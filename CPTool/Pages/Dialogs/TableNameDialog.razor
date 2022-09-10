@@ -1,0 +1,22 @@
+﻿@typeparam T
+
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="Model">
+            <MudTextField @bind-Value="Model.Name"
+                          For="@(() => Model.Name)"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="Name" />
+            
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+
+}

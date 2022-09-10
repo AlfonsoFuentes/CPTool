@@ -1,0 +1,28 @@
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+@using MudBlazor
+@using CPTool
+@using CPTool.Services
+@using CPTool.Shared
+@using CPTool.Interfaces
+@using CPTool.Entities
+@using CPTool.DTOS
+@using CPTool.Pages.BrandSupplierPages
+@using CPTool.Pages.Components
+@using CPTool.Pages.Dialogs
+@using CPTool.Pages.Dialogs.MWOItemPage
+@using CPTool.Pages.MWOPages
+@using CPTool.Pages.Classes
+@using CPTool.Pages.Settings
+
+@inject IDialogService DialogService 
+@inject ISnackbar Snackbar 
+@inject NavigationManager NavigationManager 
+@inject TablesService TablesService
+@inject ToolDialogService ToolDialogService

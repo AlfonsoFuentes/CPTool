@@ -1,0 +1,26 @@
+﻿@typeparam TDTO
+@typeparam T
+@inherits CancellableComponent
+
+<PageTitle>@TableName</PageTitle>
+<ComponentTableList @ref="table" TDTO="TDTO"
+                    SelectedItem="Selected" 
+                    T="T"
+                    TableName=@TableName
+                    Elements="@Manager.List"
+                    OnShowDialogOverrided=ShowDialogOverrided>
+    <ContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh>Name</MudTh>
+    </ContextTh>
+    <ContextTd>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </ContextTd>
+</ComponentTableList>
+
+@code {
+
+
+}
+

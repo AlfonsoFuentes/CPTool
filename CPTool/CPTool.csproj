@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <!--<Nullable>enable</Nullable>-->
+	  <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="MudBlazor" Version="6.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CPTool.Context\CPTool.Context.csproj" />
+    <ProjectReference Include="..\CPTool.DependencyInjection\CPTool.DependencyInjection.csproj" />
+    <ProjectReference Include="..\CPTool.DTOs\CPTool.DTOS.csproj" />
+    <ProjectReference Include="..\CPTool.Entities\CPTool.Entities.csproj" />
+    <ProjectReference Include="..\CPTool.Interfaces\CPTool.Interfaces.csproj" />
+    <ProjectReference Include="..\CPTool.Shared\CPTool.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+</Project>

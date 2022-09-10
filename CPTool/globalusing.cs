@@ -1,0 +1,14 @@
+﻿global using CPTool.DTOS;
+global using Microsoft.AspNetCore.Components;
+global using CPTool.Entities;
+global using CPTool.Implementations;
+global using MudBlazor;
+global using CPTool.Shared;
+global using CPTool.Services;
+global using CPTool.Interfaces;
+global using CPTool.Pages.Classes;
+global using CPTool.Pages.Dialogs;
+global using CPTool.Pages.Components;
+global using System.Text.RegularExpressions;
+global using Microsoft.AspNetCore.Components.Web;
+global using static MudBlazor.CategoryTypes;

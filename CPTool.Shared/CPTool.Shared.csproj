@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+        
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CPTool.DTOs\CPTool.DTOS.csproj" />
+    <ProjectReference Include="..\CPTool.Entities\CPTool.Entities.csproj" />
+    <ProjectReference Include="..\CPTool.Implementations\CPTool.Implementations.csproj" />
+    <ProjectReference Include="..\CPTool.Interfaces\CPTool.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

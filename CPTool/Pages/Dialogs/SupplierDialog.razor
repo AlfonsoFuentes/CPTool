@@ -1,0 +1,69 @@
+﻿@inherits CancellableComponent
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+            <ComponentAutoComplete Label="Brands or Service"
+                                   TDTO="BrandDTO"
+                                   T="Brand"
+                                   Manager=TablesService.ManBrand
+                                   ObjectList=TablesService.ManBrand.List
+                                   @bind-Model=@Model.BrandDTO
+                                   ShowDialogOverrided=@((dto)=>ToolDialogService.ShowBrandDialog(Model))
+                                   @bind-ModelInt=@Model.BrandDTO.Id></ComponentAutoComplete>
+
+
+
+            <MudTextField @bind-Value="Model.SupplierDTO.Name"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="Supplier Name" />
+            <MudTextField @bind-Value="Model.SupplierDTO.ContactPerson"
+          
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="Contact person" />
+            <MudTextField @bind-Value="Model.SupplierDTO.Email"
+                          InputType="InputType.Email"
+                         
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="email" />
+            <MudTextField @bind-Value="Model.SupplierDTO.Phone"
+                          InputType="InputType.Telephone"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="Phone" />
+            <MudTextField @bind-Value="Model.SupplierDTO.Address"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="Address" />
+            <MudTextField @bind-Value="Model.SupplierDTO.TaxCodeLD"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="TaxCode LD" />
+            <MudTextField @bind-Value="Model.SupplierDTO.TaxCodeLP"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="TaxCode LP" />
+
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    public IMask mask1 = new RegexMask(@"^[0-9]\d{0,4}$");
+    bool success;
+    string[] errors = { };
+}

@@ -1,0 +1,24 @@
+﻿@typeparam TDTO
+
+@typeparam T
+
+
+<MudSelect Dense="true"
+           Margin="Margin.Dense"
+           T="int"
+           Label=@Label
+           Disabled=@Disable
+           AnchorOrigin="Origin.BottomCenter"
+           Value=@ModelInt
+           Variant="Variant.Outlined"
+           ValueChanged=ValueChanged>
+    @foreach (var item in Elements)
+    {
+        <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
+    }
+
+</MudSelect>
+
+@code {
+
+}

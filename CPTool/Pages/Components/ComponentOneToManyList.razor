@@ -1,0 +1,89 @@
+﻿@typeparam MasterTDTO
+@typeparam MasterT
+@typeparam DetailDTO
+@typeparam DetailT
+@inherits CancellableComponent
+<PageTitle>@PageTitle</PageTitle>
+<MudGrid>
+
+    <MudItem xs="12" sm="@mastersm">
+        <ComponentTableList @ref="@tableMaster"
+                            TDTO="MasterTDTO" T="MasterT"
+                            TableName=@MasterTableName
+                            OnShowDialogOverrided="ShowDialogMaster"
+                            SelectedItem="@SelectedMaster"
+                            Elements="@Masters"
+                            OnRowClickEvent="RowMasterClicked">
+
+            <ContextTh>
+                <MudTh Style="width:40px">#</MudTh>
+                <MudTh>Name</MudTh>
+                @if (ContextThMaster != null)
+                    @ContextThMaster
+
+
+
+
+
+
+                </ContextTh>
+                <ContextTd>
+                    <MudTd DataLabel="Id">@context.Id</MudTd>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    @if (ContextTdMaster != null)
+                    @ContextTdMaster(context)
+
+
+
+
+
+
+
+                </ContextTd>
+            </ComponentTableList>
+        </MudItem>
+
+
+        <MudItem xs="12" sm="@detailsm">
+            <ComponentTableList @ref="@tableDetail"
+                            TDTO="DetailDTO"
+                            T="DetailT"
+                            TableName=@DetailTableName
+                            OnShowDialogOverrided="ShowDialogDetail"
+                            Elements="@Details"
+                            OnRowClickEvent="RowDetailClicked"
+                            
+                            SelectedItem="@SelectedDetail">
+
+
+                <ContextTh>
+                    <MudTh Style="width:40px">#</MudTh>
+                    <MudTh>Name</MudTh>
+                    @if (ContextThDetail != null)
+                    @ContextThDetail
+
+
+
+
+
+
+                </ContextTh>
+                <ContextTd>
+                    <MudTd DataLabel="Id">@context.Id</MudTd>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    @if (ContextTdDetail != null)
+                    @ContextTdDetail(context)
+
+
+
+
+
+
+                </ContextTd>
+            </ComponentTableList>
+        </MudItem>
+
+    </MudGrid>
+    @code {
+
+}

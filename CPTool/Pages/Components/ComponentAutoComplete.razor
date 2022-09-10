@@ -1,0 +1,26 @@
+﻿@typeparam TDTO
+
+@typeparam T
+@inherits CancellableComponent
+
+<MudAutocomplete T="string" Label="@Label" Value="AutocompleteText"
+                 SearchFunc="@SearchAsync"
+                 Immediate="@Inmediate"
+                 ResetValueOnEmptyText="@resetValueOnEmptyText"
+                 CoerceText="@coerceText"
+                 CoerceValue="@coerceValue"
+                 CloseIcon="@Icons.Material.Filled.Search"
+                 InputMode="InputMode.text"
+                 Margin="Margin.Dense"
+                 Dense="true"
+                 Disabled=@Disable
+                 Variant="Variant.Outlined"
+                 ValueChanged=ValueChanged
+                 OnKeyUp="KeyUp"></MudAutocomplete>
+@*<MudText Class="mb-n3" Typo="Typo.body2">
+    <MudChip>@(AutocompleteText ?? "Not selected")</MudChip>
+    </MudText>*@
+
+    @code {
+
+}

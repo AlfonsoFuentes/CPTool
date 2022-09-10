@@ -1,0 +1,58 @@
+﻿@page "/mainsettings/{TableId:int}"
+
+
+@switch (TableId)
+{
+    case 1:
+        {
+            <ComponentSimpleList TDTO="MWOTypeDTO" T="MWOType" TableName="MWO Types" Manager=TablesService.ManMWOType></ComponentSimpleList>
+        }
+        break;
+    case 2:
+        {
+            <ComponentSimpleList TDTO="UnitaryBasePrizeDTO" T="UnitaryBasePrize" TableName="Unitary Prizes" Manager=TablesService.ManUnitaryPrize></ComponentSimpleList>
+        }
+        break;
+    case 3:
+        {
+            <ComponentSimpleList TDTO="GasketDTO" T="Gasket" TableName="Gaskets" Manager=TablesService.ManGasket></ComponentSimpleList>
+        }
+        break;
+    case 4:
+        {
+            <ComponentSimpleList TDTO="MaterialDTO" T="Material" TableName="Materials" Manager=TablesService.ManMaterial OnShowDialogOverrided=ToolDialogService.ShowMaterialDialog></ComponentSimpleList>
+        }
+        break;
+    case 5:
+        {
+            <ComponentOneToManyList MasterTDTO="EquipmentTypeDTO"
+                        MasterT="EquipmentType"
+                        DetailDTO="EquipmentTypeSubDTO"
+                        DetailT="EquipmentTypeSub"
+                        MasterTableName="Equipment Type"
+                        DetailTableName="Sub Type"
+
+                        MasterManager=TablesService.ManEquipmentType
+                        DetailManager=TablesService.ManEquipmentTypeSub
+                        OnShowDialogMaster=ToolDialogService.ShowEquipmentType
+                        OnShowDialogDetail=ToolDialogService.ShowEquipmentTypeSub>
+
+            </ComponentOneToManyList>
+        }
+        break;
+    case 6:
+        {
+            <BrandSupplierList 
+                OnShowDialogDetail=ToolDialogService.ShowSupplierDialog 
+                OnShowDialogMaster=ToolDialogService.ShowBrandDialog>
+
+            </BrandSupplierList>
+        }
+        break;
+}
+@code {
+    [Parameter]
+    public int TableId { get; set; } = 0;
+
+
+}

@@ -1,0 +1,145 @@
+﻿@inherits CancellableComponent
+@implements IDisposable
+@if (test)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+            <ComponentAutoComplete Label="Equipment Type"
+                               TDTO="EquipmentTypeDTO"
+                               T="EquipmentType"
+                               Manager=TablesService.ManEquipmentType
+                              
+                               ObjectList=TablesService.ManEquipmentType.List
+                               @bind-Model="@Model.EquipmentTypeDTO"
+                               Required=true
+                               ShowDialogOverrided=ToolDialogService.ShowEquipmentType
+                               RequiredError="Must submit Equipment Type">
+
+            </ComponentAutoComplete>
+            <ComponentAutoComplete Label="Sub Equipment Type"
+                               TDTO="EquipmentTypeSubDTO"
+                               T="EquipmentTypeSub"
+                              
+                               @bind-Model="@Model.EquipmentTypeSubDTO"
+                               Disable=@(Model.EquipmentTypeDTO.Id==0?true:false)
+                               Manager=TablesService.ManEquipmentTypeSub
+                               ObjectList=Model.EquipmentTypeDTO.EquipmentTypeSubDTOs
+                               ShowDialogOverrided=ToolDialogService.ShowEquipmentTypeSub
+                               Parent=Model.EquipmentTypeDTO>
+
+            </ComponentAutoComplete>
+
+
+
+
+            <MudTextField T="string" @bind-Value="Model.TagNumber"
+                      Required="true"
+                      Immediate="true"
+                      Label="Tag Number"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      RequiredError="Must have Tag Number"></MudTextField>
+
+            <MudTextField T="string" Value="@Model.TagId"
+                      Immediate="true"
+                      Disabled="true"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Label="Tag"></MudTextField>
+            <ComponentAutoComplete Label="Gasket"
+                               TDTO="GasketDTO"
+                               T="Gasket"
+                               Manager=TablesService.ManGasket
+                              
+                               @bind-Model="@Model.GasketDTO"
+                               ObjectList=TablesService.ManGasket.List>
+
+            </ComponentAutoComplete>
+
+            <ComponentAutoComplete Label="Outer Material"
+                               TDTO="MaterialDTO"
+                               T="Material"
+                               ObjectList=TablesService.ManMaterial.List
+                               ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
+                               Manager=TablesService.ManMaterial
+                               @bind-Model="@Model.OuterMaterialDTO"
+                               >
+
+            </ComponentAutoComplete>
+            <ComponentAutoComplete Label="Internal Material"
+                               TDTO="MaterialDTO"
+                               T="Material"
+                               ObjectList=TablesService.ManMaterial.List
+                               ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
+                               Manager=TablesService.ManMaterial
+                               @bind-Model="@Model.InnerMaterialDTO"
+                               >
+
+            </ComponentAutoComplete>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+           
+            <ComponentSelect TDTO="BrandDTO"
+                         T="Brand"
+                        
+                         Label="Brand or Service"
+                         PostEvent=OnBrandValueChanged
+                         Elements=TablesService.ManBrand.List
+                         @bind-Model=@Model.BrandDTO
+                        >
+
+
+            </ComponentSelect>
+            <ComponentSelect TDTO="SupplierDTO"
+                         T="Supplier"
+                         Label="Supplier"
+                         Disable="@(Model.BrandDTO.Id==0?true:false)"
+                         Elements=SelectedSupplier
+                         @bind-Model=@Model.SupplierDTO
+                       >
+
+
+            </ComponentSelect>
+            @*<MudSelect Dense="true"
+                   Margin="Margin.Dense"
+                   T="int"
+                   Label="Supplier"
+                   Disabled="@(Model.BrandId==0?true:false)"
+                   AnchorOrigin="Origin.BottomCenter"
+                   Value=@Model.SupplierId
+                   Variant="Variant.Outlined"
+                   ValueChanged="OnSupplierValueChanged">
+                @foreach (var item in SelectedSupplier)
+                {
+                    <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
+                }
+
+            </MudSelect>*@
+
+            <MudTextField T="string" @bind-Value="Model.Model"
+                      Immediate="true"
+                      Label="Model"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"></MudTextField>
+            <MudTextField T="string" @bind-Value="Model.Reference"
+                      Immediate="true"
+                      Label="Reference"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"></MudTextField>
+            <MudTextField T="string" @bind-Value="Model.SerialNumber"
+                      Immediate="true"
+                      Label="Serial Number"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"></MudTextField>
+        </MudItem>
+    </MudGrid>
+}
+
+@code {
+
+    bool test = true;
+    //async Task Update()
+    //{
+    //    await AutoCompleteEquipmet.UpdateFrom();
+    //}
+}

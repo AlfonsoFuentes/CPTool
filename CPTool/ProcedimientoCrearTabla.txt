@@ -1,0 +1,46 @@
+﻿1 Crear Entity
+2 Crear EntityDTO
+3 Crear  CreateMap<Entity, EntityDTO>().ReverseMap();
+4 Agregar DBSet<Entity>
+5 Agregar Entity y EntityDTO a las tables que se requiera asi:
+
+relacion uno a uno:
+=>Debe incluir EntityId en el principal
+relacion uno a muchos
+=> Debe incluir List<Entity> y la tabla relacionada
+relacion muchos a muchos
+Agregar DBSet nuevo con las dos tablas
+
+6 Crear Mapper en las tablas que se relaciono
+.ForMember(dest => dest.MWOItemDTO, act => act.MapFrom(src => src.MWOItem))
+6.1 En el OnModelCreating del TableContext agregar el AutoInclude para eager loading
+7 Compilar hasta que no halla errores
+8 Hacer Migration Add-Migration Nx
+9 Update-Database
+10 Si la tabla es para settings crear nueva fila en  <MudNavGroup Title="Settings" Expanded="true"> aumnetar un numero en el parametro
+si la tabla es sencilla usar en el case en MainSettings
+
+<GenericSimpleList TDTO="MWOTypeDTO" T="MWOType" TableName="MWO Types"></GenericSimpleList>
+
+si la tabla es uno a muchos usar
+
+<GenericOneToManyList 
+    MasterTDTO="MWODTO"
+                      MasterT="MWO" DetailDTO="MWOItemDTO" DetailT="MWOItem" MasterTableName="MWO List" DetailTableName="MWO Items">
+
+</GenericOneToManyList>
+
+si la tabla es muchos a muchos usar
+
+<GenericManytoManyList><GenericManytoManyList>
+
+11 Agregar Al servicio de UI el listado
+11.1 Agregar  public Result<List<GasketDTO>> Gaskets { get; set; } = new(); a la clase MWOItemModel
+11.2 Agregar readonly IGetList<GasketDTO, Gasket> _getgasketlist;
+11.3 en el constructor inject  IGetList<GasketDTO, Gasket> getgasketlist;
+11.4 en Initialize() Agregar  _MWOItemData.Gaskets = await _getgasketlist.Handle();
+
+
+
+
+

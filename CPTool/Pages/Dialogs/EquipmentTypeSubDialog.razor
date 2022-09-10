@@ -1,0 +1,28 @@
+﻿
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="Model">
+            <MudTextField @bind-Value="Model.Name"
+                          For="@(() => Model.Name)"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="Name" />
+            <MudTextField @bind-Value="Model.TagLetter"
+                          For="@(() => Model.TagLetter)"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense"
+                          Immediate="true"
+                          Label="Letter" />
+
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+}

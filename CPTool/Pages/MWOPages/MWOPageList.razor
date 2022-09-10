@@ -1,0 +1,45 @@
+﻿@page "/"
+@page "/mwolist"
+@implements IDisposable
+@inherits CancellableComponent
+@if (test)
+{
+
+
+    <ComponentOneToManyList MasterTDTO="MWODTO"
+                        MasterT="MWO"
+                        DetailDTO="MWOItemDTO"
+                        DetailT="MWOItem"
+                        MasterTableName="MWO"
+                        DetailTableName="Items"
+                        MasterManager=TablesService.ManMWO
+                        DetailManager=TablesService.ManMWOItem
+                        OnShowDialogDetail=ToolDialogService.ShowDialogMWOItem
+                        OnShowDialogMaster=ToolDialogService.ShowDialogMWO>
+        <ContextThMaster>
+            <MudTh>MWO Type</MudTh>
+        </ContextThMaster>
+        <ContextTdMaster>
+            <MudTd DataLabel="MWO Type">@context.MWOTypeDTO.Name</MudTd>
+        </ContextTdMaster>
+        <ContextThDetail>
+            <MudTh>Budget, USD</MudTh>
+        </ContextThDetail>
+        <ContextTdDetail>
+            <MudTd DataLabel="Budget">@context.BudgetPrize</MudTd>
+        </ContextTdDetail>
+    </ComponentOneToManyList>
+    
+
+}
+@code {
+    bool test = true;
+    protected override async Task OnInitializedAsync()
+    {
+        await TablesService.Initialize();
+    }
+
+}
+
+
+
