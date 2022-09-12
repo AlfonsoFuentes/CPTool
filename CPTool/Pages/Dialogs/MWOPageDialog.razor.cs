@@ -2,6 +2,7 @@
 
 
 
+using AutoMapper;
 using CPTool.Entities;
 using CPTool.Shared;
 
@@ -11,11 +12,12 @@ namespace CPTool.Pages.Dialogs
     {
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        //[Inject]
-        //public IDTOManager<MWODTO, MWO> MWOmanager { get; set; }
+
 
         [Parameter]
         public MWODTO Model { get; set; }
+
+       
         MudForm form;
         async Task Submit()
         {
@@ -25,7 +27,9 @@ namespace CPTool.Pages.Dialogs
             await form.Validate();
             if (form.IsValid)
             {
-                //await MWOmanager.AddUpdate(Model, _cts.Token);
+                if (Model.Id == 0)
+                    Model = _mapper.Map<CreateMWODTO>(Model);
+
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }
@@ -38,6 +42,9 @@ namespace CPTool.Pages.Dialogs
         protected override void OnInitialized()
         {
             success2 = true;
+
+
+
 
         }
 

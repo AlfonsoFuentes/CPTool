@@ -4,8 +4,8 @@ namespace CPTool.DTOS
 {
     public class SupplierDTO : AuditableEntityDTO
     {
-        public List<BrandSupplierDTO>? BrandSupplierDTOs { get; set; } = new();
-        public List<EquipmentItemDTO> EquipmentItemDTOs { get; set; }
+        public List<BrandSupplierDTO> BrandSupplierDTOs { get; set; } = new();
+        public List<EquipmentItemDTO> EquipmentItemDTOs { get; set; } = new();
         public string VendorCode { get; set; } = "";
 
         public string Address { get; set; } = "";

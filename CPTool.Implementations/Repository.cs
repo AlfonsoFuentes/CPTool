@@ -20,7 +20,7 @@ namespace CPTool.Implementations
         {
             try
             {
-                //await _dbContext.Set<T>().AddAsync(entity);
+               
                 await _dbContext.AddAsync(entity);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace CPTool.Implementations
         {
             try
             {
-                //_dbContext.Set<T>().Remove(entity);
+               
                 _dbContext.Remove(entity);
 
             }
@@ -58,7 +58,7 @@ namespace CPTool.Implementations
 
                 foreach (var property in navigations)
                 {
-                    query = query.Include(property.Name).AsNoTracking();
+                    query = query.Include(property.Name);
                     
                 }
                    
@@ -66,33 +66,24 @@ namespace CPTool.Implementations
             return query;
         }
 
-        public async Task<IQueryable<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
-            //var retorno =  _dbContext
-            //    .Set<T>().ToIncludeEntities();
-            var retorno3 = await Query(true).ToListAsync();
-            //var retorno2 = await _dbContext.Set<T>().ToListAsync();
-            return  retorno3.AsQueryable();
+         
+            var retorno3 = await Query(true).ToListAsync(); 
+            return retorno3;
         }
 
-        //public async Task<T> GetByIdAsync(int id)
-        //{
-        //    var retorno = await _dbContext.Set<T>().FindAsync(id)!;
-        //    //var retornoList = await GetAllAsync();
-        //    //var retorno = retornoList.FirstOrDefault(x=>x.Id==id);
-        //    return retorno!;
-        //}
-        public async Task<T?> GetByIdAsync(int itemId/*, bool eager = false*/)
+       
+        public async Task<T> GetByIdAsync(int itemId/*, bool eager = false*/)
         {
-            return await Query(true).FirstOrDefaultAsync(i => i.Id == itemId);
+            return await Query(true).FirstAsync(i => i.Id == itemId);
         }
-        public async Task<IQueryable<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
+        public async Task<List<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
         {
-            return  _dbContext
+            return await _dbContext
                 .Set<T>()
                 .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .AsQueryable();
+                .Take(pageSize).ToListAsync();
         }
 
         public T UpdateAsync(T entity)
@@ -102,7 +93,7 @@ namespace CPTool.Implementations
             return entity;
         }
 
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null)
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null!)
         {
             IQueryable<T> query = _dbContext.Set<T>().AsNoTracking();
             return await query.AnyAsync(filter);
@@ -120,7 +111,7 @@ namespace CPTool.Implementations
             {
                 string exm = ex.Message;
             }
-            return result;
+            return result!;
         }
     }
 }

@@ -553,7 +553,7 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("InsulationItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MWOId")
+                    b.Property<int?>("MWOId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -1026,9 +1026,7 @@ namespace CPTool.Context.Migrations
 
                     b.HasOne("CPTool.Entities.MWO", "MWO")
                         .WithMany("MWOItems")
-                        .HasForeignKey("MWOId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MWOId");
 
                     b.HasOne("CPTool.Entities.PaintingItem", "PaintingItem")
                         .WithMany("MWOItems")

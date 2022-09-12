@@ -12,7 +12,7 @@ namespace CPTool.DTOS
     
     public class GasketDTO : AuditableEntityDTO
     {
-        public virtual ICollection<EquipmentItemDTO> EquipmentItemDTOs { get; set; }
+        public virtual List<EquipmentItemDTO> EquipmentItemDTOs { get; set; } = new();
 
     }
 

@@ -6,7 +6,7 @@ namespace CPTool.DTOS
 {
     public class StructuralItemDTO : AuditableEntityDTO
     {
-        public List<MWOItemDTO> MWOItemDTOs { get; set; }
+        public List<MWOItemDTO> MWOItemDTOs { get; set; } = new();
 
     }
 

@@ -15,9 +15,9 @@ namespace CPTool.Interfaces
 
         Task<T> GetByIdAsync(int id);
 
-        Task<IQueryable<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync();
 
-        Task<IQueryable<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
+        Task<List<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
 
         Task<T> AddAsync(T entity);
         Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null);

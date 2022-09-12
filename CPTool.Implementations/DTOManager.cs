@@ -1,4 +1,6 @@
 ﻿using CPTool.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -6,14 +8,14 @@ using System.Threading;
 namespace CPTool.Implementations
 {
     public class DTOManager<TDTO, T> : IDTOManager<TDTO, T>, IDisposable
-        where TDTO : IAuditableEntityDTO, new()
+        where TDTO : class, IAuditableEntityDTO,  new() 
           where T : IAuditableEntity
     {
 
         readonly IUnitOfWork _unitofwork;
         readonly IMapper _mapper;
-        IQueryable<TDTO> QueryableList { get; set; }
-        public List<TDTO> List { get; set; }
+       
+        public List<TDTO> List { get; set; } = new();
         public DTOManager(IUnitOfWork unitofwork, IMapper mapper)
         {
             _unitofwork = unitofwork;
@@ -21,7 +23,7 @@ namespace CPTool.Implementations
         }
 
 
-        public async Task<IResult<TDTO>> AddUpdate(TDTO dto, CancellationToken cancellationToken)
+        public async Task<IResult<TDTO>> AddUpdate(IAuditableEntityDTO dto, CancellationToken cancellationToken)
         {
             var table = _mapper.Map<T>(dto);
 
@@ -30,9 +32,10 @@ namespace CPTool.Implementations
             if (!result.Succeeded)
                 return await Result<TDTO>.FailAsync("Not created!");
 
-            dto = _mapper.Map<TDTO>(request);
+            var responsdto = _mapper.Map<TDTO>(request);
             await UpdateList();
-            return await Result<TDTO>.SuccessAsync(dto, "Updated");
+         
+            return await Result<TDTO>.SuccessAsync(responsdto, "Updated");
 
 
         }
@@ -90,9 +93,9 @@ namespace CPTool.Implementations
         {
             var list = await _unitofwork.Repository<T>().GetAllAsync();
             List = _mapper.Map<List<TDTO>>(list);
-            QueryableList = List.AsQueryable();
-         
-            if (PostEvent != null)  PostEvent.Invoke();
+           
+
+            if (PostEvent != null) PostEvent.Invoke();
 
 
             return List;
@@ -103,10 +106,53 @@ namespace CPTool.Implementations
 
 
         }
-        public async Task Test(MWODTO model)
-        {
+        //public async Task Test1(CancellationToken cancellationToken)
+        //{
+        //    var mwotypelist = await _unitofwork.Repository<MWOType>().GetAllAsync();
+        //    var mwotype = mwotypelist.FirstOrDefault(x => x.Id == 2);
+        //    var mwotypedto = _mapper.Map<MWOTypeDTO>(mwotype);
 
-        }
-        public Action PostEvent { get; set; }
+        //    var mwolist = await _unitofwork.Repository<MWO>().GetAllAsync(); ;
+        //    var mwo = mwolist.FirstOrDefault(x => x.Id == 3);
+        //    var mwodto = _mapper.Map<MWODTO>(mwo);
+        //    mwodto.MWOTypeDTO = mwotypedto;
+        //    mwodto.Name = "MWO test update";
+        //    mwodto.Number = 12345;
+
+        //    mwo = _mapper.Map<MWO>(mwodto);
+
+
+        //    var request = mwo.Id == 0 ? await _unitofwork.Repository<MWO>().AddAsync(mwo) : _unitofwork.Repository<MWO>().UpdateAsync(mwo);
+
+        //    var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
+        //    if (result.Succeeded)
+        //    {
+
+        //    }
+        //}
+        //public async Task Test2(CancellationToken cancellationToken)
+        //{
+        //    var mwotypelist = await _unitofwork.Repository<MWOType>().GetAllAsync();
+        //    var mwotype = mwotypelist.FirstOrDefault(x => x.Id == 2);
+        //    var mwotypedto = _mapper.Map<MWOTypeDTO>(mwotype);
+
+
+        //    var mwodto = new CreateMWODTO();
+        //    mwodto.MWOTypeDTO = mwotypedto;
+        //    mwodto.Name = "MWO test update";
+        //    mwodto.Number = 12345;
+
+        //    var mwo = _mapper.Map<MWO>(mwodto);
+
+        //    //await _unitofwork.Repository<MWO>().AddAsync(mwo);
+        //    var request = mwo.Id == 0 ? await _unitofwork.Repository<MWO>().AddAsync(mwo) : _unitofwork.Repository<MWO>().UpdateAsync(mwo);
+
+        //    var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
+        //    if (result.Succeeded)
+        //    {
+
+        //    }
+        //}
+        public Action PostEvent { get; set; } = null!;
     }
 }

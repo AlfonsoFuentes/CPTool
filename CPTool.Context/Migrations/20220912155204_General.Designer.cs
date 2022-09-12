@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20220910140119_initial")]
-    partial class initial
+    [Migration("20220912155204_General")]
+    partial class General
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -555,7 +555,7 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("InsulationItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MWOId")
+                    b.Property<int?>("MWOId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -1028,9 +1028,7 @@ namespace CPTool.Context.Migrations
 
                     b.HasOne("CPTool.Entities.MWO", "MWO")
                         .WithMany("MWOItems")
-                        .HasForeignKey("MWOId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MWOId");
 
                     b.HasOne("CPTool.Entities.PaintingItem", "PaintingItem")
                         .WithMany("MWOItems")

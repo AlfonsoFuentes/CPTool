@@ -75,7 +75,7 @@ namespace CPTool.Implementations
         {
         }
 
-        public T Data { get; set; }
+        public T Data { get; set; } = default(T)!;
 
         public new static Result<T> Fail()
         {

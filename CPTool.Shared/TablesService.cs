@@ -73,7 +73,7 @@ namespace CPTool.Shared
             await ManEquipmentType.UpdateList();
             await ManEquipmentTypeSub.UpdateList();
             await ManMWOType.UpdateList();
-           
+
             await ManBrand.UpdateList();
             await ManSupplier.UpdateList();
             await ManBrandSupplier.UpdateList();
@@ -81,6 +81,9 @@ namespace CPTool.Shared
             await ManItemEquipment.UpdateList();
             await ManMWO.UpdateList();
             await ManMWOItem.UpdateList();
+
+            //await ManMWOType.Test1(new CancellationToken());
+            //await ManMWOType.Test2(new CancellationToken());
         }
         void UpdateBrandSupplierDTO()
         {
@@ -96,7 +99,7 @@ namespace CPTool.Shared
             //        row.BrandDTO = ManBrand.List.FirstOrDefault(x => x.Id == row.BrandId);
             //        row.SupplierDTO = ManSupplier.List.FirstOrDefault(x => x.Id == row.SupplierId);
             //    }
-               
+
             //}
             //foreach (var item in ManSupplier.List)
             //{
@@ -110,7 +113,7 @@ namespace CPTool.Shared
         }
         void UpdateMWO()
         {
-            foreach(var mwo in ManMWO.List)
+            foreach (var mwo in ManMWO.List)
             {
                 foreach (var item in mwo.MWOItemDTOs)
                 {
@@ -129,7 +132,7 @@ namespace CPTool.Shared
                     }
                 }
             }
-            
+
         }
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> Save { get; set; }
         public Func<IAuditableEntityDTO, Task<IResult<int>>> Delete { get; set; }

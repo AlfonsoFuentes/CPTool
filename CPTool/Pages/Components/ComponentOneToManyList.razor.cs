@@ -23,9 +23,9 @@ namespace CPTool.Pages.Components
         [Parameter]
         public string DetailTableName { get; set; }
         [Parameter]
-        public Func<MasterTDTO, Task<DialogResult>> OnShowDialogMaster { get; set; }
+        public Func<AuditableEntityDTO, Task<DialogResult>> OnShowDialogMaster { get; set; }
         [Parameter]
-        public Func<DetailDTO, Task<DialogResult>> OnShowDialogDetail { get; set; }
+        public Func<AuditableEntityDTO, Task<DialogResult>> OnShowDialogDetail { get; set; }
         MasterTDTO SelectedMaster = new();
         DetailDTO SelectedDetail = new();
 
@@ -63,7 +63,7 @@ namespace CPTool.Pages.Components
         protected override void OnInitialized()
         {
 
-            TablesService.Save += OnSave;
+           
             TablesService.Delete += OnDelete;
            
 
@@ -71,43 +71,41 @@ namespace CPTool.Pages.Components
         }
 
 
-        async Task<DialogResult> ShowDialogMaster(MasterTDTO dto)
+        async Task<DialogResult> ShowDialogMaster(AuditableEntityDTO dto)
         {
-
-            return OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<MasterTDTO>(dto) : await OnShowDialogMaster.Invoke(dto);
+            TablesService.Save += OnSaveMaster;
+            return OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogMaster.Invoke(dto);
         }
 
 
-        async Task<DialogResult> ShowDialogDetail(DetailDTO dto)
+        async Task<DialogResult> ShowDialogDetail(AuditableEntityDTO dto)
         {
+            TablesService.Save += OnSaveDetails;
 
-
-            return OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<DetailDTO>(dto) : await OnShowDialogDetail.Invoke(dto);
+            return OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogDetail.Invoke(dto);
         }
 
-        async Task<IResult<IAuditableEntityDTO>> OnSave(IAuditableEntityDTO dto)
+        async Task<IResult<IAuditableEntityDTO>> OnSaveMaster(IAuditableEntityDTO dto)
         {
-            if (dto is MasterTDTO)
-            {
-                var result = await MasterManager.AddUpdate(dto as MasterTDTO, _cts.Token);
-                if (result.Succeeded)
-                    SelectedMaster = result.Data;
-                StateHasChanged();
+            var result = await MasterManager.AddUpdate(dto, _cts.Token);
+            if (result.Succeeded)
+                SelectedMaster = result.Data;
+            StateHasChanged();
+            TablesService.Save -= OnSaveMaster;
+            return result;
 
-                return result;
-
-            }
-            if (dto is DetailDTO)
-            {
-                //(dto as DetailDTO).Mas = SelectedMaster.Id;
-                var result = await DetailManager.AddUpdate(dto as DetailDTO, _cts.Token);
-                await MasterManager.UpdateList();
-                SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
-                StateHasChanged();
-                return result;
-            }
-            return await Result<IAuditableEntityDTO>.FailAsync("Not Value!");
         }
+        async Task<IResult<IAuditableEntityDTO>> OnSaveDetails(IAuditableEntityDTO dto)
+        {
+            var result = await DetailManager.AddUpdate(dto, _cts.Token);
+            await MasterManager.UpdateList();
+            SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
+            StateHasChanged();
+            TablesService.Save -= OnSaveDetails;
+            return result;
+        }
+
+       
         async Task<IResult<int>> OnDelete(IAuditableEntityDTO dto)
         {
             if (dto is MasterTDTO)
@@ -134,7 +132,7 @@ namespace CPTool.Pages.Components
        
         void IDisposable.Dispose()
         {
-            TablesService.Save -= OnSave;
+          
             TablesService.Delete -= OnDelete;
            
         }

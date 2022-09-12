@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CPTool.DTOS
 {
-    
-    public class MWODTO : AuditableEntityDTO
+
+    public class MWODTO :  AuditableEntityDTO
     {
         const string ceb = "CEB0000";
         const string cec = "CEC0000";
@@ -16,11 +16,12 @@ namespace CPTool.DTOS
         public string CECName => $"{cec}{Number}";
         public string? ProjectLeader { get; set; } = "";
         public DateTime ApprovalDate { get; set; } = DateTime.Now;
-        
+
         public decimal Budget { get; set; } = 0;
         public decimal Expenses { get; set; } = 0;
+        public int MWOTypeId => MWOTypeDTO==null?0: MWOTypeDTO.Id;
 
-        public MWOTypeDTO MWOTypeDTO { get; set; }
+        public  MWOTypeDTO MWOTypeDTO { get; set; } = new();
         public List<MWOItemDTO> MWOItemDTOs
         {
             get
@@ -34,6 +35,16 @@ namespace CPTool.DTOS
             }
         }
         public List<PurchaseOrderDTO>? PurchaseOrderDTOs { get; set; } = new();
+
+    }
+    public class CreateMWODTO : MWODTO
+    {
+        
+
+       
+        
+
+        
     }
 
 

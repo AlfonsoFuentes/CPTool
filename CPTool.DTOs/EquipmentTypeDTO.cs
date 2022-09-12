@@ -13,18 +13,7 @@ namespace CPTool.DTOS
     {
 
         public string? TagLetter { get; set; } = "";
-        public virtual ICollection<EquipmentItemDTO> EquipmentItemDTOs { get; set; }
-        public List<EquipmentTypeSubDTO> EquipmentTypeSubDTOs
-        {
-            get
-            {
-                var values = Details.Select(x => x as EquipmentTypeSubDTO).ToList();
-                return values!;
-            }
-            set
-            {
-                Details = value!.Select(x => x as AuditableEntityDTO).ToList();
-            }
-        }
+        public virtual List<EquipmentItemDTO> EquipmentItemDTOs { get; set; } = new();
+        public List<EquipmentTypeSubDTO> EquipmentTypeSubDTOs { get; set; } = new();
     }
 }

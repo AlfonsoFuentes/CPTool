@@ -10,6 +10,6 @@ namespace CPTool.DTOS
 {
     public class UnitaryBasePrizeDTO  :AuditableEntityDTO
     {
-        public virtual ICollection<MWOItemDTO> MWOItemDTOs { get; set; }
+        public virtual List<MWOItemDTO> MWOItemDTOs { get; set; } = new();
     }
 }

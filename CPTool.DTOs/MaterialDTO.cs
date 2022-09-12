@@ -13,9 +13,9 @@ namespace CPTool.DTOS
     {
         public string? Abbreviation { get; set; }
       
-        public virtual ICollection<EquipmentItemDTO> InnerMaterialsDTO { get; set; }
+        public virtual List<EquipmentItemDTO> InnerMaterialsDTO { get; set; } = new();
 
-       
-        public virtual ICollection<EquipmentItemDTO> OuterMaterialsDTO { get; set; }
+
+        public virtual List<EquipmentItemDTO> OuterMaterialsDTO { get; set; } = new();
     }
 }

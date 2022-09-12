@@ -14,7 +14,7 @@ namespace CPTool.Services
         {
             DialogService = dialogService;
         }
-        public async Task<DialogResult> ShowEquipmentType(EquipmentTypeDTO Model)
+        public async Task<DialogResult> ShowEquipmentType(AuditableEntityDTO Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
@@ -27,7 +27,7 @@ namespace CPTool.Services
             return await dialog.Result;
 
         }
-        public async Task<DialogResult> ShowEquipmentTypeSub(EquipmentTypeSubDTO Model)
+        public async Task<DialogResult> ShowEquipmentTypeSub(AuditableEntityDTO Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
@@ -54,7 +54,7 @@ namespace CPTool.Services
 
             return await dialog.Result;
         }
-        public async Task<DialogResult> ShowDialogMWO(MWODTO Model)
+        public async Task<DialogResult> ShowDialogMWO(AuditableEntityDTO Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
@@ -68,7 +68,7 @@ namespace CPTool.Services
             var result = await dialog.Result;
             return result;
         }
-        public async Task<DialogResult> ShowDialogMWOItem(MWOItemDTO Model)
+        public async Task<DialogResult> ShowDialogMWOItem(AuditableEntityDTO Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };

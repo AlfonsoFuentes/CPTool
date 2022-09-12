@@ -11,6 +11,7 @@ namespace CPTool.DTOS
     public class MWOItemDTO : AuditableEntityDTO
     {
        
+        public List<PurchaseOrderDTO>? PurchaseOrderDTOs { get; set; }
         public MWODTO? MWODTO { get; set; }
         public AlterationItemDTO? AlterationItemDTO { get; set; }
         public FoundationItemDTO? FoundationItemDTO { get; set; }
@@ -26,17 +27,37 @@ namespace CPTool.DTOS
         public TestingItemDTO? TestingItemDTO { get; set; }
         public EngineeringCostItemDTO? EngineeringCostItemDTO { get; set; }
         public ContingencyItemDTO? ContingencyItemDTO { get; set; }
+        public UnitaryBasePrizeDTO? UnitaryBasePrizeDTO { get; set; }
         public int Order { get; set; }
      
         public ChapterDTO? ChapterDTO { get; set; }
+
+        public int? MWOId { get; set; } = null!;
+        public int? AlterationItemId { get; set; }
+        public int? FoundationItemId { get; set; }
+        public int? StructuralItemId { get; set; }
+        public int? EquipmentItemId { get; set; }
+        public int? ElectricalItemId { get; set; }
+        public int? PipingItemId { get; set; }
+        public int? InstrumentItemId { get; set; }
+        public int? InsulationItemId { get; set; }
+        public int? PaintingItemId { get; set; }
+        public int? EHSItemId { get; set; }
+        public int? TaxesItemId { get; set; }
+        public int? TestingItemId { get; set; }
+        public int? EngineeringCostItemId { get; set; }
+        public int? ContingencyItemId { get; set; }
+        public int ChapterId { get; set; }
+        public int? UnitaryBasePrizeId { get; set; }
+
         public string Nomenclatore => $"{ChapterLetter}{Order}";
         public string Letter { get; set; } = "";
         string ChapterLetter => ChapterDTO == null ? Letter : ChapterDTO.Letter!;
 
-        public int UnitaryBasePrizeId { get; set; }
-        public UnitaryBasePrizeDTO? UnitaryBasePrizeDTO { get; set; }
+       
+       
 
-        public int EquipmentTypeId { get; set; }
+      
        
 
         public decimal BudgetPrize => UnitaryPrize * Quantity;
@@ -46,7 +67,10 @@ namespace CPTool.DTOS
 
        
     }
+    public class CreateMWOItemDTO :MWOItemDTO
+    {
 
+    }
 
 
 

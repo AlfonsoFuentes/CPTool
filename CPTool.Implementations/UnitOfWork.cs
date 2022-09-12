@@ -4,7 +4,7 @@
     {
 
         private readonly TableContext _dbContext;
-        private bool disposed;
+
         private Hashtable? _repositories;
 
 

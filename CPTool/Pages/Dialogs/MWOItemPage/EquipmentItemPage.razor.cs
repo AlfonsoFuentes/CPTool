@@ -14,7 +14,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
             if (Model == null)
             {
                 Model = new EquipmentItemDTO();
-                //Model.MWOItemId = Item.Id;
+
             }
             OnBrandValueChanged();
             TablesService.Save += OnSave;
@@ -25,7 +25,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         {
             if (Model.EquipmentTypeDTO.Id == 0)
             {
-               
+
                 Model.EquipmentTypeSubDTO = new();
             }
 
@@ -36,21 +36,23 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
 
         public async Task<IResult<IAuditableEntityDTO>> OnSave(IAuditableEntityDTO dto)
         {
-            if (Model.Id != 0) return await TablesService.ManItemEquipment.AddUpdate(Model, _cts.Token);
+            if (Model.Id == 0)
+                Model = _mapper.Map<CreateEquipmentItemDTO>(Model);
+            return await TablesService.ManItemEquipment.AddUpdate(Model, _cts.Token);
 
-            return Result<IAuditableEntityDTO>.Success();
+          
         }
         void OnBrandValueChanged()
         {
             Model.SupplierDTO = new();
-           
+
             SelectedSupplier = Model.BrandDTO.Id == 0 ? new() : Model.BrandDTO.BrandSupplierDTOs.Select(x => x.SupplierDTO).ToList();
         }
         void OnSupplierValueChanged(int value)
         {
 
             Model.SupplierDTO = TablesService.ManSupplier.List.FirstOrDefault(x => x.Id == value);
-            
+
         }
         void IDisposable.Dispose()
         {

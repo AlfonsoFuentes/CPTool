@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPTool.Context.Migrations
 {
-    public partial class initial : Migration
+    public partial class General : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -506,7 +506,7 @@ namespace CPTool.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MWOId = table.Column<int>(type: "int", nullable: false),
+                    MWOId = table.Column<int>(type: "int", nullable: true),
                     AlterationItemId = table.Column<int>(type: "int", nullable: true),
                     FoundationItemId = table.Column<int>(type: "int", nullable: true),
                     StructuralItemId = table.Column<int>(type: "int", nullable: true),
@@ -591,8 +591,7 @@ namespace CPTool.Context.Migrations
                         name: "FK_MWOItems_MWOs_MWOId",
                         column: x => x.MWOId,
                         principalTable: "MWOs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_MWOItems_PaintingItems_PaintingItemId",
                         column: x => x.PaintingItemId,

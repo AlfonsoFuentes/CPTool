@@ -51,6 +51,10 @@ namespace CPTool.DependencyInjection
                    .ForMember(dest => dest.EquipmentItemDTOs,
                   act => act.MapFrom(src => src.EquipmentItems))
                .ReverseMap();
+            CreateMap<EquipmentTypeDTO, CreateEquipmentTypeSubDTO>();
+            CreateMap<CreateEquipmentTypeSubDTO, EquipmentType>()
+                .ForMember(dest => dest.EquipmentItems,
+                  act => act.MapFrom(src => src.EquipmentItemDTOs));
             CreateMap<EquipmentTypeSub, EquipmentTypeSubDTO>()
                  .ForMember(dest => dest.EquipmentTypeDTO,
                   act => act.MapFrom(src => src.EquipmentType))
@@ -81,6 +85,9 @@ namespace CPTool.DependencyInjection
                  .ForMember(dest => dest.SupplierDTO, act => act.MapFrom(src => src.Supplier))
                   .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
                 .ReverseMap();
+            CreateMap<CreateEquipmentItemDTO, EquipmentItem>()
+                .ForMember(dest => dest.MWOItems, act => act.MapFrom(src => src.MWOItemDTOs));
+            CreateMap<EquipmentItemDTO, CreateEquipmentItemDTO>();
             CreateMap<FoundationItem, FoundationItemDTO>()
                 .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems)).ReverseMap();
             CreateMap<InstrumentItem, InstrumentItemDTO>()
@@ -103,17 +110,28 @@ namespace CPTool.DependencyInjection
                 .ForMember(dest => dest.MWODTO, act => act.MapFrom(src => src.MWO))
                 .ForMember(dest => dest.PurchaseOrderItemDTOs, act => act.MapFrom(src => src.PurchaseOrderItems))
                 .ReverseMap();
+            CreateMap<PurchaseOrderDTO, CreatePurchaseOrderDTO>()
+                .ForMember(dest => dest.PurchaseOrderItemDTOs,
+                act => act.MapFrom(src => src.PurchaseOrderItemDTOs));
+            CreateMap<CreatePurchaseOrderDTO, PurchaseOrder>()
+                .ForMember(dest => dest.PurchaseOrderItems,
+                act => act.MapFrom(src => src.PurchaseOrderItemDTOs));
+               
             CreateMap<PurchaseOrderItem, PurchaseOrderItemDTO>()
                 .ForMember(dest => dest.PurchaseOrderDTO,
                 act => act.MapFrom(src => src.PurchaseOrder))
                 .ReverseMap();
+            CreateMap<PurchaseOrderItemDTO, CreatePurchaseOrderDTO>();
+            CreateMap<CreatePurchaseOrderDTO, PurchaseOrderItem>();
             CreateMap<Chapter, ChapterDTO>()
              .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
              .ReverseMap();
             CreateMap<UnitaryBasePrize, UnitaryBasePrizeDTO>()
-                 .ForMember(dest => dest.MWOItemDTOs, 
+                 .ForMember(dest => dest.MWOItemDTOs,
                  act => act.MapFrom(src => src.MWOItems)).ReverseMap();
             CreateMap<MWOItem, MWOItemDTO>()
+                 .ForMember(dest => dest.PurchaseOrderDTOs, act => act.MapFrom(src => src.PurchaseOrders))
+
                 .ForMember(dest => dest.MWODTO, act => act.MapFrom(src => src.MWO))
                 .ForMember(dest => dest.AlterationItemDTO, act => act.MapFrom(src => src.AlterationItem))
                 .ForMember(dest => dest.ContingencyItemDTO, act => act.MapFrom(src => src.ContingencyItem))
@@ -132,17 +150,27 @@ namespace CPTool.DependencyInjection
                 .ForMember(dest => dest.ChapterDTO, act => act.MapFrom(src => src.Chapter))
 
                .ReverseMap();
+            CreateMap<MWOItemDTO, CreateMWOItemDTO>()
+                .ForMember(dest => dest.PurchaseOrderDTOs, act => act.MapFrom(src => src.PurchaseOrderDTOs));
+;
+            CreateMap<CreateMWOItemDTO, MWOItem>()
+                .ForMember(dest => dest.PurchaseOrders, act => act.MapFrom(src => src.PurchaseOrderDTOs)); 
+
             CreateMap<MWO, MWODTO>()
-                .ForMember(dest => dest.MWOTypeDTO, act => act.MapFrom(src => src.MWOType))
+                 .ForMember(dest => dest.MWOTypeDTO, act => act.MapFrom(src => src.MWOType))
                 .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
                 .ForMember(dest => dest.PurchaseOrderDTOs, act => act.MapFrom(src => src.PurchaseOrders))
                 .ReverseMap();
+            CreateMap<CreateMWODTO, MWO>()
+              .ForMember(dest => dest.MWOItems, act => act.MapFrom(src => src.MWOItemDTOs))
+              .ForMember(dest => dest.PurchaseOrders, act => act.MapFrom(src => src.PurchaseOrderDTOs));
 
+            CreateMap<MWODTO, CreateMWODTO>();
             CreateMap<MWOType, MWOTypeDTO>()
                 .ForMember(dest => dest.MWODTOs, act => act.MapFrom(src => src.MWOs))
                 .ReverseMap();
 
-           
+
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CPTool.DTOS
    
     public class EngineeringCostItemDTO : AuditableEntityDTO
     {
-        public List<MWOItemDTO> MWOItemDTOs { get; set; }
+        public List<MWOItemDTO> MWOItemDTOs { get; set; } = new();
     }
 
 

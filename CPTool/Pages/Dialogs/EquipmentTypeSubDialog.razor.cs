@@ -8,6 +8,7 @@
         public EquipmentTypeSubDTO Model { get; set; }
         void Submit()
         {
+            if (Model.Id == 0) Model = _mapper.Map<CreateEquipmentTypeSubDTO>(Model);
             MudDialog.Close(DialogResult.Ok(Model));
         }
 
