@@ -13,9 +13,8 @@ namespace CPTool.Interfaces
         Task<IResult<int>> Delete(int id, CancellationToken cancellationToken);
         Task<IResult<int>> Delete(TDTO id, CancellationToken cancellationToken);
         Task<IResult<TDTO>> GetById(int id);
-        Task<List<TDTO>> UpdateList();
-        Action PostEvent { get; set; }
-        //Task Test1(CancellationToken cancellationToken);
-        //Task Test2(CancellationToken cancellationToken);
+        Task UpdateList();
+        Func<Task> PostEvent { get; set; }
+       
     }
 }

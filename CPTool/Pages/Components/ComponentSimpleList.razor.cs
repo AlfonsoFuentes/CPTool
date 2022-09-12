@@ -21,7 +21,7 @@ namespace CPTool.Pages.Components
       
         protected override void OnInitialized()
         {
-            
+            //Manager.PostEvent += StateHasChanged;
             TablesService.Save += OnSave;
             TablesService.Delete += OnDelete;
             base.OnInitialized();
@@ -37,8 +37,9 @@ namespace CPTool.Pages.Components
         async Task<IResult<IAuditableEntityDTO>> OnSave(IAuditableEntityDTO dto)
         {
             var result = await Manager.AddUpdate(dto as TDTO, _cts.Token);
-            //if (result.Succeeded) await TablesService.OnUpdateList();
 
+
+            StateHasChanged();
             return result;
 
 
@@ -47,8 +48,7 @@ namespace CPTool.Pages.Components
         async Task<IResult<int>> OnDelete(IAuditableEntityDTO dto)
         {
             var result = await Manager.Delete(dto.Id, _cts.Token);
-            //if (result.Succeeded) await TablesService.OnUpdateList();
-
+            StateHasChanged();
             return result;
 
 
@@ -58,7 +58,8 @@ namespace CPTool.Pages.Components
         {
             TablesService.Save -= OnSave;
             TablesService.Delete -= OnDelete;
-           
+            //Manager.PostEvent -= StateHasChanged;
+
         }
     }
 }

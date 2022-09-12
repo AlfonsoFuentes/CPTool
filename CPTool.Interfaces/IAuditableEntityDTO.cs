@@ -14,7 +14,8 @@ namespace CPTool.Interfaces
         string? Name { get; set; }
         public static string TableName { get; set; }
 
-       
+      
+
 
     }
 }

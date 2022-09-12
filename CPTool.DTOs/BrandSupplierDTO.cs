@@ -6,12 +6,16 @@ namespace CPTool.DTOS
    
     public class BrandSupplierDTO : AuditableEntityDTO
     {
-       
-       
-        public SupplierDTO? SupplierDTO { get; set; } 
-        public BrandDTO? BrandDTO { get; set; } 
 
-       
+        public int BrandId => BrandDTO.Id;
+        public SupplierDTO SupplierDTO { get; set; } = new();
+        public int SupplierId => SupplierDTO.Id;
+        public BrandDTO BrandDTO { get; set; } = new();
+
+
     }
-   
+    public class CreateBrandSupplierDTO : BrandSupplierDTO
+    {
+
+    }
 }

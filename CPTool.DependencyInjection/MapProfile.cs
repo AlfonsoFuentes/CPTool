@@ -32,6 +32,8 @@ namespace CPTool.DependencyInjection
                .ForMember(dest => dest.SupplierDTO,
                   act => act.MapFrom(src => src.Supplier))
              .ReverseMap();
+            CreateMap<BrandSupplierDTO, CreateBrandSupplierDTO>();
+            CreateMap<CreateBrandSupplierDTO, BrandSupplier>();
             CreateMap<Brand, BrandDTO>()
                 .ForMember(dest => dest.BrandSupplierDTOs,
                   act => act.MapFrom(src => src.BrandSuppliers))
@@ -51,8 +53,10 @@ namespace CPTool.DependencyInjection
                    .ForMember(dest => dest.EquipmentItemDTOs,
                   act => act.MapFrom(src => src.EquipmentItems))
                .ReverseMap();
-            CreateMap<EquipmentTypeDTO, CreateEquipmentTypeSubDTO>();
-            CreateMap<CreateEquipmentTypeSubDTO, EquipmentType>()
+            CreateMap<EquipmentTypeSubDTO, CreateEquipmentTypeSubDTO>()
+                .ForMember(dest => dest.EquipmentItemDTOs,
+                  act => act.MapFrom(src => src.EquipmentItemDTOs));
+            CreateMap<CreateEquipmentTypeSubDTO, EquipmentTypeSub>()
                 .ForMember(dest => dest.EquipmentItems,
                   act => act.MapFrom(src => src.EquipmentItemDTOs));
             CreateMap<EquipmentTypeSub, EquipmentTypeSubDTO>()

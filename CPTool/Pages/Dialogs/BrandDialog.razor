@@ -1,15 +1,19 @@
 ﻿@inherits CancellableComponent
+@if(viewform)
+{
+
+
 <MudDialog>
     <DialogContent>
         <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-            <ComponentAutoComplete Label="Supplier"
+            <ComponentAutoComplete Label="Supplier Name"
                                    TDTO="SupplierDTO"
                                    T="Supplier"
                                    Manager=TablesService.ManSupplier
                                    ObjectList=TablesService.ManSupplier.List
                                    ShowDialogOverrided=@((dto)=>ToolDialogService.ShowSupplierDialog(Model))
                                    @bind-Model=@Model.SupplierDTO
-                                   @bind-ModelInt=@Model.SupplierDTO.Id></ComponentAutoComplete>
+                                  ></ComponentAutoComplete>
 
 
 
@@ -24,19 +28,13 @@
                        T="BrandType"
                        Label="Select Brand or Service"
                        AnchorOrigin="Origin.BottomCenter"
-                       
                        Value=@Model.BrandDTO.BrandType
-                       Variant="Variant.Outlined"
-                     >
+                       Variant="Variant.Outlined">
                 @foreach (var item in Enum.GetValues<BrandType>())
                 {
                     <MudSelectItem Value="item">@item</MudSelectItem>
                 }
-                <MudTextField @bind-Value="Model.BrandDTO.Name"
-                              Variant="Variant.Outlined"
-                              Margin="Margin.Dense"
-                              Immediate="true"
-                              Label="Brand Name" />
+                
             </MudSelect>
 
 
@@ -47,9 +45,9 @@
         <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
     </DialogActions>
 </MudDialog>
-
+}
 @code {
-
+    bool viewform = true;
     public IMask mask1 = new RegexMask(@"^[0-9]\d{0,4}$");
     bool success;
     string[] errors = { };

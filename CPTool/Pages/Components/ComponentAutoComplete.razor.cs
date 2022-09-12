@@ -22,10 +22,7 @@ namespace CPTool.Pages.Components
         public TDTO Model { get; set; } = new();
         [Parameter]
         public bool Disable { get; set; } = false;
-        //[Parameter]
-        //public int ModelInt { get; set; } = 0;
-        //[Parameter]
-        //public EventCallback<int> ModelIntChanged { get; set; }
+       
         [Parameter]
         public EventCallback<TDTO> ModelChanged { get; set; }
         [Parameter]
@@ -51,7 +48,7 @@ namespace CPTool.Pages.Components
         {
 
 
-            //Model = Manager.List.Any(x => x.Id == ModelInt) ? Manager.List.FirstOrDefault(x => x.Id == ModelInt) : new();
+        
             if (Model!=null&&Model.Id != 0)
             {
 
@@ -62,7 +59,7 @@ namespace CPTool.Pages.Components
         }
         protected override void OnParametersSet()
         {
-            //Model = Manager.List.Any(x => x.Id == ModelInt) ? Manager.List.FirstOrDefault(x => x.Id == ModelInt) : new();
+           
              if(Model==null)
             {
                 AutocompleteText = "";
@@ -103,13 +100,13 @@ namespace CPTool.Pages.Components
             if (AutocompleteText == null)
             {
                 Model = new();
-                //ModelInt = 0;
+               
 
             }
             else if (IsExist)
             {
                 Model = ObjectList.FirstOrDefault(x => x.Name == AutocompleteText);
-                //ModelInt = Model.Id;
+               
 
 
             }
@@ -117,10 +114,10 @@ namespace CPTool.Pages.Components
             {
                 Model = new();
                 Model.Name = AutocompleteText;
-                //ModelInt = 0;
+              
                 CreatingNewRow = true;
             }
-            //await ModelIntChanged.InvokeAsync(ModelInt);
+           
             await ModelChanged.InvokeAsync(Model);
             TablesService.OnUpdateForm();
         }

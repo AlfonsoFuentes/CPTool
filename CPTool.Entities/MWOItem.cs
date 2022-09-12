@@ -21,10 +21,10 @@ namespace CPTool.Entities
         public  TestingItem? TestingItem { get; set; }
         public  EngineeringCostItem? EngineeringCostItem { get; set; }
         public  ContingencyItem? ContingencyItem { get; set; }
-        public  Chapter Chapter { get; set; } = null!;
+        public  Chapter Chapter { get; set; } 
         public  UnitaryBasePrize? UnitaryBasePrize { get; set; }
 
-        public int? MWOId { get; set; } = null!;
+        public int? MWOId { get; set; }
         public int ? AlterationItemId { get; set; }
         public int ? FoundationItemId { get; set; }
         public int ? StructuralItemId { get; set; }

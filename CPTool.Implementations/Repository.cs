@@ -20,7 +20,7 @@ namespace CPTool.Implementations
         {
             try
             {
-               
+
                 await _dbContext.AddAsync(entity);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace CPTool.Implementations
         {
             try
             {
-               
+
                 _dbContext.Remove(entity);
 
             }
@@ -59,21 +59,29 @@ namespace CPTool.Implementations
                 foreach (var property in navigations)
                 {
                     query = query.Include(property.Name);
-                    
+
                 }
-                   
+
             }
             return query;
         }
 
         public async Task<List<T>> GetAllAsync()
         {
-         
-            var retorno3 = await Query(true).ToListAsync(); 
-            return retorno3;
+            List<T> retorno = new();
+            try
+            {
+                var retorno1 = Query(true);
+                retorno = await retorno1.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                string exm = ex.Message;
+            }
+            return retorno;
         }
 
-       
+
         public async Task<T> GetByIdAsync(int itemId/*, bool eager = false*/)
         {
             return await Query(true).FirstAsync(i => i.Id == itemId);
@@ -98,7 +106,7 @@ namespace CPTool.Implementations
             IQueryable<T> query = _dbContext.Set<T>().AsNoTracking();
             return await query.AnyAsync(filter);
         }
-       
+
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
             T? result = null!;

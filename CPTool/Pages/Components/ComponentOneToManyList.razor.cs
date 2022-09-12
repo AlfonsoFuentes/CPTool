@@ -62,8 +62,9 @@ namespace CPTool.Pages.Components
 
         protected override void OnInitialized()
         {
-
-           
+         
+            DetailManager.PostEvent += MasterManager.UpdateList;
+       
             TablesService.Delete += OnDelete;
            
 
@@ -81,6 +82,7 @@ namespace CPTool.Pages.Components
         async Task<DialogResult> ShowDialogDetail(AuditableEntityDTO dto)
         {
             TablesService.Save += OnSaveDetails;
+            if(dto.Id==0) dto.Master = SelectedMaster;
 
             return OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogDetail.Invoke(dto);
         }
@@ -98,7 +100,7 @@ namespace CPTool.Pages.Components
         async Task<IResult<IAuditableEntityDTO>> OnSaveDetails(IAuditableEntityDTO dto)
         {
             var result = await DetailManager.AddUpdate(dto, _cts.Token);
-            await MasterManager.UpdateList();
+          
             SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
             StateHasChanged();
             TablesService.Save -= OnSaveDetails;
@@ -112,7 +114,7 @@ namespace CPTool.Pages.Components
             {
                 SelectedMaster = new();
                 var result = await MasterManager.Delete(dto.Id, _cts.Token);
-          
+
                 StateHasChanged();
 
                 return result;
@@ -121,7 +123,7 @@ namespace CPTool.Pages.Components
             if (dto is DetailDTO)
             {
                 var result = await DetailManager.Delete(dto.Id, _cts.Token);
-                await MasterManager.UpdateList();
+              
                 SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
                 StateHasChanged();
                 return result;
@@ -132,7 +134,7 @@ namespace CPTool.Pages.Components
        
         void IDisposable.Dispose()
         {
-          
+            DetailManager.PostEvent -= MasterManager.UpdateList;
             TablesService.Delete -= OnDelete;
            
         }

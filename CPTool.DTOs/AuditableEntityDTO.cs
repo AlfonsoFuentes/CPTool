@@ -19,13 +19,16 @@ namespace CPTool.DTOS
         public virtual string? Name { get; set; } = "";
 
       
-        public List<AuditableEntityDTO> Details { get; set; }= new ();
+        public  List<AuditableEntityDTO> Details { get; set; }= new ();
 
       
         public void Dispose()
         {
             throw new NotImplementedException();
         }
+
+        public int MasterId { get; set; }
+        public AuditableEntityDTO Master { get; set; } = null!;
     }
 
 

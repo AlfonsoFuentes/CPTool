@@ -11,5 +11,6 @@ namespace CPTool.DTOS
         public List<EquipmentItemDTO> EquipmentItemDTOs { get; set; } = new();
         public string? Description { get; set; }
     }
-   
+    
+
 }
