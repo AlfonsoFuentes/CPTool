@@ -13,14 +13,13 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
            var chapter = TablesService.ManChapter.List.FirstOrDefault(x => x.Id == value);
            
             Model.Letter = chapter.Letter;
-            if (Model.Id != 0)
+            if (Model.Id == 0)
             {
                 Model.ChapterDTO = chapter;
 
             }
             var list = Model.MWODTO.MWOItemDTOs.Where(x => x.ChapterDTO.Id == value).ToList();
-            //var listinchpater = TablesService.ManMWO.li.ManMWOItem.List.Where(x => x.MWOId == Model.mw.MWO.Id && x.ChapterDTO.Id == value).ToList();
-
+          
             Model.Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
 
         }

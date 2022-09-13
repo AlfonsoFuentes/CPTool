@@ -28,7 +28,7 @@
                        T="BrandType"
                        Label="Select Brand or Service"
                        AnchorOrigin="Origin.BottomCenter"
-                       Value=@Model.BrandDTO.BrandType
+                       @bind-Value=@Model.BrandDTO.BrandType
                        Variant="Variant.Outlined">
                 @foreach (var item in Enum.GetValues<BrandType>())
                 {

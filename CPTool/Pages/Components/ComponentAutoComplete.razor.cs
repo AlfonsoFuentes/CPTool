@@ -119,7 +119,7 @@ namespace CPTool.Pages.Components
             }
            
             await ModelChanged.InvokeAsync(Model);
-            TablesService.OnUpdateForm();
+           
         }
 
 

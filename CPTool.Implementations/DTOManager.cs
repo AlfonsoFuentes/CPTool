@@ -25,19 +25,46 @@ namespace CPTool.Implementations
 
         public async Task<IResult<TDTO>> AddUpdate(IAuditableEntityDTO dto, CancellationToken cancellationToken)
         {
+            dto=await OnPriorSave(dto);
+            
             var table = _mapper.Map<T>(dto);
 
             var request = dto.Id == 0 ? await _unitofwork.Repository<T>().AddAsync(table) : _unitofwork.Repository<T>().UpdateAsync(table);
             var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
             if (!result.Succeeded)
                 return await Result<TDTO>.FailAsync("Not created!");
-
-            var responsdto = _mapper.Map<TDTO>(request);
-            await UpdateList();
+            var mppeddto = _mapper.Map<TDTO>(request) as IAuditableEntityDTO;
+           var  responsdto = await OnPostSave(mppeddto) as TDTO;
+           
+        
          
-            return await Result<TDTO>.SuccessAsync(responsdto, "Updated");
+            return await Result<TDTO>.SuccessAsync(responsdto!, "Updated");
 
 
+        }
+        async Task<IAuditableEntityDTO> OnPriorSave(IAuditableEntityDTO dto)
+        {
+            if (PriorSave != null)
+            {
+                var resultchild = await PriorSave.Invoke(dto);
+                if (resultchild.Succeeded)
+                {
+                    return resultchild.Data;
+                }
+            }
+            return dto;
+        }
+        async Task<IAuditableEntityDTO> OnPostSave(IAuditableEntityDTO dto)
+        {
+            if (PostSave != null)
+            {
+                var resultchild = await PostSave.Invoke(dto);
+                if (resultchild.Succeeded)
+                {
+                    return resultchild.Data;
+                }
+            }
+            return dto;
         }
 
         public async Task<IResult<int>> Delete(int id, CancellationToken cancellationToken)
@@ -54,7 +81,7 @@ namespace CPTool.Implementations
                 {
                     return await Result<int>.FailAsync("Not Delete!");
                 }
-                await UpdateList();
+             
                 return await Result<int>.SuccessAsync(result.Data, retorno);
             }
             return await Result<int>.FailAsync("Not Found!");
@@ -95,7 +122,7 @@ namespace CPTool.Implementations
             List = _mapper.Map<List<TDTO>>(list);
            
 
-            if (PostEvent != null) await PostEvent.Invoke();
+            if (PostUpdateListEvent != null) await PostUpdateListEvent.Invoke();
 
 
            
@@ -106,7 +133,11 @@ namespace CPTool.Implementations
 
 
         }
-       
-        public Func<Task> PostEvent { get; set; } = null!;
+
+       public Func<Task> PostUpdateListEvent { get; set; }
+ 
+        public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PriorSave { get; set; } = null!;
+        public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PostSave { get; set; } = null!;
+      
     }
 }

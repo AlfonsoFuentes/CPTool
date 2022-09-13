@@ -16,31 +16,26 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
                 Model = new EquipmentItemDTO();
 
             }
-            OnBrandValueChanged();
-            TablesService.Save += OnSave;
-            TablesService.UpdateForm += UpdateForm;
+            SelectedSupplier = Model.BrandDTO.Id == 0 ? new() : Model.BrandDTO.BrandSupplierDTOs.Select(x => x.SupplierDTO).ToList();
+          
+           
 
         }
-        void UpdateForm()
-        {
-            if (Model.EquipmentTypeDTO.Id == 0)
-            {
-
-                Model.EquipmentTypeSubDTO = new();
-            }
-
-
-
-            StateHasChanged();
-        }
+       
 
         public async Task<IResult<IAuditableEntityDTO>> OnSave(IAuditableEntityDTO dto)
         {
+           
             if (Model.Id == 0)
                 Model = _mapper.Map<CreateEquipmentItemDTO>(Model);
-            return await TablesService.ManItemEquipment.AddUpdate(Model, _cts.Token);
+           var result=  await TablesService.ManItemEquipment.AddUpdate(Model, _cts.Token);
+            if(result.Succeeded)
+            {
+                (dto as MWOItemDTO).EquipmentItemDTO = result.Data;
+                return await Result<IAuditableEntityDTO>.SuccessAsync((dto as MWOItemDTO), "Updated");
+            }
 
-          
+            return await Result<IAuditableEntityDTO>.FailAsync("Not created!");
         }
         void OnBrandValueChanged()
         {
@@ -48,16 +43,11 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
 
             SelectedSupplier = Model.BrandDTO.Id == 0 ? new() : Model.BrandDTO.BrandSupplierDTOs.Select(x => x.SupplierDTO).ToList();
         }
-        void OnSupplierValueChanged(int value)
-        {
-
-            Model.SupplierDTO = TablesService.ManSupplier.List.FirstOrDefault(x => x.Id == value);
-
-        }
+        
         void IDisposable.Dispose()
         {
-            TablesService.Save -= OnSave;
-            TablesService.UpdateForm -= UpdateForm;
+           
+
         }
     }
 }

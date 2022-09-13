@@ -11,14 +11,9 @@
         protected override void OnInitialized()
         {
 
-            Model.UnitaryBasePrizeDTO = Model.UnitaryBasePrizeId == 0 ? new() : TablesService.ManUnitaryPrize.List.FirstOrDefault(x => x.Id == Model.UnitaryBasePrizeId);
-            base.OnInitialized();
+           
         }
-        void Update()
-        {
-            Model.UnitaryBasePrizeDTO = Model.UnitaryBasePrizeId == 0 ? new() : TablesService.ManUnitaryPrize.List.FirstOrDefault(x => x.Id == Model.UnitaryBasePrizeId);
-
-        }
+       
 
         async Task Submit()
         {

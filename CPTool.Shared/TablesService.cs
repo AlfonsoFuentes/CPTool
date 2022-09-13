@@ -8,6 +8,9 @@ namespace CPTool.Shared
 {
     public class TablesService : IDisposable
     {
+        public IDTOManager<VendorCodeDTO, VendorCode> ManVendorCode { get; set; }
+        public IDTOManager<TaxCodeLDDTO, TaxCodeLD> ManTaxCodeLD { get; set; }
+        public IDTOManager<TaxCodeLPDTO, TaxCodeLP> ManTaxCodeLP { get; set; }
 
         public IDTOManager<BrandDTO, Brand> ManBrand { get; set; }
         public IDTOManager<SupplierDTO, Supplier> ManSupplier { get; set; }
@@ -38,7 +41,10 @@ namespace CPTool.Shared
             IDTOManager<MaterialDTO, Material> manMaterial,
             IDTOManager<BrandDTO, Brand> manBrand,
             IDTOManager<SupplierDTO, Supplier> manSupplier,
-            IDTOManager<EquipmentItemDTO, EquipmentItem> manItemEquipment
+            IDTOManager<EquipmentItemDTO, EquipmentItem> manItemEquipment ,
+            IDTOManager<VendorCodeDTO, VendorCode> manVendorCode,
+            IDTOManager<TaxCodeLDDTO, TaxCodeLD> manTaxCodeLD,
+            IDTOManager<TaxCodeLPDTO, TaxCodeLP> manTaxCodeLP
             )
 
         {
@@ -57,6 +63,9 @@ namespace CPTool.Shared
             ManSupplier = manSupplier;
             ManItemEquipment = manItemEquipment;
             ManBrandSupplier = manBrandSupplier;
+            ManVendorCode = manVendorCode;
+            ManTaxCodeLD = manTaxCodeLD;
+            ManTaxCodeLP = manTaxCodeLP;
            
         }
 
@@ -78,61 +87,14 @@ namespace CPTool.Shared
             await ManMWO.UpdateList();
             await ManMWOItem.UpdateList();
 
-            //await ManMWOType.Test1(new CancellationToken());
-            //await ManMWOType.Test2(new CancellationToken());
+            await ManVendorCode.UpdateList();
+            await ManTaxCodeLD.UpdateList();
+            await ManTaxCodeLP.UpdateList();
         }
-        //void UpdateBrandSupplierDTO()
-        //{
-        //    //foreach (var row in ManBrandSupplier.List)
-        //    //{
-        //    //    row.BrandDTO = ManBrand.List.FirstOrDefault(x => x.Id == row.BrandId);
-        //    //    row.SupplierDTO = ManSupplier.List.FirstOrDefault(x => x.Id == row.SupplierId);
-        //    //}
-        //    //foreach (var item in ManBrand.List)
-        //    //{
-        //    //    foreach(var row in item.BrandSupplierDTOs)
-        //    //    {
-        //    //        row.BrandDTO = ManBrand.List.FirstOrDefault(x => x.Id == row.BrandId);
-        //    //        row.SupplierDTO = ManSupplier.List.FirstOrDefault(x => x.Id == row.SupplierId);
-        //    //    }
-
-        //    //}
-        //    //foreach (var item in ManSupplier.List)
-        //    //{
-        //    //    foreach (var row in item.BrandSupplierDTOs)
-        //    //    {
-        //    //        row.BrandDTO = ManBrand.List.FirstOrDefault(x => x.Id == row.BrandId);
-        //    //        row.SupplierDTO = ManSupplier.List.FirstOrDefault(x => x.Id == row.SupplierId);
-        //    //    }
-
-        //    //}
-        //}
-        //void UpdateMWO()
-        //{
-        //    foreach (var mwo in ManMWO.List)
-        //    {
-        //        foreach (var item in mwo.MWOItemDTOs)
-        //        {
-        //            if (item.EquipmentItemDTO != null && item.EquipmentItemDTO.Id != 0)
-        //            {
-        //                var row = item.EquipmentItemDTO;
-
-        //                //row.BrandDTO = ManBrand.List.Any(x => x.Id == row.BrandId) ? ManBrand.List.FirstOrDefault(x => x.Id == row.BrandId) : new();
-        //                //row.SupplierDTO = ManSupplier.List.Any(x => x.Id == row.SupplierId) ? ManSupplier.List.FirstOrDefault(x => x.Id == row.SupplierId) : new();
-        //                //row.GasketDTO = ManGasket.List.Any(x => x.Id == row.GasketId) ? ManGasket.List.FirstOrDefault(x => x.Id == row.GasketId) : new();
-        //                //row.EquipmentTypeDTO = ManEquipmentType.List.Any(x => x.Id == row.EquipmentTypeId) ? ManEquipmentType.List.FirstOrDefault(x => x.Id == row.EquipmentTypeId) : new();
-        //                //row.EquipmentTypeSubDTO = ManEquipmentTypeSub.List.Any(x => x.Id == row.EquipmentTypeSubId) ? ManEquipmentTypeSub.List.FirstOrDefault(x => x.Id == row.EquipmentTypeSubId) : new();
-        //                //row.InnerMaterialDTO = ManMaterial.List.Any(x => x.Id == row.InnerMaterialId) ? ManMaterial.List.FirstOrDefault(x => x.Id == row.InnerMaterialId) : new();
-        //                //row.OuterMaterialDTO = ManMaterial.List.Any(x => x.Id == row.OuterMaterialId) ? ManMaterial.List.FirstOrDefault(x => x.Id == row.OuterMaterialId) : new();
-
-        //            }
-        //        }
-        //    }
-
-        //}
+       
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> Save { get; set; }
         public Func<IAuditableEntityDTO, Task<IResult<int>>> Delete { get; set; }
-        public Action UpdateForm { get; set; }
+        //public Action UpdateForm { get; set; }
         public async Task<IResult<IAuditableEntityDTO>> OnSave(IAuditableEntityDTO result)
         {
             if (Save != null)
@@ -154,19 +116,15 @@ namespace CPTool.Shared
 
             return await Result<int>.FailAsync("Not Event");
         }
-        public void OnUpdateForm()
-        {
-            if (UpdateForm != null) UpdateForm.Invoke();
-        }
+        //public void OnUpdateForm()
+        //{
+        //    if (UpdateForm != null) UpdateForm.Invoke();
+        //}
 
 
         public void Dispose()
         {
-            //ManBrand.PostEvent -= UpdateBrandSupplierDTO;
-            //ManSupplier.PostEvent -= UpdateBrandSupplierDTO;
-            //ManBrandSupplier.PostEvent -= UpdateBrandSupplierDTO;
-            //ManMWO.PostEvent -= UpdateMWO;
-            //ManMWOItem.PostEvent -= UpdateMWO;
+           
         }
     }
 }

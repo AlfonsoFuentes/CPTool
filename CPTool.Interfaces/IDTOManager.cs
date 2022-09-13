@@ -14,7 +14,9 @@ namespace CPTool.Interfaces
         Task<IResult<int>> Delete(TDTO id, CancellationToken cancellationToken);
         Task<IResult<TDTO>> GetById(int id);
         Task UpdateList();
-        Func<Task> PostEvent { get; set; }
-       
+        Func<Task> PostUpdateListEvent { get; set; }
+        Func<IAuditableEntityDTO,Task<IResult<IAuditableEntityDTO>>> PriorSave { get; set; }
+        Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PostSave { get; set; }
+
     }
 }

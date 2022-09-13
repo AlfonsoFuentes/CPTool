@@ -62,11 +62,11 @@ namespace CPTool.Pages.Components
 
         protected override void OnInitialized()
         {
-         
-            DetailManager.PostEvent += MasterManager.UpdateList;
-       
+
+            DetailManager.PostUpdateListEvent += MasterManager.UpdateList;
+
             TablesService.Delete += OnDelete;
-           
+
 
             base.OnInitialized();
         }
@@ -82,7 +82,7 @@ namespace CPTool.Pages.Components
         async Task<DialogResult> ShowDialogDetail(AuditableEntityDTO dto)
         {
             TablesService.Save += OnSaveDetails;
-            if(dto.Id==0) dto.Master = SelectedMaster;
+            if (dto.Id == 0) dto.Master = SelectedMaster;
 
             return OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogDetail.Invoke(dto);
         }
@@ -92,6 +92,7 @@ namespace CPTool.Pages.Components
             var result = await MasterManager.AddUpdate(dto, _cts.Token);
             if (result.Succeeded)
                 SelectedMaster = result.Data;
+            await MasterManager.UpdateList();
             StateHasChanged();
             TablesService.Save -= OnSaveMaster;
             return result;
@@ -100,21 +101,24 @@ namespace CPTool.Pages.Components
         async Task<IResult<IAuditableEntityDTO>> OnSaveDetails(IAuditableEntityDTO dto)
         {
             var result = await DetailManager.AddUpdate(dto, _cts.Token);
-          
+            await DetailManager.UpdateList();
+            await MasterManager.UpdateList();
             SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
+
             StateHasChanged();
             TablesService.Save -= OnSaveDetails;
             return result;
         }
 
-       
+
         async Task<IResult<int>> OnDelete(IAuditableEntityDTO dto)
         {
             if (dto is MasterTDTO)
             {
                 SelectedMaster = new();
                 var result = await MasterManager.Delete(dto.Id, _cts.Token);
-
+          
+                await MasterManager.UpdateList();
                 StateHasChanged();
 
                 return result;
@@ -123,7 +127,7 @@ namespace CPTool.Pages.Components
             if (dto is DetailDTO)
             {
                 var result = await DetailManager.Delete(dto.Id, _cts.Token);
-              
+                await DetailManager.UpdateList();
                 SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
                 StateHasChanged();
                 return result;
@@ -131,12 +135,12 @@ namespace CPTool.Pages.Components
             }
             return await Result<int>.FailAsync("Not Value!");
         }
-       
+
         void IDisposable.Dispose()
         {
-            DetailManager.PostEvent -= MasterManager.UpdateList;
+            DetailManager.PostUpdateListEvent -= MasterManager.UpdateList;
             TablesService.Delete -= OnDelete;
-           
+
         }
 
     }

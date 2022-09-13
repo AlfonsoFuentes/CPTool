@@ -100,21 +100,7 @@
 
 
             </ComponentSelect>
-            @*<MudSelect Dense="true"
-                   Margin="Margin.Dense"
-                   T="int"
-                   Label="Supplier"
-                   Disabled="@(Model.BrandId==0?true:false)"
-                   AnchorOrigin="Origin.BottomCenter"
-                   Value=@Model.SupplierId
-                   Variant="Variant.Outlined"
-                   ValueChanged="OnSupplierValueChanged">
-                @foreach (var item in SelectedSupplier)
-                {
-                    <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
-                }
-
-            </MudSelect>*@
+           
 
             <MudTextField T="string" @bind-Value="Model.Model"
                       Immediate="true"

@@ -28,6 +28,7 @@ namespace CPTool.Pages.Dialogs
                 {
                     Model = _mapper.Map<CreateBrandSupplierDTO>(Model);
                 }
+                
                 MudDialog.Close(DialogResult.Ok(Model));
             }
         }

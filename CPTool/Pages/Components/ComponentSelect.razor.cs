@@ -10,10 +10,9 @@ namespace CPTool.Pages.Components
         public TDTO Model { get; set; } = new();
         [Parameter]
         public bool Disable { get; set; } = false;
-        [Parameter]
+      
         public int ModelInt { get; set; } = 0;
-        [Parameter]
-        public EventCallback<int> ModelIntChanged { get; set; }
+       
 
         [Parameter]
         public EventCallback<TDTO> ModelChanged { get; set; }
@@ -31,20 +30,22 @@ namespace CPTool.Pages.Components
         public List<TDTO> Elements { get; set; } = new();
         [Parameter]
         public Action PostEvent { get; set; }
-       
+        [Parameter]
+        public Func<Task> PostEventAsync { get; set; }
         protected override void OnInitialized()
         {
-
+            ModelInt = Model.Id;
             base.OnInitialized();
         }
         async Task ValueChanged(int value)
         {
             ModelInt = value;
-            await ModelIntChanged.InvokeAsync(ModelInt);
+           
             Model = Elements.FirstOrDefault(x => x.Id == value);
             await ModelChanged.InvokeAsync(Model);
-         
+
             if (PostEvent != null) PostEvent.Invoke();
+            if (PostEventAsync != null) await PostEventAsync.Invoke();
         }
     }
 }
