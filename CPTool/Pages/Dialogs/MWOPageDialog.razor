@@ -11,8 +11,8 @@
                                    Manager=TablesService.ManMWOType
                                    Required=true
                                    ObjectList=TablesService.ManMWOType.List
-                                 
-                                   RequiredError="Must submit MWO Type"
+                                   TableName="MWO Type"
+                                   Validation="@(new Func<string, string>(ReviewMWOType))"
                                    @bind-Model="@Model.MWOTypeDTO">
 
                 </ComponentAutoComplete>
@@ -21,6 +21,9 @@
                           Variant="Variant.Outlined"
                           Margin="Margin.Dense"
                           Immediate="true"
+                          Required=true
+                          RequiredError="Must Submit MWO Name"
+                          Validation="@(new Func<string, string>(ReviewMWOName))"
                           Label="Name" />
                 <MudTextField T="int" @bind-Value="Model.Number"
                           Immediate="true"
@@ -48,8 +51,8 @@
             </MudForm>
         </DialogContent>
         <DialogActions>
-            <MudButton OnClick="Cancel">Cancel</MudButton>
-            <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
         </DialogActions>
     </MudDialog>
 }

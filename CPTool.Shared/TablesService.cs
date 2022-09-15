@@ -68,9 +68,11 @@ namespace CPTool.Shared
             ManTaxCodeLP = manTaxCodeLP;
            
         }
-
+        bool initialize = false;
         public async Task Initialize()
         {
+            if (initialize) return;
+            initialize = true;
             await ManChapter.UpdateList();
             await ManUnitaryPrize.UpdateList();
             await ManGasket.UpdateList();

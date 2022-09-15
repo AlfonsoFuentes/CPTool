@@ -8,7 +8,7 @@ namespace CPTool.DTOS
   
     public class EHSItemDTO : AuditableEntityDTO
     {
-        public List<MWOItemDTO> MWOItemDTOs { get; set; } = new();
+        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
     }
 
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPTool.Context.Migrations
 {
-    public partial class General : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -270,25 +270,33 @@ namespace CPTool.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Suppliers",
+                name: "TaxCodeLDs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VendorCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaxCodeLD = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaxCodeLP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                    table.PrimaryKey("PK_TaxCodeLDs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaxCodeLPs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaxCodeLPs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -334,6 +342,21 @@ namespace CPTool.Context.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UnitaryBasePrizes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VendorCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VendorCodes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -386,6 +409,44 @@ namespace CPTool.Context.Migrations
                         principalTable: "MWOTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Suppliers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VendorCodeId = table.Column<int>(type: "int", nullable: true),
+                    TaxCodeId = table.Column<int>(type: "int", nullable: true),
+                    TaxCodeLDId = table.Column<int>(type: "int", nullable: true),
+                    TaxCodeLPId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Suppliers_TaxCodeLDs_TaxCodeLDId",
+                        column: x => x.TaxCodeLDId,
+                        principalTable: "TaxCodeLDs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Suppliers_TaxCodeLPs_TaxCodeLPId",
+                        column: x => x.TaxCodeLPId,
+                        principalTable: "TaxCodeLPs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Suppliers_VendorCodes_VendorCodeId",
+                        column: x => x.VendorCodeId,
+                        principalTable: "VendorCodes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -476,27 +537,6 @@ namespace CPTool.Context.Migrations
                         name: "FK_EquipmentItems_Suppliers_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PurchaseOrders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MWOId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PurchaseOrders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PurchaseOrders_MWOs_MWOId",
-                        column: x => x.MWOId,
-                        principalTable: "MWOs",
                         principalColumn: "Id");
                 });
 
@@ -622,6 +662,34 @@ namespace CPTool.Context.Migrations
                         column: x => x.UnitaryBasePrizeId,
                         principalTable: "UnitaryBasePrizes",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchaseOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MWOId = table.Column<int>(type: "int", nullable: false),
+                    MWOItemId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchaseOrders_MWOItems_MWOItemId",
+                        column: x => x.MWOItemId,
+                        principalTable: "MWOItems",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PurchaseOrders_MWOs_MWOId",
+                        column: x => x.MWOId,
+                        principalTable: "MWOs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -790,6 +858,26 @@ namespace CPTool.Context.Migrations
                 name: "IX_PurchaseOrders_MWOId",
                 table: "PurchaseOrders",
                 column: "MWOId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseOrders_MWOItemId",
+                table: "PurchaseOrders",
+                column: "MWOItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Suppliers_TaxCodeLDId",
+                table: "Suppliers",
+                column: "TaxCodeLDId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Suppliers_TaxCodeLPId",
+                table: "Suppliers",
+                column: "TaxCodeLPId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Suppliers_VendorCodeId",
+                table: "Suppliers",
+                column: "VendorCodeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -798,10 +886,13 @@ namespace CPTool.Context.Migrations
                 name: "BrandSuppliers");
 
             migrationBuilder.DropTable(
-                name: "MWOItems");
+                name: "PurchaseOrderItems");
 
             migrationBuilder.DropTable(
-                name: "PurchaseOrderItems");
+                name: "PurchaseOrders");
+
+            migrationBuilder.DropTable(
+                name: "MWOItems");
 
             migrationBuilder.DropTable(
                 name: "AlterationItems");
@@ -834,6 +925,9 @@ namespace CPTool.Context.Migrations
                 name: "InsulationItems");
 
             migrationBuilder.DropTable(
+                name: "MWOs");
+
+            migrationBuilder.DropTable(
                 name: "PaintingItems");
 
             migrationBuilder.DropTable(
@@ -852,9 +946,6 @@ namespace CPTool.Context.Migrations
                 name: "UnitaryBasePrizes");
 
             migrationBuilder.DropTable(
-                name: "PurchaseOrders");
-
-            migrationBuilder.DropTable(
                 name: "Brands");
 
             migrationBuilder.DropTable(
@@ -870,13 +961,19 @@ namespace CPTool.Context.Migrations
                 name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "MWOs");
+                name: "MWOTypes");
 
             migrationBuilder.DropTable(
                 name: "EquipmentTypes");
 
             migrationBuilder.DropTable(
-                name: "MWOTypes");
+                name: "TaxCodeLDs");
+
+            migrationBuilder.DropTable(
+                name: "TaxCodeLPs");
+
+            migrationBuilder.DropTable(
+                name: "VendorCodes");
         }
     }
 }

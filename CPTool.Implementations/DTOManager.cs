@@ -27,9 +27,10 @@ namespace CPTool.Implementations
         {
             dto=await OnPriorSave(dto);
             
-            var table = _mapper.Map<T>(dto);
+            T? table = _mapper.Map<T>(dto);
 
-            var request = dto.Id == 0 ? await _unitofwork.Repository<T>().AddAsync(table) : _unitofwork.Repository<T>().UpdateAsync(table);
+            var exist = await _unitofwork.Repository<T>().AnyAsync(x => x.Equals( table));
+            var request = !exist ? await _unitofwork.Repository<T>().AddAsync(table) : _unitofwork.Repository<T>().UpdateAsync(table);
             var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
             if (!result.Succeeded)
                 return await Result<TDTO>.FailAsync("Not created!");
@@ -134,7 +135,7 @@ namespace CPTool.Implementations
 
         }
 
-       public Func<Task> PostUpdateListEvent { get; set; }
+        public Func<Task> PostUpdateListEvent { get; set; } = null!;
  
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PriorSave { get; set; } = null!;
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PostSave { get; set; } = null!;

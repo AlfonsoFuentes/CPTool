@@ -97,20 +97,21 @@ namespace CPTool.Pages.BrandSupplierPages
                 BrandSupplier.BrandDTO = result.Data;
                 SelectedDetail = new();
                 SelectedMaster = new();
+               
                 if (BrandSupplier.BrandId != 0 && BrandSupplier.SupplierId != 0)
                 {
                     var result2 = await TablesService.ManBrandSupplier.AddUpdate(BrandSupplier, _cts.Token);
-                    if(result2.Succeeded)
+                    if (result2.Succeeded)
                     {
                         await TablesService.ManBrandSupplier.UpdateList();
-                        await TablesService.ManBrand.UpdateList();
+
                         await TablesService.ManSupplier.UpdateList();
                         SelectedDetail = (await TablesService.ManSupplier.GetById(BrandSupplier.SupplierDTO.Id)).Data;
                     }
 
                 }
+                await TablesService.ManBrand.UpdateList();
 
-               
             }
 
             StateHasChanged();
@@ -120,12 +121,15 @@ namespace CPTool.Pages.BrandSupplierPages
         async Task<IResult<IAuditableEntityDTO>> SaveSupplier(IAuditableEntityDTO dto)
         {
             var BrandSupplier = dto as BrandSupplierDTO;
+         
             var result = await TablesService.ManSupplier.AddUpdate(BrandSupplier.SupplierDTO, _cts.Token);
             if (result.Succeeded)
             {
                 BrandSupplier.SupplierDTO = result.Data;
                 SelectedDetail = new();
                 SelectedMaster = new();
+              
+
                 if (BrandSupplier.BrandId != 0 && BrandSupplier.SupplierId != 0)
                 {
                     var result2 = await TablesService.ManBrandSupplier.AddUpdate(BrandSupplier, _cts.Token);
@@ -133,13 +137,13 @@ namespace CPTool.Pages.BrandSupplierPages
                     {
                         await TablesService.ManBrandSupplier.UpdateList();
                         await TablesService.ManBrand.UpdateList();
-                        await TablesService.ManSupplier.UpdateList();
+
                         SelectedMaster = (await TablesService.ManBrand.GetById(BrandSupplier.BrandDTO.Id)).Data;
                     }
                 }
-               
+                await TablesService.ManSupplier.UpdateList();
 
-               
+
             }
             StateHasChanged();
 
@@ -147,7 +151,23 @@ namespace CPTool.Pages.BrandSupplierPages
 
             return await Result<AuditableEntityDTO>.SuccessAsync(new(), "Updated");
         }
+        async Task<IResult<IAuditableEntityDTO>> SaveBrandSupplier(IAuditableEntityDTO dto)
+        {
+            var BrandSupplier = dto as BrandSupplierDTO;
+            if (BrandSupplier.BrandId != 0 && BrandSupplier.SupplierId != 0)
+            {
+                var result = await TablesService.ManBrandSupplier.AddUpdate(dto, _cts.Token);
+                if (result.Succeeded)
+                {
 
+                    return await Result<IAuditableEntityDTO>.SuccessAsync(result.Data, "Updated");
+                }
+
+            }
+
+            return await Result<IAuditableEntityDTO>.SuccessAsync(dto, "Not Updated");
+
+        }
         async Task<IResult<int>> Delete(IAuditableEntityDTO dto)
         {
             IResult<int> result = null;
@@ -156,6 +176,9 @@ namespace CPTool.Pages.BrandSupplierPages
                 result = await TablesService.ManBrand.Delete(dto.Id, _cts.Token);
                 if (result.Succeeded)
                 {
+                    await TablesService.ManSupplier.UpdateList();
+                    await TablesService.ManBrandSupplier.UpdateList();
+                    await TablesService.ManBrand.UpdateList();
                     StateHasChanged();
                 }
                 return result;
@@ -165,6 +188,9 @@ namespace CPTool.Pages.BrandSupplierPages
                 result = await TablesService.ManSupplier.Delete(dto.Id, _cts.Token);
                 if (result.Succeeded)
                 {
+                    await TablesService.ManSupplier.UpdateList();
+                    await TablesService.ManBrandSupplier.UpdateList();
+                    await TablesService.ManBrand.UpdateList();
                     StateHasChanged();
                 }
                 return result;
@@ -176,7 +202,7 @@ namespace CPTool.Pages.BrandSupplierPages
         void IDisposable.Dispose()
         {
 
-            
+
             TablesService.Delete -= Delete;
         }
     }

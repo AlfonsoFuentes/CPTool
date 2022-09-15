@@ -19,10 +19,10 @@ namespace CPTool.DTOS
 
         public decimal Budget { get; set; } = 0;
         public decimal Expenses { get; set; } = 0;
-        public int MWOTypeId => MWOTypeDTO==null?0: MWOTypeDTO.Id;
+        public int? MWOTypeId => MWOTypeDTO?.Id;
 
-        public  MWOTypeDTO MWOTypeDTO { get; set; } = new();
-        public List<MWOItemDTO> MWOItemDTOs
+        public  MWOTypeDTO? MWOTypeDTO { get; set; } = new();
+        public List<MWOItemDTO>? MWOItemDTOs
         {
             get
             {
@@ -37,15 +37,7 @@ namespace CPTool.DTOS
         public List<PurchaseOrderDTO>? PurchaseOrderDTOs { get; set; } = new();
 
     }
-    public class CreateMWODTO : MWODTO
-    {
-        
-
-       
-        
-
-        
-    }
+    
 
 
 

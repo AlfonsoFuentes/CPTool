@@ -27,8 +27,13 @@ namespace CPTool.DTOS
             throw new NotImplementedException();
         }
 
-        public int MasterId { get; set; }
+        public int? MasterId => Master?.Id;
         public AuditableEntityDTO? Master { get; set; } = null!;
+
+        public bool Equals(IAuditableEntityDTO? other)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

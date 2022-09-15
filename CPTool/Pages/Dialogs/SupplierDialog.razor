@@ -1,12 +1,18 @@
 ﻿@inherits CancellableComponent
+@if (test)
+{
+
+}
 <MudDialog>
     <DialogContent>
         <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
             <ComponentAutoComplete Label="Brands or Service"
+                TableName="Brand or Services"
                                    TDTO="BrandDTO"
                                    T="Brand"
                                    Manager=TablesService.ManBrand
                                    ObjectList=TablesService.ManBrand.List
+                                  
                                    @bind-Model=@Model.BrandDTO
                                    ShowDialogOverrided=@((dto)=>ToolDialogService.ShowBrandDialog(Model))></ComponentAutoComplete>
 
@@ -17,22 +23,9 @@
                           Margin="Margin.Dense"
                           Immediate="true"
                           Label="Supplier Name" />
-            <MudTextField @bind-Value="Model.SupplierDTO.VendorCode"
-                          InputType="InputType.Email"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Vendor Code" />
-           @* <ComponentAutoComplete Label="Vendor Code"
-                                   TDTO="VendorCodeDTO"
-                                   T="VendorCode"
-                                   Required=true
-                                   RequiredError="Must submit unique Vendor Code"
-                                   Manager=TablesService.ManVendorCode
-                                   ObjectList=TablesService.ManVendorCode.List
-                                   @bind-Model=@Model.SupplierDTO.VendorCodeDTO
-                                   ></ComponentAutoComplete>*@
-           
+
+
+
             <MudTextField @bind-Value="Model.SupplierDTO.ContactPerson"
                           Variant="Variant.Outlined"
                           Margin="Margin.Dense"
@@ -55,40 +48,56 @@
                           Margin="Margin.Dense"
                           Immediate="true"
                           Label="Address" />
+            <ComponentAutoComplete Label="Vendor Code"
+                                   TDTO="VendorCodeDTO"
+                                   T="VendorCode"
+                                   UpdateList="UpdateVendorCode"
+                                   Validation="@(new Func<string, string>(ReviewVendorCode))"
+                                   Manager=TablesService.ManVendorCode
+                                   ObjectList=TablesService.ManVendorCode.List
+                                   @bind-Model=@Model.SupplierDTO.VendorCodeDTO
+                                   Required=true
+                                   TableName="Vendor Code"
+                                  >
 
-            @*<ComponentAutoComplete Label="TaxCode LD"
+            </ComponentAutoComplete>
+          
+            <ComponentAutoComplete Label="Tax Codel LD"
                                    TDTO="TaxCodeLDDTO"
                                    T="TaxCodeLD"
-                                   Required=true
-                                   RequiredError="Must submit TaxCode LD"
+                                   UpdateList="UpdateTaxCodeLD"
                                    Manager=TablesService.ManTaxCodeLD
                                    ObjectList=TablesService.ManTaxCodeLD.List
-                                   @bind-Model=@Model.SupplierDTO.TaxCodeLDDTO></ComponentAutoComplete>
-            <ComponentAutoComplete Label="TaxCode LP"
+                                   @bind-Model=@Model.SupplierDTO.TaxCodeLDDTO
+                                   Required=true
+                                   Validation="@(new Func<string, string>(ReviewTaxCodeLD))"
+                                   TableName="Tax Codel LD"
+                                  >
+
+            </ComponentAutoComplete>
+            <ComponentAutoComplete Label="Tax Codel LP"
                                    TDTO="TaxCodeLPDTO"
                                    T="TaxCodeLP"
-                                   RequiredError="Must submit TaxCode LP"
+                                   UpdateList="UpdateTaxCodeLP"
                                    Manager=TablesService.ManTaxCodeLP
                                    ObjectList=TablesService.ManTaxCodeLP.List
+                                   @bind-Model=@Model.SupplierDTO.TaxCodeLPDTO
+                                   Validation="@(new Func<string, string>(ReviewTaxCodeLP))"
                                    Required=true
-                                   @bind-Model=@Model.SupplierDTO.TaxCodeLPDTO></ComponentAutoComplete>*@
+                                   TableName="Tax Codel LP">
 
-            <MudTextField @bind-Value="Model.SupplierDTO.TaxCodeLD"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="TaxCode LD" />
-            <MudTextField @bind-Value="Model.SupplierDTO.TaxCodeLP"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="TaxCode LP" />
+            </ComponentAutoComplete>
+          
+
+
+           
+
 
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -97,4 +106,5 @@
     public IMask mask1 = new RegexMask(@"^[0-9]\d{0,4}$");
     bool success;
     string[] errors = { };
+    bool test = true;
 }

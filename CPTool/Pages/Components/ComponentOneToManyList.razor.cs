@@ -75,7 +75,11 @@ namespace CPTool.Pages.Components
         async Task<DialogResult> ShowDialogMaster(AuditableEntityDTO dto)
         {
             TablesService.Save += OnSaveMaster;
-            return OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogMaster.Invoke(dto);
+
+            var retorno = OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogMaster.Invoke(dto);
+
+            if (retorno.Cancelled) TablesService.Save -= OnSaveMaster;
+            return retorno;
         }
 
 
@@ -84,7 +88,10 @@ namespace CPTool.Pages.Components
             TablesService.Save += OnSaveDetails;
             if (dto.Id == 0) dto.Master = SelectedMaster;
 
-            return OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogDetail.Invoke(dto);
+            var retorno = OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<AuditableEntityDTO>(dto) : await OnShowDialogDetail.Invoke(dto);
+
+            if (retorno.Cancelled) TablesService.Save -= OnSaveDetails;
+            return retorno;
         }
 
         async Task<IResult<IAuditableEntityDTO>> OnSaveMaster(IAuditableEntityDTO dto)
@@ -117,7 +124,7 @@ namespace CPTool.Pages.Components
             {
                 SelectedMaster = new();
                 var result = await MasterManager.Delete(dto.Id, _cts.Token);
-          
+
                 await MasterManager.UpdateList();
                 StateHasChanged();
 

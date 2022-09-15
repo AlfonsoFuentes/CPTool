@@ -13,8 +13,8 @@ namespace CPTool.DTOS
     {
 
         public string? TagLetter { get; set; } = "";
-        public virtual List<EquipmentItemDTO> EquipmentItemDTOs { get; set; } = new();
-        public List<EquipmentTypeSubDTO> EquipmentTypeSubDTOs
+        public  List<EquipmentItemDTO>? EquipmentItemDTOs { get; set; } = new();
+        public List<EquipmentTypeSubDTO>? EquipmentTypeSubDTOs
         {
             get
             {

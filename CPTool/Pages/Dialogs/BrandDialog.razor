@@ -1,50 +1,56 @@
 ﻿@inherits CancellableComponent
-@if(viewform)
+@if (viewform)
 {
 
 
-<MudDialog>
-    <DialogContent>
-        <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-            <ComponentAutoComplete Label="Supplier Name"
+    <MudDialog>
+        <DialogContent>
+            <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                <ComponentAutoComplete Label="Supplier Name"
+                                   TableName="Supplier"
                                    TDTO="SupplierDTO"
                                    T="Supplier"
                                    Manager=TablesService.ManSupplier
                                    ObjectList=TablesService.ManSupplier.List
                                    ShowDialogOverrided=@((dto)=>ToolDialogService.ShowSupplierDialog(Model))
-                                   @bind-Model=@Model.SupplierDTO
-                                  ></ComponentAutoComplete>
+                                   @bind-Model=@Model.SupplierDTO></ComponentAutoComplete>
 
+                <MudSelect Dense="true"
+                       Margin="Margin.Dense"
+                       T="BrandType"
+                       Label="Select Type Brand or Service"
+                       AnchorOrigin="Origin.BottomCenter"
+                       @bind-Value=@Model.BrandDTO.BrandType
+                       Validation="@(new Func<BrandType, string>(ValidateBrandType))"
+                       Variant="Variant.Outlined">
+                    @foreach (var item in Enum.GetValues<BrandType>())
+                    {
+                        <MudSelectItem Value="item">@item</MudSelectItem>
+                    }
 
-
-            <MudTextField @bind-Value="Model.BrandDTO.Name"
+                </MudSelect>
+                @if (Model.BrandDTO.BrandType != BrandType.None)
+                {
+                    <MudTextField @bind-Value="Model.BrandDTO.Name"
                           Variant="Variant.Outlined"
                           Margin="Margin.Dense"
                           Immediate="true"
-                          Label="Brand Name" />
-
-            <MudSelect Dense="true"
-                       Margin="Margin.Dense"
-                       T="BrandType"
-                       Label="Select Brand or Service"
-                       AnchorOrigin="Origin.BottomCenter"
-                       @bind-Value=@Model.BrandDTO.BrandType
-                       Variant="Variant.Outlined">
-                @foreach (var item in Enum.GetValues<BrandType>())
-                {
-                    <MudSelectItem Value="item">@item</MudSelectItem>
+                          Required=true
+                          RequiredError=@($"Must Submit {Model.BrandDTO.BrandType.ToString()}")
+                          Label=@Model.BrandDTO.BrandType.ToString() />
                 }
-                
-            </MudSelect>
 
 
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
-    </DialogActions>
-</MudDialog>
+
+
+
+            </MudForm>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
 }
 @code {
     bool viewform = true;

@@ -20,22 +20,63 @@ namespace CPTool.Pages.Dialogs
             await form.Validate();
             if (form.IsValid)
             {
-                if (Model.BrandId == 0 || Model.SupplierId == 0)
-                {
-                    Model = _mapper.Map<CreateBrandSupplierDTO>(Model);
-                }
-                else if (!TablesService.ManBrandSupplier.List.Any(x => x.BrandId == Model.BrandId && x.SupplierId == Model.SupplierId) )
-                {
-                    Model = _mapper.Map<CreateBrandSupplierDTO>(Model);
-                }
-                
+               
                 MudDialog.Close(DialogResult.Ok(Model));
             }
         }
 
 
         void Cancel() => MudDialog.Cancel();
-
+        private string ReviewVendorCode(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit Vendor Code";
+            if (!TablesService.ManVendorCode.List.Any(x => x.Name == arg))
+            {
+                return $"Vendor Code: {arg} is not in the list";
+            }
+            if (TablesService.ManSupplier.List.Any(x=>x.VendorCodeDTO.Name==arg) )
+            {
+                var vendor = (TablesService.ManSupplier.List.First(x => x.VendorCodeDTO.Name == arg));
+                return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
+            }
+                
+            return null;
+        }
+        private string ReviewTaxCodeLD(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit Tax Code LD";
+            if (!TablesService.ManTaxCodeLD.List.Any(x => x.Name == arg))
+                return $"Tax Code LD: {arg} is not in the list";
+            return null;
+        }
+        private string ReviewTaxCodeLP(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit Tax Code LP";
+            if (!TablesService.ManTaxCodeLP.List.Any(x => x.Name == arg))
+                return $"Tax Code LP: {arg} is not in the list";
+            return null;
+        }
+        async Task UpdateVendorCode()
+        {
+            await TablesService.ManVendorCode.UpdateList();
+            StateHasChanged();
+            await form.Validate();
+        }
+        async Task UpdateTaxCodeLD()
+        {
+            await TablesService.ManTaxCodeLD.UpdateList();
+            StateHasChanged();
+            await form.Validate();
+        }
+        async Task UpdateTaxCodeLP()
+        {
+            await TablesService.ManTaxCodeLP.UpdateList();
+            StateHasChanged();
+            await form.Validate();
+        }
         protected override void OnInitialized()
         {
 

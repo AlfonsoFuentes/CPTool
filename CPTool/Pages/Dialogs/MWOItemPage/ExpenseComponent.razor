@@ -6,12 +6,14 @@
         <ComponentAutoComplete Label="Unitary prize unit"
                                TDTO="UnitaryBasePrizeDTO"
                                T="UnitaryBasePrize"
+                               UpdateList="UpdateUnitaryPrizeName"
+                               Validation="@(new Func<string, string>(ValidateUnitaryPrizeName))"
                                Manager=TablesService.ManUnitaryPrize
                                ObjectList=TablesService.ManUnitaryPrize.List
-                              
+                               TableName="Unitary prize unit"
                                @bind-Model=@Model.UnitaryBasePrizeDTO
                                Required="true"
-                               RequiredError="Must submit Unitary prize"></ComponentAutoComplete>
+                               ></ComponentAutoComplete>
         <MudTextField T="decimal" @bind-Value="Model.UnitaryPrize"
                       Immediate="true"
                       InputMode="InputMode.numeric"

@@ -8,7 +8,7 @@ namespace CPTool.DTOS
     {
         public BrandType BrandType { get; set; }
         public List<BrandSupplierDTO>? BrandSupplierDTOs { get; set; } = new();
-        public List<EquipmentItemDTO> EquipmentItemDTOs { get; set; } = new();
+        public List<EquipmentItemDTO>? EquipmentItemDTOs { get; set; } = new();
         public string? Description { get; set; }
     }
     

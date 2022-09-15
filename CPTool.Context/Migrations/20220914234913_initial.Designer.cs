@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20220912211850_BrandSupplierDelete")]
-    partial class BrandSupplierDelete
+    [Migration("20220914234913_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -813,24 +813,74 @@ namespace CPTool.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TaxCodeLD")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("TaxCodeId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("TaxCodeLP")
-                        .IsRequired()
+                    b.Property<int?>("TaxCodeLDId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TaxCodeLPId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("VendorCodeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaxCodeLDId");
+
+                    b.HasIndex("TaxCodeLPId");
+
+                    b.HasIndex("VendorCodeId");
+
+                    b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.TaxCodeLD", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("VendorCode")
-                        .IsRequired()
+                    b.HasKey("Id");
+
+                    b.ToTable("TaxCodeLDs");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.TaxCodeLP", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("TaxCodeLPs");
                 });
 
             modelBuilder.Entity("CPTool.Entities.TaxesItem", b =>
@@ -897,6 +947,28 @@ namespace CPTool.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UnitaryBasePrizes");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.VendorCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VendorCodes");
                 });
 
             modelBuilder.Entity("CPTool.Entities.BrandSupplier", b =>
@@ -1122,6 +1194,27 @@ namespace CPTool.Context.Migrations
                     b.Navigation("PurchaseOrder");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.Supplier", b =>
+                {
+                    b.HasOne("CPTool.Entities.TaxCodeLD", "TaxCodeLD")
+                        .WithMany("Suppliers")
+                        .HasForeignKey("TaxCodeLDId");
+
+                    b.HasOne("CPTool.Entities.TaxCodeLP", "TaxCodeLP")
+                        .WithMany("Suppliers")
+                        .HasForeignKey("TaxCodeLPId");
+
+                    b.HasOne("CPTool.Entities.VendorCode", "VendorCode")
+                        .WithMany("Suppliers")
+                        .HasForeignKey("VendorCodeId");
+
+                    b.Navigation("TaxCodeLD");
+
+                    b.Navigation("TaxCodeLP");
+
+                    b.Navigation("VendorCode");
+                });
+
             modelBuilder.Entity("CPTool.Entities.AlterationItem", b =>
                 {
                     b.Navigation("MWOItems");
@@ -1247,6 +1340,16 @@ namespace CPTool.Context.Migrations
                     b.Navigation("EquipmentItems");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.TaxCodeLD", b =>
+                {
+                    b.Navigation("Suppliers");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.TaxCodeLP", b =>
+                {
+                    b.Navigation("Suppliers");
+                });
+
             modelBuilder.Entity("CPTool.Entities.TaxesItem", b =>
                 {
                     b.Navigation("MWOItems");
@@ -1260,6 +1363,11 @@ namespace CPTool.Context.Migrations
             modelBuilder.Entity("CPTool.Entities.UnitaryBasePrize", b =>
                 {
                     b.Navigation("MWOItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.VendorCode", b =>
+                {
+                    b.Navigation("Suppliers");
                 });
 #pragma warning restore 612, 618
         }

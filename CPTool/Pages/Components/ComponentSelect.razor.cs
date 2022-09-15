@@ -24,7 +24,10 @@ namespace CPTool.Pages.Components
         public bool Required { get; set; }
         [Parameter]
         public string Label { get; set; }
-       
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Validation)]
+        public object Validation { get; set; }
+
         [Parameter]
         [EditorRequired]
         public List<TDTO> Elements { get; set; } = new();
@@ -33,7 +36,8 @@ namespace CPTool.Pages.Components
         [Parameter]
         public Func<Task> PostEventAsync { get; set; }
         protected override void OnInitialized()
-        {
+        {   
+           
             ModelInt = Model.Id;
             base.OnInitialized();
         }

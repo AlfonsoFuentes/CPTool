@@ -9,26 +9,34 @@ namespace CPTool.Pages.Components
         where T : AuditableEntity, new()
     {
         [Parameter]
+        [EditorRequired]
         public string TableName { get; set; }
+
+        public string RequiredError => Required ? "" : $"Must submit {Label} ";
         [Parameter]
-        public string RequiredError { get; set; }
+        public bool Required { get; set; } = false;
         [Parameter]
-        public bool Required { get; set; }
-        [Parameter]
+        [EditorRequired]
         public string Label { get; set; }
         [Parameter]
-        public AuditableEntityDTO Parent { get; set; } = new();
+        public AuditableEntityDTO Parent { get; set; }
         [Parameter]
         public TDTO Model { get; set; } = new();
+
         [Parameter]
         public bool Disable { get; set; } = false;
-       
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Validation)]
+        public object Validation { get; set; }
+
         [Parameter]
         public EventCallback<TDTO> ModelChanged { get; set; }
         [Parameter]
         [EditorRequired]
         public IDTOManager<TDTO, T> Manager { get; set; }
 
+        [Parameter]
+        public Func<Task> UpdateList { get; set; }
 
         [Parameter]
         [EditorRequired]
@@ -48,8 +56,8 @@ namespace CPTool.Pages.Components
         {
 
 
-        
-            if (Model!=null&&Model.Id != 0)
+
+            if (Model != null && Model.Id != 0)
             {
 
                 AutocompleteText = Model.Name;
@@ -59,8 +67,8 @@ namespace CPTool.Pages.Components
         }
         protected override void OnParametersSet()
         {
-           
-             if(Model==null)
+
+            if (Model == null)
             {
                 AutocompleteText = "";
                 return;
@@ -100,13 +108,13 @@ namespace CPTool.Pages.Components
             if (AutocompleteText == null)
             {
                 Model = new();
-               
+
 
             }
             else if (IsExist)
             {
                 Model = ObjectList.FirstOrDefault(x => x.Name == AutocompleteText);
-               
+
 
 
             }
@@ -114,12 +122,12 @@ namespace CPTool.Pages.Components
             {
                 Model = new();
                 Model.Name = AutocompleteText;
-              
+
                 CreatingNewRow = true;
             }
-           
+
             await ModelChanged.InvokeAsync(Model);
-           
+
         }
 
 
@@ -138,9 +146,11 @@ namespace CPTool.Pages.Components
             if (!dialogResult.Cancelled)
             {
                 Model = new();
-                
+
                 Model.Name = AutocompleteText;
 
+                if (Parent != null)
+                    Model.Master = Parent;
 
                 dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowDialogName<TDTO>(Model) : await ShowDialogOverrided.Invoke(Model);
 
@@ -153,8 +163,8 @@ namespace CPTool.Pages.Components
                         CreatingNewRow = false;
                         Model = created.Data;
                         await ModelChanged.InvokeAsync(Model);
-                       
 
+                        if (UpdateList != null) await UpdateList.Invoke();
 
 
                     }

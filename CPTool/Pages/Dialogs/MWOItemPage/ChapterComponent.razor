@@ -1,22 +1,20 @@
 ﻿<MudGrid>
     <MudItem xs="12" sm="12" Class="pa-4">
-        <MudSelect Dense="true"
-                   Margin="Margin.Dense"
-                   T="int"
-                   Label="Chapter"
-                   AnchorOrigin="Origin.BottomCenter"
-                   Disabled="@(Model.ChapterDTO.Id==0?false:true)"
-                   Value=@Model.ChapterDTO.Id
-                   Variant="Variant.Outlined"
-                   ValueChanged="OnValueChanged"
-                   Validation="@(new Func<int, string>(ItemChapter))"
-                   Required="true">
-            @foreach (var item in TablesService.ManChapter.List)
-            {
-                <MudSelectItem Value="item.Id">@item.LetterName</MudSelectItem>
-            }
+        <ComponentSelect TDTO="ChapterDTO"
+                         T="Chapter"
+                         Label="Chapter"
+                         Disable="@(Model.ChapterDTO.Id==0?false:true)"
+                         TableName="Chapter"
+                         PostEvent=OnChapterChanged
+                         Elements=TablesService.ManChapter.List
+                         Required=true
+                         Validation="@(new Func<int, string>(ItemChapter))"
+                         @bind-Model=@Model.ChapterDTO>
 
-        </MudSelect>
+
+        </ComponentSelect>
+
+       
       <MudTextField T="string" Value="Model.Nomenclatore"
                       Immediate="true"
                       Disabled="true"
@@ -31,13 +29,7 @@
                       Disabled="@(Model.ChapterDTO.Id==0?true:false)"
                       Validation="@(new Func<string,string>(AnyName))"
                       Label="item Name" />
-     @*     <MudTextField T="string" @bind-Value="Item.Description"
-                      Immediate="true"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      Disabled="@(Item.Chapter.Id==0?true:false)"
-                      Lines="3"
-                      Label="Description" />*@
+    
     </MudItem>
 </MudGrid>
 

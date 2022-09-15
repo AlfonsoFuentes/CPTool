@@ -1,37 +1,66 @@
-﻿<MudDialog>
-    <DialogContent>
-        <CascadingValue Value="Model">
-            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-2">
+﻿@if (test)
+{
+    <MudDialog DisableSidePadding="true">
+      
+            <DialogContent>
+                <MudContainer Style="max-height: 420px;">
+                    <CascadingValue Value="this">
 
-                    <MudTabPanel Text="Name">
-                        <MudGrid>
-                            <MudItem xs="12" sm="6">
-                                <ChapterComponent></ChapterComponent>
-                            </MudItem>
-                            <MudItem xs="12" sm="6">
-                                <ExpenseComponent></ExpenseComponent>
-                            </MudItem>
-                        </MudGrid>
-                    </MudTabPanel>
+                        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                            <MudStack Justify="@_justify">
+                                <MudPaper Height="60px" Width="100%">
+                                    <MudToolBar>
+                                        <MudButton Variant="Variant.Filled" OnClick="ViewName" Size="Size.Small"> Name</MudButton>
+                                        <MudButton Variant="Variant.Filled" OnClick="ViewSpecs" Size="Size.Small">Specs</MudButton>
+                                    </MudToolBar>
+                                </MudPaper>
 
-                    <MudTabPanel Text="Specs">
-                        @if (Model.ChapterDTO.Id == 4)
-                        {
-                            <EquipmentItemPage @ref=@EquipmentItemPage></EquipmentItemPage>
-                        }
-                    </MudTabPanel>
-                </MudTabs>
-            </MudForm>
-        </CascadingValue>
+                                @if (bViewName)
+                                {
 
-    </DialogContent>
-    <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
-        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-    </DialogActions>
-</MudDialog>
+                                    <MudPaper Height="320px" Width="100%">
+                                        <MudGrid>
+
+                                            <MudItem xs="12" sm="6">
+                                                <ChapterComponent></ChapterComponent>
+                                            </MudItem>
+                                            <MudItem xs="12" sm="6">
+                                                <ExpenseComponent></ExpenseComponent>
+                                            </MudItem>
+
+                                        </MudGrid>
+                                    </MudPaper>
+
+                                }
+                                @if (bViewSpecs)
+                                {
+
+                                    <MudPaper Height="320px" Width="100%">
+                                        <EquipmentItemPage Visible=@bEquipmentVisible @ref="EquipmentItemPage"></EquipmentItemPage>
+                                    </MudPaper>
+
+                                }
+                            </MudStack>
+
+
+
+                        </MudForm>
+
+                    </CascadingValue>
+                </MudContainer>
+            </DialogContent>
+
+            <DialogActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+            </DialogActions>
+       
+    </MudDialog>
+}
+
 @code {
     bool success;
     string[] errors = { };
+    bool test = true;
+    Justify _justify = Justify.Center;
 }

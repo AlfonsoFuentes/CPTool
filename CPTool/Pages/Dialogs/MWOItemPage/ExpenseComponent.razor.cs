@@ -1,12 +1,15 @@
 ﻿
 
 
+using static MudBlazor.CategoryTypes;
+
 namespace CPTool.Pages.Dialogs.MWOItemPage
 {
     public partial class ExpenseComponent : CancellableComponent, IDisposable
     {
         [CascadingParameter]
-        protected MWOItemDTO Model { get; set; }
+        protected MWOItemDialog Dialog { get; set; }
+        protected MWOItemDTO Model => Dialog.Model;
 
         protected override void OnInitialized()
         {
@@ -27,6 +30,20 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
             if (valor < 0)
                 return "Quantity must be greater than zero";
             return null;
+        }
+        private string ValidateUnitaryPrizeName(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit Unitary prize";
+            if (!TablesService.ManUnitaryPrize.List.Any(x => x.Name == arg))
+                return $"Unitary prize: {arg} is not in the list";
+            return null;
+        }
+        async Task UpdateUnitaryPrizeName()
+        {
+            await TablesService.ManUnitaryPrize.UpdateList();
+            StateHasChanged();
+            await Dialog.form.Validate();
         }
     }
 }

@@ -5,23 +5,17 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
     public partial class ChapterComponent
     {
         [CascadingParameter]
-        protected MWOItemDTO Model { get; set; }
+        protected MWOItemDialog Dialog { get; set; }
+        protected MWOItemDTO Model => Dialog.Model;
 
-        void OnValueChanged(int value)
+        void OnChapterChanged()
         {
           
-           var chapter = TablesService.ManChapter.List.FirstOrDefault(x => x.Id == value);
-           
-            Model.Letter = chapter.Letter;
-            if (Model.Id == 0)
-            {
-                Model.ChapterDTO = chapter;
-
-            }
-            var list = Model.MWODTO.MWOItemDTOs.Where(x => x.ChapterDTO.Id == value).ToList();
+            var list = Model.MWODTO.MWOItemDTOs.Where(x => x.ChapterDTO.Id == Model.ChapterDTO.Id).ToList();
           
             Model.Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
-
+            Dialog.GetSaveEvent();
+         
         }
         private string ItemChapter(int arg)
         {
@@ -33,7 +27,15 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         {
 
             if (model == null || model == "") return "Must define a name";
-            if (TablesService.ManMWOItem.List.Where(x => x.Id != Model.Id).Any(x => x.Name == model)) return "Name already existing";
+            if(Model.Id!=0)
+            {
+                if (TablesService.ManMWOItem.List.Where(x => x.Id != Model.Id).Any(x => x.Name == model)) return "Name already existing";
+            }
+            else
+            {
+                if (TablesService.ManMWOItem.List.Any(x => x.Name == model)) return "Name already existing";
+            }
+           
 
 
             return null;

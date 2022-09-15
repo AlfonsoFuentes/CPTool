@@ -1,31 +1,35 @@
 ﻿@inherits CancellableComponent
 @implements IDisposable
-@if (test)
+@if (Visible)
 {
     <MudGrid>
         <MudItem xs="12" sm="6">
             <ComponentAutoComplete Label="Equipment Type"
                                TDTO="EquipmentTypeDTO"
                                T="EquipmentType"
+                               UpdateList="UpdateEquipmentType"
+                               Validation="@(new Func<string, string>(ValidateEquipmentType))"
                                Manager=TablesService.ManEquipmentType
-                              
+                               TableName="Equipment Type"
                                ObjectList=TablesService.ManEquipmentType.List
                                @bind-Model="@Model.EquipmentTypeDTO"
                                Required=true
-                               ShowDialogOverrided=ToolDialogService.ShowEquipmentType
-                               RequiredError="Must submit Equipment Type">
+                               ShowDialogOverrided=ToolDialogService.ShowEquipmentType>
 
             </ComponentAutoComplete>
             <ComponentAutoComplete Label="Sub Equipment Type"
+                               TableName="Sub Equipment Type"
                                TDTO="EquipmentTypeSubDTO"
                                T="EquipmentTypeSub"
-                              
+                          
+                               UpdateList="UpdateEquipmentSubType"
+                               Validation="@(new Func<string, string>(ValidateEquipmentSubType))"
                                @bind-Model="@Model.EquipmentTypeSubDTO"
                                Disable=@(Model.EquipmentTypeDTO.Id==0?true:false)
                                Manager=TablesService.ManEquipmentTypeSub
                                ObjectList=Model.EquipmentTypeDTO.EquipmentTypeSubDTOs
                                ShowDialogOverrided=ToolDialogService.ShowEquipmentTypeSub
-                               Parent=Model.EquipmentTypeDTO>
+                               Parent=@Model.EquipmentTypeDTO>
 
             </ComponentAutoComplete>
 
@@ -47,46 +51,51 @@
                       Variant="Variant.Outlined"
                       Label="Tag"></MudTextField>
             <ComponentAutoComplete Label="Gasket"
+                               TableName="Gasket"
                                TDTO="GasketDTO"
                                T="Gasket"
+                               UpdateList="UpdateGasket"
+                               Validation="@(new Func<string, string>(ValidateGasket))"
                                Manager=TablesService.ManGasket
-                              
                                @bind-Model="@Model.GasketDTO"
                                ObjectList=TablesService.ManGasket.List>
 
             </ComponentAutoComplete>
 
             <ComponentAutoComplete Label="Outer Material"
+                               TableName="Material"
                                TDTO="MaterialDTO"
                                T="Material"
+                               UpdateList="UpdateMaterial"
+                               Validation="@(new Func<string, string>(ValidateMaterial))"
+
                                ObjectList=TablesService.ManMaterial.List
                                ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
                                Manager=TablesService.ManMaterial
-                               @bind-Model="@Model.OuterMaterialDTO"
-                               >
+                               @bind-Model="@Model.OuterMaterialDTO">
 
             </ComponentAutoComplete>
             <ComponentAutoComplete Label="Internal Material"
+                               TableName="Material"
                                TDTO="MaterialDTO"
                                T="Material"
+                               UpdateList="UpdateMaterial"
+                               Validation="@(new Func<string, string>(ValidateMaterial))"
                                ObjectList=TablesService.ManMaterial.List
                                ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
                                Manager=TablesService.ManMaterial
-                               @bind-Model="@Model.InnerMaterialDTO"
-                               >
+                               @bind-Model="@Model.InnerMaterialDTO">
 
             </ComponentAutoComplete>
         </MudItem>
         <MudItem xs="12" sm="6">
-           
+
             <ComponentSelect TDTO="BrandDTO"
                          T="Brand"
-                        
                          Label="Brand or Service"
                          PostEvent=OnBrandValueChanged
                          Elements=TablesService.ManBrand.List
-                         @bind-Model=@Model.BrandDTO
-                        >
+                         @bind-Model=@Model.BrandDTO>
 
 
             </ComponentSelect>
@@ -94,13 +103,12 @@
                          T="Supplier"
                          Label="Supplier"
                          Disable="@(Model.BrandDTO.Id==0?true:false)"
-                         Elements=SelectedSupplier
-                         @bind-Model=@Model.SupplierDTO
-                       >
+                         Elements=@Model.BrandDTO.BrandSupplierDTOs.Select(x=>x.SupplierDTO).ToList()
+                         @bind-Model=@Model.SupplierDTO>
 
 
             </ComponentSelect>
-           
+
 
             <MudTextField T="string" @bind-Value="Model.Model"
                       Immediate="true"
@@ -123,9 +131,5 @@
 
 @code {
 
-    bool test = true;
-    //async Task Update()
-    //{
-    //    await AutoCompleteEquipmet.UpdateFrom();
-    //}
+
 }

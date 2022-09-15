@@ -20,21 +20,21 @@ namespace CPTool.Pages.Dialogs
             await form.Validate();
             if (form.IsValid)
             {
-                if (Model.BrandId == 0 || Model.SupplierId == 0)
-                {
-                    Model = _mapper.Map<CreateBrandSupplierDTO>(Model);
-                }
-                else if (!TablesService.ManBrandSupplier.List.Any(x => x.BrandId == Model.BrandId && x.SupplierId == Model.SupplierId))
-                {
-                    Model = _mapper.Map<CreateBrandSupplierDTO>(Model);
-                }
+                
                 MudDialog.Close(DialogResult.Ok(Model));
             }
         }
 
 
         void Cancel() => MudDialog.Cancel();
+        private string ValidateBrandType(BrandType arg)
+        {
+            if (arg == BrandType.None)
+                return "Must submit Brand or Service Type";
+            
 
+            return null;
+        }
         protected override void OnInitialized()
         {
           

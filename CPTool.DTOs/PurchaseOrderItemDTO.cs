@@ -5,13 +5,10 @@ namespace CPTool.DTOS
     public class PurchaseOrderItemDTO : AuditableEntityDTO
     {
 
-        public int PurchaseOrderId { get; set; }
+        public int? PurchaseOrderId => PurchaseOrderDTO?.Id;
         public PurchaseOrderDTO? PurchaseOrderDTO { get; set; }
     }
-    public class CreatePurchaseOrderItemDTO  :  PurchaseOrderItemDTO
-    {
-
-    }
+    
 
 
 

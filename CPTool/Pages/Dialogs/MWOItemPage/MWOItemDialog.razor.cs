@@ -6,14 +6,38 @@
 
         [Parameter]
         public MWOItemDTO Model { get; set; }
-        MudForm form;
+        public MudForm form;
         EquipmentItemPage EquipmentItemPage;
         protected override void OnInitialized()
         {
 
-           
+          
+
+
         }
-       
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if(firstRender)
+            {
+                ViewSpecificSpec();
+            }
+            base.OnAfterRender(firstRender);
+        }
+        void ViewSpecificSpec()
+        {
+            ViewSpecs();
+            StateHasChanged();
+            
+            switch (Model.ChapterId)
+            {
+                case 4:
+                    bEquipmentVisible = true;
+                    TablesService.ManMWOItem.PriorSave += EquipmentItemPage.OnSave;
+                    break;
+            }
+            ViewName();
+            StateHasChanged();
+        }
 
         async Task Submit()
         {
@@ -21,17 +45,41 @@
             await form.Validate();
             if (form.IsValid)
             {
-                if (Model.Id == 0) Model = _mapper.Map<CreateMWOItemDTO>(Model);
+
                 MudDialog.Close(DialogResult.Ok(Model));
             }
         }
 
-
-        void Cancel() => MudDialog.Cancel();
-
-        void IDisposable.Dispose()
+        public void GetSaveEvent()
         {
 
+            ViewSpecificSpec();
+        }
+
+        void Cancel() => MudDialog.Cancel();
+        bool bEquipmentVisible = false;
+        bool bViewSpecs = false;
+        bool bViewName = true;
+        void ViewName()
+        {
+            bViewName = true;
+            bViewSpecs = !bViewName;
+        }
+        void ViewSpecs()
+        {
+            bViewSpecs = true;
+            bViewName = !bViewSpecs;
+        }
+        void IDisposable.Dispose()
+        {
+            if (TablesService.ManMWOItem.PriorSave != null)
+            {
+                if (Model.ChapterDTO.Id == 4)
+                {
+
+                    TablesService.ManMWOItem.PriorSave -= EquipmentItemPage.OnSave;
+                }
+            }
         }
     }
 }

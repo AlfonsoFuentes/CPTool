@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.Interfaces
 {
-    public interface IAuditableEntityDTO
+    public interface IAuditableEntityDTO 
     {
         public int Id { get; set; }
         DateTime CreatedDate { get; set; }

@@ -96,7 +96,7 @@ namespace CPTool.Implementations
 
         public T UpdateAsync(T entity)
         {
-            T exist = _dbContext.Set<T>().Find(entity.Id)!;
+            T exist = _dbContext.Set<T>().First(x => x == entity)!;
             _dbContext.Entry(exist).CurrentValues.SetValues(entity);
             return entity;
         }

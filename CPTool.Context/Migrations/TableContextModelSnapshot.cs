@@ -811,26 +811,14 @@ namespace CPTool.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TaxCodeLD")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("TaxCodeLDId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TaxCodeLP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TaxCodeLPId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("VendorCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("VendorCodeId")
                         .HasColumnType("int");
@@ -1203,17 +1191,23 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.Supplier", b =>
                 {
-                    b.HasOne("CPTool.Entities.TaxCodeLD", null)
+                    b.HasOne("CPTool.Entities.TaxCodeLD", "TaxCodeLD")
                         .WithMany("Suppliers")
                         .HasForeignKey("TaxCodeLDId");
 
-                    b.HasOne("CPTool.Entities.TaxCodeLP", null)
+                    b.HasOne("CPTool.Entities.TaxCodeLP", "TaxCodeLP")
                         .WithMany("Suppliers")
                         .HasForeignKey("TaxCodeLPId");
 
-                    b.HasOne("CPTool.Entities.VendorCode", null)
+                    b.HasOne("CPTool.Entities.VendorCode", "VendorCode")
                         .WithMany("Suppliers")
                         .HasForeignKey("VendorCodeId");
+
+                    b.Navigation("TaxCodeLD");
+
+                    b.Navigation("TaxCodeLP");
+
+                    b.Navigation("VendorCode");
                 });
 
             modelBuilder.Entity("CPTool.Entities.AlterationItem", b =>

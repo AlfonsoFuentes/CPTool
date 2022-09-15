@@ -27,18 +27,30 @@ namespace CPTool.Pages.Dialogs
             await form.Validate();
             if (form.IsValid)
             {
-                if (Model.Id == 0)
-                    Model = _mapper.Map<CreateMWODTO>(Model);
-
-
+               
                 MudDialog.Close(DialogResult.Ok(Model));
             }
         }
 
 
         void Cancel() => MudDialog.Cancel();
-
-
+        private string ReviewMWOType(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit MWO Type";
+            return null;
+        }
+        private string ReviewMWOName(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit MWO Name";
+            if (TablesService.ManMWO.List.Any(x => x.Name == arg))
+            {
+                
+                return $"MWO Name: {arg} is already existing in MWO List";
+            }
+            return null;
+        }
         protected override void OnInitialized()
         {
             success2 = true;
