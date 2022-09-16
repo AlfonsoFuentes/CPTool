@@ -2,6 +2,7 @@
 
 using CPTool.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace CPTool.DTOS
 {
@@ -9,8 +10,9 @@ namespace CPTool.DTOS
     public class AlterationItemDTO : AuditableEntityDTO
     {
         public List<MWOItemDTO> MWOItemDTOs { get; set; } = new();
-        public static string TableName = "Alteration";
 
+        [Required]
+        public string CostCenter { get; set; } = ""!;
     }
 
 

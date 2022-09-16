@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPTool.Context.Migrations
 {
-    public partial class initial : Migration
+    public partial class General : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -422,7 +422,6 @@ namespace CPTool.Context.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VendorCodeId = table.Column<int>(type: "int", nullable: true),
-                    TaxCodeId = table.Column<int>(type: "int", nullable: true),
                     TaxCodeLDId = table.Column<int>(type: "int", nullable: true),
                     TaxCodeLPId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),

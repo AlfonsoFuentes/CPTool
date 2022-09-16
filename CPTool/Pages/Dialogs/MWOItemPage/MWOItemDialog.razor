@@ -11,7 +11,7 @@
                                 <MudPaper Height="60px" Width="100%">
                                     <MudToolBar>
                                         <MudButton Variant="Variant.Filled" OnClick="ViewName" Size="Size.Small"> Name</MudButton>
-                                        <MudButton Variant="Variant.Filled" OnClick="ViewSpecs" Size="Size.Small">Specs</MudButton>
+                                        <MudButton Variant="Variant.Filled" OnClick="ViewSpecs" Disabled=@(!bViewButtonSpecs) Size="Size.Small">Specs</MudButton>
                                     </MudToolBar>
                                 </MudPaper>
 

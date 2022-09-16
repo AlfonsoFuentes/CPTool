@@ -31,7 +31,6 @@
                         DetailT="EquipmentTypeSub"
                         MasterTableName="Equipment Type"
                         DetailTableName="Sub Type"
-
                         MasterManager=TablesService.ManEquipmentType
                         DetailManager=TablesService.ManEquipmentTypeSub
                         OnShowDialogMaster=ToolDialogService.ShowEquipmentType
@@ -42,11 +41,22 @@
         break;
     case 6:
         {
-            <BrandSupplierList 
-                OnShowDialogDetail=ToolDialogService.ShowSupplierDialog 
-                OnShowDialogMaster=ToolDialogService.ShowBrandDialog>
+            <BrandSupplierList OnShowDialogDetail=ToolDialogService.ShowSupplierDialog
+                   OnShowDialogMaster=ToolDialogService.ShowBrandDialog>
 
             </BrandSupplierList>
+        }
+        break;
+    case 7:
+        {
+            <PurchaseOrderMWOItemList OnShowDialogDetail=ToolDialogService.ShowPurchaseOrderItemDialog
+                          OnShowDialogMaster=ToolDialogService.ShowPurchaseOrderDialog>
+
+            </PurchaseOrderMWOItemList>
+
+
+
+
         }
         break;
 }

@@ -21,6 +21,10 @@ namespace CPTool.DependencyInjection
                 {
                     AddChapters(db);
                 }
+                else
+                {
+                    var list = db.Chapters.ToList();
+                }
                 if (!db.MWOTypes!.Any())
                 {
                     AddMWOType(db);

@@ -26,15 +26,24 @@ namespace CPTool.Pages.Components
         public Func<AuditableEntityDTO, Task<DialogResult>> OnShowDialogMaster { get; set; }
         [Parameter]
         public Func<AuditableEntityDTO, Task<DialogResult>> OnShowDialogDetail { get; set; }
-        MasterTDTO SelectedMaster = new();
-        DetailDTO SelectedDetail = new();
+        [Parameter]
+        public MasterTDTO SelectedMaster { get; set; } = new();
+        [Parameter]
+        public DetailDTO SelectedDetail { get; set; } = new();
 
+        [Parameter]
+        public EventCallback<MasterTDTO> SelectedMasterChanged { get; set; }
+        [Parameter]
+        public EventCallback<DetailDTO> SelectedDetailChanged { get; set; }
 
         public List<MasterTDTO> Masters => MasterManager.List;
         List<DetailDTO> Details => SelectedMaster.Details.Select(x => x as DetailDTO).ToList();
         ComponentTableList<MasterTDTO, MasterT> tableMaster;
         ComponentTableList<DetailDTO, DetailT> tableDetail;
-
+        [Parameter]
+        public RenderFragment OtherButtonMaster { get; set; }
+        [Parameter]
+        public RenderFragment OtherButtonDetail { get; set; }
         [Parameter]
         public RenderFragment ContextThMaster { get; set; }
         [Parameter]
@@ -46,18 +55,20 @@ namespace CPTool.Pages.Components
         string PageTitle => $"Relation {MasterTableName} => {DetailTableName}";
         int mastersm => 6;
         int detailsm => 6;
-        void RowMasterClicked(MasterTDTO dto)
+        async Task RowMasterClicked(MasterTDTO dto)
         {
             SelectedMaster = dto;
-
+            await SelectedMasterChanged.InvokeAsync(SelectedMaster);
 
             SelectedDetail = new();
+            await SelectedDetailChanged.InvokeAsync(SelectedDetail);
         }
-        void RowDetailClicked(DetailDTO dto)
+        async Task RowDetailClicked(DetailDTO dto)
         {
 
             SelectedDetail = dto;
-
+        
+            await SelectedDetailChanged.InvokeAsync(SelectedDetail);
         }
 
         protected override void OnInitialized()
@@ -66,8 +77,6 @@ namespace CPTool.Pages.Components
             DetailManager.PostUpdateListEvent += MasterManager.UpdateList;
 
             TablesService.Delete += OnDelete;
-
-
             base.OnInitialized();
         }
 

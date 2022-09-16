@@ -1,5 +1,4 @@
-﻿<h3>BrandSupplierList</h3>
-
+﻿@using System.Globalization
 @inherits CancellableComponent
 
 @implements IDisposable
@@ -7,49 +6,48 @@
 <MudGrid>
 
     <MudItem xs="12" sm="@mastersm">
-        <ComponentTableList @ref="@tableMaster"
-                            TDTO="BrandDTO" T="Brand"
+        <ComponentTableList
+                            ShowAddButton=false
+                            TDTO="PurchaseOrderDTO" T="PurchaseOrder"
                             TableName=@MasterTableName
                             Elements="@Masters"
                             OnShowDialogOverrided="ShowDialogMaster"
                             SelectedItem="@SelectedMaster"
                             OnRowClickEvent="RowMasterClicked">
 
-            <OtherButtons>
-                <MudTooltip Text="Restore List">
-                    <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
-                </MudTooltip>
-            </OtherButtons>
+           
             <ContextTh>
                 <MudTh Style="width:40px">#</MudTh>
                 <MudTh>Name</MudTh>
-
-
+                <MudTh>Status</MudTh>
+                <MudTh>PR</MudTh>
+                <MudTh>PO</MudTh>
+                <MudTh>Value</MudTh>
             </ContextTh>
             <ContextTd>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
-
+                <MudTd DataLabel="Status">@context.PurchaseOrderStatus.ToString()</MudTd>
+                <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
+                <MudTd DataLabel="PO">@context.PONumber</MudTd>
+                <MudTd DataLabel="Value">@context.PrizeUSD.ToString(_en)</MudTd>
             </ContextTd>
         </ComponentTableList>
     </MudItem>
 
 
     <MudItem xs="12" sm="@detailsm">
-        <ComponentTableList @ref="@tableDetail"
-                            TDTO="SupplierDTO"
-                            T="Supplier"
+        <ComponentTableList
+                            TDTO="MWOItemDTO"
+                            T="MWOItem"
+                            DisableAddButton=@(SelectedMaster==null?true:false)
                             TableName=@DetailTableName
                             OnShowDialogOverrided="ShowDialogDetail"
                             Elements="@Details"
                             OnRowClickEvent="RowDetailClicked"
                             SelectedItem="@SelectedDetail">
 
-            <OtherButtons>
-                <MudTooltip Text="Restore List">
-                    <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
-                </MudTooltip>
-            </OtherButtons>
+           
             <ContextTh>
                 <MudTh Style="width:40px">#</MudTh>
                 <MudTh>Name</MudTh>
@@ -65,7 +63,5 @@
 
 </MudGrid>
 @code {
-
+    public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
 }
-@*OnShowDialogDetail=ToolDialogService.ShowDialogMWOItem
-                        OnShowDialogMaster=ToolDialogService.ShowDialogMWO*@

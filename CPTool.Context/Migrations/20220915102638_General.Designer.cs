@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20220914234913_initial")]
-    partial class initial
+    [Migration("20220915102638_General")]
+    partial class General
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -812,9 +812,6 @@ namespace CPTool.Context.Migrations
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TaxCodeId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("TaxCodeLDId")
                         .HasColumnType("int");

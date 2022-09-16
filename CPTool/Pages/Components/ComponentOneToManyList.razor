@@ -8,37 +8,29 @@
 
     <MudItem xs="12" sm="@mastersm">
         <ComponentTableList @ref="@tableMaster"
+                            ShowAddButton=@ShowAddButtonMaster
                             TDTO="MasterTDTO" T="MasterT"
                             TableName=@MasterTableName
                             OnShowDialogOverrided="ShowDialogMaster"
                             SelectedItem="@SelectedMaster"
                             Elements="@Masters"
                             OnRowClickEvent="RowMasterClicked">
+            <OtherButtons>
+                @if (OtherButtonMaster != null)
+                    @OtherButtonMaster
+                </OtherButtons>
 
-            <ContextTh>
-                <MudTh Style="width:40px">#</MudTh>
-                <MudTh>Name</MudTh>
-                @if (ContextThMaster != null)
+                <ContextTh>
+                    <MudTh Style="width:40px">#</MudTh>
+                    <MudTh>Name</MudTh>
+                    @if (ContextThMaster != null)
                     @ContextThMaster
-
-
-
-
-
-
                 </ContextTh>
                 <ContextTd>
                     <MudTd DataLabel="Id">@context.Id</MudTd>
                     <MudTd DataLabel="Name">@context.Name</MudTd>
                     @if (ContextTdMaster != null)
                     @ContextTdMaster(context)
-
-
-
-
-
-
-
                 </ContextTd>
             </ComponentTableList>
         </MudItem>
@@ -48,23 +40,22 @@
             <ComponentTableList @ref="@tableDetail"
                             TDTO="DetailDTO"
                             T="DetailT"
+                            ShowAddButton=@ShowAddButtonDetail
                             TableName=@DetailTableName
                             OnShowDialogOverrided="ShowDialogDetail"
                             Elements="@Details"
                             OnRowClickEvent="RowDetailClicked"
-                            
                             SelectedItem="@SelectedDetail">
-
+                <OtherButtons>
+                    @if (OtherButtonDetail != null)
+                    @OtherButtonDetail
+                </OtherButtons>
 
                 <ContextTh>
                     <MudTh Style="width:40px">#</MudTh>
                     <MudTh>Name</MudTh>
                     @if (ContextThDetail != null)
                     @ContextThDetail
-
-
-
-
 
 
                 </ContextTh>
@@ -74,16 +65,14 @@
                     @if (ContextTdDetail != null)
                     @ContextTdDetail(context)
 
-
-
-
-
-
                 </ContextTd>
             </ComponentTableList>
         </MudItem>
 
     </MudGrid>
     @code {
-
+    [Parameter]
+    public bool ShowAddButtonMaster { get; set; } = true;
+    [Parameter]
+    public bool ShowAddButtonDetail { get; set; } = true;
 }

@@ -6,10 +6,10 @@ using CPTool.Interfaces;
 
 namespace CPTool.Pages.Components
 {
-    public partial class ComponentToolbar<T> where T: IAuditableEntityDTO
+    public partial class ComponentToolbar<T> where T: AuditableEntityDTO,new()
     {
         [Parameter]
-        public T SelectedItem { get; set; }
+        public T SelectedItem { get; set; }=new();
 
         [Parameter]
         public RenderFragment OtherButtons { get; set; }

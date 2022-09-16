@@ -8,6 +8,8 @@ namespace CPTool.Shared
 {
     public class TablesService : IDisposable
     {
+        public IDTOManager<PurchaseOrderDTO, PurchaseOrder> ManPurchaseOrder { get; set; }
+        public IDTOManager<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> ManPurchaseOrderMWOItem { get; set; }
         public IDTOManager<VendorCodeDTO, VendorCode> ManVendorCode { get; set; }
         public IDTOManager<TaxCodeLDDTO, TaxCodeLD> ManTaxCodeLD { get; set; }
         public IDTOManager<TaxCodeLPDTO, TaxCodeLP> ManTaxCodeLP { get; set; }
@@ -44,7 +46,9 @@ namespace CPTool.Shared
             IDTOManager<EquipmentItemDTO, EquipmentItem> manItemEquipment ,
             IDTOManager<VendorCodeDTO, VendorCode> manVendorCode,
             IDTOManager<TaxCodeLDDTO, TaxCodeLD> manTaxCodeLD,
-            IDTOManager<TaxCodeLPDTO, TaxCodeLP> manTaxCodeLP
+            IDTOManager<TaxCodeLPDTO, TaxCodeLP> manTaxCodeLP,
+            IDTOManager<PurchaseOrderDTO, PurchaseOrder> manPurchaseOrder,
+            IDTOManager<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> manPurchaseOrderMWOItem
             )
 
         {
@@ -66,13 +70,16 @@ namespace CPTool.Shared
             ManVendorCode = manVendorCode;
             ManTaxCodeLD = manTaxCodeLD;
             ManTaxCodeLP = manTaxCodeLP;
-           
+            ManPurchaseOrder = manPurchaseOrder;
+             ManPurchaseOrderMWOItem=manPurchaseOrderMWOItem;
+
+
         }
-        bool initialize = false;
+       
         public async Task Initialize()
         {
-            if (initialize) return;
-            initialize = true;
+
+          
             await ManChapter.UpdateList();
             await ManUnitaryPrize.UpdateList();
             await ManGasket.UpdateList();
@@ -92,6 +99,8 @@ namespace CPTool.Shared
             await ManVendorCode.UpdateList();
             await ManTaxCodeLD.UpdateList();
             await ManTaxCodeLP.UpdateList();
+            await ManPurchaseOrder.UpdateList();
+            await ManPurchaseOrderMWOItem.UpdateList();
         }
        
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> Save { get; set; }
@@ -118,11 +127,7 @@ namespace CPTool.Shared
 
             return await Result<int>.FailAsync("Not Event");
         }
-        //public void OnUpdateForm()
-        //{
-        //    if (UpdateForm != null) UpdateForm.Invoke();
-        //}
-
+       
 
         public void Dispose()
         {

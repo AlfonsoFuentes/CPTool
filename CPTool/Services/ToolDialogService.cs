@@ -134,5 +134,34 @@ namespace CPTool.Services
             var result = await dialog.Result;
             return result;
         }
+
+        public async Task<DialogResult> ShowPurchaseOrderDialog(PurchaseOrderMWOItemDTO Model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = Model.PurchaseOrderCreated == false ? $"Add new Purchase Order " : $"Edit {Model.PurchaseOrderDTO.Name}";
+
+
+            modeldialog.parameters.Add("Model", Model);
+            var dialog = DialogService.Show<PurchaseOrderDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
+        public async Task<DialogResult> ShowPurchaseOrderItemDialog(PurchaseOrderMWOItemDTO Model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = "Relate PurchaseOrder to Items";
+
+
+            modeldialog.parameters.Add("Model", Model);
+            var dialog = DialogService.Show<PurchaseOrderItemDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CPTool.DTOS
 {
-   
+
     public class BrandSupplierDTO : AuditableEntityDTO
     {
 
@@ -16,5 +16,5 @@ namespace CPTool.DTOS
 
 
     }
-   
+
 }

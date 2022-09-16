@@ -2,7 +2,7 @@
 using CPTool.Implementations;
 using static MudBlazor.Icons.Custom;
 
-namespace CPTool.Pages.BrandSupplierPages
+namespace CPTool.Pages.ManytoManyList
 {
     public partial class BrandSupplierList : CancellableComponent, IDisposable
 

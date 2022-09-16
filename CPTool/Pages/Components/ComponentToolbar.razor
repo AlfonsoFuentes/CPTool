@@ -1,28 +1,36 @@
 ﻿@typeparam T
 <MudToolBar>
-    <MudTooltip Text="Add">
-        <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="Add" Size="Size.Small" />
-    </MudTooltip>
+    @if (ShowAddButton)
+    {
+        <MudTooltip Text="Add">
+            <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="Add" Size="Size.Small" Disabled=@DisableAddButton />
+        </MudTooltip>
+    }
+    
     <MudTooltip Text="Edit">
-        <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled="@(SelectedItem==null?true:false)" OnClick="Edit" Size="Size.Small" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled="@(SelectedItem.Id==0?true:false)" OnClick="Edit" Size="Size.Small" />
     </MudTooltip>
 
     <MudTooltip Text="Delete">
-        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" Disabled="@(SelectedItem==null?true:false)" Size="Size.Small" OnClick="Delete" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" Disabled="@(SelectedItem.Id==0?true:false)" Size="Size.Small" OnClick="Delete" />
     </MudTooltip>
     @OtherButtons
     <MudTooltip Text="Print">
-        <MudIconButton Icon="@Icons.Material.Outlined.Print" Color="Color.Inherit" Disabled="@(SelectedItem==null?true:false)" Size="Size.Small" OnClick="Print" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Print" Color="Color.Inherit" Disabled="@(SelectedItem.Id==0?true:false)" Size="Size.Small" OnClick="Print" />
     </MudTooltip>
     <MudTooltip Text="Excel">
-        <MudIconButton Icon="@Icons.Custom.FileFormats.FileExcel" Color="Color.Inherit" Disabled="@(SelectedItem==null?true:false)" Size="Size.Small" OnClick="Excel" />
+        <MudIconButton Icon="@Icons.Custom.FileFormats.FileExcel" Color="Color.Inherit" Disabled="@(SelectedItem.Id==0?true:false)" Size="Size.Small" OnClick="Excel" />
     </MudTooltip>
     <MudTooltip Text="PDF">
-        <MudIconButton Icon="@Icons.Custom.FileFormats.FilePdf" Color="Color.Inherit" Disabled="@(SelectedItem==null?true:false)" Size="Size.Small" OnClick="PDF" />
+        <MudIconButton Icon="@Icons.Custom.FileFormats.FilePdf" Color="Color.Inherit" Disabled="@(SelectedItem.Id==0?true:false)" Size="Size.Small" OnClick="PDF" />
     </MudTooltip>
 
 </MudToolBar>
 
 @code {
+    [Parameter]
+    public bool ShowAddButton { get; set; } = true;
+    [Parameter]
+    public bool DisableAddButton { get; set; } = true;
 
 }

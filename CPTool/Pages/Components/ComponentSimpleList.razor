@@ -4,8 +4,9 @@
 
 <PageTitle>@TableName</PageTitle>
 <ComponentTableList @ref="table" TDTO="TDTO"
-                    SelectedItem="Selected" 
+                    SelectedItem="@Selected" 
                     T="T"
+                    ShowAddButton=@ShowAddButton
                     TableName=@TableName
                     Elements="@Manager.List"
                     OnShowDialogOverrided=ShowDialogOverrided>
@@ -20,7 +21,8 @@
 </ComponentTableList>
 
 @code {
-
+    [Parameter]
+    public bool ShowAddButton { get; set; } = true;
 
 }
 

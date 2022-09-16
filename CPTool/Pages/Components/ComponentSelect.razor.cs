@@ -16,8 +16,7 @@ namespace CPTool.Pages.Components
 
         [Parameter]
         public EventCallback<TDTO> ModelChanged { get; set; }
-        [Parameter]
-        public string TableName { get; set; }
+       
         [Parameter]
         public string RequiredError { get; set; }
         [Parameter]

@@ -6,14 +6,16 @@
     <MudDialog>
         <DialogContent>
             <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <ComponentAutoComplete Label="Supplier Name"
-                                   TableName="Supplier"
-                                   TDTO="SupplierDTO"
-                                   T="Supplier"
-                                   Manager=TablesService.ManSupplier
-                                   ObjectList=TablesService.ManSupplier.List
-                                   ShowDialogOverrided=@((dto)=>ToolDialogService.ShowSupplierDialog(Model))
-                                   @bind-Model=@Model.SupplierDTO></ComponentAutoComplete>
+                <ComponentSelect 
+                    TDTO="SupplierDTO"
+                             T="Supplier"
+                             Label="Supplier Name"
+                             Elements=TablesService.ManSupplier.List                            
+                             @bind-Model=@Model.SupplierDTO>
+
+
+                </ComponentSelect>
+              
 
                 <MudSelect Dense="true"
                        Margin="Margin.Dense"

@@ -30,6 +30,10 @@ namespace CPTool.Context.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("CostCenter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -711,14 +715,63 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MWOId")
+                    b.Property<int>("Currency")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MWOItemId")
+                    b.Property<int?>("MWOId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("POCreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("POEstimatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("POInstalledDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PONumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("POOrderingdDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("POReceivedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("PrizeCurrency")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PrizeUSD")
+                        .HasColumnType("float");
+
+                    b.Property<int>("PurchaseOrderStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PurchaseRequisition")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SPL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TaxCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("USDCOP")
+                        .HasColumnType("float");
+
+                    b.Property<double>("USDEUR")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -727,36 +780,36 @@ namespace CPTool.Context.Migrations
 
                     b.HasIndex("MWOId");
 
-                    b.HasIndex("MWOItemId");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("PurchaseOrders");
                 });
 
-            modelBuilder.Entity("CPTool.Entities.PurchaseOrderItem", b =>
+            modelBuilder.Entity("CPTool.Entities.PurchaseOrderMWOItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("PurchaseOrderId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("MWOItemId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PurchaseOrderId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("PurchaseOrderId", "MWOItemId");
 
-                    b.HasIndex("PurchaseOrderId");
+                    b.HasIndex("MWOItemId");
 
-                    b.ToTable("PurchaseOrderItems");
+                    b.ToTable("PurchaseOrderMWOItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.StructuralItem", b =>
@@ -1163,28 +1216,32 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.PurchaseOrder", b =>
                 {
-                    b.HasOne("CPTool.Entities.MWO", "MWO")
+                    b.HasOne("CPTool.Entities.MWO", null)
                         .WithMany("PurchaseOrders")
-                        .HasForeignKey("MWOId")
+                        .HasForeignKey("MWOId");
+
+                    b.HasOne("CPTool.Entities.Supplier", "Supplier")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("SupplierId");
+
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PurchaseOrderMWOItem", b =>
+                {
+                    b.HasOne("CPTool.Entities.MWOItem", "MWOItem")
+                        .WithMany("PurchaseOrderMWOItems")
+                        .HasForeignKey("MWOItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CPTool.Entities.MWOItem", "MWOItem")
-                        .WithMany("PurchaseOrders")
-                        .HasForeignKey("MWOItemId");
-
-                    b.Navigation("MWO");
-
-                    b.Navigation("MWOItem");
-                });
-
-            modelBuilder.Entity("CPTool.Entities.PurchaseOrderItem", b =>
-                {
                     b.HasOne("CPTool.Entities.PurchaseOrder", "PurchaseOrder")
-                        .WithMany("PurchaseOrderItems")
+                        .WithMany("PurchaseOrderMWOItems")
                         .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("MWOItem");
 
                     b.Navigation("PurchaseOrder");
                 });
@@ -1300,7 +1357,7 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.MWOItem", b =>
                 {
-                    b.Navigation("PurchaseOrders");
+                    b.Navigation("PurchaseOrderMWOItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MWOType", b =>
@@ -1320,7 +1377,7 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.PurchaseOrder", b =>
                 {
-                    b.Navigation("PurchaseOrderItems");
+                    b.Navigation("PurchaseOrderMWOItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.StructuralItem", b =>
@@ -1333,6 +1390,8 @@ namespace CPTool.Context.Migrations
                     b.Navigation("BrandSuppliers");
 
                     b.Navigation("EquipmentItems");
+
+                    b.Navigation("PurchaseOrders");
                 });
 
             modelBuilder.Entity("CPTool.Entities.TaxCodeLD", b =>

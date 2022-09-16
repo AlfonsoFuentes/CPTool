@@ -19,11 +19,15 @@ namespace CPTool.Context
         {
             modelBuilder.Entity<EquipmentItem>().HasOne(c => c.InnerMaterial).WithMany(t => t.InnerMaterials).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<EquipmentItem>().HasOne(c => c.OuterMaterial).WithMany(t => t.OuterMaterials).OnDelete(DeleteBehavior.NoAction);
+            //Relation Many to Many Brand Supplier
             modelBuilder.Entity<BrandSupplier>().HasKey(i => new { i.BrandId, i.SupplierId });
-
             modelBuilder.Entity<Brand>().HasMany(c => c.BrandSuppliers).WithOne(t => t.Brand).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Supplier>().HasMany(c => c.BrandSuppliers).WithOne(t => t.Supplier).OnDelete(DeleteBehavior.Cascade);
 
+            //Relation Many to Many Purchase Order  MWOItem
+            modelBuilder.Entity<PurchaseOrderMWOItem>().HasKey(i => new { i.PurchaseOrderId, i.MWOItemId });
+            modelBuilder.Entity<PurchaseOrder>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.PurchaseOrder).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.Cascade);
         }
 
        
@@ -34,7 +38,7 @@ namespace CPTool.Context
         public DbSet<MWO> MWOs { get; set; }
         public DbSet<MWOItem> MWOItems { get; set; }
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
-        public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
+        public DbSet<PurchaseOrderMWOItem> PurchaseOrderMWOItems { get; set; }
         public DbSet<AlterationItem> AlterationItems { get; set; }
         public DbSet<FoundationItem> FoundationItems { get; set; }
         public DbSet<StructuralItem> StructuralItems { get; set; }

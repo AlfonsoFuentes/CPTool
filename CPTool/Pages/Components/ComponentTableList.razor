@@ -21,7 +21,9 @@
             <ToolBarContent>
 
                 <ComponentToolbar T="TDTO"
+                                  ShowAddButton=@ShowAddButton
                                   SelectedItem="@SelectedItem"
+                                  DisableAddButton=@DisableAddButton
                                   OnAdd="Add"
                                   OnDelete="Delete"
                                   OnEdit="Edit"
@@ -60,5 +62,8 @@
 
 
 @code {
-
+    [Parameter]
+    public bool ShowAddButton { get; set; } = true;
+    [Parameter]
+    public bool DisableAddButton { get; set; } = true;
 }

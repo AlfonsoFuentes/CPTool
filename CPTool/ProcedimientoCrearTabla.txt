@@ -1,6 +1,7 @@
 ﻿1 Crear Entity
 2 Crear EntityDTO
-3 Crear  CreateMap<Entity, EntityDTO>().ReverseMap();
+3 Crear  CreateMap<Entity, EntityDTO>() con Entities relacionadas
+3.1 Crear CreateMap<EntityDTO, Entity>()
 4 Agregar DBSet<Entity>
 5 Agregar Entity y EntityDTO a las tables que se requiera asi:
 
@@ -13,7 +14,7 @@ Agregar DBSet nuevo con las dos tablas
 
 6 Crear Mapper en las tablas que se relaciono
 .ForMember(dest => dest.MWOItemDTO, act => act.MapFrom(src => src.MWOItem))
-6.1 En el OnModelCreating del TableContext agregar el AutoInclude para eager loading
+
 7 Compilar hasta que no halla errores
 8 Hacer Migration Add-Migration Nx
 9 Update-Database

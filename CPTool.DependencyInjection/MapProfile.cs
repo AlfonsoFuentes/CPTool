@@ -42,139 +42,154 @@ namespace CPTool.DependencyInjection
                  );
             CreateMap<Material, MaterialDTO>()
                 .ForMember(dest => dest.InnerMaterialsDTO,
-                  act => act.MapFrom(src => src.InnerMaterials))
-                .ForMember(dest => dest.OuterMaterialsDTO,
-                  act => act.MapFrom(src => src.OuterMaterials));
+                act => { act.PreCondition(src => (src.InnerMaterials != null)); act.MapFrom(src => src.InnerMaterials); }
+                  )
+                .ForMember(dest => dest.OuterMaterialsDTO, act => { act.PreCondition(src => (src.OuterMaterials != null)); act.MapFrom(src => src.OuterMaterials); }
+                  );
             CreateMap<BrandSupplier, BrandSupplierDTO>()
-               .ForMember(dest => dest.BrandDTO,
-                 act => act.MapFrom(src => src.Brand))
-              .ForMember(dest => dest.SupplierDTO,
-                 act => act.MapFrom(src => src.Supplier));
+               .ForMember(dest => dest.BrandDTO, act => { act.PreCondition(src => (src.Brand != null)); act.MapFrom(src => src.Brand); }
+               )
+              .ForMember(dest => dest.SupplierDTO, act =>
+              {
+                  act.PreCondition(src => (src.Supplier != null)); act.MapFrom(src => src.Supplier);
+              }
+             );
             CreateMap<Brand, BrandDTO>()
                 .ForMember(dest => dest.BrandSupplierDTOs,
                   act => act.MapFrom(src => src.BrandSuppliers))
+                //.ForMember(dest => dest.PurchaseOrderDTOs,act => { act.PreCondition(src => (src.PurchaseOrders != null)); act.MapFrom(src => src.PurchaseOrders); })
                 .ForMember(dest => dest.EquipmentItemDTOs,
                   act => { act.PreCondition(src => (src.EquipmentItems != null)); act.MapFrom(src => src.EquipmentItems); });
             CreateMap<Supplier, SupplierDTO>()
-               .ForMember(dest => dest.BrandSupplierDTOs,
-                 act => act.MapFrom(src => src.BrandSuppliers))
-               .ForMember(dest => dest.VendorCodeDTO,
-                 act => act.MapFrom(src => src.VendorCode))
-               .ForMember(dest => dest.TaxCodeLDDTO,
-                 act => act.MapFrom(src => src.TaxCodeLD))
-               .ForMember(dest => dest.TaxCodeLPDTO,
-                 act => act.MapFrom(src => src.TaxCodeLP))
+               .ForMember(dest => dest.BrandSupplierDTOs, act =>{act.PreCondition(src => (src.BrandSuppliers != null)); act.MapFrom(src => src.BrandSuppliers);})
+               .ForMember(dest => dest.VendorCodeDTO, act =>{act.PreCondition(src => (src.VendorCode != null)); act.MapFrom(src => src.VendorCode);})
+               .ForMember(dest => dest.TaxCodeLDDTO,act =>{act.PreCondition(src => (src.TaxCodeLD != null)); act.MapFrom(src => src.TaxCodeLD);})
+               .ForMember(dest => dest.TaxCodeLPDTO, act =>{act.PreCondition(src => (src.TaxCodeLP != null)); act.MapFrom(src => src.TaxCodeLP);})
                 .ForMember(dest => dest.EquipmentItemDTOs,
-                 act => { act.PreCondition(src => (src.EquipmentItems != null)); act.MapFrom(src => src.EquipmentItems); });
+                 act => { act.PreCondition(src => (src.EquipmentItems != null)); act.MapFrom(src => src.EquipmentItems); })
+            .ForMember(dest => dest.PurchaseOrderDTOs,
+                 act => { act.PreCondition(src => (src.PurchaseOrders != null)); act.MapFrom(src => src.PurchaseOrders); });
 
             CreateMap<EquipmentType, EquipmentTypeDTO>()
                   .ForMember(dest => dest.EquipmentTypeSubDTOs,
-                  act => act.MapFrom(src => src.EquipmentTypeSubs))
+                  act =>
+                  {
+                      act.PreCondition(src => (src.EquipmentTypeSubs != null)); act.MapFrom(src => src.EquipmentTypeSubs);
+                  }
+                  )
                    .ForMember(dest => dest.EquipmentItemDTOs,
                   act => { act.PreCondition(src => (src.EquipmentItems != null)); act.MapFrom(src => src.EquipmentItems); });
             CreateMap<EquipmentTypeSub, EquipmentTypeSubDTO>()
-                .ForMember(dest => dest.EquipmentTypeDTO,
-                 act => act.MapFrom(src => src.EquipmentType))
+                .ForMember(dest => dest.EquipmentTypeDTO, act =>
+                {
+                    act.PreCondition(src => (src.EquipmentType != null)); act.MapFrom(src => src.EquipmentType);
+                }
+                )
                 .ForMember(dest => dest.EquipmentItemDTOs,
                  act => { act.PreCondition(src => (src.EquipmentItems != null)); act.MapFrom(src => src.EquipmentItems); });
 
 
 
             CreateMap<AlterationItem, AlterationItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); }
+               )
                ;
             CreateMap<ContingencyItem, ContingencyItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); })
                 ;
             CreateMap<EHSItem, EHSItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); })
                 ;
             CreateMap<ElectricalItem, ElectricalItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); })
                 ;
             CreateMap<EngineeringCostItem, EngineeringCostItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
 
 
             CreateMap<EquipmentItem, EquipmentItemDTO>()
-               .ForMember(dest => dest.GasketDTO, act => act.MapFrom(src => src.Gasket))
-                .ForMember(dest => dest.InnerMaterialDTO, act => act.MapFrom(src => src.InnerMaterial))
-                .ForMember(dest => dest.OuterMaterialDTO, act => act.MapFrom(src => src.OuterMaterial))
-                .ForMember(dest => dest.EquipmentTypeDTO, act => act.MapFrom(src => src.EquipmentType))
-                 .ForMember(dest => dest.EquipmentTypeSubDTO, act => act.MapFrom(src => src.EquipmentTypeSub))
-               .ForMember(dest => dest.BrandDTO, act => 
+               .ForMember(dest => dest.GasketDTO, act => { act.PreCondition(src => (src.Gasket != null)); act.MapFrom(src => src.Gasket); })
+                .ForMember(dest => dest.InnerMaterialDTO, act => { act.PreCondition(src => (src.InnerMaterial != null)); act.MapFrom(src => src.InnerMaterial); })
+                .ForMember(dest => dest.OuterMaterialDTO, act => { act.PreCondition(src => (src.OuterMaterial != null)); act.MapFrom(src => src.OuterMaterial); })
+                .ForMember(dest => dest.EquipmentTypeDTO, act => { act.PreCondition(src => (src.EquipmentType != null)); act.MapFrom(src => src.EquipmentType); })
+                 .ForMember(dest => dest.EquipmentTypeSubDTO, act => { act.PreCondition(src => (src.EquipmentTypeSub != null)); act.MapFrom(src => src.EquipmentTypeSub); })
+               .ForMember(dest => dest.BrandDTO, act =>
                { act.PreCondition(src => (src.Brand != null)); act.MapFrom(src => src.Brand); })
 
                 .ForMember(dest => dest.SupplierDTO, act =>
                 { act.PreCondition(src => (src.Supplier != null)); act.MapFrom(src => src.Supplier); })
-                 .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+                 .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<FoundationItem, FoundationItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<InstrumentItem, InstrumentItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<InsulationItem, InsulationItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<PaintingItem, PaintingItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<PipingItem, PipingItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<StructuralItem, StructuralItemDTO>()
-                .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+                .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<TaxesItem, TaxesItemDTO>()
-                .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+                .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<TestingItem, TestingItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
 
 
             CreateMap<TestingItem, TestingItemDTO>()
-               .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+               .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
 
 
-            CreateMap<PurchaseOrderItem, PurchaseOrderItemDTO>()
+            CreateMap<PurchaseOrderMWOItem, PurchaseOrderMWOItemDTO>()
                 .ForMember(dest => dest.PurchaseOrderDTO,
-                act => act.MapFrom(src => src.PurchaseOrder));
+                act => { act.PreCondition(src => (src.PurchaseOrder != null)); act.MapFrom(src => src.PurchaseOrder); })
+              .ForMember(dest => dest.MWOItemDTO,
+                act => { act.PreCondition(src => (src.MWOItem != null)); act.MapFrom(src => src.MWOItem); });
 
             CreateMap<PurchaseOrder, PurchaseOrderDTO>()
-               .ForMember(dest => dest.MWODTO, act => act.MapFrom(src => src.MWO))
-               .ForMember(dest => dest.PurchaseOrderItemDTOs,
-               act => act.MapFrom(src => src.PurchaseOrderItems));
+               .ForMember(dest => dest.PurchaseOrderMWOItemDTOs, act => { act.PreCondition(src => (src.PurchaseOrderMWOItems != null)); act.MapFrom(src => src.PurchaseOrderMWOItems); })
+                //.ForMember(dest => dest.BrandDTO, act => { act.PreCondition(src => (src.MWOItem != null)); act.MapFrom(src => src.Brand); })
+                .ForMember(dest => dest.SupplierDTO, act => { act.PreCondition(src => (src.Supplier != null)); act.MapFrom(src => src.Supplier); });
+
 
             CreateMap<Chapter, ChapterDTO>()
-             .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems));
+             .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
             CreateMap<UnitaryBasePrize, UnitaryBasePrizeDTO>()
                 .ForMember(dest => dest.MWOItemDTOs,
-                act => act.MapFrom(src => src.MWOItems));
+                act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
 
             CreateMap<MWOItem, MWOItemDTO>()
-               .ForMember(dest => dest.PurchaseOrderDTOs, act => act.MapFrom(src => src.PurchaseOrders))
-               .ForMember(dest => dest.MWODTO, act => act.MapFrom(src => src.MWO))
-               .ForMember(dest => dest.AlterationItemDTO, act => act.MapFrom(src => src.AlterationItem))
-               .ForMember(dest => dest.ContingencyItemDTO, act => act.MapFrom(src => src.ContingencyItem))
-               .ForMember(dest => dest.EHSItemDTO, act => act.MapFrom(src => src.EHSItem))
-               .ForMember(dest => dest.ElectricalItemDTO, act => act.MapFrom(src => src.ElectricalItem))
-               .ForMember(dest => dest.EngineeringCostItemDTO, act => act.MapFrom(src => src.EngineeringCostItem))
-               .ForMember(dest => dest.EquipmentItemDTO, act => act.MapFrom(src => src.EquipmentItem))
-               .ForMember(dest => dest.FoundationItemDTO, act => act.MapFrom(src => src.FoundationItem))
-               .ForMember(dest => dest.InstrumentItemDTO, act => act.MapFrom(src => src.InstrumentItem))
-               .ForMember(dest => dest.InsulationItemDTO, act => act.MapFrom(src => src.InsulationItem))
-               .ForMember(dest => dest.PaintingItemDTO, act => act.MapFrom(src => src.PaintingItem))
-               .ForMember(dest => dest.PipingItemDTO, act => act.MapFrom(src => src.PipingItem))
-               .ForMember(dest => dest.StructuralItemDTO, act => act.MapFrom(src => src.StructuralItem))
-               .ForMember(dest => dest.TaxesItemDTO, act => act.MapFrom(src => src.TaxesItem))
-               .ForMember(dest => dest.TestingItemDTO, act => act.MapFrom(src => src.TestingItem))
-               .ForMember(dest => dest.UnitaryBasePrizeDTO, act => act.MapFrom(src => src.UnitaryBasePrize))
-               .ForMember(dest => dest.ChapterDTO, act => act.MapFrom(src => src.Chapter));
+               .ForMember(dest => dest.PurchaseOrderMWOItemDTOs, act => { act.PreCondition(src => (src.PurchaseOrderMWOItems != null)); act.MapFrom(src => src.PurchaseOrderMWOItems); })
+                .ForMember(dest => dest.MWODTO, act => { act.PreCondition(src => (src.MWO != null)); act.MapFrom(src => src.MWO); })
+               .ForMember(dest => dest.AlterationItemDTO, act => { act.PreCondition(src => (src.AlterationItem != null)); act.MapFrom(src => src.AlterationItem); })
+               .ForMember(dest => dest.ContingencyItemDTO, act => { act.PreCondition(src => (src.ContingencyItem != null)); act.MapFrom(src => src.ContingencyItem); })
+               .ForMember(dest => dest.EHSItemDTO, act => { act.PreCondition(src => (src.EHSItem != null)); act.MapFrom(src => src.EHSItem); })
+               .ForMember(dest => dest.ElectricalItemDTO, act => { act.PreCondition(src => (src.ElectricalItem != null)); act.MapFrom(src => src.ElectricalItem); })
+               .ForMember(dest => dest.EngineeringCostItemDTO, act => { act.PreCondition(src => (src.EngineeringCostItem != null)); act.MapFrom(src => src.EngineeringCostItem); })
+               .ForMember(dest => dest.EquipmentItemDTO, act => { act.PreCondition(src => (src.EquipmentItem != null)); act.MapFrom(src => src.EquipmentItem); })
+               .ForMember(dest => dest.FoundationItemDTO, act => { act.PreCondition(src => (src.FoundationItem != null)); act.MapFrom(src => src.FoundationItem); })
+               .ForMember(dest => dest.InstrumentItemDTO, act => { act.PreCondition(src => (src.InstrumentItem != null)); act.MapFrom(src => src.InstrumentItem); })
+               .ForMember(dest => dest.InsulationItemDTO, act => { act.PreCondition(src => (src.InsulationItem != null)); act.MapFrom(src => src.InsulationItem); })
+               .ForMember(dest => dest.PaintingItemDTO, act => { act.PreCondition(src => (src.PaintingItem != null)); act.MapFrom(src => src.PaintingItem); })
+               .ForMember(dest => dest.PipingItemDTO, act => { act.PreCondition(src => (src.PipingItem != null)); act.MapFrom(src => src.PipingItem); })
+               .ForMember(dest => dest.StructuralItemDTO, act => { act.PreCondition(src => (src.StructuralItem != null)); act.MapFrom(src => src.StructuralItem); })
+               .ForMember(dest => dest.TaxesItemDTO, act => { act.PreCondition(src => (src.TaxesItem != null)); act.MapFrom(src => src.TaxesItem); })
+               .ForMember(dest => dest.TestingItemDTO, act => { act.PreCondition(src => (src.TestingItem != null)); act.MapFrom(src => src.TestingItem); })
+               .ForMember(dest => dest.UnitaryBasePrizeDTO, act => { act.PreCondition(src => (src.UnitaryBasePrize != null)); act.MapFrom(src => src.UnitaryBasePrize); })
+               .ForMember(dest => dest.ChapterDTO, act => { act.PreCondition(src => (src.Chapter != null)); act.MapFrom(src => src.Chapter); });
 
             CreateMap<MWO, MWODTO>()
-                 .ForMember(dest => dest.MWOTypeDTO, act => act.MapFrom(src => src.MWOType))
-                .ForMember(dest => dest.MWOItemDTOs, act => act.MapFrom(src => src.MWOItems))
-                .ForMember(dest => dest.PurchaseOrderDTOs, act => act.MapFrom(src => src.PurchaseOrders));
+                 .ForMember(dest => dest.MWOTypeDTO, act => { act.PreCondition(src => (src.MWOType != null)); act.MapFrom(src => src.MWOType); })
+                .ForMember(dest => dest.MWOItemDTOs, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); })
+                ;
 
 
             CreateMap<MWOType, MWOTypeDTO>()
-                .ForMember(dest => dest.MWODTOs, act => act.MapFrom(src => src.MWOs));
+                .ForMember(dest => dest.MWODTOs, act => { act.PreCondition(src => (src.MWOs != null)); act.MapFrom(src => src.MWOs); });
 
         }
+      
         void DTOtoEntity()
         {
             CreateMap<AuditableEntityDTO, AuditableEntity>();
@@ -202,7 +217,7 @@ namespace CPTool.DependencyInjection
             CreateMap<StructuralItemDTO, StructuralItem>();
             CreateMap<TaxesItemDTO, TaxesItem>();
             CreateMap<TestingItemDTO, TestingItem>();
-            CreateMap<PurchaseOrderItemDTO, PurchaseOrderItem>();
+            CreateMap<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem>();
             CreateMap<PurchaseOrderDTO, PurchaseOrder>();
             CreateMap<ChapterDTO, Chapter>();
             CreateMap<UnitaryBasePrizeDTO, UnitaryBasePrize>();
@@ -210,5 +225,6 @@ namespace CPTool.DependencyInjection
             CreateMap<MWODTO, MWO>();
             CreateMap<MWOTypeDTO, MWOType>();
         }
+     
     }
 }

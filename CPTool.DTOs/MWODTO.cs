@@ -34,7 +34,7 @@ namespace CPTool.DTOS
                 Details = value!.Select(x => x as AuditableEntityDTO).ToList();
             }
         }
-        public List<PurchaseOrderDTO>? PurchaseOrderDTOs { get; set; } = new();
+       
 
     }
     

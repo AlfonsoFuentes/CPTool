@@ -23,7 +23,7 @@ namespace CPTool.Pages.Components
         
         public List<TDTO> Elements { get; set; } = new();
         [Parameter]
-        public TDTO SelectedItem { get; set; }
+        public TDTO SelectedItem { get; set; } = new();
 
         [Parameter]
         public string TableName { get; set; }

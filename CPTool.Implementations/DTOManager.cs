@@ -8,13 +8,13 @@ using System.Threading;
 namespace CPTool.Implementations
 {
     public class DTOManager<TDTO, T> : IDTOManager<TDTO, T>, IDisposable
-        where TDTO : class, IAuditableEntityDTO,  new() 
+        where TDTO : class, IAuditableEntityDTO, new()
           where T : IAuditableEntity
     {
 
         readonly IUnitOfWork _unitofwork;
         readonly IMapper _mapper;
-       
+
         public List<TDTO> List { get; set; } = new();
         public DTOManager(IUnitOfWork unitofwork, IMapper mapper)
         {
@@ -25,20 +25,20 @@ namespace CPTool.Implementations
 
         public async Task<IResult<TDTO>> AddUpdate(IAuditableEntityDTO dto, CancellationToken cancellationToken)
         {
-            dto=await OnPriorSave(dto);
-            
+            dto = await OnPriorSave(dto);
+
             T? table = _mapper.Map<T>(dto);
 
-            var exist = await _unitofwork.Repository<T>().AnyAsync(x => x.Equals( table));
+            var exist = await _unitofwork.Repository<T>().AnyAsync(x => x.Equals(table));
             var request = !exist ? await _unitofwork.Repository<T>().AddAsync(table) : _unitofwork.Repository<T>().UpdateAsync(table);
             var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
             if (!result.Succeeded)
                 return await Result<TDTO>.FailAsync("Not created!");
             var mppeddto = _mapper.Map<TDTO>(request) as IAuditableEntityDTO;
-           var  responsdto = await OnPostSave(mppeddto) as TDTO;
-           
-        
-         
+            var responsdto = await OnPostSave(mppeddto) as TDTO;
+
+
+
             return await Result<TDTO>.SuccessAsync(responsdto!, "Updated");
 
 
@@ -82,7 +82,7 @@ namespace CPTool.Implementations
                 {
                     return await Result<int>.FailAsync("Not Delete!");
                 }
-             
+
                 return await Result<int>.SuccessAsync(result.Data, retorno);
             }
             return await Result<int>.FailAsync("Not Found!");
@@ -121,24 +121,39 @@ namespace CPTool.Implementations
         {
             var list = await _unitofwork.Repository<T>().GetAllAsync();
             List = _mapper.Map<List<TDTO>>(list);
-           
+            try
+            {
+                //List = new();
+                //foreach (var row in list)
+                //{
+                //    var rowdto = _mapper.Map<TDTO>(row);
+                //    List.Add(rowdto);
+                //}
+                //
+            }
+            catch (Exception ex)
+            {
+               
+                    string exm = ex.Message;
+              
 
-            if (PostUpdateListEvent != null) await PostUpdateListEvent.Invoke();
+            }
+                if (PostUpdateListEvent != null) await PostUpdateListEvent.Invoke();
 
 
-           
-        }
 
-        public void Dispose()
-        {
+            }
+
+            public void Dispose()
+            {
 
 
-        }
+            }
 
         public Func<Task> PostUpdateListEvent { get; set; } = null!;
- 
+
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PriorSave { get; set; } = null!;
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PostSave { get; set; } = null!;
-      
+
     }
 }

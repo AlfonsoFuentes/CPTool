@@ -35,11 +35,23 @@ namespace CPTool.Pages.Dialogs
             {
                 return $"Vendor Code: {arg} is not in the list";
             }
-            if (TablesService.ManSupplier.List.Any(x=>x.VendorCodeDTO.Name==arg) )
+            if(Model.SupplierDTO.Id==0)
             {
-                var vendor = (TablesService.ManSupplier.List.First(x => x.VendorCodeDTO.Name == arg));
-                return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
+                if (TablesService.ManSupplier.List.Any(x => x.VendorCodeDTO.Name == arg))
+                {
+                    var vendor = (TablesService.ManSupplier.List.First(x => x.VendorCodeDTO.Name == arg));
+                    return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
+                }
             }
+            else
+            {
+                if (TablesService.ManSupplier.List.Where(x=>x.Id!=Model.SupplierDTO.Id).Any(x => x.VendorCodeDTO.Name == arg))
+                {
+                    var vendor = (TablesService.ManSupplier.List.First(x => x.VendorCodeDTO.Name == arg));
+                    return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
+                }
+            }
+            
                 
             return null;
         }

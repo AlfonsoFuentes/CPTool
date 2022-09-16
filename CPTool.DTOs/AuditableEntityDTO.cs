@@ -28,7 +28,7 @@ namespace CPTool.DTOS
         }
 
         public int? MasterId => Master?.Id;
-        public AuditableEntityDTO? Master { get; set; } = null!;
+        public AuditableEntityDTO? Master { get; set; }
 
         public bool Equals(IAuditableEntityDTO? other)
         {

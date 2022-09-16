@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddCPToolServices(builder.Configuration);
+builder.Services.CurrencyService();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

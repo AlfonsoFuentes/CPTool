@@ -2,7 +2,7 @@
 @page "/mwolist"
 @implements IDisposable
 @inherits CancellableComponent
-@if (test)
+@if (DatabaseInitialize)
 {
 
 
@@ -10,7 +10,8 @@
                         MasterT="MWO"
                         DetailDTO="MWOItemDTO"
                         DetailT="MWOItem"
-                       
+                        @bind-SelectedMaster=@SelectedMWO
+                        @bind-SelectedDetail=@SelectedMWOItem
                         MasterTableName="MWO"
                         DetailTableName="Items"
                         MasterManager=TablesService.ManMWO
@@ -35,17 +36,38 @@
         <ContextTdDetail>
             <MudTd DataLabel="Budget">@context.BudgetPrize</MudTd>
         </ContextTdDetail>
+        <OtherButtonDetail>
+            <MudTooltip Text="Shopping Cart">
+                <MudIconButton Icon="@Icons.Filled.AddShoppingCart" Color="Color.Inherit" Disabled=@(SelectedMWOItem.Id==0?true:false) Size="Size.Small" OnClick="AddShoppingCart" />
+            </MudTooltip>
+        </OtherButtonDetail>
+        
     </ComponentOneToManyList>
     
 
 }
 @code {
-    bool test = true;
+    [CascadingParameter]
+    public App App{ get; set; }
+
+    MWODTO SelectedMWO = new();
+    MWOItemDTO SelectedMWOItem = new();
+    async Task AddShoppingCart()
+    {
+        PurchaseOrderMWOItemDTO model= new();
+        model.PurchaseOrderDTO.MWOItemDTO = SelectedMWOItem;
+        model.MWOItemDTO = SelectedMWOItem;
+       
+        var retorno = await ToolDialogService.ShowPurchaseOrderDialog(model);
+    }
+    public bool DatabaseInitialize { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
+        if (DatabaseInitialize) return;
         await TablesService.Initialize();
+        DatabaseInitialize = true;
     }
-
 }
 
 

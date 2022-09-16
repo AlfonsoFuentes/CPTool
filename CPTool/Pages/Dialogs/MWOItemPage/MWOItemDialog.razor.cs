@@ -23,6 +23,7 @@
             }
             base.OnAfterRender(firstRender);
         }
+        bool bViewButtonSpecs = false;
         void ViewSpecificSpec()
         {
             ViewSpecs();
@@ -32,6 +33,7 @@
             {
                 case 4:
                     bEquipmentVisible = true;
+                    bViewButtonSpecs = true;
                     TablesService.ManMWOItem.PriorSave += EquipmentItemPage.OnSave;
                     break;
             }
