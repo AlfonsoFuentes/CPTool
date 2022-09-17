@@ -8,10 +8,9 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         protected MWOItemDialog Dialog { get; set; }
         protected MWOItemDTO Item => Dialog.Model;
 
-        [Parameter]
-        public bool Visible { get; set; } = false;
+       
         EquipmentItemDTO Model { get => Item.EquipmentItemDTO; set => Item.EquipmentItemDTO = value; }
-        List<SupplierDTO> SupplierList = new();
+      
         protected override void OnInitialized()
         {
             if (Model == null)
@@ -19,48 +18,18 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
                 Model = new EquipmentItemDTO();
               
             }
-            //SupplierList = Model.BrandDTO.Id == 0 ? new() : Model.BrandDTO.BrandSupplierDTOs.Select(x => x.SupplierDTO).ToList();
-
-        }
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if(firstRender)
-            {
-                if (Model == null)
-                {
-                    Model = new EquipmentItemDTO();
-                    Dialog.GetSaveEvent();
-                }
-                
-            }
-            base.OnAfterRender(firstRender);
-        }
-
-        public async Task<IResult<IAuditableEntityDTO>> OnSave(IAuditableEntityDTO dto)
-        {
            
-           
-           var result=  await TablesService.ManItemEquipment.AddUpdate(Model, _cts.Token);
-            if(result.Succeeded)
-            {
-                (dto as MWOItemDTO).EquipmentItemDTO = result.Data;
-                return await Result<IAuditableEntityDTO>.SuccessAsync((dto as MWOItemDTO), "Updated");
-            }
-
-            return await Result<IAuditableEntityDTO>.FailAsync("Not created!");
         }
+        
+
+        
         void OnBrandValueChanged()
         {
             Model.SupplierDTO = new();
 
-            SupplierList = Model.BrandDTO.Id == 0 ? new() : Model.BrandDTO.BrandSupplierDTOs.Select(x => x.SupplierDTO).ToList();
-        }
-        
-        void IDisposable.Dispose()
-        {
            
-
         }
+       
         private string ValidateEquipmentType(string arg)
         {
             if (arg == null || arg == "")

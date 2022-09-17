@@ -1,50 +1,60 @@
-﻿@if (test)
+﻿@inherits CancellableComponent
+@if (test)
 {
-    <ComponentBaseDialog TDTO="MWOItemDTO" Model="@Model">
+    <ComponentBaseDialog TDTO="MWOItemDTO" Model="@Model" FuncOnInitialize="OnInit">
         <Components>
             <CascadingValue Value="this">
-                <MudStack Justify="@_justify">
-                    <MudPaper Height="60px" Width="100%">
-                        <MudToolBar>
-                            <MudButton Variant="Variant.Filled" OnClick="ViewName" Size="Size.Small"> Name</MudButton>
-                            <MudButton Variant="Variant.Filled" OnClick="ViewSpecs" Disabled=@(!bViewButtonSpecs) Size="Size.Small">Specs</MudButton>
-                        </MudToolBar>
-                    </MudPaper>
+                <MudGrid>
+                    <MudItem xs="12">
+                       
+                            <MudToolBar>
+                                <MudButton Variant="Variant.Outlined" OnClick="ViewName" Size="Size.Small"> Name</MudButton>
+                                <MudButton Variant="Variant.Outlined" OnClick="ViewSpecs" Size="Size.Small">Specs</MudButton>
+                            </MudToolBar>
+                       
+                    </MudItem>
 
-                    @if (bViewName)
-                    {
+                    <MudItem xs="12">
+                       
+                            @if (bViewName)
+                            {
 
-                        <MudPaper Height="320px" Width="100%">
-                            <MudGrid>
+                                <MudGrid>
 
-                                <MudItem xs="12" sm="6">
-                                    <ChapterComponent></ChapterComponent>
-                                </MudItem>
-                                <MudItem xs="12" sm="6">
-                                    <ExpenseComponent></ExpenseComponent>
-                                </MudItem>
+                                    <MudItem xs="12" sm="6">
+                                        <ChapterComponent></ChapterComponent>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="6">
+                                        <ExpenseComponent></ExpenseComponent>
+                                    </MudItem>
 
-                            </MudGrid>
-                        </MudPaper>
+                                </MudGrid>
 
-                    }
-                    @if (bViewSpecs)
-                    {
+                            }
+                            @if (bViewSpecs)
+                            {
+                                @switch (Model.ChapterDTO.Id)
+                                {
+                                    case 4:
+                                        <EquipmentItemPage></EquipmentItemPage>
+                                        break;
+                                }
 
-                        <MudPaper Height="320px" Width="100%">
-                            <EquipmentItemPage Visible=@bEquipmentVisible @ref="EquipmentItemPage"></EquipmentItemPage>
-                        </MudPaper>
 
-                    }
-                </MudStack>
+
+                            }
+                     
+                    </MudItem>
+
+                </MudGrid>
             </CascadingValue>
         </Components>
     </ComponentBaseDialog>
-    
+
 }
 
 @code {
-  
+
     bool test = true;
-    Justify _justify = Justify.Center;
+    //Justify _justify = Justify.Center;
 }

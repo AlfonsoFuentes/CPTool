@@ -1,7 +1,6 @@
 ﻿@inherits CancellableComponent
 @implements IDisposable
-@if (Visible)
-{
+
     <MudGrid>
         <MudItem xs="12" sm="6">
             <ComponentAutoComplete Label="Equipment Type"
@@ -127,7 +126,7 @@
                       Variant="Variant.Outlined"></MudTextField>
         </MudItem>
     </MudGrid>
-}
+
 
 @code {
 

@@ -1,4 +1,6 @@
-﻿namespace CPTool.Pages.Dialogs.MWOItemPage
+﻿using System.Security.Cryptography;
+
+namespace CPTool.Pages.Dialogs.MWOItemPage
 {
     public partial class MWOItemDialog : IDisposable
     {
@@ -7,48 +9,38 @@
         [Parameter]
         public MWOItemDTO Model { get; set; }
       
-        EquipmentItemPage EquipmentItemPage;
-        
-       
-        bool bViewButtonSpecs = false;
-        void ViewSpecificSpec()
+         async Task OnInit()
         {
-            ViewSpecs();
-            StateHasChanged();
-            
+            ChapterChange();
+
+          
+            await Task.CompletedTask;
+        }
+        public void ChapterChange()
+        {
+       
             switch (Model.ChapterId)
             {
                 case 4:
-                    bEquipmentVisible = true;
-                    bViewButtonSpecs = true;
-                    TablesService.ManMWOItem.PriorSave += EquipmentItemPage.OnSave;
+                   
+                   
+                    TablesService.ManMWOItem.PriorSave += OnSaveEquipment;
                     break;
             }
-            ViewName();
-            StateHasChanged();
-        }
-
-       
-
-        public void GetSaveEvent()
-        {
-
-            ViewSpecificSpec();
-        }
-
       
-        bool bEquipmentVisible = false;
-        bool bViewSpecs = false;
+      
+        }
         bool bViewName = true;
+        bool bViewSpecs = false;
         void ViewName()
         {
             bViewName = true;
-            bViewSpecs = !bViewName;
+            bViewSpecs = false;
         }
         void ViewSpecs()
         {
+            bViewName = false;
             bViewSpecs = true;
-            bViewName = !bViewSpecs;
         }
         void IDisposable.Dispose()
         {
@@ -57,9 +49,22 @@
                 if (Model.ChapterDTO.Id == 4)
                 {
 
-                    TablesService.ManMWOItem.PriorSave -= EquipmentItemPage.OnSave;
+                    TablesService.ManMWOItem.PriorSave -= OnSaveEquipment;
                 }
             }
+        }
+        public async Task<IResult<IAuditableEntityDTO>> OnSaveEquipment(IAuditableEntityDTO dto)
+        {
+
+
+            var result = await TablesService.ManItemEquipment.AddUpdate(Model.EquipmentItemDTO, _cts.Token);
+            if (result.Succeeded)
+            {
+                (dto as MWOItemDTO).EquipmentItemDTO = result.Data;
+                return await Result<IAuditableEntityDTO>.SuccessAsync((dto as MWOItemDTO), "Updated");
+            }
+
+            return await Result<IAuditableEntityDTO>.FailAsync("Not created!");
         }
     }
 }

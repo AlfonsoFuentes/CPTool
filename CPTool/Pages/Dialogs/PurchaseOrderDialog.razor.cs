@@ -13,15 +13,13 @@ namespace CPTool.Pages.Dialogs
 
         async Task Initializeform()
         {
-            await Task.Run(() =>
-            {
-                Model.PurchaseOrderDTO.USDCOP = 4000;// Math.Round(_CurrencyService.RateList["COP"], 2);
-                Model.PurchaseOrderDTO.USDEUR = 1;// Math.Round(_CurrencyService.RateList["EUR"], 2);
-                if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
-                    Model.PurchaseOrderDTO.POEstimatedDate = DateTime.UtcNow;
-                Model.PurchaseOrderDTO.SetButtonNameHistory();
+            Model.PurchaseOrderDTO.USDCOP = 4000;// Math.Round(_CurrencyService.RateList["COP"], 2);
+            Model.PurchaseOrderDTO.USDEUR = 1;// Math.Round(_CurrencyService.RateList["EUR"], 2);
+            if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
+                Model.PurchaseOrderDTO.POEstimatedDate = DateTime.UtcNow;
+            Model.PurchaseOrderDTO.SetButtonNameHistory();
 
-            });
+           await Task.CompletedTask;
 
         }
         async Task BeforeClose()

@@ -8,14 +8,15 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         protected MWOItemDialog Dialog { get; set; }
         protected MWOItemDTO Model => Dialog.Model;
 
+       
         void OnChapterChanged()
         {
           
             var list = Model.MWODTO.MWOItemDTOs.Where(x => x.ChapterDTO.Id == Model.ChapterDTO.Id).ToList();
           
             Model.Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
-            Dialog.GetSaveEvent();
-         
+
+            Dialog.ChapterChange();
         }
         private string ItemChapter(int arg)
         {
