@@ -15,10 +15,10 @@
            Variant="Variant.Outlined"
            Validation="@Validation"
            ValueChanged=ValueChanged>
-    <MudSelectItem Value=0>Must select @Label ...</MudSelectItem>
+   
     @foreach (var item in Elements)
     {
-        <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
+        <MudSelectItem Value="item">@item.Name</MudSelectItem>
     }
 
 </MudSelect>

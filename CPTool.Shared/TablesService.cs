@@ -29,7 +29,7 @@ namespace CPTool.Shared
         public IDTOManager<EquipmentTypeDTO, EquipmentType> ManEquipmentType { get; set; }
         public IDTOManager<EquipmentTypeSubDTO, EquipmentTypeSub> ManEquipmentTypeSub { get; set; }
         public IDTOManager<EquipmentItemDTO, EquipmentItem> ManItemEquipment { get; set; }
-
+        public IDTOManager<DownPaymentDTO, DownPayment> ManDownPayment { get; set; }
         public TablesService(
             IDTOManager<BrandSupplierDTO, BrandSupplier> manBrandSupplier,
             IDTOManager<MWOTypeDTO, MWOType> manMWOType,
@@ -48,7 +48,8 @@ namespace CPTool.Shared
             IDTOManager<TaxCodeLDDTO, TaxCodeLD> manTaxCodeLD,
             IDTOManager<TaxCodeLPDTO, TaxCodeLP> manTaxCodeLP,
             IDTOManager<PurchaseOrderDTO, PurchaseOrder> manPurchaseOrder,
-            IDTOManager<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> manPurchaseOrderMWOItem
+            IDTOManager<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> manPurchaseOrderMWOItem,
+            IDTOManager<DownPaymentDTO, DownPayment> manDownPayment
             )
 
         {
@@ -72,6 +73,7 @@ namespace CPTool.Shared
             ManTaxCodeLP = manTaxCodeLP;
             ManPurchaseOrder = manPurchaseOrder;
              ManPurchaseOrderMWOItem=manPurchaseOrderMWOItem;
+            ManDownPayment=manDownPayment;
 
 
         }
@@ -101,6 +103,7 @@ namespace CPTool.Shared
             await ManTaxCodeLP.UpdateList();
             await ManPurchaseOrder.UpdateList();
             await ManPurchaseOrderMWOItem.UpdateList();
+            await ManDownPayment.UpdateList();
         }
        
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> Save { get; set; }

@@ -23,7 +23,11 @@ namespace CPTool.DependencyInjection
         {
             CreateMap<AuditableEntity, AuditableEntityDTO>()
                 .ReverseMap();
+            CreateMap<DownPayment, DownPaymentDTO>()
 
+              .ForMember(dest => dest.PurchaseOrderDTO,
+               act => { act.PreCondition(src => (src.PurchaseOrder != null)); act.MapFrom(src => src.PurchaseOrder); }
+              );
 
             CreateMap<TaxCodeLP, TaxCodeLPDTO>()
 
@@ -149,7 +153,7 @@ namespace CPTool.DependencyInjection
 
             CreateMap<PurchaseOrder, PurchaseOrderDTO>()
                .ForMember(dest => dest.PurchaseOrderMWOItemDTOs, act => { act.PreCondition(src => (src.PurchaseOrderMWOItems != null)); act.MapFrom(src => src.PurchaseOrderMWOItems); })
-                //.ForMember(dest => dest.BrandDTO, act => { act.PreCondition(src => (src.MWOItem != null)); act.MapFrom(src => src.Brand); })
+                .ForMember(dest => dest.DownPaymentDTOs, act => { act.PreCondition(src => (src.DownPayments != null)); act.MapFrom(src => src.DownPayments); })
                 .ForMember(dest => dest.SupplierDTO, act => { act.PreCondition(src => (src.Supplier != null)); act.MapFrom(src => src.Supplier); });
 
 
@@ -161,7 +165,7 @@ namespace CPTool.DependencyInjection
 
             CreateMap<MWOItem, MWOItemDTO>()
                .ForMember(dest => dest.PurchaseOrderMWOItemDTOs, act => { act.PreCondition(src => (src.PurchaseOrderMWOItems != null)); act.MapFrom(src => src.PurchaseOrderMWOItems); })
-                .ForMember(dest => dest.MWODTO, act => { act.PreCondition(src => (src.MWO != null)); act.MapFrom(src => src.MWO); })
+                .ForMember(dest => dest.MWODTO, act => act.MapFrom(src => src.MWO))
                .ForMember(dest => dest.AlterationItemDTO, act => { act.PreCondition(src => (src.AlterationItem != null)); act.MapFrom(src => src.AlterationItem); })
                .ForMember(dest => dest.ContingencyItemDTO, act => { act.PreCondition(src => (src.ContingencyItem != null)); act.MapFrom(src => src.ContingencyItem); })
                .ForMember(dest => dest.EHSItemDTO, act => { act.PreCondition(src => (src.EHSItem != null)); act.MapFrom(src => src.EHSItem); })
@@ -193,6 +197,7 @@ namespace CPTool.DependencyInjection
         void DTOtoEntity()
         {
             CreateMap<AuditableEntityDTO, AuditableEntity>();
+            CreateMap<DownPaymentDTO, DownPayment>();
             CreateMap<TaxCodeLPDTO, TaxCodeLP>();
             CreateMap<TaxCodeLDDTO, TaxCodeLD>();
             CreateMap<VendorCodeDTO, VendorCode>();

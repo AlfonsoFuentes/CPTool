@@ -1,8 +1,11 @@
-﻿namespace CPTool.Pages.Dialogs
+﻿using System.Collections.Immutable;
+using System.Linq;
+
+namespace CPTool.Pages.Dialogs
 {
     public partial class PurchaseOrderItemDialog
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+       
 
 
 
@@ -10,28 +13,16 @@
         public PurchaseOrderMWOItemDTO Model { get; set; }
 
         List<MWOItemDTO> MWOItemDTOs = new();
-        protected override void OnInitialized()
+       
+        async Task ProperInitialize()
         {
-            var mwoitems = Model.PurchaseOrderDTO.PurchaseOrderMWOItemDTOs;
-            var mwo = mwoitems.FirstOrDefault().MWOItemDTO.MWODTO;
+            var mwosearch = Model.PurchaseOrderDTO.PurchaseOrderMWOItemDTOs.FirstOrDefault().MWOItemDTO.MWODTO;
+            var mwo = (await TablesService.ManMWO.GetById(mwosearch.Id)).Data;
 
-            MWOItemDTOs= mwo.MWOItemDTOs.Where(x=>x.PurchaseOrderMWOItemDTOs.Count==0).ToList(); 
-            base.OnInitialized();
+
+            MWOItemDTOs = mwo.MWOItemDTOs.Select(x => x).Where(y => !y.PurchaseOrderMWOItemDTOs.Any(z => z.PurchaseOrderId == Model.PurchaseOrderId)).ToList();
         }
-        MudForm form;
-        async Task Submit()
-        {
-            await form.Validate();
-            if (form.IsValid)
-            {
-                
-
-
-                MudDialog.Close(DialogResult.Ok(Model));
-            }
-        }
-
-        void Cancel() => MudDialog.Cancel();
         
+
     }
 }

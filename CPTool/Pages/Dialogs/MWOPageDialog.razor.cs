@@ -10,7 +10,7 @@ namespace CPTool.Pages.Dialogs
 {
     public partial class MWOPageDialog : CancellableComponent
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+      
 
 
 
@@ -18,22 +18,7 @@ namespace CPTool.Pages.Dialogs
         public MWODTO Model { get; set; }
 
        
-        MudForm form;
-        async Task Submit()
-        {
-
-
-
-            await form.Validate();
-            if (form.IsValid)
-            {
-               
-                MudDialog.Close(DialogResult.Ok(Model));
-            }
-        }
-
-
-        void Cancel() => MudDialog.Cancel();
+       
         private string ReviewMWOType(string arg)
         {
             if (arg == null || arg == "")
@@ -51,17 +36,7 @@ namespace CPTool.Pages.Dialogs
             }
             return null;
         }
-        protected override void OnInitialized()
-        {
-            success2 = true;
-
-
-
-
-        }
-
-
-
+        
         string AnyNumber(int number)
         {
             if (Model.Id == 0)

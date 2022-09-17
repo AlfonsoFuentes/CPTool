@@ -42,19 +42,19 @@ namespace CPTool.Pages.Components
         private string searchString1 = "";
         public IResult<List<TDTO>> Result { get; set; }
         private bool FilterFunc1(TDTO element) => FilterFunc(element, searchString1);
-      
 
+        [Parameter]
+        public Func<TDTO,string, bool> SearchFunc { get; set; } = null;
        
 
 
 
         private bool FilterFunc(TDTO element, string searchString)
         {
+            var retorno = SearchFunc == null ? element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) : SearchFunc.Invoke(element,searchString);
+            return retorno;
 
-            if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-
-            return false;
+           
         }
 
 

@@ -25,17 +25,33 @@ namespace CPTool.Pages.ManytoManyList
             => SelectedMaster.Id == 0 ? new() : SelectedMaster.PurchaseOrderMWOItemDTOs.Select(
                 x => TablesService.ManMWOItem.List.FirstOrDefault(y => y.Id == x.MWOItemDTO.Id)).ToList();
 
-        List<PurchaseOrderDTO> Masters => TablesService.ManPurchaseOrder.List.OrderBy(x =>(int) x.PurchaseOrderStatus).ToList();
+        List<PurchaseOrderDTO> Masters => TablesService.ManPurchaseOrder.List.OrderBy(x => (int)x.PurchaseOrderStatus).ToList();
 
-       
+        Func<PurchaseOrderDTO,string, bool> SearchMaster => (PurchaseOrderDTO element,string searchString) => OnfuncSearchMaster(element, searchString);
 
+        bool OnfuncSearchMaster(PurchaseOrderDTO element,string searchString)
+        {
+            var retorno= element.PurchaseRequisition.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PONumber.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PurchaseOrderStatus.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase);
+            return retorno;
+        }
         void ViewMasterList()
         {
             SelectedMaster = new();
+            bool encontrado = Masters.Any(x => x.PurchaseRequisition.Contains(value));
 
             SelectedDetail = new();
         }
+        async Task AddDownPayment()
+        {
+            DownPaymentDTO model = new();
+            model.PurchaseOrderDTO = SelectedMaster;
+           
 
+            var retorno = await ToolDialogService.ShowDownpaymentDialog(model);
+        }
         string PageTitle => $"Relation {MasterTableName} => {DetailTableName}";
         int mastersm => 6;
         int detailsm => 6;
@@ -66,10 +82,14 @@ namespace CPTool.Pages.ManytoManyList
             SelectedDetail = bs.PurchaseOrderDTO.PurchaseOrderMWOItemDTOs.FirstOrDefault().MWOItemDTO;
             bs.MWOItemDTO = SelectedDetail;
 
-            bs.PurchaseOrderDTO.MWOItemDTO = SelectedDetail;
+          
             TablesService.Save += SaveMaster;
             bs.PurchaseOrderCreated = true;
-            return OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<PurchaseOrderDTO>(dto) : await OnShowDialogMaster.Invoke(bs);
+
+            var result = OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<PurchaseOrderDTO>(dto) : await OnShowDialogMaster.Invoke(bs);
+
+            if (result.Cancelled) TablesService.Save -= SaveMaster;
+            return result;
 
 
         }
@@ -81,10 +101,12 @@ namespace CPTool.Pages.ManytoManyList
             PurchaseOrderMWOItemDTO bs = new();
             bs.PurchaseOrderDTO = SelectedMaster;
             bs.MWOItemDTO = SelectedDetail;
-           
+
             TablesService.Save += SaveDetail;
 
-            return OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<MWOItemDTO>(dto) : await OnShowDialogDetail.Invoke(bs);
+            var result = OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<MWOItemDTO>(dto) : await OnShowDialogDetail.Invoke(bs);
+            if (result.Cancelled) TablesService.Save -= SaveDetail;
+            return result;
 
 
         }
@@ -100,7 +122,7 @@ namespace CPTool.Pages.ManytoManyList
                 purchaseOrderMWOItemDTO.PurchaseOrderDTO = result.Data;
                 SelectedDetail = new();
                 SelectedMaster = new();
-               
+
                 if (purchaseOrderMWOItemDTO.PurchaseOrderId != 0 && purchaseOrderMWOItemDTO.MWOItemId != 0)
                 {
                     var result2 = await TablesService.ManPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
@@ -124,14 +146,14 @@ namespace CPTool.Pages.ManytoManyList
         async Task<IResult<IAuditableEntityDTO>> SaveDetail(IAuditableEntityDTO dto)
         {
             var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
-         
+
             var result = await TablesService.ManMWOItem.AddUpdate(purchaseOrderMWOItemDTO.MWOItemDTO, _cts.Token);
             if (result.Succeeded)
             {
                 purchaseOrderMWOItemDTO.MWOItemDTO = result.Data;
                 SelectedDetail = new();
                 SelectedMaster = new();
-              
+
 
                 if (purchaseOrderMWOItemDTO.PurchaseOrderId != 0 && purchaseOrderMWOItemDTO.MWOItemId != 0)
                 {

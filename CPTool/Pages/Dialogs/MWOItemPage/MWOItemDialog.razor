@@ -1,66 +1,50 @@
 ﻿@if (test)
 {
-    <MudDialog DisableSidePadding="true">
-      
-            <DialogContent>
-                <MudContainer Style="max-height: 420px;">
-                    <CascadingValue Value="this">
+    <ComponentBaseDialog TDTO="MWOItemDTO" Model="@Model">
+        <Components>
+            <CascadingValue Value="this">
+                <MudStack Justify="@_justify">
+                    <MudPaper Height="60px" Width="100%">
+                        <MudToolBar>
+                            <MudButton Variant="Variant.Filled" OnClick="ViewName" Size="Size.Small"> Name</MudButton>
+                            <MudButton Variant="Variant.Filled" OnClick="ViewSpecs" Disabled=@(!bViewButtonSpecs) Size="Size.Small">Specs</MudButton>
+                        </MudToolBar>
+                    </MudPaper>
 
-                        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                            <MudStack Justify="@_justify">
-                                <MudPaper Height="60px" Width="100%">
-                                    <MudToolBar>
-                                        <MudButton Variant="Variant.Filled" OnClick="ViewName" Size="Size.Small"> Name</MudButton>
-                                        <MudButton Variant="Variant.Filled" OnClick="ViewSpecs" Disabled=@(!bViewButtonSpecs) Size="Size.Small">Specs</MudButton>
-                                    </MudToolBar>
-                                </MudPaper>
+                    @if (bViewName)
+                    {
 
-                                @if (bViewName)
-                                {
+                        <MudPaper Height="320px" Width="100%">
+                            <MudGrid>
 
-                                    <MudPaper Height="320px" Width="100%">
-                                        <MudGrid>
+                                <MudItem xs="12" sm="6">
+                                    <ChapterComponent></ChapterComponent>
+                                </MudItem>
+                                <MudItem xs="12" sm="6">
+                                    <ExpenseComponent></ExpenseComponent>
+                                </MudItem>
 
-                                            <MudItem xs="12" sm="6">
-                                                <ChapterComponent></ChapterComponent>
-                                            </MudItem>
-                                            <MudItem xs="12" sm="6">
-                                                <ExpenseComponent></ExpenseComponent>
-                                            </MudItem>
+                            </MudGrid>
+                        </MudPaper>
 
-                                        </MudGrid>
-                                    </MudPaper>
+                    }
+                    @if (bViewSpecs)
+                    {
 
-                                }
-                                @if (bViewSpecs)
-                                {
+                        <MudPaper Height="320px" Width="100%">
+                            <EquipmentItemPage Visible=@bEquipmentVisible @ref="EquipmentItemPage"></EquipmentItemPage>
+                        </MudPaper>
 
-                                    <MudPaper Height="320px" Width="100%">
-                                        <EquipmentItemPage Visible=@bEquipmentVisible @ref="EquipmentItemPage"></EquipmentItemPage>
-                                    </MudPaper>
-
-                                }
-                            </MudStack>
-
-
-
-                        </MudForm>
-
-                    </CascadingValue>
-                </MudContainer>
-            </DialogContent>
-
-            <DialogActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
-                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-            </DialogActions>
-       
-    </MudDialog>
+                    }
+                </MudStack>
+            </CascadingValue>
+        </Components>
+    </ComponentBaseDialog>
+    
 }
 
 @code {
-    bool success;
-    string[] errors = { };
+  
     bool test = true;
     Justify _justify = Justify.Center;
 }

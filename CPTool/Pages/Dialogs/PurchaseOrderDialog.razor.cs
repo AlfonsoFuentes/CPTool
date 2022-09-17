@@ -4,50 +4,44 @@ namespace CPTool.Pages.Dialogs
 {
     public partial class PurchaseOrderDialog
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-
 
 
         [Parameter]
         public PurchaseOrderMWOItemDTO Model { get; set; }
 
-        protected override void OnInitialized()
+        
+
+        async Task Initializeform()
         {
-            //var response = _CurrencyService.RateList;
-            Model.PurchaseOrderDTO.USDCOP = 4000;// Math.Round(_CurrencyService.RateList["COP"], 2);
-            Model.PurchaseOrderDTO.USDEUR = 1;// Math.Round(_CurrencyService.RateList["EUR"], 2);
-            if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
-                Model.PurchaseOrderDTO.POEstimatedDate = DateTime.UtcNow;
-            Model.PurchaseOrderDTO.SetButtonNameHistory();
-            base.OnInitialized();
-        }
-        MudForm form;
-        async Task Submit()
-        {
-            await form.Validate();
-            if (form.IsValid)
+            await Task.Run(() =>
             {
-                Model.PurchaseOrderDTO.ChangeStatusPO();
+                Model.PurchaseOrderDTO.USDCOP = 4000;// Math.Round(_CurrencyService.RateList["COP"], 2);
+                Model.PurchaseOrderDTO.USDEUR = 1;// Math.Round(_CurrencyService.RateList["EUR"], 2);
+                if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
+                    Model.PurchaseOrderDTO.POEstimatedDate = DateTime.UtcNow;
+                Model.PurchaseOrderDTO.SetButtonNameHistory();
 
-                if(!Model.PurchaseOrderCreated)
+            });
+
+        }
+        async Task BeforeClose()
+        {
+            Model.PurchaseOrderDTO.ChangeStatusPO();
+
+            if (!Model.PurchaseOrderCreated)
+            {
+                var result = await TablesService.ManPurchaseOrder.AddUpdate(Model.PurchaseOrderDTO, _cts.Token);
+                if (result.Succeeded)
                 {
-                    var result = await TablesService.ManPurchaseOrder.AddUpdate(Model.PurchaseOrderDTO, _cts.Token);
-                    if (result.Succeeded)
-                    {
 
-                        Model.PurchaseOrderDTO = result.Data;
-                        await TablesService.ManPurchaseOrderMWOItem.AddUpdate(Model, _cts.Token);
-                        await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-                        await TablesService.ManPurchaseOrder.UpdateList();
-                    }
+                    Model.PurchaseOrderDTO = result.Data;
+                    await TablesService.ManPurchaseOrderMWOItem.AddUpdate(Model, _cts.Token);
+                    await TablesService.ManPurchaseOrderMWOItem.UpdateList();
+                    await TablesService.ManPurchaseOrder.UpdateList();
                 }
-               
-               
-                MudDialog.Close(DialogResult.Ok(Model));
             }
         }
-      
-        void Cancel() => MudDialog.Cancel();
+
         private string ValidateCurrency(Currency arg)
         {
             if (arg == Currency.None)
@@ -58,7 +52,7 @@ namespace CPTool.Pages.Dialogs
         }
         private string ValidatePONumber(string arg)
         {
-           
+
 
             if (arg == "")
                 return "Must define PO number";

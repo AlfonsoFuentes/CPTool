@@ -2,27 +2,14 @@
 {
     public partial class MWOItemDialog : IDisposable
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+       
 
         [Parameter]
         public MWOItemDTO Model { get; set; }
-        public MudForm form;
+      
         EquipmentItemPage EquipmentItemPage;
-        protected override void OnInitialized()
-        {
-
-          
-
-
-        }
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if(firstRender)
-            {
-                ViewSpecificSpec();
-            }
-            base.OnAfterRender(firstRender);
-        }
+        
+       
         bool bViewButtonSpecs = false;
         void ViewSpecificSpec()
         {
@@ -41,16 +28,7 @@
             StateHasChanged();
         }
 
-        async Task Submit()
-        {
-
-            await form.Validate();
-            if (form.IsValid)
-            {
-
-                MudDialog.Close(DialogResult.Ok(Model));
-            }
-        }
+       
 
         public void GetSaveEvent()
         {
@@ -58,7 +36,7 @@
             ViewSpecificSpec();
         }
 
-        void Cancel() => MudDialog.Cancel();
+      
         bool bEquipmentVisible = false;
         bool bViewSpecs = false;
         bool bViewName = true;

@@ -6,16 +6,23 @@
 <MudGrid>
 
     <MudItem xs="12" sm="@mastersm">
-        <ComponentTableList
-                            ShowAddButton=false
+        <ComponentTableList ShowAddButton=false
                             TDTO="PurchaseOrderDTO" T="PurchaseOrder"
                             TableName=@MasterTableName
+                            SearchFunc="SearchMaster"
                             Elements="@Masters"
                             OnShowDialogOverrided="ShowDialogMaster"
                             SelectedItem="@SelectedMaster"
                             OnRowClickEvent="RowMasterClicked">
 
-           
+            <OtherButtons>
+                <MudTooltip Text="Downpayment">
+                    <MudIconButton Icon="@Icons.Filled.CurrencyExchange" Color="Color.Inherit" Disabled=@(SelectedMaster.Id==0?true:false) Size="Size.Small" OnClick="AddDownPayment" />
+                </MudTooltip>
+                <MudTooltip Text="Restore List">
+                    <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+                </MudTooltip>
+            </OtherButtons>
             <ContextTh>
                 <MudTh Style="width:40px">#</MudTh>
                 <MudTh>Name</MudTh>
@@ -37,17 +44,20 @@
 
 
     <MudItem xs="12" sm="@detailsm">
-        <ComponentTableList
-                            TDTO="MWOItemDTO"
+        <ComponentTableList TDTO="MWOItemDTO"
                             T="MWOItem"
-                            DisableAddButton=@(SelectedMaster==null?true:false)
+                            DisableAddButton=@(SelectedMaster.Id==0?true:false)
                             TableName=@DetailTableName
                             OnShowDialogOverrided="ShowDialogDetail"
                             Elements="@Details"
                             OnRowClickEvent="RowDetailClicked"
                             SelectedItem="@SelectedDetail">
 
-           
+            <OtherButtons>
+                <MudTooltip Text="Restore List">
+                    <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+                </MudTooltip>
+            </OtherButtons>
             <ContextTh>
                 <MudTh Style="width:40px">#</MudTh>
                 <MudTh>Name</MudTh>
@@ -64,4 +74,11 @@
 </MudGrid>
 @code {
     public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+
+    string value = "";
+   
+    //Func
+    //<string, bool> func = (string para) => { return Masters.Any(x=>x.PurchaseRequisition.Contains(para)); };
+   
+
 }

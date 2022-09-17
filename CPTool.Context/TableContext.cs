@@ -64,6 +64,8 @@ namespace CPTool.Context
         public DbSet<TaxCodeLD> TaxCodeLDs { get; set; }
         public DbSet<VendorCode> VendorCodes { get; set; }
         public DbSet<TaxCodeLP> TaxCodeLPs { get; set; }
+
+        public DbSet<DownPayment> DownPayments { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             foreach (var entry in ChangeTracker.Entries<IAuditableEntity>().ToList())

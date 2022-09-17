@@ -1,27 +1,17 @@
 ﻿@inherits CancellableComponent
-<MudDialog>
-    <DialogContent>
-        <MudForm Model="Model" @ref="form">
-            <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Name</MudField>
-            <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PONumber</MudField>
-            <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PurchaseRequisition</MudField>
-            <ComponentMultiSelect TDTO="MWOItemDTO"
-                                  T="MWOItem"
-                                  Label="MWO Item"
-                                  Elements=MWOItemDTOs
-                                  @bind-Model=@Model.MWOItemDTO
-                                  @bind-SelectedValues=@SelectedValues></ComponentMultiSelect>|
+<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize=ProperInitialize  >
+    <Components>
+        <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Name</MudField>
+        <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PONumber</MudField>
+        <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PurchaseRequisition</MudField>
+        <ComponentSelect TDTO="MWOItemDTO"
+                         T="MWOItem"
+                         Label="MWO Item"
+                         Elements=MWOItemDTOs
+                         @bind-Model=@Model.MWOItemDTO></ComponentSelect>
+    </Components>
+</ComponentBaseDialog>
 
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-
-        <MudButton Variant="Variant.Filled" Color="Color.Primary"
-                   Class="ml-auto" OnClick="Submit">Save</MudButton>
-
-        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-    </DialogActions>
-</MudDialog>
 @code {
-    public IEnumerable<MWOItemDTO> SelectedValues;
+   
 }

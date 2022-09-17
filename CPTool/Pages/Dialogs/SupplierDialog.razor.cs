@@ -6,27 +6,15 @@ namespace CPTool.Pages.Dialogs
 {
     public partial class SupplierDialog : CancellableComponent
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+       
 
         [Parameter]
         public BrandSupplierDTO Model { get; set; }
 
 
 
-        MudForm form;
-        async Task Submit()
-        {
-
-            await form.Validate();
-            if (form.IsValid)
-            {
-               
-                MudDialog.Close(DialogResult.Ok(Model));
-            }
-        }
-
-
-        void Cancel() => MudDialog.Cancel();
+       
+       
         private string ReviewVendorCode(string arg)
         {
             if (arg == null || arg == "")
@@ -75,26 +63,21 @@ namespace CPTool.Pages.Dialogs
         {
             await TablesService.ManVendorCode.UpdateList();
             StateHasChanged();
-            await form.Validate();
+          
         }
         async Task UpdateTaxCodeLD()
         {
             await TablesService.ManTaxCodeLD.UpdateList();
             StateHasChanged();
-            await form.Validate();
+          
         }
         async Task UpdateTaxCodeLP()
         {
             await TablesService.ManTaxCodeLP.UpdateList();
             StateHasChanged();
-            await form.Validate();
+           
         }
-        protected override void OnInitialized()
-        {
-
-            base.OnInitialized();
-        }
-
+        
 
     }
 }

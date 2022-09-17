@@ -6,33 +6,48 @@ namespace CPTool.DTOS
 {
     public class PurchaseOrderDTO : AuditableEntityDTO
     {
-       
+        public List<DownPaymentDTO>? DownPaymentDTOs { get; set; }
         public List<PurchaseOrderMWOItemDTO>? PurchaseOrderMWOItemDTOs { get; set; } = new();
 
-        public MWOItemDTO? MWOItemDTO { get; set; } = new();
-        public PurchaseOrderStatus PurchaseOrderStatus { get; set; } = PurchaseOrderStatus.Draft; 
+        MWOItemDTO? _MWOItemDTO;
+        public MWOItemDTO? MWOItemDTO
+        {
+            get
+            {
+                return PurchaseOrderMWOItemDTOs?.Count == 0 ? _MWOItemDTO : PurchaseOrderMWOItemDTOs?.FirstOrDefault()?.MWOItemDTO;
+            }
+            set
+            {
+                _MWOItemDTO = value;
+            }
+        }
+        public PurchaseOrderStatus PurchaseOrderStatus { get; set; } = PurchaseOrderStatus.Draft;
 
         //public BrandDTO? BrandDTO { get; set; }
         public SupplierDTO? SupplierDTO { get; set; } = new();
         public int? SupplierId => SupplierDTO?.Id;
         //public int? BrandId => BrandDTO?.Id;
         public string PurchaseRequisition { get; set; } = "";
-        public DateTime POOrderingdDate { get; set; } 
-        public DateTime POCreatedDate { get; set; } 
+        public DateTime POOrderingdDate { get; set; }
+        public DateTime POCreatedDate { get; set; }
         public DateTime POReceivedDate { get; set; }
         public DateTime POInstalledDate { get; set; }
         public DateTime? POEstimatedDate { get; set; }
-      
+
         public string PONumber { get; set; } = "";
         public string SPL => MWOItemDTO?.ChapterDTO?.Id == 1 ? "SPL Alteration" : "SPL No Alteration";
         public string TaxCode => MWOItemDTO?.ChapterDTO?.Id == 1 ? SupplierDTO?.TaxCodeLPDTO?.Name! : SupplierDTO?.TaxCodeLDDTO?.Name!;
-        public string CostCenter => MWOItemDTO?.ChapterDTO?.Id == 1 ? MWOItemDTO ?.AlterationItemDTO?.CostCenter!: "";
+        public string CostCenter => MWOItemDTO?.ChapterDTO?.Id == 1 ? MWOItemDTO?.AlterationItemDTO?.CostCenter! : "";
         public Currency Currency { get; set; } = Currency.COP;
         public double PrizeCurrency { get; set; }
-       
+
+
+        public double Tax { get; set; } = 0.19;
+        public double PrizeCurrencyTax => Tax * PrizeCurrency;
+        public double TotalPrizeCurrency => PrizeCurrency + PrizeCurrencyTax;
         public double USDCOP { get; set; }
         public double USDEUR { get; set; }
-        public double ValueExchangeRate => Currency == Currency.EUR ? Currency == Currency.USD?1: USDEUR : USDCOP ;
+        public double ValueExchangeRate => Currency == Currency.EUR ? Currency == Currency.USD ? 1 : USDEUR : USDCOP;
         public double PrizeUSD
         {
             get => Currency == Currency.USD ? PrizeCurrency :
@@ -50,8 +65,8 @@ namespace CPTool.DTOS
             {
                 PurchaseOrderHistory.Add($"Cost Center: {MWOItemDTO?.AlterationItemDTO?.CostCenter}");
             }
-           
-           
+
+
             if (PurchaseOrderStatus == PurchaseOrderStatus.Draft)
             {
                 PurchaseOrderHistory.Add("Purchase order in draft");
@@ -136,9 +151,6 @@ namespace CPTool.DTOS
         }
 
     }
-
-
-
 
 
 }

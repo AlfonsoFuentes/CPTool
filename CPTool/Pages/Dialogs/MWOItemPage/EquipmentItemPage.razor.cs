@@ -74,7 +74,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
             await TablesService.ManEquipmentType.UpdateList();
             Model.EquipmentTypeDTO = TablesService.ManEquipmentType.List.FirstOrDefault(x => x.Id == Model.EquipmentTypeDTO.Id);
             StateHasChanged();
-            await Dialog.form.Validate();
+           
         }
         private string ValidateEquipmentSubType(string arg)
         {
@@ -90,7 +90,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
             await TablesService.ManEquipmentTypeSub.UpdateList();
             Model.EquipmentTypeDTO = TablesService.ManEquipmentType.List.FirstOrDefault(x => x.Id == Model.EquipmentTypeDTO.Id);
             StateHasChanged();
-            await Dialog.form.Validate();
+            
         }
         private string ValidateGasket(string arg)
         {
@@ -106,7 +106,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
             await TablesService.ManGasket.UpdateList();
            
             StateHasChanged();
-            await Dialog.form.Validate();
+           
         }
         private string ValidateMaterial(string arg)
         {
@@ -122,7 +122,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
             await TablesService.ManMaterial.UpdateList();
 
             StateHasChanged();
-            await Dialog.form.Validate();
+           
         }
     }
 }

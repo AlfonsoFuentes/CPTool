@@ -10,6 +10,7 @@ namespace CPTool.Pages.Components
         [Parameter]
         public IDTOManager<TDTO, T> Manager { get; set; }
 
+        public Func<TDTO,string, bool> SearchFunc { get; set; } = null;
 
         ComponentTableList<TDTO, T> table;
         TDTO Selected = new();

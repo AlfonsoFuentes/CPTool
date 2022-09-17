@@ -1,27 +1,20 @@
-﻿
-<MudDialog>
-    <DialogContent>
-        <MudForm Model="Model">
-            <MudTextField @bind-Value="Model.Name"
-                          For="@(() => Model.Name)"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Name" />
-            <MudTextField @bind-Value="Model.Abbreviation"
-                          For="@(() => Model.Abbreviation)"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Abbreviation" />
+﻿<ComponentBaseDialog TDTO="MaterialDTO" Model="@Model" >
+    <Components>
+        <MudTextField @bind-Value="Model.Name"
+                      For="@(() => Model.Name)"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="Name" />
+        <MudTextField @bind-Value="Model.Abbreviation"
+                      For="@(() => Model.Abbreviation)"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="Abbreviation" />
+    </Components>
+</ComponentBaseDialog>
 
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
-        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-    </DialogActions>
-</MudDialog>
 
 @code {
 

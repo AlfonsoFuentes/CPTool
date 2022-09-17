@@ -1,160 +1,151 @@
 ﻿@using System.Globalization
 @inherits CancellableComponent
-<MudDialog>
-    <DialogContent>
-        <MudForm Model="Model" @ref="form">
-            <MudGrid>
+<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize="Initializeform" FuncBeforeClose=BeforeClose ButtonSaveName=@Model.PurchaseOrderDTO.ButtonName
+DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderStatus.Installed?true:false)
+>
+    <Components>
+        <MudGrid>
 
-                <MudItem xs="12" sm="6">
-                    @if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Draft)
+            <MudItem xs="12" sm="6">
+                @if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Draft)
+                {
+                    <MudTextField @bind-Value="@Model.PurchaseOrderDTO.Name"
+                              Required=true
+                              RequiredError="Must Submit PO Name"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="Name" />
+                    <ComponentSelect TDTO="SupplierDTO"
+                                 T="Supplier"
+                                 Label="Supplier"
+                                 Required=true
+                                 RequiredError="Must Submit Supplier"
+                                 Elements=@TablesService.ManSupplier.List
+                                 @bind-Model=@Model.PurchaseOrderDTO.SupplierDTO></ComponentSelect>
+
+                }
+                else
+                {
+                    <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Name</MudField>
+                    <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
+
+
+                }
+                @if (Model.PurchaseOrderDTO.MWOItemDTO?.ChapterDTO?.Id == 1)
+                {
+                    <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
+                }
+
+                <MudField Label="Tax Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.TaxCode</MudField>
+                <MudField Label="Vendor Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO?.VendorCodeDTO?.Name</MudField>
+                <MudField Label="SPL" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SPL</MudField>
+
+                @if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Draft)
+                {
+                    <MudTextField @bind-Value="Model.PurchaseOrderDTO.PurchaseRequisition"
+                              Required=true
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="PR" />
+                    <MudSelect Dense="true"
+                           Margin="Margin.Dense"
+                           T="Currency"
+                           Label="Select Type of Currency"
+                           AnchorOrigin="Origin.BottomCenter"
+                           @bind-Value=@Model.PurchaseOrderDTO.Currency
+                           Validation="@(new Func<Currency, string>(ValidateCurrency))"
+                           Variant="Variant.Outlined">
+                        @foreach (var item in Enum.GetValues<Currency>())
+                        {
+                            <MudSelectItem Value="item">@item</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudNumericField T="double" @bind-Value="Model.PurchaseOrderDTO.PrizeCurrency"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Format="C0"
+                                 Culture="@_en"
+                                 Required="true"
+                                 Validation="@(new Func<double, string>(ValidatePOAmount))"
+                                 Label=@($"PO Value, {Model.PurchaseOrderDTO.Currency}")></MudNumericField>
+                    @if (Model.PurchaseOrderDTO.Currency == Currency.EUR || Model.PurchaseOrderDTO.Currency == Currency.COP)
                     {
-                        <MudTextField @bind-Value="@Model.PurchaseOrderDTO.Name"
-                                  Required=true
-                                  RequiredError="Must Submit PO Name"
-                                  Variant="Variant.Outlined"
-                                  Margin="Margin.Dense"
-                                  Immediate="true"
-                                  Label="Name" />
-                        <ComponentSelect TDTO="SupplierDTO"
-                                     T="Supplier"
-                                     Label="Supplier"
-                                     Required=true
-                                     RequiredError="Must Submit Supplier"
-                                     Elements=@TablesService.ManSupplier.List
-                                     @bind-Model=@Model.PurchaseOrderDTO.SupplierDTO></ComponentSelect>
-
+                        <MudNumericField T="double" Value="@Model.PurchaseOrderDTO.ValueExchangeRate"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Disabled=true
+                                 Culture="@_en"
+                                 Format="C2"
+                                 Variant="Variant.Outlined"
+                                 Label=@(Model.PurchaseOrderDTO.Currency==Currency.EUR?"Exchange Rate, EUR to USD":"Exchange Rate, COP to USD" )></MudNumericField>
+                        <MudNumericField T="double" Value="@Model.PurchaseOrderDTO.PrizeUSD"
+                                 Format="C0"
+                                 Disabled=true
+                                 Culture="@_en"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Label="Value, $USD"></MudNumericField>
                     }
-                    else
-                    {
-                        <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Name</MudField>
-                        <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
-
-
-                    }
-                    @if (Model.PurchaseOrderDTO.MWOItemDTO?.ChapterDTO?.Id == 1)
-                    {
-                        <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
-                    }
-
-                    <MudField Label="Tax Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.TaxCode</MudField>
+                }
+                else
+                {
                     <MudField Label="Vendor Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO?.VendorCodeDTO?.Name</MudField>
-                    <MudField Label="SPL" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SPL</MudField>
+                    <MudField Label="Type of Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
+                    <MudField Label=@($"PO Value, {Model.PurchaseOrderDTO.Currency}") Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PrizeCurrency.ToString(_en)</MudField>
+                }
 
-                    @if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Draft)
+
+                @if ((int)Model.PurchaseOrderDTO.PurchaseOrderStatus >= 1)
+                {
+                    if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
                     {
-                        <MudTextField @bind-Value="Model.PurchaseOrderDTO.PurchaseRequisition"
-                                  Required=true
-                                  Variant="Variant.Outlined"
-                                  Margin="Margin.Dense"
-                                  Immediate="true"
-                                  Label="PR" />
-                        <MudSelect Dense="true"
-                               Margin="Margin.Dense"
-                               T="Currency"
-                               Label="Select Type of Currency"
-                               AnchorOrigin="Origin.BottomCenter"
-                               @bind-Value=@Model.PurchaseOrderDTO.Currency
-                               Validation="@(new Func<Currency, string>(ValidateCurrency))"
-                               Variant="Variant.Outlined">
-                            @foreach (var item in Enum.GetValues<Currency>())
-                            {
-                                <MudSelectItem Value="item">@item</MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudNumericField T="double" @bind-Value="Model.PurchaseOrderDTO.PrizeCurrency"
-                                     Immediate="true"
-                                     HideSpinButtons="true"
-                                     Margin="Margin.Dense"
-                                     Variant="Variant.Outlined"
-                                     Format="C0"
-                                     Culture="@_en"
-                                     Required="true"
-                                     Validation="@(new Func<double, string>(ValidatePOAmount))"
-                                     Label=@($"PO Value, {Model.PurchaseOrderDTO.Currency}")></MudNumericField>
-                        @if (Model.PurchaseOrderDTO.Currency == Currency.EUR || Model.PurchaseOrderDTO.Currency == Currency.COP)
-                        {
-                            <MudNumericField T="double" Value="@Model.PurchaseOrderDTO.ValueExchangeRate"
-                                     Immediate="true"
-                                     HideSpinButtons="true"
-                                     Margin="Margin.Dense"
-                                     Disabled=true
-                                     Culture="@_en"
-                                     Format="C2"
-                                     Variant="Variant.Outlined"
-                                     Label=@(Model.PurchaseOrderDTO.Currency==Currency.EUR?"Exchange Rate, EUR to USD":"Exchange Rate, COP to USD" )></MudNumericField>
-                            <MudNumericField T="double" Value="@Model.PurchaseOrderDTO.PrizeUSD"
-                                     Format="C0"
-                                     Disabled=true
-                                     Culture="@_en"
-                                     Margin="Margin.Dense"
-                                     Variant="Variant.Outlined"
-                                     Label="Value, $USD"></MudNumericField>
-                        }
+                        <MudTextField T="string" @bind-Value="@Model.PurchaseOrderDTO.PONumber"
+                              Immediate="true"
+                              Margin="Margin.Dense"
+                              Validation="@(new Func<string, string>(ValidatePONumber))"
+                              Variant="Variant.Outlined"
+                              Label="Purchase Order number"></MudTextField>
+                        <MudDatePicker Label="Estimated receive date"
+                               ShowWeekNumbers="true"
+                               Disabled=@(Model.PurchaseOrderDTO.PurchaseOrderStatus== PurchaseOrderStatus.Ordering?false:true)
+                               Required=true
+                               RequiredError="Must define estimated receive date"
+                               @bind-Date="Model.PurchaseOrderDTO.POEstimatedDate" Culture="@_en"></MudDatePicker>
                     }
                     else
                     {
-                        <MudField Label="Vendor Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO?.VendorCodeDTO?.Name</MudField>
-                        <MudField Label="Type of Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
-                        <MudField Label=@($"PO Value, {Model.PurchaseOrderDTO.Currency}") Variant="Variant.Outlined"  Margin="Margin.Dense">@Model.PurchaseOrderDTO.PrizeCurrency.ToString(_en)</MudField>
+                        <MudField Label="Purchase Order number" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PONumber</MudField>
+                        <MudField Label="Estimated receive date" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.POEstimatedDate.ToString()</MudField>
                     }
 
+                }
 
-                    @if ((int)Model.PurchaseOrderDTO.PurchaseOrderStatus >= 1)
-                    {
-                        if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudCard>
+
+
+                    <MudCardContent>
+
+                        @foreach (var row in Model.PurchaseOrderDTO.PurchaseOrderHistory)
                         {
-                            <MudTextField T="string" @bind-Value="@Model.PurchaseOrderDTO.PONumber"
-                                  Immediate="true"
-                                
-                                  Margin="Margin.Dense"
-                                  Validation="@(new Func<string, string>(ValidatePONumber))"
-                                  Variant="Variant.Outlined"
-                                  Label="Purchase Order number"></MudTextField>
-                            <MudDatePicker Label="Estimated receive date"
-                                   ShowWeekNumbers="true"
-                                   Disabled=@(Model.PurchaseOrderDTO.PurchaseOrderStatus== PurchaseOrderStatus.Ordering?false:true)
-                                   Required=true
-                                   RequiredError="Must define estimated receive date"
-                                   @bind-Date="Model.PurchaseOrderDTO.POEstimatedDate" Culture="@_en"></MudDatePicker>
-                        }
-                        else
-                        {
-                            <MudField Label="Purchase Order number" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PONumber</MudField>
-                            <MudField Label="Estimated receive date" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.POEstimatedDate.ToString()</MudField>
+                            <MudField Variant="Variant.Outlined" Margin="Margin.Dense">@row</MudField>
                         }
 
-                    }
+                    </MudCardContent>
 
-                </MudItem>
-                <MudItem xs="12" sm="6">
-                    <MudCard>
-                        
+                </MudCard>
+            </MudItem>
 
-                        <MudCardContent>
+        </MudGrid>
+    </Components>
+</ComponentBaseDialog>
 
-                            @foreach (var row in Model.PurchaseOrderDTO.PurchaseOrderHistory)
-                            {
-                                <MudField Variant="Variant.Outlined" Margin="Margin.Dense">@row</MudField>
-                            }
-
-                        </MudCardContent>
-
-                    </MudCard>
-                </MudItem>
-
-            </MudGrid>
-
-
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderStatus.Installed?true:false)
-                   Class="ml-auto" OnClick="Submit">@Model.PurchaseOrderDTO.ButtonName</MudButton>
-
-        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-    </DialogActions>
-</MudDialog>
 
 @code {
     public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");

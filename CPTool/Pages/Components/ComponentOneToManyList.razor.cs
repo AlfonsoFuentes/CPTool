@@ -17,6 +17,11 @@ namespace CPTool.Pages.Components
         [Parameter]
         public IDTOManager<DetailDTO, DetailT> DetailManager { get; set; }
 
+        [Parameter]
+        public Func<MasterTDTO,string, bool> SearchFuncMaster { get; set; } = null;
+
+        [Parameter]
+        public Func<DetailDTO,string, bool> SearchFuncDetail { get; set; } = null;
 
         [Parameter]
         public string MasterTableName { get; set; }
@@ -74,7 +79,7 @@ namespace CPTool.Pages.Components
         protected override void OnInitialized()
         {
 
-            DetailManager.PostUpdateListEvent += MasterManager.UpdateList;
+          
 
             TablesService.Delete += OnDelete;
             base.OnInitialized();
@@ -154,7 +159,7 @@ namespace CPTool.Pages.Components
 
         void IDisposable.Dispose()
         {
-            DetailManager.PostUpdateListEvent -= MasterManager.UpdateList;
+          
             TablesService.Delete -= OnDelete;
 
         }

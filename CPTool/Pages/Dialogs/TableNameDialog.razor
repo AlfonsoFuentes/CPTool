@@ -1,22 +1,15 @@
 ﻿@typeparam T
+<ComponentBaseDialog TDTO="T" Model="@Model" >
+    <Components>
+        <MudTextField @bind-Value="Model.Name"
+                      For="@(() => Model.Name)"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="Name" />
+    </Components>
+</ComponentBaseDialog>
 
-<MudDialog>
-    <DialogContent>
-        <MudForm Model="Model">
-            <MudTextField @bind-Value="Model.Name"
-                          For="@(() => Model.Name)"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Name" />
-            
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
-        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-    </DialogActions>
-</MudDialog>
 @code {
 
 }

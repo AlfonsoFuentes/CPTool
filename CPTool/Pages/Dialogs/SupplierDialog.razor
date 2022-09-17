@@ -3,117 +3,82 @@
 {
 
 }
-<MudDialog>
-    <DialogContent>
-        <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-            <ComponentSelect TDTO="BrandDTO"
-                             T="Brand"
-                             Label="Brands or Service"
-                            
-                             Elements=TablesService.ManBrand.List
-                             @bind-Model=@Model.BrandDTO>
-
-
-            </ComponentSelect>
-           @* <ComponentAutoComplete Label="Brands or Service"
-                TableName="Brand or Services"
-                                   TDTO="BrandDTO"
-                                   T="Brand"
-                                   Manager=TablesService.ManBrand
-                                   ObjectList=TablesService.ManBrand.List
-                                  
-                                   @bind-Model=@Model.BrandDTO
-                                   ShowDialogOverrided=@((dto)=>ToolDialogService.ShowBrandDialog(Model))></ComponentAutoComplete>*@
+<ComponentBaseDialog TDTO="BrandSupplierDTO" Model="@Model" >
+    <Components>
+        <MudTextField @bind-Value="Model.SupplierDTO.Name"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="Supplier Name" />
 
 
 
-            <MudTextField @bind-Value="Model.SupplierDTO.Name"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Supplier Name" />
+        <MudTextField @bind-Value="Model.SupplierDTO.ContactPerson"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="Contact person" />
+        <MudTextField @bind-Value="Model.SupplierDTO.Email"
+                      InputType="InputType.Email"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="email" />
+        <MudTextField @bind-Value="Model.SupplierDTO.Phone"
+                      InputType="InputType.Telephone"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="Phone" />
+        <MudTextField @bind-Value="Model.SupplierDTO.Address"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Label="Address" />
+        <ComponentAutoComplete Label="Vendor Code"
+                               TDTO="VendorCodeDTO"
+                               T="VendorCode"
+                               UpdateList="UpdateVendorCode"
+                               Validation="@(new Func<string, string>(ReviewVendorCode))"
+                               Manager=TablesService.ManVendorCode
+                               ObjectList=TablesService.ManVendorCode.List
+                               @bind-Model=@Model.SupplierDTO.VendorCodeDTO
+                               Required=true
+                               TableName="Vendor Code">
 
+        </ComponentAutoComplete>
 
+        <ComponentAutoComplete Label="Tax Codel LD"
+                               TDTO="TaxCodeLDDTO"
+                               T="TaxCodeLD"
+                               UpdateList="UpdateTaxCodeLD"
+                               Manager=TablesService.ManTaxCodeLD
+                               ObjectList=TablesService.ManTaxCodeLD.List
+                               @bind-Model=@Model.SupplierDTO.TaxCodeLDDTO
+                               Required=true
+                               Validation="@(new Func<string, string>(ReviewTaxCodeLD))"
+                               TableName="Tax Codel LD">
 
-            <MudTextField @bind-Value="Model.SupplierDTO.ContactPerson"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Contact person" />
-            <MudTextField @bind-Value="Model.SupplierDTO.Email"
-                          InputType="InputType.Email"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="email" />
-            <MudTextField @bind-Value="Model.SupplierDTO.Phone"
-                          InputType="InputType.Telephone"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Phone" />
-            <MudTextField @bind-Value="Model.SupplierDTO.Address"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Label="Address" />
-            <ComponentAutoComplete Label="Vendor Code"
-                                   TDTO="VendorCodeDTO"
-                                   T="VendorCode"
-                                   UpdateList="UpdateVendorCode"
-                                   Validation="@(new Func<string, string>(ReviewVendorCode))"
-                                   Manager=TablesService.ManVendorCode
-                                   ObjectList=TablesService.ManVendorCode.List
-                                   @bind-Model=@Model.SupplierDTO.VendorCodeDTO
-                                   Required=true
-                                   TableName="Vendor Code"
-                                  >
+        </ComponentAutoComplete>
+        <ComponentAutoComplete Label="Tax Codel LP"
+                               TDTO="TaxCodeLPDTO"
+                               T="TaxCodeLP"
+                               UpdateList="UpdateTaxCodeLP"
+                               Manager=TablesService.ManTaxCodeLP
+                               ObjectList=TablesService.ManTaxCodeLP.List
+                               @bind-Model=@Model.SupplierDTO.TaxCodeLPDTO
+                               Validation="@(new Func<string, string>(ReviewTaxCodeLP))"
+                               Required=true
+                               TableName="Tax Codel LP">
 
-            </ComponentAutoComplete>
-          
-            <ComponentAutoComplete Label="Tax Codel LD"
-                                   TDTO="TaxCodeLDDTO"
-                                   T="TaxCodeLD"
-                                   UpdateList="UpdateTaxCodeLD"
-                                   Manager=TablesService.ManTaxCodeLD
-                                   ObjectList=TablesService.ManTaxCodeLD.List
-                                   @bind-Model=@Model.SupplierDTO.TaxCodeLDDTO
-                                   Required=true
-                                   Validation="@(new Func<string, string>(ReviewTaxCodeLD))"
-                                   TableName="Tax Codel LD"
-                                  >
+        </ComponentAutoComplete>
+    </Components>
+</ComponentBaseDialog>
 
-            </ComponentAutoComplete>
-            <ComponentAutoComplete Label="Tax Codel LP"
-                                   TDTO="TaxCodeLPDTO"
-                                   T="TaxCodeLP"
-                                   UpdateList="UpdateTaxCodeLP"
-                                   Manager=TablesService.ManTaxCodeLP
-                                   ObjectList=TablesService.ManTaxCodeLP.List
-                                   @bind-Model=@Model.SupplierDTO.TaxCodeLPDTO
-                                   Validation="@(new Func<string, string>(ReviewTaxCodeLP))"
-                                   Required=true
-                                   TableName="Tax Codel LP">
-
-            </ComponentAutoComplete>
-          
-
-
-           
-
-
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
-        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-    </DialogActions>
-</MudDialog>
 
 @code {
 
     public IMask mask1 = new RegexMask(@"^[0-9]\d{0,4}$");
-    bool success;
-    string[] errors = { };
+  
     bool test = true;
 }

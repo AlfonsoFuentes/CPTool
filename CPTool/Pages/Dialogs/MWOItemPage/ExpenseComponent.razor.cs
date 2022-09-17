@@ -43,7 +43,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         {
             await TablesService.ManUnitaryPrize.UpdateList();
             StateHasChanged();
-            await Dialog.form.Validate();
+            
         }
     }
 }

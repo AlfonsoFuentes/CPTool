@@ -9,6 +9,7 @@
     <MudItem xs="12" sm="@mastersm">
         <ComponentTableList @ref="@tableMaster"
                             ShowAddButton=@ShowAddButtonMaster
+                            SearchFunc=@SearchFuncMaster
                             TDTO="MasterTDTO" T="MasterT"
                             TableName=@MasterTableName
                             OnShowDialogOverrided="ShowDialogMaster"
@@ -40,6 +41,7 @@
             <ComponentTableList @ref="@tableDetail"
                             TDTO="DetailDTO"
                             T="DetailT"
+                            SearchFunc=@SearchFuncDetail
                             ShowAddButton=@ShowAddButtonDetail
                             TableName=@DetailTableName
                             OnShowDialogOverrided="ShowDialogDetail"

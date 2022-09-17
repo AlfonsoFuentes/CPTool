@@ -1,67 +1,54 @@
 ﻿@inherits CancellableComponent
 
-@if (success2)
-{
-    <MudDialog>
-        <DialogContent>
-            <MudForm Model="Model" @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <ComponentAutoComplete Label="MWO Type"
-                                   TDTO="MWOTypeDTO"
-                                   T="MWOType"
-                                   Manager=TablesService.ManMWOType
-                                   Required=true
-                                   ObjectList=TablesService.ManMWOType.List
-                                   TableName="MWO Type"
-                                   Validation="@(new Func<string, string>(ReviewMWOType))"
-                                   @bind-Model="@Model.MWOTypeDTO">
+<ComponentBaseDialog TDTO="MWODTO" Model="@Model">
+    <Components>
+        <ComponentAutoComplete Label="MWO Type"
+                               TDTO="MWOTypeDTO"
+                               T="MWOType"
+                               Manager=TablesService.ManMWOType
+                               Required=true
+                               ObjectList=TablesService.ManMWOType.List
+                               TableName="MWO Type"
+                               Validation="@(new Func<string, string>(ReviewMWOType))"
+                               @bind-Model="@Model.MWOTypeDTO">
 
-                </ComponentAutoComplete>
-
-                <MudTextField @bind-Value="Model.Name"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Immediate="true"
-                          Required=true
-                          RequiredError="Must Submit MWO Name"
-                          Validation="@(new Func<string, string>(ReviewMWOName))"
-                          Label="Name" />
-                <MudTextField T="int" @bind-Value="Model.Number"
-                          Immediate="true"
-                          Validation="@(new Func<int, string>(AnyNumber))"
-                          Label="Number"
-                          Required=true
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          InputMode="InputMode.numeric"
-                          Mask="@mask1" />
-                <MudTextField T="string" Value="Model.CEBName"
-                          Immediate="true"
-                          Disabled="true"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Label="Number" />
-                <MudTextField T="string" Value="Model.CECName"
-                          Immediate="true"
-                          Disabled="true"
-                          Variant="Variant.Outlined"
-                          Margin="Margin.Dense"
-                          Label="CECName" />
-
-
-            </MudForm>
-        </DialogContent>
-        <DialogActions>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
-            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-        </DialogActions>
-    </MudDialog>
-}
+        </ComponentAutoComplete>
+        <MudTextField @bind-Value="Model.Name"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Immediate="true"
+                      Required=true
+                      RequiredError="Must Submit MWO Name"
+                      Validation="@(new Func<string, string>(ReviewMWOName))"
+                      Label="Name" />
+        <MudTextField T="int" @bind-Value="Model.Number"
+                      Immediate="true"
+                      Validation="@(new Func<int, string>(AnyNumber))"
+                      Label="Number"
+                      Required=true
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      InputMode="InputMode.numeric"
+                      Mask="@mask1" />
+        <MudTextField T="string" Value="Model.CEBName"
+                      Immediate="true"
+                      Disabled="true"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Label="Number" />
+        <MudTextField T="string" Value="Model.CECName"
+                      Immediate="true"
+                      Disabled="true"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Label="CECName" />
+    </Components>
+</ComponentBaseDialog>
 
 
 @code {
 
     public IMask mask1 = new RegexMask(@"^[0-9]\d{0,4}$");
-    bool success, success2;
-    string[] errors = { };
+   
 
 }

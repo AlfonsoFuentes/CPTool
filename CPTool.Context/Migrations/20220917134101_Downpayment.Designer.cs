@@ -4,6 +4,7 @@ using CPTool.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    partial class TableContextModelSnapshot : ModelSnapshot
+    [Migration("20220917134101_Downpayment")]
+    partial class Downpayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,6 +160,9 @@ namespace CPTool.Context.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<string>("CBSRequesNo")
                         .HasColumnType("nvarchar(max)");
 
@@ -167,26 +172,11 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeliveryDueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("DownPaymentAmount")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime?>("DownPaymentDueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DownpaymentDescrption")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DownpaymentStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("Incotherm")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ManagerEmail")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -203,10 +193,7 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("PurchaseOrderId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("RealDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RequestDate")
+                    b.Property<DateTime>("RealDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -815,9 +802,6 @@ namespace CPTool.Context.Migrations
                     b.Property<double>("PrizeCurrency")
                         .HasColumnType("float");
 
-                    b.Property<double>("PrizeCurrencyTax")
-                        .HasColumnType("float");
-
                     b.Property<double>("PrizeUSD")
                         .HasColumnType("float");
 
@@ -835,15 +819,9 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Tax")
-                        .HasColumnType("float");
-
                     b.Property<string>("TaxCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalPrizeCurrency")
-                        .HasColumnType("float");
 
                     b.Property<double>("USDCOP")
                         .HasColumnType("float");

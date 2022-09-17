@@ -1,12 +1,14 @@
 ﻿
 
+using CPTool.Interfaces;
+
 namespace CPTool.Entities
 {
     public class PurchaseOrder : AuditableEntity
     {
-       
 
-      
+
+        public ICollection<DownPayment>? DownPayments { get; set; }
         public  ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
 
         public PurchaseOrderStatus PurchaseOrderStatus { get; set; }
@@ -31,8 +33,9 @@ namespace CPTool.Entities
         public double PrizeUSD { get; set; }
         public double USDCOP { get; set; }
         public double USDEUR { get; set; }
+
+        public double Tax { get; set; }
+        public double PrizeCurrencyTax { get; set; }
+        public double TotalPrizeCurrency { get; set; }
     }
-
-
-
 }
