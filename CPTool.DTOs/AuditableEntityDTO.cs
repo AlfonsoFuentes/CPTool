@@ -18,7 +18,7 @@ namespace CPTool.DTOS
         public DateTime? UpdatedDate { get; set; } = DateTime.Now;
         public virtual string? Name { get; set; } = "";
 
-       
+        public string? Description { get; set; } = "";
         public List<AuditableEntityDTO> Details { get; set; } = new();
 
 

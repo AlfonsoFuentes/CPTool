@@ -2,7 +2,7 @@
 using CPTool.Implementations;
 using static MudBlazor.Icons.Custom;
 
-namespace CPTool.Pages.ManytoManyList
+namespace CPTool.Pages.PagesList
 {
     public partial class BrandSupplierList : CancellableComponent, IDisposable
 
@@ -67,9 +67,9 @@ namespace CPTool.Pages.ManytoManyList
             bs.BrandDTO = SelectedMaster;
             bs.SupplierDTO = SelectedDetail;
             TablesService.Save += SaveBrand;
-            return OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<BrandDTO>(dto) : await OnShowDialogMaster.Invoke(bs);
-
-
+            var result = OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<BrandDTO>(dto) : await OnShowDialogMaster.Invoke(bs);
+            if (result.Cancelled) TablesService.Save -= SaveBrand;
+            return result;
         }
 
         async Task<DialogResult> ShowDialogDetail(SupplierDTO dto)
@@ -81,9 +81,11 @@ namespace CPTool.Pages.ManytoManyList
             bs.SupplierDTO = SelectedDetail;
             TablesService.Save += SaveSupplier;
 
-            return OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<SupplierDTO>(dto) : await OnShowDialogDetail.Invoke(bs);
+            var result= OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<SupplierDTO>(dto) : await OnShowDialogDetail.Invoke(bs);
 
+            if(result.Cancelled) TablesService.Save -= SaveSupplier;
 
+            return result;
         }
 
 

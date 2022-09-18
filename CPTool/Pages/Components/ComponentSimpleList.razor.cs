@@ -9,8 +9,8 @@ namespace CPTool.Pages.Components
     {
         [Parameter]
         public IDTOManager<TDTO, T> Manager { get; set; }
-
-        public Func<TDTO,string, bool> SearchFunc { get; set; } = null;
+        [Parameter]
+        public Func<TDTO, string, bool> SearchFunc { get; set; } = null;
 
         ComponentTableList<TDTO, T> table;
         TDTO Selected = new();
@@ -19,6 +19,10 @@ namespace CPTool.Pages.Components
 
         [Parameter]
         public Func<TDTO, Task<DialogResult>> OnShowDialogOverrided { get; set; }
+        [Parameter]
+        public RenderFragment ContextTh { get; set; }
+        [Parameter]
+        public RenderFragment<TDTO> ContextTd { get; set; }
 
         protected override void OnInitialized()
         {

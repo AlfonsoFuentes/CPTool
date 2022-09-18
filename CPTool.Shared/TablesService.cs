@@ -28,8 +28,17 @@ namespace CPTool.Shared
         public IDTOManager<MWOItemDTO, MWOItem> ManMWOItem { get; set; }
         public IDTOManager<EquipmentTypeDTO, EquipmentType> ManEquipmentType { get; set; }
         public IDTOManager<EquipmentTypeSubDTO, EquipmentTypeSub> ManEquipmentTypeSub { get; set; }
-        public IDTOManager<EquipmentItemDTO, EquipmentItem> ManItemEquipment { get; set; }
+        public IDTOManager<EquipmentItemDTO, EquipmentItem> ManEquipmentItem { get; set; }
+        public IDTOManager<InstrumentItemDTO, InstrumentItem> ManInstrumentItem { get; set; }
         public IDTOManager<DownPaymentDTO, DownPayment> ManDownPayment { get; set; }
+
+        public IDTOManager<MeasuredVariableDTO, MeasuredVariable> ManMeasuredVariable { get; set; }
+        public IDTOManager<MeasuredVariableModifierDTO, MeasuredVariableModifier> ManMeasuredVariableModifier { get; set; }
+        public IDTOManager<DeviceFunctionDTO, DeviceFunction> ManDeviceFunction { get; set; }
+        public IDTOManager<DeviceFunctionModifierDTO, DeviceFunctionModifier> ManDeviceFunctionModifier { get; set; }
+        public IDTOManager<ReadoutDTO, Readout> ManReadout { get; set; }
+
+        public IDTOManager<MaterialsGroupDTO, MaterialsGroup> ManMaterialsGroup { get; set; }
         public TablesService(
             IDTOManager<BrandSupplierDTO, BrandSupplier> manBrandSupplier,
             IDTOManager<MWOTypeDTO, MWOType> manMWOType,
@@ -43,13 +52,22 @@ namespace CPTool.Shared
             IDTOManager<MaterialDTO, Material> manMaterial,
             IDTOManager<BrandDTO, Brand> manBrand,
             IDTOManager<SupplierDTO, Supplier> manSupplier,
-            IDTOManager<EquipmentItemDTO, EquipmentItem> manItemEquipment ,
+            IDTOManager<EquipmentItemDTO, EquipmentItem> manEquipmentItem,
+            IDTOManager<InstrumentItemDTO, InstrumentItem> manInstrumentItem,
             IDTOManager<VendorCodeDTO, VendorCode> manVendorCode,
             IDTOManager<TaxCodeLDDTO, TaxCodeLD> manTaxCodeLD,
             IDTOManager<TaxCodeLPDTO, TaxCodeLP> manTaxCodeLP,
             IDTOManager<PurchaseOrderDTO, PurchaseOrder> manPurchaseOrder,
             IDTOManager<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> manPurchaseOrderMWOItem,
-            IDTOManager<DownPaymentDTO, DownPayment> manDownPayment
+            IDTOManager<DownPaymentDTO, DownPayment> manDownPayment,
+            IDTOManager<MeasuredVariableDTO, MeasuredVariable> manMeasuredVariable,
+            IDTOManager<MeasuredVariableModifierDTO, MeasuredVariableModifier> manMeasuredVariableModifier,
+            IDTOManager<DeviceFunctionDTO, DeviceFunction> manDeviceFunction,
+            IDTOManager<DeviceFunctionModifierDTO, DeviceFunctionModifier> manDeviceFunctionModifier,
+            IDTOManager<ReadoutDTO, Readout> manReadout,
+            IDTOManager<MaterialsGroupDTO, MaterialsGroup> manMaterialsGroup
+
+
             )
 
         {
@@ -66,22 +84,28 @@ namespace CPTool.Shared
             ManMaterial = manMaterial;
             ManBrand = manBrand;
             ManSupplier = manSupplier;
-            ManItemEquipment = manItemEquipment;
+            ManEquipmentItem = manEquipmentItem;
+           ManInstrumentItem=manInstrumentItem;
             ManBrandSupplier = manBrandSupplier;
             ManVendorCode = manVendorCode;
             ManTaxCodeLD = manTaxCodeLD;
             ManTaxCodeLP = manTaxCodeLP;
             ManPurchaseOrder = manPurchaseOrder;
-             ManPurchaseOrderMWOItem=manPurchaseOrderMWOItem;
-            ManDownPayment=manDownPayment;
-
+            ManPurchaseOrderMWOItem = manPurchaseOrderMWOItem;
+            ManDownPayment = manDownPayment;
+            ManDeviceFunction= manDeviceFunction;
+            ManDeviceFunctionModifier= manDeviceFunctionModifier;
+            ManMeasuredVariable= manMeasuredVariable;
+            ManMeasuredVariableModifier= manMeasuredVariableModifier;
+            ManReadout = manReadout;
+            ManMaterialsGroup = manMaterialsGroup;
 
         }
-       
+
         public async Task Initialize()
         {
 
-          
+
             await ManChapter.UpdateList();
             await ManUnitaryPrize.UpdateList();
             await ManGasket.UpdateList();
@@ -92,9 +116,10 @@ namespace CPTool.Shared
             await ManBrandSupplier.UpdateList();
             await ManBrand.UpdateList();
             await ManSupplier.UpdateList();
-          
 
-            await ManItemEquipment.UpdateList();
+
+            await ManEquipmentItem.UpdateList();
+            await ManInstrumentItem.UpdateList();
             await ManMWO.UpdateList();
             await ManMWOItem.UpdateList();
 
@@ -104,8 +129,15 @@ namespace CPTool.Shared
             await ManPurchaseOrder.UpdateList();
             await ManPurchaseOrderMWOItem.UpdateList();
             await ManDownPayment.UpdateList();
+
+            await ManDeviceFunction.UpdateList();
+            await ManDeviceFunctionModifier.UpdateList();
+            await ManMeasuredVariable.UpdateList();
+            await ManMeasuredVariableModifier.UpdateList();
+            await ManReadout.UpdateList();
+            await ManMaterialsGroup.UpdateList();
         }
-       
+
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> Save { get; set; }
         public Func<IAuditableEntityDTO, Task<IResult<int>>> Delete { get; set; }
         //public Action UpdateForm { get; set; }
@@ -130,11 +162,11 @@ namespace CPTool.Shared
 
             return await Result<int>.FailAsync("Not Event");
         }
-       
+
 
         public void Dispose()
         {
-           
+
         }
     }
 }

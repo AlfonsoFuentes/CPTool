@@ -8,12 +8,19 @@ namespace CPTool.Entities
 {
     public class Material :AuditableEntity
     {
+     
+
         public string? Abbreviation { get; set; }
 
         [ForeignKey("InnerMaterialId")]
-        public virtual ICollection<EquipmentItem> InnerMaterials { get; set; } = null!;
+        public ICollection<MaterialsGroup>? InnerMaterials { get; set; } = null!;
 
         [ForeignKey("OuterMaterialId")]
-        public virtual ICollection<EquipmentItem> OuterMaterials { get; set; } = null!;
+        public ICollection<MaterialsGroup>? OuterMaterials { get; set; } = null!;
+
+        public ICollection<PipingItem>? PipingItems { get; set; } = null!;
+
+
+
     }
 }

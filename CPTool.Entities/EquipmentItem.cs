@@ -6,18 +6,15 @@ namespace CPTool.Entities
     {
         public  ICollection<MWOItem> MWOItems { get; set; } = null!;
 
-
-        public  Gasket? Gasket { get; set; }
-        public  Material? InnerMaterial { get; set; }
-        public  Material? OuterMaterial { get; set; }
+        public MaterialsGroup? MaterialsGroup { get; set; }
+       
         public  EquipmentType? EquipmentType { get; set; }
         public  EquipmentTypeSub? EquipmentTypeSub { get; set; }
         public  Brand? Brand { get; set; }
         public  Supplier? Supplier { get; set; }
 
-        public int? GasketId { get; set; }
-        public int? InnerMaterialId { get; set; }
-        public int? OuterMaterialId { get; set; }
+        public int? MaterialsGroupId { get; set; }
+        
         public int? EquipmentTypeId { get; set; }
         public int? EquipmentTypeSubId { get; set; }
         public int? BrandId { get; set; }

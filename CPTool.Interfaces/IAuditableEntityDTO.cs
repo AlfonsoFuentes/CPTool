@@ -12,7 +12,7 @@ namespace CPTool.Interfaces
         DateTime CreatedDate { get; set; }
         DateTime? UpdatedDate { get; set; }
         string? Name { get; set; }
-        public static string TableName { get; set; }
+   
 
       
 

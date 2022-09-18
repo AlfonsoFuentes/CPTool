@@ -1,6 +1,8 @@
 ﻿@using System.Globalization
 @inherits CancellableComponent
-<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize="Initializeform" FuncBeforeClose=BeforeClose ButtonSaveName=@Model.PurchaseOrderDTO.ButtonName
+<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize="Initializeform" FuncBeforeClose=BeforeClose 
+    
+    ButtonSaveName=@Model.PurchaseOrderDTO.ButtonName
 DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderStatus.Installed?true:false)
 >
     <Components>
@@ -17,19 +19,26 @@ DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderSta
                               Immediate="true"
                               Label="Name" />
                     <ComponentSelect TDTO="SupplierDTO"
-                                 T="Supplier"
+                               
                                  Label="Supplier"
                                  Required=true
                                  RequiredError="Must Submit Supplier"
                                  Elements=@TablesService.ManSupplier.List
                                  @bind-Model=@Model.PurchaseOrderDTO.SupplierDTO></ComponentSelect>
+                    <ComponentSelect TDTO="BrandDTO"
+                                 Label="Brand or Service"
+                                 Required=true
+                                 Disable=@(Model.PurchaseOrderDTO.SupplierDTO.Id==0?true:false)
+                                 RequiredError="Must Submit Brand or Service"
+                                 Elements=@Model.PurchaseOrderDTO.SupplierDTO.BrandSupplierDTOs.Select(x=>x.BrandDTO).ToList()
+                                 @bind-Model=@Model.PurchaseOrderDTO.BrandDTO></ComponentSelect>
 
                 }
                 else
                 {
                     <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Name</MudField>
                     <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
-
+                    <MudField Label="Brand or Service" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.BrandDTO.Name</MudField>
 
                 }
                 @if (Model.PurchaseOrderDTO.MWOItemDTO?.ChapterDTO?.Id == 1)
@@ -127,19 +136,10 @@ DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderSta
 
             </MudItem>
             <MudItem xs="12" sm="6">
-                <MudCard>
-
-
-                    <MudCardContent>
-
-                        @foreach (var row in Model.PurchaseOrderDTO.PurchaseOrderHistory)
-                        {
-                            <MudField Variant="Variant.Outlined" Margin="Margin.Dense">@row</MudField>
-                        }
-
-                    </MudCardContent>
-
-                </MudCard>
+                @foreach (var row in Model.PurchaseOrderDTO.PurchaseOrderHistory)
+                {
+                    <MudField Variant="Variant.Outlined" Margin="Margin.Dense">@row</MudField>
+                }
             </MudItem>
 
         </MudGrid>

@@ -6,44 +6,61 @@
             <CascadingValue Value="this">
                 <MudGrid>
                     <MudItem xs="12">
-                       
-                            <MudToolBar>
-                                <MudButton Variant="Variant.Outlined" OnClick="ViewName" Size="Size.Small"> Name</MudButton>
-                                <MudButton Variant="Variant.Outlined" OnClick="ViewSpecs" Size="Size.Small">Specs</MudButton>
-                            </MudToolBar>
-                       
+
+                        <MudToolBar>
+                            <MudButton Variant="Variant.Outlined" OnClick="ViewName" Size="Size.Small" Color="Color.Primary"> Name</MudButton>
+                            <MudButton Variant="Variant.Outlined" OnClick="ViewSpecs" Size="Size.Small" Color="Color.Primary">Specs</MudButton>
+                            @if (Model.ChapterId == 4 || Model.ChapterId == 7)
+                            {
+                                <MudButton Variant="Variant.Outlined" OnClick="ViewMaterials" Size="Size.Small" Color="Color.Primary">Materials</MudButton>
+                            }
+                        </MudToolBar>
+
                     </MudItem>
 
                     <MudItem xs="12">
-                       
-                            @if (bViewName)
+
+                        @if (bViewName)
+                        {
+
+                            <MudGrid>
+
+                                <MudItem xs="12" sm="6">
+                                    <ChapterComponent></ChapterComponent>
+                                </MudItem>
+                                <MudItem xs="12" sm="6">
+                                    <ExpenseComponent></ExpenseComponent>
+                                </MudItem>
+
+                            </MudGrid>
+
+                        }
+                        @if (bViewSpecs)
+                        {
+                            @switch (Model.ChapterDTO.Id)
                             {
-
-                                <MudGrid>
-
-                                    <MudItem xs="12" sm="6">
-                                        <ChapterComponent></ChapterComponent>
-                                    </MudItem>
-                                    <MudItem xs="12" sm="6">
-                                        <ExpenseComponent></ExpenseComponent>
-                                    </MudItem>
-
-                                </MudGrid>
-
+                                case 4:
+                                    <EquipmentItemPage></EquipmentItemPage>
+                                    break;
+                                case 7:
+                                    <InstrumentItemPage></InstrumentItemPage>
+                                    break;
                             }
-                            @if (bViewSpecs)
+
+                        }
+                        @if(bViewMaterials)
+                        {
+                            @switch (Model.ChapterDTO.Id)
                             {
-                                @switch (Model.ChapterDTO.Id)
-                                {
-                                    case 4:
-                                        <EquipmentItemPage></EquipmentItemPage>
-                                        break;
-                                }
-
-
-
+                                case 4:
+                                    <MaterialsComponent Model="@Model.EquipmentItemDTO.MaterialsGroupDTO"></MaterialsComponent>
+                                    break;
+                                case 7:
+                                    <MaterialsComponent Model="@Model.InstrumentItemDTO.MaterialsGroupDTO"></MaterialsComponent>
+                                    break;
                             }
-                     
+                        }
+
                     </MudItem>
 
                 </MudGrid>

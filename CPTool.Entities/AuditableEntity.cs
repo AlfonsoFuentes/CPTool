@@ -11,8 +11,10 @@ namespace CPTool.Entities
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedDate { get; set; } = DateTime.UtcNow;
         public string? Name { get; set; } = "";
+        public string? Description { get; set; } = "";
 
-        
+
+
 
 
     }

@@ -4,24 +4,9 @@
 
 namespace CPTool.Context.Migrations
 {
-    public partial class RemoveBrandPurchaseorder : Migration
+    public partial class BrandPurchaseOrder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_PurchaseOrders_Brands_BrandId",
-                table: "PurchaseOrders");
-
-            migrationBuilder.DropIndex(
-                name: "IX_PurchaseOrders_BrandId",
-                table: "PurchaseOrders");
-
-            migrationBuilder.DropColumn(
-                name: "BrandId",
-                table: "PurchaseOrders");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "BrandId",
@@ -40,6 +25,21 @@ namespace CPTool.Context.Migrations
                 column: "BrandId",
                 principalTable: "Brands",
                 principalColumn: "Id");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_PurchaseOrders_Brands_BrandId",
+                table: "PurchaseOrders");
+
+            migrationBuilder.DropIndex(
+                name: "IX_PurchaseOrders_BrandId",
+                table: "PurchaseOrders");
+
+            migrationBuilder.DropColumn(
+                name: "BrandId",
+                table: "PurchaseOrders");
         }
     }
 }

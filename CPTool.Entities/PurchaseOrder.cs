@@ -13,10 +13,10 @@ namespace CPTool.Entities
 
         public PurchaseOrderStatus PurchaseOrderStatus { get; set; }
 
-       //public Brand? Brand { get; set; }
+        public Brand? Brand { get; set; }
         public Supplier? Supplier { get; set; }
         public int? SupplierId { get; set; }
-        //public int? BrandId { get; set; }
+        public int? BrandId { get; set; }
         public string PurchaseRequisition { get; set; } = "";
 
         public DateTime POCreatedDate { get; set; }

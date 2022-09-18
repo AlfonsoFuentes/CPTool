@@ -6,9 +6,17 @@
         [Parameter]
         public DownPaymentDTO Model { get; set; }
 
-       
-        async Task ProperSave()
+        async Task Initializeform()
         {
+          
+            Model.SetButtonNameHistory();
+
+            await Task.CompletedTask;
+
+        }
+        async Task BeforeClose()
+        {
+            Model.ChangeStatusDP();
             if (Model.Id == 0)
             {
                 await TablesService.ManDownPayment.AddUpdate(Model, _cts.Token);

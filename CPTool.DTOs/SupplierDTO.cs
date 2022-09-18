@@ -6,7 +6,7 @@ namespace CPTool.DTOS
     {
         public List<BrandSupplierDTO>? BrandSupplierDTOs { get; set; } = new();
         public List<EquipmentItemDTO>? EquipmentItemDTOs { get; set; } = new();
-
+        public List<InstrumentItemDTO>? InstrumentItemDTOs { get; set; } = new();
         public List<PurchaseOrderDTO>? PurchaseOrderDTOs { get; set; } = new();
         public string Address { get; set; } = "";
         public string Phone { get; set; } = "";

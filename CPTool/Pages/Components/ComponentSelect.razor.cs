@@ -2,9 +2,9 @@
 
 namespace CPTool.Pages.Components
 {
-    public partial class ComponentSelect<TDTO, T>
+    public partial class ComponentSelect<TDTO>
         where TDTO : AuditableEntityDTO, new()
-        where T : AuditableEntity, new()
+        
     {
         [Parameter]
         public TDTO Model { get; set; } = new();

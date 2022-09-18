@@ -10,17 +10,16 @@ namespace CPTool.DTOS
 
 
         public List<MWOItemDTO> MWOItemDTOs { get; set; } = new();
-        public GasketDTO? GasketDTO { get; set; } = new();
-        public MaterialDTO? InnerMaterialDTO { get; set; } = new();
-        public MaterialDTO? OuterMaterialDTO { get; set; } = new();
+
         public EquipmentTypeDTO? EquipmentTypeDTO { get; set; } = new();
         public EquipmentTypeSubDTO? EquipmentTypeSubDTO { get; set; } = new();
         public BrandDTO? BrandDTO { get; set; } = new();
         public SupplierDTO? SupplierDTO { get; set; } = new();
 
-        public int? GasketId => GasketDTO?.Id == 0 ? null : GasketDTO?.Id;
-        public int? InnerMaterialId => InnerMaterialDTO?.Id == 0 ? null : InnerMaterialDTO?.Id;
-        public int? OuterMaterialId => OuterMaterialDTO?.Id == 0 ? null : OuterMaterialDTO?.Id;
+        public MaterialsGroupDTO? MaterialsGroupDTO { get; set; } = new();
+        public int? MaterialsGroupId => MaterialsGroupDTO?.Id;
+
+
         public int? EquipmentTypeId => EquipmentTypeDTO?.Id == 0 ? null : EquipmentTypeDTO?.Id;
         public int? EquipmentTypeSubId => EquipmentTypeSubDTO?.Id == 0 ? null : EquipmentTypeSubDTO?.Id;
         public int? BrandId => BrandDTO?.Id == 0 ? null : BrandDTO?.Id;

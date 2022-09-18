@@ -2,10 +2,12 @@
 {
     public enum DownpaymentStatus
     {
+        Draft=0,
         Created = 1,
         Approved = 2,
-        Rejected = 3,
-        Cancelled = 4,
-        Closed = 5
+        Paid= 3,
+        Rejected = 4,
+        Cancelled = 5,
+        Closed = 6
     }
 }

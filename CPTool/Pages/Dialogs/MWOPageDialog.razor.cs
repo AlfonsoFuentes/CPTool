@@ -5,6 +5,7 @@
 using AutoMapper;
 using CPTool.Entities;
 using CPTool.Shared;
+using static MudBlazor.FilterOperator;
 
 namespace CPTool.Pages.Dialogs
 {
@@ -29,11 +30,15 @@ namespace CPTool.Pages.Dialogs
         {
             if (arg == null || arg == "")
                 return "Must submit MWO Name";
-            if (TablesService.ManMWO.List.Any(x => x.Name == arg))
+            if (Model.Id == 0)
             {
-                
-                return $"MWO Name: {arg} is already existing in MWO List";
+                if (TablesService.ManMWO.List.Any(x => x.Name == arg)) return $"MWO Name: {arg} is already existing in MWO List";
             }
+            else
+            {
+                if (TablesService.ManMWO.List.Where(x => x.Id != Model.Id).Any(x => x.Name == arg)) return $"MWO Name: {arg} is already existing in MWO List";
+            }
+            
             return null;
         }
         

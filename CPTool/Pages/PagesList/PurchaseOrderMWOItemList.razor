@@ -1,0 +1,145 @@
+﻿@using System.Globalization
+@inherits CancellableComponent
+
+@implements IDisposable
+<PageTitle>@PageTitle</PageTitle>
+<MudGrid>
+
+    <MudItem xs="12" sm="@mastersm">
+        <ComponentTableList ShowAddButton=false
+                            TDTO="PurchaseOrderDTO" T="PurchaseOrder"
+                            TableName=@MasterTableName
+                            SearchFunc="SearchMaster"
+                            Elements="@Masters"
+                            OnShowDialogOverrided="ShowDialogMaster"
+                            SelectedItem="@SelectedMaster"
+                            OnRowClickEvent="RowMasterClicked">
+
+            <OtherButtons>
+                <MudTooltip Text="Downpayment">
+                    <MudIconButton Icon="@Icons.Filled.CurrencyExchange" Color="Color.Inherit" Disabled=@(SelectedMaster.Id==0?true:false) Size="Size.Small" OnClick="AddDownPayment" />
+                </MudTooltip>
+                <MudTooltip Text="Restore List">
+                    <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+                </MudTooltip>
+                <MudTooltip Text="@(HideRigthpane?"Hide rigth pane":"Show rigth pane")">
+                    <MudIconButton Icon="@(HideRigthpane?Icons.Filled.ArrowBack:Icons.Filled.ArrowForward)" Color="Color.Inherit" Size="Size.Small" OnClick=@(()=>HideRigthpane=!HideRigthpane) />
+                </MudTooltip>
+            </OtherButtons>
+            <ContextTh>
+                <MudTh Style="width:40px">#</MudTh>
+
+                
+
+                @if (HideRigthpane)
+                {
+                    <MudTh>MWO</MudTh>
+                    <MudTh>MWO Name</MudTh>
+                    <MudTh>PO Name</MudTh>
+                    <MudTh>PR</MudTh>
+                    <MudTh>PO</MudTh>
+                    <MudTh>Value</MudTh>
+                    <MudTh>Status</MudTh>
+                    <MudTh>Last date</MudTh>
+                    <MudTh>Supplier</MudTh>
+                    <MudTh>Brand</MudTh>
+                   
+                   
+
+
+                }
+                else
+                {
+                    <MudTh>PO Name</MudTh>
+                    <MudTh>PR</MudTh>
+                    <MudTh>PO</MudTh>
+                    <MudTh>Status</MudTh>
+                    <MudTh>Last date</MudTh>
+                    
+                   
+                    
+                }
+            </ContextTh>
+            <ContextTd>
+
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                @if (HideRigthpane)
+                {
+                   
+                    <MudTd DataLabel="Name">@context.MWOItemDTO.MWODTO.CECName</MudTd>
+                    <MudTd DataLabel="Name">@context.MWOItemDTO.MWODTO.Name</MudTd>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
+                    <MudTd DataLabel="PO">@context.PONumber</MudTd>
+                    <MudTd DataLabel="Value">@($"${context.Currency.ToString()} {context.PrizeCurrency.ToString("C0")}")</MudTd>
+                    <MudTd DataLabel="Status">@context.PurchaseOrderStatus.ToString()</MudTd>
+                    <MudTd DataLabel="date">@context.LastEvenDate?.ToString("d", _en)</MudTd>
+                    <MudTd DataLabel="Supplier">@context.SupplierDTO.Name</MudTd>
+                    <MudTd DataLabel="Brand">@context.BrandDTO.Name</MudTd>
+                   
+                    
+
+
+
+                }
+                else
+                {
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
+                    <MudTd DataLabel="PO">@context.PONumber</MudTd>
+                    <MudTd DataLabel="Status">@context.PurchaseOrderStatus.ToString()</MudTd>
+                    <MudTd DataLabel="date">@context.LastEvenDate?.ToString("d", _en)</MudTd>
+                  
+                   
+                   
+                   
+                }
+            </ContextTd>
+        </ComponentTableList>
+    </MudItem>
+
+    @if (!HideRigthpane)
+    {
+        <MudItem xs="12" sm="@detailsm">
+            <ComponentTableList TDTO="MWOItemDTO"
+                            T="MWOItem"
+                            DisableAddButton=@(SelectedMaster.Id==0?true:false)
+                            TableName=@DetailTableName
+                            OnShowDialogOverrided="ShowDialogDetail"
+                            Elements="@Details"
+                            OnRowClickEvent="RowDetailClicked"
+                            SelectedItem="@SelectedDetail">
+
+                <OtherButtons>
+                    <MudTooltip Text="Restore List">
+                        <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+                    </MudTooltip>
+                </OtherButtons>
+                <ContextTh>
+                    <MudTh Style="width:40px">#</MudTh>
+                    <MudTh>Name</MudTh>
+
+                </ContextTh>
+                <ContextTd>
+                    <MudTd DataLabel="Id">@context.Id</MudTd>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+
+                </ContextTd>
+            </ComponentTableList>
+        </MudItem>
+    }
+
+
+</MudGrid>
+@code {
+    public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+
+    string value = "";
+
+    bool HideRigthpane = false;
+
+    int mastersm => HideRigthpane == true ? 12 : 6;
+    int detailsm => 6;
+
+
+}

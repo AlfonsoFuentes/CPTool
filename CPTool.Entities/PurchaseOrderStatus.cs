@@ -8,6 +8,7 @@ namespace CPTool.Entities
         Draft,
         Ordering,
         Created,
+
         Received,
         Installed
     }

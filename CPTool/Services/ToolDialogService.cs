@@ -166,7 +166,7 @@ namespace CPTool.Services
         public async Task<DialogResult> ShowDownpaymentDialog(DownPaymentDTO Model)
         {
             ParameterDialogModel modeldialog = new();
-            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
             modeldialog.DialogTitle = Model.Id==0?$"Add downpayment to PO#: {Model.PurchaseOrderDTO.PONumber}":$"Edit Downpayment {Model.Name}";

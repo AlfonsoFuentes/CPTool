@@ -30,12 +30,12 @@ namespace CPTool.DependencyInjection
             var asse = Assembly.GetExecutingAssembly();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
 
 
-            services.AddScoped(typeof(IDTOManager<,>), typeof(DTOManager<,>));
-            //services.AddScoped<IDTOManager<MWODTO, MWO>, DTOManagerMWODTO>();
+            services.AddTransient(typeof(IDTOManager<,>), typeof(DTOManager<,>));
+           
             return services;
         }
     }

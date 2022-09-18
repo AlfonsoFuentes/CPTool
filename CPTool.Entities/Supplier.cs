@@ -9,7 +9,7 @@ namespace CPTool.Entities
         public  ICollection<BrandSupplier> BrandSuppliers { get; set; } = null!;
         public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = null!;
 
-
+        public ICollection<InstrumentItem> InstrumentItems { get; set; } = null!;
         public string Address { get; set; } = "";
         public string Phone { get; set; } = "";
     

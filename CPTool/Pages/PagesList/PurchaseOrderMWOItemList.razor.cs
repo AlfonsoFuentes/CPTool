@@ -2,7 +2,7 @@
 using CPTool.Implementations;
 using static MudBlazor.Icons.Custom;
 
-namespace CPTool.Pages.ManytoManyList
+namespace CPTool.Pages.PagesList
 {
     public partial class PurchaseOrderMWOItemList : CancellableComponent, IDisposable
 
@@ -34,7 +34,11 @@ namespace CPTool.Pages.ManytoManyList
             var retorno= element.PurchaseRequisition.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
             element.PONumber.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
             element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.PurchaseOrderStatus.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase);
+            element.MWOItemDTO.MWODTO.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.MWOItemDTO.MWODTO.CECName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PurchaseOrderStatus.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.SupplierDTO.Name.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.BrandDTO.Name.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase);
             return retorno;
         }
         void ViewMasterList()
@@ -53,8 +57,7 @@ namespace CPTool.Pages.ManytoManyList
             var retorno = await ToolDialogService.ShowDownpaymentDialog(model);
         }
         string PageTitle => $"Relation {MasterTableName} => {DetailTableName}";
-        int mastersm => 6;
-        int detailsm => 6;
+      
         protected override void OnInitialized()
         {
 

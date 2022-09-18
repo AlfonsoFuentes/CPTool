@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20220916101452_Purchaseordermwoitem")]
-    partial class Purchaseordermwoitem
+    [Migration("20220918015724_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -89,6 +92,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
@@ -116,6 +122,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Letter")
                         .HasColumnType("nvarchar(max)");
 
@@ -141,6 +150,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -150,6 +162,134 @@ namespace CPTool.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ContingencyItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.DeviceFunction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceFunctions");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.DeviceFunctionModifier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceFunctionModifiers");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.DownPayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CBSRequesNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CBSRequesText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeliveryDueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DownPaymentAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("DownPaymentDueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DownpaymentDescrption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DownpaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Incotherm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManagerEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Payterms")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Percentage")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProformaInvoice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("RealDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("DownPayments");
                 });
 
             modelBuilder.Entity("CPTool.Entities.EHSItem", b =>
@@ -162,6 +302,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -185,6 +328,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -206,6 +352,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -232,16 +381,19 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("EquipmentTypeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("EquipmentTypeSubId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GasketId")
+                    b.Property<int?>("MaterialsGroupId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InnerMaterialId")
+                    b.Property<int?>("MaterialsGrouptId")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
@@ -250,9 +402,6 @@ namespace CPTool.Context.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OuterMaterialId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Reference")
                         .IsRequired()
@@ -288,11 +437,7 @@ namespace CPTool.Context.Migrations
 
                     b.HasIndex("EquipmentTypeSubId");
 
-                    b.HasIndex("GasketId");
-
-                    b.HasIndex("InnerMaterialId");
-
-                    b.HasIndex("OuterMaterialId");
+                    b.HasIndex("MaterialsGroupId");
 
                     b.HasIndex("SupplierId");
 
@@ -309,6 +454,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -334,6 +482,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EquipmentTypeId")
                         .HasColumnType("int");
@@ -365,6 +516,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -387,6 +541,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -406,16 +563,83 @@ namespace CPTool.Context.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DeviceFunctionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DeviceFunctionModifierId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InnerMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaterialsGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MeasuredVariableId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MeasuredVariableModifierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OuterMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ReadoutId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("DeviceFunctionId");
+
+                    b.HasIndex("DeviceFunctionModifierId");
+
+                    b.HasIndex("MaterialsGroupId");
+
+                    b.HasIndex("MeasuredVariableId");
+
+                    b.HasIndex("MeasuredVariableModifierId");
+
+                    b.HasIndex("ReadoutId");
+
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("InstrumentItems");
                 });
@@ -430,6 +654,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -456,6 +683,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -465,6 +695,102 @@ namespace CPTool.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Materials");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("GasketId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InnerMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OuterMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GasketId");
+
+                    b.HasIndex("InnerMaterialId");
+
+                    b.HasIndex("OuterMaterialId");
+
+                    b.ToTable("MaterialsGroup");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.MeasuredVariable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeasuredVariables");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.MeasuredVariableModifier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeasuredVariableModifiers");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MWO", b =>
@@ -489,6 +815,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Expenses")
                         .HasColumnType("decimal(18,2)");
@@ -537,6 +866,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("EHSItemId")
                         .HasColumnType("int");
@@ -651,6 +983,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -673,6 +1008,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -694,6 +1032,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -719,6 +1060,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<int>("Currency")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MWOId")
                         .HasColumnType("int");
@@ -748,6 +1092,9 @@ namespace CPTool.Context.Migrations
                     b.Property<double>("PrizeCurrency")
                         .HasColumnType("float");
 
+                    b.Property<double>("PrizeCurrencyTax")
+                        .HasColumnType("float");
+
                     b.Property<double>("PrizeUSD")
                         .HasColumnType("float");
 
@@ -765,9 +1112,15 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
+                    b.Property<double>("Tax")
+                        .HasColumnType("float");
+
                     b.Property<string>("TaxCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalPrizeCurrency")
+                        .HasColumnType("float");
 
                     b.Property<double>("USDCOP")
                         .HasColumnType("float");
@@ -798,6 +1151,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
@@ -814,6 +1170,34 @@ namespace CPTool.Context.Migrations
                     b.ToTable("PurchaseOrderMWOItems");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.Readout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Readouts");
+                });
+
             modelBuilder.Entity("CPTool.Entities.StructuralItem", b =>
                 {
                     b.Property<int>("Id")
@@ -824,6 +1208,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -854,6 +1241,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -900,6 +1290,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -921,6 +1314,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -944,6 +1340,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -965,6 +1364,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -988,6 +1390,9 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1009,6 +1414,9 @@ namespace CPTool.Context.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -1040,6 +1448,15 @@ namespace CPTool.Context.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.DownPayment", b =>
+                {
+                    b.HasOne("CPTool.Entities.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("DownPayments")
+                        .HasForeignKey("PurchaseOrderId");
+
+                    b.Navigation("PurchaseOrder");
+                });
+
             modelBuilder.Entity("CPTool.Entities.EquipmentItem", b =>
                 {
                     b.HasOne("CPTool.Entities.Brand", "Brand")
@@ -1054,19 +1471,9 @@ namespace CPTool.Context.Migrations
                         .WithMany("EquipmentItems")
                         .HasForeignKey("EquipmentTypeSubId");
 
-                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
+                    b.HasOne("CPTool.Entities.MaterialsGroup", "MaterialsGroup")
                         .WithMany("EquipmentItems")
-                        .HasForeignKey("GasketId");
-
-                    b.HasOne("CPTool.Entities.Material", "InnerMaterial")
-                        .WithMany("InnerMaterials")
-                        .HasForeignKey("InnerMaterialId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("CPTool.Entities.Material", "OuterMaterial")
-                        .WithMany("OuterMaterials")
-                        .HasForeignKey("OuterMaterialId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("MaterialsGroupId");
 
                     b.HasOne("CPTool.Entities.Supplier", "Supplier")
                         .WithMany("EquipmentItems")
@@ -1078,11 +1485,7 @@ namespace CPTool.Context.Migrations
 
                     b.Navigation("EquipmentTypeSub");
 
-                    b.Navigation("Gasket");
-
-                    b.Navigation("InnerMaterial");
-
-                    b.Navigation("OuterMaterial");
+                    b.Navigation("MaterialsGroup");
 
                     b.Navigation("Supplier");
                 });
@@ -1096,6 +1499,80 @@ namespace CPTool.Context.Migrations
                         .IsRequired();
 
                     b.Navigation("EquipmentType");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.InstrumentItem", b =>
+                {
+                    b.HasOne("CPTool.Entities.Brand", "Brand")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("BrandId");
+
+                    b.HasOne("CPTool.Entities.DeviceFunction", "DeviceFunction")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("DeviceFunctionId");
+
+                    b.HasOne("CPTool.Entities.DeviceFunctionModifier", "DeviceFunctionModifier")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("DeviceFunctionModifierId");
+
+                    b.HasOne("CPTool.Entities.MaterialsGroup", "MaterialsGroup")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("MaterialsGroupId");
+
+                    b.HasOne("CPTool.Entities.MeasuredVariable", "MeasuredVariable")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("MeasuredVariableId");
+
+                    b.HasOne("CPTool.Entities.MeasuredVariableModifier", "MeasuredVariableModifier")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("MeasuredVariableModifierId");
+
+                    b.HasOne("CPTool.Entities.Readout", "Readout")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("ReadoutId");
+
+                    b.HasOne("CPTool.Entities.Supplier", "Supplier")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("SupplierId");
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("DeviceFunction");
+
+                    b.Navigation("DeviceFunctionModifier");
+
+                    b.Navigation("MaterialsGroup");
+
+                    b.Navigation("MeasuredVariable");
+
+                    b.Navigation("MeasuredVariableModifier");
+
+                    b.Navigation("Readout");
+
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
+                {
+                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
+                        .WithMany("MaterialsGroups")
+                        .HasForeignKey("GasketId");
+
+                    b.HasOne("CPTool.Entities.Material", "InnerMaterial")
+                        .WithMany("InnerMaterials")
+                        .HasForeignKey("InnerMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Material", "OuterMaterial")
+                        .WithMany("OuterMaterials")
+                        .HasForeignKey("OuterMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Gasket");
+
+                    b.Navigation("InnerMaterial");
+
+                    b.Navigation("OuterMaterial");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MWO", b =>
@@ -1279,6 +1756,8 @@ namespace CPTool.Context.Migrations
                     b.Navigation("BrandSuppliers");
 
                     b.Navigation("EquipmentItems");
+
+                    b.Navigation("InstrumentItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.Chapter", b =>
@@ -1289,6 +1768,16 @@ namespace CPTool.Context.Migrations
             modelBuilder.Entity("CPTool.Entities.ContingencyItem", b =>
                 {
                     b.Navigation("MWOItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.DeviceFunction", b =>
+                {
+                    b.Navigation("InstrumentItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.DeviceFunctionModifier", b =>
+                {
+                    b.Navigation("InstrumentItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.EHSItem", b =>
@@ -1330,7 +1819,7 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.Gasket", b =>
                 {
-                    b.Navigation("EquipmentItems");
+                    b.Navigation("MaterialsGroups");
                 });
 
             modelBuilder.Entity("CPTool.Entities.InstrumentItem", b =>
@@ -1348,6 +1837,23 @@ namespace CPTool.Context.Migrations
                     b.Navigation("InnerMaterials");
 
                     b.Navigation("OuterMaterials");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
+                {
+                    b.Navigation("EquipmentItems");
+
+                    b.Navigation("InstrumentItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.MeasuredVariable", b =>
+                {
+                    b.Navigation("InstrumentItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.MeasuredVariableModifier", b =>
+                {
+                    b.Navigation("InstrumentItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MWO", b =>
@@ -1379,7 +1885,14 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.PurchaseOrder", b =>
                 {
+                    b.Navigation("DownPayments");
+
                     b.Navigation("PurchaseOrderMWOItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.Readout", b =>
+                {
+                    b.Navigation("InstrumentItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.StructuralItem", b =>
@@ -1392,6 +1905,8 @@ namespace CPTool.Context.Migrations
                     b.Navigation("BrandSuppliers");
 
                     b.Navigation("EquipmentItems");
+
+                    b.Navigation("InstrumentItems");
 
                     b.Navigation("PurchaseOrders");
                 });

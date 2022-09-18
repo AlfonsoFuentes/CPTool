@@ -17,6 +17,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
             Model.Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
 
             Dialog.ChapterChange();
+            StateHasChanged();
         }
         private string ItemChapter(int arg)
         {

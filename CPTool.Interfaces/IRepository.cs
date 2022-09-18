@@ -20,7 +20,7 @@ namespace CPTool.Interfaces
         Task<List<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
 
         Task<T> AddAsync(T entity);
-        Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null!);
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
         T UpdateAsync(T entity);
 

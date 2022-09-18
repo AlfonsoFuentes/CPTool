@@ -17,8 +17,31 @@ namespace CPTool.Context
       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.InnerMaterial).WithMany(t => t.InnerMaterials).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.OuterMaterial).WithMany(t => t.OuterMaterials).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.InnerMaterial).WithMany(t => t.InnerMaterials).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.OuterMaterial).WithMany(t => t.OuterMaterials).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleStart).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleFinish).WithMany(t => t.FinishPipingItems).OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.OD).WithMany(t => t.ODs).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.ID).WithMany(t => t.IDs).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.Thickness).WithMany(t => t.Thicknesss).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Pressure).WithMany(t => t.Pressures).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Temperature).WithMany(t => t.Temperatures).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.MassFlow).WithMany(t => t.MassFlows).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.VolumetricFlow).WithMany(t => t.VolumetricFlows).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Density).WithMany(t => t.Densitys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Viscosity).WithMany(t => t.Viscositys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.EnthalpyFlow).WithMany(t => t.EnthalpyFlows).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.SpecificEnthalpy).WithMany(t => t.SpecificEnthalpys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.ThermalConductivity).WithMany(t => t.ThermalConductivitys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProcessCondition>().HasOne(c => c.SpecificCp).WithMany(t => t.SpecificCps).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.StartMWOItem).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.FinishMWOItem).WithMany(t => t.FisnishPipingItems).OnDelete(DeleteBehavior.NoAction);
+
+
             //Relation Many to Many Brand Supplier
             modelBuilder.Entity<BrandSupplier>().HasKey(i => new { i.BrandId, i.SupplierId });
             modelBuilder.Entity<Brand>().HasMany(c => c.BrandSuppliers).WithOne(t => t.Brand).OnDelete(DeleteBehavior.Cascade);
@@ -66,6 +89,12 @@ namespace CPTool.Context
         public DbSet<TaxCodeLP> TaxCodeLPs { get; set; }
 
         public DbSet<DownPayment> DownPayments { get; set; }
+
+        public DbSet<MeasuredVariable> MeasuredVariables { get; set; }
+        public DbSet<MeasuredVariableModifier> MeasuredVariableModifiers { get; set; }
+        public DbSet<DeviceFunction> DeviceFunctions { get; set; }
+        public DbSet<DeviceFunctionModifier> DeviceFunctionModifiers { get; set; }
+        public DbSet<Readout> Readouts { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             foreach (var entry in ChangeTracker.Entries<IAuditableEntity>().ToList())

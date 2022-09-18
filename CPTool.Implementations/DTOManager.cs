@@ -31,7 +31,7 @@ namespace CPTool.Implementations
 
             var exist = await _unitofwork.Repository<T>().AnyAsync(x => x.Equals(table));
             var request = !exist ? await _unitofwork.Repository<T>().AddAsync(table) : _unitofwork.Repository<T>().UpdateAsync(table);
-            var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
+            var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null!);
             if (!result.Succeeded)
                 return await Result<TDTO>.FailAsync("Not created!");
             var mppeddto = _mapper.Map<TDTO>(request) as IAuditableEntityDTO;
@@ -77,7 +77,7 @@ namespace CPTool.Implementations
             {
                 string retorno = $"{table.Name!} removed succesfully";
                 await _unitofwork.Repository<T>().DeleteAsync(table);
-                var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
+                var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null!);
                 if (!result.Succeeded)
                 {
                     return await Result<int>.FailAsync("Not Delete!");
@@ -96,7 +96,7 @@ namespace CPTool.Implementations
             {
                 string retorno = $"{table.Name!} removed succesfully";
                 await _unitofwork.Repository<T>().DeleteAsync(table);
-                var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null);
+                var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null!);
                 if (!result.Succeeded)
                 {
                     return await Result<int>.FailAsync("Not Delete!");

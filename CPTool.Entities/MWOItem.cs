@@ -4,9 +4,12 @@ namespace CPTool.Entities
 {
     public class MWOItem : AuditableEntity
     {
-
+        [ForeignKey("StartMWOItemId")]
+        public ICollection<PipingItem>? StartPipingItems { get; set; }
+        [ForeignKey("FinishMWOItemId")]
+        public ICollection<PipingItem>? FisnishPipingItems { get; set; }
         public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
-        public  MWO MWO { get; set; } = null!;
+        public  MWO? MWO { get; set; } = null!;
         public  AlterationItem? AlterationItem { get; set; }
         public  FoundationItem? FoundationItem { get; set; }
         public  StructuralItem? StructuralItem { get; set; }

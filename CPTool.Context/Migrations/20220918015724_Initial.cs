@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPTool.Context.Migrations
 {
-    public partial class General : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,11 @@ namespace CPTool.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,10 +33,10 @@ namespace CPTool.Context.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BrandType = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,7 +52,8 @@ namespace CPTool.Context.Migrations
                     Letter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,11 +68,46 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ContingencyItems", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeviceFunctionModifiers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceFunctionModifiers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeviceFunctions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceFunctions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +118,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,7 +134,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -110,7 +150,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,7 +167,8 @@ namespace CPTool.Context.Migrations
                     TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -141,7 +183,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -156,26 +199,12 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Gaskets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InstrumentItems",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InstrumentItems", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,7 +215,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,11 +232,46 @@ namespace CPTool.Context.Migrations
                     Abbreviation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Materials", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MeasuredVariableModifiers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeasuredVariableModifiers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MeasuredVariables",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeasuredVariables", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,7 +282,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -232,7 +298,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -247,11 +314,29 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PipingItems", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Readouts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Readouts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -262,7 +347,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -277,7 +363,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -292,7 +379,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -307,7 +395,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -322,7 +411,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -337,7 +427,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -352,7 +443,8 @@ namespace CPTool.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -369,7 +461,8 @@ namespace CPTool.Context.Migrations
                     TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -380,6 +473,40 @@ namespace CPTool.Context.Migrations
                         principalTable: "EquipmentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaterialsGroup",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GasketId = table.Column<int>(type: "int", nullable: true),
+                    InnerMaterialId = table.Column<int>(type: "int", nullable: true),
+                    OuterMaterialId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaterialsGroup", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MaterialsGroup_Gaskets_GasketId",
+                        column: x => x.GasketId,
+                        principalTable: "Gaskets",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MaterialsGroup_Materials_InnerMaterialId",
+                        column: x => x.InnerMaterialId,
+                        principalTable: "Materials",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MaterialsGroup_Materials_OuterMaterialId",
+                        column: x => x.OuterMaterialId,
+                        principalTable: "Materials",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -398,7 +525,8 @@ namespace CPTool.Context.Migrations
                     MWOTypeId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -426,7 +554,8 @@ namespace CPTool.Context.Migrations
                     TaxCodeLPId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -457,7 +586,8 @@ namespace CPTool.Context.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -482,9 +612,8 @@ namespace CPTool.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GasketId = table.Column<int>(type: "int", nullable: true),
-                    InnerMaterialId = table.Column<int>(type: "int", nullable: true),
-                    OuterMaterialId = table.Column<int>(type: "int", nullable: true),
+                    MaterialsGroupId = table.Column<int>(type: "int", nullable: true),
+                    MaterialsGrouptId = table.Column<int>(type: "int", nullable: true),
                     EquipmentTypeId = table.Column<int>(type: "int", nullable: true),
                     EquipmentTypeSubId = table.Column<int>(type: "int", nullable: true),
                     BrandId = table.Column<int>(type: "int", nullable: true),
@@ -497,7 +626,8 @@ namespace CPTool.Context.Migrations
                     SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -518,22 +648,130 @@ namespace CPTool.Context.Migrations
                         principalTable: "EquipmentTypeSubs",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_EquipmentItems_Gaskets_GasketId",
-                        column: x => x.GasketId,
-                        principalTable: "Gaskets",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_EquipmentItems_Materials_InnerMaterialId",
-                        column: x => x.InnerMaterialId,
-                        principalTable: "Materials",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_EquipmentItems_Materials_OuterMaterialId",
-                        column: x => x.OuterMaterialId,
-                        principalTable: "Materials",
+                        name: "FK_EquipmentItems_MaterialsGroup_MaterialsGroupId",
+                        column: x => x.MaterialsGroupId,
+                        principalTable: "MaterialsGroup",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_EquipmentItems_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InstrumentItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TagNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaterialsGroupId = table.Column<int>(type: "int", nullable: true),
+                    InnerMaterialId = table.Column<int>(type: "int", nullable: true),
+                    OuterMaterialId = table.Column<int>(type: "int", nullable: true),
+                    MeasuredVariableId = table.Column<int>(type: "int", nullable: true),
+                    MeasuredVariableModifierId = table.Column<int>(type: "int", nullable: true),
+                    DeviceFunctionId = table.Column<int>(type: "int", nullable: true),
+                    DeviceFunctionModifierId = table.Column<int>(type: "int", nullable: true),
+                    ReadoutId = table.Column<int>(type: "int", nullable: true),
+                    BrandId = table.Column<int>(type: "int", nullable: true),
+                    SupplierId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InstrumentItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_DeviceFunctionModifiers_DeviceFunctionModifierId",
+                        column: x => x.DeviceFunctionModifierId,
+                        principalTable: "DeviceFunctionModifiers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_DeviceFunctions_DeviceFunctionId",
+                        column: x => x.DeviceFunctionId,
+                        principalTable: "DeviceFunctions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_MaterialsGroup_MaterialsGroupId",
+                        column: x => x.MaterialsGroupId,
+                        principalTable: "MaterialsGroup",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_MeasuredVariableModifiers_MeasuredVariableModifierId",
+                        column: x => x.MeasuredVariableModifierId,
+                        principalTable: "MeasuredVariableModifiers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_MeasuredVariables_MeasuredVariableId",
+                        column: x => x.MeasuredVariableId,
+                        principalTable: "MeasuredVariables",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_Readouts_ReadoutId",
+                        column: x => x.ReadoutId,
+                        principalTable: "Readouts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_InstrumentItems_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchaseOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PurchaseOrderStatus = table.Column<int>(type: "int", nullable: false),
+                    SupplierId = table.Column<int>(type: "int", nullable: true),
+                    PurchaseRequisition = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    POCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    POReceivedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    POInstalledDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    POEstimatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    POOrderingdDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PONumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SPL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaxCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Currency = table.Column<int>(type: "int", nullable: false),
+                    PrizeCurrency = table.Column<double>(type: "float", nullable: false),
+                    PrizeUSD = table.Column<double>(type: "float", nullable: false),
+                    USDCOP = table.Column<double>(type: "float", nullable: false),
+                    USDEUR = table.Column<double>(type: "float", nullable: false),
+                    Tax = table.Column<double>(type: "float", nullable: false),
+                    PrizeCurrencyTax = table.Column<double>(type: "float", nullable: false),
+                    TotalPrizeCurrency = table.Column<double>(type: "float", nullable: false),
+                    MWOId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchaseOrders_MWOs_MWOId",
+                        column: x => x.MWOId,
+                        principalTable: "MWOs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PurchaseOrders_Suppliers_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "Id");
@@ -570,7 +808,8 @@ namespace CPTool.Context.Migrations
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -664,49 +903,64 @@ namespace CPTool.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchaseOrders",
+                name: "DownPayments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MWOId = table.Column<int>(type: "int", nullable: false),
-                    MWOItemId = table.Column<int>(type: "int", nullable: true),
+                    PurchaseOrderId = table.Column<int>(type: "int", nullable: true),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ManagerEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CBSRequesText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CBSRequesNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProformaInvoice = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DownpaymentStatus = table.Column<int>(type: "int", nullable: false),
+                    Payterms = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DownPaymentDueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeliveryDueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RealDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Percentage = table.Column<double>(type: "float", nullable: false),
+                    DownPaymentAmount = table.Column<double>(type: "float", nullable: false),
+                    DownpaymentDescrption = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Incotherm = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PurchaseOrders", x => x.Id);
+                    table.PrimaryKey("PK_DownPayments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PurchaseOrders_MWOItems_MWOItemId",
-                        column: x => x.MWOItemId,
-                        principalTable: "MWOItems",
+                        name: "FK_DownPayments_PurchaseOrders_PurchaseOrderId",
+                        column: x => x.PurchaseOrderId,
+                        principalTable: "PurchaseOrders",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PurchaseOrders_MWOs_MWOId",
-                        column: x => x.MWOId,
-                        principalTable: "MWOs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchaseOrderItems",
+                name: "PurchaseOrderMWOItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     PurchaseOrderId = table.Column<int>(type: "int", nullable: false),
+                    MWOItemId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PurchaseOrderItems", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseOrderMWOItems", x => new { x.PurchaseOrderId, x.MWOItemId });
                     table.ForeignKey(
-                        name: "FK_PurchaseOrderItems_PurchaseOrders_PurchaseOrderId",
+                        name: "FK_PurchaseOrderMWOItems_MWOItems_MWOItemId",
+                        column: x => x.MWOItemId,
+                        principalTable: "MWOItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PurchaseOrderMWOItems_PurchaseOrders_PurchaseOrderId",
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrders",
                         principalColumn: "Id",
@@ -717,6 +971,11 @@ namespace CPTool.Context.Migrations
                 name: "IX_BrandSuppliers_SupplierId",
                 table: "BrandSuppliers",
                 column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DownPayments_PurchaseOrderId",
+                table: "DownPayments",
+                column: "PurchaseOrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EquipmentItems_BrandId",
@@ -734,19 +993,9 @@ namespace CPTool.Context.Migrations
                 column: "EquipmentTypeSubId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EquipmentItems_GasketId",
+                name: "IX_EquipmentItems_MaterialsGroupId",
                 table: "EquipmentItems",
-                column: "GasketId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EquipmentItems_InnerMaterialId",
-                table: "EquipmentItems",
-                column: "InnerMaterialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EquipmentItems_OuterMaterialId",
-                table: "EquipmentItems",
-                column: "OuterMaterialId");
+                column: "MaterialsGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EquipmentItems_SupplierId",
@@ -757,6 +1006,61 @@ namespace CPTool.Context.Migrations
                 name: "IX_EquipmentTypeSubs_EquipmentTypeId",
                 table: "EquipmentTypeSubs",
                 column: "EquipmentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_BrandId",
+                table: "InstrumentItems",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_DeviceFunctionId",
+                table: "InstrumentItems",
+                column: "DeviceFunctionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_DeviceFunctionModifierId",
+                table: "InstrumentItems",
+                column: "DeviceFunctionModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_MaterialsGroupId",
+                table: "InstrumentItems",
+                column: "MaterialsGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_MeasuredVariableId",
+                table: "InstrumentItems",
+                column: "MeasuredVariableId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_MeasuredVariableModifierId",
+                table: "InstrumentItems",
+                column: "MeasuredVariableModifierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_ReadoutId",
+                table: "InstrumentItems",
+                column: "ReadoutId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentItems_SupplierId",
+                table: "InstrumentItems",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialsGroup_GasketId",
+                table: "MaterialsGroup",
+                column: "GasketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialsGroup_InnerMaterialId",
+                table: "MaterialsGroup",
+                column: "InnerMaterialId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialsGroup_OuterMaterialId",
+                table: "MaterialsGroup",
+                column: "OuterMaterialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MWOItems_AlterationItemId",
@@ -849,9 +1153,9 @@ namespace CPTool.Context.Migrations
                 column: "MWOTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchaseOrderItems_PurchaseOrderId",
-                table: "PurchaseOrderItems",
-                column: "PurchaseOrderId");
+                name: "IX_PurchaseOrderMWOItems_MWOItemId",
+                table: "PurchaseOrderMWOItems",
+                column: "MWOItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrders_MWOId",
@@ -859,9 +1163,9 @@ namespace CPTool.Context.Migrations
                 column: "MWOId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchaseOrders_MWOItemId",
+                name: "IX_PurchaseOrders_SupplierId",
                 table: "PurchaseOrders",
-                column: "MWOItemId");
+                column: "SupplierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Suppliers_TaxCodeLDId",
@@ -885,13 +1189,16 @@ namespace CPTool.Context.Migrations
                 name: "BrandSuppliers");
 
             migrationBuilder.DropTable(
-                name: "PurchaseOrderItems");
+                name: "DownPayments");
 
             migrationBuilder.DropTable(
-                name: "PurchaseOrders");
+                name: "PurchaseOrderMWOItems");
 
             migrationBuilder.DropTable(
                 name: "MWOItems");
+
+            migrationBuilder.DropTable(
+                name: "PurchaseOrders");
 
             migrationBuilder.DropTable(
                 name: "AlterationItems");
@@ -924,9 +1231,6 @@ namespace CPTool.Context.Migrations
                 name: "InsulationItems");
 
             migrationBuilder.DropTable(
-                name: "MWOs");
-
-            migrationBuilder.DropTable(
                 name: "PaintingItems");
 
             migrationBuilder.DropTable(
@@ -945,16 +1249,31 @@ namespace CPTool.Context.Migrations
                 name: "UnitaryBasePrizes");
 
             migrationBuilder.DropTable(
-                name: "Brands");
+                name: "MWOs");
 
             migrationBuilder.DropTable(
                 name: "EquipmentTypeSubs");
 
             migrationBuilder.DropTable(
-                name: "Gaskets");
+                name: "Brands");
 
             migrationBuilder.DropTable(
-                name: "Materials");
+                name: "DeviceFunctionModifiers");
+
+            migrationBuilder.DropTable(
+                name: "DeviceFunctions");
+
+            migrationBuilder.DropTable(
+                name: "MaterialsGroup");
+
+            migrationBuilder.DropTable(
+                name: "MeasuredVariableModifiers");
+
+            migrationBuilder.DropTable(
+                name: "MeasuredVariables");
+
+            migrationBuilder.DropTable(
+                name: "Readouts");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");
@@ -964,6 +1283,12 @@ namespace CPTool.Context.Migrations
 
             migrationBuilder.DropTable(
                 name: "EquipmentTypes");
+
+            migrationBuilder.DropTable(
+                name: "Gaskets");
+
+            migrationBuilder.DropTable(
+                name: "Materials");
 
             migrationBuilder.DropTable(
                 name: "TaxCodeLDs");

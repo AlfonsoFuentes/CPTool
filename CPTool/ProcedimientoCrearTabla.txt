@@ -35,11 +35,7 @@ si la tabla es muchos a muchos usar
 
 <GenericManytoManyList><GenericManytoManyList>
 
-11 Agregar Al servicio de UI el listado
-11.1 Agregar  public Result<List<GasketDTO>> Gaskets { get; set; } = new(); a la clase MWOItemModel
-11.2 Agregar readonly IGetList<GasketDTO, Gasket> _getgasketlist;
-11.3 en el constructor inject  IGetList<GasketDTO, Gasket> getgasketlist;
-11.4 en Initialize() Agregar  _MWOItemData.Gaskets = await _getgasketlist.Handle();
+En Table Service agregar el Manager
 
 
 

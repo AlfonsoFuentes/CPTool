@@ -23,17 +23,20 @@ namespace CPTool.DTOS
         }
         public PurchaseOrderStatus PurchaseOrderStatus { get; set; } = PurchaseOrderStatus.Draft;
 
-        //public BrandDTO? BrandDTO { get; set; }
+        public BrandDTO? BrandDTO { get; set; } = new();
         public SupplierDTO? SupplierDTO { get; set; } = new();
         public int? SupplierId => SupplierDTO?.Id;
-        //public int? BrandId => BrandDTO?.Id;
+        public int? BrandId => BrandDTO?.Id;
         public string PurchaseRequisition { get; set; } = "";
-        public DateTime POOrderingdDate { get; set; }
-        public DateTime POCreatedDate { get; set; }
-        public DateTime POReceivedDate { get; set; }
-        public DateTime POInstalledDate { get; set; }
+        public DateTime? POOrderingdDate { get; set; }
+        public DateTime? POCreatedDate { get; set; }
+        public DateTime? POReceivedDate { get; set; }
+        public DateTime? POInstalledDate { get; set; }
         public DateTime? POEstimatedDate { get; set; }
-
+        public DateTime? LastEvenDate => 
+            PurchaseOrderStatus == PurchaseOrderStatus.Ordering ? POOrderingdDate :
+            PurchaseOrderStatus == PurchaseOrderStatus.Created ? POCreatedDate : 
+            PurchaseOrderStatus== PurchaseOrderStatus.Received ? POReceivedDate : POInstalledDate;
         public string PONumber { get; set; } = "";
         public string SPL => MWOItemDTO?.ChapterDTO?.Id == 1 ? "SPL Alteration" : "SPL No Alteration";
         public string TaxCode => MWOItemDTO?.ChapterDTO?.Id == 1 ? SupplierDTO?.TaxCodeLPDTO?.Name! : SupplierDTO?.TaxCodeLDDTO?.Name!;
@@ -77,7 +80,7 @@ namespace CPTool.DTOS
             {
                 PurchaseOrderHistory.Add("PO Ordering");
                 PurchaseOrderHistory.Add($"PR: {PurchaseRequisition}");
-                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate?.ToString(_en)}");
                 PurchaseOrderHistory.Add($"Pending to submit:");
                 PurchaseOrderHistory.Add($"PO Number");
                 PurchaseOrderHistory.Add($"Estimated receive date");
@@ -89,8 +92,8 @@ namespace CPTool.DTOS
                 PurchaseOrderHistory.Add("PO Ordered");
                 PurchaseOrderHistory.Add($"PR: {PurchaseRequisition}");
                 PurchaseOrderHistory.Add($"PO: {PONumber}");
-                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate.ToString(_en)}");
-                PurchaseOrderHistory.Add($"Ordered date: {POCreatedDate.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate?.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Ordered date: {POCreatedDate?.ToString(_en)}");
                 PurchaseOrderHistory.Add($"Estimated date: {POEstimatedDate?.ToString(_en)}");
 
                 ButtonName = "Receive";
@@ -101,10 +104,10 @@ namespace CPTool.DTOS
                 PurchaseOrderHistory.Add("PO Ordered");
                 PurchaseOrderHistory.Add($"PR: {PurchaseRequisition}");
                 PurchaseOrderHistory.Add($"PO: {PONumber}");
-                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate.ToString(_en)}");
-                PurchaseOrderHistory.Add($"Ordered date: {POCreatedDate.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate?.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Ordered date: {POCreatedDate?.ToString(_en)}");
                 PurchaseOrderHistory.Add($"Estimated date: {POEstimatedDate?.ToString(_en)}");
-                PurchaseOrderHistory.Add($"Received date date: {POReceivedDate.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Received date date: {POReceivedDate?.ToString(_en)}");
                 ButtonName = "Install";
             }
             else if (PurchaseOrderStatus == PurchaseOrderStatus.Installed)
@@ -112,11 +115,11 @@ namespace CPTool.DTOS
                 PurchaseOrderHistory.Add("PO Ordered");
                 PurchaseOrderHistory.Add($"PR: {PurchaseRequisition}");
                 PurchaseOrderHistory.Add($"PO: {PONumber}");
-                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate.ToString(_en)}");
-                PurchaseOrderHistory.Add($"Ordered date: {POCreatedDate.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Created date: {POOrderingdDate?.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Ordered date: {POCreatedDate?.ToString(_en)}");
                 PurchaseOrderHistory.Add($"Estimated date: {POEstimatedDate?.ToString(_en)}");
-                PurchaseOrderHistory.Add($"Received date date: {POReceivedDate.ToString(_en)}");
-                PurchaseOrderHistory.Add($"Installed date date: {POInstalledDate.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Received date date: {POReceivedDate?.ToString(_en)}");
+                PurchaseOrderHistory.Add($"Installed date date: {POInstalledDate?.ToString(_en)}");
                 ButtonName = "Closed";
             }
 

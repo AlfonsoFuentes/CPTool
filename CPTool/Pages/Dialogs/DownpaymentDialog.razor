@@ -1,127 +1,141 @@
 ﻿@inherits CancellableComponent
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
-<ComponentBaseDialog TDTO="DownPaymentDTO" Model="@Model" FuncBeforeClose=ProperSave>
+<ComponentBaseDialog TDTO="DownPaymentDTO" Model="@Model" FuncBeforeClose=BeforeClose ButtonSaveName=@Model.ButtonName
+                     FuncOnInitialize="Initializeform"
+                     DisableButtonSave=@(Model.DownpaymentStatus==DownpaymentStatus.Paid?true:false)>
     <Components>
-        <MudTextField @bind-Value="@Model.Name"
-                      Required=true
-                      RequiredError="Must submit Template form Name"
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                      Immediate="true"
-                      Label="Template form Name" />
-        <MudDatePicker Label="Request date"
-                       DisableToolbar="true"
-                       Editable=true
-                       Required=true
-                       Margin="Margin.Dense"
-                       Variant="Variant.Outlined"
-                       RequiredError="Must define estimated Request date"
-                       @bind-Date="Model.RequestDate" Culture="@_en"></MudDatePicker>
-        <MudTextField T="string" Label="Manager email" Required="true" RequiredError="Email is required!"
-                      Margin="Margin.Dense"
-                      InputType="InputType.Email" @bind-Value=@Model.ManagerEmail
-                      Variant="Variant.Outlined"
-                      Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-        <MudField Label="Supplier Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
-        <MudField Label="Supplier Vendor" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.VendorCodeDTO.Name</MudField>
-        <MudField Label="PO #" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PONumber</MudField>
-        <MudField Label="PO Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
+        <MudGrid>
 
-        <MudField Label="@($"PO Value ${Model.PurchaseOrderDTO.Currency}")" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PrizeCurrency</MudField>
-        <MudField Label="@($"PO Tax Value ${Model.PurchaseOrderDTO.Currency}")" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PrizeCurrencyTax</MudField>
-        <MudField Label="@($"PO Total Value ${Model.PurchaseOrderDTO.Currency}")" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.TotalPrizeCurrency</MudField>
-        @if (Model.Id == 0)
-        {
-            <MudTextField @bind-Value="@Model.ProformaInvoice"
-                      Required=true
-                      RequiredError="Must submit Proforma Invoice"
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                      Immediate="true"
-                      Label="Proforma Invoice #" />
-            <MudTextField @bind-Value="@Model.DownpaymentDescrption"
-                      Required=true
-                      RequiredError="Must submit Downpayment Description"
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                      Immediate="true"
-                      Label="Downpayment request due?" />
-            <MudTextField @bind-Value="@Model.Payterms"
-                      Required=true
-                      RequiredError="Must submit Pay terms"
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                      Lines="2"
-                      Immediate="true"
-                      Label="Pay terms?" />
-            <MudTextField @bind-Value="@Model.Incotherm"
-                      Required=true
-                      RequiredError="Must submit Incotherm"
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                      Immediate="true"
-                      Label="Incotherm" />
-            <MudField Label="Downpayment Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
-            <MudNumericField T="double" @bind-Value="Model.Percentage"
-                         Immediate="true"
-                         HideSpinButtons="true"
-                         Margin="Margin.Dense"
-                         Variant="Variant.Outlined"
-                         Required="true"
-                         Min="0" Max="100"
-                         Label="Downpayment Percentage"></MudNumericField>
-            <MudField Label="Downpayment Value" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DownPaymentAmount</MudField>
-            <MudDatePicker Label="Downpayment due date"
-                       Editable=true
-                       Required=true
-                       Margin="Margin.Dense"
-                       DisableToolbar="true"
-                       Variant="Variant.Outlined"
-                       ShowWeekNumbers=true
-                       RequiredError="Must define estimated Downpayment due date"
-                       @bind-Date="Model.DownPaymentDueDate" Culture="@_en"></MudDatePicker>
-            <MudField Label="MWO Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWOName</MudField>
-            <MudDatePicker Label="Delivery due date"
-                       DisableToolbar="true"
-                       Editable=true
-                       Required=true
-                       Margin="Margin.Dense"
-                       Variant="Variant.Outlined"
-                       ShowWeekNumbers=true
-                       RequiredError="Must define estimated Delivery due due date"
-                       @bind-Date="Model.DeliveryDueDate" Culture="@_en"></MudDatePicker>
-            <MudTextField @bind-Value="@Model.CBSRequesText"
-                      Required=true
-                      RequiredError="Must CBSRequest text"
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                      Immediate="true"
-                      Label="CBSRequest Text" />
-            <MudTextField @bind-Value="@Model.CBSRequesNo"
-                      Required=true
-                      RequiredError="Must CBSRequest No"
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                      Immediate="true"
-                      Label="CBSRequest No" />
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="@Model.Name"
+                              Required=true
+                              RequiredError="Must submit Template form Name"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="Template form Name" />
+                <MudDatePicker Label="Request date"
+                               DisableToolbar="true"
+                               Editable=true
+                               Required=true
+                               Margin="Margin.Dense"
+                               Variant="Variant.Outlined"
+                               RequiredError="Must define estimated Request date"
+                               @bind-Date="Model.RequestDate" Culture="@_en"></MudDatePicker>
+                <MudTextField T="string" Label="Manager email" Required="true" RequiredError="Email is required!"
+                              Margin="Margin.Dense"
+                              InputType="InputType.Email" @bind-Value=@Model.ManagerEmail
+                              Variant="Variant.Outlined"
+                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+                <MudField Label="Supplier Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
+                <MudField Label="Supplier Vendor" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.VendorCodeDTO.Name</MudField>
+                <MudField Label="PO #" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PONumber</MudField>
+                <MudField Label="PO Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
 
-        }
-        else
-        {
-            <MudField Label="Proforma Invoice #" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.ProformaInvoice</MudField>
-            <MudField Label="Downpayment request due?" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DownpaymentDescrption</MudField>
-            <MudField Label="Pay terms?" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.Payterms</MudField>
-            <MudField Label="Incotherm" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.Incotherm</MudField>
-            <MudField Label="Downpayment Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
+                <MudField Label="@($"PO Value ${Model.PurchaseOrderDTO.Currency}")" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PrizeCurrency.ToString("C2")</MudField>
+                <MudField Label="@($"PO Tax Value ${Model.PurchaseOrderDTO.Currency}")" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PrizeCurrencyTax.ToString("C2")</MudField>
+                <MudField Label="@($"PO Total Value ${Model.PurchaseOrderDTO.Currency}")" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.TotalPrizeCurrency.ToString("C2")</MudField>
+                @if (Model.Id == 0)
+                {
+                    <MudTextField @bind-Value="@Model.ProformaInvoice"
+                              Required=true
+                              RequiredError="Must submit Proforma Invoice"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="Proforma Invoice #" />
+                    <MudTextField @bind-Value="@Model.DownpaymentDescrption"
+                              Required=true
+                              RequiredError="Must submit Downpayment Description"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="Downpayment request due?" />
+                    <MudTextField @bind-Value="@Model.Payterms"
+                              Required=true
+                              RequiredError="Must submit Pay terms"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Lines="2"
+                              Immediate="true"
+                              Label="Pay terms?" />
+                    <MudTextField @bind-Value="@Model.Incotherm"
+                              Required=true
+                              RequiredError="Must submit Incotherm"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="Incotherm" />
+                    <MudField Label="Downpayment Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
+                    <MudNumericField T="double" @bind-Value="Model.Percentage"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Required="true"
+                                 Min="0" Max="100"
+                                 Label="Downpayment Percentage"></MudNumericField>
+                    <MudField Label="Downpayment Value" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DownPaymentAmount</MudField>
+                    <MudDatePicker Label="Downpayment due date"
+                               Editable=true
+                               Required=true
+                               Margin="Margin.Dense"
+                               DisableToolbar="true"
+                               Variant="Variant.Outlined"
+                               ShowWeekNumbers=true
+                               RequiredError="Must define estimated Downpayment due date"
+                               @bind-Date="Model.DownPaymentDueDate" Culture="@_en"></MudDatePicker>
+                    <MudField Label="MWO Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWOName</MudField>
+                    <MudDatePicker Label="Delivery due date"
+                               DisableToolbar="true"
+                               Editable=true
+                               Required=true
+                               Margin="Margin.Dense"
+                               Variant="Variant.Outlined"
+                               ShowWeekNumbers=true
+                               RequiredError="Must define estimated Delivery due due date"
+                               @bind-Date="Model.DeliveryDueDate" Culture="@_en"></MudDatePicker>
+                    <MudTextField @bind-Value="@Model.CBSRequesText"
+                              Required=true
+                              RequiredError="Must CBSRequest text"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="CBSRequest Text" />
+                    <MudTextField @bind-Value="@Model.CBSRequesNo"
+                              Required=true
+                              RequiredError="Must CBSRequest No"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Immediate="true"
+                              Label="CBSRequest No" />
 
-            <MudField Label="Downpayment Percentage" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.Percentage</MudField>
-            <MudField Label="Downpayment due date" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DownPaymentDueDate?.ToString(_en)</MudField>
-            <MudField Label="MWO Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWOName</MudField>
-            <MudField Label="Delivery due date" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DeliveryDueDate?.ToString(_en)</MudField>
-            <MudField Label="CBSRequest Text" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.CBSRequesText</MudField>
-            <MudField Label="CBSRequest No" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.CBSRequesNo</MudField>
-        }
+                }
+                else
+                {
+                    <MudField Label="Proforma Invoice #" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.ProformaInvoice</MudField>
+                    <MudField Label="Downpayment request due?" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DownpaymentDescrption</MudField>
+                    <MudField Label="Pay terms?" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.Payterms</MudField>
+                    <MudField Label="Incotherm" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.Incotherm</MudField>
+                    <MudField Label="Downpayment Currency" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Currency.ToString()</MudField>
+
+                    <MudField Label="Downpayment Percentage" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.Percentage</MudField>
+                    <MudField Label="Downpayment due date" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DownPaymentDueDate?.ToString(_en)</MudField>
+                    <MudField Label="MWO Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWOName</MudField>
+                    <MudField Label="Delivery due date" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.DeliveryDueDate?.ToString(_en)</MudField>
+                    <MudField Label="CBSRequest Text" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.CBSRequesText</MudField>
+                    <MudField Label="CBSRequest No" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.CBSRequesNo</MudField>
+                }
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                @foreach (var row in Model.DownpaymentHistory)
+                {
+                    <MudField Variant="Variant.Outlined" Margin="Margin.Dense">@row</MudField>
+                }
+            </MudItem>
+        </MudGrid>
     </Components>
 
 </ComponentBaseDialog>

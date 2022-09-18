@@ -15,7 +15,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         {
             if (Model == null)
             {
-                Model = new EquipmentItemDTO();
+                Model = new ();
               
             }
            
