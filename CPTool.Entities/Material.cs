@@ -8,7 +8,7 @@ namespace CPTool.Entities
 {
     public class Material :AuditableEntity
     {
-     
+        
 
         public string? Abbreviation { get; set; }
 
@@ -20,6 +20,7 @@ namespace CPTool.Entities
 
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;
 
+        public ICollection<Nozzle>? Nozzles { get; set; } = null!;
 
 
     }

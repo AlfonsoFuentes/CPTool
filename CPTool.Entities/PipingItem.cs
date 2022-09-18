@@ -13,6 +13,8 @@ namespace CPTool.Entities
         public Nozzle? NozzleFinish { get; set; }
         public MWOItem? StartMWOItem { get; set; }
         public MWOItem? FinishMWOItem { get; set; }
+
+        public PipeClass? PipeClass { get; set; }
         public int? MaterialId { get; set; }
         public int? ProcessFluidId { get; set; }
         public int? DiameterId { get; set; }
@@ -20,14 +22,17 @@ namespace CPTool.Entities
         public int? NozzleFinishId { get; set; }
         public int? StartMWOItemId { get; set; }
         public int? FinishMWOItemId { get; set; }
-
+        public int? PipeClassId { get; set; }
         public bool Insulation { get; set; }
 
-       
+
     }
     public class ProcessFluid : AuditableEntity
     {
+        public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
+        public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;
+        public ICollection<ProcessCondition>? ProcessCondition { get; set; } = null!;
     }
     public class PipeDiameter : AuditableEntity
     {
@@ -37,14 +42,14 @@ namespace CPTool.Entities
         public Unit? OD { get; set; }
         public Unit? ID { get; set; }
         public Unit? Thickness { get; set; }
-        public PipeClass? PipeClass { get; set; }
+
 
         public int? ODId { get; set; }
         public int? IDId { get; set; }
         public int? ThicknessId { get; set; }
     }
 
-  
+
 
     public class Nozzle : AuditableEntity
     {
@@ -62,12 +67,21 @@ namespace CPTool.Entities
         public ConnectionType? ConnectionType { get; set; }
         public int? GasketId { get; set; }
         public Gasket? Gasket { get; set; }
+        public int? MaterialID { get; set; }
+        public Material? Material { get; set; }
 
-        public int? ProcessConditionId { get; set; }
-        public ProcessCondition? ProcessCondition { get; set; }
+        public StreamType StreamType { get; set; }
 
-       
+        public PipeAccesory? PipeAccesory { get; set; }
+        public int? PipeAccesoryId { get; set; }
 
+
+    }
+    public enum StreamType
+    {
+        None,
+        Inlet,
+        Outlet
     }
     public class PipeAccesory : AuditableEntity
     {
@@ -75,10 +89,58 @@ namespace CPTool.Entities
         public PipingItem? PipingItem { get; set; }
         public int? ProcessConditionId { get; set; }
         public ProcessCondition? ProcessCondition { get; set; }
+
+        public Unit? Friction { get; }
+        public Unit? Reynold { get; }
+
+        public Unit? LevelInlet { get; set; }
+        public Unit? LevelOutlet { get; set; }
+        public Unit? FrictionDropPressure { get; set; }
+        public Unit? OverallDropPressure { get; set; }
+        public Unit? ElevationChange { get; set; }
+        public int? FrictionId { get; }
+        public int? ReynoldId { get; }
+        public int? LevelInletId { get; set; }
+        public int? LevelOutletId { get; set; }
+        public int? FrictionDropPressureId { get; set; }
+        public int? OverallDropPressureId { get; set; }
+        public int? ElevationChangeId { get; set; }
+
+        public FlowDirection FlowDirection { get; set; }
+        public PipeAccesorySectionType SectionType { get; set; }
+
+        public ICollection<Nozzle>? Nozzles { get; set; }
     }
-    public class PipeClass:AuditableEntity
+    public enum FlowDirection
     {
-        public ICollection<PipeDiameter>? PipeDiameters { get; set; } = null!;
+        None,
+        Up,
+        Straigth,
+        Down
+    }
+    public enum PipeAccesorySectionType
+    {
+        None,
+
+        OutletVessel,
+        InletVessel,
+        Tube,
+        Elbow90,
+        Elbow45,
+        BallValve,
+        Butterfly,
+        ProportionalValve,
+        CheckValve,
+        POU,
+        Reducer,
+        Expansion,
+        FlowMeter
+
+    }
+    public class PipeClass : AuditableEntity
+    {
+
+        public ICollection<PipingItem>? PipingItems { get; set; } = null!;
     }
     public class ConnectionType : AuditableEntity
     {
@@ -86,8 +148,10 @@ namespace CPTool.Entities
     }
     public class ProcessCondition : AuditableEntity
     {
+
         public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
-        public ICollection<Nozzle>? Nozzles { get; set; } = null!;
+        public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
+        public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
         public Unit? Pressure { get; set; }
         public Unit? Temperature { get; set; }
         public Unit? MassFlow { get; set; }
@@ -98,6 +162,7 @@ namespace CPTool.Entities
         public Unit? SpecificEnthalpy { get; set; }
         public Unit? ThermalConductivity { get; set; }
         public Unit? SpecificCp { get; set; }
+        public ProcessFluid? ProcessFluid { get; set; }
         public int? PressureId { get; set; }
         public int? TemperatureId { get; set; }
         public int? MassFlowId { get; set; }
@@ -108,42 +173,7 @@ namespace CPTool.Entities
         public int? SpecificEnthalpyId { get; set; }
         public int? ThermalConductivityId { get; set; }
         public int? SpecificCpId { get; set; }
-    }
-
-    public class Unit : AuditableEntity
-    {
-        public string? UnitName { get; set; }
-        public double Value { get; set; }
-
-        [ForeignKey("ODId")]
-        public ICollection<PipeDiameter>? ODs { get; set; } = null!;
-        [ForeignKey("IDId")]
-        public ICollection<PipeDiameter>? IDs { get; set; } = null!;
-        [ForeignKey("ThicknessId")]
-        public ICollection<PipeDiameter>? Thicknesss { get; set; } = null!;
-
-
-        [ForeignKey("SpecificCpId")]
-        public ICollection<ProcessCondition>? SpecificCps { get; set; } = null!;
-        [ForeignKey("ThermalConductivityId")]
-        public ICollection<ProcessCondition>? ThermalConductivitys { get; set; } = null!;
-
-        [ForeignKey("SpecificEnthalpyId")]
-        public ICollection<ProcessCondition>? SpecificEnthalpys { get; set; } = null!;
-        [ForeignKey("EnthalpyFlowId")]
-        public ICollection<ProcessCondition>? EnthalpyFlows { get; set; } = null!;
-        [ForeignKey("ViscosityId")]
-        public ICollection<ProcessCondition>? Viscositys { get; set; } = null!;
-        [ForeignKey("DensityId")]
-        public ICollection<ProcessCondition>? Densitys { get; set; } = null!;
-        [ForeignKey("VolumetricFlowId")]
-        public ICollection<ProcessCondition>? VolumetricFlows { get; set; } = null!;
-        [ForeignKey("MassFlowId")]
-        public ICollection<ProcessCondition>? MassFlows { get; set; } = null!;
-        [ForeignKey("TemperatureId")]
-        public ICollection<ProcessCondition>? Temperatures { get; set; } = null!;
-        [ForeignKey("PressureId")]
-        public ICollection<ProcessCondition>? Pressures { get; set; } = null!;
+        public int? ProcessFluidId { get; set; }
     }
 
 }

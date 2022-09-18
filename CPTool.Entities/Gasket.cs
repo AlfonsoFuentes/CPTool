@@ -8,7 +8,7 @@ namespace CPTool.Entities
 {
     public class Gasket :AuditableEntity
     {
-        public ICollection<Nozzle>? MaterialsGroupNozzles { get; set; }
+        public ICollection<Nozzle>? Nozzles { get; set; }
         
        public ICollection<MaterialsGroup>? MaterialsGroups { get; set; }
     }
