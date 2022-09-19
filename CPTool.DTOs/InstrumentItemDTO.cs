@@ -7,6 +7,9 @@ namespace CPTool.DTOS
    
     public class InstrumentItemDTO : AuditableEntityDTO
     {
+        public ProcessConditionDTO? ProcessConditionDTO { get; set; }
+        public ProcessFluidDTO? ProcessFluidDTO { get; set; }
+        public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
         public List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
         public MaterialsGroupDTO? MaterialsGroupDTO { get; set; } = new();
         public MeasuredVariableDTO? MeasuredVariableDTO { get; set; } = new();
@@ -17,7 +20,8 @@ namespace CPTool.DTOS
         public BrandDTO? BrandDTO { get; set; } = new();
         public SupplierDTO? SupplierDTO { get; set; } = new();
 
-       
+        public int? ProcessConditionId => ProcessConditionDTO?.Id;
+        public int? ProcessFluidId => ProcessFluidDTO?.Id;
         public int? MaterialsGroupId => MaterialsGroupDTO?.Id;
         public int? MeasuredVariableId => MeasuredVariableDTO?.Id;
         public int? MeasuredVariableModifierId => MeasuredVariableModifierDTO?.Id;

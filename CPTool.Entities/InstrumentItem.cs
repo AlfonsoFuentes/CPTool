@@ -4,7 +4,10 @@ namespace CPTool.Entities
 {
     public class InstrumentItem : AuditableEntity
     {
-        public  ICollection<MWOItem> MWOItems { get; set; } = null!;
+        public ProcessCondition? ProcessCondition { get; set; }
+        public ProcessFluid? ProcessFluid { get; set; }
+        public ICollection<Nozzle>? Nozzles { get; set; } = null!;
+        public  ICollection<MWOItem>? MWOItems { get; set; } = null!;
         public MaterialsGroup? MaterialsGroup { get; set; }
         public MeasuredVariable? MeasuredVariable { get; set; }
         public MeasuredVariableModifier? MeasuredVariableModifier { get; set; }
@@ -14,8 +17,7 @@ namespace CPTool.Entities
         public Brand? Brand { get; set; }
         public Supplier? Supplier { get; set; }
 
-        public ProcessCondition? ProcessCondition { get; set; }
-        public ProcessFluid? ProcessFluid { get; set; }
+      
         public int? ProcessConditionId { get; set; }
         public int? ProcessFluidId { get; set; }
         public int? MaterialsGroupId { get; set; }

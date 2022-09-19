@@ -4,6 +4,7 @@ using CPTool.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    partial class TableContextModelSnapshot : ModelSnapshot
+    [Migration("20220918225121_PipingItem")]
+    partial class PipingItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1057,13 +1059,7 @@ namespace CPTool.Context.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EquipmentItemId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("GasketId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InstrumentItemId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MaterialID")
@@ -1081,9 +1077,6 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("PipeDiameterId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PipingItemId")
-                        .HasColumnType("int");
-
                     b.Property<int>("StreamType")
                         .HasColumnType("int");
 
@@ -1094,11 +1087,7 @@ namespace CPTool.Context.Migrations
 
                     b.HasIndex("ConnectionTypeId");
 
-                    b.HasIndex("EquipmentItemId");
-
                     b.HasIndex("GasketId");
-
-                    b.HasIndex("InstrumentItemId");
 
                     b.HasIndex("MaterialID");
 
@@ -1107,8 +1096,6 @@ namespace CPTool.Context.Migrations
                     b.HasIndex("PipeClassId");
 
                     b.HasIndex("PipeDiameterId");
-
-                    b.HasIndex("PipingItemId");
 
                     b.ToTable("Nozzles");
                 });
@@ -2164,17 +2151,9 @@ namespace CPTool.Context.Migrations
                         .WithMany("Nozzles")
                         .HasForeignKey("ConnectionTypeId");
 
-                    b.HasOne("CPTool.Entities.EquipmentItem", "EquipmentItem")
-                        .WithMany("Nozzles")
-                        .HasForeignKey("EquipmentItemId");
-
                     b.HasOne("CPTool.Entities.Gasket", "Gasket")
                         .WithMany("Nozzles")
                         .HasForeignKey("GasketId");
-
-                    b.HasOne("CPTool.Entities.InstrumentItem", "InstrumentItem")
-                        .WithMany("Nozzles")
-                        .HasForeignKey("InstrumentItemId");
 
                     b.HasOne("CPTool.Entities.Material", "Material")
                         .WithMany("Nozzles")
@@ -2192,17 +2171,9 @@ namespace CPTool.Context.Migrations
                         .WithMany("Nozzles")
                         .HasForeignKey("PipeDiameterId");
 
-                    b.HasOne("CPTool.Entities.PipingItem", "PipingItem")
-                        .WithMany("Nozzles")
-                        .HasForeignKey("PipingItemId");
-
                     b.Navigation("ConnectionType");
 
-                    b.Navigation("EquipmentItem");
-
                     b.Navigation("Gasket");
-
-                    b.Navigation("InstrumentItem");
 
                     b.Navigation("Material");
 
@@ -2211,8 +2182,6 @@ namespace CPTool.Context.Migrations
                     b.Navigation("PipeClass");
 
                     b.Navigation("PipeDiameter");
-
-                    b.Navigation("PipingItem");
                 });
 
             modelBuilder.Entity("CPTool.Entities.PipeAccesory", b =>
@@ -2555,8 +2524,6 @@ namespace CPTool.Context.Migrations
             modelBuilder.Entity("CPTool.Entities.EquipmentItem", b =>
                 {
                     b.Navigation("MWOItems");
-
-                    b.Navigation("Nozzles");
                 });
 
             modelBuilder.Entity("CPTool.Entities.EquipmentType", b =>
@@ -2586,8 +2553,6 @@ namespace CPTool.Context.Migrations
             modelBuilder.Entity("CPTool.Entities.InstrumentItem", b =>
                 {
                     b.Navigation("MWOItems");
-
-                    b.Navigation("Nozzles");
                 });
 
             modelBuilder.Entity("CPTool.Entities.InsulationItem", b =>
@@ -2676,8 +2641,6 @@ namespace CPTool.Context.Migrations
             modelBuilder.Entity("CPTool.Entities.PipingItem", b =>
                 {
                     b.Navigation("MWOItems");
-
-                    b.Navigation("Nozzles");
 
                     b.Navigation("PipeAccesorys");
                 });

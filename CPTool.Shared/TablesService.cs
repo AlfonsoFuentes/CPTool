@@ -39,6 +39,14 @@ namespace CPTool.Shared
         public IDTOManager<ReadoutDTO, Readout> ManReadout { get; set; }
 
         public IDTOManager<MaterialsGroupDTO, MaterialsGroup> ManMaterialsGroup { get; set; }
+        public IDTOManager<UnitDTO, Unit> ManUnit { get; set; }
+        public IDTOManager<ProcessFluidDTO, ProcessFluid> ManProcessFluid { get; set; }
+        public IDTOManager<PipeDiameterDTO, PipeDiameter> ManPipeDiameter { get; set; }
+        public IDTOManager<NozzleDTO, Nozzle> ManNozzle { get; set; }
+        public IDTOManager<PipeAccesoryDTO, PipeAccesory> ManPipeAccesory { get; set; }
+        public IDTOManager<PipeClassDTO, PipeClass> ManPipeClass { get; set; }
+        public IDTOManager<ProcessConditionDTO, ProcessCondition> ManProcessCondition { get; set; }
+        
         public TablesService(
             IDTOManager<BrandSupplierDTO, BrandSupplier> manBrandSupplier,
             IDTOManager<MWOTypeDTO, MWOType> manMWOType,
@@ -65,7 +73,14 @@ namespace CPTool.Shared
             IDTOManager<DeviceFunctionDTO, DeviceFunction> manDeviceFunction,
             IDTOManager<DeviceFunctionModifierDTO, DeviceFunctionModifier> manDeviceFunctionModifier,
             IDTOManager<ReadoutDTO, Readout> manReadout,
-            IDTOManager<MaterialsGroupDTO, MaterialsGroup> manMaterialsGroup
+            IDTOManager<MaterialsGroupDTO, MaterialsGroup> manMaterialsGroup,
+            IDTOManager<UnitDTO, Unit> manUnit,
+            IDTOManager<ProcessFluidDTO, ProcessFluid> manProcessFluid,
+            IDTOManager<PipeDiameterDTO, PipeDiameter> manPipeDiameter,
+            IDTOManager<NozzleDTO, Nozzle> manNozzle,
+            IDTOManager<PipeAccesoryDTO, PipeAccesory> manPipeAccesory,
+            IDTOManager<PipeClassDTO, PipeClass> manPipeClass,
+            IDTOManager<ProcessConditionDTO, ProcessCondition> manProcessCondition
 
 
             )
@@ -85,7 +100,7 @@ namespace CPTool.Shared
             ManBrand = manBrand;
             ManSupplier = manSupplier;
             ManEquipmentItem = manEquipmentItem;
-           ManInstrumentItem=manInstrumentItem;
+            ManInstrumentItem = manInstrumentItem;
             ManBrandSupplier = manBrandSupplier;
             ManVendorCode = manVendorCode;
             ManTaxCodeLD = manTaxCodeLD;
@@ -93,19 +108,30 @@ namespace CPTool.Shared
             ManPurchaseOrder = manPurchaseOrder;
             ManPurchaseOrderMWOItem = manPurchaseOrderMWOItem;
             ManDownPayment = manDownPayment;
-            ManDeviceFunction= manDeviceFunction;
-            ManDeviceFunctionModifier= manDeviceFunctionModifier;
-            ManMeasuredVariable= manMeasuredVariable;
-            ManMeasuredVariableModifier= manMeasuredVariableModifier;
+            ManDeviceFunction = manDeviceFunction;
+            ManDeviceFunctionModifier = manDeviceFunctionModifier;
+            ManMeasuredVariable = manMeasuredVariable;
+            ManMeasuredVariableModifier = manMeasuredVariableModifier;
             ManReadout = manReadout;
             ManMaterialsGroup = manMaterialsGroup;
-
+            ManUnit = manUnit;
+            ManProcessFluid = manProcessFluid;
+            ManPipeDiameter = manPipeDiameter;
+            ManNozzle = manNozzle;
+            ManPipeAccesory = manPipeAccesory;
+            ManPipeClass = manPipeClass;
+            ManProcessCondition = manProcessCondition;
         }
 
         public async Task Initialize()
         {
-
-
+            await ManProcessCondition.UpdateList();
+            await ManPipeClass.UpdateList();
+            await ManPipeAccesory.UpdateList();
+            await ManNozzle.UpdateList();
+            await ManPipeDiameter.UpdateList();
+            await ManProcessFluid.UpdateList();
+            await ManUnit.UpdateList();
             await ManChapter.UpdateList();
             await ManUnitaryPrize.UpdateList();
             await ManGasket.UpdateList();

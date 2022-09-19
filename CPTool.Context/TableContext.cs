@@ -17,14 +17,14 @@ namespace CPTool.Context
       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.InnerMaterial).WithMany(t => t.InnerMaterials).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.OuterMaterial).WithMany(t => t.OuterMaterials).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.InnerMaterial).WithMany(t => t.InnerMaterials).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.OuterMaterial).WithMany(t => t.OuterMaterials).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleStart).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleFinish).WithMany(t => t.FinishPipingItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleStart).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleFinish).WithMany(t => t.FinishPipingItems).OnDelete(DeleteBehavior.NoAction);
             
-            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.OD).WithMany(t => t.ODs).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.ID).WithMany(t => t.IDs).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.OD).WithMany(t => t.ODs).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.ID).WithMany(t => t.IDs).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeDiameter>().HasOne(c => c.Thickness).WithMany(t => t.Thicknesss).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Pressure).WithMany(t => t.Pressures).OnDelete(DeleteBehavior.NoAction);
@@ -104,6 +104,14 @@ namespace CPTool.Context
         public DbSet<DeviceFunction> DeviceFunctions { get; set; }
         public DbSet<DeviceFunctionModifier> DeviceFunctionModifiers { get; set; }
         public DbSet<Readout> Readouts { get; set; }
+        public DbSet<Unit> Units { get; set; }
+        public DbSet<ProcessFluid> ProcessFluids { get; set; }
+        public DbSet<PipeDiameter> PipeDiameters { get; set; }
+        public DbSet<Nozzle> Nozzles { get; set; }
+        public DbSet<PipeAccesory> PipeAccesorys { get; set; }
+        public DbSet<PipeClass> PipeClasss { get; set; }
+        public DbSet<ConnectionType> ConnectionTypes { get; set; }
+        public DbSet<ProcessCondition> ProcessConditions { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             foreach (var entry in ChangeTracker.Entries<IAuditableEntity>().ToList())
