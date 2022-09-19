@@ -32,7 +32,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Length(Unit u) : this(0,u)
+        {
 
+        }
 
     }
     public class Area : Amount
@@ -45,7 +48,14 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Area(double dvalue, Unit u) : base(dvalue, u)
+        {
 
+        }
+        public Area(Unit u) : this(0, u)
+        {
+
+        }
 
     }
     public class Volume : Amount
@@ -62,7 +72,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Volume(Unit u) : this(0, u)
+        {
 
+        }
 
     }
     public class Time : Amount
@@ -79,7 +92,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Time(Unit u) : this(0, u)
+        {
 
+        }
 
     }
     public class Velocity : Amount
@@ -96,7 +112,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Velocity(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class Mass : Amount
     {
@@ -112,7 +131,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Mass(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class Force : Amount
     {
@@ -128,7 +150,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Force(Unit u) : this(0, u)
+        {
 
+        }
     }
 
     public class Electric : Amount
@@ -145,7 +170,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Electric(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class Power : Amount
     {
@@ -161,7 +189,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Power(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class Energy : Amount
     {
@@ -177,7 +208,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Energy(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class Temperature : Amount
     {
@@ -193,7 +227,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Temperature( Unit u) : this(0, u)
+        {
 
+        }
     }
     public class Pressure : Amount
     {
@@ -211,7 +248,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Pressure(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class MotorVelocity : Amount
     {
@@ -224,6 +264,10 @@ namespace CPTool.UnitsSystem
 
         }
         public MotorVelocity(double dvalue, Unit u) : base(dvalue, u)
+        {
+
+        }
+        public MotorVelocity(Unit u) : this(0, u)
         {
 
         }
@@ -288,7 +332,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public AmountOfSubstance(Unit u) : this(0, u)
+        {
 
+        }
 
     }
 
@@ -306,7 +353,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public HeatTransferCoefficient(Unit u) : this(0, u)
+        {
 
+        }
 
     }
     public class MassDensity : Amount
@@ -323,7 +373,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public MassDensity(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class DropPressure : Amount
     {
@@ -339,7 +392,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public DropPressure(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class DropPressureLength : Amount
     {
@@ -355,7 +411,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public DropPressureLength(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class ThermalConductivity : Amount
     {
@@ -368,6 +427,10 @@ namespace CPTool.UnitsSystem
 
         }
         public ThermalConductivity(double dvalue, Unit u) : base(dvalue, u)
+        {
+
+        }
+        public ThermalConductivity(Unit u) : this(0, u)
         {
 
         }
@@ -387,7 +450,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public VolumeEnergy(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class MassEnergy : Amount
     {
@@ -403,7 +469,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public MassEnergy(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class MassEntropy : Amount
     {
@@ -419,7 +488,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public MassEntropy(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class MassFlow : Amount
     {
@@ -435,7 +507,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public MassFlow(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class HeatSurfaceFlow : Amount
     {
@@ -451,7 +526,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public HeatSurfaceFlow(Unit u) : this(0, u)
+        {
 
+        }
 
     }
     public class VolumetricFlow : Amount
@@ -468,7 +546,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public VolumetricFlow(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class EnergyFlow : Amount
     {
@@ -484,7 +565,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public EnergyFlow(Unit u) : this(0, u)
+        {
 
+        }
     }
     public class Viscosity : Amount
     {
@@ -500,7 +584,10 @@ namespace CPTool.UnitsSystem
         {
 
         }
+        public Viscosity(Unit u) : this(0, u)
+        {
 
+        }
     }
 
 }

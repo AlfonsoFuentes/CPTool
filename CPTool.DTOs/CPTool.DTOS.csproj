@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CPTool.Entities\CPTool.Entities.csproj" />
     <ProjectReference Include="..\CPTool.Interfaces\CPTool.Interfaces.csproj" />
+    <ProjectReference Include="..\CPTool.UnitsSystem\CPTool.UnitsSystem.csproj" />
   </ItemGroup>
 
 </Project>

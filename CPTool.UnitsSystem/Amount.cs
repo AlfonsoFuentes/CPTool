@@ -18,47 +18,65 @@ namespace CPTool.UnitsSystem
         protected double dvalue;
         protected Unit unit;
         string name = "";
+        string unitname = "";
         public delegate void ValueChanged();
 
 
         public ValueChanged OnValueChanged;
 
         #region Constructor methods
-      
 
-        //public  string UnitName { get; set; }
+
+        
 
         public Amount(double dvalue, Unit unit)
         {
-            //UnitName = unit.Name;
+            
             this.dvalue = dvalue;
-            this.unit = unit;
+            UnitName = unit.Name;
+            //this.unit = unit;
 
         }
 
         public Amount(Amount amo)
         {
             this.dvalue = amo.dvalue;
-            this.unit = amo.unit;
+           
             this.name = amo.name;
-            //UnitName = amo.Unit.Name;
+            UnitName = amo.Unit.Name;
         }
         public Amount(double dvalue, string unitName)
         {
             this.dvalue = dvalue;
-            //UnitName = unitName;
-            this.unit = UnitManager.GetUnitByName(unitName);
+            UnitName = unitName;
+           
         }
         public void SetValue(double dvalue, string unitName)
         {
             this.dvalue = dvalue;
-            //UnitName = unitName;
-            this.unit = UnitManager.GetUnitByName(unitName);
+            UnitName = unitName;
+            
         }
-        public void SetValue(Amount amount)
+        public string UnitName
+        {
+            get
+            {
+                return unitname;
+            }
+            set
+            {
+                unitname = value;
+                this.unit = UnitManager.GetUnitByName(unitname);
+                this.dvalue = ConvertedTo(this.unit).Value;
+            }
+        }
+        void SetValue(Amount amount)
         {
             SetValue(amount.dvalue, amount.unit);
         }
+        protected double beforeValue;
+      
+
         public virtual void SetValue(double dvalue, Unit unit)
         {
             if (beforeValue != dvalue)
@@ -81,44 +99,14 @@ namespace CPTool.UnitsSystem
             this.unit = unit;
 
         }
-        public void SetUnit(Unit unit)
-        {
-
-            this.dvalue = ConvertedTo(unit).Value;
-            this.unit = unit;
-
-        }
+        
         public double GetValue(Unit unit)
         {
 
             return ConvertedTo(unit).Value;
         }
-        public void SetUnit(string unit)
-        {
-            this.unit = UnitManager.GetUnitByName(unit);
+       
 
-            this.dvalue = ConvertedTo(this.unit).Value;
-        }
-
-        protected double beforeValue;
-        private string svalue = "";
-        public string sValue
-        {
-            get
-            {
-
-                return dvalue.ToString("G6");
-            }
-
-            set
-            {
-                svalue = value;
-                var valor = svalue.ToDouble();
-
-                SetValue(valor, this.unit);
-
-            }
-        }
         public static Amount Zero(Unit unit)
         {
             return new Amount(0.0, unit);

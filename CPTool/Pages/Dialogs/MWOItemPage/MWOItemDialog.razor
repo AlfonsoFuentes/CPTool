@@ -42,13 +42,16 @@
                                 case 4:
                                     <EquipmentItemPage></EquipmentItemPage>
                                     break;
+                                case 6:
+                                    <PipingtItemPage></PipingtItemPage>
+                                    break;
                                 case 7:
                                     <InstrumentItemPage></InstrumentItemPage>
                                     break;
                             }
 
                         }
-                        @if(bViewMaterials)
+                        @if (bViewMaterials)
                         {
                             @switch (Model.ChapterDTO.Id)
                             {

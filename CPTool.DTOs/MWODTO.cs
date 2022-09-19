@@ -1,6 +1,7 @@
 ﻿
 
 using CPTool.Entities;
+using CPTool.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPTool.DTOS

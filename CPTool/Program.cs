@@ -3,6 +3,7 @@ using CPTool.Context;
 using CPTool.DependencyInjection;
 using CPTool.Services;
 using CPTool.Shared;
+using CPTool.UnitsSystem;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ builder.Services.CurrencyService();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-
+UnitManager.RegisterByAssembly(typeof(SIUnitTypes).Assembly);
 builder.Services.AddMudServices();
 builder.Services.AddScoped<TablesService>();
 builder.Services.AddScoped<ToolDialogService>();

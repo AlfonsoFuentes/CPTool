@@ -10,14 +10,14 @@ namespace CPTool.DTOS
         public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
       
         public List<PipeAccesoryDTO>? PipeAccesorysDTO { get; set; } = new();
-        public MaterialDTO? MaterialDTO { get; set; }
-        public ProcessFluidDTO? ProcessFluidDTO { get; set; }
-        public PipeDiameterDTO? DiameterDTO { get; set; }
-        public NozzleDTO? NozzleStartDTO { get; set; }
-        public NozzleDTO? NozzleFinishDTO { get; set; }
-        public MWOItemDTO? StartMWOItemDTO { get; set; }
-        public MWOItemDTO? FinishMWOItemDTO { get; set; }
-        public PipeClassDTO? PipeClassDTO { get; set; }
+        public MaterialDTO? MaterialDTO { get; set; } = new();
+        public ProcessFluidDTO? ProcessFluidDTO { get; set; } = new();
+        public PipeDiameterDTO? DiameterDTO { get; set; } = new();
+        public NozzleDTO? NozzleStartDTO { get; set; } = new();
+        public NozzleDTO? NozzleFinishDTO { get; set; } = new();
+        public MWOItemDTO? StartMWOItemDTO { get; set; } = new();
+        public MWOItemDTO? FinishMWOItemDTO { get; set; } = new();
+        public PipeClassDTO? PipeClassDTO { get; set; } = new();
         public int? MaterialId => MaterialDTO?.Id;
         public int? ProcessFluidId => ProcessFluidDTO?.Id;
         public int? DiameterId => DiameterDTO?.Id;

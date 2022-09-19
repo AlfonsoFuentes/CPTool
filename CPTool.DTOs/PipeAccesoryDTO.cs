@@ -8,20 +8,42 @@ namespace CPTool.DTOS
 {
     public class PipeAccesoryDTO : AuditableEntityDTO
     {
-        public ICollection<NozzleDTO>? NozzlesDTO { get; set; }
-      
-        public PipingItemDTO? PipingItemDTO { get; set; }
-     
-        public ProcessConditionDTO? ProcessConditionDTO { get; set; }
+       
+        public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
 
-        public UnitDTO? FrictionDTO { get; }
-        public UnitDTO? ReynoldDTO { get; }
+        public PipingItemDTO? PipingItemDTO { get; set; } = new();
 
-        public UnitDTO? LevelInletDTO { get; set; }
-        public UnitDTO? LevelOutletDTO { get; set; }
-        public UnitDTO? FrictionDropPressureDTO { get; set; }
-        public UnitDTO? OverallDropPressureDTO { get; set; }
-        public UnitDTO? ElevationChangeDTO { get; set; }
+        public ProcessConditionDTO? ProcessConditionDTO { get; set; } = new();
+
+        public UnitDTO? FrictionDTO { get; set; } = new()
+        {
+            Amount = new UnitLess()
+        };
+        public UnitDTO? ReynoldDTO { get; set; } = new()
+        {
+            Amount = new UnitLess()
+        };
+
+        public UnitDTO? LevelInletDTO { get; set; } = new()
+        {
+            Amount = new Length(LengthUnits.MilliMeter)
+        };
+        public UnitDTO? LevelOutletDTO { get; set; } = new()
+        {
+            Amount = new Length(LengthUnits.MilliMeter)
+        };
+        public UnitDTO? FrictionDropPressureDTO { get; set; } = new()
+        {
+            Amount = new DropPressure(DropPressureUnits.psi)
+        };
+        public UnitDTO? OverallDropPressureDTO { get; set; } = new()
+        {
+            Amount = new DropPressure(DropPressureUnits.psi)
+        };
+        public UnitDTO? ElevationChangeDTO { get; set; } = new()
+        {
+            Amount = new DropPressure(DropPressureUnits.psi)
+        };
 
         public int? ProcessConditionId => ProcessConditionDTO?.Id;
 

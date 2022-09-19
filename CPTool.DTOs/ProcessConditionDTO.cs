@@ -12,16 +12,16 @@ namespace CPTool.DTOS
         public List<PipeAccesoryDTO>? PipeAccesorysDTO { get; set; } = new();
         public List<EquipmentItemDTO>? EquipmentItemsDTO { get; set; } = new();
         public List<InstrumentItemDTO>? InstrumentItemsDTO { get; set; } = new();
-        public UnitDTO? PressureDTO { get; set; }
-        public UnitDTO? TemperatureDTO { get; set; }
-        public UnitDTO? MassFlowDTO { get; set; }
-        public UnitDTO? VolumetricFlowDTO { get; set; }
-        public UnitDTO? DensityDTO { get; set; }
-        public UnitDTO? ViscosityDTO { get; set; }
-        public UnitDTO? EnthalpyFlowDTO { get; set; }
-        public UnitDTO? SpecificEnthalpyDTO { get; set; }
-        public UnitDTO? ThermalConductivityDTO { get; set; }
-        public UnitDTO? SpecificCpDTO { get; set; }
+        public UnitDTO? PressureDTO { get; set; } = new() { Amount = new Pressure(PressureUnits.Bar) };
+        public UnitDTO? TemperatureDTO { get; set; } = new() { Amount = new Temperature(TemperatureUnits.DegreeCelcius) };
+        public UnitDTO? MassFlowDTO { get; set; } = new() { Amount = new MassFlow(MassFlowUnits.Kg_hr) };
+        public UnitDTO? VolumetricFlowDTO { get; set; } = new() { Amount = new VolumetricFlow(VolumetricFlowUnits.m3_hr) };
+        public UnitDTO? DensityDTO { get; set; } = new() { Amount = new MassDensity(MassDensityUnits.Kg_m3) };
+        public UnitDTO? ViscosityDTO { get; set; } = new() { Amount = new Viscosity(ViscosityUnits.cPoise) };
+        public UnitDTO? EnthalpyFlowDTO { get; set; } = new() { Amount = new EnergyFlow(EnergyFlowUnits.Kcal_hr) };
+        public UnitDTO? SpecificEnthalpyDTO { get; set; } = new() { Amount = new MassEnergy(MassEnergyUnits.Kcal_Kg) };
+        public UnitDTO? ThermalConductivityDTO { get; set; } = new() { Amount = new ThermalConductivity(ThermalConductivityUnits.kW_m_K) };
+        public UnitDTO? SpecificCpDTO { get; set; } = new() { Amount = new MassEntropy(MassEntropyUnits.Kcal_Kg_C) };
         public ProcessFluid? ProcessFluidDTO { get; set; }
         public int? PressureId=>PressureDTO?.Id;
         public int? TemperatureId=> TemperatureDTO?.Id;

@@ -11,9 +11,9 @@ namespace CPTool.DTOS
         public List<PipingItemDTO>? PipingItemsDTO { get; set; } = new();
         public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
 
-        public UnitDTO? ODDTO { get; set; }
-        public UnitDTO? IDDTO { get; set; }
-        public UnitDTO? ThicknessDTO { get; set; }
+        public UnitDTO? ODDTO { get; set; } = new() { Amount = new Length(LengthUnits.Inch) };
+        public UnitDTO? IDDTO { get; set; } = new() { Amount = new Length(LengthUnits.Inch) };
+        public UnitDTO? ThicknessDTO { get; set; } = new() { Amount = new Length(LengthUnits.Inch) };
 
 
         public int? ODId => ODDTO ?. Id;
