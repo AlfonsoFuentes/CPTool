@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CPTool.Implementations
+namespace CPtool.ExtensionMethods
 {
-   
     public class Result : IResult
     {
         public Result()

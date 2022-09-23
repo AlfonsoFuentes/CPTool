@@ -4,28 +4,73 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Reflection;
+using CPtool.ExtensionMethods;
 
 namespace CPTool.Implementations
 {
     public class DTOManager<TDTO, T> : IDTOManager<TDTO, T>, IDisposable
-        where TDTO : class, IAuditableEntityDTO, new()
-          where T : IAuditableEntity
+        where TDTO : AuditableEntityDTO, new()
+          where T : AuditableEntity
     {
 
         readonly IUnitOfWork _unitofwork;
         readonly IMapper _mapper;
 
-        public List<TDTO> List { get; set; } = new();
-        public DTOManager(IUnitOfWork unitofwork, IMapper mapper)
+        private readonly TableContext _dbContext;
+        public DTOManager(IUnitOfWork unitofwork, IMapper mapper, TableContext dbContext)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
+            _dbContext = dbContext;
         }
-
-
-        public async Task<IResult<TDTO>> AddUpdate(IAuditableEntityDTO dto, CancellationToken cancellationToken)
+        public TDTO CreateDTO()
         {
-            dto = await OnPriorSave(dto);
+            TDTO dto = new();
+            dto.SaveObject += AddUpdate;
+            dto.OnSubscribeTransferData();
+            return dto;
+
+        }
+        public async Task<IResult<IAuditableEntityDTO>> AddUpdate(IAuditableEntityDTO dto, CancellationToken cancellationToken)
+        {
+
+
+            T table = _mapper.Map<T>(dto);
+
+            var exist = await _unitofwork.Repository<T>().AnyAsync(x => x.Equals(table));
+            try
+            {
+                var mwo = _dbContext.MWOs.ToList().First();
+                var chap = _dbContext.Chapters.ToList().First();
+                MWOItem mwoitem = new();
+                mwoitem.MWO = mwo;
+                mwoitem.Chapter = chap;
+                var request2 = _dbContext.Add(table);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                string mes = ex.Message;
+            }
+
+            //var request = !exist ? await _unitofwork.Repository<T>().AddAsync(table) : _unitofwork.Repository<T>().UpdateAsync(table);
+            //var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null!);
+            //if (!result.Succeeded)
+            //    return await Result<IAuditableEntityDTO>.FailAsync("Not created!");
+            //var mppeddto = _mapper.Map<TDTO>(request) as IAuditableEntityDTO;
+            //var responsdto = await OnPostSave(mppeddto) as TDTO;
+            //await GetList();
+
+
+            return await Result<IAuditableEntityDTO>.SuccessAsync("Updated");
+
+
+        }
+        public async Task<IResult<IAuditableEntityDTO>> AddUpdate2(IAuditableEntityDTO dto, CancellationToken cancellationToken)
+        {
+
+            //dto = await OnPriorSave(dto);
 
             T? table = _mapper.Map<T>(dto);
 
@@ -33,13 +78,13 @@ namespace CPTool.Implementations
             var request = !exist ? await _unitofwork.Repository<T>().AddAsync(table) : _unitofwork.Repository<T>().UpdateAsync(table);
             var result = await _unitofwork.CommitAndRemoveCache(cancellationToken, null!);
             if (!result.Succeeded)
-                return await Result<TDTO>.FailAsync("Not created!");
+                return await Result<IAuditableEntityDTO>.FailAsync("Not created!");
             var mppeddto = _mapper.Map<TDTO>(request) as IAuditableEntityDTO;
-            var responsdto = await OnPostSave(mppeddto) as TDTO;
+            //var responsdto = await OnPostSave(mppeddto) as TDTO;
+            await GetList();
 
 
-
-            return await Result<TDTO>.SuccessAsync(responsdto!, "Updated");
+            return await Result<IAuditableEntityDTO>.SuccessAsync(mppeddto, "Updated");
 
 
         }
@@ -82,7 +127,7 @@ namespace CPTool.Implementations
                 {
                     return await Result<int>.FailAsync("Not Delete!");
                 }
-
+                await GetList();
                 return await Result<int>.SuccessAsync(result.Data, retorno);
             }
             return await Result<int>.FailAsync("Not Found!");
@@ -101,59 +146,39 @@ namespace CPTool.Implementations
                 {
                     return await Result<int>.FailAsync("Not Delete!");
                 }
-                await UpdateList();
+                await GetList();
                 return await Result<int>.SuccessAsync(result.Data, retorno);
             }
             return await Result<int>.FailAsync("Not Found!");
         }
-        public async Task<IResult<TDTO>> GetById(int id)
+        public async Task<TDTO> GetById(int id)
         {
             var table = await _unitofwork.Repository<T>().GetByIdAsync(id);
 
             var dto = _mapper.Map<TDTO>(table);
 
-            return dto == null ? await Result<TDTO>.FailAsync("Not found!") : await Result<TDTO>.SuccessAsync(dto, "row returned");
+            return dto;
 
 
         }
 
-        public async Task UpdateList()
+        public async Task GetList()
         {
             var list = await _unitofwork.Repository<T>().GetAllAsync();
             List = _mapper.Map<List<TDTO>>(list);
-            try
-            {
-                //List = new();
-                //foreach (var row in list)
-                //{
-                //    var rowdto = _mapper.Map<TDTO>(row);
-                //    List.Add(rowdto);
-                //}
-                //
-            }
-            catch (Exception ex)
-            {
-               
-                    string exm = ex.Message;
-              
 
-            }
-                if (PostUpdateListEvent != null) await PostUpdateListEvent.Invoke();
+        }
+
+        public void Dispose()
+        {
 
 
-
-            }
-
-            public void Dispose()
-            {
-
-
-            }
+        }
 
         public Func<Task> PostUpdateListEvent { get; set; } = null!;
 
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PriorSave { get; set; } = null!;
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PostSave { get; set; } = null!;
-
+        public List<TDTO> List { get; set; } = null!;
     }
 }

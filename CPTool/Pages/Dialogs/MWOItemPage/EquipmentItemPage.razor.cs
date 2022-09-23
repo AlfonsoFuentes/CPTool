@@ -11,15 +11,15 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
        
         EquipmentItemDTO Model { get => Item.EquipmentItemDTO; set => Item.EquipmentItemDTO = value; }
       
-        protected override void OnInitialized()
-        {
-            if (Model == null)
-            {
-                Model = new ();
+        //protected override void OnInitialized()
+        //{
+        //    if (Model == null)
+        //    {
+        //        Model = new ();
               
-            }
+        //    }
            
-        }
+        //}
         
 
         
@@ -38,13 +38,13 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
                 return $"Equipment Type: {arg} is not in the list";
             return null;
         }
-        async Task UpdateEquipmentType()
-        {
-            await TablesService.ManEquipmentType.UpdateList();
-            Model.EquipmentTypeDTO = TablesService.ManEquipmentType.List.FirstOrDefault(x => x.Id == Model.EquipmentTypeDTO.Id);
-            StateHasChanged();
+        //async Task UpdateEquipmentType()
+        //{
+        //    //await TablesService.ManEquipmentType.UpdateList();
+        //    Model.EquipmentTypeDTO = TablesService.ManEquipmentType.List.FirstOrDefault(x => x.Id == Model.EquipmentTypeDTO.Id);
+        //    StateHasChanged();
            
-        }
+        //}
         private string ValidateEquipmentSubType(string arg)
         {
             if (arg == null || arg == "")
@@ -53,14 +53,14 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
                 return $"Equipment Sub Type: {arg} is not in the list";
             return null;
         }
-        async Task UpdateEquipmentSubType()
-        {
-            await TablesService.ManEquipmentType.UpdateList();
-            await TablesService.ManEquipmentTypeSub.UpdateList();
-            Model.EquipmentTypeDTO = TablesService.ManEquipmentType.List.FirstOrDefault(x => x.Id == Model.EquipmentTypeDTO.Id);
-            StateHasChanged();
+        //async Task UpdateEquipmentSubType()
+        //{
+        //    //await TablesService.ManEquipmentType.UpdateList();
+        //    //await TablesService.ManEquipmentTypeSub.UpdateList();
+        //    Model.EquipmentTypeDTO = TablesService.ManEquipmentType.List.FirstOrDefault(x => x.Id == Model.EquipmentTypeDTO.Id);
+        //    StateHasChanged();
             
-        }
+        //}
         private string ValidateGasket(string arg)
         {
             if (arg == null || arg == "")
@@ -70,13 +70,13 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
            
             return null;
         }
-        async Task UpdateGasket()
-        {
-            await TablesService.ManGasket.UpdateList();
+        //async Task UpdateGasket()
+        //{
+        //    //await TablesService.ManGasket.UpdateList();
            
-            StateHasChanged();
+        //    StateHasChanged();
            
-        }
+        //}
         private string ValidateMaterial(string arg)
         {
             if (arg == null || arg == "")
@@ -86,12 +86,12 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
 
             return null;
         }
-        async Task UpdateMaterial()
-        {
-            await TablesService.ManMaterial.UpdateList();
+        //async Task UpdateMaterial()
+        //{
+        //    //await TablesService.ManMaterial.UpdateList();
 
-            StateHasChanged();
+        //    StateHasChanged();
            
-        }
+        //}
     }
 }

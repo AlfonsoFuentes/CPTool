@@ -3,6 +3,11 @@ using CPTool.Entities;
 using CPTool.Implementations;
 using CPTool.Interfaces;
 using System.Threading;
+using System.Reflection;
+using CPtool.ExtensionMethods;
+using Microsoft.EntityFrameworkCore;
+using CPTool.Context;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CPTool.Shared
 {
@@ -17,8 +22,6 @@ namespace CPTool.Shared
         public IDTOManager<BrandDTO, Brand> ManBrand { get; set; }
         public IDTOManager<SupplierDTO, Supplier> ManSupplier { get; set; }
         public IDTOManager<BrandSupplierDTO, BrandSupplier> ManBrandSupplier { get; set; }
-
-
         public IDTOManager<MaterialDTO, Material> ManMaterial { get; set; }
         public IDTOManager<GasketDTO, Gasket> ManGasket { get; set; }
         public IDTOManager<UnitaryBasePrizeDTO, UnitaryBasePrize> ManUnitaryPrize { get; set; }
@@ -30,6 +33,7 @@ namespace CPTool.Shared
         public IDTOManager<EquipmentTypeSubDTO, EquipmentTypeSub> ManEquipmentTypeSub { get; set; }
         public IDTOManager<EquipmentItemDTO, EquipmentItem> ManEquipmentItem { get; set; }
         public IDTOManager<InstrumentItemDTO, InstrumentItem> ManInstrumentItem { get; set; }
+        public IDTOManager<PipingItemDTO, PipingItem> ManPipingItem { get; set; }
         public IDTOManager<DownPaymentDTO, DownPayment> ManDownPayment { get; set; }
 
         public IDTOManager<MeasuredVariableDTO, MeasuredVariable> ManMeasuredVariable { get; set; }
@@ -38,7 +42,7 @@ namespace CPTool.Shared
         public IDTOManager<DeviceFunctionModifierDTO, DeviceFunctionModifier> ManDeviceFunctionModifier { get; set; }
         public IDTOManager<ReadoutDTO, Readout> ManReadout { get; set; }
 
-        public IDTOManager<MaterialsGroupDTO, MaterialsGroup> ManMaterialsGroup { get; set; }
+
         public IDTOManager<UnitDTO, Unit> ManUnit { get; set; }
         public IDTOManager<ProcessFluidDTO, ProcessFluid> ManProcessFluid { get; set; }
         public IDTOManager<PipeDiameterDTO, PipeDiameter> ManPipeDiameter { get; set; }
@@ -46,7 +50,7 @@ namespace CPTool.Shared
         public IDTOManager<PipeAccesoryDTO, PipeAccesory> ManPipeAccesory { get; set; }
         public IDTOManager<PipeClassDTO, PipeClass> ManPipeClass { get; set; }
         public IDTOManager<ProcessConditionDTO, ProcessCondition> ManProcessCondition { get; set; }
-        
+
         public TablesService(
             IDTOManager<BrandSupplierDTO, BrandSupplier> manBrandSupplier,
             IDTOManager<MWOTypeDTO, MWOType> manMWOType,
@@ -73,14 +77,15 @@ namespace CPTool.Shared
             IDTOManager<DeviceFunctionDTO, DeviceFunction> manDeviceFunction,
             IDTOManager<DeviceFunctionModifierDTO, DeviceFunctionModifier> manDeviceFunctionModifier,
             IDTOManager<ReadoutDTO, Readout> manReadout,
-            IDTOManager<MaterialsGroupDTO, MaterialsGroup> manMaterialsGroup,
+
             IDTOManager<UnitDTO, Unit> manUnit,
             IDTOManager<ProcessFluidDTO, ProcessFluid> manProcessFluid,
             IDTOManager<PipeDiameterDTO, PipeDiameter> manPipeDiameter,
             IDTOManager<NozzleDTO, Nozzle> manNozzle,
             IDTOManager<PipeAccesoryDTO, PipeAccesory> manPipeAccesory,
             IDTOManager<PipeClassDTO, PipeClass> manPipeClass,
-            IDTOManager<ProcessConditionDTO, ProcessCondition> manProcessCondition
+            IDTOManager<ProcessConditionDTO, ProcessCondition> manProcessCondition,
+            IDTOManager<PipingItemDTO, PipingItem> manPipingItem
 
 
             )
@@ -113,7 +118,7 @@ namespace CPTool.Shared
             ManMeasuredVariable = manMeasuredVariable;
             ManMeasuredVariableModifier = manMeasuredVariableModifier;
             ManReadout = manReadout;
-            ManMaterialsGroup = manMaterialsGroup;
+
             ManUnit = manUnit;
             ManProcessFluid = manProcessFluid;
             ManPipeDiameter = manPipeDiameter;
@@ -121,47 +126,64 @@ namespace CPTool.Shared
             ManPipeAccesory = manPipeAccesory;
             ManPipeClass = manPipeClass;
             ManProcessCondition = manProcessCondition;
-        }
+            ManPipingItem = manPipingItem;
 
+        }
+       
         public async Task Initialize()
         {
-            await ManProcessCondition.UpdateList();
-            await ManPipeClass.UpdateList();
-            await ManPipeAccesory.UpdateList();
-            await ManNozzle.UpdateList();
-            await ManPipeDiameter.UpdateList();
-            await ManProcessFluid.UpdateList();
-            await ManUnit.UpdateList();
-            await ManChapter.UpdateList();
-            await ManUnitaryPrize.UpdateList();
-            await ManGasket.UpdateList();
-            await ManMaterial.UpdateList();
-            await ManEquipmentType.UpdateList();
-            await ManEquipmentTypeSub.UpdateList();
-            await ManMWOType.UpdateList();
-            await ManBrandSupplier.UpdateList();
-            await ManBrand.UpdateList();
-            await ManSupplier.UpdateList();
+            await ManProcessCondition.GetList();
+            await ManPipeClass.GetList();
+            await ManPipeAccesory.GetList();
+            await ManNozzle.GetList();
+            await ManPipeDiameter.GetList();
+            await ManProcessFluid.GetList();
+            await ManUnit.GetList();
+            await ManChapter.GetList();
+            await ManUnitaryPrize.GetList();
+            await ManGasket.GetList();
+            await ManMaterial.GetList();
+            await ManEquipmentType.GetList();
+            await ManEquipmentTypeSub.GetList();
+            await ManMWOType.GetList();
+            await ManBrandSupplier.GetList();
+            await ManBrand.GetList();
+            await ManSupplier.GetList();
 
 
-            await ManEquipmentItem.UpdateList();
-            await ManInstrumentItem.UpdateList();
-            await ManMWO.UpdateList();
-            await ManMWOItem.UpdateList();
+            await ManEquipmentItem.GetList();
+            await ManPipingItem.GetList();
+            await ManInstrumentItem.GetList();
+            await ManMWO.GetList();
+            await ManMWOItem.GetList();
 
-            await ManVendorCode.UpdateList();
-            await ManTaxCodeLD.UpdateList();
-            await ManTaxCodeLP.UpdateList();
-            await ManPurchaseOrder.UpdateList();
-            await ManPurchaseOrderMWOItem.UpdateList();
-            await ManDownPayment.UpdateList();
+            await ManVendorCode.GetList();
+            await ManTaxCodeLD.GetList();
+            await ManTaxCodeLP.GetList();
+            await ManPurchaseOrder.GetList();
+            await ManPurchaseOrderMWOItem.GetList();
+            await ManDownPayment.GetList();
 
-            await ManDeviceFunction.UpdateList();
-            await ManDeviceFunctionModifier.UpdateList();
-            await ManMeasuredVariable.UpdateList();
-            await ManMeasuredVariableModifier.UpdateList();
-            await ManReadout.UpdateList();
-            await ManMaterialsGroup.UpdateList();
+            await ManDeviceFunction.GetList();
+            await ManDeviceFunctionModifier.GetList();
+            await ManMeasuredVariable.GetList();
+            await ManMeasuredVariableModifier.GetList();
+            await ManReadout.GetList();
+
+            //await Test();
+            //var mane = ManEquipmentItem.List.Last();
+
+            //var type = mane.GetType();
+
+            //var props = type.GetProperties().Where(x=>x.HasAttribute<DerivedSaveAttribute>()).ToList();
+            //foreach(var row in props)
+            //{
+            //    var auid = row.GetGetMethod();
+            //    var myMethod = type.GetMethod("MyMethod");
+            //}
+
+
+
         }
 
         public Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> Save { get; set; }

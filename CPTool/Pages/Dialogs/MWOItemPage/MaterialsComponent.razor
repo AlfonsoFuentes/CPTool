@@ -1,8 +1,8 @@
-﻿<ComponentAutoComplete Label="Gasket"
+﻿@*<ComponentAutoComplete Label="Gasket"
                        TableName="Gasket"
                        TDTO="GasketDTO"
                        T="Gasket"
-                       UpdateList="UpdateGasket"
+                     
                        Validation="@(new Func<string, string>(ValidateGasket))"
                        Manager=TablesService.ManGasket
                        @bind-Model="@Model.GasketDTO"
@@ -14,7 +14,7 @@
                        TableName="Material"
                        TDTO="MaterialDTO"
                        T="Material"
-                       UpdateList="UpdateMaterial"
+                      
                        Validation="@(new Func<string, string>(ValidateMaterial))"
                        ObjectList=TablesService.ManMaterial.List
                        ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
@@ -26,14 +26,14 @@
                        TableName="Material"
                        TDTO="MaterialDTO"
                        T="Material"
-                       UpdateList="UpdateMaterial"
+                      
                        Validation="@(new Func<string, string>(ValidateMaterial))"
                        ObjectList=TablesService.ManMaterial.List
                        ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
                        Manager=TablesService.ManMaterial
                        @bind-Model="@Model.InnerMaterialDTO">
 
-</ComponentAutoComplete>
+</ComponentAutoComplete>*@
 
 @code {
 

@@ -8,7 +8,7 @@ namespace CPTool.Pages.Components
         where T : AuditableEntity, new()
     {
 
-       
+
         private bool dense = true;
         [Parameter]
         public RenderFragment OtherButtons { get; set; }
@@ -20,8 +20,9 @@ namespace CPTool.Pages.Components
 
 
         [Parameter]
-        
         public List<TDTO> Elements { get; set; } = new();
+        [Parameter]
+        public EventCallback<List<TDTO>> ElementsChanged { get; set; }
         [Parameter]
         public TDTO SelectedItem { get; set; } = new();
 
@@ -35,7 +36,7 @@ namespace CPTool.Pages.Components
 
         [Parameter]
         public EventCallback OnUpdateMaster { get; set; }
-      
+
         private bool hover = true;
         private bool striped = true;
         private bool bordered = true;
@@ -44,17 +45,17 @@ namespace CPTool.Pages.Components
         private bool FilterFunc1(TDTO element) => FilterFunc(element, searchString1);
 
         [Parameter]
-        public Func<TDTO,string, bool> SearchFunc { get; set; } = null;
-       
+        public Func<TDTO, string, bool> SearchFunc { get; set; } = null;
+
 
 
 
         private bool FilterFunc(TDTO element, string searchString)
         {
-            var retorno = SearchFunc == null ? element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) : SearchFunc.Invoke(element,searchString);
+            var retorno = SearchFunc == null ? element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) : SearchFunc.Invoke(element, searchString);
             return retorno;
 
-           
+
         }
 
 
@@ -70,13 +71,13 @@ namespace CPTool.Pages.Components
         public async Task<IResult<int>> DeleteFromDialog(TDTO dto)
         {
 
-            var resultdelete =await TablesService.OnDelete(SelectedItem);
+            var resultdelete = await TablesService.OnDelete(SelectedItem);
             if (resultdelete.Succeeded)
             {
-               
+
                 Snackbar.Add(resultdelete.Messages[0], MudBlazor.Severity.Info);
 
-                
+
 
             }
             else
@@ -97,16 +98,16 @@ namespace CPTool.Pages.Components
         }
         async Task AddEdit(TDTO dto)
         {
-            var result = OnShowDialogOverrided==null? await ShowDialog(dto): await OnShowDialogOverrided.Invoke(dto);
-            
+            var result = OnShowDialogOverrided == null ? await ShowDialog(dto) : await OnShowDialogOverrided.Invoke(dto);
+
             if (!result.Cancelled)
             {
                 var result2 = await TablesService.OnSave(result.Data as IAuditableEntityDTO);
-               
+
                 if (result2.Succeeded)
                 {
 
-                   
+
                     Snackbar.Add(result2.Messages[0], MudBlazor.Severity.Info);
                     StateHasChanged();
                 }
@@ -114,7 +115,7 @@ namespace CPTool.Pages.Components
                 {
                     Snackbar.Add(result2.Messages[0], MudBlazor.Severity.Error);
                 }
-               
+
 
             }
         }
@@ -132,7 +133,7 @@ namespace CPTool.Pages.Components
             var result = await ToolDialogService.ShowMessageDialogYesNo($"Are you sure you want to remove {SelectedItem.Name}?");
             if (!result.Cancelled)
             {
-             await  TablesService.OnDelete(SelectedItem);
+                await TablesService.OnDelete(SelectedItem);
 
 
                 StateHasChanged();

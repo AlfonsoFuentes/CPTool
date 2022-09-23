@@ -1,4 +1,6 @@
-﻿namespace CPTool.Implementations
+﻿using CPtool.ExtensionMethods;
+
+namespace CPTool.Implementations
 {
     public class UnitOfWork : IUnitOfWork
     {

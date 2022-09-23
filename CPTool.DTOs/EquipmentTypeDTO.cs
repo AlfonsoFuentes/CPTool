@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace CPTool.DTOS
 {
    
-    public class EquipmentTypeDTO : AuditableEntityDTO
+    public class EquipmentTypeDTO : AuditableEntityDTO, IMapFrom<EquipmentType>
     {
 
         public string? TagLetter { get; set; } = "";

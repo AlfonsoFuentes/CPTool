@@ -41,7 +41,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         }
         async Task UpdateUnitaryPrizeName()
         {
-            await TablesService.ManUnitaryPrize.UpdateList();
+            await TablesService.ManUnitaryPrize.GetList();
             StateHasChanged();
             
         }

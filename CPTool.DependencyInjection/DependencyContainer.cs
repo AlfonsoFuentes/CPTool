@@ -22,7 +22,8 @@ namespace CPTool.DependencyInjection
 
             services.AddDbContextFactory<TableContext>(
                 options => options
-               
+                .EnableSensitiveDataLogging()
+
              .UseSqlServer(
                  configuration.GetConnectionString(
                      "DefaultConnection")));
@@ -30,12 +31,13 @@ namespace CPTool.DependencyInjection
             var asse = Assembly.GetExecutingAssembly();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
 
-            services.AddTransient(typeof(IDTOManager<,>), typeof(DTOManager<,>));
-           
+            services.AddScoped(typeof(IDTOManager<,>), typeof(DTOManager<,>));
+            //services.AddTransient(typeof(ICreationMethod<,>), typeof(CreationMethod<,>));
+
             return services;
         }
     }

@@ -12,7 +12,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         void OnChapterChanged()
         {
           
-            var list = Model.MWODTO.MWOItemDTOs.Where(x => x.ChapterDTO.Id == Model.ChapterDTO.Id).ToList();
+            var list = Model.MWODTO.MWOItemDTOs.Where(x => x.ChapterDTO.Id == Model.ChapterDTO?.Id).ToList();
           
             Model.Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
 

@@ -1,7 +1,7 @@
 ﻿@inherits CancellableComponent
 @if (test)
 {
-    <ComponentBaseDialog TDTO="MWOItemDTO" Model="@Model" FuncOnInitialize="OnInit">
+    <ComponentBaseDialog @ref=@basedialog TDTO="MWOItemDTO" Model="@Model" FuncOnInitialize="OnInit" >
         <Components>
             <CascadingValue Value="this">
                 <MudGrid>
@@ -9,10 +9,12 @@
 
                         <MudToolBar>
                             <MudButton Variant="Variant.Outlined" OnClick="ViewName" Size="Size.Small" Color="Color.Primary"> Name</MudButton>
-                            <MudButton Variant="Variant.Outlined" OnClick="ViewSpecs" Size="Size.Small" Color="Color.Primary">Specs</MudButton>
-                            @if (Model.ChapterId == 4 || Model.ChapterId == 7)
+
+                            @if (Model.ChapterDTO?.Id == 4 || Model.ChapterDTO?.Id == 7)
                             {
+                                <MudButton Variant="Variant.Outlined" OnClick="ViewSpecs" Size="Size.Small" Color="Color.Primary">Specs</MudButton>
                                 <MudButton Variant="Variant.Outlined" OnClick="ViewMaterials" Size="Size.Small" Color="Color.Primary">Materials</MudButton>
+                                <MudButton Variant="Variant.Outlined" OnClick="ViewNozzles" Size="Size.Small" Color="Color.Primary">Nozzles</MudButton>
                             }
                         </MudToolBar>
 
@@ -37,7 +39,7 @@
                         }
                         @if (bViewSpecs)
                         {
-                            @switch (Model.ChapterDTO.Id)
+                            @switch (Model.ChapterDTO?.Id)
                             {
                                 case 4:
                                     <EquipmentItemPage></EquipmentItemPage>
@@ -53,13 +55,22 @@
                         }
                         @if (bViewMaterials)
                         {
-                            @switch (Model.ChapterDTO.Id)
+                           
+                        }
+                        @if (bNozzles)
+                        { 
+                            @switch (Model.ChapterDTO?.Id)
                             {
                                 case 4:
-                                    <MaterialsComponent Model="@Model.EquipmentItemDTO.MaterialsGroupDTO"></MaterialsComponent>
+                                    <ComponentSimpleList TDTO="NozzleDTO" T="Nozzle" TableName="Nozzles in Equipment" 
+                                        OnShowDialogOverrided="ToolDialogService.ShowNozzleDialog"
+                                        Elements="@Model.EquipmentItemDTO.NozzlesDTO" Manager=TablesService.ManNozzle></ComponentSimpleList>
+
+                      
                                     break;
                                 case 7:
-                                    <MaterialsComponent Model="@Model.InstrumentItemDTO.MaterialsGroupDTO"></MaterialsComponent>
+                                    <ComponentSimpleList TDTO="NozzleDTO" T="Nozzle" TableName="Nozzles in Equipment"
+                                         Elements="@Model.InstrumentItemDTO.NozzlesDTO" Manager=TablesService.ManNozzle></ComponentSimpleList>
                                     break;
                             }
                         }

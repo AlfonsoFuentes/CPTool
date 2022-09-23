@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CPTool.DTOS
 {
 
-    public class MWODTO :  AuditableEntityDTO
+    public class MWODTO :  AuditableEntityDTO, IMapFrom<MWO>
     {
         const string ceb = "CEB0000";
         const string cec = "CEC0000";
@@ -20,7 +20,7 @@ namespace CPTool.DTOS
 
         public decimal Budget { get; set; } = 0;
         public decimal Expenses { get; set; } = 0;
-        public int? MWOTypeId => MWOTypeDTO?.Id;
+        //public int? MWOTypeId => MWOTypeDTO?.Id;
 
         public  MWOTypeDTO? MWOTypeDTO { get; set; } = new();
         public List<MWOItemDTO>? MWOItemDTOs

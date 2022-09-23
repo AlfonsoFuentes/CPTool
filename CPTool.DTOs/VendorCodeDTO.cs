@@ -2,7 +2,7 @@
 
 namespace CPTool.DTOS
 {
-    public class VendorCodeDTO : AuditableEntityDTO
+    public class VendorCodeDTO : AuditableEntityDTO, IMapFrom<VendorCode>
     {
         public  List<Supplier>?    SuppliersDTO { get; set; } = new();
     }

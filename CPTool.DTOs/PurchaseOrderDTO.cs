@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace CPTool.DTOS
 {
-    public class PurchaseOrderDTO : AuditableEntityDTO
+    public class PurchaseOrderDTO : AuditableEntityDTO, IMapFrom<PurchaseOrder>
     {
         public List<DownPaymentDTO>? DownPaymentDTOs { get; set; }
         public List<PurchaseOrderMWOItemDTO>? PurchaseOrderMWOItemDTOs { get; set; } = new();
@@ -25,8 +25,7 @@ namespace CPTool.DTOS
 
         public BrandDTO? BrandDTO { get; set; } = new();
         public SupplierDTO? SupplierDTO { get; set; } = new();
-        public int? SupplierId => SupplierDTO?.Id;
-        public int? BrandId => BrandDTO?.Id;
+        
         public string PurchaseRequisition { get; set; } = "";
         public DateTime? POOrderingdDate { get; set; }
         public DateTime? POCreatedDate { get; set; }

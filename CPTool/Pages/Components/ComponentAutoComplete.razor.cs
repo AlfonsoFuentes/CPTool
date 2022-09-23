@@ -35,13 +35,14 @@ namespace CPTool.Pages.Components
         [EditorRequired]
         public IDTOManager<TDTO, T> Manager { get; set; }
 
-        [Parameter]
-        public Func<Task> UpdateList { get; set; }
+        //[Parameter]
+        //public Func<Task> UpdateList { get; set; }
 
         [Parameter]
-        [EditorRequired]
+      
         public List<TDTO> ObjectList { get; set; } = new();
-
+        [Parameter]
+        public EventCallback<List<TDTO>> ObjectListChanged { get; set; }
         [Parameter]
         public Func<TDTO, Task<DialogResult>> ShowDialogOverrided { get; set; }
         List<string> ListNames => ObjectList.Select(x => x.Name).ToList();
@@ -161,10 +162,11 @@ namespace CPTool.Pages.Components
                     if (created.Succeeded)
                     {
                         CreatingNewRow = false;
-                        Model = created.Data;
+                        Model = created.Data as TDTO;
                         await ModelChanged.InvokeAsync(Model);
-
-                        if (UpdateList != null) await UpdateList.Invoke();
+                        await ObjectListChanged.InvokeAsync(Manager.List);
+                        StateHasChanged();
+                        //if (UpdateList != null) await UpdateList.Invoke();
 
 
                     }

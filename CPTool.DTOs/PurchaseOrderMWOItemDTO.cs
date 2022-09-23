@@ -1,9 +1,8 @@
 ﻿namespace CPTool.DTOS
 {
-    public class PurchaseOrderMWOItemDTO : AuditableEntityDTO
+    public class PurchaseOrderMWOItemDTO : AuditableEntityDTO, IMapFrom<PurchaseOrderMWOItem>
     {
-        public int? PurchaseOrderId => PurchaseOrderDTO?.Id;
-        public int? MWOItemId => MWOItemDTO?.Id;
+      
         public PurchaseOrderDTO? PurchaseOrderDTO { get; set; } = new();
 
         

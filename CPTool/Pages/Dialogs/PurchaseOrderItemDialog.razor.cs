@@ -17,10 +17,10 @@ namespace CPTool.Pages.Dialogs
         async Task ProperInitialize()
         {
             var mwosearch = Model.PurchaseOrderDTO.PurchaseOrderMWOItemDTOs.FirstOrDefault().MWOItemDTO.MWODTO;
-            var mwo = (await TablesService.ManMWO.GetById(mwosearch.Id)).Data;
+            var mwo = await TablesService.ManMWO.GetById(mwosearch.Id);
 
 
-            MWOItemDTOs = mwo.MWOItemDTOs.Select(x => x).Where(y => !y.PurchaseOrderMWOItemDTOs.Any(z => z.PurchaseOrderId == Model.PurchaseOrderId)).ToList();
+            MWOItemDTOs = mwo.MWOItemDTOs.Select(x => x).Where(y => !y.PurchaseOrderMWOItemDTOs.Any(z => z.PurchaseOrderDTO.Id == Model.PurchaseOrderDTO.Id)).ToList();
         }
         
 

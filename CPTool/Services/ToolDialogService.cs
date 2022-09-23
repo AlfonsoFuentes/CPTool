@@ -177,5 +177,19 @@ namespace CPTool.Services
             var result = await dialog.Result;
             return result;
         }
+        public async Task<DialogResult> ShowNozzleDialog(NozzleDTO Model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = Model.Id == 0 ? $"Add Nozzle " : $"Edit Nozzle {Model.Name}";
+
+
+            modeldialog.parameters.Add("Model", Model);
+            var dialog = DialogService.Show<NozzleDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
     }
 }

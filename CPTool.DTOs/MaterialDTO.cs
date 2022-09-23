@@ -3,15 +3,24 @@
 namespace CPTool.DTOS
 {
     
-    public class MaterialDTO  :AuditableEntityDTO
+    public class MaterialDTO  :AuditableEntityDTO, IMapFrom<Material>
     {
+        public MaterialDTO()
+        {
+
+        }
         public string? Abbreviation { get; set; }
 
 
-        public List<MaterialsGroupDTO>? InnerMaterialDTOs { get; set; } = new();
+        public List<EquipmentItemDTO>? EquipmentItemInnerMaterialDTOs { get; set; } =null;
+        public List<EquipmentItemDTO>? EquipmentItemOuterMaterialDTOs { get; set; } = null;
 
+        public List<InstrumentItemDTO>? InstrumentItemInnerMaterialDTOs { get; set; } = null;
+        public List<InstrumentItemDTO>? InstrumentItemOuterMaterialDTOs { get; set; } = null;
 
+        public List<PipingItemDTO>? PipingItemsDTO { get; set; } = null;
 
-        public List<MaterialsGroupDTO>? OuterMaterialDTOs { get; set; } = new();
+       
+        public List<NozzleDTO>? NozzlesDTO { get; set; } = null;
     }
 }

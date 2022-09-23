@@ -73,7 +73,7 @@ namespace CPTool.Implementations
             {
                 var retorno1 = Query(true);
                 //retorno = retorno1.ToList();
-                retorno = await retorno1.ToListAsync();
+                retorno = await retorno1.AsNoTracking().ToListAsync();
             }
             catch (Exception ex)
             {

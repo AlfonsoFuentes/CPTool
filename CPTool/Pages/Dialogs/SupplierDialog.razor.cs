@@ -59,24 +59,24 @@ namespace CPTool.Pages.Dialogs
                 return $"Tax Code LP: {arg} is not in the list";
             return null;
         }
-        async Task UpdateVendorCode()
-        {
-            await TablesService.ManVendorCode.UpdateList();
-            StateHasChanged();
+        //async Task UpdateVendorCode()
+        //{
+        //    //await TablesService.ManVendorCode.UpdateList();
+        //    StateHasChanged();
           
-        }
-        async Task UpdateTaxCodeLD()
-        {
-            await TablesService.ManTaxCodeLD.UpdateList();
-            StateHasChanged();
+        //}
+        //async Task UpdateTaxCodeLD()
+        //{
+        //    //await TablesService.ManTaxCodeLD.UpdateList();
+        //    StateHasChanged();
           
-        }
-        async Task UpdateTaxCodeLP()
-        {
-            await TablesService.ManTaxCodeLP.UpdateList();
-            StateHasChanged();
+        //}
+        //async Task UpdateTaxCodeLP()
+        //{
+        //    //await TablesService.ManTaxCodeLP.UpdateList();
+        //    StateHasChanged();
            
-        }
+        //}
         
 
     }

@@ -1,4 +1,5 @@
-﻿using CPTool.Entities;
+﻿using CPtool.ExtensionMethods;
+using CPTool.Entities;
 using CPTool.Implementations;
 using static MudBlazor.Icons.Custom;
 
@@ -122,23 +123,23 @@ namespace CPTool.Pages.PagesList
             var result = await TablesService.ManPurchaseOrder.AddUpdate(purchaseOrderMWOItemDTO.PurchaseOrderDTO, _cts.Token);
             if (result.Succeeded)
             {
-                purchaseOrderMWOItemDTO.PurchaseOrderDTO = result.Data;
+                purchaseOrderMWOItemDTO.PurchaseOrderDTO = result.Data as PurchaseOrderDTO;
                 SelectedDetail = new();
                 SelectedMaster = new();
 
-                if (purchaseOrderMWOItemDTO.PurchaseOrderId != 0 && purchaseOrderMWOItemDTO.MWOItemId != 0)
+                if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
                 {
                     var result2 = await TablesService.ManPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
                     if (result2.Succeeded)
                     {
-                        await TablesService.ManPurchaseOrderMWOItem.UpdateList();
+                        //await TablesService.ManPurchaseOrderMWOItem.UpdateList();
 
-                        await TablesService.ManMWOItem.UpdateList();
-                        SelectedDetail = (await TablesService.ManMWOItem.GetById(purchaseOrderMWOItemDTO.MWOItemDTO.Id)).Data;
+                        await TablesService.ManMWOItem.GetList();
+                        SelectedDetail = await TablesService.ManMWOItem.GetById(purchaseOrderMWOItemDTO.MWOItemDTO.Id);
                     }
 
                 }
-                await TablesService.ManPurchaseOrder.UpdateList();
+                await TablesService.ManPurchaseOrder.GetList();
 
             }
 
@@ -153,23 +154,23 @@ namespace CPTool.Pages.PagesList
             var result = await TablesService.ManMWOItem.AddUpdate(purchaseOrderMWOItemDTO.MWOItemDTO, _cts.Token);
             if (result.Succeeded)
             {
-                purchaseOrderMWOItemDTO.MWOItemDTO = result.Data;
+                purchaseOrderMWOItemDTO.MWOItemDTO = result.Data as MWOItemDTO;
                 SelectedDetail = new();
                 SelectedMaster = new();
 
 
-                if (purchaseOrderMWOItemDTO.PurchaseOrderId != 0 && purchaseOrderMWOItemDTO.MWOItemId != 0)
+                if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
                 {
                     var result2 = await TablesService.ManPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
                     if (result2.Succeeded)
                     {
-                        await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-                        await TablesService.ManPurchaseOrder.UpdateList();
+                        //await TablesService.ManPurchaseOrderMWOItem.UpdateList();
+                        await TablesService.ManPurchaseOrder.GetList();
 
-                        SelectedMaster = (await TablesService.ManPurchaseOrder.GetById(purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id)).Data;
+                        SelectedMaster = await TablesService.ManPurchaseOrder.GetById(purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id);
                     }
                 }
-                await TablesService.ManMWOItem.UpdateList();
+                await TablesService.ManMWOItem.GetList();
 
 
             }
@@ -182,7 +183,7 @@ namespace CPTool.Pages.PagesList
         async Task<IResult<IAuditableEntityDTO>> SaveBrandSupplier(IAuditableEntityDTO dto)
         {
             var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
-            if (purchaseOrderMWOItemDTO.PurchaseOrderId != 0 && purchaseOrderMWOItemDTO.MWOItemId != 0)
+            if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
             {
                 var result = await TablesService.ManPurchaseOrderMWOItem.AddUpdate(dto, _cts.Token);
                 if (result.Succeeded)
@@ -204,9 +205,9 @@ namespace CPTool.Pages.PagesList
                 result = await TablesService.ManPurchaseOrder.Delete(dto.Id, _cts.Token);
                 if (result.Succeeded)
                 {
-                    await TablesService.ManMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrder.UpdateList();
+                    //await TablesService.ManMWOItem.UpdateList();
+                    await TablesService.ManPurchaseOrderMWOItem.GetList();
+                    await TablesService.ManPurchaseOrder.GetList();
                     StateHasChanged();
                 }
                 return result;
@@ -216,9 +217,9 @@ namespace CPTool.Pages.PagesList
                 result = await TablesService.ManMWOItem.Delete(dto.Id, _cts.Token);
                 if (result.Succeeded)
                 {
-                    await TablesService.ManMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrder.UpdateList();
+                    //await TablesService.ManMWOItem.UpdateList();
+                    await TablesService.ManPurchaseOrderMWOItem.GetList();
+                    await TablesService.ManPurchaseOrder.GetList();
                     StateHasChanged();
                 }
                 return result;

@@ -8,13 +8,16 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
-
+using System.Reflection;
+using AutoMapper;
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddCPToolServices(builder.Configuration);
-builder.Services.CurrencyService();
+var asse = Assembly.GetExecutingAssembly();
 
+builder.Services.CurrencyService();
+//builder.Services.AddServiceMapper();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

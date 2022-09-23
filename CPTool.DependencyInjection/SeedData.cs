@@ -1,6 +1,7 @@
 ﻿using CPTool.Context;
 using CPTool.Entities;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,12 @@ namespace CPTool.DependencyInjection
                 {
                     AddChapters(db);
                 }
-                
+
                 if (!db.MWOTypes!.Any())
                 {
                     AddMWOType(db);
                 }
-                if(!db.MeasuredVariables!.Any())
+                if (!db.MeasuredVariables!.Any())
                 {
                     AddMeasuredVariable(db);
                 }
@@ -46,9 +47,31 @@ namespace CPTool.DependencyInjection
                 {
                     AddDeviceFunctionModifier(db);
                 }
+                var test = false;
+                if (test)
+                {
+                    var mwo = db.MWOs.ToList().First();
+                    var chap = db.Chapters.ToList().First();
+                    MWOItem mwoitem = new();
+                    mwoitem.MWO = mwo;
+                    mwoitem.Chapter = chap;
+                    var request2 = db.Add(mwoitem);
+                    try
+                    {
+                        db.SaveChanges();
+
+                    }
+                    catch(Exception ex)
+                    {
+                        string exm = ex.Message;
+                    }
+                    //var mwo = ManMWO.List.First();
+                    //MWOItemDTO mwoitem = new();
+                    //mwoitem.MWODTO = mwo;
+                    //await ManMWOItem.AddUpdate2(mwoitem, new());
+                }
             }
         }
-        
         static void AddChapters(TableContext context)
         {
             var chapters = new Chapter[]
@@ -416,7 +439,7 @@ namespace CPTool.DependencyInjection
 
             context.SaveChanges();
 
-           
+
         }
         static void AddMeasuredVariableModifier(TableContext context)
         {

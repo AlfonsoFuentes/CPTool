@@ -20,7 +20,8 @@
             if (Model.Id == 0)
             {
                 await TablesService.ManDownPayment.AddUpdate(Model, _cts.Token);
-                await TablesService.ManDownPayment.UpdateList();
+                var list = TablesService.ManDownPayment.List;
+               
             }
         }
        

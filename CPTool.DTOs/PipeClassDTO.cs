@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace CPTool.DTOS
 {
-    public class PipeClassDTO : AuditableEntityDTO
+    public class PipeClassDTO : AuditableEntityDTO, IMapFrom<PipeClass>
     {
 
-        public List<PipingItemDTO>? PipingItemsDTO { get; set; } = new();
+        
+        public List<PipingItemDTO>? PipingItemsDTO { get; set; } = null!;
+        public List<NozzleDTO>? NozzlesDTO { get; set; } = null!;
     }
 }

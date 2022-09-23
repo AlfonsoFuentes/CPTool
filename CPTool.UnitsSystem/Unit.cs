@@ -9,7 +9,7 @@ namespace CPTool.UnitsSystem
     [Serializable]
     public sealed class Unit : IComparable, IComparable<Unit>, IEquatable<Unit>, IFormattable
     {
-        private static Unit none = new Unit(String.Empty, String.Empty, UnitType.None, "no unit");
+        private static Unit none = new Unit("no unit", "no symbol", UnitType.None, "no unit");
 
         private string name;
         private string symbol;

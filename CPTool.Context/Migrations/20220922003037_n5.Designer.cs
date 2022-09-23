@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20220918015724_Initial")]
-    partial class Initial
+    [Migration("20220922003037_n5")]
+    partial class n5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -139,6 +139,31 @@ namespace CPTool.Context.Migrations
                     b.ToTable("Chapters");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.ConnectionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConnectionTypes");
+                });
+
             modelBuilder.Entity("CPTool.Entities.ContingencyItem", b =>
                 {
                     b.Property<int>("Id")
@@ -227,6 +252,9 @@ namespace CPTool.Context.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("ApprovedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CBSRequesNo")
                         .HasColumnType("nvarchar(max)");
@@ -390,10 +418,7 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("EquipmentTypeSubId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MaterialsGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MaterialsGrouptId")
+                    b.Property<int?>("GasketId")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
@@ -402,6 +427,12 @@ namespace CPTool.Context.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProcessConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcessFluidId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Reference")
                         .IsRequired()
@@ -429,6 +460,12 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("eInnerMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eOuterMaterialId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
@@ -437,9 +474,17 @@ namespace CPTool.Context.Migrations
 
                     b.HasIndex("EquipmentTypeSubId");
 
-                    b.HasIndex("MaterialsGroupId");
+                    b.HasIndex("GasketId");
+
+                    b.HasIndex("ProcessConditionId");
+
+                    b.HasIndex("ProcessFluidId");
 
                     b.HasIndex("SupplierId");
+
+                    b.HasIndex("eInnerMaterialId");
+
+                    b.HasIndex("eOuterMaterialId");
 
                     b.ToTable("EquipmentItems");
                 });
@@ -578,10 +623,7 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("DeviceFunctionModifierId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InnerMaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MaterialsGroupId")
+                    b.Property<int?>("GasketId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MeasuredVariableId")
@@ -596,7 +638,10 @@ namespace CPTool.Context.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OuterMaterialId")
+                    b.Property<int?>("ProcessConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcessFluidId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ReadoutId")
@@ -623,6 +668,12 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("iInnerMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("iOuterMaterialId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
@@ -631,15 +682,23 @@ namespace CPTool.Context.Migrations
 
                     b.HasIndex("DeviceFunctionModifierId");
 
-                    b.HasIndex("MaterialsGroupId");
+                    b.HasIndex("GasketId");
 
                     b.HasIndex("MeasuredVariableId");
 
                     b.HasIndex("MeasuredVariableModifierId");
 
+                    b.HasIndex("ProcessConditionId");
+
+                    b.HasIndex("ProcessFluidId");
+
                     b.HasIndex("ReadoutId");
 
                     b.HasIndex("SupplierId");
+
+                    b.HasIndex("iInnerMaterialId");
+
+                    b.HasIndex("iOuterMaterialId");
 
                     b.ToTable("InstrumentItems");
                 });
@@ -695,46 +754,6 @@ namespace CPTool.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Materials");
-                });
-
-            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GasketId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InnerMaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OuterMaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GasketId");
-
-                    b.HasIndex("InnerMaterialId");
-
-                    b.HasIndex("OuterMaterialId");
-
-                    b.ToTable("MaterialsGroup");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MeasuredVariable", b =>
@@ -858,7 +877,7 @@ namespace CPTool.Context.Migrations
                     b.Property<decimal>("BudgetPrize")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ChapterId")
+                    b.Property<int?>("ChapterId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ContingencyItemId")
@@ -997,6 +1016,79 @@ namespace CPTool.Context.Migrations
                     b.ToTable("MWOTypes");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.Nozzle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("ConnectionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EquipmentItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GasketId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InstrumentItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaterialID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PipeAccesoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PipeClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PipeDiameterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PipingItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StreamType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConnectionTypeId");
+
+                    b.HasIndex("EquipmentItemId");
+
+                    b.HasIndex("GasketId");
+
+                    b.HasIndex("InstrumentItemId");
+
+                    b.HasIndex("MaterialID");
+
+                    b.HasIndex("PipeAccesoryId");
+
+                    b.HasIndex("PipeClassId");
+
+                    b.HasIndex("PipeDiameterId");
+
+                    b.HasIndex("PipingItemId");
+
+                    b.ToTable("Nozzles");
+                });
+
             modelBuilder.Entity("CPTool.Entities.PaintingItem", b =>
                 {
                     b.Property<int>("Id")
@@ -1022,7 +1114,83 @@ namespace CPTool.Context.Migrations
                     b.ToTable("PaintingItems");
                 });
 
-            modelBuilder.Entity("CPTool.Entities.PipingItem", b =>
+            modelBuilder.Entity("CPTool.Entities.PipeAccesory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ElevationChangeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FlowDirection")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FrictionDropPressureId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FrictionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LevelInletId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LevelOutletId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OverallDropPressureId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PipingItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcessConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ReynoldId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SectionType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ElevationChangeId");
+
+                    b.HasIndex("FrictionDropPressureId");
+
+                    b.HasIndex("FrictionId");
+
+                    b.HasIndex("LevelInletId");
+
+                    b.HasIndex("LevelOutletId");
+
+                    b.HasIndex("OverallDropPressureId");
+
+                    b.HasIndex("PipingItemId");
+
+                    b.HasIndex("ProcessConditionId");
+
+                    b.HasIndex("ReynoldId");
+
+                    b.ToTable("PipeAccesorys");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipeClass", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1044,7 +1212,215 @@ namespace CPTool.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("PipeClasss");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipeDiameter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IDId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ODId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ThicknessId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IDId");
+
+                    b.HasIndex("ODId");
+
+                    b.HasIndex("ThicknessId");
+
+                    b.ToTable("PipeDiameters");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipingItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DiameterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FinishMWOItemId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Insulation")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NozzleFinishId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NozzleStartId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PipeClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcessFluidId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StartMWOItemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiameterId");
+
+                    b.HasIndex("FinishMWOItemId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("NozzleFinishId");
+
+                    b.HasIndex("NozzleStartId");
+
+                    b.HasIndex("PipeClassId");
+
+                    b.HasIndex("ProcessFluidId");
+
+                    b.HasIndex("StartMWOItemId");
+
                     b.ToTable("PipingItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.ProcessCondition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DensityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EnthalpyFlowId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MassFlowId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PressureId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpecificCpId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpecificEnthalpyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TemperatureId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ThermalConductivityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ViscosityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VolumetricFlowId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DensityId");
+
+                    b.HasIndex("EnthalpyFlowId");
+
+                    b.HasIndex("MassFlowId");
+
+                    b.HasIndex("PressureId");
+
+                    b.HasIndex("SpecificCpId");
+
+                    b.HasIndex("SpecificEnthalpyId");
+
+                    b.HasIndex("TemperatureId");
+
+                    b.HasIndex("ThermalConductivityId");
+
+                    b.HasIndex("ViscosityId");
+
+                    b.HasIndex("VolumetricFlowId");
+
+                    b.ToTable("ProcessConditions");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.ProcessFluid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProcessFluids");
                 });
 
             modelBuilder.Entity("CPTool.Entities.PurchaseOrder", b =>
@@ -1054,6 +1430,9 @@ namespace CPTool.Context.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("BrandId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -1132,6 +1511,8 @@ namespace CPTool.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("MWOId");
 
@@ -1379,6 +1760,37 @@ namespace CPTool.Context.Migrations
                     b.ToTable("TestingItems");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.Unit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UnitName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Units");
+                });
+
             modelBuilder.Entity("CPTool.Entities.UnitaryBasePrize", b =>
                 {
                     b.Property<int>("Id")
@@ -1471,13 +1883,31 @@ namespace CPTool.Context.Migrations
                         .WithMany("EquipmentItems")
                         .HasForeignKey("EquipmentTypeSubId");
 
-                    b.HasOne("CPTool.Entities.MaterialsGroup", "MaterialsGroup")
+                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
                         .WithMany("EquipmentItems")
-                        .HasForeignKey("MaterialsGroupId");
+                        .HasForeignKey("GasketId");
+
+                    b.HasOne("CPTool.Entities.ProcessCondition", "ProcessCondition")
+                        .WithMany("EquipmentItems")
+                        .HasForeignKey("ProcessConditionId");
+
+                    b.HasOne("CPTool.Entities.ProcessFluid", "ProcessFluid")
+                        .WithMany("EquipmentItems")
+                        .HasForeignKey("ProcessFluidId");
 
                     b.HasOne("CPTool.Entities.Supplier", "Supplier")
                         .WithMany("EquipmentItems")
                         .HasForeignKey("SupplierId");
+
+                    b.HasOne("CPTool.Entities.Material", "eInnerMaterial")
+                        .WithMany("EquipmentItemInnerMaterials")
+                        .HasForeignKey("eInnerMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Material", "eOuterMaterial")
+                        .WithMany("EquipmentItemOuterMaterials")
+                        .HasForeignKey("eOuterMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Brand");
 
@@ -1485,9 +1915,17 @@ namespace CPTool.Context.Migrations
 
                     b.Navigation("EquipmentTypeSub");
 
-                    b.Navigation("MaterialsGroup");
+                    b.Navigation("Gasket");
+
+                    b.Navigation("ProcessCondition");
+
+                    b.Navigation("ProcessFluid");
 
                     b.Navigation("Supplier");
+
+                    b.Navigation("eInnerMaterial");
+
+                    b.Navigation("eOuterMaterial");
                 });
 
             modelBuilder.Entity("CPTool.Entities.EquipmentTypeSub", b =>
@@ -1515,9 +1953,9 @@ namespace CPTool.Context.Migrations
                         .WithMany("InstrumentItems")
                         .HasForeignKey("DeviceFunctionModifierId");
 
-                    b.HasOne("CPTool.Entities.MaterialsGroup", "MaterialsGroup")
+                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("MaterialsGroupId");
+                        .HasForeignKey("GasketId");
 
                     b.HasOne("CPTool.Entities.MeasuredVariable", "MeasuredVariable")
                         .WithMany("InstrumentItems")
@@ -1527,6 +1965,14 @@ namespace CPTool.Context.Migrations
                         .WithMany("InstrumentItems")
                         .HasForeignKey("MeasuredVariableModifierId");
 
+                    b.HasOne("CPTool.Entities.ProcessCondition", "ProcessCondition")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("ProcessConditionId");
+
+                    b.HasOne("CPTool.Entities.ProcessFluid", "ProcessFluid")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("ProcessFluidId");
+
                     b.HasOne("CPTool.Entities.Readout", "Readout")
                         .WithMany("InstrumentItems")
                         .HasForeignKey("ReadoutId");
@@ -1535,44 +1981,39 @@ namespace CPTool.Context.Migrations
                         .WithMany("InstrumentItems")
                         .HasForeignKey("SupplierId");
 
+                    b.HasOne("CPTool.Entities.Material", "iInnerMaterial")
+                        .WithMany("InstrumentItemInnerMaterials")
+                        .HasForeignKey("iInnerMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Material", "iOuterMaterial")
+                        .WithMany("InstrumentItemOuterMaterials")
+                        .HasForeignKey("iOuterMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Brand");
 
                     b.Navigation("DeviceFunction");
 
                     b.Navigation("DeviceFunctionModifier");
 
-                    b.Navigation("MaterialsGroup");
+                    b.Navigation("Gasket");
 
                     b.Navigation("MeasuredVariable");
 
                     b.Navigation("MeasuredVariableModifier");
 
+                    b.Navigation("ProcessCondition");
+
+                    b.Navigation("ProcessFluid");
+
                     b.Navigation("Readout");
 
                     b.Navigation("Supplier");
-                });
 
-            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
-                {
-                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
-                        .WithMany("MaterialsGroups")
-                        .HasForeignKey("GasketId");
+                    b.Navigation("iInnerMaterial");
 
-                    b.HasOne("CPTool.Entities.Material", "InnerMaterial")
-                        .WithMany("InnerMaterials")
-                        .HasForeignKey("InnerMaterialId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("CPTool.Entities.Material", "OuterMaterial")
-                        .WithMany("OuterMaterials")
-                        .HasForeignKey("OuterMaterialId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Gasket");
-
-                    b.Navigation("InnerMaterial");
-
-                    b.Navigation("OuterMaterial");
+                    b.Navigation("iOuterMaterial");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MWO", b =>
@@ -1594,9 +2035,7 @@ namespace CPTool.Context.Migrations
 
                     b.HasOne("CPTool.Entities.Chapter", "Chapter")
                         .WithMany("MWOItems")
-                        .HasForeignKey("ChapterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChapterId");
 
                     b.HasOne("CPTool.Entities.ContingencyItem", "ContingencyItem")
                         .WithMany("MWOItems")
@@ -1693,8 +2132,285 @@ namespace CPTool.Context.Migrations
                     b.Navigation("UnitaryBasePrize");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.Nozzle", b =>
+                {
+                    b.HasOne("CPTool.Entities.ConnectionType", "ConnectionType")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("ConnectionTypeId");
+
+                    b.HasOne("CPTool.Entities.EquipmentItem", "EquipmentItem")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("EquipmentItemId");
+
+                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("GasketId");
+
+                    b.HasOne("CPTool.Entities.InstrumentItem", "InstrumentItem")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("InstrumentItemId");
+
+                    b.HasOne("CPTool.Entities.Material", "Material")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("MaterialID");
+
+                    b.HasOne("CPTool.Entities.PipeAccesory", "PipeAccesory")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("PipeAccesoryId");
+
+                    b.HasOne("CPTool.Entities.PipeClass", "PipeClass")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("PipeClassId");
+
+                    b.HasOne("CPTool.Entities.PipeDiameter", "PipeDiameter")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("PipeDiameterId");
+
+                    b.HasOne("CPTool.Entities.PipingItem", "PipingItem")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("PipingItemId");
+
+                    b.Navigation("ConnectionType");
+
+                    b.Navigation("EquipmentItem");
+
+                    b.Navigation("Gasket");
+
+                    b.Navigation("InstrumentItem");
+
+                    b.Navigation("Material");
+
+                    b.Navigation("PipeAccesory");
+
+                    b.Navigation("PipeClass");
+
+                    b.Navigation("PipeDiameter");
+
+                    b.Navigation("PipingItem");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipeAccesory", b =>
+                {
+                    b.HasOne("CPTool.Entities.Unit", "ElevationChange")
+                        .WithMany("ElevationChangePipeAccesorys")
+                        .HasForeignKey("ElevationChangeId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "FrictionDropPressure")
+                        .WithMany("FrictionDropPressurePipeAccesorys")
+                        .HasForeignKey("FrictionDropPressureId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "Friction")
+                        .WithMany("FrictionPipeAccesorys")
+                        .HasForeignKey("FrictionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "LevelInlet")
+                        .WithMany("LevelInletPipeAccesorys")
+                        .HasForeignKey("LevelInletId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "LevelOutlet")
+                        .WithMany("LevelOutletPipeAccesorys")
+                        .HasForeignKey("LevelOutletId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "OverallDropPressure")
+                        .WithMany("OverallDropPressurePipeAccesorys")
+                        .HasForeignKey("OverallDropPressureId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.PipingItem", "PipingItem")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("PipingItemId");
+
+                    b.HasOne("CPTool.Entities.ProcessCondition", "ProcessCondition")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("ProcessConditionId");
+
+                    b.HasOne("CPTool.Entities.Unit", "Reynold")
+                        .WithMany("ReynoldPipeAccesorys")
+                        .HasForeignKey("ReynoldId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ElevationChange");
+
+                    b.Navigation("Friction");
+
+                    b.Navigation("FrictionDropPressure");
+
+                    b.Navigation("LevelInlet");
+
+                    b.Navigation("LevelOutlet");
+
+                    b.Navigation("OverallDropPressure");
+
+                    b.Navigation("PipingItem");
+
+                    b.Navigation("ProcessCondition");
+
+                    b.Navigation("Reynold");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipeDiameter", b =>
+                {
+                    b.HasOne("CPTool.Entities.Unit", "ID")
+                        .WithMany("IDs")
+                        .HasForeignKey("IDId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "OD")
+                        .WithMany("ODs")
+                        .HasForeignKey("ODId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "Thickness")
+                        .WithMany("Thicknesss")
+                        .HasForeignKey("ThicknessId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ID");
+
+                    b.Navigation("OD");
+
+                    b.Navigation("Thickness");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipingItem", b =>
+                {
+                    b.HasOne("CPTool.Entities.PipeDiameter", "Diameter")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("DiameterId");
+
+                    b.HasOne("CPTool.Entities.MWOItem", "FinishMWOItem")
+                        .WithMany("FisnishPipingItems")
+                        .HasForeignKey("FinishMWOItemId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Material", "Material")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("MaterialId");
+
+                    b.HasOne("CPTool.Entities.Nozzle", "NozzleFinish")
+                        .WithMany("FinishPipingItems")
+                        .HasForeignKey("NozzleFinishId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Nozzle", "NozzleStart")
+                        .WithMany("StartPipingItems")
+                        .HasForeignKey("NozzleStartId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.PipeClass", "PipeClass")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("PipeClassId");
+
+                    b.HasOne("CPTool.Entities.ProcessFluid", "ProcessFluid")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("ProcessFluidId");
+
+                    b.HasOne("CPTool.Entities.MWOItem", "StartMWOItem")
+                        .WithMany("StartPipingItems")
+                        .HasForeignKey("StartMWOItemId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Diameter");
+
+                    b.Navigation("FinishMWOItem");
+
+                    b.Navigation("Material");
+
+                    b.Navigation("NozzleFinish");
+
+                    b.Navigation("NozzleStart");
+
+                    b.Navigation("PipeClass");
+
+                    b.Navigation("ProcessFluid");
+
+                    b.Navigation("StartMWOItem");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.ProcessCondition", b =>
+                {
+                    b.HasOne("CPTool.Entities.Unit", "Density")
+                        .WithMany("Densitys")
+                        .HasForeignKey("DensityId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "EnthalpyFlow")
+                        .WithMany("EnthalpyFlows")
+                        .HasForeignKey("EnthalpyFlowId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "MassFlow")
+                        .WithMany("MassFlows")
+                        .HasForeignKey("MassFlowId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "Pressure")
+                        .WithMany("Pressures")
+                        .HasForeignKey("PressureId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "SpecificCp")
+                        .WithMany("SpecificCps")
+                        .HasForeignKey("SpecificCpId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "SpecificEnthalpy")
+                        .WithMany("SpecificEnthalpys")
+                        .HasForeignKey("SpecificEnthalpyId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "Temperature")
+                        .WithMany("Temperatures")
+                        .HasForeignKey("TemperatureId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "ThermalConductivity")
+                        .WithMany("ThermalConductivitys")
+                        .HasForeignKey("ThermalConductivityId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "Viscosity")
+                        .WithMany("Viscositys")
+                        .HasForeignKey("ViscosityId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Unit", "VolumetricFlow")
+                        .WithMany("VolumetricFlows")
+                        .HasForeignKey("VolumetricFlowId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Density");
+
+                    b.Navigation("EnthalpyFlow");
+
+                    b.Navigation("MassFlow");
+
+                    b.Navigation("Pressure");
+
+                    b.Navigation("SpecificCp");
+
+                    b.Navigation("SpecificEnthalpy");
+
+                    b.Navigation("Temperature");
+
+                    b.Navigation("ThermalConductivity");
+
+                    b.Navigation("Viscosity");
+
+                    b.Navigation("VolumetricFlow");
+                });
+
             modelBuilder.Entity("CPTool.Entities.PurchaseOrder", b =>
                 {
+                    b.HasOne("CPTool.Entities.Brand", "Brand")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("BrandId");
+
                     b.HasOne("CPTool.Entities.MWO", null)
                         .WithMany("PurchaseOrders")
                         .HasForeignKey("MWOId");
@@ -1702,6 +2418,8 @@ namespace CPTool.Context.Migrations
                     b.HasOne("CPTool.Entities.Supplier", "Supplier")
                         .WithMany("PurchaseOrders")
                         .HasForeignKey("SupplierId");
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Supplier");
                 });
@@ -1758,11 +2476,18 @@ namespace CPTool.Context.Migrations
                     b.Navigation("EquipmentItems");
 
                     b.Navigation("InstrumentItems");
+
+                    b.Navigation("PurchaseOrders");
                 });
 
             modelBuilder.Entity("CPTool.Entities.Chapter", b =>
                 {
                     b.Navigation("MWOItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.ConnectionType", b =>
+                {
+                    b.Navigation("Nozzles");
                 });
 
             modelBuilder.Entity("CPTool.Entities.ContingencyItem", b =>
@@ -1798,6 +2523,8 @@ namespace CPTool.Context.Migrations
             modelBuilder.Entity("CPTool.Entities.EquipmentItem", b =>
                 {
                     b.Navigation("MWOItems");
+
+                    b.Navigation("Nozzles");
                 });
 
             modelBuilder.Entity("CPTool.Entities.EquipmentType", b =>
@@ -1819,12 +2546,18 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.Gasket", b =>
                 {
-                    b.Navigation("MaterialsGroups");
+                    b.Navigation("EquipmentItems");
+
+                    b.Navigation("InstrumentItems");
+
+                    b.Navigation("Nozzles");
                 });
 
             modelBuilder.Entity("CPTool.Entities.InstrumentItem", b =>
                 {
                     b.Navigation("MWOItems");
+
+                    b.Navigation("Nozzles");
                 });
 
             modelBuilder.Entity("CPTool.Entities.InsulationItem", b =>
@@ -1834,16 +2567,17 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.Material", b =>
                 {
-                    b.Navigation("InnerMaterials");
+                    b.Navigation("EquipmentItemInnerMaterials");
 
-                    b.Navigation("OuterMaterials");
-                });
+                    b.Navigation("EquipmentItemOuterMaterials");
 
-            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
-                {
-                    b.Navigation("EquipmentItems");
+                    b.Navigation("InstrumentItemInnerMaterials");
 
-                    b.Navigation("InstrumentItems");
+                    b.Navigation("InstrumentItemOuterMaterials");
+
+                    b.Navigation("Nozzles");
+
+                    b.Navigation("PipingItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MeasuredVariable", b =>
@@ -1865,7 +2599,11 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.MWOItem", b =>
                 {
+                    b.Navigation("FisnishPipingItems");
+
                     b.Navigation("PurchaseOrderMWOItems");
+
+                    b.Navigation("StartPipingItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MWOType", b =>
@@ -1873,14 +2611,62 @@ namespace CPTool.Context.Migrations
                     b.Navigation("MWOs");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.Nozzle", b =>
+                {
+                    b.Navigation("FinishPipingItems");
+
+                    b.Navigation("StartPipingItems");
+                });
+
             modelBuilder.Entity("CPTool.Entities.PaintingItem", b =>
                 {
                     b.Navigation("MWOItems");
                 });
 
+            modelBuilder.Entity("CPTool.Entities.PipeAccesory", b =>
+                {
+                    b.Navigation("Nozzles");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipeClass", b =>
+                {
+                    b.Navigation("Nozzles");
+
+                    b.Navigation("PipingItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.PipeDiameter", b =>
+                {
+                    b.Navigation("Nozzles");
+
+                    b.Navigation("PipingItems");
+                });
+
             modelBuilder.Entity("CPTool.Entities.PipingItem", b =>
                 {
                     b.Navigation("MWOItems");
+
+                    b.Navigation("Nozzles");
+
+                    b.Navigation("PipeAccesorys");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.ProcessCondition", b =>
+                {
+                    b.Navigation("EquipmentItems");
+
+                    b.Navigation("InstrumentItems");
+
+                    b.Navigation("PipeAccesorys");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.ProcessFluid", b =>
+                {
+                    b.Navigation("EquipmentItems");
+
+                    b.Navigation("InstrumentItems");
+
+                    b.Navigation("PipingItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.PurchaseOrder", b =>
@@ -1929,6 +2715,49 @@ namespace CPTool.Context.Migrations
             modelBuilder.Entity("CPTool.Entities.TestingItem", b =>
                 {
                     b.Navigation("MWOItems");
+                });
+
+            modelBuilder.Entity("CPTool.Entities.Unit", b =>
+                {
+                    b.Navigation("Densitys");
+
+                    b.Navigation("ElevationChangePipeAccesorys");
+
+                    b.Navigation("EnthalpyFlows");
+
+                    b.Navigation("FrictionDropPressurePipeAccesorys");
+
+                    b.Navigation("FrictionPipeAccesorys");
+
+                    b.Navigation("IDs");
+
+                    b.Navigation("LevelInletPipeAccesorys");
+
+                    b.Navigation("LevelOutletPipeAccesorys");
+
+                    b.Navigation("MassFlows");
+
+                    b.Navigation("ODs");
+
+                    b.Navigation("OverallDropPressurePipeAccesorys");
+
+                    b.Navigation("Pressures");
+
+                    b.Navigation("ReynoldPipeAccesorys");
+
+                    b.Navigation("SpecificCps");
+
+                    b.Navigation("SpecificEnthalpys");
+
+                    b.Navigation("Temperatures");
+
+                    b.Navigation("ThermalConductivitys");
+
+                    b.Navigation("Thicknesss");
+
+                    b.Navigation("Viscositys");
+
+                    b.Navigation("VolumetricFlows");
                 });
 
             modelBuilder.Entity("CPTool.Entities.UnitaryBasePrize", b =>

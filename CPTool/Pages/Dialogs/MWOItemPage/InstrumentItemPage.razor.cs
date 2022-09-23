@@ -8,16 +8,12 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         protected MWOItemDialog Dialog { get; set; }
         protected MWOItemDTO Item => Dialog.Model;
 
-       
+      
         InstrumentItemDTO Model { get => Item.InstrumentItemDTO; set => Item.InstrumentItemDTO = value; }
       
         protected override void OnInitialized()
         {
-            if (Model == null)
-            {
-                Model = new ();
-              
-            }
+            
            
         }
 

@@ -16,6 +16,12 @@ namespace CPTool.UnitsSystem
         public static readonly UnitType AmountOfSubstance = new UnitType("mole");
         public static readonly UnitType LuminousIntensity = new UnitType("candela");
         public static readonly UnitType Percentage = new UnitType("Percentage");
+        public static readonly UnitType UnitLess = new UnitType("UnitLess");
+    }
+    [UnitDefinitionClass]
+    public static class UnitLessUnits
+    {
+        public static readonly Unit None = new Unit("None", "xx", SIUnitTypes.UnitLess, "UnitLess");
     }
 
     [UnitDefinitionClass]
@@ -328,14 +334,14 @@ namespace CPTool.UnitsSystem
 
     }
     [UnitDefinitionClass]
-    public static class DropPressureLengthUnits
+    public static class PressureDropLengthUnits
     {
-        public static readonly Unit psi_100ft = new Unit("Pound/in2/100", "psi/100 ft", DropPressureUnits.psi / (100 * LengthUnits.Foot), "DropPressureLength");
-        public static readonly Unit Kpa_m = new Unit("KiloPascal/meter", "kPa/m", DropPressureUnits.KiloPascal / (LengthUnits.Meter), "DropPressureLength");
+        public static readonly Unit psi_100ft = new Unit("Pound/in2/100", "psi/100 ft", PressureDropUnits.psi / (100 * LengthUnits.Foot), "DropPressureLength");
+        public static readonly Unit Kpa_m = new Unit("KiloPascal/meter", "kPa/m", PressureDropUnits.KiloPascal / (LengthUnits.Meter), "DropPressureLength");
 
     }
     [UnitDefinitionClass]
-    public static class DropPressureUnits
+    public static class PressureDropUnits
     {
         public static readonly Unit Pascal = new Unit("Pascal", "Pa", ForceUnits.Newton * LengthUnits.Meter.Power(-2), "DropPressure");
         public static readonly Unit HectoPascal = new Unit("hectoPascal", "hPa", 100.0 * Pascal, "DropPressure");

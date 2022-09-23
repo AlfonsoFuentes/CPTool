@@ -6,7 +6,7 @@ namespace CPTool.DTOS
 {
    
     
-    public class ChapterDTO : AuditableEntityDTO
+    public class ChapterDTO : AuditableEntityDTO, IMapFrom<Chapter>
     {
         public ChapterDTO()
         {

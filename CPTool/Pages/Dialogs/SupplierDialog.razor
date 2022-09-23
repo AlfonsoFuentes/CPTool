@@ -47,7 +47,7 @@
         <ComponentAutoComplete Label="Vendor Code"
                                TDTO="VendorCodeDTO"
                                T="VendorCode"
-                               UpdateList="UpdateVendorCode"
+                              
                                Validation="@(new Func<string, string>(ReviewVendorCode))"
                                Manager=TablesService.ManVendorCode
                                ObjectList=TablesService.ManVendorCode.List
@@ -60,7 +60,7 @@
         <ComponentAutoComplete Label="Tax Codel LD"
                                TDTO="TaxCodeLDDTO"
                                T="TaxCodeLD"
-                               UpdateList="UpdateTaxCodeLD"
+                             
                                Manager=TablesService.ManTaxCodeLD
                                ObjectList=TablesService.ManTaxCodeLD.List
                                @bind-Model=@Model.SupplierDTO.TaxCodeLDDTO
@@ -72,7 +72,7 @@
         <ComponentAutoComplete Label="Tax Codel LP"
                                TDTO="TaxCodeLPDTO"
                                T="TaxCodeLP"
-                               UpdateList="UpdateTaxCodeLP"
+                              
                                Manager=TablesService.ManTaxCodeLP
                                ObjectList=TablesService.ManTaxCodeLP.List
                                @bind-Model=@Model.SupplierDTO.TaxCodeLPDTO

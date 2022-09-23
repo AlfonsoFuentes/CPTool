@@ -12,11 +12,17 @@ namespace CPTool.Entities
 
         public string? Abbreviation { get; set; }
 
-        [ForeignKey("InnerMaterialId")]
-        public ICollection<MaterialsGroup>? InnerMaterials { get; set; } = null!;
+        [ForeignKey("iInnerMaterialId")]
+        public ICollection<InstrumentItem>? InstrumentItemInnerMaterials { get; set; } = null!;
 
-        [ForeignKey("OuterMaterialId")]
-        public ICollection<MaterialsGroup>? OuterMaterials { get; set; } = null!;
+        [ForeignKey("iOuterMaterialId")]
+        public ICollection<InstrumentItem>? InstrumentItemOuterMaterials { get; set; } = null!;
+
+        [ForeignKey("eInnerMaterialId")]
+        public ICollection<EquipmentItem>? EquipmentItemInnerMaterials { get; set; } = null!;
+
+        [ForeignKey("eOuterMaterialId")]
+        public ICollection<EquipmentItem>? EquipmentItemOuterMaterials { get; set; } = null!;
 
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;
 

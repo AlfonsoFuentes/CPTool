@@ -8,7 +8,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
         protected MWOItemDialog Dialog { get; set; }
         protected MWOItemDTO Item => Dialog.Model;
 
-       
+        
         PipingItemDTO Model { get => Item.PipingItemDTO; set => Item.PipingItemDTO = value; }
       
         protected override void OnInitialized()

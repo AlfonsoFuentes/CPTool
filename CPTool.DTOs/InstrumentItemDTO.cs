@@ -5,33 +5,33 @@
 namespace CPTool.DTOS
 {
    
-    public class InstrumentItemDTO : AuditableEntityDTO
+    public class InstrumentItemDTO : AuditableEntityDTO, IMapFrom<InstrumentItem>
     {
-        public ProcessConditionDTO? ProcessConditionDTO { get; set; }
-        public ProcessFluidDTO? ProcessFluidDTO { get; set; }
+       
         public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
-        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
-        public MaterialsGroupDTO? MaterialsGroupDTO { get; set; } = new();
+        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = null!;
+
         public MeasuredVariableDTO? MeasuredVariableDTO { get; set; } = new();
         public MeasuredVariableModifierDTO? MeasuredVariableModifierDTO { get; set; } = new();
         public DeviceFunctionDTO? DeviceFunctionDTO { get; set; } = new();
         public DeviceFunctionModifierDTO? DeviceFunctionModifierDTO { get; set; } = new();
         public ReadoutDTO? ReadoutDTO { get; set; } = new();
+      
+       
+        public ProcessConditionDTO? ProcessConditionDTO { get; set; } = new();
+        public ProcessFluidDTO? ProcessFluidDTO { get; set; } = new();
+        public GasketDTO? GasketDTO { get; set; } = new();
+        public MaterialDTO? InnerMaterialDTO { get; set; } = new();
+        public MaterialDTO? OuterMaterialDTO { get; set; } = new();
         public BrandDTO? BrandDTO { get; set; } = new();
         public SupplierDTO? SupplierDTO { get; set; } = new();
-
-        public int? ProcessConditionId => ProcessConditionDTO?.Id;
-        public int? ProcessFluidId => ProcessFluidDTO?.Id;
-        public int? MaterialsGroupId => MaterialsGroupDTO?.Id;
-        public int? MeasuredVariableId => MeasuredVariableDTO?.Id;
-        public int? MeasuredVariableModifierId => MeasuredVariableModifierDTO?.Id;
-        public int? DeviceFunctionId => DeviceFunctionDTO?.Id;
-        public int? DeviceFunctionModifierId => DeviceFunctionModifierDTO?.Id;
-        public int? ReadoutId => ReadoutDTO?.Id;
-        public int? BrandId => BrandDTO?.Id;
-        public int? SupplierId => SupplierDTO?.Id;
-
-
+        //public int? GasketId => GasketDTO?.Id == 0 ? null : GasketDTO?.Id;
+        //public int? InnerMaterialId => InnerMaterialDTO?.Id == 0 ? null : InnerMaterialDTO?.Id;
+        //public int? OuterMaterialId => OuterMaterialDTO?.Id == 0 ? null : OuterMaterialDTO?.Id;
+        //public int? ProcessConditionId => ProcessConditionDTO?.Id == 0 ? null : ProcessConditionDTO?.Id;
+        //public int? ProcessFluidId => ProcessFluidDTO?.Id == 0 ? null : ProcessFluidDTO?.Id;
+        //public int? BrandId => BrandDTO?.Id == 0 ? null : BrandDTO?.Id;
+        //public int? SupplierId => SupplierDTO?.Id == 0 ? null : SupplierDTO?.Id; 
         public string TagLetter => SetTagLetter();
 
         public string TagId => SetTagId();

@@ -32,10 +32,10 @@ namespace CPTool.Pages.Dialogs
                 if (result.Succeeded)
                 {
 
-                    Model.PurchaseOrderDTO = result.Data;
+                    Model.PurchaseOrderDTO = result.Data as PurchaseOrderDTO;
                     await TablesService.ManPurchaseOrderMWOItem.AddUpdate(Model, _cts.Token);
-                    await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrder.UpdateList();
+                    //await TablesService.ManPurchaseOrderMWOItem.UpdateList();
+                    await TablesService.ManPurchaseOrder.GetList();
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace CPTool.Pages.Dialogs
                 return "PO number must start with 850";
             if (arg.Length != 10)
                 return "PO number must have ten numbers";
-            if (TablesService.ManPurchaseOrderMWOItem.List.Where(x => x.MWOItemId != Model.MWOItemDTO.Id).Any(x => x.PurchaseOrderDTO.PONumber == arg))
+            if (TablesService.ManPurchaseOrderMWOItem.List.Where(x => x.MWOItemDTO.Id != Model.MWOItemDTO.Id).Any(x => x.PurchaseOrderDTO.PONumber == arg))
                 return "PO number existing";
             return null;
 

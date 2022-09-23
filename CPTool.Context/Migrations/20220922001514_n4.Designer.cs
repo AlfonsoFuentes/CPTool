@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Context.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20220918230054_NozzleEquipment")]
-    partial class NozzleEquipment
+    [Migration("20220922001514_n4")]
+    partial class n4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -418,7 +418,7 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("EquipmentTypeSubId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MaterialsGroupId")
+                    b.Property<int?>("GasketId")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
@@ -460,6 +460,12 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("eInnerMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eOuterMaterialId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
@@ -468,13 +474,17 @@ namespace CPTool.Context.Migrations
 
                     b.HasIndex("EquipmentTypeSubId");
 
-                    b.HasIndex("MaterialsGroupId");
+                    b.HasIndex("GasketId");
 
                     b.HasIndex("ProcessConditionId");
 
                     b.HasIndex("ProcessFluidId");
 
                     b.HasIndex("SupplierId");
+
+                    b.HasIndex("eInnerMaterialId");
+
+                    b.HasIndex("eOuterMaterialId");
 
                     b.ToTable("EquipmentItems");
                 });
@@ -613,10 +623,7 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("DeviceFunctionModifierId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InnerMaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MaterialsGroupId")
+                    b.Property<int?>("GasketId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MeasuredVariableId")
@@ -630,9 +637,6 @@ namespace CPTool.Context.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OuterMaterialId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("ProcessConditionId")
                         .HasColumnType("int");
@@ -664,6 +668,12 @@ namespace CPTool.Context.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("iInnerMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("iOuterMaterialId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
@@ -672,7 +682,7 @@ namespace CPTool.Context.Migrations
 
                     b.HasIndex("DeviceFunctionModifierId");
 
-                    b.HasIndex("MaterialsGroupId");
+                    b.HasIndex("GasketId");
 
                     b.HasIndex("MeasuredVariableId");
 
@@ -685,6 +695,10 @@ namespace CPTool.Context.Migrations
                     b.HasIndex("ReadoutId");
 
                     b.HasIndex("SupplierId");
+
+                    b.HasIndex("iInnerMaterialId");
+
+                    b.HasIndex("iOuterMaterialId");
 
                     b.ToTable("InstrumentItems");
                 });
@@ -740,46 +754,6 @@ namespace CPTool.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Materials");
-                });
-
-            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GasketId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InnerMaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OuterMaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GasketId");
-
-                    b.HasIndex("InnerMaterialId");
-
-                    b.HasIndex("OuterMaterialId");
-
-                    b.ToTable("MaterialsGroup");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MeasuredVariable", b =>
@@ -903,7 +877,7 @@ namespace CPTool.Context.Migrations
                     b.Property<decimal>("BudgetPrize")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ChapterId")
+                    b.Property<int?>("ChapterId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ContingencyItemId")
@@ -1378,9 +1352,6 @@ namespace CPTool.Context.Migrations
                     b.Property<int?>("PressureId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProcessFluidId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SpecificCpId")
                         .HasColumnType("int");
 
@@ -1411,8 +1382,6 @@ namespace CPTool.Context.Migrations
                     b.HasIndex("MassFlowId");
 
                     b.HasIndex("PressureId");
-
-                    b.HasIndex("ProcessFluidId");
 
                     b.HasIndex("SpecificCpId");
 
@@ -1914,9 +1883,9 @@ namespace CPTool.Context.Migrations
                         .WithMany("EquipmentItems")
                         .HasForeignKey("EquipmentTypeSubId");
 
-                    b.HasOne("CPTool.Entities.MaterialsGroup", "MaterialsGroup")
+                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
                         .WithMany("EquipmentItems")
-                        .HasForeignKey("MaterialsGroupId");
+                        .HasForeignKey("GasketId");
 
                     b.HasOne("CPTool.Entities.ProcessCondition", "ProcessCondition")
                         .WithMany("EquipmentItems")
@@ -1930,19 +1899,33 @@ namespace CPTool.Context.Migrations
                         .WithMany("EquipmentItems")
                         .HasForeignKey("SupplierId");
 
+                    b.HasOne("CPTool.Entities.Material", "eInnerMaterial")
+                        .WithMany("EquipmentItemInnerMaterials")
+                        .HasForeignKey("eInnerMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Material", "eOuterMaterial")
+                        .WithMany("EquipmentItemOuterMaterials")
+                        .HasForeignKey("eOuterMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Brand");
 
                     b.Navigation("EquipmentType");
 
                     b.Navigation("EquipmentTypeSub");
 
-                    b.Navigation("MaterialsGroup");
+                    b.Navigation("Gasket");
 
                     b.Navigation("ProcessCondition");
 
                     b.Navigation("ProcessFluid");
 
                     b.Navigation("Supplier");
+
+                    b.Navigation("eInnerMaterial");
+
+                    b.Navigation("eOuterMaterial");
                 });
 
             modelBuilder.Entity("CPTool.Entities.EquipmentTypeSub", b =>
@@ -1970,9 +1953,9 @@ namespace CPTool.Context.Migrations
                         .WithMany("InstrumentItems")
                         .HasForeignKey("DeviceFunctionModifierId");
 
-                    b.HasOne("CPTool.Entities.MaterialsGroup", "MaterialsGroup")
+                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("MaterialsGroupId");
+                        .HasForeignKey("GasketId");
 
                     b.HasOne("CPTool.Entities.MeasuredVariable", "MeasuredVariable")
                         .WithMany("InstrumentItems")
@@ -1998,13 +1981,23 @@ namespace CPTool.Context.Migrations
                         .WithMany("InstrumentItems")
                         .HasForeignKey("SupplierId");
 
+                    b.HasOne("CPTool.Entities.Material", "iInnerMaterial")
+                        .WithMany("InstrumentItemInnerMaterials")
+                        .HasForeignKey("iInnerMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Entities.Material", "iOuterMaterial")
+                        .WithMany("InstrumentItemOuterMaterials")
+                        .HasForeignKey("iOuterMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Brand");
 
                     b.Navigation("DeviceFunction");
 
                     b.Navigation("DeviceFunctionModifier");
 
-                    b.Navigation("MaterialsGroup");
+                    b.Navigation("Gasket");
 
                     b.Navigation("MeasuredVariable");
 
@@ -2017,29 +2010,10 @@ namespace CPTool.Context.Migrations
                     b.Navigation("Readout");
 
                     b.Navigation("Supplier");
-                });
 
-            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
-                {
-                    b.HasOne("CPTool.Entities.Gasket", "Gasket")
-                        .WithMany("MaterialsGroups")
-                        .HasForeignKey("GasketId");
+                    b.Navigation("iInnerMaterial");
 
-                    b.HasOne("CPTool.Entities.Material", "InnerMaterial")
-                        .WithMany("InnerMaterials")
-                        .HasForeignKey("InnerMaterialId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("CPTool.Entities.Material", "OuterMaterial")
-                        .WithMany("OuterMaterials")
-                        .HasForeignKey("OuterMaterialId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Gasket");
-
-                    b.Navigation("InnerMaterial");
-
-                    b.Navigation("OuterMaterial");
+                    b.Navigation("iOuterMaterial");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MWO", b =>
@@ -2061,9 +2035,7 @@ namespace CPTool.Context.Migrations
 
                     b.HasOne("CPTool.Entities.Chapter", "Chapter")
                         .WithMany("MWOItems")
-                        .HasForeignKey("ChapterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChapterId");
 
                     b.HasOne("CPTool.Entities.ContingencyItem", "ContingencyItem")
                         .WithMany("MWOItems")
@@ -2187,7 +2159,7 @@ namespace CPTool.Context.Migrations
                         .HasForeignKey("PipeAccesoryId");
 
                     b.HasOne("CPTool.Entities.PipeClass", "PipeClass")
-                        .WithMany()
+                        .WithMany("Nozzles")
                         .HasForeignKey("PipeClassId");
 
                     b.HasOne("CPTool.Entities.PipeDiameter", "PipeDiameter")
@@ -2382,10 +2354,6 @@ namespace CPTool.Context.Migrations
                         .HasForeignKey("PressureId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Entities.ProcessFluid", "ProcessFluid")
-                        .WithMany("ProcessCondition")
-                        .HasForeignKey("ProcessFluidId");
-
                     b.HasOne("CPTool.Entities.Unit", "SpecificCp")
                         .WithMany("SpecificCps")
                         .HasForeignKey("SpecificCpId")
@@ -2423,8 +2391,6 @@ namespace CPTool.Context.Migrations
                     b.Navigation("MassFlow");
 
                     b.Navigation("Pressure");
-
-                    b.Navigation("ProcessFluid");
 
                     b.Navigation("SpecificCp");
 
@@ -2580,7 +2546,9 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.Gasket", b =>
                 {
-                    b.Navigation("MaterialsGroups");
+                    b.Navigation("EquipmentItems");
+
+                    b.Navigation("InstrumentItems");
 
                     b.Navigation("Nozzles");
                 });
@@ -2599,20 +2567,17 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.Material", b =>
                 {
-                    b.Navigation("InnerMaterials");
+                    b.Navigation("EquipmentItemInnerMaterials");
+
+                    b.Navigation("EquipmentItemOuterMaterials");
+
+                    b.Navigation("InstrumentItemInnerMaterials");
+
+                    b.Navigation("InstrumentItemOuterMaterials");
 
                     b.Navigation("Nozzles");
 
-                    b.Navigation("OuterMaterials");
-
                     b.Navigation("PipingItems");
-                });
-
-            modelBuilder.Entity("CPTool.Entities.MaterialsGroup", b =>
-                {
-                    b.Navigation("EquipmentItems");
-
-                    b.Navigation("InstrumentItems");
                 });
 
             modelBuilder.Entity("CPTool.Entities.MeasuredVariable", b =>
@@ -2665,6 +2630,8 @@ namespace CPTool.Context.Migrations
 
             modelBuilder.Entity("CPTool.Entities.PipeClass", b =>
                 {
+                    b.Navigation("Nozzles");
+
                     b.Navigation("PipingItems");
                 });
 
@@ -2700,8 +2667,6 @@ namespace CPTool.Context.Migrations
                     b.Navigation("InstrumentItems");
 
                     b.Navigation("PipingItems");
-
-                    b.Navigation("ProcessCondition");
                 });
 
             modelBuilder.Entity("CPTool.Entities.PurchaseOrder", b =>

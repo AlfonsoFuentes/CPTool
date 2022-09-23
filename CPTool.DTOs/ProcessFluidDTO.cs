@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace CPTool.DTOS
 {
-    public class ProcessFluidDTO : AuditableEntityDTO
+    public class ProcessFluidDTO : AuditableEntityDTO, IMapFrom<ProcessFluid>
     {
-        public List<EquipmentItemDTO>? EquipmentItemsDTO { get; set; } = new();
-        public List<InstrumentItemDTO>? InstrumentItemsDTO { get; set; } = new();
-        public List<PipingItemDTO>? PipingItemsDTO { get; set; } = new();
-        public List<ProcessConditionDTO>? ProcessConditionDTO { get; set; } = new();
+        public ProcessFluidDTO()
+        {
+
+        }
+        public List<EquipmentItemDTO>? EquipmentItemsDTO { get; set; } = null;
+        public List<InstrumentItemDTO>? InstrumentItemsDTO { get; set; } = null;
+        public List<PipingItemDTO>? PipingItemsDTO { get; set; } = null;
+        //public List<ProcessConditionDTO>? ProcessConditionDTO { get; set; } = null;
     }
 }

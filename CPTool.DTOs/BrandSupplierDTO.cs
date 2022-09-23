@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CPTool.DTOS
 {
 
-    public class BrandSupplierDTO : AuditableEntityDTO
+    public class BrandSupplierDTO : AuditableEntityDTO, IMapFrom<BrandSupplier>
     {
 
         public int? SupplierId => SupplierDTO?.Id;

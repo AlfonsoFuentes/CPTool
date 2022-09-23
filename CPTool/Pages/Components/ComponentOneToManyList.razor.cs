@@ -2,6 +2,7 @@
 
 
 
+using CPtool.ExtensionMethods;
 using System.ComponentModel.DataAnnotations;
 
 namespace CPTool.Pages.Components
@@ -112,8 +113,13 @@ namespace CPTool.Pages.Components
         {
             var result = await MasterManager.AddUpdate(dto, _cts.Token);
             if (result.Succeeded)
-                SelectedMaster = result.Data;
-            await MasterManager.UpdateList();
+            {
+                SelectedMaster = result.Data as MasterTDTO;
+                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+            }
+                
+
+          
             StateHasChanged();
             TablesService.Save -= OnSaveMaster;
             return result;
@@ -122,11 +128,17 @@ namespace CPTool.Pages.Components
         async Task<IResult<IAuditableEntityDTO>> OnSaveDetails(IAuditableEntityDTO dto)
         {
             var result = await DetailManager.AddUpdate(dto, _cts.Token);
-            await DetailManager.UpdateList();
-            await MasterManager.UpdateList();
-            SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
+            if(result.Succeeded)
+            {
+                await MasterManager.GetList();
+                SelectedMaster = await MasterManager.GetById(SelectedMaster.Id);
+                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                StateHasChanged();
+            }
+           
+           
 
-            StateHasChanged();
+          
             TablesService.Save -= OnSaveDetails;
             return result;
         }
@@ -139,7 +151,7 @@ namespace CPTool.Pages.Components
                 SelectedMaster = new();
                 var result = await MasterManager.Delete(dto.Id, _cts.Token);
 
-                await MasterManager.UpdateList();
+                ////await MasterManager.UpdateList();
                 StateHasChanged();
 
                 return result;
@@ -148,8 +160,8 @@ namespace CPTool.Pages.Components
             if (dto is DetailDTO)
             {
                 var result = await DetailManager.Delete(dto.Id, _cts.Token);
-                await DetailManager.UpdateList();
-                SelectedMaster = MasterManager.List.FirstOrDefault(x => x.Id == SelectedMaster.Id);
+                await MasterManager.GetList();
+                SelectedMaster =await  MasterManager.GetById( SelectedMaster.Id);
                 StateHasChanged();
                 return result;
 

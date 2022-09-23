@@ -3,22 +3,42 @@
 
 using CPTool.Interfaces;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CPTool.Context
 {
     public class TableContext : DbContext
     {
+        //public TableContext()
+        //{
+
+        //}
         public TableContext(DbContextOptions<TableContext> options)
             : base(options)
         {
 
 
         }
-      
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.EnableSensitiveDataLogging()
+        //      .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+        //     .UseSqlServer("Server = tcp:cptool.database.windows.net, 1433; Initial Catalog = PMTool; Persist Security Info = False; User ID = afuentesdiaz; Password = 1506Afd1974 *; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30");
+
+        //    //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+        //    //    //.UseLazyLoadingProxies()
+        //    //    .UseSqlServer("Server=LAPTOP-LQMM1A89;Database=CPToolDataContext;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True");
+
+
+        //    base.OnConfiguring(optionsBuilder);
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.InnerMaterial).WithMany(t => t.InnerMaterials).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<MaterialsGroup>().HasOne(c => c.OuterMaterial).WithMany(t => t.OuterMaterials).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eInnerMaterial).WithMany(t => t.EquipmentItemInnerMaterials).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eOuterMaterial).WithMany(t => t.EquipmentItemOuterMaterials).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iInnerMaterial).WithMany(t => t.InstrumentItemInnerMaterials).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iOuterMaterial).WithMany(t => t.InstrumentItemOuterMaterials).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleStart).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleFinish).WithMany(t => t.FinishPipingItems).OnDelete(DeleteBehavior.NoAction);

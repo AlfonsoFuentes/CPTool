@@ -7,7 +7,7 @@ namespace CPTool.Pages.Components
         
     {
         [Parameter]
-        public TDTO Model { get; set; } = new();
+        public TDTO Model { get; set; }
         [Parameter]
         public bool Disable { get; set; } = false;
       

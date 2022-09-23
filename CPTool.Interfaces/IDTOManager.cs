@@ -7,13 +7,14 @@ namespace CPTool.Interfaces
           where T : IAuditableEntity
     {
 
-
+        TDTO CreateDTO();
         List<TDTO> List { get; set; }
-        Task<IResult<TDTO>> AddUpdate(IAuditableEntityDTO dto, CancellationToken cancellationToken);
+        Task<IResult<IAuditableEntityDTO>> AddUpdate(IAuditableEntityDTO dto, CancellationToken cancellationToken);
+        Task<IResult<IAuditableEntityDTO>> AddUpdate2(IAuditableEntityDTO dto, CancellationToken cancellationToken);
         Task<IResult<int>> Delete(int id, CancellationToken cancellationToken);
         Task<IResult<int>> Delete(TDTO id, CancellationToken cancellationToken);
-        Task<IResult<TDTO>> GetById(int id);
-        Task UpdateList();
+        Task<TDTO> GetById(int id);
+        Task GetList();
        
         Func<IAuditableEntityDTO,Task<IResult<IAuditableEntityDTO>>> PriorSave { get; set; }
         Func<IAuditableEntityDTO, Task<IResult<IAuditableEntityDTO>>> PostSave { get; set; }

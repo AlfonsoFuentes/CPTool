@@ -12,11 +12,12 @@ namespace CPTool.Entities
         public  ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
 
         public PurchaseOrderStatus PurchaseOrderStatus { get; set; }
-
-        public Brand? Brand { get; set; }
-        public Supplier? Supplier { get; set; }
-        public int? SupplierId { get; set; }
         public int? BrandId { get; set; }
+        public Brand? Brand { get; set; }
+        public int? SupplierId { get; set; }
+        public Supplier? Supplier { get; set; }
+      
+        
         public string PurchaseRequisition { get; set; } = "";
 
         public DateTime POCreatedDate { get; set; }

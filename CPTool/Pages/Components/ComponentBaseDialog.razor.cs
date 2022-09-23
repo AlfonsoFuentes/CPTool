@@ -2,7 +2,7 @@
 {
     public partial class ComponentBaseDialog<TDTO> where TDTO : AuditableEntityDTO
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
 
         [Parameter]
         public RenderFragment Components { get; set; }
@@ -14,8 +14,8 @@
         public Func<Task> FuncBeforeClose { get; set; }
         [Parameter]
         public Func<Task> FuncOnInitialize { get; set; }
-
-        MudForm form { get; set; }
+        [Parameter]
+        public MudForm form { get; set; }
         [Parameter]
         public string ButtonSaveName { get; set; }
         [Parameter]
@@ -25,7 +25,7 @@
             if(FuncOnInitialize!=null) await FuncOnInitialize.Invoke(); 
            
         }
-        async Task Submit()
+        public async virtual Task Submit()
         {
             await form.Validate();
             if (form.IsValid)

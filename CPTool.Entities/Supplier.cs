@@ -16,11 +16,13 @@ namespace CPTool.Entities
 
         public string Email { get; set; } = "";
         public string ContactPerson { get; set; } = "";
-        public int? VendorCodeId { get; set; }
-        public int? TaxCodeLDId { get; set; }
+        
+       
         public int? TaxCodeLPId { get; set; }
         public TaxCodeLP? TaxCodeLP { get; set; }
+        public int? TaxCodeLDId { get; set; }
         public VendorCode? VendorCode { get; set; }
+        public int? VendorCodeId { get; set; }
         public TaxCodeLD? TaxCodeLD { get; set; }
     }
 

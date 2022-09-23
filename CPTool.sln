@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CPTool.Implementations", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CPTool.Shared", "CPTool.Shared\CPTool.Shared.csproj", "{26AB5241-2C37-4891-9F6B-00B8914C3B92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPTool.UnitsSystem", "CPTool.UnitsSystem\CPTool.UnitsSystem.csproj", "{CA6C4B3D-1A39-4267-815F-7804C103FB57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CPTool.UnitsSystem", "CPTool.UnitsSystem\CPTool.UnitsSystem.csproj", "{CA6C4B3D-1A39-4267-815F-7804C103FB57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPtool.ExtensionMethods", "CPtool.ExtensionMethods\CPtool.ExtensionMethods.csproj", "{C00ADD95-B676-42CE-8B21-DCA1332966C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CPtool.ExtensionMethods", "CPtool.ExtensionMethods\CPtool.ExtensionMethods.csproj", "{C00ADD95-B676-42CE-8B21-DCA1332966C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

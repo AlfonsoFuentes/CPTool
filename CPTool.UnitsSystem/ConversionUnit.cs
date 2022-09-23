@@ -8,7 +8,7 @@ namespace CPTool.UnitsSystem
 {
     public class UnitLess : Amount
     {
-        public UnitLess() : this(0)
+        public UnitLess(Unit u) : base(0,u)
         {
 
         }
@@ -32,7 +32,7 @@ namespace CPTool.UnitsSystem
         {
 
         }
-        public Length(Unit u) : this(0,u)
+        public Length(Unit u) : this(0, u)
         {
 
         }
@@ -227,7 +227,7 @@ namespace CPTool.UnitsSystem
         {
 
         }
-        public Temperature( Unit u) : this(0, u)
+        public Temperature(Unit u) : this(0, u)
         {
 
         }
@@ -384,7 +384,7 @@ namespace CPTool.UnitsSystem
         {
 
         }
-        public DropPressure(double dvalue) : base(dvalue, DropPressureUnits.psi)
+        public DropPressure(double dvalue) : base(dvalue, PressureDropUnits.psi)
         {
 
         }
@@ -403,7 +403,7 @@ namespace CPTool.UnitsSystem
         {
 
         }
-        public DropPressureLength(double dvalue) : base(dvalue, DropPressureLengthUnits.psi_100ft)
+        public DropPressureLength(double dvalue) : base(dvalue, PressureDropLengthUnits.psi_100ft)
         {
 
         }

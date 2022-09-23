@@ -2,9 +2,9 @@
 
 namespace CPTool.DTOS
 {
-    public class DownPaymentDTO : AuditableEntityDTO
+    public class DownPaymentDTO : AuditableEntityDTO, IMapFrom<DownPayment>
     {
-        public int? PurchaseOrderId => PurchaseOrderDTO?.Id;
+       
         public PurchaseOrderDTO? PurchaseOrderDTO { get; set; } = new();
         public string? ManagerEmail { get; set; } = "gabriel_perez@colpal.com";
 

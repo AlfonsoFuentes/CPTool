@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 namespace CPTool.DTOS
 {
     
-    public class GasketDTO : AuditableEntityDTO
+    public class GasketDTO : AuditableEntityDTO, IMapFrom<Gasket>
     {
-        public List<MaterialsGroupDTO>? MaterialsGroupDTOs { get; set; } = new();
+        public List<InstrumentItem>? InstrumentItemDTOs { get; set; } = null!;
+        public List<EquipmentItemDTO>? EquipmentItemDTOs { get; set; } = null!;
+        public List<NozzleDTO>? NozzlesDTO { get; set; } = null!;
 
     }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.DTOS
 {
-    public class UnitaryBasePrizeDTO  :AuditableEntityDTO
+    public class UnitaryBasePrizeDTO  :AuditableEntityDTO, IMapFrom<UnitaryBasePrize>
     {
         public  List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
     }

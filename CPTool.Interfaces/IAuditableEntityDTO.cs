@@ -14,7 +14,12 @@ namespace CPTool.Interfaces
         string? Name { get; set; }
 
         string? Description { get; set; }
-       
+
+        Func<IAuditableEntityDTO, CancellationToken, Task<IResult<IAuditableEntityDTO>>>? SaveObject { get; set; }
+
+        Func<IAuditableEntityDTO, IAuditableEntityDTO>? TransferDataToObject { get; set; }
+
+        void OnSubscribeTransferData();
 
     }
 }

@@ -2,8 +2,8 @@
 {
     public partial class MaterialsComponent
     {
-        [Parameter]
-        public MaterialsGroupDTO Model { get; set; } 
+        //[Parameter]
+        ////public MaterialsGroupDTO Model { get; set; } 
         private string ValidateGasket(string arg)
         {
             if (arg == null || arg == "")
@@ -13,13 +13,7 @@
 
             return null;
         }
-        async Task UpdateGasket()
-        {
-            await TablesService.ManGasket.UpdateList();
-
-            StateHasChanged();
-
-        }
+        
         private string ValidateMaterial(string arg)
         {
             if (arg == null || arg == "")
@@ -29,12 +23,12 @@
 
             return null;
         }
-        async Task UpdateMaterial()
-        {
-            await TablesService.ManMaterial.UpdateList();
+        //async Task UpdateMaterial()
+        //{
+        //    //await TablesService.ManMaterial.UpdateList();
 
-            StateHasChanged();
+        //    StateHasChanged();
 
-        }
+        //}
     }
 }

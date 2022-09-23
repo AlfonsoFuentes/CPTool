@@ -4,33 +4,33 @@ namespace CPTool.Entities
 {
     public class InstrumentItem : AuditableEntity
     {
+        public int? ProcessConditionId { get; set; }
         public ProcessCondition? ProcessCondition { get; set; }
+        public int? ProcessFluidId { get; set; }
         public ProcessFluid? ProcessFluid { get; set; }
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
         public  ICollection<MWOItem>? MWOItems { get; set; } = null!;
-        public MaterialsGroup? MaterialsGroup { get; set; }
-        public MeasuredVariable? MeasuredVariable { get; set; }
-        public MeasuredVariableModifier? MeasuredVariableModifier { get; set; }
-        public DeviceFunction? DeviceFunction { get; set; }
-        public DeviceFunctionModifier? DeviceFunctionModifier { get; set; }
-        public Readout? Readout { get; set; }
-        public Brand? Brand { get; set; }
-        public Supplier? Supplier { get; set; }
-
-      
-        public int? ProcessConditionId { get; set; }
-        public int? ProcessFluidId { get; set; }
-        public int? MaterialsGroupId { get; set; }
-        public int? InnerMaterialId { get; set; }
-        public int? OuterMaterialId { get; set; }
+        public int? GasketId { get; set; }
+        public Gasket? Gasket { get; set; } = null!;
+        public int? iInnerMaterialId { get; set; }
+        public Material? iInnerMaterial { get; set; } = null!;
+        public int? iOuterMaterialId { get; set; }
+        public Material? iOuterMaterial { get; set; } = null!;
         public int? MeasuredVariableId { get; set; }
+        public MeasuredVariable? MeasuredVariable { get; set; }
         public int? MeasuredVariableModifierId { get; set; }
+        public MeasuredVariableModifier? MeasuredVariableModifier { get; set; }
         public int? DeviceFunctionId { get; set; }
+        public DeviceFunction? DeviceFunction { get; set; }
         public int? DeviceFunctionModifierId { get; set; }
+        public DeviceFunctionModifier? DeviceFunctionModifier { get; set; }
         public int? ReadoutId { get; set; }
+        public Readout? Readout { get; set; }
+
         public int? BrandId { get; set; }
+        public Brand? Brand { get; set; }
         public int? SupplierId { get; set; }
-       
+        public Supplier? Supplier { get; set; }
         public string? TagId { get; set; }
         public string? TagLetter { get; set; }
         public string? TagNumber { get; set; }

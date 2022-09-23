@@ -13,7 +13,7 @@ namespace CPTool.Entities
         public decimal Expenses { get; set; }
 
         public int MWOTypeId { get; set; }
-        public MWOType? MWOType { get; set; }
+        public MWOType MWOType { get; set; }
         public ICollection<MWOItem>? MWOItems { get; set; } 
         public ICollection<PurchaseOrder>? PurchaseOrders { get; set; }
     }

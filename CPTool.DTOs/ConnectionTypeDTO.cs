@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.DTOS
 {
-    public class ConnectionTypeDTO : AuditableEntityDTO
+    public class ConnectionTypeDTO : AuditableEntityDTO, IMapFrom<ConnectionType>
     {
         public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
     }

@@ -6,11 +6,11 @@
             <ComponentAutoComplete Label="Equipment Type"
                                TDTO="EquipmentTypeDTO"
                                T="EquipmentType"
-                               UpdateList="UpdateEquipmentType"
+                            
                                Validation="@(new Func<string, string>(ValidateEquipmentType))"
                                Manager=TablesService.ManEquipmentType
                                TableName="Equipment Type"
-                               ObjectList=TablesService.ManEquipmentType.List
+                               @bind-ObjectList=@TablesService.ManEquipmentType.List
                                @bind-Model="@Model.EquipmentTypeDTO"
                                Required=true
                                ShowDialogOverrided=ToolDialogService.ShowEquipmentType>
@@ -21,12 +21,12 @@
                                TDTO="EquipmentTypeSubDTO"
                                T="EquipmentTypeSub"
                           
-                               UpdateList="UpdateEquipmentSubType"
+                            
                                Validation="@(new Func<string, string>(ValidateEquipmentSubType))"
                                @bind-Model="@Model.EquipmentTypeSubDTO"
                                Disable=@(Model.EquipmentTypeDTO.Id==0?true:false)
                                Manager=TablesService.ManEquipmentTypeSub
-                               ObjectList=Model.EquipmentTypeDTO.EquipmentTypeSubDTOs
+                               @bind-ObjectList=Model.EquipmentTypeDTO.EquipmentTypeSubDTOs
                                ShowDialogOverrided=ToolDialogService.ShowEquipmentTypeSub
                                Parent=@Model.EquipmentTypeDTO>
 

@@ -26,8 +26,12 @@ namespace CPTool.UnitsSystem
 
         #region Constructor methods
 
+        public Amount(Unit unit)
+        {
+            this.dvalue = 0;
+            UnitName = unit.Name;
+        }
 
-        
 
         public Amount(double dvalue, Unit unit)
         {
