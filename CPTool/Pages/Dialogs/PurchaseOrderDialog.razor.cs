@@ -1,4 +1,4 @@
-﻿using CPTool.Entities;
+﻿using CPTool.Domain.Entities;
 
 namespace CPTool.Pages.Dialogs
 {
@@ -6,68 +6,71 @@ namespace CPTool.Pages.Dialogs
     {
 
 
-        [Parameter]
-        public PurchaseOrderMWOItemDTO Model { get; set; }
+        //[Parameter]
+        //public PurchaseOrderMWOItemDTO Model { get; set; }
+        //[Inject]
+        //public IGetList<PurchaseOrderDTO, PurchaseOrder> POList { get; set; }
+        //[Inject]
+        //public IDTOManager<PurchaseOrderDTO,PurchaseOrder> POManager { get; set; }
+        //[Inject]
+        //public IDTOManager<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> POItemManager { get; set; }
+        //async Task Initializeform()
+        //{
+        //    Model.PurchaseOrderDTO.USDCOP = 4000;// Math.Round(_CurrencyService.RateList["COP"], 2);
+        //    Model.PurchaseOrderDTO.USDEUR = 1;// Math.Round(_CurrencyService.RateList["EUR"], 2);
+        //    if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
+        //        Model.PurchaseOrderDTO.POEstimatedDate = DateTime.UtcNow;
+        //    Model.PurchaseOrderDTO.SetButtonNameHistory();
 
-        
+        //   await Task.CompletedTask;
 
-        async Task Initializeform()
-        {
-            Model.PurchaseOrderDTO.USDCOP = 4000;// Math.Round(_CurrencyService.RateList["COP"], 2);
-            Model.PurchaseOrderDTO.USDEUR = 1;// Math.Round(_CurrencyService.RateList["EUR"], 2);
-            if (Model.PurchaseOrderDTO.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
-                Model.PurchaseOrderDTO.POEstimatedDate = DateTime.UtcNow;
-            Model.PurchaseOrderDTO.SetButtonNameHistory();
+        //}
+        //async Task BeforeClose()
+        //{
+        //    Model.PurchaseOrderDTO.ChangeStatusPO();
 
-           await Task.CompletedTask;
+        //    if (!Model.PurchaseOrderCreated)
+        //    {
+        //        var result = await POManager.AddUpdate(Model.PurchaseOrderDTO, _cts.Token);
+        //        if (result.Succeeded)
+        //        {
 
-        }
-        async Task BeforeClose()
-        {
-            Model.PurchaseOrderDTO.ChangeStatusPO();
+        //            //Model.PurchaseOrderDTO = result.Data as PurchaseOrderDTO;
+        //            await POItemManager.AddUpdate(Model, _cts.Token);
 
-            if (!Model.PurchaseOrderCreated)
-            {
-                var result = await TablesService.ManPurchaseOrder.AddUpdate(Model.PurchaseOrderDTO, _cts.Token);
-                if (result.Succeeded)
-                {
+        //            TablesService.PurchaseOrders = await POList.Handle();
+        //        }
+        //    }
+        //}
 
-                    Model.PurchaseOrderDTO = result.Data as PurchaseOrderDTO;
-                    await TablesService.ManPurchaseOrderMWOItem.AddUpdate(Model, _cts.Token);
-                    //await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrder.GetList();
-                }
-            }
-        }
-
-        private string ValidateCurrency(Currency arg)
-        {
-            if (arg == Currency.None)
-                return "Must submit Currency";
-
-
-            return null;
-        }
-        private string ValidatePONumber(string arg)
-        {
+        //private string ValidateCurrency(Currency arg)
+        //{
+        //    if (arg == Currency.None)
+        //        return "Must submit Currency";
 
 
-            if (arg == "")
-                return "Must define PO number";
-            if (!arg.StartsWith("850"))
-                return "PO number must start with 850";
-            if (arg.Length != 10)
-                return "PO number must have ten numbers";
-            if (TablesService.ManPurchaseOrderMWOItem.List.Where(x => x.MWOItemDTO.Id != Model.MWOItemDTO.Id).Any(x => x.PurchaseOrderDTO.PONumber == arg))
-                return "PO number existing";
-            return null;
+        //    return null;
+        //}
+        //private string ValidatePONumber(string arg)
+        //{
 
-        }
-        private string ValidatePOAmount(double arg)
-        {
-            if (arg <= 0)
-                return "PO Value must be greater than zero";
-            return null;
-        }
+
+        //    if (arg == "")
+        //        return "Must define PO number";
+        //    if (!arg.StartsWith("850"))
+        //        return "PO number must start with 850";
+        //    if (arg.Length != 10)
+        //        return "PO number must have ten numbers";
+        //    if (TablesService.PurchaseOrderMWOItems.Where(x => x.MWOItemDTO.Id != Model.MWOItemDTO.Id).Any(x => x.PurchaseOrderDTO.PONumber == arg))
+        //        return "PO number existing";
+        //    return null;
+
+        //}
+        //private string ValidatePOAmount(double arg)
+        //{
+        //    if (arg <= 0)
+        //        return "PO Value must be greater than zero";
+        //    return null;
+        //}
     }
 }

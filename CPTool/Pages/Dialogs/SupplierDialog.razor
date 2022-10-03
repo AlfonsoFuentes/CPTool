@@ -3,17 +3,17 @@
 {
 
 }
-<ComponentBaseDialog TDTO="BrandSupplierDTO" Model="@Model" >
+@*<ComponentBaseDialog TDTO="BrandSupplierDTO" Model="@Model">
     <Components>
-        <ComponentSelect  TDTO="BrandDTO"
-                        Label="Brand or Service"
-                         Elements=TablesService.ManBrand.List
+        <ComponentSelect TDTO="BrandDTO"
+                         Label="Brand or Service"
+                         Elements=TablesService.Brands
                          @bind-Model=@Model.BrandDTO>
 
 
         </ComponentSelect>
 
-        
+
         <MudTextField @bind-Value="Model.SupplierDTO.Name"
                       Variant="Variant.Outlined"
                       Margin="Margin.Dense"
@@ -47,10 +47,9 @@
         <ComponentAutoComplete Label="Vendor Code"
                                TDTO="VendorCodeDTO"
                                T="VendorCode"
-                              
+                               Elements="@TablesService.VendorCodes"
+                               @bind-ElementsService="@TablesService.VendorCodes"
                                Validation="@(new Func<string, string>(ReviewVendorCode))"
-                               Manager=TablesService.ManVendorCode
-                               ObjectList=TablesService.ManVendorCode.List
                                @bind-Model=@Model.SupplierDTO.VendorCodeDTO
                                Required=true
                                TableName="Vendor Code">
@@ -60,9 +59,10 @@
         <ComponentAutoComplete Label="Tax Codel LD"
                                TDTO="TaxCodeLDDTO"
                                T="TaxCodeLD"
-                             
-                               Manager=TablesService.ManTaxCodeLD
-                               ObjectList=TablesService.ManTaxCodeLD.List
+                               Elements="@TablesService.TaxCodeLDs"
+                               @bind-ElementsService="@TablesService.TaxCodeLDs"
+
+                         
                                @bind-Model=@Model.SupplierDTO.TaxCodeLDDTO
                                Required=true
                                Validation="@(new Func<string, string>(ReviewTaxCodeLD))"
@@ -72,9 +72,9 @@
         <ComponentAutoComplete Label="Tax Codel LP"
                                TDTO="TaxCodeLPDTO"
                                T="TaxCodeLP"
-                              
-                               Manager=TablesService.ManTaxCodeLP
-                               ObjectList=TablesService.ManTaxCodeLP.List
+                               Elements="@TablesService.TaxCodeLPs"
+                               @bind-ElementsService="@TablesService.TaxCodeLPs"
+                         
                                @bind-Model=@Model.SupplierDTO.TaxCodeLPDTO
                                Validation="@(new Func<string, string>(ReviewTaxCodeLP))"
                                Required=true
@@ -82,12 +82,12 @@
 
         </ComponentAutoComplete>
     </Components>
-</ComponentBaseDialog>
+</ComponentBaseDialog>*@
 
 
 @code {
 
     public IMask mask1 = new RegexMask(@"^[0-9]\d{0,4}$");
-  
+
     bool test = true;
 }

@@ -1,74 +1,95 @@
-﻿using CPTool.Interfaces;
+﻿
+
 using CPTool.Pages.Classes;
+using CPTool.Services;
+using MediatR;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
-namespace CPTool.Pages.Components
-{
-    public partial class ComponentSimpleList<TDTO, T> : CancellableComponent, IDisposable
-        where TDTO : AuditableEntityDTO, new()
-        where T : AuditableEntity, new()
-    {
-        [Parameter]
-        public IDTOManager<TDTO, T> Manager { get; set; }
-        [Parameter]
-        public Func<TDTO, string, bool> SearchFunc { get; set; } = null;
-        [Parameter]
-        public List<TDTO> Elements { get; set; } = new();
-        [Parameter]
-        public EventCallback<List<TDTO>> ElementsChanged { get; set; }
-        ComponentTableList<TDTO, T> table;
-        TDTO Selected = new();
-        [Parameter]
-        public string TableName { get; set; }
+namespace CPTool.Pages.Components;
 
-        [Parameter]
-        public Func<TDTO, Task<DialogResult>> OnShowDialogOverrided { get; set; }
-        [Parameter]
-        public RenderFragment ContextTh { get; set; }
-        [Parameter]
-        public RenderFragment<TDTO> ContextTd { get; set; }
+//public partial class ComponentSimpleList<TCreate, TUpdate, TDelete, TList> : CancellableComponent
+//    where TCreate : CreateCommand, new()
+//    where TUpdate : UpdateCommand, new()
+//    where TDelete : DeleteCommand, new()
+//    where TList : ListCommand, new()
+//{
+//    [Inject]
+//    public IMediator? mediator { get; set; }
 
-        protected override void OnInitialized()
-        {
-            if (Elements == null) Elements = Manager.List;
-            TablesService.Save += OnSave;
-            TablesService.Delete += OnDelete;
-            base.OnInitialized();
-        }
-        async Task<DialogResult> ShowDialogOverrided(TDTO dto)
-        {
+//    [Parameter]
+//    public Func<UpdateCommand, string, bool> SearchFunc { get; set; } = null!;
+//    [Parameter]
 
-            return OnShowDialogOverrided == null ? await ToolDialogService.ShowDialogName<TDTO>(dto) : await OnShowDialogOverrided.Invoke(dto);
+//    public List<UpdateCommand> Elements { get; set; } = new();
+//    [Parameter]
+//    public EventCallback<List<UpdateCommand>> ElementsChanged { get; set; }
+//    UpdateCommand Selected = new();
+//    [Parameter]
+//    public string TableName { get; set; }
+
+//    [Parameter]
+//    public Func<Commands, Task<DialogResult>> OnShowDialogOverrided { get; set; }
+//    [Parameter]
+//    public RenderFragment ContextTh { get; set; }
+//    [Parameter]
+//    public RenderFragment<UpdateCommand> ContextTd { get; set; }
+
+//    protected override void OnInitialized()
+//    {
 
 
-        }
+//        base.OnInitialized();
+//    }
+//    async Task OnAdd()
+//    {
+//        TCreate model = new();
+//        //var result = OnShowDialogOverrided == null ? await ToolDialogService.ShowDialogName<TCreate>(model) : await OnShowDialogOverrided.Invoke(model);
 
-        async Task<IResult<IAuditableEntityDTO>> OnSave(IAuditableEntityDTO dto)
-        {
-            var result = await Manager.AddUpdate(dto as TDTO, _cts.Token);
+//        //if (!result.Cancelled)
+//        //{
+//        //    var result2 = await mediator!.Send(result.Data as TCreate, _cts.Token);
+//        //    if (result2.Succeeded)
+//        //    {
+//        //        //Elements = await GetList.Handle();
+//        //        await ElementsChanged.InvokeAsync(Elements);
 
-            var list = Manager.List;
-            StateHasChanged();
-            return result;
+//        //    }
+
+//        //    StateHasChanged();
+//        //}
+
+//    }
+//    async Task OnEdit(TUpdate model)
+//    {
+
+//        //var result = OnShowDialogOverrided == null ? await ToolDialogService.ShowDialogName<TUpdate>(model) : await OnShowDialogOverrided.Invoke(model);
+
+//        //if (!result.Cancelled)
+//        //{
+//        //    var result2 = await mediator!.Send(result.Data as TUpdate, _cts.Token);
+//        //    if (result2.Succeeded)
+//        //    {
+//        //        //Elements = await GetList.Handle();
+//        //        await ElementsChanged.InvokeAsync(Elements);
+//        //    }
+
+//        //    StateHasChanged();
+//        //}
+
+//    }
+
+//    async Task OnDelete(TUpdate dto)
+//    {
+//        //var result2 = await Manager.Delete(dto as TDTO, _cts.Token);
+//        //if (result2.Succeeded)
+//        //{
+//        //    Elements = await GetList.Handle();
+//        //    await ElementsChanged.InvokeAsync(Elements);
+//        //}
+
+//        StateHasChanged();
 
 
-
-        }
-        async Task<IResult<int>> OnDelete(IAuditableEntityDTO dto)
-        {
-            var result = await Manager.Delete(dto.Id, _cts.Token);
-            var list = Manager.List;
-            StateHasChanged();
-            return result;
-
-
-
-        }
-        void IDisposable.Dispose()
-        {
-            TablesService.Save -= OnSave;
-            TablesService.Delete -= OnDelete;
-
-
-        }
-    }
-}
+//    }
+//}

@@ -28,7 +28,7 @@ namespace CPTool.Services
 
             return new();
         }
-        Dictionary<string, double> _RateList = null;
+        Dictionary<string, double> _RateList = null!;
         public Dictionary<string, double> RateList
         {
             get
@@ -59,10 +59,10 @@ namespace CPTool.Services
     public class Rates
     {
         [JsonProperty("rates")]
-        public Dictionary<string, double> RateList { get; set; }
+        public Dictionary<string, double> RateList { get; set; } = null!;
 
         [JsonProperty("base")]
-        public string Base { get; set; }
+        public string Base { get; set; } = null!;
 
         [JsonProperty("date")]
         public DateTimeOffset Date { get; set; }

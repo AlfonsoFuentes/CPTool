@@ -6,7 +6,7 @@ namespace CPTool.DTOS
 {
     public class TaxesItemDTO : AuditableEntityDTO, IMapFrom<TaxesItem>
     {
-        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
+        public List<MWOItemDTO>? MWOItemsDTO { get; set; } = new();
     }
 
 

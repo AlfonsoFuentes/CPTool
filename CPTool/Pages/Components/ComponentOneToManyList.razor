@@ -3,22 +3,26 @@
 @typeparam DetailDTO
 @typeparam DetailT
 @inherits CancellableComponent
+@*
 <PageTitle>@PageTitle</PageTitle>
 <MudGrid>
 
     <MudItem xs="12" sm="@mastersm">
-        <ComponentTableList @ref="@tableMaster"
+        <ComponentTableList 
                             ShowAddButton=@ShowAddButtonMaster
                             SearchFunc=@SearchFuncMaster
                             TDTO="MasterTDTO" T="MasterT"
                             TableName=@MasterTableName
-                            OnShowDialogOverrided="ShowDialogMaster"
+                            OnAdd="OnAddMaster"
+                            OnEdit="OnEditMaster"
+                            OnDelete="OnDeleteMaster"
                             SelectedItem="@SelectedMaster"
                             Elements="@Masters"
                             OnRowClickEvent="RowMasterClicked">
             <OtherButtons>
                 @if (OtherButtonMaster != null)
                     @OtherButtonMaster
+
 
                 </OtherButtons>
 
@@ -28,6 +32,7 @@
                     @if (ContextThMaster != null)
                     @ContextThMaster
 
+
                 </ContextTh>
                 <ContextTd>
                     <MudTd DataLabel="Id">@context.Id</MudTd>
@@ -35,25 +40,30 @@
                     @if (ContextTdMaster != null)
                     @ContextTdMaster(context)
 
+
                 </ContextTd>
             </ComponentTableList>
         </MudItem>
 
 
         <MudItem xs="12" sm="@detailsm">
-            <ComponentTableList @ref="@tableDetail"
+            <ComponentTableList
                             TDTO="DetailDTO"
                             T="DetailT"
                             SearchFunc=@SearchFuncDetail
+                            DisableAddButton=@(SelectedMaster.Id==0?true:false)
                             ShowAddButton=@ShowAddButtonDetail
                             TableName=@DetailTableName
-                            OnShowDialogOverrided="ShowDialogDetail"
+                            OnAdd="OnAddDetail"
+                            OnEdit="OnEditDetail"
+                            OnDelete="OnDeleteDetail"
                             Elements="@Details"
                             OnRowClickEvent="RowDetailClicked"
                             SelectedItem="@SelectedDetail">
                 <OtherButtons>
                     @if (OtherButtonDetail != null)
                     @OtherButtonDetail
+
 
                 </OtherButtons>
 
@@ -65,6 +75,7 @@
 
 
 
+
                 </ContextTh>
                 <ContextTd>
                     <MudTd DataLabel="Id">@context.Id</MudTd>
@@ -73,11 +84,12 @@
                     @ContextTdDetail(context)
 
 
+
                 </ContextTd>
             </ComponentTableList>
         </MudItem>
 
-    </MudGrid>
+    </MudGrid>*@
     @code {
     [Parameter]
     public bool ShowAddButtonMaster { get; set; } = true;

@@ -1,0 +1,56 @@
+﻿<MudDialog DisableSidePadding="true">
+    <DialogContent>
+        <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+            <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                <CascadingValue Value="this">
+
+
+                    <MudForm Model="Model" @ref="form">
+                        <SelectComponent T="AddEditSupplierCommand"
+                                         Elements=@Suppliers
+                                         SelectionChanged="SelectionSupplier"
+                                         Label="Supplier"
+                                         Value="Model.SupplierCommand.Id">
+
+
+                        </SelectComponent>
+                        <MudSelect Dense="true"
+                                   Margin="Margin.Dense"
+                                   T="BrandType"
+                                   Label="Select Type Brand or Service"
+                                   AnchorOrigin="Origin.BottomCenter"
+                                   @bind-Value=@Model.BrandCommand.BrandType
+                                   Validation="@(new Func<BrandType, string>(ValidateBrandType))"
+                                   Variant="Variant.Outlined">
+                            @foreach (var item in Enum.GetValues<BrandType>())
+                            {
+                                <MudSelectItem Value="item">@item</MudSelectItem>
+                            }
+
+                        </MudSelect>
+                        @if (Model.BrandCommand.BrandType != BrandType.None)
+                        {
+                            <MudTextField @bind-Value="Model.BrandCommand.Name"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      Immediate="true"
+                                      Required=true
+                                      Validation="@(new Func<string, string>(ValidateBrandName))"
+                                      Label=@Model.BrandCommand.BrandType.ToString() />
+                        }
+                    </MudForm>
+                </CascadingValue>
+
+            </MudPaper>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+
+}

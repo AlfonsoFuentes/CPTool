@@ -1,0 +1,48 @@
+﻿
+
+@if (ShowAddButton)
+{
+    <ManyToManyComponent TMasterDetail="AddEditBrandSupplierCommand"
+                     TMaster="AddEditBrandCommand" TDetail="AddEditSupplierCommand"
+                     TMasterList="GetBrandListQuery" TDetailList="GetSupplierListQuery"
+                     TDeleteMaster="DeleteBrandCommand" TDeleteDetail="DeleteSupplierCommand"
+                     @bind-SelectedDetail="@SelectedSupplier"
+                     @bind-SelectedMaster="@SelectedBrand"
+                     @bind-ElementsMasters=@ElementsBrand
+                     @bind-ElementsDetails=@ElementsSupplier
+                     OnShowDialogMaster="ToolDialogService.ShowBrandDialog"
+                     OnShowDialogDetails="ToolDialogService.ShowSupplierDialog"
+                     OnRowClickedMaster="RowClickedMaster" OnRowClickedDetails="RowClickedDetails"
+                     >
+        <MasterContextTh>
+
+        </MasterContextTh>
+        <MasterContextTd>
+
+        </MasterContextTd>
+        <DetailContextTh>
+
+        </DetailContextTh>
+        <DetailContextTd>
+
+        </DetailContextTd>
+    </ManyToManyComponent>
+
+
+
+
+
+}
+
+@code {
+
+
+
+
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}
+@*   SearchFuncMaster="FilterFuncEqu" SearchFuncDetails="FilterFuncEquSub"*@

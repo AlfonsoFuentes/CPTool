@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace CPTool.DTOS
 {
    
-    public class EquipmentTypeDTO : AuditableEntityDTO, IMapFrom<EquipmentType>
+    public class EquipmentTypeDTO : AuditableEntityDTO, IAuditableEntityDTO
     {
 
         public string? TagLetter { get; set; } = "";
-        public  List<EquipmentItemDTO>? EquipmentItemDTOs { get; set; } = new();
-        public List<EquipmentTypeSubDTO>? EquipmentTypeSubDTOs
+        public  List<EquipmentItemDTO>? EquipmentItemsDTO { get; set; } = new();
+        public List<EquipmentTypeSubDTO>? EquipmentTypeSubsDTO
         {
             get
             {

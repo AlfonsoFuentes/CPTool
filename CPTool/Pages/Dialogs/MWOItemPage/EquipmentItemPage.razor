@@ -1,41 +1,38 @@
 ﻿@inherits CancellableComponent
 @implements IDisposable
-
-    <MudGrid>
-        <MudItem xs="12" sm="6">
-            <ComponentAutoComplete Label="Equipment Type"
+@*
+<MudGrid>
+    <MudItem xs="12" sm="6">
+        <ComponentAutoComplete Label="Equipment Type"
                                TDTO="EquipmentTypeDTO"
                                T="EquipmentType"
-                            
                                Validation="@(new Func<string, string>(ValidateEquipmentType))"
-                               Manager=TablesService.ManEquipmentType
                                TableName="Equipment Type"
-                               @bind-ObjectList=@TablesService.ManEquipmentType.List
+                               @bind-ElementsService=@TablesService.EquipmentTypes
+                               Elements="@TablesService.EquipmentTypes"
                                @bind-Model="@Model.EquipmentTypeDTO"
                                Required=true
                                ShowDialogOverrided=ToolDialogService.ShowEquipmentType>
 
-            </ComponentAutoComplete>
-            <ComponentAutoComplete Label="Sub Equipment Type"
+        </ComponentAutoComplete>
+        <ComponentAutoComplete Label="Sub Equipment Type"
                                TableName="Sub Equipment Type"
                                TDTO="EquipmentTypeSubDTO"
                                T="EquipmentTypeSub"
-                          
-                            
+                               @bind-ElementsService=@TablesService.EquipmentTypeSubs
+                               Elements=@Model.EquipmentTypeDTO.EquipmentTypeSubsDTO
                                Validation="@(new Func<string, string>(ValidateEquipmentSubType))"
                                @bind-Model="@Model.EquipmentTypeSubDTO"
                                Disable=@(Model.EquipmentTypeDTO.Id==0?true:false)
-                               Manager=TablesService.ManEquipmentTypeSub
-                               @bind-ObjectList=Model.EquipmentTypeDTO.EquipmentTypeSubDTOs
                                ShowDialogOverrided=ToolDialogService.ShowEquipmentTypeSub
                                Parent=@Model.EquipmentTypeDTO>
 
-            </ComponentAutoComplete>
+        </ComponentAutoComplete>
 
 
 
 
-            <MudTextField T="string" @bind-Value="Model.TagNumber"
+        <MudTextField T="string" @bind-Value="Model.TagNumber"
                       Required="true"
                       Immediate="true"
                       Label="Tag Number"
@@ -43,54 +40,52 @@
                       Variant="Variant.Outlined"
                       RequiredError="Must have Tag Number"></MudTextField>
 
-            <MudTextField T="string" Value="@Model.TagId"
+        <MudTextField T="string" Value="@Model.TagId"
                       Immediate="true"
                       Disabled="true"
                       Margin="Margin.Dense"
                       Variant="Variant.Outlined"
                       Label="Tag"></MudTextField>
-            
-        </MudItem>
-        <MudItem xs="12" sm="6">
 
-            <ComponentSelect TDTO="BrandDTO"
-                        
+    </MudItem>
+    <MudItem xs="12" sm="6">
+
+        <ComponentSelect TDTO="BrandDTO"
                          Label="Brand or Service"
                          PostEvent=OnBrandValueChanged
-                         Elements=TablesService.ManBrand.List
+                         Elements=TablesService.Brands
                          @bind-Model=@Model.BrandDTO>
 
 
-            </ComponentSelect>
-            <ComponentSelect TDTO="SupplierDTO"
-                        
+        </ComponentSelect>
+        <ComponentSelect TDTO="SupplierDTO"
                          Label="Supplier"
                          Disable="@(Model.BrandDTO.Id==0?true:false)"
-                         Elements=@Model.BrandDTO.BrandSupplierDTOs.Select(x=>x.SupplierDTO).ToList()
+                         Elements=@Model.BrandDTO.BrandSuppliersDTO.Select(x=>x.SupplierDTO).ToList()
                          @bind-Model=@Model.SupplierDTO>
 
 
-            </ComponentSelect>
+        </ComponentSelect>
 
 
-            <MudTextField T="string" @bind-Value="Model.Model"
+        <MudTextField T="string" @bind-Value="Model.Model"
                       Immediate="true"
                       Label="Model"
                       Margin="Margin.Dense"
                       Variant="Variant.Outlined"></MudTextField>
-            <MudTextField T="string" @bind-Value="Model.Reference"
+        <MudTextField T="string" @bind-Value="Model.Reference"
                       Immediate="true"
                       Label="Reference"
                       Margin="Margin.Dense"
                       Variant="Variant.Outlined"></MudTextField>
-            <MudTextField T="string" @bind-Value="Model.SerialNumber"
+        <MudTextField T="string" @bind-Value="Model.SerialNumber"
                       Immediate="true"
                       Label="Serial Number"
                       Margin="Margin.Dense"
                       Variant="Variant.Outlined"></MudTextField>
-        
-        </MudItem>
-    </MudGrid>
+
+    </MudItem>
+</MudGrid>*@
 
 
 @code {

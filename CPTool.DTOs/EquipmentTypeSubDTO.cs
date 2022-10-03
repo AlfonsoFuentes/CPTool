@@ -10,7 +10,7 @@ namespace CPTool.DTOS
        
         public EquipmentTypeDTO? EquipmentTypeDTO { get => (Master as EquipmentTypeDTO)!; set => Master = value; } 
         public string? TagLetter { get; set; } = "";
-        public  List<EquipmentItemDTO> EquipmentItemDTOs { get; set; } = new();
+        public  List<EquipmentItemDTO> EquipmentItemsDTO { get; set; } = new();
 
 
 

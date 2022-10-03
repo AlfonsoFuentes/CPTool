@@ -1,5 +1,5 @@
 ﻿@inherits CancellableComponent
-<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize=ProperInitialize  >
+@*<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize=ProperInitialize  >
     <Components>
         <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.Name</MudField>
         <MudField Label="Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.PONumber</MudField>
@@ -7,10 +7,10 @@
         <ComponentSelect TDTO="MWOItemDTO"
                         
                          Label="MWO Item"
-                         Elements=MWOItemDTOs
+                         Elements=MWOItemsDTO
                          @bind-Model=@Model.MWOItemDTO></ComponentSelect>
     </Components>
-</ComponentBaseDialog>
+</ComponentBaseDialog>*@
 
 @code {
    

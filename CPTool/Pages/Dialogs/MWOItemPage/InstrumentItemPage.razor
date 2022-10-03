@@ -1,40 +1,40 @@
 ﻿@inherits CancellableComponent
 @implements IDisposable
 
-    <MudGrid>
+   @* <MudGrid>
         <MudItem xs="12" sm="6">
         <ComponentSelect TDTO="MeasuredVariableDTO"
                         
                          Label="Measured Variable"
-                         Elements=TablesService.ManMeasuredVariable.List
+                         Elements=TablesService.MeasuredVariables
                          @bind-Model=@Model.MeasuredVariableDTO>
 
 
         </ComponentSelect>
         <ComponentSelect TDTO="MeasuredVariableModifierDTO"
                          Label="Measured Variable Modifier"
-                         Elements=TablesService.ManMeasuredVariableModifier.List
+                         Elements=TablesService.MeasuredVariableModifiers
                          @bind-Model=@Model.MeasuredVariableModifierDTO>
 
 
         </ComponentSelect>
          <ComponentSelect TDTO="ReadoutDTO"
                          Label="Readout"
-                         Elements=TablesService.ManReadout.List
+                         Elements=TablesService.Readouts
                          @bind-Model=@Model.ReadoutDTO>
 
 
         </ComponentSelect>
         <ComponentSelect TDTO="DeviceFunctionDTO"
                          Label="Device function"
-                         Elements=TablesService.ManDeviceFunction.List
+                         Elements=TablesService.DeviceFunctions
                          @bind-Model=@Model.DeviceFunctionDTO>
 
 
         </ComponentSelect>
         <ComponentSelect TDTO="DeviceFunctionModifierDTO"
                          Label="Device function Modifier"
-                         Elements=TablesService.ManDeviceFunctionModifier.List
+                         Elements=TablesService.DeviceFunctionModifiers
                          @bind-Model=@Model.DeviceFunctionModifierDTO>
 
 
@@ -55,7 +55,7 @@
                         
                          Label="Brand or Service"
                          PostEvent=OnBrandValueChanged
-                         Elements=TablesService.ManBrand.List
+                         Elements=TablesService.Brands
                          @bind-Model=@Model.BrandDTO>
 
 
@@ -64,7 +64,7 @@
                        
                          Label="Supplier"
                          Disable="@(Model.BrandDTO.Id==0?true:false)"
-                         Elements=@Model.BrandDTO.BrandSupplierDTOs.Select(x=>x.SupplierDTO).ToList()
+                         Elements=@Model.BrandDTO.BrandSuppliersDTO.Select(x=>x.SupplierDTO).ToList()
                          @bind-Model=@Model.SupplierDTO>
 
 
@@ -89,7 +89,7 @@
         
         </MudItem>
     </MudGrid>
-
+*@
 
 @code {
 

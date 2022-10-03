@@ -8,7 +8,7 @@ namespace CPTool.DTOS
     
     public class ContingencyItemDTO : AuditableEntityDTO, IMapFrom<ContingencyItem>
     {
-        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
+        public List<MWOItemDTO>? MWOItemsDTO { get; set; } = new();
     }
 
 

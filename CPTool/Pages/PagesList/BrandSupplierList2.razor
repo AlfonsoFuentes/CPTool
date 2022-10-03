@@ -1,0 +1,72 @@
+﻿
+
+@inherits CancellableComponent
+
+@implements IDisposable
+@*
+<PageTitle>@PageTitle</PageTitle>
+<MudGrid>
+
+    <MudItem xs="12" sm="@mastersm">
+        <ComponentTableList 
+                            TDTO="BrandDTO" T="Brand"
+                            TableName=@MasterTableName
+                            Elements="@Masters"
+                            OnShowDialogOverrided="ShowDialogMaster"
+                            SelectedItem="@SelectedMaster"
+                            OnRowClickEvent="RowMasterClicked">
+
+            <OtherButtons>
+                <MudTooltip Text="Restore List">
+                    <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+                </MudTooltip>
+            </OtherButtons>
+            <ContextTh>
+                <MudTh Style="width:40px">#</MudTh>
+                <MudTh>Name</MudTh>
+
+
+            </ContextTh>
+            <ContextTd>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+
+            </ContextTd>
+        </ComponentTableList>
+    </MudItem>
+
+
+    <MudItem xs="12" sm="@detailsm">
+        <ComponentTableList 
+                            TDTO="SupplierDTO"
+                            T="Supplier"
+                            TableName=@DetailTableName
+                            OnShowDialogOverrided="ShowDialogDetail"
+                            Elements="@Details"
+                            OnRowClickEvent="RowDetailClicked"
+                            SelectedItem="@SelectedDetail">
+
+            <OtherButtons>
+                <MudTooltip Text="Restore List">
+                    <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+                </MudTooltip>
+            </OtherButtons>
+            <ContextTh>
+                <MudTh Style="width:40px">#</MudTh>
+                <MudTh>Name</MudTh>
+
+            </ContextTh>
+            <ContextTd>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+
+            </ContextTd>
+        </ComponentTableList>
+    </MudItem>
+
+</MudGrid>*@
+@code {
+
+}
+@*OnShowDialogDetail=ToolDialogService.ShowDialogMWOItem
+                        OnShowDialogMaster=ToolDialogService.ShowDialogMWO*@

@@ -1,0 +1,17 @@
+﻿global using CPTool.Identity.Configuration;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore;
+global using CPTool.Application.Contracts;
+global using CPTool.Application.Models.Identity;
+global using CPTool.Identity.Models;
+global using CPTool.Identity.Services;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.Extensions.Options;
+global using CPTool.Identity.Constants;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;

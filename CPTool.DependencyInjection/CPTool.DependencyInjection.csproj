@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -14,8 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CPTool.Context\CPTool.Context.csproj" />
-    <ProjectReference Include="..\CPTool.DTOs\CPTool.DTOS.csproj" />
     <ProjectReference Include="..\CPTool.Implementations\CPTool.Implementations.csproj" />
     <ProjectReference Include="..\CPTool.Interfaces\CPTool.Interfaces.csproj" />
   </ItemGroup>

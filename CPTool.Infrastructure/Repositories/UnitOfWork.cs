@@ -1,0 +1,47 @@
+﻿
+namespace CPTool.Infrastructure.Repositories
+{
+    public class UnitOfWork : IUnitOfWork
+    {
+        private Hashtable _repository = null!;
+        private readonly TableContext _context;
+       
+
+     
+
+        public UnitOfWork(TableContext context)
+        {
+
+            _context = context;
+        }
+       
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel
+        {
+            if (_repository == null)
+            {
+                _repository = new();
+            }
+            var type = typeof(TEntity);
+            if (!_repository.ContainsKey(type))
+            {
+                var repositorytype = typeof(RepositoryBase<>);
+                var repositoryInstance = Activator.CreateInstance(
+                    repositorytype.MakeGenericType(typeof(TEntity)), _context);
+                _repository.Add(type, repositoryInstance);
+            }
+            var response = (IRepository<TEntity>)_repository[type]!;
+            return response;
+        }
+
+        public async Task<int> Complete()
+        {
+            return await _context.SaveChangesAsync();
+
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+    }
+}

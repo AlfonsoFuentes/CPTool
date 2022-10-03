@@ -1,27 +1,37 @@
-﻿@typeparam TDTO
-@typeparam T
+﻿@typeparam TCreate
+@typeparam TUpdate
+@typeparam TDelete
+@typeparam TList
 @inherits CancellableComponent
-
+@*
 <PageTitle>@TableName</PageTitle>
-<ComponentTableList @ref="table" TDTO="TDTO"
-                    SelectedItem="@Selected" 
+<ComponentTableList TDTO="TDTO"
+                    SelectedItem="@Selected"
                     T="T"
                     SearchFunc=@SearchFunc
                     ShowAddButton=@ShowAddButton
+                    OnAdd="OnAdd"
+                    OnEdit="OnEdit"
                     TableName=@TableName
+                    OnDelete="OnDelete"
                     Elements="@Elements"
-                    OnShowDialogOverrided=ShowDialogOverrided>
+                    >
     <ContextTh>
         <MudTh Style="width:40px">#</MudTh>
         <MudTh>Name</MudTh>
-        @ContextTh
-    </ContextTh>
-    <ContextTd>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        @ContextTd(context)
-    </ContextTd>
-</ComponentTableList>
+        @if (ContextTh != null)
+            @ContextTh
+
+        </ContextTh>
+        <ContextTd>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            @if (ContextTh != null)
+            @ContextTd(context)
+
+
+        </ContextTd>
+    </ComponentTableList>*@
 
 @code {
     [Parameter]

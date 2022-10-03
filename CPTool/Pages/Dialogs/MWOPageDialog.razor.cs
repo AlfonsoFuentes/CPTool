@@ -3,60 +3,60 @@
 
 
 using AutoMapper;
-using CPTool.Entities;
+
 using CPTool.Shared;
 using static MudBlazor.FilterOperator;
 
 namespace CPTool.Pages.Dialogs
 {
-    public partial class MWOPageDialog : CancellableComponent
-    {
+    //public partial class MWOPageDialog : CancellableComponent
+    //{
       
 
 
 
-        [Parameter]
-        public MWODTO Model { get; set; }
+    //    [Parameter]
+    //    public MWODTO Model { get; set; }
 
        
        
-        private string ReviewMWOType(string arg)
-        {
-            if (arg == null || arg == "")
-                return "Must submit MWO Type";
-            return null;
-        }
-        private string ReviewMWOName(string arg)
-        {
-            if (arg == null || arg == "")
-                return "Must submit MWO Name";
-            if (Model.Id == 0)
-            {
-                if (TablesService.ManMWO.List.Any(x => x.Name == arg)) return $"MWO Name: {arg} is already existing in MWO List";
-            }
-            else
-            {
-                if (TablesService.ManMWO.List.Where(x => x.Id != Model.Id).Any(x => x.Name == arg)) return $"MWO Name: {arg} is already existing in MWO List";
-            }
+    //    private string ReviewMWOType(string arg)
+    //    {
+    //        if (arg == null || arg == "")
+    //            return "Must submit MWO Type";
+    //        return null;
+    //    }
+    //    private string ReviewMWOName(string arg)
+    //    {
+    //        if (arg == null || arg == "")
+    //            return "Must submit MWO Name";
+    //        if (Model.Id == 0)
+    //        {
+    //            if (TablesService.MWOs.Any(x => x.Name == arg)) return $"MWO Name: {arg} is already existing in MWO List";
+    //        }
+    //        else
+    //        {
+    //            if (TablesService.MWOs.Where(x => x.Id != Model.Id).Any(x => x.Name == arg)) return $"MWO Name: {arg} is already existing in MWO List";
+    //        }
             
-            return null;
-        }
+    //        return null;
+    //    }
         
-        string AnyNumber(int number)
-        {
-            if (Model.Id == 0)
-            {
-                if (TablesService.ManMWO.List.Any(x => x.Number == number)) return "Number already existing";
-            }
-            else
-            {
-                if (TablesService.ManMWO.List.Where(x => x.Id != Model.Id).Any(x => x.Number == number)) return "Number already existing";
-            }
+    //    string AnyNumber(int number)
+    //    {
+    //        if (Model.Id == 0)
+    //        {
+    //            if (TablesService.MWOs.Any(x => x.Number == number)) return "Number already existing";
+    //        }
+    //        else
+    //        {
+    //            if (TablesService.MWOs.Where(x => x.Id != Model.Id).Any(x => x.Number == number)) return "Number already existing";
+    //        }
 
-            Regex extractNumberRegex = new Regex("\\d{5}$");
+    //        Regex extractNumberRegex = new Regex("\\d{5}$");
 
-            if (!extractNumberRegex.IsMatch(number.ToString())) return "Enter a valid 5 digit";
-            return null;
-        }
-    }
+    //        if (!extractNumberRegex.IsMatch(number.ToString())) return "Enter a valid 5 digit";
+    //        return null;
+    //    }
+    //}
 }

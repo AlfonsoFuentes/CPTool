@@ -1,5 +1,5 @@
 ﻿@inherits CancellableComponent
-@if (test)
+@*@if (test)
 {
     <ComponentBaseDialog @ref=@basedialog TDTO="MWOItemDTO" Model="@Model" FuncOnInitialize="OnInit" >
         <Components>
@@ -62,15 +62,15 @@
                             @switch (Model.ChapterDTO?.Id)
                             {
                                 case 4:
-                                    <ComponentSimpleList TDTO="NozzleDTO" T="Nozzle" TableName="Nozzles in Equipment" 
+                                    <ComponentTableList TDTO="NozzleDTO" T="Nozzle" TableName="Nozzles in Equipment" 
                                         OnShowDialogOverrided="ToolDialogService.ShowNozzleDialog"
-                                        Elements="@Model.EquipmentItemDTO.NozzlesDTO" Manager=TablesService.ManNozzle></ComponentSimpleList>
+                                        Elements="@Model.EquipmentItemDTO.NozzlesDTO" ></ComponentTableList>
 
                       
                                     break;
                                 case 7:
-                                    <ComponentSimpleList TDTO="NozzleDTO" T="Nozzle" TableName="Nozzles in Equipment"
-                                         Elements="@Model.InstrumentItemDTO.NozzlesDTO" Manager=TablesService.ManNozzle></ComponentSimpleList>
+                                    <ComponentTableList TDTO="NozzleDTO" T="Nozzle" TableName="Nozzles in Equipment"
+                                         Elements="@Model.InstrumentItemDTO.NozzlesDTO" ></ComponentTableList>
                                     break;
                             }
                         }
@@ -82,10 +82,10 @@
         </Components>
     </ComponentBaseDialog>
 
-}
+}*@
 
 @code {
 
-    bool test = true;
+    //bool test = true;
     //Justify _justify = Justify.Center;
 }

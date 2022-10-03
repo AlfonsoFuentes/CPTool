@@ -1,53 +1,72 @@
 ﻿@page "/mainsettings/{TableId:int}"
+@using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures.Command.Delete
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+@using CPTool.NewPages.Dialogs.BrandSupplier.List
 
 
 @switch (TableId)
 {
     case 1:
         {
-            <ComponentSimpleList TDTO="MWOTypeDTO" T="MWOType" TableName="MWO Types" Manager=TablesService.ManMWOType></ComponentSimpleList>
+
+            <SimpleListComponent TMaster="AddEditMWOTypeCommand"
+                     TDeleteMaster="DeleteMWOTypeCommand"
+                     TMasterList="GetMWOTypeListQuery"
+                     TGedById="GetByIdMWOTypeQuery"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+
+
+
+            </SimpleListComponent>
+
         }
         break;
     case 2:
         {
-            <ComponentSimpleList TDTO="UnitaryBasePrizeDTO" T="UnitaryBasePrize" TableName="Unitary Prizes" Manager=TablesService.ManUnitaryPrize></ComponentSimpleList>
+            <SimpleListComponent TMaster="AddEditUnitaryBasePrizeCommand"
+                     TDeleteMaster="DeleteUnitaryBasePrizeCommand"
+                     TMasterList="GetUnitaryBasePrizeListQuery"
+                     TGedById="GetByIdUnitaryBasePrizeQuery"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+            </SimpleListComponent>
+
+
         }
         break;
     case 3:
         {
-            <ComponentSimpleList TDTO="GasketDTO" T="Gasket" TableName="Gaskets" Manager=TablesService.ManGasket></ComponentSimpleList>
+            <SimpleListComponent TMaster="AddEditGasketCommand"
+                     TDeleteMaster="DeleteGasketCommand"
+                     TMasterList="GetGasketListQuery" TGedById="GetByIdGasketQuery"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+            </SimpleListComponent>
+
         }
         break;
     case 4:
         {
-            <ComponentSimpleList TDTO="MaterialDTO" T="Material" TableName="Materials" Manager=TablesService.ManMaterial OnShowDialogOverrided=ToolDialogService.ShowMaterialDialog></ComponentSimpleList>
+            <SimpleListComponent TMaster="AddEditMaterialCommand"
+                     TDeleteMaster="DeleteMaterialCommand"
+                     TMasterList="GetMaterialListQuery"
+                     TGedById="GetByIdMaterialQuery"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+            </SimpleListComponent>
+
         }
         break;
     case 5:
         {
-            <ComponentOneToManyList MasterTDTO="EquipmentTypeDTO"
-                        MasterT="EquipmentType"
-                        DetailDTO="EquipmentTypeSubDTO"
-                        DetailT="EquipmentTypeSub"
-                        MasterTableName="Equipment Type"
-                        DetailTableName="Sub Type"
-                        MasterManager=TablesService.ManEquipmentType
-                        DetailManager=TablesService.ManEquipmentTypeSub
-                        OnShowDialogMaster=ToolDialogService.ShowEquipmentType
-                        OnShowDialogDetail=ToolDialogService.ShowEquipmentTypeSub>
-
-            </ComponentOneToManyList>
+            <EquipmentTypeList></EquipmentTypeList>
         }
         break;
-    case 6:
+        case 6:
         {
-            <BrandSupplierList OnShowDialogDetail=ToolDialogService.ShowSupplierDialog
-                   OnShowDialogMaster=ToolDialogService.ShowBrandDialog>
-
-            </BrandSupplierList>
+           <BrandSupplierList></BrandSupplierList>
         }
         break;
-    case 7:
+    @* case 7:
         {
             <PurchaseOrderMWOItemList OnShowDialogDetail=ToolDialogService.ShowPurchaseOrderItemDialog
                           OnShowDialogMaster=ToolDialogService.ShowPurchaseOrderDialog>
@@ -58,15 +77,15 @@
         break;
     case 8:
         {
-         
+
             <DownPaymenList></DownPaymenList>
 
 
         }
-        break;
+        break;*@
 }
 @code {
     [Parameter]
     public int TableId { get; set; } = 0;
-  
+
 }

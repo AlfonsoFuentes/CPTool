@@ -12,11 +12,11 @@ namespace CPTool.DTOS
         public string? Abbreviation { get; set; }
 
 
-        public List<EquipmentItemDTO>? EquipmentItemInnerMaterialDTOs { get; set; } =null;
-        public List<EquipmentItemDTO>? EquipmentItemOuterMaterialDTOs { get; set; } = null;
+        public List<EquipmentItemDTO>? EquipmentItemInnerMaterialsDTO { get; set; } =null;
+        public List<EquipmentItemDTO>? EquipmentItemOuterMaterialsDTO { get; set; } = null;
 
-        public List<InstrumentItemDTO>? InstrumentItemInnerMaterialDTOs { get; set; } = null;
-        public List<InstrumentItemDTO>? InstrumentItemOuterMaterialDTOs { get; set; } = null;
+        public List<InstrumentItemDTO>? InstrumentItemInnerMaterialsDTO { get; set; } = null;
+        public List<InstrumentItemDTO>? InstrumentItemOuterMaterialsDTO { get; set; } = null;
 
         public List<PipingItemDTO>? PipingItemsDTO { get; set; } = null;
 

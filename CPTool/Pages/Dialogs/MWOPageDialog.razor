@@ -1,13 +1,13 @@
 ﻿@inherits CancellableComponent
 
-<ComponentBaseDialog TDTO="MWODTO" Model="@Model">
+@*<ComponentBaseDialog TDTO="MWODTO" Model="@Model">
     <Components>
         <ComponentAutoComplete Label="MWO Type"
                                TDTO="MWOTypeDTO"
                                T="MWOType"
-                               Manager=TablesService.ManMWOType
+                               @bind-ElementsService=@TablesService.MWOTypes
                                Required=true
-                               ObjectList=TablesService.ManMWOType.List
+                               Elements=@TablesService.MWOTypes
                                TableName="MWO Type"
                                Validation="@(new Func<string, string>(ReviewMWOType))"
                                @bind-Model="@Model.MWOTypeDTO">
@@ -43,7 +43,7 @@
                       Margin="Margin.Dense"
                       Label="CECName" />
     </Components>
-</ComponentBaseDialog>
+</ComponentBaseDialog>*@
 
 
 @code {

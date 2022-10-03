@@ -4,8 +4,8 @@
     {
         
 
-        [Parameter]
-        public MaterialDTO Model { get; set; }
+        //[Parameter]
+        //public MaterialDTO Model { get; set; }
         
     }
 }

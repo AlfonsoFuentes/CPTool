@@ -1,0 +1,24 @@
+﻿@typeparam T
+<MudSelect Dense="true"
+           Margin="Margin.Dense"
+           T="int"
+           AdornmentColor="Color.Primary"
+
+           Label=@Label
+           Disabled=@Disable
+           AnchorOrigin="Origin.BottomCenter"
+           Value=@Value
+           Variant="Variant.Outlined"
+           Validation="@Validation"
+           ValueChanged=SelectionChanged>
+    <MudSelectItem Value=0>Must select @Label ...</MudSelectItem>
+    @foreach (var item in Elements)
+    {
+        <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
+    }
+
+</MudSelect>
+
+@code {
+
+}

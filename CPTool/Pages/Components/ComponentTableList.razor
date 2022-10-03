@@ -1,14 +1,14 @@
-﻿@typeparam TDTO
-@typeparam T
+﻿
+
 
 @inherits CancellableComponent
-<MudGrid>
+@*<MudGrid>
     <MudItem xs="12">
         <MudText Typo="Typo.h6">@TableName</MudText>
         <MudText Inline="true" Class="align-self-left">Row Selected: @SelectedItem?.Name</MudText>
     </MudItem>
     <MudItem xs="12">
-        <MudTable T="TDTO"
+        <MudTable T="UpdateCommand"
                   Breakpoint="Breakpoint.Sm"
                   Items="@Elements"
                   Dense="@dense"
@@ -16,11 +16,11 @@
                   Bordered="@bordered"
                   Striped="@striped"
                   OnRowClick="RowClickEvent"
-                  Filter="new Func<TDTO,bool>(FilterFunc1)"
+                  Filter="new Func<UpdateCommand,bool>(FilterFunc1)"
                   @bind-SelectedItem="@SelectedItem">
             <ToolBarContent>
 
-                <ComponentToolbar T="TDTO"
+                <ComponentToolbar 
                                   ShowAddButton=@ShowAddButton
                                   SelectedItem="@SelectedItem"
                                   DisableAddButton=@DisableAddButton
@@ -49,7 +49,7 @@
 
             </HeaderContent>
             <RowTemplate>
-                @ContextTd(context)
+                @ContextTd!(context)
             </RowTemplate>
             <PagerContent>
                 <MudTablePager />
@@ -58,7 +58,7 @@
 
     </MudItem>
 
-</MudGrid>
+</MudGrid>*@
 
 
 @code {

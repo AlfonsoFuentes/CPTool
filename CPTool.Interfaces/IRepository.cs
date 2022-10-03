@@ -9,21 +9,18 @@ namespace CPTool.Interfaces
 {
 
 
-    public interface IRepository<T> where T :  IAuditableEntity
+    public interface IRepository<TEntity>
+where TEntity : class, IAuditableEntity
     {
-        IQueryable<T> Entities { get; }
+        Task<IEnumerable<TEntity>> GetAll();
 
-        Task<T> GetByIdAsync(int id);
+        Task<TEntity> GetById(int id);
 
-        Task<List<T>> GetAllAsync();
+        Task Create(TEntity entity);
 
-        Task<List<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
+        Task Update( TEntity entity);
 
-        Task<T> AddAsync(T entity);
-        Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null!);
-        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
-        T UpdateAsync(T entity);
-
-        Task DeleteAsync(T entity);
+        Task Delete(int id);
+        Task<bool> Any(Expression<Func<TEntity, bool>> filter = null!);
     }
 }

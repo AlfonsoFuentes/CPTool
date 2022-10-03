@@ -1,12 +1,12 @@
 ﻿@inherits CancellableComponent
 @if (viewform)
 {
-    <ComponentBaseDialog TDTO="BrandSupplierDTO" Model="@Model" >
+    @*<ComponentBaseDialog TDTO="BrandSupplierDTO" Model="@Model" >
         <Components>
             <ComponentSelect TDTO="SupplierDTO"
                        
                          Label="Supplier Name"
-                         Elements=TablesService.ManSupplier.List
+                         Elements=TablesService.Suppliers
                          @bind-Model=@Model.SupplierDTO>
 
 
@@ -39,7 +39,7 @@
             }
         </Components>
     </ComponentBaseDialog>
-
+*@
     
 }
 @code {

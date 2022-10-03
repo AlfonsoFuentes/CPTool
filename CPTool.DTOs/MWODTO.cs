@@ -23,7 +23,7 @@ namespace CPTool.DTOS
         //public int? MWOTypeId => MWOTypeDTO?.Id;
 
         public  MWOTypeDTO? MWOTypeDTO { get; set; } = new();
-        public List<MWOItemDTO>? MWOItemDTOs
+        public List<MWOItemDTO>? MWOItemsDTO
         {
             get
             {

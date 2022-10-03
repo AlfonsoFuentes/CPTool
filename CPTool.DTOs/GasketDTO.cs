@@ -12,8 +12,8 @@ namespace CPTool.DTOS
     
     public class GasketDTO : AuditableEntityDTO, IMapFrom<Gasket>
     {
-        public List<InstrumentItem>? InstrumentItemDTOs { get; set; } = null!;
-        public List<EquipmentItemDTO>? EquipmentItemDTOs { get; set; } = null!;
+        public List<InstrumentItem>? InstrumentItemsDTO { get; set; } = null!;
+        public List<EquipmentItemDTO>? EquipmentItemsDTO { get; set; } = null!;
         public List<NozzleDTO>? NozzlesDTO { get; set; } = null!;
 
     }

@@ -1,15 +1,14 @@
 ﻿@inherits CancellableComponent
-<MudGrid>
+@*<MudGrid>
     <MudItem xs="12" sm="12" Class="pa-4">
 
 
         <ComponentAutoComplete Label="Unitary prize unit"
                                TDTO="UnitaryBasePrizeDTO"
                                T="UnitaryBasePrize"
-                              
-                              
-                               Manager=TablesService.ManUnitaryPrize
-                               ObjectList=TablesService.ManUnitaryPrize.List
+                               @bind-ElementsService=@TablesService.UnitaryPrizes
+                               Validation="@(new Func<string, string>(ValidateUnitaryPrizeName))"
+                               Elements=@TablesService.UnitaryPrizes
                                TableName="Unitary prize unit"
                                @bind-Model=@Model.UnitaryBasePrizeDTO
                               
@@ -41,8 +40,8 @@
                       Variant="Variant.Outlined"
                       Label="Budget Prize, USD"></MudTextField>
     </MudItem>
-</MudGrid>
+</MudGrid>*@
 
 @code {
-    //Validation="@(new Func<string, string>(ValidateUnitaryPrizeName))"
+   
 }

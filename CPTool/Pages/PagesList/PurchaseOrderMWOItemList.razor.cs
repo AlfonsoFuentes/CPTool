@@ -1,238 +1,244 @@
-﻿using CPtool.ExtensionMethods;
-using CPTool.Entities;
-using CPTool.Implementations;
+﻿
+using CPTool.Domain.Entities;
+
 using static MudBlazor.Icons.Custom;
+
 
 namespace CPTool.Pages.PagesList
 {
-    public partial class PurchaseOrderMWOItemList : CancellableComponent, IDisposable
+    //public partial class PurchaseOrderMWOItemList : CancellableComponent
 
-    {
-        [Parameter]
-        public bool ShowAddButton { get; set; } = false;
+    //{
+    //    [Inject]
+    //    public IDTOManager<MWOItemDTO, MWOItem> ManagerMWOItem { get; set; }
+    //    [Inject]
+    //    public IDTOManager<PurchaseOrderDTO, PurchaseOrder> ManagerPurchaseOrder { get; set; }
+    //    [Inject]
+    //    public IDTOManager<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> ManagerPurchaseOrderMWOItem { get; set; }
+    //    [Inject]
+    //    public IGetList<MWOItemDTO, MWOItem> GetMWOItemList { get; set; }
+    //    [Inject]
+    //    public IGetList<PurchaseOrderDTO, PurchaseOrder> GetPurchaseOrderList { get; set; }
+    //    [Inject]
+    //    public IGetList<PurchaseOrderMWOItemDTO, PurchaseOrderMWOItem> GetPurchaseOrderMWOItemList { get; set; }
+    //    [Parameter]
+    //    public bool ShowAddButton { get; set; } = false;
 
-        [Parameter]
-        public string MasterTableName { get; set; }
-        [Parameter]
-        public string DetailTableName { get; set; }
-        [Parameter]
-        public Func<PurchaseOrderMWOItemDTO, Task<DialogResult>> OnShowDialogMaster { get; set; }
-        [Parameter]
-        public Func<PurchaseOrderMWOItemDTO, Task<DialogResult>> OnShowDialogDetail { get; set; }
-        PurchaseOrderDTO SelectedMaster = new();
+    //    [Parameter]
+    //    public string MasterTableName { get; set; }
+    //    [Parameter]
+    //    public string DetailTableName { get; set; }
+    //    [Parameter]
+    //    public Func<PurchaseOrderMWOItemDTO, Task<DialogResult>> OnShowDialogMaster { get; set; }
+    //    [Parameter]
+    //    public Func<PurchaseOrderMWOItemDTO, Task<DialogResult>> OnShowDialogDetail { get; set; }
+    //    PurchaseOrderDTO SelectedMaster = new();
 
-        MWOItemDTO SelectedDetail = new();
-        List<MWOItemDTO> Details
-            => SelectedMaster.Id == 0 ? new() : SelectedMaster.PurchaseOrderMWOItemDTOs.Select(
-                x => TablesService.ManMWOItem.List.FirstOrDefault(y => y.Id == x.MWOItemDTO.Id)).ToList();
+    //    MWOItemDTO SelectedDetail = new();
+    //    List<MWOItemDTO> Details = new();
 
-        List<PurchaseOrderDTO> Masters => TablesService.ManPurchaseOrder.List.OrderBy(x => (int)x.PurchaseOrderStatus).ToList();
+    //    List<PurchaseOrderDTO> Masters => TablesService.PurchaseOrders.Count == 0 ? new() : TablesService.PurchaseOrders.OrderBy(x => (int)x.PurchaseOrderStatus).ToList();
 
-        Func<PurchaseOrderDTO,string, bool> SearchMaster => (PurchaseOrderDTO element,string searchString) => OnfuncSearchMaster(element, searchString);
+    //    Func<PurchaseOrderDTO, string, bool> SearchMaster => (PurchaseOrderDTO element, string searchString) => OnfuncSearchMaster(element, searchString);
 
-        bool OnfuncSearchMaster(PurchaseOrderDTO element,string searchString)
-        {
-            var retorno= element.PurchaseRequisition.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.PONumber.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.MWOItemDTO.MWODTO.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.MWOItemDTO.MWODTO.CECName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.PurchaseOrderStatus.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.SupplierDTO.Name.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-            element.BrandDTO.Name.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase);
-            return retorno;
-        }
-        void ViewMasterList()
-        {
-            SelectedMaster = new();
-            bool encontrado = Masters.Any(x => x.PurchaseRequisition.Contains(value));
+    //    bool OnfuncSearchMaster(PurchaseOrderDTO element, string searchString)
+    //    {
+    //        var retorno = element.PurchaseRequisition.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+    //        element.PONumber.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+    //        element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+    //        element.MWOItemDTO.MWODTO.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+    //        element.MWOItemDTO.MWODTO.CECName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+    //        element.PurchaseOrderStatus.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+    //        element.SupplierDTO.Name.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+    //        element.BrandDTO.Name.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase);
+    //        return retorno;
+    //    }
+    //    void ViewMasterList()
+    //    {
+    //        SelectedMaster = new();
+    //        bool encontrado = Masters.Any(x => x.PurchaseRequisition.Contains(value));
 
-            SelectedDetail = new();
-        }
-        async Task AddDownPayment()
-        {
-            DownPaymentDTO model = new();
-            model.PurchaseOrderDTO = SelectedMaster;
+    //        SelectedDetail = new();
+    //    }
+    //    async Task AddDownPayment()
+    //    {
+    //        DownPaymentDTO model = new();
+    //        model.PurchaseOrderDTO = SelectedMaster;
+
+
+    //        var retorno = await ToolDialogService.ShowDownpaymentDialog(model);
+    //    }
+    //    string PageTitle => $"Relation {MasterTableName} => {DetailTableName}";
+
+    //    protected override void OnInitialized()
+    //    {
+
+
+    //    }
+    //    void RowMasterClicked(PurchaseOrderDTO dto)
+    //    {
+    //        SelectedMaster = dto;
+    //        //SelectedDetail = new();
+
+    //    }
+
+    //    void RowDetailClicked(MWOItemDTO dto)
+    //    {
+    //        //SelectedMaster = new();
+    //        SelectedDetail = dto;
+
+    //    }
+
+    //    async Task<DialogResult> ShowDialogMaster(PurchaseOrderDTO dto)
+    //    {
+    //        SelectedMaster = dto;
+    //        PurchaseOrderMWOItemDTO bs = new();
+    //        bs.PurchaseOrderDTO = SelectedMaster;
+    //        SelectedDetail = bs.PurchaseOrderDTO.PurchaseOrderMWOItemsDTO.FirstOrDefault().MWOItemDTO;
+    //        bs.MWOItemDTO = SelectedDetail;
+
+
+
+    //        bs.PurchaseOrderCreated = true;
+
+    //        var result = OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<PurchaseOrderDTO>(dto) : await OnShowDialogMaster.Invoke(bs);
+
+
+    //        return result;
+
+
+    //    }
+
+    //    async Task<DialogResult> ShowDialogDetail(MWOItemDTO dto)
+    //    {
+
+    //        SelectedDetail = dto;
+    //        PurchaseOrderMWOItemDTO bs = new();
+    //        bs.PurchaseOrderDTO = SelectedMaster;
+    //        bs.MWOItemDTO = SelectedDetail;
+
+
+
+    //        var result = OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<MWOItemDTO>(dto) : await OnShowDialogDetail.Invoke(bs);
            
-
-            var retorno = await ToolDialogService.ShowDownpaymentDialog(model);
-        }
-        string PageTitle => $"Relation {MasterTableName} => {DetailTableName}";
-      
-        protected override void OnInitialized()
-        {
-
-            TablesService.Delete += Delete;
-        }
-        void RowMasterClicked(PurchaseOrderDTO dto)
-        {
-            SelectedMaster = dto;
-            //SelectedDetail = new();
-
-        }
-
-        void RowDetailClicked(MWOItemDTO dto)
-        {
-            //SelectedMaster = new();
-            SelectedDetail = dto;
-
-        }
-
-        async Task<DialogResult> ShowDialogMaster(PurchaseOrderDTO dto)
-        {
-            SelectedMaster = dto;
-            PurchaseOrderMWOItemDTO bs = new();
-            bs.PurchaseOrderDTO = SelectedMaster;
-            SelectedDetail = bs.PurchaseOrderDTO.PurchaseOrderMWOItemDTOs.FirstOrDefault().MWOItemDTO;
-            bs.MWOItemDTO = SelectedDetail;
-
-          
-            TablesService.Save += SaveMaster;
-            bs.PurchaseOrderCreated = true;
-
-            var result = OnShowDialogMaster == null ? await ToolDialogService.ShowDialogName<PurchaseOrderDTO>(dto) : await OnShowDialogMaster.Invoke(bs);
-
-            if (result.Cancelled) TablesService.Save -= SaveMaster;
-            return result;
+    //        return result;
 
 
-        }
-
-        async Task<DialogResult> ShowDialogDetail(MWOItemDTO dto)
-        {
-
-            SelectedDetail = dto;
-            PurchaseOrderMWOItemDTO bs = new();
-            bs.PurchaseOrderDTO = SelectedMaster;
-            bs.MWOItemDTO = SelectedDetail;
-
-            TablesService.Save += SaveDetail;
-
-            var result = OnShowDialogDetail == null ? await ToolDialogService.ShowDialogName<MWOItemDTO>(dto) : await OnShowDialogDetail.Invoke(bs);
-            if (result.Cancelled) TablesService.Save -= SaveDetail;
-            return result;
+    //    }
 
 
-        }
+    //    async Task<IResult<IAuditableEntityDTO>> SaveMaster(IAuditableEntityDTO dto)
+    //    {
+    //        var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
+
+    //        var result = await ManagerPurchaseOrder.AddUpdate(purchaseOrderMWOItemDTO.PurchaseOrderDTO, _cts.Token);
+    //        if (result.Succeeded)
+    //        {
+    //            //purchaseOrderMWOItemDTO.PurchaseOrderDTO = result.Data as PurchaseOrderDTO;
+    //            SelectedDetail = new();
+    //            SelectedMaster = new();
+
+    //            if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
+    //            {
+    //                var result2 = await ManagerPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
+    //                if (result2.Succeeded)
+    //                {
+                        
+    //                    TablesService.MWOItems = await GetMWOItemList.Handle();
+                    
+    //                    SelectedDetail = await ManagerMWOItem.GetById(purchaseOrderMWOItemDTO.MWOItemDTO.Id);
+    //                }
+
+    //            }
+    //            TablesService.PurchaseOrders = await GetPurchaseOrderList.Handle();
+
+    //        }
+
+    //        StateHasChanged();
+
+    //        return await Result<AuditableEntityDTO>.SuccessAsync(new(), "Updated");
+    //    }
+    //    async Task<IResult<IAuditableEntityDTO>> SaveDetail(IAuditableEntityDTO dto)
+    //    {
+    //        var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
+
+    //        var result = await ManagerMWOItem.AddUpdate(purchaseOrderMWOItemDTO.MWOItemDTO, _cts.Token);
+    //        if (result.Succeeded)
+    //        {
+    //            //purchaseOrderMWOItemDTO.MWOItemDTO = result.Data as MWOItemDTO;
+    //            SelectedDetail = new();
+    //            SelectedMaster = new();
 
 
-        async Task<IResult<IAuditableEntityDTO>> SaveMaster(IAuditableEntityDTO dto)
-        {
-            var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
+    //            if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
+    //            {
+    //                var result2 = await ManagerPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
+    //                if (result2.Succeeded)
+    //                {
+    //                    TablesService.PurchaseOrders = await GetPurchaseOrderList.Handle();
 
-            var result = await TablesService.ManPurchaseOrder.AddUpdate(purchaseOrderMWOItemDTO.PurchaseOrderDTO, _cts.Token);
-            if (result.Succeeded)
-            {
-                purchaseOrderMWOItemDTO.PurchaseOrderDTO = result.Data as PurchaseOrderDTO;
-                SelectedDetail = new();
-                SelectedMaster = new();
+    //                    SelectedMaster = await ManagerPurchaseOrder.GetById(purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id);
+    //                }
+    //            }
+               
+    //            TablesService.MWOItems = await GetMWOItemList.Handle();
 
-                if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
-                {
-                    var result2 = await TablesService.ManPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
-                    if (result2.Succeeded)
-                    {
-                        //await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-
-                        await TablesService.ManMWOItem.GetList();
-                        SelectedDetail = await TablesService.ManMWOItem.GetById(purchaseOrderMWOItemDTO.MWOItemDTO.Id);
-                    }
-
-                }
-                await TablesService.ManPurchaseOrder.GetList();
-
-            }
-
-            StateHasChanged();
-            TablesService.Save -= SaveMaster;
-            return await Result<AuditableEntityDTO>.SuccessAsync(new(), "Updated");
-        }
-        async Task<IResult<IAuditableEntityDTO>> SaveDetail(IAuditableEntityDTO dto)
-        {
-            var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
-
-            var result = await TablesService.ManMWOItem.AddUpdate(purchaseOrderMWOItemDTO.MWOItemDTO, _cts.Token);
-            if (result.Succeeded)
-            {
-                purchaseOrderMWOItemDTO.MWOItemDTO = result.Data as MWOItemDTO;
-                SelectedDetail = new();
-                SelectedMaster = new();
+    //        }
+    //        StateHasChanged();
 
 
-                if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
-                {
-                    var result2 = await TablesService.ManPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
-                    if (result2.Succeeded)
-                    {
-                        //await TablesService.ManPurchaseOrderMWOItem.UpdateList();
-                        await TablesService.ManPurchaseOrder.GetList();
 
-                        SelectedMaster = await TablesService.ManPurchaseOrder.GetById(purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id);
-                    }
-                }
-                await TablesService.ManMWOItem.GetList();
+    //        return await Result<AuditableEntityDTO>.SuccessAsync(new(), "Updated");
+    //    }
+    //    async Task<IResult<IAuditableEntityDTO>> SaveBrandSupplier(IAuditableEntityDTO dto)
+    //    {
+    //        var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
+    //        if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
+    //        {
+    //            var result = await ManagerPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
+    //            if (result.Succeeded)
+    //            {
 
+    //                //return await Result<IAuditableEntityDTO>.SuccessAsync(result.Data, "Updated");
+    //            }
 
-            }
-            StateHasChanged();
+    //        }
 
-            TablesService.Save -= SaveDetail;
+    //        return await Result<IAuditableEntityDTO>.SuccessAsync(dto, "Not Updated");
 
-            return await Result<AuditableEntityDTO>.SuccessAsync(new(), "Updated");
-        }
-        async Task<IResult<IAuditableEntityDTO>> SaveBrandSupplier(IAuditableEntityDTO dto)
-        {
-            var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
-            if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
-            {
-                var result = await TablesService.ManPurchaseOrderMWOItem.AddUpdate(dto, _cts.Token);
-                if (result.Succeeded)
-                {
+    //    }
+    //    async Task<IResult> Delete(IAuditableEntityDTO dto)
+    //    {
+    //        IResult result = null;
+    //        if (dto is PurchaseOrderDTO)
+    //        {
+    //            result = await ManagerPurchaseOrder.Delete(dto as PurchaseOrderDTO, _cts.Token);
+    //            if (result.Succeeded)
+    //            {
+    //                TablesService.PurchaseOrderMWOItems = await GetPurchaseOrderMWOItemList.Handle();
+    //                TablesService.PurchaseOrders = await GetPurchaseOrderList.Handle();
+    //                TablesService.MWOItems = await GetMWOItemList.Handle();
+                   
+    //                StateHasChanged();
+    //            }
+    //            return result;
+    //        }
+    //        else if (dto is MWOItemDTO)
+    //        {
+    //            result = await ManagerMWOItem.Delete(dto as MWOItemDTO, _cts.Token);
+    //            if (result.Succeeded)
+    //            {
+    //                TablesService.PurchaseOrderMWOItems = await GetPurchaseOrderMWOItemList.Handle();
+    //                TablesService.PurchaseOrders = await GetPurchaseOrderList.Handle();
+    //                TablesService.MWOItems = await GetMWOItemList.Handle();
+    //                StateHasChanged();
+    //            }
+    //            return result;
+    //        }
 
-                    return await Result<IAuditableEntityDTO>.SuccessAsync(result.Data, "Updated");
-                }
+    //        return result;
 
-            }
+    //    }
 
-            return await Result<IAuditableEntityDTO>.SuccessAsync(dto, "Not Updated");
-
-        }
-        async Task<IResult<int>> Delete(IAuditableEntityDTO dto)
-        {
-            IResult<int> result = null;
-            if (dto is PurchaseOrderDTO)
-            {
-                result = await TablesService.ManPurchaseOrder.Delete(dto.Id, _cts.Token);
-                if (result.Succeeded)
-                {
-                    //await TablesService.ManMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrderMWOItem.GetList();
-                    await TablesService.ManPurchaseOrder.GetList();
-                    StateHasChanged();
-                }
-                return result;
-            }
-            else if (dto is MWOItemDTO)
-            {
-                result = await TablesService.ManMWOItem.Delete(dto.Id, _cts.Token);
-                if (result.Succeeded)
-                {
-                    //await TablesService.ManMWOItem.UpdateList();
-                    await TablesService.ManPurchaseOrderMWOItem.GetList();
-                    await TablesService.ManPurchaseOrder.GetList();
-                    StateHasChanged();
-                }
-                return result;
-            }
-
-            return result;
-
-        }
-        void IDisposable.Dispose()
-        {
-
-
-            TablesService.Delete -= Delete;
-        }
-    }
+    //}
 }

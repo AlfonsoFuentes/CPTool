@@ -1,4 +1,4 @@
-﻿<MudGrid>
+﻿@*<MudGrid>
     <MudItem xs="12" sm="12" Class="pa-4">
         <ComponentSelect TDTO="ChapterDTO"
                         
@@ -6,7 +6,7 @@
                          Disable="@(Model.ChapterDTO?.Id==0?false:true)"
                         
                          PostEvent=OnChapterChanged
-                         Elements=TablesService.ManChapter.List
+                         Elements=TablesService.Chapters
                          
                     
                          @bind-Model=@Model.ChapterDTO>
@@ -31,10 +31,8 @@
                       Label="item Name" />
     
     </MudItem>
-</MudGrid>
+</MudGrid>*@
 
 @code {
-    //Validation="@(new Func<int, string>(ItemChapter))"
-    //Required="true"
-    //Disabled="@(Model.ChapterDTO?.Id==0?true:false)"
+  
 }

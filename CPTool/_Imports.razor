@@ -11,9 +11,7 @@
 @using CPTool
 @using CPTool.Services
 @using CPTool.Shared
-@using CPTool.Interfaces
-@using CPTool.Entities
-@using CPTool.DTOS
+@using CPTool.NewPages.Components
 @using CPTool.Pages.PagesList
 @using CPTool.Pages.Components
 @using CPTool.Pages.Dialogs
@@ -21,11 +19,45 @@
 @using CPTool.Pages.MWOPages
 @using CPTool.Pages.Classes
 @using CPTool.Pages.Settings
+@using CPTool.NewPages.Dialogs.EquipmentType.List
+
 @using System.Globalization
+@using CPTool.Application.Features.Base
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Command.CreateEdit
+@using CPTool.Application.Features.EquipmentTypeFeatures.Command.CreateEdit
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Command.Delete
+@using CPTool.Application.Features.EquipmentTypeFeatures.Command.Delete
+@using CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList;
+@using CPTool.Application.Features.EquipmentTypeFeatures.Query.GetById;
+@using CPTool.Application.Features.MMOTypeFeatures.Command.CreateEdit
+@using CPTool.Application.Features.MMOTypeFeatures.Query.GetById
+@using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit
+@using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.Delete
+@using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetById
+@using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList
+@using CPTool.Application.Features.GasketFeatures.Query.GetById
+@using CPTool.Application.Features.GasketFeatures.Query.GetList
+@using CPTool.Application.Features.GasketsFeatures.Command.CreateEdit
+@using CPTool.Application.Features.GasketsFeatures.Command.Delete
+@using CPTool.Application.Features.BrandFeatures.Command.Delete
+@using CPTool.Application.Features.BrandFeatures.Query.GetList
+@using CPTool.Application.Features.BrandSupplierFeatures
+@using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit
+@using CPTool.Application.Features.SupplierFeatures.Command.Delete
+@using CPTool.Application.Features.SupplierFeatures.Query.GetList
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList
+
+@using CPTool.Application.Features.BrandFeatures.Command.CreateEdit
+@using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit
+@using MediatR;
+@using Microsoft.AspNetCore.Components;
+
+@using CPTool.Domain.Entities
+
 @inject IDialogService DialogService 
 @inject ISnackbar Snackbar 
 @inject NavigationManager NavigationManager 
-@inject TablesService TablesService
+@*@inject ITablesService TablesService*@
 @inject ToolDialogService ToolDialogService
 @inject IMapper _mapper 
 @*@inject ICurrencyApi _CurrencyService *@

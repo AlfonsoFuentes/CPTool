@@ -1,0 +1,41 @@
+﻿
+<MudToolBar>
+    @if (ShowAddButton)
+    {
+        <MudTooltip Text="Add">
+            <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="OnAdd" Size="Size.Small" Disabled=@DisableAddButton />
+        </MudTooltip>
+    }
+
+    <MudTooltip Text="Edit">
+        <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled="@DisableEditButton" OnClick="OnEdit" Size="Size.Small" />
+    </MudTooltip>
+
+    <MudTooltip Text="Delete">
+        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnDelete" />
+    </MudTooltip>
+    @OtherButtons
+    <MudTooltip Text="Print">
+        <MudIconButton Icon="@Icons.Material.Outlined.Print" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnPrint" />
+    </MudTooltip>
+    <MudTooltip Text="Excel">
+        <MudIconButton Icon="@Icons.Custom.FileFormats.FileExcel" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnExcel" />
+    </MudTooltip>
+    <MudTooltip Text="PDF">
+        <MudIconButton Icon="@Icons.Custom.FileFormats.FilePdf" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnPDF" />
+    </MudTooltip>
+
+</MudToolBar>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public bool ShowAddButton { get; set; } = true;
+    [Parameter]
+    [EditorRequired]
+    public bool DisableAddButton { get; set; } = true;
+    [Parameter]
+    [EditorRequired]
+    public bool DisableEditButton { get; set; } = true;
+    
+}

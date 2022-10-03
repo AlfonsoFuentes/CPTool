@@ -8,7 +8,7 @@ namespace CPTool.DTOS
     
     public class ElectricalItemDTO : AuditableEntityDTO, IMapFrom<ElectricalItem>
     {
-        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
+        public List<MWOItemDTO>? MWOItemsDTO { get; set; } = new();
     }
 
 

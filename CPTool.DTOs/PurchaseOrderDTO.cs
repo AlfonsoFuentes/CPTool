@@ -6,15 +6,15 @@ namespace CPTool.DTOS
 {
     public class PurchaseOrderDTO : AuditableEntityDTO, IMapFrom<PurchaseOrder>
     {
-        public List<DownPaymentDTO>? DownPaymentDTOs { get; set; }
-        public List<PurchaseOrderMWOItemDTO>? PurchaseOrderMWOItemDTOs { get; set; } = new();
+        public List<DownPaymentDTO>? DownPaymentsDTO { get; set; }
+        public List<PurchaseOrderMWOItemDTO>? PurchaseOrderMWOItemsDTO { get; set; } = new();
 
         MWOItemDTO? _MWOItemDTO;
         public MWOItemDTO? MWOItemDTO
         {
             get
             {
-                return PurchaseOrderMWOItemDTOs?.Count == 0 ? _MWOItemDTO : PurchaseOrderMWOItemDTOs?.FirstOrDefault()?.MWOItemDTO;
+                return PurchaseOrderMWOItemsDTO?.Count == 0 ? _MWOItemDTO : PurchaseOrderMWOItemsDTO?.FirstOrDefault()?.MWOItemDTO;
             }
             set
             {

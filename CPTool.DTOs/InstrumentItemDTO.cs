@@ -9,7 +9,7 @@ namespace CPTool.DTOS
     {
        
         public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
-        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = null!;
+        public List<MWOItemDTO>? MWOItemsDTO { get; set; } = null!;
 
         public MeasuredVariableDTO? MeasuredVariableDTO { get; set; } = new();
         public MeasuredVariableModifierDTO? MeasuredVariableModifierDTO { get; set; } = new();
@@ -56,27 +56,27 @@ namespace CPTool.DTOS
 
     public class MeasuredVariableDTO : AuditableEntityDTO
     {
-        public ICollection<InstrumentItemDTO> InstrumentItemDTOs { get; set; } = null!;
+        public List<InstrumentItemDTO> InstrumentItemsDTO { get; set; } = new();
         public string? TagLetter { get; set; }
     }
     public class MeasuredVariableModifierDTO : AuditableEntityDTO
     {
-        public ICollection<InstrumentItemDTO> InstrumentItemDTOs { get; set; } = null!;
+        public List<InstrumentItemDTO> InstrumentItemsDTO { get; set; } = new();
         public string? TagLetter { get; set; }
     }
     public class DeviceFunctionDTO : AuditableEntityDTO
     {
-        public ICollection<InstrumentItemDTO> InstrumentItemDTOs { get; set; } = null!;
+        public List<InstrumentItemDTO> InstrumentItemsDTO { get; set; } = new();
         public string? TagLetter { get; set; }
     }
     public class DeviceFunctionModifierDTO : AuditableEntityDTO
     {
-        public ICollection<InstrumentItemDTO> InstrumentItemDTOs { get; set; } = null!;
+        public List<InstrumentItemDTO> InstrumentItemsDTO { get; set; } = new();
         public string? TagLetter { get; set; }
     }
     public class ReadoutDTO : AuditableEntityDTO
     {
-        public ICollection<InstrumentItemDTO> InstrumentItemDTOs { get; set; } = null!;
+        public List<InstrumentItemDTO> InstrumentItemsDTO { get; set; } = new();
         public string? TagLetter { get; set; }
     }
 

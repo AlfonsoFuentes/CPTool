@@ -1,42 +1,46 @@
-﻿namespace CPTool.Pages.Components
+﻿
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
+
+namespace CPTool.Pages.Components
 {
-    public partial class ComponentBaseDialog<TDTO> where TDTO : AuditableEntityDTO
-    {
-        [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
+    //public partial class ComponentBaseDialog<TDTO> where TDTO : Commands
+    //{
+    //    [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
 
-        [Parameter]
-        public RenderFragment Components { get; set; }
+    //    [Parameter]
+    //    public RenderFragment Components { get; set; } = null!;
 
-        [Parameter]
-        public TDTO Model { get; set; }
+    //    [Parameter]
+    //    [EditorRequired]
+    //    public TDTO Model { get; set; } = null!;
 
-        [Parameter]
-        public Func<Task> FuncBeforeClose { get; set; }
-        [Parameter]
-        public Func<Task> FuncOnInitialize { get; set; }
-        [Parameter]
-        public MudForm form { get; set; }
-        [Parameter]
-        public string ButtonSaveName { get; set; }
-        [Parameter]
-        public bool DisableButtonSave { get; set; }
-        protected override async Task OnInitializedAsync()
-        {
-            if(FuncOnInitialize!=null) await FuncOnInitialize.Invoke(); 
-           
-        }
-        public async virtual Task Submit()
-        {
-            await form.Validate();
-            if (form.IsValid)
-            {
+        
+    //    [Parameter]
+    //    public Func<Task> FuncOnInitialize { get; set; } = null!;
+    //    [Parameter]
+    //    public MudForm form { get; set; } = null!;
+    //    [Parameter]
+    //    public string ButtonSaveName { get; set; } = null!;
+    //    [Parameter]
+    //    public bool DisableButtonSave { get; set; }
+    //    protected override async Task OnInitializedAsync()
+    //    {
+    //        if (FuncOnInitialize != null) await FuncOnInitialize.Invoke();
 
-                if (FuncBeforeClose != null) await FuncBeforeClose.Invoke();
+    //    }
+    //    public async virtual Task Submit()
+    //    {
+    //        await form.Validate();
+    //        if (form.IsValid)
+    //        {
 
-                MudDialog.Close(DialogResult.Ok(Model));
-            }
-        }
+               
 
-        void Cancel() => MudDialog.Cancel();
-    }
+    //            MudDialog.Close(DialogResult.Ok(Model));
+    //        }
+    //    }
+
+    //    void Cancel() => MudDialog.Cancel();
+    //}
 }

@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @inherits CancellableComponent
-<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize="Initializeform" FuncBeforeClose=BeforeClose 
+@*<ComponentBaseDialog TDTO="PurchaseOrderMWOItemDTO" Model="@Model" FuncOnInitialize="Initializeform" FuncBeforeClose=BeforeClose 
     
     ButtonSaveName=@Model.PurchaseOrderDTO.ButtonName
 DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderStatus.Installed?true:false)
@@ -23,14 +23,14 @@ DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderSta
                                  Label="Supplier"
                                  Required=true
                                  RequiredError="Must Submit Supplier"
-                                 Elements=@TablesService.ManSupplier.List
+                                 Elements=@TablesService.Suppliers
                                  @bind-Model=@Model.PurchaseOrderDTO.SupplierDTO></ComponentSelect>
                     <ComponentSelect TDTO="BrandDTO"
                                  Label="Brand or Service"
                                  Required=true
                                  Disable=@(Model.PurchaseOrderDTO.SupplierDTO.Id==0?true:false)
                                  RequiredError="Must Submit Brand or Service"
-                                 Elements=@Model.PurchaseOrderDTO.SupplierDTO.BrandSupplierDTOs.Select(x=>x.BrandDTO).ToList()
+                                 Elements=@Model.PurchaseOrderDTO.SupplierDTO.BrandSuppliersDTO.Select(x=>x.BrandDTO).ToList()
                                  @bind-Model=@Model.PurchaseOrderDTO.BrandDTO></ComponentSelect>
 
                 }
@@ -145,7 +145,7 @@ DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderSta
         </MudGrid>
     </Components>
 </ComponentBaseDialog>
-
+*@
 
 @code {
     public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");

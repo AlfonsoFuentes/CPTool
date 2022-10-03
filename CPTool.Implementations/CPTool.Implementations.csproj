@@ -10,11 +10,4 @@
     <PackageReference Include="AutoMapper" Version="11.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CPTool.Context\CPTool.Context.csproj" />
-    <ProjectReference Include="..\CPTool.DTOs\CPTool.DTOS.csproj" />
-    <ProjectReference Include="..\CPTool.Entities\CPTool.Entities.csproj" />
-    <ProjectReference Include="..\CPTool.Interfaces\CPTool.Interfaces.csproj" />
-  </ItemGroup>
-
 </Project>

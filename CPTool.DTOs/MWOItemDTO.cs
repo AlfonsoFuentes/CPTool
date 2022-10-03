@@ -11,12 +11,12 @@ namespace CPTool.DTOS
     public class MWOItemDTO : AuditableEntityDTO, IMapFrom<MWOItem>
     {
 
-        public List<PurchaseOrderMWOItemDTO>? PurchaseOrderMWOItemDTOs { get; set; } = new();
+        public List<PurchaseOrderMWOItemDTO>? PurchaseOrderMWOItemsDTO { get; set; } = new();
 
        
         public UnitaryBasePrizeDTO? UnitaryBasePrizeDTO { get; set; } = new();
         public ChapterDTO ChapterDTO { get; set; } = new();
-        public MWODTO? MWODTO { get => Master as MWODTO; set => Master = value; }
+        public MWODTO MWODTO = new();
         public AlterationItemDTO? AlterationItemDTO { get; set; }
         public FoundationItemDTO? FoundationItemDTO { get; set; }
         public StructuralItemDTO? StructuralItemDTO { get; set; }

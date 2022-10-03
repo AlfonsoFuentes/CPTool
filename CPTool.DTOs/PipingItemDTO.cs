@@ -7,7 +7,7 @@ namespace CPTool.DTOS
     public class PipingItemDTO : AuditableEntityDTO, IMapFrom<PipingItem>
     {
         public PipingItemDTO() { }
-        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = null!;
+        public List<MWOItemDTO>? MWOItemsDTO { get; set; } = null!;
         public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
       
         public List<PipeAccesoryDTO>? PipeAccesorysDTO { get; set; } = new();

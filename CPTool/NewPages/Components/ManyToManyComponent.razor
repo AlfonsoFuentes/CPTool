@@ -1,0 +1,65 @@
+﻿@typeparam TMasterDetail
+@typeparam TMaster
+@typeparam TDetail
+@typeparam TMasterList
+@typeparam TDetailList
+@typeparam TDeleteMaster
+@typeparam TDeleteDetail
+
+@if (ShowAddButton)
+{
+    <MudGrid>
+
+        <MudItem xs="12" sm="@mastersm">
+            <TableComponent T="TMaster" Elements="@ElementsMasters" OnAdd="AddMaster" OnDelete="DeleteMaster"
+                        OnRowClicked="RowClickedMaster"
+                        OnEdit="EditMaster" SearchFunc=MasterList.FilterFunc @bind-SelectedItem="@SelectedMaster">
+                <ContextTh>
+                    <MudTh Style="width:20px">#</MudTh>
+
+                    <MudTh Style="width:50px">Name</MudTh>
+                    @if (MasterContextTh != null)
+                        @MasterContextTh
+                    </ContextTh>
+                    <ContextTd>
+                        <MudTd DataLabel="Id">@context.Id</MudTd>
+
+                        <MudTd DataLabel="Name">@context.Name</MudTd>
+                        @if (MasterContextTh != null)
+                        @MasterContextTd!(context)
+                    </ContextTd>
+                </TableComponent>
+            </MudItem>
+
+
+            <MudItem xs="12" sm="@detailsm">
+                <TableComponent T="TDetail" Elements="@ElementsDetails" 
+                        OnRowClicked="RowClickedDetails"
+                        OnAdd="AddDetail" OnDelete="DeleteDetails" OnEdit="EditDetails" SearchFunc=DetailList.FilterFunc @bind-SelectedItem="@SelectedDetail">
+                    <ContextTh>
+                        <MudTh Style="width:20px">#</MudTh>
+
+                        <MudTh Style="width:50px">Name</MudTh>
+                        @if (DetailContextTh != null)
+                        @DetailContextTh
+
+                    </ContextTh>
+                    <ContextTd>
+                        <MudTd DataLabel="Id">@context.Id</MudTd>
+
+                        <MudTd DataLabel="Name">@context.Name</MudTd>
+                        @if (DetailContextTh != null)
+                        @DetailContextTd!(context)
+                    </ContextTd>
+                </TableComponent>
+            </MudItem>
+
+        </MudGrid>
+}
+@code {
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}

@@ -1,29 +1,28 @@
-﻿namespace CPTool.Pages.Dialogs
+﻿using CPTool.Domain.Entities;
+
+namespace CPTool.Pages.Dialogs
 {
     public partial class DownpaymentDialog
     {
        
-        [Parameter]
-        public DownPaymentDTO Model { get; set; }
+        //[Parameter]
+        //public DownPaymentDTO Model { get; set; }
 
-        async Task Initializeform()
-        {
+        //[Inject]
+        //IDTOManager<DownPaymentDTO,DownPayment> Manager { get; set; }
+
+        //[Inject]
+        //IGetList<DownPaymentDTO, DownPayment> GetList { get; set; }
+
+        //async Task Initializeform()
+        //{
           
-            Model.SetButtonNameHistory();
+        //    Model.SetButtonNameHistory();
 
-            await Task.CompletedTask;
+        //    await Task.CompletedTask;
 
-        }
-        async Task BeforeClose()
-        {
-            Model.ChangeStatusDP();
-            if (Model.Id == 0)
-            {
-                await TablesService.ManDownPayment.AddUpdate(Model, _cts.Token);
-                var list = TablesService.ManDownPayment.List;
-               
-            }
-        }
+        //}
+
        
     }
 }

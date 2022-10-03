@@ -10,6 +10,6 @@ namespace CPTool.DTOS
 {
     public class UnitaryBasePrizeDTO  :AuditableEntityDTO, IMapFrom<UnitaryBasePrize>
     {
-        public  List<MWOItemDTO>? MWOItemDTOs { get; set; } = new();
+        public  List<MWOItemDTO> MWOItemsDTO { get; set; } = new();
     }
 }

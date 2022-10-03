@@ -6,7 +6,7 @@
                        Validation="@(new Func<string, string>(ValidateGasket))"
                        Manager=TablesService.ManGasket
                        @bind-Model="@Model.GasketDTO"
-                       ObjectList=TablesService.ManGasket.List>
+                       ObjectList=TablesService.Gaskets>
 
 </ComponentAutoComplete>
 
@@ -16,7 +16,7 @@
                        T="Material"
                       
                        Validation="@(new Func<string, string>(ValidateMaterial))"
-                       ObjectList=TablesService.ManMaterial.List
+                       ObjectList=TablesService.Materials
                        ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
                        Manager=TablesService.ManMaterial
                        @bind-Model="@Model.OuterMaterialDTO">
@@ -28,7 +28,7 @@
                        T="Material"
                       
                        Validation="@(new Func<string, string>(ValidateMaterial))"
-                       ObjectList=TablesService.ManMaterial.List
+                       ObjectList=TablesService.Materials
                        ShowDialogOverrided=ToolDialogService.ShowMaterialDialog
                        Manager=TablesService.ManMaterial
                        @bind-Model="@Model.InnerMaterialDTO">

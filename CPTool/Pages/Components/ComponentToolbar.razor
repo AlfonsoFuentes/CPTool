@@ -1,5 +1,5 @@
-﻿@typeparam T
-<MudToolBar>
+﻿
+@*<MudToolBar>
     @if (ShowAddButton)
     {
         <MudTooltip Text="Add">
@@ -25,7 +25,7 @@
         <MudIconButton Icon="@Icons.Custom.FileFormats.FilePdf" Color="Color.Inherit" Disabled="@(SelectedItem.Id==0?true:false)" Size="Size.Small" OnClick="PDF" />
     </MudTooltip>
 
-</MudToolBar>
+</MudToolBar>*@
 
 @code {
     [Parameter]

@@ -15,7 +15,7 @@ namespace CPTool.DTOS
 
 
         public List<NozzleDTO>? NozzlesDTO { get; set; } = new();
-        public List<MWOItemDTO>? MWOItemDTOs { get; set; } = null!;
+        public List<MWOItemDTO>? MWOItemsDTO { get; set; } = null!;
 
         public EquipmentTypeDTO? EquipmentTypeDTO { get; set; } = null!;
         public EquipmentTypeSubDTO? EquipmentTypeSubDTO { get; set; } = null!;

@@ -1,0 +1,43 @@
+﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList
+@if (ShowAddButton)
+{
+    <OneToManyListComponent TMaster="AddEditEquipmentTypeCommand" TDetail="AddEditEquipmentTypeSubCommand"
+                        TDeleteMaster="DeleteEquipmentTypeCommand" TDeleteDetail="DeleteEquipmentTypeSubCommand"
+                        TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
+                        TGedById="GetByIdEquipmentTypeQuery"
+                     
+                      
+                        ElementsDetails="@SelectedEqu.EquipmentTypesSub"
+                        @bind-SelectedMaster="@SelectedEqu"
+                        @bind-SelectedDetail="@SelectedEquSub"
+                        OnShowDialogMaster="ToolDialogService.ShowEquipmentType"
+                        OnShowDialogDetails="ToolDialogService.ShowEquipmentTypeSub">
+        <MasterContextTh>
+            <MudTh Style="width:40px">TagLetter</MudTh>
+        </MasterContextTh>
+        <MasterContextTd>
+            <MudTd DataLabel="TagLetter">@context.TagLetter</MudTd>
+        </MasterContextTd>
+        <DetailContextTh>
+            <MudTh Style="width:40px">TagLetter</MudTh>
+        </DetailContextTh>
+        <DetailContextTd>
+            <MudTd DataLabel="TagLetter">@context.TagLetter</MudTd>
+        </DetailContextTd>
+
+    </OneToManyListComponent>
+    
+}
+
+@code {
+
+
+
+
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}
+@*   SearchFuncMaster="FilterFuncEqu" SearchFuncDetails="FilterFuncEquSub"*@
