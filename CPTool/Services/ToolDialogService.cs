@@ -4,7 +4,13 @@
 
 
 using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
 using CPTool.NewPages.Dialogs.BrandSupplier.Dialog;
+using CPTool.NewPages.Dialogs.Material;
+using CPTool.NewPages.Dialogs.MWO.Dialog;
+using CPTool.Pages.Dialogs;
 
 namespace CPTool.Services
 {
@@ -117,6 +123,54 @@ namespace CPTool.Services
             var dialog = DialogService.Show<MessageDialog>("", parameters);
 
             return await dialog.Result;
+        }
+        public async Task<DialogResult> ShowMaterial(AddEditMaterialCommand model)
+        {
+
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Material" : $"Edit {model.Name} ";
+            modeldialog.parameters.Add("Model", model);
+
+            var dialog = DialogService.Show<MaterialDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+
+            return await dialog.Result;
+
+
+        }
+        public async Task<DialogResult> ShowMWO(AddEditMWOCommand model)
+        {
+
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Material" : $"Edit {model.Name} ";
+            modeldialog.parameters.Add("Model", model);
+
+            var dialog = DialogService.Show<MWODialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+
+            return await dialog.Result;
+
+
+        }
+        public async Task<DialogResult> ShowMWOItem(AddEditMWOItemCommand model)
+        {
+
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Material" : $"Edit {model.Name} ";
+            modeldialog.parameters.Add("Model", model);
+
+            var dialog = DialogService.Show<MWOItemDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+
+            return await dialog.Result;
+
+
         }
         public async Task<DialogResult> ShowDialogName<T>(T Model) where T : AddEditCommand, new()
         {

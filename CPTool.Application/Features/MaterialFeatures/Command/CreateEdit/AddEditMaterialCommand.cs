@@ -5,7 +5,7 @@ namespace CPTool.Application.Features.MaterialFeatures.Command.CreateEdit
     public class AddEditMaterialCommand : AddEditCommand, IRequest<Result<AddEditMaterialCommand>>
     {
 
-
+        public string? Abbreviation { get; set; }
 
     }
     internal class AddEditMaterialCommandHandler : IRequestHandler<AddEditMaterialCommand, Result<AddEditMaterialCommand>>

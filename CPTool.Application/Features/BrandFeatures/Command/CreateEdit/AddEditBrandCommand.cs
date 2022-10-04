@@ -1,12 +1,13 @@
 ﻿
 
 using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
 
 namespace CPTool.Application.Features.BrandFeatures.Command.CreateEdit
 {
     public class AddEditBrandCommand : AddEditCommand, IRequest<Result<AddEditBrandCommand>>
     {
-        public List<AddEditBrandSupplierCommand> BrandSuppliers { get; set; } = new();
+        public List<AddEditBrandSupplierCommand> BrandSuppliersCommand { get; set; } = new();
         public BrandType BrandType { get; set; }
 
     }

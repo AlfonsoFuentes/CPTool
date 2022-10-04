@@ -48,48 +48,31 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit
             if (command.InletBy == InletBy.Brand)
             {
                 var result = await SolveBrand(command.BrandCommand);
-                if(result.Succeeded)
-                {
-                    command.BrandCommand = result.Data;
-                }
+               
 
             }
             else if (command.InletBy == InletBy.Supplier)
             {
                 var result = await SolveSupplier(command.SupplierCommand);
-                if (result.Succeeded)
+               
+            }
+            if(command.BrandId!=0&&command.SupplierId!=0)
+            {
+                var exist = await _unitOfWork.Repository<BrandSupplier>().GetAsync(x => x.BrandId == command.BrandCommand.Id && x.SupplierId == command.SupplierCommand.Id);
+
+                if (!(exist.Count > 0))
                 {
-                    command.SupplierCommand = result.Data;
+                    var table = _mapper.Map<BrandSupplier>(command);
+
+                    _unitOfWork.Repository<BrandSupplier>().Add(table);
+                    await _unitOfWork.Complete();
+                    command.Id = table.Id;
+
+                    return await Result<AddEditBrandSupplierCommand>.SuccessAsync(command, $"{table.Name} Added to {nameof(BrandSupplier)}");
                 }
             }
-
-
-            if (command.SupplierCommand.Id!=0&&command.BrandCommand.Id!= 0)
-            {
-                var table = _mapper.Map<BrandSupplier>(command);
-
-                _unitOfWork.Repository<BrandSupplier>().Add(table);
-                await _unitOfWork.Complete();
-                command.Id = table.Id;
-
-                return await Result<AddEditBrandSupplierCommand>.SuccessAsync(command, $"{table.Name} Added to {nameof(BrandSupplier)}");
-            }
-            else
-            {
-                //var table = await _unitOfWork.Repository<BrandSupplier>().GetAsync(command.Id);
-                //if (table != null)
-                //{
-                //    _mapper.Map(command, table, typeof(AddEditBrandSupplierCommand), typeof(BrandSupplier));
-
-                //    _unitOfWork.Repository<BrandSupplier>().Update(table);
-                //    await _unitOfWork.Complete();
-                //    return await Result<AddEditBrandSupplierCommand>.SuccessAsync(command, $"{table.Name} Updated in {nameof(BrandSupplier)}");
-                //}
-                //else
-                //{
-                //    return await Result<AddEditBrandSupplierCommand>.FailAsync($"{command.Name} not found");
-                //}
-            }
+            
+            
             return await Result<AddEditBrandSupplierCommand>.SuccessAsync(command, $"Updated in {nameof(BrandSupplier)}");
         }
 

@@ -1,8 +1,5 @@
 ﻿
-
-
-
-using CPTool.Application.Features.MMOFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
 
 namespace CPTool.Application.Features.MMOTypeFeatures.Command.CreateEdit
 {
@@ -10,7 +7,7 @@ namespace CPTool.Application.Features.MMOTypeFeatures.Command.CreateEdit
     {
 
 
-        public List<AddEditMWOCommand> MWOs { get; set; } =new();
+        public List<AddEditMWOCommand> MWOsCommand { get; set; } =new();
     }
     internal class AddEditMWOTypeCommandHandler : IRequestHandler<AddEditMWOTypeCommand, Result<AddEditMWOTypeCommand>>
     {

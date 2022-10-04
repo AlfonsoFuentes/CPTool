@@ -1,6 +1,4 @@
-﻿
-
-@if (ShowAddButton)
+﻿@if (ShowAddButton)
 {
     <ManyToManyComponent TMasterDetail="AddEditBrandSupplierCommand"
                      TMaster="AddEditBrandCommand" TDetail="AddEditSupplierCommand"
@@ -12,8 +10,17 @@
                      @bind-ElementsDetails=@ElementsSupplier
                      OnShowDialogMaster="ToolDialogService.ShowBrandDialog"
                      OnShowDialogDetails="ToolDialogService.ShowSupplierDialog"
-                     OnRowClickedMaster="RowClickedMaster" OnRowClickedDetails="RowClickedDetails"
-                     >
+                     OnRowClickedMaster="RowClickedMaster" OnRowClickedDetails="RowClickedDetails">
+        <OtherButtonsMaster>
+            <MudTooltip Text="Restore List">
+                <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+            </MudTooltip>
+        </OtherButtonsMaster>
+        <OtherButtonsDetails>
+            <MudTooltip Text="Restore List">
+                <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+            </MudTooltip>
+        </OtherButtonsDetails>
         <MasterContextTh>
 
         </MasterContextTh>

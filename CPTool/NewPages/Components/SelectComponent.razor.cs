@@ -7,8 +7,9 @@
         public bool Disable { get; set; } = false;
         [Parameter]
         [EditorRequired]
-        public int Value { get; set; } 
+        public T Value { get; set; }
 
+        int ValueInt => Value.Id;
         [Parameter]
         public string RequiredError { get; set; }
         [Parameter]
@@ -24,8 +25,14 @@
         public List<T> Elements { get; set; } = new();
 
         [Parameter]
-        [EditorRequired]
-        public EventCallback<int> SelectionChanged { get; set; }
+       
+        public EventCallback<T> SelectionChanged { get; set; }
+
+        async Task InternaSelectChanged(int id)
+        {
+            Value = Elements.FirstOrDefault(x => x.Id == id);
+            await SelectionChanged.InvokeAsync(Value);
+        }
         
 
     }

@@ -2,13 +2,9 @@
 {
     public class Supplier  : BaseDomainModel
     {
-        public Supplier()
-        {
-            Brands = new HashSet<Brand>();
-        }
-
+       
         public ICollection<EquipmentItem> EquipmentItems { get; set; } = null!;
-        public ICollection<Brand> Brands { get; set; } = null!;
+        public ICollection<BrandSupplier> BrandSuppliers { get; set; } = null!;
         public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = null!;
 
         public ICollection<InstrumentItem> InstrumentItems { get; set; } = null!;

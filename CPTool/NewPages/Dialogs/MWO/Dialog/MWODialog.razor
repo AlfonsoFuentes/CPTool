@@ -1,0 +1,64 @@
+﻿<MudDialog DisableSidePadding="true">
+    <DialogContent>
+        <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+            <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                <CascadingValue Value="this">
+
+
+                    <MudForm Model="Model" @ref="form">
+                        <AutoCompleteComponent T="AddEditMWOTypeCommand"
+                                               TList="GetMWOTypeListQuery"
+                                               TableName="MWO Type"
+                                               Label="MWO Type"
+                                               ParentId=0
+                                               UpdateParent="Validateform"
+                                               @bind-Elements="@MWOTypes"
+                                               Validation="@(new Func<string, string>(ReviewMWOType))"
+                                               @bind-Model=@Model.MWOTypeCommand></AutoCompleteComponent>
+
+
+                       
+                        <MudTextField @bind-Value="Model.Name"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      Immediate="true"
+                                      Label="Name" />
+
+                        <MudTextField T="int" @bind-Value="Model.Number"
+                                      Immediate="true"
+                                      Validation="@(new Func<int, string>(AnyNumber))"
+                                      Label="Number"
+                                      Required=true
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      InputMode="InputMode.numeric"
+                                      Mask="@mask1" />
+                        <MudTextField T="string" Value="Model.CEBName"
+                                      Immediate="true"
+                                      Disabled="true"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      Label="Number" />
+                        <MudTextField T="string" Value="Model.CECName"
+                                      Immediate="true"
+                                      Disabled="true"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      Label="CECName" />
+                    </MudForm>
+                </CascadingValue>
+
+            </MudPaper>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    public IMask mask1 = new RegexMask(@"^[0-9]\d{0,4}$");
+}

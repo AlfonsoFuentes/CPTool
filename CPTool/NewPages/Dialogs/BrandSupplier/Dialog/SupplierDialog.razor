@@ -15,9 +15,9 @@
                     <MudForm Model="Model" @ref="form">
                         <SelectComponent T="AddEditBrandCommand"
                                          Elements=@Brands
-                                         SelectionChanged="SelectionBrand"
+                                       
                                          Label="Brand or Service"
-                                         Value="Model.BrandCommand.Id">
+                                         Value="Model.BrandCommand">
 
 
                         </SelectComponent>
@@ -61,6 +61,7 @@
                                                TableName="Vendor Code"
                                                Label="Vendor Code"
                                                ParentId=0
+                                               UpdateParent="Validateform"
                                                @bind-Elements="@VendorCodes"
                                                Validation="@(new Func<string, string>(ReviewVendorCode))"
                                                @bind-Model=@Model.SupplierCommand.VendorCodeCommand></AutoCompleteComponent>
@@ -69,6 +70,7 @@
                                                TableName="Tax Codel LD"
                                                Required=true
                                                Label="Tax Codel LD"
+                                               UpdateParent="Validateform"
                                                ParentId=0
                                                @bind-Elements="@TaxCodeLDs"
                                                Validation="@(new Func<string, string>(ReviewTaxCodeLD))"
@@ -77,6 +79,7 @@
                                                TList="GetTaxCodeLPListQuery"
                                                TableName="Vendor Code"
                                                Label="Tax Codel LD"
+                                               UpdateParent="Validateform"
                                                Required=true
                                                ParentId=0
                                                @bind-Elements="@TaxCodeLPs"

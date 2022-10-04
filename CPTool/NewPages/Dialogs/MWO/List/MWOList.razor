@@ -1,0 +1,43 @@
+﻿@page "/"
+@page "/mwolist"
+<PageTitle> CP Tool</PageTitle>
+@if (ShowAddButton)
+{
+    <OneToManyListComponent TMaster="AddEditMWOCommand" TDetail="AddEditMWOItemCommand"
+                        TDeleteMaster="DeleteMWOCommand" TDeleteDetail="DeleteMWOItemCommand"
+                        TMasterList="GetMWOListQuery" TDetailList="GetMWOItemListQuery"
+                        TGedById="GetByIdMWOQuery"
+                        ElementsDetails="@SelectedMaster.MWOItemsCommand"
+                        @bind-SelectedMaster="@SelectedMaster"
+                        @bind-SelectedDetail="@SelectedDetail"
+                        OnShowDialogMaster="ToolDialogService.ShowMWO"
+                        OnShowDialogDetails="ToolDialogService.ShowMWOItem">
+        <MasterContextTh>
+            <MudTh Style="width:40px">CEC#</MudTh>
+        </MasterContextTh>
+        <MasterContextTd>
+            <MudTd DataLabel="TagLetter">@context.CECName</MudTd>
+        </MasterContextTd>
+        <DetailContextTh>
+            <MudTh Style="width:40px">Tag</MudTh>
+        </DetailContextTh>
+        <DetailContextTd>
+            <MudTd DataLabel="TagLetter">@context.TagId</MudTd>
+        </DetailContextTd>
+
+    </OneToManyListComponent>
+
+}
+
+@code {
+
+
+
+
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}
+@*   SearchFuncMaster="FilterFuncEqu" SearchFuncDetails="FilterFuncEquSub"*@

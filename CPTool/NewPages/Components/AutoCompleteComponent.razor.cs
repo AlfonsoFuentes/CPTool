@@ -43,7 +43,9 @@ namespace CPTool.NewPages.Components
         [Parameter]
         public Func<T, Task<DialogResult>> ShowDialogOverrided { get; set; }
         List<string> ListNames => Elements.Select(x => x.Name).ToList();
-
+        [Parameter]
+        [EditorRequired]
+        public Func<Task> UpdateParent { get;set; }
 
         private bool resetValueOnEmptyText = true;
         private bool coerceText = true;
@@ -138,9 +140,9 @@ namespace CPTool.NewPages.Components
                         Model =created.Data;
                        
                         await ModelChanged.InvokeAsync(Model);
-                      
-                        StateHasChanged();
 
+                        await UpdateParent.Invoke();
+                        
 
 
                     }

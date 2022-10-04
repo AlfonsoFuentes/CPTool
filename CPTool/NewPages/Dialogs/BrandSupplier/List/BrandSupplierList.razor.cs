@@ -29,7 +29,11 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.List
             ElementsBrand = await mediator.Send(BrandListQuery);
             ElementsSupplier = await mediator.Send(SupplierListQuery);
         }
-
+        async Task ViewMasterList()
+        {
+            ElementsBrand = await mediator.Send(BrandListQuery);
+            ElementsSupplier = await mediator.Send(SupplierListQuery);
+        }
         void RowClickedMaster(AddEditBrandCommand row)
         {
             AsignBrand(row);
@@ -46,12 +50,12 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.List
         void AsignBrand(AddEditBrandCommand brand)
         {
             SelectedBrand = brand;
-            ElementsSupplier = SelectedBrand.BrandSuppliers.Select(x => x.SupplierCommand).ToList();
+            ElementsSupplier = SelectedBrand.BrandSuppliersCommand.Select(x=>x.SupplierCommand).ToList();
         }
         void AsignSupplier(AddEditSupplierCommand suplier)
         {
             SelectedSupplier = suplier;
-            ElementsBrand = SelectedSupplier.BrandSuppliers.Select(x => x.BrandCommand).ToList();
+            ElementsBrand = SelectedSupplier.BrandSuppliersCommand.Select(x=>x.BrandCommand).ToList();
         }
        
       

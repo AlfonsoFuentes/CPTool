@@ -14,6 +14,9 @@
             <TableComponent T="TMaster" Elements="@ElementsMasters" OnAdd="AddMaster" OnDelete="DeleteMaster"
                         OnRowClicked="RowClickedMaster"
                         OnEdit="EditMaster" SearchFunc=MasterList.FilterFunc @bind-SelectedItem="@SelectedMaster">
+                        <OtherButtons>
+                            @OtherButtonsMaster
+                        </OtherButtons>
                 <ContextTh>
                     <MudTh Style="width:20px">#</MudTh>
 
@@ -36,6 +39,9 @@
                 <TableComponent T="TDetail" Elements="@ElementsDetails" 
                         OnRowClicked="RowClickedDetails"
                         OnAdd="AddDetail" OnDelete="DeleteDetails" OnEdit="EditDetails" SearchFunc=DetailList.FilterFunc @bind-SelectedItem="@SelectedDetail">
+                    <OtherButtons>
+                        @OtherButtonsDetails
+                    </OtherButtons>
                     <ContextTh>
                         <MudTh Style="width:20px">#</MudTh>
 

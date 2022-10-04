@@ -45,7 +45,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         }
         public async virtual Task Submit()
         {
-            await form.Validate();
+            await Validateform();
             if (form.IsValid)
             {
                 Model.InletBy = InletBy.Supplier;
@@ -54,11 +54,14 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
                 MudDialog.Close(DialogResult.Ok(Model.SupplierCommand));
             }
         }
-
-        void Cancel() => MudDialog.Cancel();
-        void SelectionBrand(int id)
+        async Task Validateform()
         {
-            Model.BrandCommand = Brands.FirstOrDefault(x => x.Id == id);
+            await form.Validate();
+        }
+        void Cancel() => MudDialog.Cancel();
+        void SelectionBrand(AddEditBrandCommand id)
+        {
+            Model.BrandCommand = Brands.FirstOrDefault(x => x == id);
         }
         private string ValidateSupplieName(string arg)
         {

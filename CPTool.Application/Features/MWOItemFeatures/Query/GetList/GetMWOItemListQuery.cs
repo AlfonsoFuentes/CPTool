@@ -1,11 +1,9 @@
-﻿
-
-using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
 
 namespace CPTool.Application.Features.MWOItemFeatures.Query.GetList
 {
-   
-    public class GetMWOItemListQuery : AddEditCommand, IRequest<List<AddEditMWOItemCommand>>
+
+    public class GetMWOItemListQuery : GetListQuery, IRequest<List<AddEditMWOItemCommand>>
     {
        
 

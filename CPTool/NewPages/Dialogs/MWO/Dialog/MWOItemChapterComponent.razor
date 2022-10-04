@@ -1,0 +1,38 @@
+﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
+@if (assign)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="12" Class="pa-4">
+
+            <SelectComponent T="AddEditChapterCommand"
+                         Elements=@DialogParent.Chapters
+                         Label="Chapter"
+                         SelectionChanged="Model.AssignInternalItem"
+                         Value="@Model.ChapterCommand">
+
+
+            </SelectComponent>
+
+            <MudTextField T="string" Value="Model.Nomenclatore"
+                      Immediate="true"
+                      Disabled="true"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Label="Nomenclatore" />
+            <MudTextField T="string" @bind-Value="Model.Name"
+                      Immediate="true"
+                      Required="true"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Validation="@(new Func<string,string>(DialogParent.AnyName))"
+                      Label="item Name" />
+
+        </MudItem>
+    </MudGrid>
+}
+
+
+@code {
+    bool assign = true;
+
+}

@@ -63,7 +63,7 @@ namespace CPTool.Infrastructure.Repositories
 
         public void Add(T entity)
         {
-            dbcontext.Set<T>().Add(entity);
+            dbcontext.Add(entity);
         }
 
         public void Update(T entity)
@@ -90,7 +90,8 @@ namespace CPTool.Infrastructure.Repositories
             if (orderBy != null)
                 return await orderBy(query).ToListAsync();
 
-            return await query.ToListAsync();
+            var retorno= await query.ToListAsync();
+            return retorno;
         }
         IQueryable<T> Query(IQueryable<T> table)
         {

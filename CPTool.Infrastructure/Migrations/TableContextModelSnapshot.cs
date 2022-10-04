@@ -1714,7 +1714,7 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MWOId")
+                    b.Property<int>("MWOId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -2784,15 +2784,19 @@ namespace CPTool.Infrastructure.Migrations
                         .WithMany("PurchaseOrders")
                         .HasForeignKey("BrandId");
 
-                    b.HasOne("CPTool.Domain.Entities.MWO", null)
+                    b.HasOne("CPTool.Domain.Entities.MWO", "MWO")
                         .WithMany("PurchaseOrders")
-                        .HasForeignKey("MWOId");
+                        .HasForeignKey("MWOId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CPTool.Domain.Entities.Supplier", "Supplier")
                         .WithMany("PurchaseOrders")
                         .HasForeignKey("SupplierId");
 
                     b.Navigation("Brand");
+
+                    b.Navigation("MWO");
 
                     b.Navigation("Supplier");
                 });
@@ -2802,13 +2806,13 @@ namespace CPTool.Infrastructure.Migrations
                     b.HasOne("CPTool.Domain.Entities.MWOItem", "MWOItem")
                         .WithMany("PurchaseOrderMWOItems")
                         .HasForeignKey("MWOItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CPTool.Domain.Entities.PurchaseOrder", "PurchaseOrder")
                         .WithMany("PurchaseOrderMWOItems")
                         .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("MWOItem");

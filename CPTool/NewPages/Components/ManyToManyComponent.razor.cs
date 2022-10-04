@@ -1,5 +1,6 @@
 ﻿
 using MediatR;
+using MudBlazor;
 
 namespace CPTool.NewPages.Components
 {
@@ -19,6 +20,10 @@ namespace CPTool.NewPages.Components
         TMasterList MasterList = new();
         TDetailList DetailList = new();
 
+        [Parameter]
+        public RenderFragment OtherButtonsMaster { get; set; }
+        [Parameter]
+        public RenderFragment OtherButtonsDetails { get; set; }
         [Parameter]
 
         public List<TMaster> ElementsMasters { get; set; } = new();
@@ -82,8 +87,11 @@ namespace CPTool.NewPages.Components
             {
                 SelectedMaster = result.Data as TMaster;
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                SelectedMaster = ElementsMasters.FirstOrDefault(x => x.Id == SelectedMaster.Id);
+
                 await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                await OnRowClickedMaster.InvokeAsync(SelectedMaster);
+         
             }
 
         }
@@ -99,8 +107,11 @@ namespace CPTool.NewPages.Components
                 SelectedDetail = result.Data as TDetail;
 
                 ElementsDetails = (await mediator.Send(DetailList)) as List<TDetail>;
+
+                SelectedDetail= ElementsDetails.FirstOrDefault(x=>x.Id==SelectedDetail.Id);
                 await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
-                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                await OnRowClickedDetails.InvokeAsync(SelectedDetail);
+             
             }
 
         }
@@ -118,8 +129,10 @@ namespace CPTool.NewPages.Components
             {
                 SelectedMaster = result.Data as TMaster;
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                SelectedMaster = ElementsMasters.FirstOrDefault(x => x.Id == SelectedMaster.Id);
+
                 await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                await OnRowClickedMaster.InvokeAsync(SelectedMaster);
             }
 
         }
@@ -135,8 +148,10 @@ namespace CPTool.NewPages.Components
                 SelectedDetail = result.Data as TDetail;
 
                 ElementsDetails = (await mediator.Send(DetailList)) as List<TDetail>;
+
+                SelectedDetail = ElementsDetails.FirstOrDefault(x => x.Id == SelectedDetail.Id);
                 await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
-                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                await OnRowClickedDetails.InvokeAsync(SelectedDetail);
 
             }
 
@@ -152,7 +167,7 @@ namespace CPTool.NewPages.Components
                 SelectedMaster = new();
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
                 await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                await OnRowClickedMaster.InvokeAsync(SelectedMaster);
             }
 
 
@@ -167,8 +182,8 @@ namespace CPTool.NewPages.Components
             {
                 SelectedDetail = new();
                 ElementsDetails = (await mediator.Send(DetailList)) as List<TDetail>;
-                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
-
+                await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
+                await OnRowClickedDetails.InvokeAsync(SelectedDetail);
             }
 
 

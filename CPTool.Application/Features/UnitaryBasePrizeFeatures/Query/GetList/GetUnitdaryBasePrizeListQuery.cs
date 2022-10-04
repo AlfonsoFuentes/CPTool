@@ -23,7 +23,7 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList
         }
         public async Task<List<AddEditUnitaryBasePrizeCommand>> Handle(GetUnitaryBasePrizeListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<Gasket>().GetAllAsync();
+            var list = await _unitofwork.Repository<UnitaryBasePrize>().GetAllAsync();
 
             return _mapper.Map<List<AddEditUnitaryBasePrizeCommand>>(list);
 

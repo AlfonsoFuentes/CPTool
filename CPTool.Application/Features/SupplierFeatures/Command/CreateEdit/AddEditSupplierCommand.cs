@@ -1,5 +1,6 @@
 ﻿
 
+using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
 using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit;
 using CPTool.Application.Features.TaxCodeLDFeatures.Command.CreateEdit;
 using CPTool.Application.Features.TaxCodeLPFeatures.Command.CreateEdit;
@@ -17,7 +18,7 @@ namespace CPTool.Application.Features.SupplierFeatures.Command.CreateEdit
         public string Email { get; set; } = "";
         public string ContactPerson { get; set; } = "";
 
-        public List<AddEditBrandSupplierCommand> BrandSuppliers { get; set; } = new();
+        public List<AddEditBrandSupplierCommand> BrandSuppliersCommand { get; set; } = new();
         public int TaxCodeLPId => TaxCodeLPCommand.Id;
         public AddEditTaxCodeLPCommand TaxCodeLPCommand { get; set; } = new();
         public int VendorCodeId => VendorCodeCommand.Id;

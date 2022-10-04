@@ -3,15 +3,17 @@
            Margin="Margin.Dense"
            T="int"
            AdornmentColor="Color.Primary"
-
+           Clearable=true
+           Placeholder=@($"Must select {Label} ...")
+             
            Label=@Label
            Disabled=@Disable
            AnchorOrigin="Origin.BottomCenter"
-           Value=@Value
+           Value=@ValueInt
            Variant="Variant.Outlined"
            Validation="@Validation"
-           ValueChanged=SelectionChanged>
-    <MudSelectItem Value=0>Must select @Label ...</MudSelectItem>
+           ValueChanged=InternaSelectChanged>
+    <MudSelectItem Value=ValueInt>Must select @Label ...</MudSelectItem>
     @foreach (var item in Elements)
     {
         <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>

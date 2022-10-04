@@ -9,7 +9,7 @@ namespace CPTool.Application.Features.BrandFeatures.Mapping
         public BrandMapping()
         {
             CreateMap<Brand, AddEditBrandCommand>()
-                .ForMember(dest => dest.BrandSuppliers, act => { act.PreCondition(src => (src.BrandSuppliers != null)); act.MapFrom(src => src.BrandSuppliers); });
+                .ForMember(dest => dest.BrandSuppliersCommand, act => { act.PreCondition(src => (src.BrandSuppliers != null)); act.MapFrom(src => src.BrandSuppliers); });
 
             CreateMap<AddEditBrandCommand, Brand>();
         }

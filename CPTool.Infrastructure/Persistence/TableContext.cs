@@ -55,25 +55,20 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.OverallDropPressure).WithMany(t => t.OverallDropPressurePipeAccesorys).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.ElevationChange).WithMany(t => t.ElevationChangePipeAccesorys).OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<BrandSupplier>()
+             .HasKey(t => new { t.BrandId, t.SupplierId });
+
+            modelBuilder.Entity<BrandSupplier>()
+                .HasOne(pt => pt.Brand)
+                .WithMany(p => p.BrandSuppliers)
+                .HasForeignKey(pt => pt.BrandId);
+
+            modelBuilder.Entity<BrandSupplier>()
+                .HasOne(pt => pt.Supplier)
+                .WithMany(t => t.BrandSuppliers)
+                .HasForeignKey(pt => pt.SupplierId);
 
 
-            //Relation Many to Many Brand Supplier
-
-            modelBuilder.Entity<Brand>()
-              .HasMany(p => p.Suppliers)
-              .WithMany(t => t.Brands)
-              .UsingEntity<BrandSupplier>(
-                  pt => pt.HasKey(e => new { e.BrandId, e.SupplierId })
-              );
-
-            //modelBuilder.Entity<Brand>().HasMany(c => c.BrandSuppliers).WithOne(t => t.Brand).OnDelete(DeleteBehavior.Cascade);
-            //modelBuilder.Entity<Supplier>().HasMany(c => c.BrandSuppliers).WithOne(t => t.Supplier).OnDelete(DeleteBehavior.Cascade);
-
-            //modelBuilder.Entity<BrandSupplier>().HasKey(i => new { i.BrandId, i.SupplierId });
-            //modelBuilder.Entity<BrandSupplier>().HasOne(x => x.Supplier).WithMany(p => p.BrandSuppliers);
-            //modelBuilder.Entity<BrandSupplier>().HasOne(x => x.Brand).WithMany(p => p.BrandSuppliers);
-
-         
 
             //Relation Many to Many Purchase Order  MWOItem
             modelBuilder.Entity<PurchaseOrderMWOItem>().HasKey(i => new { i.PurchaseOrderId, i.MWOItemId });

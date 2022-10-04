@@ -21,10 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\MWOFeatures\Command\Delete\" />
-    <Folder Include="Features\MWOFeatures\Mapping\" />
-    <Folder Include="Features\MWOFeatures\Query\GetById\" />
-    <Folder Include="Features\MWOFeatures\Query\GetList\" />
+    <Folder Include="Features\NewFolder1\" />
+    <Folder Include="Features\NewFolder\" />
   </ItemGroup>
 
 </Project>
