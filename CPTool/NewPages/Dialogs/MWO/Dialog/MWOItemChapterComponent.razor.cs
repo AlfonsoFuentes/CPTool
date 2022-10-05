@@ -8,6 +8,8 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
         protected AddEditMWOItemCommand Model => DialogParent.Model;
-        
+
+       
+
     }
 }

@@ -5,9 +5,12 @@ namespace CPTool.Infrastructure.Repositories
     {
         private Hashtable _repository = null!;
         private readonly TableContext _context;
-       
 
-     
+        public IRepositoryMWO RepositoryMWO => _repositorymwo ??= new RepositoryMWO(_context);
+        public IRepositoryMWOItem RepositoryMWOItem => _repositorymwoitem ??= new RepositoryMWOItem(_context);
+
+        private IRepositoryMWO _repositorymwo = null!;
+        private IRepositoryMWOItem _repositorymwoitem = null!;
 
         public UnitOfWork(TableContext context)
         {
@@ -43,5 +46,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             _context.Dispose();
         }
+
+       
     }
 }

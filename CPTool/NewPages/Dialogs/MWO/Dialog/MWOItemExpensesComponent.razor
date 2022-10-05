@@ -1,0 +1,53 @@
+﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
+@if (assign)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="12" Class="pa-4">
+            <AutoCompleteComponent T="AddEditUnitaryBasePrizeCommand"
+                               TList="GetUnitaryBasePrizeListQuery"
+                               TableName="Unitary prize unit"
+                               Label="Unitary prize unit"
+                               ParentId=0
+                               UpdateParent="DialogParent.Validateform"
+                               @bind-Elements="@DialogParent.UnitaryBasePrizes"
+                               Validation="@(new Func<string, string>(ValidateUnitaryPrizeName))"
+                               @bind-Model=@Model.UnitaryBasePrizeCommand></AutoCompleteComponent>
+
+
+           
+            <MudTextField T="decimal" @bind-Value="Model.UnitaryPrize"
+                      Immediate="true"
+                      InputMode="InputMode.numeric"
+                      Label="Unitary prize"
+                      Validation="@(new Func<double, string>(ValidateUnitaryPrize))"
+                      Format="C"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"></MudTextField>
+
+            <MudTextField T="decimal" @bind-Value="Model.Quantity"
+                      Immediate="true"
+                      InputMode="InputMode.numeric"
+                      Label="Quantity"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Validation="@(new Func<double, string>(ValidateQuantity))"></MudTextField>
+
+
+            <MudTextField T="string" Value="@(Model.BudgetPrize.ToString())"
+                      Adornment="@Adornment.Start"
+                      AdornmentIcon=@Icons.Material.Filled.AttachMoney
+                      Format="C"
+                      Disabled="true"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Label="Budget Prize, USD"></MudTextField>
+
+        </MudItem>
+    </MudGrid>
+}
+
+
+@code {
+    bool assign = true;
+
+}

@@ -27,7 +27,7 @@ namespace CPTool.Application.Features.SupplierFeatures.Query.GetList
         }
         public async Task<List<AddEditSupplierCommand>> Handle(GetSupplierListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<Supplier>().GetAsync(null!,null!,true,false);
+            var list = await _unitofwork.Repository<Supplier>().GetAllAsync();
 
             var retorno= _mapper.Map<List<AddEditSupplierCommand>>(list);
             return retorno;

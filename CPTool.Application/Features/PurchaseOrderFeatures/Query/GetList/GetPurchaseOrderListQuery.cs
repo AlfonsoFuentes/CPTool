@@ -22,7 +22,7 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList
         }
         public async Task<List<AddEditPurchaseOrderCommand>> Handle(GetPurchaseOrderListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<PurchaseOrder>().GetAsync(null!,null!,true,true);
+            var list = await _unitofwork.Repository<PurchaseOrder>().GetAllAsync();
 
             return _mapper.Map<List<AddEditPurchaseOrderCommand>>(list);
 

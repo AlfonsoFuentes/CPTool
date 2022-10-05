@@ -11,6 +11,7 @@ namespace CPTool.Application.Contracts.Persistence
         IRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel;
         Task<int> Complete();
        
-
+        IRepositoryMWO RepositoryMWO { get; }
+        IRepositoryMWOItem RepositoryMWOItem { get; }
     }
 }

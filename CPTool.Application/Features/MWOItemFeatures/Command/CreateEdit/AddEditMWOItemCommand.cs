@@ -17,15 +17,16 @@ using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.Struct
 using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.TaxesItemFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.TestingItemFeatures.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
+using System.Reflection;
 
 namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
 {
     public class AddEditMWOItemCommand : AddEditCommand, IRequest<Result<AddEditMWOItemCommand>>
     {
         public int MWOId => MWOCommand.Id;
-        public AddEditMWOCommand MWOCommand { get; set; } = new();
+        public AddEditMWOCommand MWOCommand { get; set; } = null!;
         public int Order { get; set; }
-        public string? Nomenclatore { get; set; }
+        public string? Nomenclatore  => $"{ChapterCommand.Letter}{Order}";
         public decimal BudgetPrize { get; set; }
         public decimal RealPrize { get; set; }
         public decimal UnitaryPrize { get; set; }
@@ -40,7 +41,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
         public AddEditFoundationItemCommand? FoundationItemCommand { get; set; }
         public int? StructuralItemId => StructuralItemCommand?.Id;
         public AddEditStructuralItemCommand? StructuralItemCommand { get; set; }
-        public int? EquipmentItemId => EquipmentItemCommand?.Id;
+        //public int? EquipmentItemId => EquipmentItemCommand?.Id;
         public AddEditEquipmentItemCommand? EquipmentItemCommand { get; set; }
         public int? ElectricalItemId => ElectricalItemCommand?.Id;
         public AddEditElectricalItemCommand? ElectricalItemCommand { get; set; }
@@ -65,11 +66,14 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
 
         public int? UnitaryBasePrizeId => UnitaryBasePrizeCommand.Id;
         public AddEditUnitaryBasePrizeCommand UnitaryBasePrizeCommand { get; set; } = new();
-        
-       public void AssignInternalItem(AddEditChapterCommand chapterCommand)
+
+        public void AssignInternalItem()
         {
-            ChapterCommand = chapterCommand;
-            switch (chapterCommand.Id)
+            var list = MWOCommand.MWOItemsCommand.Where(x=>x.ChapterId== ChapterCommand.Id).ToList();
+            Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
+
+
+            switch (ChapterCommand.Id)
             {
                 case 1:
                     AlterationItemCommand = new();
@@ -88,7 +92,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
                     break;
                 case 6:
                     PipingItemCommand = new();
-                   
+
                     break;
                 case 7:
                     InstrumentItemCommand = new();
@@ -116,7 +120,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
                     break;
             }
         }
-        
+
     }
     internal class AddEditMWOItemCommandHandler : IRequestHandler<AddEditMWOItemCommand, Result<AddEditMWOItemCommand>>
     {
@@ -135,10 +139,10 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
 
         public async Task<Result<AddEditMWOItemCommand>> Handle(AddEditMWOItemCommand command, CancellationToken cancellationToken)
         {
-           
+
             if (command.Id == 0)
             {
-                
+
                 var table = _mapper.Map<MWOItem>(command);
 
                 _unitOfWork.Repository<MWOItem>().Add(table);
@@ -173,7 +177,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
                 .NotNull().WithMessage("Not null")
                 .MaximumLength(50).WithMessage("Max 50 characters");
 
-          
+
 
         }
     }

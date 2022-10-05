@@ -1,29 +1,45 @@
 ﻿<MudDialog DisableSidePadding="true">
     <DialogContent>
         <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
-            <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+           
                 <CascadingValue Value="this">
 
 
                     <MudForm Model="Model" @ref="form">
+
+                        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+                            <MudTabPanel Text="Name">
+                                <MudGrid>
+
+                                    <MudItem xs="12" sm="6">
+                                        <MWOItemChapterComponent></MWOItemChapterComponent>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="6">
+                                        <MWOItemExpensesComponent></MWOItemExpensesComponent>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudTabPanel>
+                            <MudTabPanel Text="Specs">
+                                <MudText>Content Two</MudText>
+                            </MudTabPanel>
+                            <MudTabPanel Text="Tab Three">
+                                <MudText>Content Three</MudText>
+                            </MudTabPanel>
+                            <MudTabPanel Text="Tab Disabled" Disabled="true">
+                                <MudText>Content Disabled</MudText>
+                            </MudTabPanel>
+                        </MudTabs>
                         <MudGrid>
-                            <MudItem xs="12">
-                                 <MudGrid>
 
-                                <MudItem xs="12" sm="6">
-                                    <MWOItemChapterComponent></MWOItemChapterComponent>
-                                </MudItem>
-                                <MudItem xs="12" sm="6">
-                                    
-                                </MudItem>
 
-                            </MudGrid>
-                            </MudItem>
+
                         </MudGrid>
+
                     </MudForm>
                 </CascadingValue>
 
-            </MudPaper>
+           
         </MudContainer>
     </DialogContent>
     <DialogActions>

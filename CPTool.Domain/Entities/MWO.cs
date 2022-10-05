@@ -12,8 +12,8 @@
 
         public int MWOTypeId { get; set; }
         public MWOType MWOType { get; set; } = null!;
-        public ICollection<MWOItem>? MWOItems { get; set; }
-        public ICollection<PurchaseOrder>? PurchaseOrders { get; set; }
+        public ICollection<MWOItem> MWOItems { get; set; } = null!;
+        public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = null!;
     }
 
 

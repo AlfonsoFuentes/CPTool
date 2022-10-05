@@ -20,7 +20,7 @@
         }
         public async Task<List<AddEditMWOTypeCommand>> Handle(GetMWOTypeListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<MWOType>().GetAsync(null!,null!,true,true);
+            var list = await _unitofwork.Repository<MWOType>().GetAllAsync();
 
             return _mapper.Map<List<AddEditMWOTypeCommand>>(list);
 

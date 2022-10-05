@@ -6,10 +6,13 @@
         [Parameter]
         public bool Disable { get; set; } = false;
         [Parameter]
-        [EditorRequired]
         public T Value { get; set; }
+        [Parameter]
+        public EventCallback<T> ValueChanged { get; set; }
+        [Parameter]
+        public EventCallback SelectionChanged { get; set; }        
 
-        int ValueInt => Value.Id;
+        public int ValueInt => Value.Id;
         [Parameter]
         public string RequiredError { get; set; }
         [Parameter]
@@ -24,16 +27,14 @@
         [EditorRequired]
         public List<T> Elements { get; set; } = new();
 
-        [Parameter]
-       
-        public EventCallback<T> SelectionChanged { get; set; }
-
+        
         async Task InternaSelectChanged(int id)
         {
+           
             Value = Elements.FirstOrDefault(x => x.Id == id);
-            await SelectionChanged.InvokeAsync(Value);
+            await ValueChanged.InvokeAsync(Value);
+            await SelectionChanged.InvokeAsync();
         }
-        
-
+      
     }
 }

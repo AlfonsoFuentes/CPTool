@@ -73,8 +73,10 @@ namespace CPTool.Infrastructure.Persistence
             //Relation Many to Many Purchase Order  MWOItem
             modelBuilder.Entity<PurchaseOrderMWOItem>().HasKey(i => new { i.PurchaseOrderId, i.MWOItemId });
             modelBuilder.Entity<PurchaseOrder>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.PurchaseOrder).OnDelete(DeleteBehavior.NoAction);
+            
             modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
-
+        
+            modelBuilder.Entity<Chapter>().Navigation(e => e.MWOItems).AutoInclude();
             modelBuilder.Entity<EquipmentType>().Navigation(e => e.EquipmentTypeSubs).AutoInclude();
         }
 

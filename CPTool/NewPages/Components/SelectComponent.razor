@@ -1,11 +1,13 @@
 ﻿@typeparam T
-<MudSelect Dense="true"
+
+@if (show)
+{
+    <MudSelect Dense="true"
            Margin="Margin.Dense"
            T="int"
            AdornmentColor="Color.Primary"
            Clearable=true
            Placeholder=@($"Must select {Label} ...")
-             
            Label=@Label
            Disabled=@Disable
            AnchorOrigin="Origin.BottomCenter"
@@ -13,14 +15,16 @@
            Variant="Variant.Outlined"
            Validation="@Validation"
            ValueChanged=InternaSelectChanged>
-    <MudSelectItem Value=ValueInt>Must select @Label ...</MudSelectItem>
-    @foreach (var item in Elements)
-    {
-        <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
-    }
+        <MudSelectItem Value=ValueInt>Must select @Label ...</MudSelectItem>
+        @foreach (var item in Elements)
+        {
+            <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
+        }
 
-</MudSelect>
+    </MudSelect>
+}
+
 
 @code {
-
+    bool show = true;
 }

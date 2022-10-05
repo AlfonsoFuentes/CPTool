@@ -19,9 +19,10 @@ namespace CPTool.Application.Features.MWOItemFeatures.Query.GetById
         }
         public async Task<AddEditMWOItemCommand> Handle(GetByIdMWOItemQuery request, CancellationToken cancellationToken)
         {
-            var table = await _unitofwork.Repository<MWOItem>().GetByIdAsync(request.Id);
+            var table = await _unitofwork.RepositoryMWOItem.GetMWOItemIdAsync(request.Id);
 
-            return _mapper.Map<AddEditMWOItemCommand>(table);
+            var result= _mapper.Map<AddEditMWOItemCommand>(table);
+            return result;
 
         }
     }

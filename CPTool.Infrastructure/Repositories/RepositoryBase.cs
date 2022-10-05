@@ -3,6 +3,7 @@ using CPTool.Domain.Common;
 using CPTool.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -19,12 +20,14 @@ namespace CPTool.Infrastructure.Repositories
         {
             try
             {
-                var db =  dbcontext.Set<T>();
-                return await db.ToListAsync();
+                IQueryable<T> query = dbcontext.Set<T>();
+
+                var retorno = await query.ToListAsync();
+                return retorno;
             }
             catch (Exception ex)
             {
-                string exm=ex.Message;  
+                string exm = ex.Message;
             }
             return null!;
         }
@@ -90,7 +93,7 @@ namespace CPTool.Infrastructure.Repositories
             if (orderBy != null)
                 return await orderBy(query).ToListAsync();
 
-            var retorno= await query.ToListAsync();
+            var retorno = await query.ToListAsync();
             return retorno;
         }
         IQueryable<T> Query(IQueryable<T> table)
@@ -104,6 +107,8 @@ namespace CPTool.Infrastructure.Repositories
             foreach (var property in navigations)
             {
                 query = query.Include(property.Name);
+                var entity = property.DeclaringEntityType;
+
 
             }
             return query;

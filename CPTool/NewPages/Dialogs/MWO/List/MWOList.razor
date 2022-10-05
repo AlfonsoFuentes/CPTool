@@ -1,12 +1,13 @@
 ﻿@page "/"
 @page "/mwolist"
+@using CPTool.Application.Features.MWOItemFeatures.Query.GetById
 <PageTitle> CP Tool</PageTitle>
 @if (ShowAddButton)
 {
     <OneToManyListComponent TMaster="AddEditMWOCommand" TDetail="AddEditMWOItemCommand"
                         TDeleteMaster="DeleteMWOCommand" TDeleteDetail="DeleteMWOItemCommand"
                         TMasterList="GetMWOListQuery" TDetailList="GetMWOItemListQuery"
-                        TGedById="GetByIdMWOQuery"
+                        TMasterGedById="GetByIdMWOQuery" TDetailGedById="GetByIdMWOItemQuery"
                         ElementsDetails="@SelectedMaster.MWOItemsCommand"
                         @bind-SelectedMaster="@SelectedMaster"
                         @bind-SelectedDetail="@SelectedDetail"

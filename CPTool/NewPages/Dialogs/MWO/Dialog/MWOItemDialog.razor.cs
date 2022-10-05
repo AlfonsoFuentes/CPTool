@@ -4,6 +4,8 @@ using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.Query.GetList;
 using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
 
 namespace CPTool.NewPages.Dialogs.MWO.Dialog
 {
@@ -14,18 +16,23 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
         public AddEditMWOItemCommand Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
-        GetChapterListQuery ChapterList = new();
-        GetMWOItemListQuery MWOItemList = new();
-
+       
         public List<AddEditChapterCommand> Chapters = new();
+        public List<AddEditUnitaryBasePrizeCommand> UnitaryBasePrizes = new();
         public List<AddEditMWOItemCommand> MWOItems = new();
         [Parameter]
         public MudForm form { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {
+            GetChapterListQuery ChapterList = new();
+            GetMWOItemListQuery MWOItemList = new();
+            GetUnitaryBasePrizeListQuery unitarybaseprie = new();
             Chapters = await mediator.Send(ChapterList);
+            StateHasChanged();
             MWOItems = await mediator.Send(MWOItemList);
+            UnitaryBasePrizes = await mediator.Send(unitarybaseprie);
+           
         }
 
         public async virtual Task Submit()
@@ -41,7 +48,7 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
         }
 
         void Cancel() => MudDialog.Cancel();
-        async Task Validateform()
+        public async Task Validateform()
         {
             await form.Validate();
         }

@@ -8,7 +8,8 @@
                          Elements=@DialogParent.Chapters
                          Label="Chapter"
                          SelectionChanged="Model.AssignInternalItem"
-                         Value="@Model.ChapterCommand">
+                         Disable=@(Model.ChapterCommand.Id==0?false:true)
+                         @bind-Value="@Model.ChapterCommand">
 
 
             </SelectComponent>

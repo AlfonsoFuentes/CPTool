@@ -1,10 +1,11 @@
-﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList
+﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList
 @if (ShowAddButton)
 {
     <OneToManyListComponent TMaster="AddEditEquipmentTypeCommand" TDetail="AddEditEquipmentTypeSubCommand"
                         TDeleteMaster="DeleteEquipmentTypeCommand" TDeleteDetail="DeleteEquipmentTypeSubCommand"
                         TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
-                        TGedById="GetByIdEquipmentTypeQuery"
+                        TMasterGedById="GetByIdEquipmentTypeQuery" TDetailGedById="GetByIdEquipmentTypeSubQuery"
                      
                       
                         ElementsDetails="@SelectedEqu.EquipmentTypesSub"

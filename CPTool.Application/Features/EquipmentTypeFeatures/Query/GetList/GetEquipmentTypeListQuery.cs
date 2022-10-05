@@ -25,7 +25,7 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList
         }
         public async Task<List<AddEditEquipmentTypeCommand>> Handle(GetEquipmentTypeListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<EquipmentType>().GetAsync(null!,null!,true,true);
+            var list = await _unitofwork.Repository<EquipmentType>().GetAllAsync();
 
             return _mapper.Map<List<AddEditEquipmentTypeCommand>>(list);
 

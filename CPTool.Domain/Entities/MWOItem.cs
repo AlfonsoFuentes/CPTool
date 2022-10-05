@@ -11,14 +11,17 @@
         public Chapter Chapter { get; set; } = null!;
         public int MWOId { get; set; }
         public MWO MWO { get; set; } = null!;
+        public int? UnitaryBasePrizeId { get; set; }
+        public UnitaryBasePrize? UnitaryBasePrize { get; set; }
+
         public int? AlterationItemId { get; set; }
         public AlterationItem? AlterationItem { get; set; }
         public int? FoundationItemId { get; set; }
         public FoundationItem? FoundationItem { get; set; }
         public int? StructuralItemId { get; set; }
         public StructuralItem? StructuralItem { get; set; }
-        public int? EquipmentItemId { get; set; }
-        public EquipmentItem? EquipmentItem { get; set; }
+        public int EquipmentItemId { get; set; }
+        public EquipmentItem? EquipmentItem { get; set; } 
         public int? ElectricalItemId { get; set; }
         public ElectricalItem? ElectricalItem { get; set; }
         public int? PipingItemId { get; set; }
@@ -40,8 +43,7 @@
         public int? ContingencyItemId { get; set; }
         public ContingencyItem? ContingencyItem { get; set; }
 
-        public int? UnitaryBasePrizeId { get; set; }
-        public UnitaryBasePrize? UnitaryBasePrize { get; set; }
+      
 
         public int Order { get; set; }
         public string? Nomenclatore { get; set; }

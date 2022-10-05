@@ -20,9 +20,12 @@ namespace CPTool.Application.Features.MWOFeatures.Query.GetById
         }
         public async Task<AddEditMWOCommand> Handle(GetByIdMWOQuery request, CancellationToken cancellationToken)
         {
-            var table = await _unitofwork.Repository<MWO>().GetByIdAsync(request.Id);
+           
+         
+            var table2=await _unitofwork.RepositoryMWO.GetMWO_ItemsIdAsync(request.Id);
 
-            return _mapper.Map<AddEditMWOCommand>(table);
+
+            return _mapper.Map<AddEditMWOCommand>(table2);
 
         }
     }

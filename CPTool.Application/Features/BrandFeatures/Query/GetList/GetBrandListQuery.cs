@@ -27,7 +27,7 @@ namespace CPTool.Application.Features.BrandFeatures.Query.GetList
         }
         public async Task<List<AddEditBrandCommand>> Handle(GetBrandListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<Brand>().GetAsync(null!,null!,true,false);
+            var list = await _unitofwork.Repository<Brand>().GetAllAsync();
 
             var reteorno= _mapper.Map<List<AddEditBrandCommand>>(list);
             return reteorno;

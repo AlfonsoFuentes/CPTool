@@ -11,7 +11,8 @@ namespace CPTool.Application.Features.ChapterFeatures.Mapping
         public ChapterMapping()
         {
             CreateMap<Chapter, AddEditChapterCommand>()
-               ;
+                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
+           
            
 
             CreateMap<AddEditChapterCommand, Chapter>();

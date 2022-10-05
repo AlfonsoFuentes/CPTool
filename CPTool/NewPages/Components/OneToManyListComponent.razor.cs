@@ -2,14 +2,15 @@
 
 namespace CPTool.NewPages.Components
 {
-    public partial class OneToManyListComponent<TMaster, TDetail, TMasterList, TDetailList, TDeleteMaster, TDeleteDetail, TGedById>
+    public partial class OneToManyListComponent<TMaster, TDetail, TMasterList, TDetailList, TDeleteMaster, TDeleteDetail, TMasterGedById, TDetailGedById>
         where TMaster : AddEditCommand, new()
         where TDetail : AddEditCommand, new()
         where TMasterList : GetListQuery, new()
         where TDetailList : GetListQuery, new()
         where TDeleteMaster : DeleteCommand, new()
-        where TDeleteDetail:DeleteCommand,new()
-        where TGedById : GetByIdQuery, new()
+        where TDeleteDetail : DeleteCommand, new()
+        where TMasterGedById : GetByIdQuery, new()
+        where TDetailGedById : GetByIdQuery, new()
     {
 
         [Inject]
@@ -24,12 +25,12 @@ namespace CPTool.NewPages.Components
         public List<TDetail> ElementsDetails { get; set; } = new();
 
         [Parameter]
-       
+
         public TMaster SelectedMaster { get; set; } = new();
         [Parameter]
         public EventCallback<TMaster> SelectedMasterChanged { get; set; }
         [Parameter]
-       
+
         public TDetail SelectedDetail { get; set; } = new();
         [Parameter]
         public EventCallback<TDetail> SelectedDetailChanged { get; set; }
@@ -51,9 +52,9 @@ namespace CPTool.NewPages.Components
         [Parameter]
         [EditorRequired]
         public Func<TDetail, Task<DialogResult>> OnShowDialogDetails { get; set; }
-       
 
-       
+
+
         protected override async Task OnInitializedAsync()
         {
             ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
@@ -61,12 +62,22 @@ namespace CPTool.NewPages.Components
 
         async Task RowClickedMaster(TableRowClickEventArgs<TMaster> eq)
         {
-            SelectedMaster = eq.Item;
+
+            TMasterGedById getbyid = new()
+            {
+                Id = eq.Item.Id,
+            };
+            SelectedMaster = await mediator.Send(getbyid) as TMaster;
             await SelectedMasterChanged.InvokeAsync(SelectedMaster);
         }
         async Task RowClickedDetail(TableRowClickEventArgs<TDetail> eq)
         {
-            SelectedDetail = eq.Item;
+
+            TDetailGedById getbyid = new()
+            {
+                Id = eq.Item.Id,
+            };
+            SelectedDetail = await mediator.Send(getbyid) as TDetail;
             await SelectedDetailChanged.InvokeAsync(SelectedDetail);
         }
         async Task Add()
@@ -98,7 +109,7 @@ namespace CPTool.NewPages.Components
         }
         async Task Delete()
         {
-          TDeleteMaster  ModelDelete = new() { Id = SelectedMaster.Id, Name = SelectedMaster.Name };
+            TDeleteMaster ModelDelete = new() { Id = SelectedMaster.Id, Name = SelectedMaster.Name };
 
             var result = await ToolDialogService.DeleteRow(ModelDelete);
 
@@ -119,12 +130,16 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogDetails.Invoke(model);
             if (!result.Cancelled)
             {
-                SelectedDetail = result.Data as TDetail;
+                var data = result.Data as TDetail;
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                TGedById query = new() { Id = SelectedMaster.Id };
+                TMasterGedById query = new() { Id = SelectedMaster.Id };
 
                 SelectedMaster = (await mediator.Send(query)) as TMaster;
+                TDetailGedById querydetail = new() { Id = data.Id };
+
+                SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
                 await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
             }
 
         }
@@ -132,29 +147,35 @@ namespace CPTool.NewPages.Components
         async Task EditDetail()
         {
             var result = await OnShowDialogDetails.Invoke(SelectedDetail);
-          
+
             if (!result.Cancelled)
             {
+                var data = result.Data as TDetail;
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                TGedById query = new() { Id = SelectedMaster.Id };
+                TMasterGedById query = new() { Id = SelectedMaster.Id };
 
                 SelectedMaster = (await mediator.Send(query)) as TMaster;
+                TDetailGedById querydetail = new() { Id = data.Id };
+
+                SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
                 await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
             }
         }
 
         async Task DeleteDetail()
         {
             TDeleteDetail deleteDetail = new() { Id = SelectedDetail.Id, Name = SelectedDetail.Name };
-      
+
             var result = await ToolDialogService.DeleteRow(deleteDetail);
             if (!result.Cancelled)
             {
                 SelectedDetail = new();
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                TGedById query = new() { Id = SelectedMaster.Id };
+                TMasterGedById query = new() { Id = SelectedMaster.Id };
 
                 SelectedMaster = (await mediator.Send(query)) as TMaster;
+
                 await SelectedMasterChanged.InvokeAsync(SelectedMaster);
 
             }

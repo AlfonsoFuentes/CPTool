@@ -160,7 +160,7 @@ namespace CPTool.Services
         {
 
             ParameterDialogModel modeldialog = new();
-            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
             modeldialog.DialogTitle = model.Id == 0 ? $"Add new Material" : $"Edit {model.Name} ";
