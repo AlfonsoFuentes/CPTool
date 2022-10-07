@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Mapping
         public UnitaryBasePrizeMapping()
         {
             CreateMap<UnitaryBasePrize, AddEditUnitaryBasePrizeCommand>()
-                .ForMember(dest => dest.MWOItems, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
+                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
            
 
             CreateMap<AddEditUnitaryBasePrizeCommand, UnitaryBasePrize>();

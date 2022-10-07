@@ -60,7 +60,8 @@
                                                TList="GetVendorCodeListQuery"
                                                TableName="Vendor Code"
                                                Label="Vendor Code"
-                                               ParentId=0
+                                              
+                                              
                                                UpdateParent="Validateform"
                                                @bind-Elements="@VendorCodes"
                                                Validation="@(new Func<string, string>(ReviewVendorCode))"
@@ -71,7 +72,7 @@
                                                Required=true
                                                Label="Tax Codel LD"
                                                UpdateParent="Validateform"
-                                               ParentId=0
+                                             
                                                @bind-Elements="@TaxCodeLDs"
                                                Validation="@(new Func<string, string>(ReviewTaxCodeLD))"
                                                @bind-Model=@Model.SupplierCommand.TaxCodeLDCommand></AutoCompleteComponent>
@@ -81,7 +82,8 @@
                                                Label="Tax Codel LD"
                                                UpdateParent="Validateform"
                                                Required=true
-                                               ParentId=0
+                                              
+                                            
                                                @bind-Elements="@TaxCodeLPs"
                                                Validation="@(new Func<string, string>(ReviewTaxCodeLP))"
                                                @bind-Model=@Model.SupplierCommand.TaxCodeLPCommand></AutoCompleteComponent>

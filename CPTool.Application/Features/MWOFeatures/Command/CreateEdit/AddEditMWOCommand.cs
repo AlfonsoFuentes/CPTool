@@ -17,17 +17,12 @@ namespace CPTool.Application.Features.MWOFeatures.Command.CreateEdit
         public decimal Expenses { get; set; }
 
         public int MWOTypeId => MWOTypeCommand.Id;
-        public AddEditMWOTypeCommand MWOTypeCommand { get; set; } = new();
+        public AddEditMWOTypeCommand MWOTypeCommand { get; set; } = null!;
 
         public List<AddEditMWOItemCommand> MWOItemsCommand { get; set; } = new();
         public List<AddEditPurchaseOrderCommand> PurchaseOrdersCommand { get; set; } = new();
 
-        public override AddEditCommand AddDetailtoMaster()
-        {
-            AddEditMWOItemCommand detail = new();
-            detail.MWOCommand = this;
-            return detail;
-        }
+      
 
     }
     internal class AddEditMWOCommandHandler : IRequestHandler<AddEditMWOCommand, Result<AddEditMWOCommand>>

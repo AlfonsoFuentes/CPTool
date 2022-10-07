@@ -11,7 +11,8 @@ namespace CPTool.Application.Features.VendorCodeFeatures.Mapping
     {
         public VendorCodeMapping()
         {
-            CreateMap<VendorCode, AddEditVendorCodeCommand>();
+            CreateMap<VendorCode, AddEditVendorCodeCommand>()
+                .ForMember(dest => dest.SuppliersCommand, act => { act.PreCondition(src => (src.Suppliers != null)); act.MapFrom(src => src.Suppliers); }); ;
 
             CreateMap<AddEditVendorCodeCommand, VendorCode>();
         }

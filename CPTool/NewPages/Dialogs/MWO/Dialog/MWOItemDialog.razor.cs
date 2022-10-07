@@ -17,24 +17,13 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
         [Inject]
         public IMediator mediator { get; set; }
        
-        public List<AddEditChapterCommand> Chapters = new();
-        public List<AddEditUnitaryBasePrizeCommand> UnitaryBasePrizes = new();
-        public List<AddEditMWOItemCommand> MWOItems = new();
+      
+      
+       
         [Parameter]
         public MudForm form { get; set; } = null!;
 
-        protected override async Task OnInitializedAsync()
-        {
-            GetChapterListQuery ChapterList = new();
-            GetMWOItemListQuery MWOItemList = new();
-            GetUnitaryBasePrizeListQuery unitarybaseprie = new();
-            Chapters = await mediator.Send(ChapterList);
-            StateHasChanged();
-            MWOItems = await mediator.Send(MWOItemList);
-            UnitaryBasePrizes = await mediator.Send(unitarybaseprie);
-           
-        }
-
+       
         public async virtual Task Submit()
         {
             await Validateform();
@@ -58,11 +47,11 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
             if (model == null || model == "") return "Must define a name";
             if (Model.Id != 0)
             {
-                if (MWOItems.Where(x => x.Id != Model.Id).Any(x => x.Name == model)) return "Name already existing";
+                if (Model.MWOCommand.MWOItemsCommand.Where(x => x.Id != Model.Id).Any(x => x.Name == model)) return "Name already existing";
             }
             else
             {
-                if (MWOItems.Any(x => x.Name == model)) return "Name already existing";
+                if (Model.MWOCommand.MWOItemsCommand.Any(x => x.Name == model)) return "Name already existing";
             }
 
 

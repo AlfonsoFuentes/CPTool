@@ -18,11 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CPTool.Domain\CPTool.Domain.csproj" />
     <ProjectReference Include="..\CPtool.ExtensionMethods\CPtool.ExtensionMethods.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\NewFolder1\" />
-    <Folder Include="Features\NewFolder\" />
+    <ProjectReference Include="..\CPTool.UnitsSystem\CPTool.UnitsSystem.csproj" />
   </ItemGroup>
 
 </Project>

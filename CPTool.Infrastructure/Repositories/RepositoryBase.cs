@@ -16,12 +16,12 @@ namespace CPTool.Infrastructure.Repositories
             this.dbcontext = dbcontext;
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync()
+        public virtual async Task<IReadOnlyList<T>> GetAllAsync()
         {
             try
             {
                 IQueryable<T> query = dbcontext.Set<T>();
-
+                query=Query(query);
                 var retorno = await query.ToListAsync();
                 return retorno;
             }
@@ -96,6 +96,8 @@ namespace CPTool.Infrastructure.Repositories
             var retorno = await query.ToListAsync();
             return retorno;
         }
+        //Query Include de first relationship of the Entity <T>,
+        //If the objects inside de <T> Entity has more other relations, must be include via IrepositoryEntity overload IRepository<T>
         IQueryable<T> Query(IQueryable<T> table)
         {
             var query = table!.AsQueryable();

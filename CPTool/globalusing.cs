@@ -15,5 +15,6 @@ global using CPTool.Application.Features.MMOTypeFeatures.Command.CreateEdit;
 global using CPTool.Application.Features.MMOTypeFeatures.Query.GetList;
 global using CPTool.Application.Features.MMOTypeFeatures.Command.Delete;
 global using CPTool.NewPages.Dialogs.EquipmentType.Dialog;
+global using static CPTool.App;
 
 

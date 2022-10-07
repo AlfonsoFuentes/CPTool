@@ -8,10 +8,13 @@ namespace CPTool.Infrastructure.Repositories
 
         public IRepositoryMWO RepositoryMWO => _repositorymwo ??= new RepositoryMWO(_context);
         public IRepositoryMWOItem RepositoryMWOItem => _repositorymwoitem ??= new RepositoryMWOItem(_context);
+        public IRepositoryBrand RepositoryBrand => _repositorybrand ??= new RepositoryBrand(_context);
+        public IRepositorySupplier RepositorySupplier => _repositorysupplier ??= new RepositorySupplier(_context);
 
         private IRepositoryMWO _repositorymwo = null!;
         private IRepositoryMWOItem _repositorymwoitem = null!;
-
+        private IRepositoryBrand _repositorybrand = null!;
+        private IRepositorySupplier _repositorysupplier = null!;
         public UnitOfWork(TableContext context)
         {
 

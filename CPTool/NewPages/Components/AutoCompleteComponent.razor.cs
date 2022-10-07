@@ -21,10 +21,10 @@ namespace CPTool.NewPages.Components
         [Parameter]
         [EditorRequired]
         public string Label { get; set; }
+       
         [Parameter]
-        [EditorRequired]
-        public int ParentId { get; set; }
-
+       
+        public AddEditCommand Parent { get; set; } = null!;
 
         [Parameter]
         public bool Disable { get; set; } = false;
@@ -124,8 +124,15 @@ namespace CPTool.NewPages.Components
 
             if (!dialogResult.Cancelled)
             {
-                Model = new();
-                Model.SetParentId(ParentId);
+               
+                //if (ParentId != null)
+                //{
+                //    Model = Parent.AddDetailtoMaster<T>();
+                //}
+                //else
+                //{
+                //    Model = new();
+                //}
                 Model.Name = AutocompleteText;
                 dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowDialogName<T>(Model) : await ShowDialogOverrided.Invoke(Model);
 

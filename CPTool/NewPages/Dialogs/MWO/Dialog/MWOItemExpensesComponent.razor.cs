@@ -1,6 +1,7 @@
 ﻿using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
 
+
 namespace CPTool.NewPages.Dialogs.MWO.Dialog
 {
     public partial class MWOItemExpensesComponent
@@ -28,7 +29,7 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
         {
             if (arg == null || arg == "")
                 return "Must submit Unitary prize";
-            if (!DialogParent.UnitaryBasePrizes.Any(x => x.Name == arg))
+            if (!Global.UnitaryBasePrizes.Any(x => x.Name == arg))
                 return $"Unitary prize: {arg} is not in the list";
             return null;
         }

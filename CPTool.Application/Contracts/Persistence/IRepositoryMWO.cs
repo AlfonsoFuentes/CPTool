@@ -11,8 +11,4 @@ namespace CPTool.Application.Contracts.Persistence
         Task<MWO> GetMWO_ItemsIdAsync(int id);
         Task<MWO> GetMWO_PurchaseOrderIdAsync(int id);
     }
-    public interface IRepositoryMWOItem : IRepository<MWOItem>
-    {
-        Task<MWOItem> GetMWOItemIdAsync(int id);
-    }
 }

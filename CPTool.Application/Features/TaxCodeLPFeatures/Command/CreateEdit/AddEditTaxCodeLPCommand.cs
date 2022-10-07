@@ -1,12 +1,14 @@
 ﻿
 
+using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+
 namespace CPTool.Application.Features.TaxCodeLPFeatures.Command.CreateEdit
 {
     public class AddEditTaxCodeLPCommand : AddEditCommand, IRequest<Result<AddEditTaxCodeLPCommand>>
     {
 
+        public List<AddEditSupplierCommand> SuppliersCommand { get; set; } = new();
 
-       
     }
     internal class AddEditTaxCodeLPCommandHandler : IRequestHandler<AddEditTaxCodeLPCommand, Result<AddEditTaxCodeLPCommand>>
     {

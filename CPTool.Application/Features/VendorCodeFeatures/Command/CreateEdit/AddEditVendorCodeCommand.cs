@@ -1,12 +1,14 @@
 ﻿
 
+using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+
 namespace CPTool.Application.Features.VendorCodeFeatures.Command.CreateEdit
 {
     public class AddEditVendorCodeCommand : AddEditCommand, IRequest<Result<AddEditVendorCodeCommand>>
     {
 
+        public List<AddEditSupplierCommand> SuppliersCommand { get; set; } = new();
 
-       
     }
     internal class AddEditVendorCodeCommandHandler : IRequestHandler<AddEditVendorCodeCommand, Result<AddEditVendorCodeCommand>>
     {

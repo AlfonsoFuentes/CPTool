@@ -5,17 +5,20 @@
         public int Id { get; set; }
         public string Name { get; set; }=string.Empty;
 
-        public virtual AddEditCommand AddDetailtoMaster()
+        public AddEditCommand Parent { get; set; } = null!;
+        public  T AddDetailtoMaster<T>() where T: AddEditCommand,new()
         {
-            return null!;
+            T detail = new();
+            detail.Parent = this;
+            return detail;
         }
-        public virtual void CreateMasterRelations(AddEditCommand Master1, AddEditCommand Master2)
+        public virtual void CreateMasterRelations<T1,T2>(T1 Master1, T2 Master2)
+            where T1: AddEditCommand,new()
+            where T2: AddEditCommand,new()
         {
            
         }
-        public virtual void SetParentId(int parentid)
-        {
-
-        }
+        
+        
     }
 }

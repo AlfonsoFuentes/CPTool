@@ -1,20 +1,18 @@
 ﻿
 
+using CPTool.Application.Features.EquipmentItemFeatures.Command.CreateEdit;
+
 namespace CPTool.Application.Features.EquipmentTypeFeatures.Command.CreateEdit
 {
     public class AddEditEquipmentTypeCommand : AddEditCommand, IRequest<Result<AddEditEquipmentTypeCommand>>
     {
-       
+
         public string TagLetter { get; set; } = string.Empty;
 
-        public List<AddEditEquipmentTypeSubCommand>? EquipmentTypesSub { get; set; } = new();
+        public List<AddEditEquipmentItemCommand> EquipmentItemsCommand { get; set; } = new();
+        public List<AddEditEquipmentTypeSubCommand>? EquipmentTypesSubCommand { get; set; } = new();
 
-        public override AddEditCommand AddDetailtoMaster()
-        {
-            AddEditEquipmentTypeSubCommand detail = new();
-            detail.EquipmentTypeId = Id;
-            return detail;
-        }
+       
 
     }
     internal class AddEditEquipmentTypeCommandHandler : IRequestHandler<AddEditEquipmentTypeCommand, Result<AddEditEquipmentTypeCommand>>
@@ -43,7 +41,7 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Command.CreateEdit
                 _unitOfWork.Repository<EquipmentType>().Add(table);
                 await _unitOfWork.Complete();
                 command.Id = table.Id;
-              
+
                 return await Result<AddEditEquipmentTypeCommand>.SuccessAsync(command, $"{table.Name} Added to {nameof(EquipmentType)}");
             }
             else

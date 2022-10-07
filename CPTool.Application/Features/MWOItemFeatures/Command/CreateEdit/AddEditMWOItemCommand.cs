@@ -1,21 +1,21 @@
 ﻿
 
+using CPTool.Application.Features.AlterationItemFeatures.Command.CreateEdit;
 using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ContingencyItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.EHSItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ElectricalItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.EngineeringCostItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.EquipmentItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.FoundationItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.InstrumentItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.InsulationItemFeatures.Command.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.ContingencyItemFeatures.ContingencyItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.AlterationItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.EHSItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.ElectricalItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.EngineeringCostItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.EquipmentItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.FoundationItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.InstrumentItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.InsulationItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.PaintingItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.PipingItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.StructuralItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.TaxesItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.MWOItemInternalFeatures.TestingItemFeatures.CreateEdit;
+using CPTool.Application.Features.PaintingItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipingItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.StructuralItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.TaxesItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.TestingItemFeatures.Command.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
 using System.Reflection;
 
@@ -24,8 +24,9 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
     public class AddEditMWOItemCommand : AddEditCommand, IRequest<Result<AddEditMWOItemCommand>>
     {
         public int MWOId => MWOCommand.Id;
-        public AddEditMWOCommand MWOCommand { get; set; } = null!;
-        public int Order { get; set; }
+        public AddEditMWOCommand MWOCommand { get => (Parent as AddEditMWOCommand)!; set => Parent = value; }
+        public int UnitaryBasePrizeId => UnitaryBasePrizeCommand.Id;
+        public AddEditUnitaryBasePrizeCommand UnitaryBasePrizeCommand { get; set; } = new(); public int Order { get; set; }
         public string? Nomenclatore  => $"{ChapterCommand.Letter}{Order}";
         public decimal BudgetPrize { get; set; }
         public decimal RealPrize { get; set; }
@@ -35,37 +36,36 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
 
         public int ChapterId => ChapterCommand.Id;
         public AddEditChapterCommand ChapterCommand { get; set; } = new();
-        public int? AlterationItemId => AlterationItemCommand?.Id;
+        public int? AlterationItemId => AlterationItemCommand == null ? null : AlterationItemCommand?.Id;
         public AddEditAlterationItemCommand? AlterationItemCommand { get; set; }
-        public int? FoundationItemId => FoundationItemCommand?.Id;
+        public int? FoundationItemId => FoundationItemCommand == null ? null : FoundationItemCommand?.Id;
         public AddEditFoundationItemCommand? FoundationItemCommand { get; set; }
-        public int? StructuralItemId => StructuralItemCommand?.Id;
+        public int? StructuralItemId => StructuralItemCommand == null ? null : StructuralItemCommand?.Id;
         public AddEditStructuralItemCommand? StructuralItemCommand { get; set; }
-        //public int? EquipmentItemId => EquipmentItemCommand?.Id;
+        public int? EquipmentItemId => EquipmentItemCommand == null ? null : EquipmentItemCommand?.Id;
         public AddEditEquipmentItemCommand? EquipmentItemCommand { get; set; }
-        public int? ElectricalItemId => ElectricalItemCommand?.Id;
+        public int? ElectricalItemId => ElectricalItemCommand == null ? null : ElectricalItemCommand?.Id;
         public AddEditElectricalItemCommand? ElectricalItemCommand { get; set; }
-        public int? PipingItemId => PipingItemCommand?.Id;
+        public int? PipingItemId => PipingItemCommand == null ? null : PipingItemCommand?.Id;
         public AddEditPipingItemCommand? PipingItemCommand { get; set; }
-        public int? InstrumentItemId => InstrumentItemCommand?.Id;
+        public int? InstrumentItemId => InstrumentItemCommand == null ? null : InstrumentItemCommand?.Id;
         public AddEditInstrumentItemCommand? InstrumentItemCommand { get; set; }
-        public int? InsulationItemId => InsulationItemCommand?.Id;
+        public int? InsulationItemId => InsulationItemCommand == null ? null : InsulationItemCommand?.Id;
         public AddEditInsulationItemCommand? InsulationItemCommand { get; set; }
-        public int? PaintingItemId => PaintingItemCommand?.Id;
+        public int? PaintingItemId => PaintingItemCommand == null ? null : PaintingItemCommand?.Id;
         public AddEditPaintingItemCommand? PaintingItemCommand { get; set; }
-        public int? EHSItemId => EHSItemCommand?.Id;
+        public int? EHSItemId => EHSItemCommand == null ? null : EHSItemCommand?.Id;
         public AddEditEHSItemCommand? EHSItemCommand { get; set; }
-        public int? TaxesItemId => TaxesItemCommand?.Id;
+        public int? TaxesItemId => TaxesItemCommand == null ? null : TaxesItemCommand?.Id;
         public AddEditTaxesItemCommand? TaxesItemCommand { get; set; }
-        public int? TestingItemId => TestingItemCommand?.Id;
+        public int? TestingItemId => TestingItemCommand == null ? null : TestingItemCommand?.Id;
         public AddEditTestingItemCommand? TestingItemCommand { get; set; }
-        public int? EngineeringCostItemId => EngineeringCostItemCommand?.Id;
+        public int? EngineeringCostItemId => EngineeringCostItemCommand == null ? null : EngineeringCostItemCommand?.Id;
         public AddEditEngineeringCostItemCommand? EngineeringCostItemCommand { get; set; }
-        public int? ContingencyItemId => ContingencyItemCommand?.Id;
+        public int? ContingencyItemId => ContingencyItemCommand==null?null: ContingencyItemCommand?.Id;
         public AddEditContingencyItemCommand? ContingencyItemCommand { get; set; }
 
-        public int? UnitaryBasePrizeId => UnitaryBasePrizeCommand.Id;
-        public AddEditUnitaryBasePrizeCommand UnitaryBasePrizeCommand { get; set; } = new();
+       
 
         public void AssignInternalItem()
         {

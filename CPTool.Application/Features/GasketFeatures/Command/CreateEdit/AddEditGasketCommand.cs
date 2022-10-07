@@ -1,12 +1,19 @@
 ﻿
 
+using CPTool.Application.Features.EquipmentItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.InstrumentItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
+
 namespace CPTool.Application.Features.GasketsFeatures.Command.CreateEdit
 {
     public class AddEditGasketCommand : AddEditCommand, IRequest<Result<AddEditGasketCommand>>
     {
 
+        public List<AddEditNozzleCommand>? NozzlesCommand { get; set; } = new();
 
-       
+        public List<AddEditEquipmentItemCommand>? EquipmentItemsCommand { get; set; } = new();
+        public List<AddEditInstrumentItemCommand>? InstrumentItemsCommand { get; set; } = new();
+
     }
     internal class AddEditGasketCommandHandler : IRequestHandler<AddEditGasketCommand, Result<AddEditGasketCommand>>
     {

@@ -21,7 +21,7 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit
 
         public int SupplierId => SupplierCommand.Id;
         public AddEditSupplierCommand SupplierCommand { get; set; } = new();
-        public override void CreateMasterRelations(AddEditCommand Master1, AddEditCommand Master2)
+        public override void CreateMasterRelations<T1, T2>(T1 Master1, T2 Master2)
         {
             BrandCommand = (Master1 as AddEditBrandCommand)!;
             SupplierCommand = (Master2 as AddEditSupplierCommand)!;

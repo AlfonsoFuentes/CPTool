@@ -18,7 +18,7 @@ namespace CPTool.Application.Features.BrandFeatures.Query.GetById
         }
         public async Task<AddEditBrandCommand> Handle(GetByIdBrandQuery request, CancellationToken cancellationToken)
         {
-            var table = await _unitofwork.Repository<Brand>().GetByIdAsync(request.Id);
+            var table = await _unitofwork.RepositoryBrand.GetByIdAsync(request.Id);
 
             return _mapper.Map<AddEditBrandCommand>(table);
 

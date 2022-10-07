@@ -1,4 +1,5 @@
 ﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
+
 @if (assign)
 {
     <MudGrid>
@@ -7,9 +8,9 @@
                                TList="GetUnitaryBasePrizeListQuery"
                                TableName="Unitary prize unit"
                                Label="Unitary prize unit"
-                               ParentId=0
+                         
                                UpdateParent="DialogParent.Validateform"
-                               @bind-Elements="@DialogParent.UnitaryBasePrizes"
+                               @bind-Elements="@Global.UnitaryBasePrizes"
                                Validation="@(new Func<string, string>(ValidateUnitaryPrizeName))"
                                @bind-Model=@Model.UnitaryBasePrizeCommand></AutoCompleteComponent>
 

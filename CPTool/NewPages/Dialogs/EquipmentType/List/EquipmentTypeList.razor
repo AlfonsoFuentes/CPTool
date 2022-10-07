@@ -6,9 +6,8 @@
                         TDeleteMaster="DeleteEquipmentTypeCommand" TDeleteDetail="DeleteEquipmentTypeSubCommand"
                         TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
                         TMasterGedById="GetByIdEquipmentTypeQuery" TDetailGedById="GetByIdEquipmentTypeSubQuery"
-                     
-                      
-                        ElementsDetails="@SelectedEqu.EquipmentTypesSub"
+                        ElementsMasters="Global.EquipmentTypes"
+                        ElementsDetails="@SelectedEqu.EquipmentTypesSubCommand"
                         @bind-SelectedMaster="@SelectedEqu"
                         @bind-SelectedDetail="@SelectedEquSub"
                         OnShowDialogMaster="ToolDialogService.ShowEquipmentType"
@@ -27,7 +26,7 @@
         </DetailContextTd>
 
     </OneToManyListComponent>
-    
+
 }
 
 @code {

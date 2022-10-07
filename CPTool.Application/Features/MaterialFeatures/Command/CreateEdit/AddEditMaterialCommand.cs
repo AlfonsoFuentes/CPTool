@@ -1,11 +1,33 @@
 ﻿
 
+using CPTool.Application.Features.EquipmentItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.InstrumentItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipingItemFeatures.Command.CreateEdit;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CPTool.Application.Features.MaterialFeatures.Command.CreateEdit
 {
     public class AddEditMaterialCommand : AddEditCommand, IRequest<Result<AddEditMaterialCommand>>
     {
-
         public string? Abbreviation { get; set; }
+
+        
+        public List<AddEditInstrumentItemCommand> InstrumentItemInnerMaterialsCommand { get; set; } = new();
+
+   
+        public List<AddEditInstrumentItemCommand> InstrumentItemOuterMaterialsCommand { get; set; } = new();
+
+  
+        public List<AddEditEquipmentItemCommand> EquipmentItemInnerMaterialsCommand { get; set; } = new();
+
+  
+        public List<AddEditEquipmentItemCommand> EquipmentItemOuterMaterialsCommand { get; set; } = new();
+
+        public List<AddEditPipingItemCommand> PipingItemsCommand { get; set; } = new();
+
+        public List<AddEditNozzleCommand> NozzlesCommand { get; set; } = new();
+    
 
     }
     internal class AddEditMaterialCommandHandler : IRequestHandler<AddEditMaterialCommand, Result<AddEditMaterialCommand>>

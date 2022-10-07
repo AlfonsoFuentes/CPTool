@@ -12,7 +12,7 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdi
     {
 
 
-        public List<AddEditMWOItemCommand> MWOItems { get; set; } =new();
+        public List<AddEditMWOItemCommand> MWOItemsCommand { get; set; } =new();
     }
     internal class AddEditUnitaryBasePrizeCommandHandler : IRequestHandler<AddEditUnitaryBasePrizeCommand, Result<AddEditUnitaryBasePrizeCommand>>
     {

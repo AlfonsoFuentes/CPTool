@@ -76,8 +76,7 @@ namespace CPTool.Infrastructure.Persistence
             
             modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
         
-            modelBuilder.Entity<Chapter>().Navigation(e => e.MWOItems).AutoInclude();
-            modelBuilder.Entity<EquipmentType>().Navigation(e => e.EquipmentTypeSubs).AutoInclude();
+       
         }
 
 

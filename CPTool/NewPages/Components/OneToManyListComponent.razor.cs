@@ -18,7 +18,9 @@ namespace CPTool.NewPages.Components
 
         TMasterList MasterList { get; set; } = new();
         TDetailList DetailList { get; set; } = new();
-        List<TMaster> ElementsMasters { get; set; } = new();
+        [Parameter]
+        [EditorRequired]
+        public List<TMaster> ElementsMasters { get; set; } = new();
 
         [Parameter]
         [EditorRequired]
@@ -54,11 +56,6 @@ namespace CPTool.NewPages.Components
         public Func<TDetail, Task<DialogResult>> OnShowDialogDetails { get; set; }
 
 
-
-        protected override async Task OnInitializedAsync()
-        {
-            ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-        }
 
         async Task RowClickedMaster(TableRowClickEventArgs<TMaster> eq)
         {
@@ -125,7 +122,7 @@ namespace CPTool.NewPages.Components
         }
         async Task AddDetail()
         {
-            TDetail model = SelectedMaster.AddDetailtoMaster() as TDetail;
+            TDetail model = SelectedMaster.AddDetailtoMaster<TDetail>();
 
             var result = await OnShowDialogDetails.Invoke(model);
             if (!result.Cancelled)

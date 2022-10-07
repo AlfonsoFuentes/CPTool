@@ -11,7 +11,8 @@ namespace CPTool.Application.Features.TaxCodeLDFeatures.Mapping
     {
         public TaxCodeLDMapping()
         {
-            CreateMap<TaxCodeLD, AddEditTaxCodeLDCommand>();
+            CreateMap<TaxCodeLD, AddEditTaxCodeLDCommand>()
+                .ForMember(dest => dest.SuppliersCommand, act => { act.PreCondition(src => (src.Suppliers != null)); act.MapFrom(src => src.Suppliers); });
 
             CreateMap<AddEditTaxCodeLDCommand, TaxCodeLD>();
         }

@@ -1,0 +1,52 @@
+﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
+
+@if (assign)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+            <AutoCompleteComponent T="AddEditEquipmentTypeCommand"
+                               TList="GetEquipmentTypeListQuery"
+                               TableName="Equipment Type"
+                               Label="Equipment Type"
+                              
+                               UpdateParent="DialogParent.Validateform"
+                               @bind-Elements="@Global.EquipmentTypes"
+                               @bind-Model=@Model.EquipmentTypeCommand
+                               Validation="@(new Func<string, string>(ValidateEquipmentType))"></AutoCompleteComponent>
+            <AutoCompleteComponent T="AddEditEquipmentTypeSubCommand"
+                               TList="GetEquipmentTypeSubListQuery"
+                               TableName="Sub Equipment Type"
+                               Label="Sub Equipment Type"
+                               Parent=@Model.EquipmentTypeCommand
+                              
+                               UpdateParent="DialogParent.Validateform"
+                               Disable=@(Model.EquipmentTypeCommand.Id==0?true:false)
+                               @bind-Elements="@Model.EquipmentTypeCommand.EquipmentTypesSubCommand"
+                               Validation="@(new Func<string, string>(ValidateEquipmentType))"></AutoCompleteComponent>
+
+
+            <MudTextField T="string" @bind-Value="Model.TagNumber"
+                      Required="true"
+                      Immediate="true"
+                      Label="Tag Number"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      RequiredError="Must have Tag Number"></MudTextField>
+
+            <MudTextField T="string" Value="@Model.TagId"
+                      Immediate="true"
+                      Disabled="true"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Label="Tag"></MudTextField>
+
+
+        </MudItem>
+    </MudGrid>
+}
+
+
+@code {
+    bool assign = true;
+
+}

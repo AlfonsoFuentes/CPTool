@@ -10,12 +10,12 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList
 
 
     }
-    public class GetUnitdaryBasePrizeListQueryHandler : IRequestHandler<GetUnitaryBasePrizeListQuery, List<AddEditUnitaryBasePrizeCommand>>
+    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetUnitaryBasePrizeListQuery, List<AddEditUnitaryBasePrizeCommand>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        public GetUnitdaryBasePrizeListQueryHandler(IUnitOfWork unitofwork,
+        public GetUnitaryBasePrizeListQueryHandler(IUnitOfWork unitofwork,
             IMapper mapper)
         {
             _unitofwork = unitofwork;

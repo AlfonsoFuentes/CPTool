@@ -13,5 +13,8 @@ namespace CPTool.Application.Contracts.Persistence
        
         IRepositoryMWO RepositoryMWO { get; }
         IRepositoryMWOItem RepositoryMWOItem { get; }
+
+        IRepositoryBrand RepositoryBrand { get; }
+        IRepositorySupplier RepositorySupplier { get; }
     }
 }

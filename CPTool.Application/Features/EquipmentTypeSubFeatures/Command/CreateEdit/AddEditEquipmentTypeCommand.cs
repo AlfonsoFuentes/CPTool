@@ -1,5 +1,6 @@
 ﻿using AutoMapper.Configuration.Annotations;
 using CPtool.ExtensionMethods;
+using CPTool.Application.Features.EquipmentItemFeatures.Command.CreateEdit;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,13 @@ namespace CPTool.Application.Features.EquipmentTypeSubFeatures.Command.CreateEdi
 
     public class AddEditEquipmentTypeSubCommand : AddEditCommand, IRequest<Result<AddEditEquipmentTypeSubCommand>>
     {
+        public int? EquipmentTypeId=> EquipmentTypeCommand.Id==0?null:EquipmentTypeCommand.Id;
+        public AddEditEquipmentTypeCommand EquipmentTypeCommand { get => (Parent as AddEditEquipmentTypeCommand)!; set => Parent = value; } 
+
+
+        public List<AddEditEquipmentItemCommand> EquipmentItemsCommand { get; set; } = new();
         public string TagLetter { get; set; } = string.Empty;
-        public int EquipmentTypeId { get; set; }
+      
     }
     internal class AddEditEquipmentTypeSubCommandHandler : IRequestHandler<AddEditEquipmentTypeSubCommand, Result<AddEditEquipmentTypeSubCommand>>
     {
