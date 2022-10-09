@@ -24,9 +24,9 @@ namespace CPTool.Application.Features.PipeAccesoryFeatures.Command.CreateEdit
         public int? ProcessFluidId => ProcessFluidCommand == null ? null : ProcessFluidCommand?.Id;
         public AddEditProcessFluidCommand? ProcessFluidCommand { get; set; } = null;
         public int? FrictionId => FrictionCommand == null ? null : FrictionCommand?.Id;
-        public AddEditUnitCommand? FrictionCommand { get; set; } = new();
+        public AddEditUnitCommand? FrictionCommand { get; set; } = new(UnitLessUnits.None);
         public int? ReynoldId => ReynoldCommand == null ? null : ReynoldCommand?.Id;
-        public AddEditUnitCommand? ReynoldCommand { get; set; } = new();
+        public AddEditUnitCommand? ReynoldCommand { get; set; } = new(UnitLessUnits.None);
         public int? LevelInletId => LevelInletCommand == null ? null : LevelInletCommand?.Id;
         public AddEditUnitCommand? LevelInletCommand { get; set; } = new(LengthUnits.MilliMeter);
         public int? LevelOutletId => LevelOutletCommand == null ? null : LevelOutletCommand?.Id;

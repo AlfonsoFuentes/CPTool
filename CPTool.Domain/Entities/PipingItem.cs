@@ -21,7 +21,7 @@
         public MWOItem? FinishMWOItem { get; set; }
         public int? PipeClassId { get; set; }
         public PipeClass? PipeClass { get; set; }
-
+        public string TagId { get; set; }=String.Empty;
         public bool Insulation { get; set; }
 
 

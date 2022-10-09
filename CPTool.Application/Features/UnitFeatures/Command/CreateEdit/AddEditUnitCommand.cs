@@ -17,12 +17,14 @@ namespace CPTool.Application.Features.UnitFeatures.Command.CreateEdit
     {
         public AddEditUnitCommand()
         {
-            Amount = new UnitLess(UnitLessUnits.None);
+
         }
         public AddEditUnitCommand(CPTool.UnitsSystem.Unit unit)
         {
             Amount = new(unit);
+           
         }
+
         public string? UnitName
         {
             get
@@ -31,7 +33,14 @@ namespace CPTool.Application.Features.UnitFeatures.Command.CreateEdit
             }
             set
             {
-                Amount!.UnitName = value;
+                if (Amount == null)
+                {
+                    Amount = new(value);
+                }
+                if (value != Amount!.UnitName)
+                {
+                    Amount!.UnitName = value;
+                }
             }
         }
         public double Value
@@ -42,54 +51,14 @@ namespace CPTool.Application.Features.UnitFeatures.Command.CreateEdit
             }
             set
             {
-                Amount!.SetValue(Amount!.Value, Amount!.UnitName);
+                Amount!.SetValue(value, Amount!.Unit);
             }
         }
-        Amount? Amount { get; init; }
-
-       
-        public List<AddEditPipeDiameterCommand> ODsCommand { get; set; } = new();
-      
-        public List<AddEditPipeDiameterCommand> IDsCommand { get; set; } = new();
-  
-        public List<AddEditPipeDiameterCommand> ThicknesssCommand { get; set; } = new();
+        public Amount? Amount { get; set; }
+        public List<CPTool.UnitsSystem.Unit> UnitsList=>Amount!.UnitsList;
 
 
-       
-        public List<AddEditProcessConditionCommand> SpecificCpsCommand { get; set; } = new();
-       
-        public List<AddEditProcessConditionCommand> ThermalConductivitysCommand { get; set; } = new();
-
-       
-        public List<AddEditProcessConditionCommand> SpecificEnthalpysCommand { get; set; } = new();
-  
-        public List<AddEditProcessConditionCommand> EnthalpyFlowsCommand { get; set; } = new();
-       
-        public List<AddEditProcessConditionCommand> ViscositysCommand { get; set; } = new();
-      
-        public List<AddEditProcessConditionCommand> DensitysCommand { get; set; } = new();
-       
-        public List<AddEditProcessConditionCommand> VolumetricFlowsCommand { get; set; } = new();
-      
-        public List<AddEditProcessConditionCommand> MassFlowsCommand { get; set; } = new();
-       
-        public List<AddEditProcessConditionCommand> TemperaturesCommand { get; set; } = new();
-       
-        public List<AddEditProcessConditionCommand> PressuresCommand { get; set; } = new();
-    
-        public List<AddEditPipeAccesoryCommand> FrictionPipeAccesorysCommand { get; set; } = new();
-      
-        public List<AddEditPipeAccesoryCommand> ReynoldPipeAccesorysCommand { get; set; } = new();
-       
-        public List<AddEditPipeAccesoryCommand> LevelInletPipeAccesorysCommand { get; set; } = new();
-       
-        public List<AddEditPipeAccesoryCommand> LevelOutletPipeAccesorysCommand { get; set; } = new();
-     
-        public List<AddEditPipeAccesoryCommand> FrictionDropPressurePipeAccesorysCommand { get; set; } = new();
-       
-        public List<AddEditPipeAccesoryCommand> OverallDropPressurePipeAccesorysCommand { get; set; } = new();
-        
-        public List<AddEditPipeAccesoryCommand> ElevationChangePipeAccesorysCommand { get; set; } = new();
+        public string StringValue => $"{Value} {UnitName}";
     }
     internal class AddEditUnitCommandHandler : IRequestHandler<AddEditUnitCommand, Result<AddEditUnitCommand>>
     {

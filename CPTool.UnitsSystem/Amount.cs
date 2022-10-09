@@ -25,11 +25,15 @@ namespace CPTool.UnitsSystem
         public ValueChanged OnValueChanged;
 
         #region Constructor methods
-
+        public Amount(string unitName)
+        {
+            UnitName = unitName;
+        }
         public Amount(Unit unit)
         {
             this.dvalue = 0;
-            UnitName = unit.Name;
+            this.unit = unit;
+            unitname = this.unit.Name;
         }
 
 
@@ -37,8 +41,8 @@ namespace CPTool.UnitsSystem
         {
             
             this.dvalue = dvalue;
-            UnitName = unit.Name;
-            //this.unit = unit;
+            this.unit = unit;
+            unitname = this.unit.Name;
 
         }
 
@@ -70,8 +74,15 @@ namespace CPTool.UnitsSystem
             set
             {
                 unitname = value;
+
+                if(this.unit!=null)
+                {
+                    this.dvalue = ConvertedTo(unitname).Value;
+                }
                 this.unit = UnitManager.GetUnitByName(unitname);
-                this.dvalue = ConvertedTo(this.unit).Value;
+                
+                
+               
             }
         }
         void SetValue(Amount amount)
@@ -148,6 +159,10 @@ namespace CPTool.UnitsSystem
         }
         public List<Unit> UnitsList => UnitManager.GetUnitsByFamily(this.unit).ToList();
 
+        public List<Unit> GetUnitList()
+        {
+            return UnitManager.GetUnitsByFamily(this.unit).ToList();
+        }
         /// <summary>
         /// Gets the unit of the amount.
         /// </summary>

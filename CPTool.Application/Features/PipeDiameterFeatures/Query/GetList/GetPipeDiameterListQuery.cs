@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
 
 namespace CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
@@ -25,7 +26,15 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
         {
             var list = await _unitofwork.Repository<PipeDiameter>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditPipeDiameterCommand>>(list);
+            try
+            {
+                return _mapper.Map<List<AddEditPipeDiameterCommand>>(list);
+            }
+            catch (AutoMapperMappingException ex)
+            {
+                string exm = ex.Message;
+                return null!;
+            }
 
         }
     }

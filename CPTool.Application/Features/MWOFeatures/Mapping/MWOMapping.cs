@@ -11,7 +11,8 @@ namespace CPTool.Application.Features.MWOFeatures.Mapping
         public MWOMapping()
         {
             CreateMap<MWO, AddEditMWOCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); }); ;
+                .ForMember(dest => dest.MWOTypeCommand, act => { act.PreCondition(src => (src.MWOType != null)); act.MapFrom(src => src.MWOType); })
+                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); }); 
 
             CreateMap<AddEditMWOCommand, MWO>();
         }

@@ -23,16 +23,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         [Parameter]
         public MudForm form { get; set; } = null!;
 
-        List<AddEditSupplierCommand> Suppliers = new();
-        List<AddEditBrandCommand> Brands = new();
-        GetBrandListQuery BrandList = new();
-        GetSupplierListQuery SupplierList = new();
-
-        protected override async Task OnInitializedAsync()
-        {
-            Suppliers = await mediator.Send(SupplierList);
-            Brands = await mediator.Send(BrandList);
-        }
+       
         public async virtual Task Submit()
         {
             await form.Validate();
@@ -46,10 +37,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         }
 
         void Cancel() => MudDialog.Cancel();
-        void SelectionSupplier(int id)
-        {
-            Model.SupplierCommand = Suppliers.FirstOrDefault(x => x.Id == id);
-        }
+      
         private string ValidateBrandType(BrandType arg)
         {
             if (arg == BrandType.None)
@@ -66,12 +54,13 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
                 return "Must submit Brand or Service Type";
             if(Model.BrandCommand.Id==0)
             {
-                if (Brands.Any(x => x.Name == arg))
+                if (GlobalTables.Brands.Any(x => x.Name == arg))
                     return "Name already exist";
             }
             else
             {
-                if (Brands.Where(x => x.Id != Model.BrandCommand.Id).Any(x => x.Name == arg))
+               
+                if (GlobalTables.Brands.Where(x => x.Id != Model.BrandCommand.Id).Any(x => x.Name == arg))
                     return "Name already exist";
             }
             

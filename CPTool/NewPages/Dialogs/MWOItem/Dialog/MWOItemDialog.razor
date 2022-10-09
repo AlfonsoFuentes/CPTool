@@ -1,0 +1,101 @@
+﻿@using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit
+@using CPTool.Application.Features.NozzleFeatures.Command.Delete
+@using CPTool.Application.Features.NozzleFeatures.Query.GetById
+@using CPTool.Application.Features.NozzleFeatures.Query.GetList
+@using CPTool.NewPages.Dialogs.Nozzle.List
+<MudDialog DisableSidePadding="true">
+    <DialogContent>
+        <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+
+            <CascadingValue Value="this">
+
+
+                <MudForm Model="Model" @ref="form">
+
+                    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+                        <MudTabPanel Text="Name">
+                            <MudGrid>
+
+                                <MudItem xs="12" sm="6">
+                                    <MWOItemChapterComponent></MWOItemChapterComponent>
+                                </MudItem>
+                                <MudItem xs="12" sm="6">
+                                    <MWOItemExpensesComponent></MWOItemExpensesComponent>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudTabPanel>
+                        <MudTabPanel Text="Specs">
+                            @if (Model.ChapterCommand.Id != 0)
+                            {
+                                switch (Model.ChapterCommand.Id)
+                                {
+                                    case 4:
+                                        <MWOItemEquipmentComponent></MWOItemEquipmentComponent>
+                                        break;
+                                }
+                            }
+
+                        </MudTabPanel>
+                        <MudTabPanel Text="Materials">
+                            @if (Model.ChapterCommand.Id != 0)
+                            {
+                                switch (Model.ChapterCommand.Id)
+                                {
+                                    case 4:
+                                        <MWOItemMaterialsComponent @bind-Gasket="@Model.EquipmentItemCommand.GasketCommand"
+                                                       @bind-InnerMaterial="@Model.EquipmentItemCommand.eInnerMaterialCommand"
+                                                       @bind-OuterMaterial=@Model.EquipmentItemCommand.eOuterMaterialCommand></MWOItemMaterialsComponent>
+                                        break;
+                                }
+                            }
+                        </MudTabPanel>
+                        <MudTabPanel Text="Nozzles">
+                            @if (Model.Id!=0&&Model.ChapterCommand.Id != 0)
+                            {
+                                switch (Model.ChapterCommand.Id)
+                                {
+                                    case 4:
+                                        <NozzleList @bind-Nozzles="@Model.EquipmentItemCommand.NozzlesCommand"
+                                        UpdateParent="UpdateFormFromChild" Master="@Model.EquipmentItemCommand"></NozzleList>
+
+                                        break;
+                                }
+                            }
+                        </MudTabPanel>
+                        <MudTabPanel Text="Process Conditions">
+                            @if (Model.Id != 0 && Model.ChapterCommand.Id != 0)
+                            {
+                                switch (Model.ChapterCommand.Id)
+                                {
+                                    case 4:
+                                        <MWOItemProcessConditions @bind-bind-ProcessCondition="@Model.EquipmentItemCommand.ProcessConditionCommand"
+                                                      @bind-ProcessFluid=@Model.EquipmentItemCommand.ProcessFluidCommand></MWOItemProcessConditions>
+
+                                        break;
+                                }
+                            }
+                        </MudTabPanel>
+                    </MudTabs>
+                    <MudGrid>
+
+
+
+                    </MudGrid>
+
+                </MudForm>
+            </CascadingValue>
+
+
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+
+}

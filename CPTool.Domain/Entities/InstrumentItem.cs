@@ -29,7 +29,7 @@
         public Brand? Brand { get; set; }
         public int? SupplierId { get; set; }
         public Supplier? Supplier { get; set; }
-        public string? TagId { get; set; }
+        public string TagId { get; set; } = string.Empty;
         public string? TagLetter { get; set; }
         public string? TagNumber { get; set; }
         public string? Model { get; set; }

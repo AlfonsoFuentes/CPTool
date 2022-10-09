@@ -29,8 +29,8 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleStart).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleFinish).WithMany(t => t.FinishPipingItems).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.OD).WithMany(t => t.ODs).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.ID).WithMany(t => t.IDs).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.OuterDiameter).WithMany(t => t.ODs).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeDiameter>().HasOne(c => c.InternalDiameter).WithMany(t => t.IDs).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeDiameter>().HasOne(c => c.Thickness).WithMany(t => t.Thicknesss).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Pressure).WithMany(t => t.Pressures).OnDelete(DeleteBehavior.NoAction);

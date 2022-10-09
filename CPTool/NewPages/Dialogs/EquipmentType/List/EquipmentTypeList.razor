@@ -6,22 +6,30 @@
                         TDeleteMaster="DeleteEquipmentTypeCommand" TDeleteDetail="DeleteEquipmentTypeSubCommand"
                         TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
                         TMasterGedById="GetByIdEquipmentTypeQuery" TDetailGedById="GetByIdEquipmentTypeSubQuery"
-                        ElementsMasters="Global.EquipmentTypes"
+                        @bind-ElementsMasters="@GlobalTables.EquipmentTypes"
                         ElementsDetails="@SelectedEqu.EquipmentTypesSubCommand"
                         @bind-SelectedMaster="@SelectedEqu"
                         @bind-SelectedDetail="@SelectedEquSub"
                         OnShowDialogMaster="ToolDialogService.ShowEquipmentType"
                         OnShowDialogDetails="ToolDialogService.ShowEquipmentTypeSub">
         <MasterContextTh>
-            <MudTh Style="width:40px">TagLetter</MudTh>
+            <MudTh Style="width:40px">#</MudTh>
+            <MudTh Style="width:40px">Name</MudTh>
+            <MudTh Style="width:40px">Tag Letter</MudTh>
         </MasterContextTh>
         <MasterContextTd>
+            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
             <MudTd DataLabel="TagLetter">@context.TagLetter</MudTd>
         </MasterContextTd>
         <DetailContextTh>
-            <MudTh Style="width:40px">TagLetter</MudTh>
+            <MudTh Style="width:40px">#</MudTh>
+            <MudTh Style="width:40px">Name</MudTh>
+            <MudTh Style="width:40px">Tag Letter</MudTh>
         </DetailContextTh>
         <DetailContextTd>
+            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
             <MudTd DataLabel="TagLetter">@context.TagLetter</MudTd>
         </DetailContextTd>
 

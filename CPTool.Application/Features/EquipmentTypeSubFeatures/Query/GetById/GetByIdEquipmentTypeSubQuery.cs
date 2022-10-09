@@ -16,7 +16,7 @@
         }
         public async Task<AddEditEquipmentTypeSubCommand> Handle(GetByIdEquipmentTypeSubQuery request, CancellationToken cancellationToken)
         {
-            var table = await _unitofwork.Repository<EquipmentType>().GetByIdAsync(request.Id);
+            var table = await _unitofwork.Repository<EquipmentTypeSub>().GetByIdAsync(request.Id);
 
             return _mapper.Map<AddEditEquipmentTypeSubCommand>(table);
 

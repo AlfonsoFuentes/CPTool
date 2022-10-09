@@ -20,7 +20,7 @@
         public FoundationItem? FoundationItem { get; set; }
         public int? StructuralItemId { get; set; }
         public StructuralItem? StructuralItem { get; set; }
-        public int EquipmentItemId { get; set; }
+        public int? EquipmentItemId { get; set; }
         public EquipmentItem? EquipmentItem { get; set; } 
         public int? ElectricalItemId { get; set; }
         public ElectricalItem? ElectricalItem { get; set; }

@@ -6,7 +6,7 @@
         public string Name { get; set; }=string.Empty;
 
         public AddEditCommand Parent { get; set; } = null!;
-        public  T AddDetailtoMaster<T>() where T: AddEditCommand,new()
+        public virtual T AddDetailtoMaster<T>() where T: AddEditCommand,new()
         {
             T detail = new();
             detail.Parent = this;

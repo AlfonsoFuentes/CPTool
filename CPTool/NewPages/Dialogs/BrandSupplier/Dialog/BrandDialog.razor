@@ -1,4 +1,8 @@
-﻿<MudDialog DisableSidePadding="true">
+﻿@if (debug)
+{
+
+}
+<MudDialog DisableSidePadding="true">
     <DialogContent>
         <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
             <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
@@ -7,10 +11,10 @@
 
                     <MudForm Model="Model" @ref="form">
                         <SelectComponent T="AddEditSupplierCommand"
-                                         Elements=@Suppliers
+                                         Elements=@GlobalTables.Suppliers
                                          
                                          Label="Supplier"
-                                         Value="Model.SupplierCommand">
+                                         @bind-Value="@Model.SupplierCommand">
 
 
                         </SelectComponent>
@@ -52,5 +56,5 @@
     </DialogActions>
 </MudDialog>
 @code {
-
+    bool debug = true;
 }

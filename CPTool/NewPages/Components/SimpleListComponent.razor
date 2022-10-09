@@ -13,18 +13,14 @@
                         OnRowClicked="RowClickedMaster"
                         OnEdit="Edit" SearchFunc=ModelList.FilterFunc @bind-SelectedItem="@SelectedMaster">
                 <ContextTh>
-                    <MudTh Style="width:20px">#</MudTh>
-
-                    <MudTh Style="width:50px">Name</MudTh>
+            
                     @if (MasterContextTh != null)
                         @MasterContextTh
 
 
                     </ContextTh>
                     <ContextTd>
-                        <MudTd DataLabel="Id">@context.Id</MudTd>
-
-                        <MudTd DataLabel="Name">@context.Name</MudTd>
+                    
                         @if (MasterContextTh != null)
                         @MasterContextTd!(context)
 

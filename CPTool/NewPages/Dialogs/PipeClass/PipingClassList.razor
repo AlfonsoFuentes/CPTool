@@ -1,0 +1,60 @@
+﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
+@using CPTool.Application.Features.PipeClassFeatures.Command.CreateEdit
+@using CPTool.Application.Features.PipeClassFeatures.Command.Delete
+@using CPTool.Application.Features.PipeClassFeatures.Query.GetById
+@using CPTool.Application.Features.PipeClassFeatures.Query.GetList
+@using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit
+@using CPTool.Application.Features.PipeDiameterFeatures.Command.Delete
+@using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
+@using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
+@if (ShowAddButton)
+{
+    <OneToManyListComponent TMaster="AddEditPipeClassCommand" TDetail="AddEditPipeDiameterCommand"
+                        TDeleteMaster="DeletePipeClassCommand" TDeleteDetail="DeletePipeDiameterCommand"
+                        TMasterList="GetPipeClassListQuery" TDetailList="GetPipeDiameterListQuery"
+                        TMasterGedById="GetByIdPipeClassQuery" TDetailGedById="GetByIdPipeDiameterQuery"
+                        @bind-ElementsMasters="GlobalTables.PipeClasses"
+                        ElementsDetails="@SelectedMaster.PipeDiametersCommand"
+                        @bind-SelectedMaster="@SelectedMaster"
+                        @bind-SelectedDetail="@SelectedDetail"
+                        OnShowDialogMaster="ToolDialogService.ShowDialogName"
+                        OnShowDialogDetails="ToolDialogService.ShowPipeDiameterDialog">
+        <MasterContextTh>
+            <MudTh Style="width:40px">#</MudTh>
+            <MudTh Style="width:40px">Name</MudTh>
+        </MasterContextTh>
+        <MasterContextTd>
+            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
+        </MasterContextTd>
+        <DetailContextTh>
+            <MudTh Style="width:40px">#</MudTh>
+            <MudTh Style="width:40px">Name</MudTh>
+            <MudTh Style="width:40px">OD</MudTh>
+            <MudTh Style="width:40px">ID</MudTh>
+            <MudTh Style="width:40px">Thickness</MudTh>
+        </DetailContextTh>
+        <DetailContextTd>
+            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
+            <MudTd DataLabel="TagLetter">@context.ODCommand.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.IDCommand.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.ThicknessCommand.StringValue</MudTd>
+        </DetailContextTd>
+
+    </OneToManyListComponent>
+
+}
+
+@code {
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+
+    AddEditPipeClassCommand SelectedMaster { get; set; } = new();
+    AddEditPipeDiameterCommand SelectedDetail { get; set; } = new();
+    [Parameter]
+    public RenderFragment OtherButtons { get; set; }
+}

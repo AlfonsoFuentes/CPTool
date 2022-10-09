@@ -1,0 +1,42 @@
+﻿@using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit
+@using CPTool.Application.Features.NozzleFeatures.Command.Delete
+@using CPTool.Application.Features.NozzleFeatures.Query.GetById
+@using CPTool.Application.Features.NozzleFeatures.Query.GetList
+<DetailListComponent TDetail="AddEditNozzleCommand"
+                     TDetailList="GetNozzleListQuery"
+                     TDeleteDetail="DeleteNozzleCommand"
+                     TDetailGedById="GetByIdNozzleQuery"
+                    
+                     @bind-ElementsDetails=@Nozzles
+                     @bind-SelectedDetail=@SelectedNozzle
+                     OnShowDialogDetails="ToolDialogService.ShowNozzleDialog"
+                     SelectedMaster="@Master">
+
+    <DetailContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+        <MudTh Style="width:40px">In/Out</MudTh>
+        <MudTh Style="width:40px">Diameter</MudTh>
+        <MudTh Style="width:40px">Class</MudTh>
+        <MudTh Style="width:40px">Material</MudTh>
+        <MudTh Style="width:40px">Connection Type</MudTh>
+        <MudTh Style="width:40px">Gasket</MudTh>
+        
+    </DetailContextTh>
+    <DetailContextTd>
+        <MudTd DataLabel="Name">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="In/Out">@context.StreamType.ToString()</MudTd>
+        <MudTd DataLabel="Diameter">@context.PipeDiameterCommand?.Name</MudTd>
+        <MudTd DataLabel="Class">@context.PipeClassCommand?.Name</MudTd>
+        <MudTd DataLabel="Material">@context.MaterialCommand?.Name</MudTd>
+        <MudTd DataLabel="Connection Type">@context.ConnectionTypeCommand?.Name</MudTd>
+        <MudTd DataLabel="Gasket">@context.GasketCommand?.Name</MudTd>
+       
+     
+    </DetailContextTd>
+</DetailListComponent>
+
+@code {
+
+}

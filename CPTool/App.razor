@@ -1,5 +1,6 @@
 ﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
 @using CPTool.Application.Features.ChapterFeatures.Query.GetList
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
 <CascadingValue Value="this">
 
 
@@ -21,16 +22,7 @@
     public IMediator mediator { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        GetChapterListQuery ChapterList = new();
-        GetMWOListQuery MWOList = new();
-        GetEquipmentTypeListQuery EquipmenTypeList = new();
-
-        GetUnitaryBasePrizeListQuery unitarybaseprie = new();
-        Global.Chapters = await mediator.Send(ChapterList);
-        Global.MWOs = await mediator.Send(MWOList);
-        Global.UnitaryBasePrizes = await mediator.Send(unitarybaseprie);
-        Global.EquipmentTypes = await mediator.Send(EquipmenTypeList);
-
+        await GlobalTables.InitializeTables(mediator);
     }
 
 

@@ -10,12 +10,11 @@
                                                TList="GetMWOTypeListQuery"
                                                TableName="MWO Type"
                                                Label="MWO Type"
-                                              
-                                               
-                                               UpdateParent="Validateform"
+                                               SelectionChanged="@((arg)=>{Model.MWOTypeCommand=arg;})"
+                                               ValidateForm="Validateform"
                                                @bind-Elements="@MWOTypes"
                                                Validation="@(new Func<string, string>(ReviewMWOType))"
-                                               @bind-Model=@Model.MWOTypeCommand></AutoCompleteComponent>
+                                               Model=@Model.MWOTypeCommand></AutoCompleteComponent>
 
 
                        

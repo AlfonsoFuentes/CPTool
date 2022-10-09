@@ -2,6 +2,7 @@
 @if (ShowAddButton)
 {
     <MudTable T="T"
+          @ref="mudTable"
           Breakpoint="Breakpoint.Sm"
           Items="@Elements"
           Dense="@dense"
@@ -9,11 +10,12 @@
           Bordered="@bordered"
           Striped="@striped"
           OnRowClick="OnRowClicked"
+        
           ReadOnly=true
           Filter="new Func<T,bool>(FilterFunc1)"
           @bind-SelectedItem="@SelectedItem">
         <ToolBarContent>
-
+            @SelectedItem.Name
             <ToolBarComponent ShowAddButton=@ShowAddButton
                           DisableEditButton=@DisableEditButton
                           DisableAddButton=@DisableAddButton
@@ -49,7 +51,9 @@
         </PagerContent>
     </MudTable>
 }
+
 @code {
+    private MudTable<T> mudTable;
     private bool hover = true;
     private bool striped = true;
     private bool bordered = true;
@@ -61,4 +65,6 @@
     public bool DisableAddButton { get; set; } = false;
     [Parameter]
     public bool DisableEditButton { get; set; } = false;
+    private int selectedRowNumber = -1;
+    
 }

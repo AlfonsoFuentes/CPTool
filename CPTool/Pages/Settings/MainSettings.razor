@@ -1,4 +1,8 @@
 ﻿@page "/mainsettings/{TableId:int}"
+@using CPTool.Application.Features.ConnectionTypeFeatures.Command.CreateEdit
+@using CPTool.Application.Features.ConnectionTypeFeatures.Command.Delete
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList
 @using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit
 @using CPTool.Application.Features.MaterialFeatures.Command.Delete
 @using CPTool.Application.Features.MaterialFeatures.Query.GetById
@@ -16,6 +20,15 @@
 @using CPTool.Application.Features.VendorCodeFeatures.Query.GetById
 @using CPTool.Application.Features.VendorCodeFeatures.Query.GetList
 @using CPTool.NewPages.Dialogs.BrandSupplier.List
+@using CPTool.NewPages.Dialogs.ConnectionType.List
+@using CPTool.NewPages.Dialogs.Gaskets.List
+@using CPTool.NewPages.Dialogs.MWOType.List
+@using CPTool.NewPages.Dialogs.Material.List
+@using CPTool.NewPages.Dialogs.PipeClass
+@using CPTool.NewPages.Dialogs.TaxCodeLD.List
+@using CPTool.NewPages.Dialogs.TaxCodeLP.List
+@using CPTool.NewPages.Dialogs.UnitaryBasePrize
+@using CPTool.NewPages.Dialogs.VendorCode.List
 
 
 @switch (TableId)
@@ -32,93 +45,56 @@
         break;
     case 3:
         {
-
-            <SimpleListComponent TMaster="AddEditMWOTypeCommand"
-                     TDeleteMaster="DeleteMWOTypeCommand"
-                     TMasterList="GetMWOTypeListQuery"
-                     TGedById="GetByIdMWOTypeQuery"
-                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
-
-
-
-            </SimpleListComponent>
-
+            <MWOTypeList></MWOTypeList>
         }
         break;
     case 4:
         {
-            <SimpleListComponent TMaster="AddEditUnitaryBasePrizeCommand"
-                     TDeleteMaster="DeleteUnitaryBasePrizeCommand"
-                     TMasterList="GetUnitaryBasePrizeListQuery"
-                     TGedById="GetByIdUnitaryBasePrizeQuery"
-                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
-            </SimpleListComponent>
-
-
+            <UnitaryBasePrizeList></UnitaryBasePrizeList>
         }
         break;
     case 5:
         {
-            <SimpleListComponent TMaster="AddEditGasketCommand"
-                     TDeleteMaster="DeleteGasketCommand"
-                     TMasterList="GetGasketListQuery" TGedById="GetByIdGasketQuery"
-                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
-            </SimpleListComponent>
-
+           <GasketsList></GasketsList>
         }
         break;
     case 6:
         {
-            <SimpleListComponent TMaster="AddEditMaterialCommand"
-                     TDeleteMaster="DeleteMaterialCommand"
-                     TMasterList="GetMaterialListQuery"
-                     TGedById="GetByIdMaterialQuery"
-                     OnShowDialogMaster="ToolDialogService.ShowMaterial">
-            </SimpleListComponent>
-
+            <MaterialList></MaterialList>
         }
         break;
     case 7:
         {
-            <SimpleListComponent TMaster="AddEditTaxCodeLDCommand"
-                     TDeleteMaster="DeleteTaxCodeLDCommand"
-                     TMasterList="GetTaxCodeLDListQuery" TGedById="GetByIdTaxCodeLDQuery"
-                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
-            </SimpleListComponent>
+            <TaxCodeLDList></TaxCodeLDList>
+           
 
         }
         break;
     case 8:
         {
-            <SimpleListComponent TMaster="AddEditTaxCodeLPCommand"
-                     TDeleteMaster="DeleteTaxCodeLPCommand"
-                     TMasterList="GetTaxCodeLPListQuery" TGedById="GetByIdTaxCodeLPQuery"
-                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
-            </SimpleListComponent>
-
+            <TaxCodeLPList></TaxCodeLPList>
         }
         break;
     case 9:
         {
-            <SimpleListComponent TMaster="AddEditVendorCodeCommand"
-                     TDeleteMaster="DeleteVendorCodeCommand"
-                     TMasterList="GetVendorCodeListQuery" TGedById="GetByIdVendorCodeQuery"
-                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
-            </SimpleListComponent>
+             <VendorCodeList></VendorCodeList>
+           
 
         }
         break;
    
-    @* case 10:
+    case 10:
         {
-            <PurchaseOrderMWOItemList OnShowDialogDetail=ToolDialogService.ShowPurchaseOrderItemDialog
-                          OnShowDialogMaster=ToolDialogService.ShowPurchaseOrderDialog>
-
-            </PurchaseOrderMWOItemList>
+            <ConnectionTypeList></ConnectionTypeList>
+           
 
         }
         break;
     case 11:
+        {
+            <PipingClassList></PipingClassList>
+        }break;
+        @*   case 11:
         {
 
             <DownPaymenList></DownPaymenList>

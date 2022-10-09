@@ -11,20 +11,24 @@
         [Inject]
         public IMediator mediator { get; set; }
         TMasterList ModelList { get; set; } = new();
+        [Parameter]
+      
         public List<TMaster> ElementsMasters { get; set; } = new();
+
+        [Parameter]
+      
+        public EventCallback<List<TMaster>> ElementsMastersChanged { get; set; }
         public TMaster SelectedMaster { get; set; } = new();
         [Parameter]
+        [EditorRequired]
         public RenderFragment MasterContextTh { get; set; }
         [Parameter]
+        [EditorRequired]
         public RenderFragment<TMaster> MasterContextTd { get; set; }
         [Parameter]
         [EditorRequired]
         public Func<TMaster, Task<DialogResult>> OnShowDialogMaster { get; set; }
-        protected override async Task OnInitializedAsync()
-        {
-            ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
-        }
-
+       
         void RowClickedMaster(TableRowClickEventArgs<TMaster> eq)
         {
             SelectedMaster = eq.Item;
@@ -41,7 +45,7 @@
                 SelectedMaster = result.Data as TMaster;
                
                 ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
-
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
             }
 
         }
@@ -54,7 +58,7 @@
             if (!result.Cancelled)
             {
                 ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
-
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
             }
         }
         async Task Delete()
@@ -67,7 +71,7 @@
             {
                 SelectedMaster = new();
                 ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
-               
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
 
             }
 

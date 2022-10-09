@@ -2,6 +2,7 @@
 using CPTool.Domain.Common;
 using CPTool.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -37,7 +38,15 @@ namespace CPTool.Infrastructure.Repositories
             return await dbcontext.Set<T>().Where(predicate).ToListAsync();
         }
 
-
+       public  void GetTracker()
+        {
+            //dbcontext.ChangeTracker.DetectChanges();
+            var traked = dbcontext.ChangeTracker.DebugView.LongView;
+            foreach (var entry in dbcontext.ChangeTracker.Entries<BaseDomainModel>())
+            {
+               var state=entry.State;
+            }
+        }
         public async Task<IReadOnlyList<T>> GetAsync(
             Expression<Func<T, bool>> predicate = null!,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!,
@@ -71,8 +80,17 @@ namespace CPTool.Infrastructure.Repositories
 
         public void Update(T entity)
         {
-            dbcontext.Set<T>().Attach(entity);
-            dbcontext.Entry(entity).State = EntityState.Modified;
+            try
+            {
+             
+                dbcontext.Set<T>().Attach(entity);
+                dbcontext.Entry(entity).State = EntityState.Modified;
+
+            }
+            catch (Exception ex)
+            {
+                string exm = ex.Message;
+            }
 
         }
 

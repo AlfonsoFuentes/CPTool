@@ -14,7 +14,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 
-//builder.Services.AddCPToolServices(builder.Configuration);
+
 var asse = Assembly.GetExecutingAssembly();
 
 builder.Services.AddInfrastructureService(builder.Configuration);
@@ -24,14 +24,13 @@ builder.Services.AddCors(options =>
 options.AddPolicy("CorsPolicy",
 builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
-//builder.Services.CurrencyService();
-//builder.Services.AddServiceMapper();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 UnitManager.RegisterByAssembly(typeof(SIUnitTypes).Assembly);
 builder.Services.AddMudServices();
-//builder.Services.AddScoped<ITablesService,TablesService>();
+
 builder.Services.AddScoped<ToolDialogService>();
 var app = builder.Build();
 app.Services.InitializeDatabase();

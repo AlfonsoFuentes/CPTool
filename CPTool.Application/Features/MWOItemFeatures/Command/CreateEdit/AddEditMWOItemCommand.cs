@@ -25,14 +25,15 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
     {
         public int MWOId => MWOCommand.Id;
         public AddEditMWOCommand MWOCommand { get => (Parent as AddEditMWOCommand)!; set => Parent = value; }
-        public int UnitaryBasePrizeId => UnitaryBasePrizeCommand.Id;
-        public AddEditUnitaryBasePrizeCommand UnitaryBasePrizeCommand { get; set; } = new(); public int Order { get; set; }
-        public string? Nomenclatore  => $"{ChapterCommand.Letter}{Order}";
-        public decimal BudgetPrize { get; set; }
+        public int? UnitaryBasePrizeId => UnitaryBasePrizeCommand?.Id == 0 ? null : UnitaryBasePrizeCommand?.Id;
+        public AddEditUnitaryBasePrizeCommand? UnitaryBasePrizeCommand { get; set; } = new();
+        public int Order { get; set; }
+        public string? Nomenclatore => $"{ChapterCommand.Letter}{Order}";
+        public decimal BudgetPrize => UnitaryPrize * Quantity;
         public decimal RealPrize { get; set; }
         public decimal UnitaryPrize { get; set; }
         public decimal Quantity { get; set; }
-        public string TagId { get; set; } = string.Empty;
+        public string TagId => GetTagId();
 
         public int ChapterId => ChapterCommand.Id;
         public AddEditChapterCommand ChapterCommand { get; set; } = new();
@@ -62,14 +63,29 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
         public AddEditTestingItemCommand? TestingItemCommand { get; set; }
         public int? EngineeringCostItemId => EngineeringCostItemCommand == null ? null : EngineeringCostItemCommand?.Id;
         public AddEditEngineeringCostItemCommand? EngineeringCostItemCommand { get; set; }
-        public int? ContingencyItemId => ContingencyItemCommand==null?null: ContingencyItemCommand?.Id;
+        public int? ContingencyItemId => ContingencyItemCommand == null ? null : ContingencyItemCommand?.Id;
         public AddEditContingencyItemCommand? ContingencyItemCommand { get; set; }
 
-       
+        string GetTagId()
+        {
+            switch(ChapterCommand.Id)
+            {
+                case 4:
+                    return EquipmentItemCommand!.TagId;
+                  
+                case 6:
+                    return PipingItemCommand!.TagId;
+                  
+                case 7:
+                    return InstrumentItemCommand!.TagId;
+                   
+            }
+            return "";
+        }
 
         public void AssignInternalItem()
         {
-            var list = MWOCommand.MWOItemsCommand.Where(x=>x.ChapterId== ChapterCommand.Id).ToList();
+            var list = MWOCommand.MWOItemsCommand.Where(x => x.ChapterId == ChapterCommand.Id).ToList();
             Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
 
 
@@ -142,24 +158,43 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit
 
             if (command.Id == 0)
             {
+                try
+                {
+                    var table = _mapper.Map<MWOItem>(command);
+                    _unitOfWork.Repository<MWOItem>().Add(table);
+                    await _unitOfWork.Complete();
+                    command.Id = table.Id;
+                    return await Result<AddEditMWOItemCommand>.SuccessAsync(command, $"{table.Name} Added to {nameof(MWOItem)}");
+                }
+                catch (Exception ex)
+                {
+                    string exm = ex.Message;
+                    return await Result<AddEditMWOItemCommand>.FailAsync($"{ex.Message}");
+                }
 
-                var table = _mapper.Map<MWOItem>(command);
 
-                _unitOfWork.Repository<MWOItem>().Add(table);
-                await _unitOfWork.Complete();
-                command.Id = table.Id;
-                return await Result<AddEditMWOItemCommand>.SuccessAsync(command, $"{table.Name} Added to {nameof(MWOItem)}");
+
+
             }
             else
             {
-                var table = await _unitOfWork.Repository<MWOItem>().GetByIdAsync(command.Id);
+                var table = await _unitOfWork.RepositoryMWOItem.GetMWOItemIdAsync(command.Id);
                 if (table != null)
                 {
-                    _mapper.Map(command, table, typeof(AddEditMWOItemCommand), typeof(MWOItem));
+                    try
+                    {
 
-                    _unitOfWork.Repository<MWOItem>().Update(table);
-                    await _unitOfWork.Complete();
-                    return await Result<AddEditMWOItemCommand>.SuccessAsync(command, $"{table.Name} Updated in {nameof(MWOItem)}");
+                        _mapper.Map(command, table, typeof(AddEditMWOItemCommand), typeof(MWOItem));
+
+                        _unitOfWork.Repository<MWOItem>().Update(table);
+                        await _unitOfWork.Complete();
+                        return await Result<AddEditMWOItemCommand>.SuccessAsync(command, $"{table.Name} Updated in {nameof(MWOItem)}");
+                    }
+                    catch (Exception ex)
+                    {
+                        string exm = ex.Message;
+                        return await Result<AddEditMWOItemCommand>.FailAsync($"{ex.Message}");
+                    }
                 }
                 else
                 {

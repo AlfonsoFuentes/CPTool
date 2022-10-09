@@ -14,24 +14,22 @@
 
         <MudItem xs="12" sm="@mastersm">
             <TableComponent T="TMaster" Elements="@ElementsMasters" OnAdd="Add" OnDelete="Delete"
-                        OnRowClicked="RowClickedMaster"
+                        OnRowClicked="RowClickedMaster" DisableEditButton=@(SelectedMaster.Id==0?true:false)
                         OnEdit="Edit" SearchFunc=MasterList.FilterFunc @bind-SelectedItem="@SelectedMaster">
                 <ContextTh>
-                    <MudTh Style="width:20px">#</MudTh>
 
-                    <MudTh Style="width:50px">Name</MudTh>
                     @if (MasterContextTh != null)
                         @MasterContextTh
 
 
-                       
+
+
                     </ContextTh>
                     <ContextTd>
-                        <MudTd DataLabel="Id">@context.Id</MudTd>
 
-                        <MudTd DataLabel="Name">@context.Name</MudTd>
                         @if (MasterContextTh != null)
                         @MasterContextTd!(context)
+
 
 
 
@@ -45,21 +43,19 @@
                         OnRowClicked="RowClickedDetail"
                         OnAdd="AddDetail" OnDelete="DeleteDetail" OnEdit="EditDetail" SearchFunc=DetailList.FilterFunc @bind-SelectedItem="@SelectedDetail">
                     <ContextTh>
-                        <MudTh Style="width:20px">#</MudTh>
 
-                        <MudTh Style="width:50px">Name</MudTh>
                         @if (DetailContextTh != null)
                         @DetailContextTh
 
 
 
+
                     </ContextTh>
                     <ContextTd>
-                        <MudTd DataLabel="Id">@context.Id</MudTd>
 
-                        <MudTd DataLabel="Name">@context.Name</MudTd>
                         @if (DetailContextTh != null)
                         @DetailContextTd!(context)
+
 
                     </ContextTd>
                 </TableComponent>

@@ -21,9 +21,8 @@ namespace CPTool.NewPages.Components
         [Parameter]
         [EditorRequired]
         public string Label { get; set; }
-       
+
         [Parameter]
-       
         public AddEditCommand Parent { get; set; } = null!;
 
         [Parameter]
@@ -32,10 +31,12 @@ namespace CPTool.NewPages.Components
         [Category(CategoryTypes.FormComponent.Validation)]
         public object Validation { get; set; }
         [Parameter]
+        [EditorRequired]
         public T Model { get; set; } = new();
-        [Parameter]
-        public EventCallback<T> ModelChanged { get; set; }
 
+        [Parameter]
+        [EditorRequired]
+        public EventCallback<T> SelectionChanged { get; set; }
         [Parameter]
         public List<T> Elements { get; set; } = new();
         [Parameter]
@@ -45,7 +46,9 @@ namespace CPTool.NewPages.Components
         List<string> ListNames => Elements.Select(x => x.Name).ToList();
         [Parameter]
         [EditorRequired]
-        public Func<Task> UpdateParent { get;set; }
+        public Func<Task> ValidateForm { get; set; }
+        [Parameter]
+        public Func<Task> UpdateMasterParent { get; set; } //For use in master details relation
 
         private bool resetValueOnEmptyText = true;
         private bool coerceText = true;
@@ -54,7 +57,7 @@ namespace CPTool.NewPages.Components
 
         protected override void OnInitialized()
         {
-            if (Model != null && Model.Id != 0)
+            if (Model != null)
             {
                 AutocompleteText = Model.Name;
             }
@@ -76,7 +79,14 @@ namespace CPTool.NewPages.Components
 
             return ListNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
         }
-
+        protected override void OnParametersSet()
+        {
+            if (Model != null)
+            {
+                AutocompleteText = Model.Name;
+            }
+            base.OnParametersSet();
+        }
         bool IsExist => ListNames.Contains(AutocompleteText);
         string AutocompleteText = "";
 
@@ -87,14 +97,10 @@ namespace CPTool.NewPages.Components
             if (AutocompleteText == null)
             {
                 Model = new();
-
-
             }
             else if (IsExist)
             {
                 Model = Elements.FirstOrDefault(x => x.Name == AutocompleteText);
-
-
 
             }
             else
@@ -105,8 +111,9 @@ namespace CPTool.NewPages.Components
                 //CreatingNewRow = true;
             }
 
-            await ModelChanged.InvokeAsync(Model);
 
+            await SelectionChanged.InvokeAsync(Model);
+            await ValidateForm.Invoke();
         }
 
 
@@ -124,15 +131,15 @@ namespace CPTool.NewPages.Components
 
             if (!dialogResult.Cancelled)
             {
-               
-                //if (ParentId != null)
-                //{
-                //    Model = Parent.AddDetailtoMaster<T>();
-                //}
-                //else
-                //{
-                //    Model = new();
-                //}
+
+                if (Parent != null)
+                {
+                    Model = Parent.AddDetailtoMaster<T>();
+                }
+                else
+                {
+                    Model = new();
+                }
                 Model.Name = AutocompleteText;
                 dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowDialogName<T>(Model) : await ShowDialogOverrided.Invoke(Model);
 
@@ -141,15 +148,22 @@ namespace CPTool.NewPages.Components
                     var created = await Mediator.Send(Model) as Result<T>;
                     if (created.Succeeded)
                     {
-                        Elements = await Mediator.Send(ModelList) as List<T>;
-                        await ElementsChanged.InvokeAsync(Elements);
+                        if (Parent != null)
+                        {
 
-                        Model =created.Data;
-                       
-                        await ModelChanged.InvokeAsync(Model);
+                            await UpdateMasterParent.Invoke();
+                        }
+                        else
+                        {
+                            Elements = await Mediator.Send(ModelList) as List<T>;
+                            await ElementsChanged.InvokeAsync(Elements);
 
-                        await UpdateParent.Invoke();
-                        
+                        }
+                        Model = created.Data;
+                        await SelectionChanged.InvokeAsync(Model);
+                        await ValidateForm.Invoke();
+                    
+
 
 
                     }

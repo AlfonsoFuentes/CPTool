@@ -24,8 +24,8 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.Mapping
 
 
             CreateMap<AddEditEquipmentItemCommand, EquipmentItem>()
-                .ForMember(dest => dest.ProcessCondition, act => { act.PreCondition(src => (src.ProcessConditionCommand != null)); act.MapFrom(src => src.ProcessConditionCommand); })
-                ;
+                .ForMember(dest => dest.ProcessCondition,
+                act => { act.PreCondition(src => (src.ProcessConditionId == 0)); act.MapFrom(src => src.ProcessConditionCommand); });
 
         }
     }

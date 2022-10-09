@@ -10,6 +10,7 @@ using CPTool.Application.Features.TaxCodeLPFeatures.Command.CreateEdit;
 using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList;
 using CPTool.Application.Features.VendorCodeFeatures.Command.CreateEdit;
 using CPTool.Application.Features.VendorCodeFeatures.Query.GetList;
+using static MudBlazor.Icons.Custom;
 
 namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
 {
@@ -24,25 +25,10 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         [Parameter]
         public MudForm form { get; set; } = null!;
 
-        List<AddEditSupplierCommand> Suppliers = new();
-        List<AddEditBrandCommand> Brands = new();
-        GetBrandListQuery BrandList = new();
-        GetSupplierListQuery SupplierList = new();
-        GetVendorCodeListQuery VendorCodeListQuery = new();
-        List<AddEditVendorCodeCommand> VendorCodes = new();
-        GetTaxCodeLDListQuery GetTaxCodeLDListQuery = new();
-        List<AddEditTaxCodeLDCommand> TaxCodeLDs = new();
-        GetTaxCodeLPListQuery GetTaxCodeLPListQuery = new();
-        List<AddEditTaxCodeLPCommand> TaxCodeLPs = new();
+    
+       
 
-        protected override async Task OnInitializedAsync()
-        {
-            Suppliers = await mediator.Send(SupplierList);
-            Brands = await mediator.Send(BrandList);
-            VendorCodes = await mediator.Send(VendorCodeListQuery);
-            TaxCodeLDs = await mediator.Send(GetTaxCodeLDListQuery);
-            TaxCodeLPs = await mediator.Send(GetTaxCodeLPListQuery);
-        }
+
         public async virtual Task Submit()
         {
             await Validateform();
@@ -61,7 +47,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         void Cancel() => MudDialog.Cancel();
         void SelectionBrand(AddEditBrandCommand id)
         {
-            Model.BrandCommand = Brands.FirstOrDefault(x => x == id);
+            Model.BrandCommand = GlobalTables.Brands.FirstOrDefault(x => x == id);
         }
         private string ValidateSupplieName(string arg)
         {
@@ -71,12 +57,12 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
                 return "Must submit Supplier";
             if(Model.SupplierCommand.Id==0)
             {
-                if (Suppliers.Any(x => x.Name == arg))
+                if (GlobalTables.Suppliers.Any(x => x.Name == arg))
                     return "Name already exist";
             }
             else
             {
-                if (Suppliers.Where(x => x.Id != Model.SupplierCommand.Id).Any(x => x.Name == arg))
+                if (GlobalTables.Suppliers.Where(x => x.Id != Model.SupplierCommand.Id).Any(x => x.Name == arg))
                     return "Name already exist";
             }
             
@@ -88,23 +74,23 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         {
             if (arg == null || arg == "")
                 return "Must submit Vendor Code";
-            if (!VendorCodes.Any(x => x.Name == arg))
+            if (!GlobalTables.VendorCodes.Any(x => x.Name == arg))
             {
                 return $"Vendor Code: {arg} is not in the list";
             }
             if (Model.SupplierCommand.Id == 0)
             {
-                if (Suppliers.Any(x => x.VendorCodeCommand.Name == arg))
+                if (GlobalTables.Suppliers.Any(x => x.VendorCodeCommand.Name == arg))
                 {
-                    var vendor = (Suppliers.First(x => x.VendorCodeCommand.Name == arg));
+                    var vendor = (GlobalTables.Suppliers.First(x => x.VendorCodeCommand.Name == arg));
                     return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
                 }
             }
             else
             {
-                if (Suppliers.Where(x => x.Id != Model.SupplierCommand.Id).Any(x => x.VendorCodeCommand.Name == arg))
+                if (GlobalTables.Suppliers.Where(x => x.Id != Model.SupplierCommand.Id).Any(x => x.VendorCodeCommand.Name == arg))
                 {
-                    var vendor = (Suppliers.First(x => x.VendorCodeCommand.Name == arg));
+                    var vendor = (GlobalTables.Suppliers.First(x => x.VendorCodeCommand.Name == arg));
                     return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
                 }
             }
@@ -112,21 +98,6 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
 
             return null;
         }
-        private string ReviewTaxCodeLD(string arg)
-        {
-            if (arg == null || arg == "")
-                return "Must submit Tax Code LD";
-            if (!TaxCodeLDs.Any(x => x.Name == arg))
-                return $"Tax Code LD: {arg} is not in the list";
-            return null;
-        }
-        private string ReviewTaxCodeLP(string arg)
-        {
-            if (arg == null || arg == "")
-                return "Must submit Tax Code LP";
-            if (!TaxCodeLPs.Any(x => x.Name == arg))
-                return $"Tax Code LP: {arg} is not in the list";
-            return null;
-        }
+       
     }
 }

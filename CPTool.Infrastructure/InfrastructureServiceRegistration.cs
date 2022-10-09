@@ -14,8 +14,8 @@ namespace CPTool.Infrastructure
 
 
             services.AddDbContext<TableContext>(options =>
-
-            options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
+            .EnableSensitiveDataLogging(true));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
           

@@ -15,31 +15,45 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.Command.CreateEdi
 {
     public class AddEditProcessConditionCommand : AddEditCommand, IRequest<Result<AddEditProcessConditionCommand>>
     {
+        public AddEditProcessConditionCommand()
+        {
+
+            TemperatureCommand.Name = "Temperature";
+            PressureCommand.Name = "Pressure";
+            MassFlowCommand.Name = "Mass Flow";
+            VolumetricFlowCommand.Name = "Pressure";
+            DensityCommand.Name = "Density";
+            ViscosityCommand.Name = "Viscosity";
+            EnthalpyFlowCommand.Name = "Enthalpy Flow";
+            SpecificEnthalpyCommand.Name = "Specific Enthalpy";
+            ThermalConductivityCommand.Name = "Thermal Conductivity";
+
+        }
         public List<AddEditPipeAccesoryCommand> PipeAccesorysCommand { get; set; } = new();
         public List<AddEditEquipmentItemCommand> EquipmentItemsCommand { get; set; } = new();
         public List<AddEditInstrumentItemCommand> InstrumentItemsCommand { get; set; } = new();
-        public int? PressureId => PressureCommand.Id;
+        public int? PressureId => PressureCommand.Id == 0 ? null : PressureCommand.Id;
         public AddEditUnitCommand PressureCommand { get; set; } = new(PressureUnits.Bar);
-        public int? TemperatureId => TemperatureCommand.Id;
+        public int? TemperatureId => TemperatureCommand.Id == 0 ? null : TemperatureCommand.Id;
         public AddEditUnitCommand TemperatureCommand { get; set; } = new(TemperatureUnits.DegreeCelcius);
-        public int? MassFlowId => MassFlowCommand.Id;
+        public int? MassFlowId => MassFlowCommand.Id == 0 ? null : MassFlowCommand.Id;
         public AddEditUnitCommand MassFlowCommand { get; set; } = new(MassFlowUnits.Kg_hr);
-        public int? VolumetricFlowId => VolumetricFlowCommand.Id;
+        public int? VolumetricFlowId => VolumetricFlowCommand.Id == 0 ? null : VolumetricFlowCommand.Id;
         public AddEditUnitCommand VolumetricFlowCommand { get; set; } = new(VolumetricFlowUnits.m3_hr);
-        public int? DensityId => DensityCommand.Id;
+        public int? DensityId => DensityCommand.Id == 0 ? null : DensityCommand.Id;
         public AddEditUnitCommand DensityCommand { get; set; } = new(MassDensityUnits.Kg_m3);
-        public int? ViscosityId => ViscosityCommand.Id;
-        public AddEditUnitCommand ViscosityCommand { get; set; }=new(ViscosityUnits.cPoise);
-        public int? EnthalpyFlowId => EnthalpyFlowCommand.Id;
-        public AddEditUnitCommand EnthalpyFlowCommand { get; set; }=new(EnergyFlowUnits.Kcal_hr);
-        public int? SpecificEnthalpyId => SpecificEnthalpyCommand.Id;
+        public int? ViscosityId => ViscosityCommand.Id == 0 ? null : ViscosityCommand.Id;
+        public AddEditUnitCommand ViscosityCommand { get; set; } = new(ViscosityUnits.cPoise);
+        public int? EnthalpyFlowId => EnthalpyFlowCommand.Id == 0 ? null : EnthalpyFlowCommand.Id;
+        public AddEditUnitCommand EnthalpyFlowCommand { get; set; } = new(EnergyFlowUnits.Kcal_hr);
+        public int? SpecificEnthalpyId => SpecificEnthalpyCommand.Id == 0 ? null : SpecificEnthalpyCommand.Id;
         public AddEditUnitCommand SpecificEnthalpyCommand { get; set; } = new(MassEnergyUnits.Kcal_Kg);
-        public int? ThermalConductivityId => ThermalConductivityCommand.Id;
+        public int? ThermalConductivityId => ThermalConductivityCommand.Id == 0 ? null : ThermalConductivityCommand.Id;
         public AddEditUnitCommand ThermalConductivityCommand { get; set; } = new(ThermalConductivityUnits.kW_m_K);
-        public int? SpecificCpId =>SpecificCpCommand.Id;
-        public AddEditUnitCommand SpecificCpCommand { get; set; }=new(MassEntropyUnits.Kcal_Kg_C);
+        public int? SpecificCpId => SpecificCpCommand.Id == 0 ? null : SpecificCpCommand.Id;
+        public AddEditUnitCommand SpecificCpCommand { get; set; } = new(MassEntropyUnits.Kcal_Kg_C);
 
-   
+
     }
     internal class AddEditProcessConditionCommandHandler : IRequestHandler<AddEditProcessConditionCommand, Result<AddEditProcessConditionCommand>>
     {
@@ -58,11 +72,11 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.Command.CreateEdi
 
         public async Task<Result<AddEditProcessConditionCommand>> Handle(AddEditProcessConditionCommand command, CancellationToken cancellationToken)
         {
-          
+
 
             if (command.Id == 0)
             {
-                
+
                 var table = _mapper.Map<ProcessCondition>(command);
 
                 _unitOfWork.Repository<ProcessCondition>().Add(table);
@@ -97,7 +111,7 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.Command.CreateEdi
                 .NotNull().WithMessage("Not null")
                 .MaximumLength(50).WithMessage("Max 50 characters");
 
-          
+
 
         }
     }

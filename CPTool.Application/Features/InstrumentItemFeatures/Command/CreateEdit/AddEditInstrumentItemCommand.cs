@@ -49,7 +49,7 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.Command.CreateEdit
         public AddEditBrandCommand? BrandCommand { get; set; }
         public int? SupplierId => SupplierCommand == null ? null : SupplierCommand.Id;
         public AddEditSupplierCommand? SupplierCommand { get; set; }
-        public string? TagId { get; set; }
+        public string TagId { get; set; }=String.Empty;
         public string? TagLetter { get; set; }
         public string? TagNumber { get; set; }
         public string? Model { get; set; }

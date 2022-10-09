@@ -35,7 +35,7 @@ namespace CPTool.Application.Features.PipingItemFeatures.Command.CreateEdit
         public AddEditMWOItemCommand? FinishMWOItemCommand { get; set; }
         public int? PipeClassId => PipeClassCommand == null ? null : PipeClassCommand.Id;
         public AddEditPipeClassCommand? PipeClassCommand { get; set; }
-
+        public string TagId { get; set; } = String.Empty;
         public bool Insulation { get; set; }
 
      

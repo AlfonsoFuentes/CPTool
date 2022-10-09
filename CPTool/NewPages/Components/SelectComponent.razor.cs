@@ -1,6 +1,8 @@
-﻿namespace CPTool.NewPages.Components
+﻿using Microsoft.AspNetCore.Components.Web;
+
+namespace CPTool.NewPages.Components
 {
-    public partial class SelectComponent<T> where T : AddEditCommand
+    public partial class SelectComponent<T> where T : AddEditCommand, new()
     {
 
         [Parameter]
@@ -10,7 +12,7 @@
         [Parameter]
         public EventCallback<T> ValueChanged { get; set; }
         [Parameter]
-        public EventCallback SelectionChanged { get; set; }        
+        public EventCallback<T> SelectionChanged { get; set; }
 
         public int ValueInt => Value.Id;
         [Parameter]
@@ -27,14 +29,16 @@
         [EditorRequired]
         public List<T> Elements { get; set; } = new();
 
-        
+
+
         async Task InternaSelectChanged(int id)
         {
-           
-            Value = Elements.FirstOrDefault(x => x.Id == id);
+            if (id != 0) Value = Elements.FirstOrDefault(x => x.Id == id);
+            else Value = new();
             await ValueChanged.InvokeAsync(Value);
-            await SelectionChanged.InvokeAsync();
+            await SelectionChanged.InvokeAsync(Value);
+
         }
-      
+
     }
 }

@@ -16,36 +16,37 @@ namespace CPTool.Application.Features.NozzleFeatures.Command.CreateEdit
 {
     public class AddEditNozzleCommand : AddEditCommand, IRequest<Result<AddEditNozzleCommand>>
     {
-
-       
+        public int? PipeAccesoryId => PipeAccesoryCommand==null? null : PipeAccesoryCommand?.Id;
+        public AddEditPipeAccesoryCommand? PipeAccesoryCommand { get; set; } 
+        public int Order { get; set; }
         public List<AddEditPipingItemCommand>? StartPipingItemsCommand { get; set; } = new();
-      
+
         public List<AddEditPipingItemCommand>? FinishPipingItemsCommand { get; set; } = new();
 
-        public int? PipeClassId => PipeClassCommand == null ? null : PipeClassCommand?.Id;
-        public AddEditPipeClassCommand? PipeClassCommand { get; set; }
+        public int? EquipmentItemId => EquipmentItemCommand==null ? null : EquipmentItemCommand?.Id;
+        public AddEditEquipmentItemCommand? EquipmentItemCommand { get; set; } 
+        public int? InstrumentItemId => InstrumentItemCommand==null ? null : InstrumentItemCommand?.Id;
+        public AddEditInstrumentItemCommand? InstrumentItemCommand { get; set; } 
 
-        public int? PipeDiameterId => PipeDiameterCommand == null ? null : PipeDiameterCommand?.Id;
-        public AddEditPipeDiameterCommand? PipeDiameterCommand { get; set; }
-        public int? ConnectionTypeId => ConnectionTypeCommand == null ? null : ConnectionTypeCommand?.Id;
-        public AddEditConnectionTypeCommand? ConnectionTypeCommand { get; set; }
-        public int? GasketId => GasketCommand == null ? null : GasketCommand?.Id;
-        public AddEditGasketCommand? GasketCommand { get; set; }
-        public int? MaterialID => MaterialCommand == null ? null : MaterialCommand?.Id;
-        public AddEditMaterialCommand? MaterialCommand { get; set; }
+        public int? PipingItemId => PipingItemCommand==null ? null : PipingItemCommand?.Id;
+        public AddEditPipingItemCommand? PipingItemCommand { get; set; } 
+
+        public int? PipeDiameterId => PipeDiameterCommand?.Id == 0 ? null : PipeDiameterCommand?.Id;
+        public AddEditPipeDiameterCommand? PipeDiameterCommand { get; set; } = new();
+        public int? ConnectionTypeId => ConnectionTypeCommand?.Id == 0 ?  null : ConnectionTypeCommand?.Id;
+        public AddEditConnectionTypeCommand? ConnectionTypeCommand { get; set; } = new();
+        public int? GasketId => GasketCommand?.Id == 0 ? null : GasketCommand?.Id;
+        public AddEditGasketCommand? GasketCommand { get; set; } = new();
+        public int? MaterialID => MaterialCommand?.Id == 0 ? null : MaterialCommand?.Id;
+        public AddEditMaterialCommand? MaterialCommand { get; set; } = new();
 
         public StreamType StreamType { get; set; }
 
-        public AddEditPipeAccesoryCommand? PipeAccesoryCommand { get; set; }
-        public int? PipeAccesoryId => PipeAccesoryCommand == null ? null : PipeAccesoryCommand?.Id;
+       
 
-        public int? EquipmentItemId => EquipmentItemCommand == null ? null : EquipmentItemCommand?.Id;
-        public AddEditEquipmentItemCommand? EquipmentItemCommand { get; set; }
-        public int? InstrumentItemId => InstrumentItemCommand == null ? null : InstrumentItemCommand?.Id;
-        public AddEditInstrumentItemCommand? InstrumentItemCommand { get; set; }
-
-        public int? PipingItemId => PipingItemCommand == null ? null : PipingItemCommand?.Id;
-        public AddEditPipingItemCommand PipingItemCommand { get; set; } = null!;
+        public int? PipeClassId => PipeClassCommand?.Id == 0 ? null : PipeClassCommand?.Id;
+        public AddEditPipeClassCommand? PipeClassCommand { get; set; } = new();
+        public List<AddEditNozzleCommand> ParentNozzles { get; set; } = new();
     }
     internal class AddEditNozzleCommandHandler : IRequestHandler<AddEditNozzleCommand, Result<AddEditNozzleCommand>>
     {
@@ -68,7 +69,7 @@ namespace CPTool.Application.Features.NozzleFeatures.Command.CreateEdit
 
             if (command.Id == 0)
             {
-                
+
                 var table = _mapper.Map<Nozzle>(command);
 
                 _unitOfWork.Repository<Nozzle>().Add(table);
@@ -103,7 +104,7 @@ namespace CPTool.Application.Features.NozzleFeatures.Command.CreateEdit
                 .NotNull().WithMessage("Not null")
                 .MaximumLength(50).WithMessage("Max 50 characters");
 
-          
+
 
         }
     }

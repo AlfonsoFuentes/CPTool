@@ -15,8 +15,7 @@ namespace CPTool.Application.Contracts.Persistence
         
 
         Task<T> GetByIdAsync(int id);
-
-     
+        void GetTracker();
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);

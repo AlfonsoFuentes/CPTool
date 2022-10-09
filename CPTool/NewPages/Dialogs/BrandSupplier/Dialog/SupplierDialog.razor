@@ -4,7 +4,10 @@
 @using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList
 @using CPTool.Application.Features.VendorCodeFeatures.Command.CreateEdit
 @using CPTool.Application.Features.VendorCodeFeatures.Query.GetList
-
+@if(debug)
+{
+    
+}
 <MudDialog DisableSidePadding="true">
     <DialogContent>
         <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
@@ -14,10 +17,9 @@
 
                     <MudForm Model="Model" @ref="form">
                         <SelectComponent T="AddEditBrandCommand"
-                                         Elements=@Brands
-                                       
+                                         Elements=@GlobalTables.Brands
                                          Label="Brand or Service"
-                                         Value="Model.BrandCommand">
+                                         @bind-Value="@Model.BrandCommand">
 
 
                         </SelectComponent>
@@ -60,34 +62,32 @@
                                                TList="GetVendorCodeListQuery"
                                                TableName="Vendor Code"
                                                Label="Vendor Code"
-                                              
-                                              
-                                               UpdateParent="Validateform"
-                                               @bind-Elements="@VendorCodes"
+                                               SelectionChanged="@((arg)=>{Model.SupplierCommand.VendorCodeCommand=arg;})"
+                                               ValidateForm="Validateform"
+                                               @bind-Elements="@GlobalTables.VendorCodes"
                                                Validation="@(new Func<string, string>(ReviewVendorCode))"
-                                               @bind-Model=@Model.SupplierCommand.VendorCodeCommand></AutoCompleteComponent>
+                                               Model=@Model.SupplierCommand.VendorCodeCommand></AutoCompleteComponent>
                         <AutoCompleteComponent T="AddEditTaxCodeLDCommand"
                                                TList="GetTaxCodeLDListQuery"
                                                TableName="Tax Codel LD"
                                                Required=true
                                                Label="Tax Codel LD"
-                                               UpdateParent="Validateform"
-                                             
-                                               @bind-Elements="@TaxCodeLDs"
-                                               Validation="@(new Func<string, string>(ReviewTaxCodeLD))"
-                                               @bind-Model=@Model.SupplierCommand.TaxCodeLDCommand></AutoCompleteComponent>
+                                               ValidateForm="Validateform"
+                                               SelectionChanged="@((arg)=>{Model.SupplierCommand.TaxCodeLDCommand=arg;})"
+                                               @bind-Elements="@GlobalTables.TaxCodeLDs"
+                                               Validation="@(new Func<string, string>(GlobalTables.ReviewTaxCodeLD))"
+                                               Model=@Model.SupplierCommand.TaxCodeLDCommand></AutoCompleteComponent>
                         <AutoCompleteComponent T="AddEditTaxCodeLPCommand"
                                                TList="GetTaxCodeLPListQuery"
                                                TableName="Vendor Code"
                                                Label="Tax Codel LD"
-                                               UpdateParent="Validateform"
+                                               ValidateForm="Validateform"
                                                Required=true
-                                              
-                                            
-                                               @bind-Elements="@TaxCodeLPs"
-                                               Validation="@(new Func<string, string>(ReviewTaxCodeLP))"
-                                               @bind-Model=@Model.SupplierCommand.TaxCodeLPCommand></AutoCompleteComponent>
-                       
+                                               SelectionChanged="@((arg)=>{Model.SupplierCommand.TaxCodeLPCommand=arg;})"
+                                               @bind-Elements="@GlobalTables.TaxCodeLPs"
+                                               Validation="@(new Func<string, string>(GlobalTables.ReviewTaxCodeLP))"
+                                               Model=@Model.SupplierCommand.TaxCodeLPCommand></AutoCompleteComponent>
+
 
                     </MudForm>
                 </CascadingValue>
@@ -103,5 +103,5 @@
     </DialogActions>
 </MudDialog>
 @code {
-
+    bool debug = true;
 }

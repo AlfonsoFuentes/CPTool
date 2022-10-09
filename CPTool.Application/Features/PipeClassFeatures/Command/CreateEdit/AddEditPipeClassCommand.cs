@@ -6,7 +6,9 @@
 
 using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
 using CPTool.Application.Features.PipingItemFeatures.Command.CreateEdit;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Application.Features.PipeClassFeatures.Command.CreateEdit
 {
@@ -15,7 +17,25 @@ namespace CPTool.Application.Features.PipeClassFeatures.Command.CreateEdit
 
         public List<AddEditPipingItemCommand>? PipingItemsCommand { get; set; } = new();
         public List<AddEditNozzleCommand>? NozzlesCommand { get; set; } = new();
-       
+        public List<AddEditPipeDiameterCommand> PipeDiametersCommand{ get; set; } = new();
+
+        public override T AddDetailtoMaster<T>()
+        {
+            AddEditPipeDiameterCommand detail = new();
+            detail.PipeClassCommand = this;
+          
+
+            return (detail as T)!;
+        }
+        public  string ValidatePipeDiameterName(string arg)
+        {
+            if (arg == null || arg == "")
+                return null!;
+            if (PipeDiametersCommand.Any(x => x.Name == arg))
+                return $"Diameter: {arg} is in the list";
+
+            return null!;
+        }
     }
     internal class AddEditPipeClassCommandHandler : IRequestHandler<AddEditPipeClassCommand, Result<AddEditPipeClassCommand>>
     {

@@ -7,18 +7,7 @@ namespace CPTool.Infrastructure.Repositories
         public RepositoryMWOItem(TableContext dbcontext) : base(dbcontext)
         {
         }
-       
-        public async Task<MWO> GetMWOIdAsync(int id)
-        {
-            var result = await dbcontext!.MWOs!
-                 .Include(x => x.MWOType)
-                 .Include(x => x.MWOItems).ThenInclude(hh => hh.Chapter)
-                 .Include(x => x.MWOItems).ThenInclude(hh => hh.EquipmentItem)
-                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            return result!;
-
-        }
 
         public async Task<MWOItem> GetMWOItemIdAsync(int id)
         {
@@ -26,7 +15,9 @@ namespace CPTool.Infrastructure.Repositories
                  .Include(x => x.Chapter)
                  .Include(x => x.MWO)
                  .Include(x => x.UnitaryBasePrize)
-                 .Include(x=>x.EquipmentItem)
+                 .Include(x => x.EquipmentItem).ThenInclude(y => y!.Nozzles)
+                 .Include(x => x.EquipmentItem).ThenInclude(x => x!.ProcessCondition)
+                 .Include(x => x.EquipmentItem).ThenInclude(x => x!.ProcessFluid)
                  .FirstOrDefaultAsync(x => x.Id == id);
 
             return result!;

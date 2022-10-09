@@ -1,0 +1,26 @@
+﻿@using CPTool.Application.Features.ConnectionTypeFeatures.Command.CreateEdit
+@using CPTool.Application.Features.ConnectionTypeFeatures.Command.Delete
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList
+
+<SimpleListComponent TMaster="AddEditConnectionTypeCommand"
+                     TDeleteMaster="DeleteConnectionTypeCommand"
+                     TMasterList="GetConnectionTypeListQuery" TGedById="GetByIdConnectionTypeQuery"
+                     @bind-ElementsMasters="GlobalTables.ConnectionTypes"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="Name">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+
+}

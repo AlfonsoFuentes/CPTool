@@ -1,0 +1,31 @@
+﻿@using CPTool.Application.Features.ProcessFluidFeatures.Command.CreateEdit
+@using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
+@if (assign)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+            <AutoCompleteComponent T="AddEditProcessFluidCommand"
+                               TList="GetProcessFluidListQuery"
+                               TableName="Process Fluid"
+                               Label="Process Fluid"
+                               SelectionChanged="OnProcessFluidChanged"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.ProcessFluids"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateProcessFluid))"
+                               Model=@ProcessFluid>
+
+            </AutoCompleteComponent>
+        </MudItem>
+        <MudItem xs="12" sm="12">
+            <SelectUnitComponent @bind-Model=@ProcessCondition.TemperatureCommand UpdateParent=DialogParent.Validateform>
+
+            </SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.PressureCommand UpdateParent=DialogParent.Validateform>
+
+            </SelectUnitComponent>
+        </MudItem>
+    </MudGrid>
+}
+@code {
+    bool assign = true;
+}

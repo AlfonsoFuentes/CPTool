@@ -19,11 +19,11 @@ namespace CPTool.NewPages.Components
         TMasterList MasterList { get; set; } = new();
         TDetailList DetailList { get; set; } = new();
         [Parameter]
-        [EditorRequired]
         public List<TMaster> ElementsMasters { get; set; } = new();
+        [Parameter]
+        public EventCallback<List<TMaster>> ElementsMastersChanged { get; set; }
 
         [Parameter]
-        [EditorRequired]
         public List<TDetail> ElementsDetails { get; set; } = new();
 
         [Parameter]
@@ -40,13 +40,17 @@ namespace CPTool.NewPages.Components
         public RenderFragment OtherButtons { get; set; }
 
         [Parameter]
+        [EditorRequired]
         public RenderFragment MasterContextTh { get; set; }
         [Parameter]
+        [EditorRequired]
         public RenderFragment<TMaster> MasterContextTd { get; set; }
 
         [Parameter]
+        [EditorRequired]
         public RenderFragment DetailContextTh { get; set; }
         [Parameter]
+        [EditorRequired]
         public RenderFragment<TDetail> DetailContextTd { get; set; }
         [Parameter]
         [EditorRequired]
@@ -88,7 +92,7 @@ namespace CPTool.NewPages.Components
                 await SelectedMasterChanged.InvokeAsync(SelectedMaster);
 
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
             }
 
         }
@@ -101,7 +105,7 @@ namespace CPTool.NewPages.Components
             if (!result.Cancelled)
             {
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
             }
         }
         async Task Delete()
@@ -127,8 +131,11 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogDetails.Invoke(model);
             if (!result.Cancelled)
             {
-                var data = result.Data as TDetail;
+               
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+
+                var data = result.Data as TDetail;
                 TMasterGedById query = new() { Id = SelectedMaster.Id };
 
                 SelectedMaster = (await mediator.Send(query)) as TMaster;
@@ -137,6 +144,7 @@ namespace CPTool.NewPages.Components
                 SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
                 await SelectedMasterChanged.InvokeAsync(SelectedMaster);
                 await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+               
             }
 
         }
@@ -149,6 +157,7 @@ namespace CPTool.NewPages.Components
             {
                 var data = result.Data as TDetail;
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
                 TMasterGedById query = new() { Id = SelectedMaster.Id };
 
                 SelectedMaster = (await mediator.Send(query)) as TMaster;
@@ -169,6 +178,7 @@ namespace CPTool.NewPages.Components
             {
                 SelectedDetail = new();
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
                 TMasterGedById query = new() { Id = SelectedMaster.Id };
 
                 SelectedMaster = (await mediator.Send(query)) as TMaster;

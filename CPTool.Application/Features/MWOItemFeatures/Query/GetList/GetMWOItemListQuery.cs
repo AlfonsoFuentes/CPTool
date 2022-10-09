@@ -22,7 +22,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.Query.GetList
         }
         public async Task<List<AddEditMWOItemCommand>> Handle(GetMWOItemListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<MWOItem>().GetAllAsync();
+            var list = await _unitofwork.RepositoryMWOItem.GetAllAsync();
 
             return _mapper.Map<List<AddEditMWOItemCommand>>(list);
 

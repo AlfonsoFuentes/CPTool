@@ -1251,6 +1251,9 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PipeAccesoryId")
                         .HasColumnType("int");
 
@@ -1468,14 +1471,17 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IDId")
+                    b.Property<int?>("InternalDiameterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ODId")
+                    b.Property<int?>("OuterDiameterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PipeClassId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ThicknessId")
@@ -1489,9 +1495,11 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IDId");
+                    b.HasIndex("InternalDiameterId");
 
-                    b.HasIndex("ODId");
+                    b.HasIndex("OuterDiameterId");
+
+                    b.HasIndex("PipeClassId");
 
                     b.HasIndex("ThicknessId");
 
@@ -2628,24 +2636,30 @@ namespace CPTool.Infrastructure.Migrations
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipeDiameter", b =>
                 {
-                    b.HasOne("CPTool.Domain.Entities.Unit", "ID")
+                    b.HasOne("CPTool.Domain.Entities.Unit", "InternalDiameter")
                         .WithMany("IDs")
-                        .HasForeignKey("IDId")
+                        .HasForeignKey("InternalDiameterId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.Unit", "OD")
+                    b.HasOne("CPTool.Domain.Entities.Unit", "OuterDiameter")
                         .WithMany("ODs")
-                        .HasForeignKey("ODId")
+                        .HasForeignKey("OuterDiameterId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.PipeClass", "PipeClass")
+                        .WithMany("PipeDiameters")
+                        .HasForeignKey("PipeClassId");
 
                     b.HasOne("CPTool.Domain.Entities.Unit", "Thickness")
                         .WithMany("Thicknesss")
                         .HasForeignKey("ThicknessId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("ID");
+                    b.Navigation("InternalDiameter");
 
-                    b.Navigation("OD");
+                    b.Navigation("OuterDiameter");
+
+                    b.Navigation("PipeClass");
 
                     b.Navigation("Thickness");
                 });
@@ -3008,6 +3022,8 @@ namespace CPTool.Infrastructure.Migrations
             modelBuilder.Entity("CPTool.Domain.Entities.PipeClass", b =>
                 {
                     b.Navigation("Nozzles");
+
+                    b.Navigation("PipeDiameters");
 
                     b.Navigation("PipingItems");
                 });

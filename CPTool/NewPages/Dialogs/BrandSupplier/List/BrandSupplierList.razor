@@ -6,8 +6,8 @@
                      TDeleteMaster="DeleteBrandCommand" TDeleteDetail="DeleteSupplierCommand"
                      @bind-SelectedDetail="@SelectedSupplier"
                      @bind-SelectedMaster="@SelectedBrand"
-                     @bind-ElementsMasters=@ElementsBrand
-                     @bind-ElementsDetails=@ElementsSupplier
+                     @bind-ElementsMasters=@Brands
+                     @bind-ElementsDetails=@Suppliers
                      OnShowDialogMaster="ToolDialogService.ShowBrandDialog"
                      OnShowDialogDetails="ToolDialogService.ShowSupplierDialog"
                      OnRowClickedMaster="RowClickedMaster" OnRowClickedDetails="RowClickedDetails">

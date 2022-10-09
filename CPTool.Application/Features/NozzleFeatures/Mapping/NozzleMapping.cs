@@ -24,7 +24,15 @@ namespace CPTool.Application.Features.NozzleFeatures.Mapping
                 .ForMember(dest => dest.PipingItemCommand, act => { act.PreCondition(src => (src.PipingItem != null)); act.MapFrom(src => src.PipingItem); });
            
 
-            CreateMap<AddEditNozzleCommand, Nozzle>();
+            CreateMap<AddEditNozzleCommand, Nozzle>()
+                //.ForMember(dest => dest.PipeClass, act => act.MapFrom(src => src.PipeClassCommand))
+                //.ForMember(dest => dest.PipeDiameter, act => act.MapFrom(src => src.PipeDiameterCommand))
+                //.ForMember(dest => dest.ConnectionType, act => act.MapFrom(src => src.ConnectionTypeCommand))
+                //.ForMember(dest => dest.Gasket, act => act.MapFrom(src => src.GasketCommand))
+                //.ForMember(dest => dest.Material, act => act.MapFrom(src => src.MaterialCommand))
+
+
+                ;
         }
     }
 }

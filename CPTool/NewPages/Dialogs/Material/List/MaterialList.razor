@@ -1,0 +1,26 @@
+﻿@using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures.Command.Delete
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+<SimpleListComponent TMaster="AddEditMaterialCommand"
+                     TDeleteMaster="DeleteMaterialCommand"
+                     TMasterList="GetMaterialListQuery"
+                     TGedById="GetByIdMaterialQuery"
+                     @bind-ElementsMasters="GlobalTables.Materials"
+                     OnShowDialogMaster="ToolDialogService.ShowMaterial">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="Name">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+
+}

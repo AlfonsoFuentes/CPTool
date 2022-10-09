@@ -5,9 +5,9 @@
         public string? UnitName { get; set; }
         public double Value { get; set; }
 
-        [ForeignKey("ODId")]
+        [ForeignKey("OuterDiameterId")]
         public ICollection<PipeDiameter>? ODs { get; set; } = null!;
-        [ForeignKey("IDId")]
+        [ForeignKey("InternalDiameterId")]
         public ICollection<PipeDiameter>? IDs { get; set; } = null!;
         [ForeignKey("ThicknessId")]
         public ICollection<PipeDiameter>? Thicknesss { get; set; } = null!;

@@ -7,9 +7,16 @@ using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit;
 using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
 using CPTool.NewPages.Dialogs.BrandSupplier.Dialog;
 using CPTool.NewPages.Dialogs.Material;
+using CPTool.NewPages.Dialogs.Material.Dialog;
 using CPTool.NewPages.Dialogs.MWO.Dialog;
+using CPTool.NewPages.Dialogs.MWOItem.Dialog;
+using CPTool.NewPages.Dialogs.Nozzle;
+using CPTool.NewPages.Dialogs.Nozzle.Dialog;
+using CPTool.NewPages.Dialogs.PipeDiameter.Dialog;
 using CPTool.Pages.Dialogs;
 
 namespace CPTool.Services
@@ -67,8 +74,8 @@ namespace CPTool.Services
 
             return result;
         }
-        
-        public async Task<DialogResult>  DeleteRow(DeleteCommand model)
+
+        public async Task<DialogResult> DeleteRow(DeleteCommand model)
         {
 
             ParameterDialogModel modeldialog = new();
@@ -81,7 +88,7 @@ namespace CPTool.Services
             var dialog = DialogService.Show<DeleteDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
             var result = await dialog.Result;
 
-            
+
             return result;
         }
         public async Task<DialogResult> ShowBrandDialog(AddEditBrandSupplierCommand Model)
@@ -183,76 +190,7 @@ namespace CPTool.Services
             var dialog = DialogService.Show<TableNameDialog<T>>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
             return await dialog.Result;
         }
-        //    public async Task<DialogResult> ShowDialogMWO(AuditableEntityDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
 
-        //        modeldialog.DialogTitle = Model.Id == 0 ? $"Add new MWO " : $"Edit {Model.Name}";
-
-
-        //        modeldialog.parameters.Add("Model", Model);
-        //        var dialog = DialogService.Show<MWOPageDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
-        //    public async Task<DialogResult> ShowDialogMWOItem(AuditableEntityDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
-
-        //        modeldialog.DialogTitle = Model.Id == 0 ? $"Add new MWO Item" : $"Edit {Model.Name}";
-        //        modeldialog.parameters.Add("Model", Model);
-
-        //        var dialog = DialogService.Show<MWOItemDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
-
-        //    public async Task<DialogResult> ShowMaterialDialog(MaterialDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
-
-        //        modeldialog.DialogTitle = Model.Id == 0 ? $"Add new Material " : $"Edit {Model.Name}";
-
-
-        //        modeldialog.parameters.Add("Model", Model);
-        //        var dialog = DialogService.Show<MaterialDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
-        //    public async Task<DialogResult> ShowSupplierDialog(BrandSupplierDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
-
-        //        modeldialog.DialogTitle = Model.SupplierDTO.Id == 0 ? $"Add new Supplier " : $"Edit {Model.SupplierDTO.Name}";
-
-
-        //        modeldialog.parameters.Add("Model", Model);
-        //        var dialog = DialogService.Show<SupplierDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
-        //    public async Task<DialogResult> ShowBrandDialog(BrandSupplierDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
-
-        //        modeldialog.DialogTitle = Model.BrandDTO.Id == 0 ? $"Add new Brand or Service" : $"Edit {Model.BrandDTO.Name}";
-
-
-        //        modeldialog.parameters.Add("Model", Model);
-        //        var dialog = DialogService.Show<BrandDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
 
         //    public async Task<DialogResult> ShowPurchaseOrderDialog(PurchaseOrderMWOItemDTO Model)
         //    {
@@ -296,19 +234,35 @@ namespace CPTool.Services
         //        var result = await dialog.Result;
         //        return result;
         //    }
-        //    public async Task<DialogResult> ShowNozzleDialog(NozzleDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
+        public async Task<DialogResult> ShowNozzleDialog(AddEditNozzleCommand Model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
 
-        //        modeldialog.DialogTitle = Model.Id == 0 ? $"Add Nozzle " : $"Edit Nozzle {Model.Name}";
+            modeldialog.DialogTitle = Model.Id == 0 ? $"Add Nozzle " : $"Edit Nozzle {Model.Name}";
 
 
-        //        modeldialog.parameters.Add("Model", Model);
-        //        var dialog = DialogService.Show<NozzleDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
+            modeldialog.parameters.Add("Model", Model);
+            var dialog = DialogService.Show<NozzleDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
+
+
+        public async Task<DialogResult> ShowPipeDiameterDialog(AddEditPipeDiameterCommand Model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = Model.Id == 0 ? $"Add Pipe Diameter " : $"Edit Pipe Diameter {Model.Name}";
+
+
+            modeldialog.parameters.Add("Model", Model);
+            var dialog = DialogService.Show<PipeDiameterDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
     }
 }

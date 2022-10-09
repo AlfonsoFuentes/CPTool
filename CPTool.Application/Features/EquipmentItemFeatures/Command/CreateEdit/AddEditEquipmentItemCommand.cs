@@ -18,33 +18,48 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.Command.CreateEdit
     public class AddEditEquipmentItemCommand : AddEditCommand, IRequest<Result<AddEditEquipmentItemCommand>>
     {
         public List<AddEditNozzleCommand> NozzlesCommand { get; set; } = new();
-       
+        public int? ProcessConditionId => ProcessConditionCommand?.Id == 0 ? null : ProcessConditionCommand?.Id;
         public AddEditProcessConditionCommand ProcessConditionCommand { get; set; } = new();
-        public int? ProcessFluidId => ProcessFluidCommand == null ? null : ProcessConditionCommand.Id;
-        public AddEditProcessFluidCommand? ProcessFluidCommand { get; set; }
-      
-        public int? GasketId => GasketCommand == null ? null : GasketCommand.Id;
-        public AddEditGasketCommand? GasketCommand { get; set; } = null!;
-        public int? eInnerMaterialId => eInnerMaterialCommand == null ? null : eInnerMaterialCommand.Id;
-        public AddEditMaterialCommand? eInnerMaterialCommand { get; set; } = null!;
-        public int? eOuterMaterialId => eOuterMaterialCommand == null ? null : eOuterMaterialCommand.Id;
-        public AddEditMaterialCommand? eOuterMaterialCommand { get; set; } = null!;
-        public int? EquipmentTypeId => EquipmentTypeCommand == null ? null : EquipmentTypeCommand.Id;
-        public AddEditEquipmentTypeCommand? EquipmentTypeCommand { get; set; } = null!;
-        public int? EquipmentTypeSubId => EquipmentTypeSubCommand == null ? null : EquipmentTypeSubCommand.Id;
-        public AddEditEquipmentTypeSubCommand? EquipmentTypeSubCommand { get; set; } = null!;
-        public int? BrandId => BrandCommand == null ? null : BrandCommand.Id;
-        public AddEditBrandCommand? BrandCommand { get; set; } = null!;
-        public int? SupplierId => SupplierCommand == null ? null : SupplierCommand.Id;
-        public AddEditSupplierCommand? SupplierCommand { get; set; } = null!;
+        public int? ProcessFluidId => ProcessFluidCommand?.Id==0 ? null : ProcessConditionCommand.Id;
+        public AddEditProcessFluidCommand? ProcessFluidCommand { get; set; } = new();
+
+        public int? GasketId => GasketCommand?.Id == 0 ? null : GasketCommand?.Id;
+        public AddEditGasketCommand? GasketCommand { get; set; } = new();
+        public int? eInnerMaterialId => eInnerMaterialCommand?.Id == 0 ? null : eInnerMaterialCommand?.Id;
+        public AddEditMaterialCommand? eInnerMaterialCommand { get; set; } = new();
+        public int? eOuterMaterialId => eOuterMaterialCommand?.Id == 0 ? null : eOuterMaterialCommand?.Id;
+        public AddEditMaterialCommand? eOuterMaterialCommand { get; set; } = new();
+        public int? EquipmentTypeId => EquipmentTypeCommand?.Id == 0 ? null : EquipmentTypeCommand?.Id;
+        public AddEditEquipmentTypeCommand? EquipmentTypeCommand { get; set; } = new();
+        public int? EquipmentTypeSubId => EquipmentTypeSubCommand?.Id == 0 ? null : EquipmentTypeSubCommand?.Id;
+        public AddEditEquipmentTypeSubCommand? EquipmentTypeSubCommand { get; set; } = new();
+        public int? BrandId => BrandCommand?.Id==0? null : BrandCommand?.Id;
+        public AddEditBrandCommand BrandCommand { get; set; } = new();
+        public int? SupplierId => SupplierCommand?.Id == 0 ? null : SupplierCommand?.Id;
+        public AddEditSupplierCommand SupplierCommand { get; set; } = new();
         public string TagNumber { get; set; } = "";
         public string TagLetter { get; set; } = "";
-        public string TagId { get; set; } = "";
+        public string TagId  => $"{EquipmentTypeCommand?.TagLetter}{EquipmentTypeSubCommand?.TagLetter}-{TagNumber}";
         public string Model { get; set; } = "";
         public string Reference { get; set; } = "";
         public string SerialNumber { get; set; } = "";
 
         public List<AddEditMWOItemCommand> MWOItemsCommand { get; set; } = new();
+
+        public override T AddDetailtoMaster<T>() 
+        {
+            if(typeof(T) == typeof(AddEditNozzleCommand))
+            {
+                AddEditNozzleCommand detail = new();
+               
+                detail.Order = this.NozzlesCommand.Count==0?1: this.NozzlesCommand.OrderBy(x => x.Order).Last().Order + 1;
+                detail.Name = $"N{detail.Order}";
+                detail.ParentNozzles = this.NozzlesCommand;
+                detail.EquipmentItemCommand = this;
+                return (detail as T)!;
+            }
+            return null!;
+        }
     }
     internal class AddEditEquipmentItemCommandHandler : IRequestHandler<AddEditEquipmentItemCommand, Result<AddEditEquipmentItemCommand>>
     {

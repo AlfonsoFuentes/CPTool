@@ -2,9 +2,12 @@
 
 
 using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
+using CPTool.Application.Features.BrandFeatures.Query.GetById;
 using CPTool.Application.Features.BrandFeatures.Query.GetList;
 using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.Query.GetById;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
+using CPTool.Domain.Entities;
 using MudBlazor;
 
 namespace CPTool.NewPages.Dialogs.BrandSupplier.List
@@ -20,45 +23,54 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.List
         AddEditBrandCommand SelectedBrand { get; set; } = new();
         AddEditSupplierCommand SelectedSupplier { get; set; } = new();
 
-        public List<AddEditBrandCommand> ElementsBrand = new();
-        public List<AddEditSupplierCommand> ElementsSupplier = new();
+        List<AddEditSupplierCommand> Suppliers = new();
+        List<AddEditBrandCommand> Brands = new();
+        GetBrandListQuery BrandList = new();
+        GetSupplierListQuery SupplierList = new();
 
 
         protected override async Task OnInitializedAsync()
         {
-            ElementsBrand = await mediator.Send(BrandListQuery);
-            ElementsSupplier = await mediator.Send(SupplierListQuery);
+            Suppliers = await mediator.Send(SupplierList);
+            Brands = await mediator.Send(BrandList);
         }
         async Task ViewMasterList()
         {
-            ElementsBrand = await mediator.Send(BrandListQuery);
-            ElementsSupplier = await mediator.Send(SupplierListQuery);
+            Suppliers = await mediator.Send(SupplierList);
+            Brands = await mediator.Send(BrandList);
         }
-        void RowClickedMaster(AddEditBrandCommand row)
+        async Task RowClickedMaster(AddEditBrandCommand row)
         {
-            AsignBrand(row);
+            await AsignBrand(row);
 
-
+            GlobalTables.Brands = await mediator.Send(BrandList);
         }
-        void RowClickedDetails(AddEditSupplierCommand row)
+        async Task RowClickedDetails(AddEditSupplierCommand row)
         {
-            AsignSupplier(row);
+            await AsignSupplier(row);
 
-
+            GlobalTables.Suppliers = await mediator.Send(SupplierList);
 
         }
-        void AsignBrand(AddEditBrandCommand brand)
+        async Task AsignBrand(AddEditBrandCommand brand)
         {
-            SelectedBrand = brand;
-            ElementsSupplier = SelectedBrand.BrandSuppliersCommand.Select(x=>x.SupplierCommand).ToList();
+
+            GetByIdBrandQuery getbyd = new() { Id = brand.Id };
+
+            SelectedBrand = await mediator.Send(getbyd);
+            SelectedSupplier = new();
+            Suppliers = SelectedBrand.BrandSuppliersCommand.Select(x => x.SupplierCommand).ToList();
         }
-        void AsignSupplier(AddEditSupplierCommand suplier)
+        async Task AsignSupplier(AddEditSupplierCommand suplier)
         {
-            SelectedSupplier = suplier;
-            ElementsBrand = SelectedSupplier.BrandSuppliersCommand.Select(x=>x.BrandCommand).ToList();
+            GetByIdSupplierQuery getbyd = new() { Id = suplier.Id };
+
+            SelectedSupplier = await mediator.Send(getbyd);
+            SelectedBrand = new();
+            Brands = SelectedSupplier.BrandSuppliersCommand.Select(x => x.BrandCommand).ToList();
         }
-       
-      
-       
+
+
+
     }
 }
