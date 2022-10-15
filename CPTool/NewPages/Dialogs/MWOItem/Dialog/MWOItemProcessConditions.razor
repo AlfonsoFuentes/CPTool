@@ -1,10 +1,13 @@
-﻿@using CPTool.Application.Features.ProcessFluidFeatures.Command.CreateEdit
+﻿@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit
+@using CPTool.Application.Features.ProcessFluidFeatures.Query.GetById
 @using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
 @if (assign)
 {
     <MudGrid>
         <MudItem xs="12" sm="6">
-            <AutoCompleteComponent T="AddEditProcessFluidCommand"
+            <AutoCompleteComponent T="EditProcessFluid"
+                               TAdd="AddProcessFluid"
+                               TGedById="GetByIdProcessFluidQuery"
                                TList="GetProcessFluidListQuery"
                                TableName="Process Fluid"
                                Label="Process Fluid"
@@ -17,10 +20,10 @@
             </AutoCompleteComponent>
         </MudItem>
         <MudItem xs="12" sm="12">
-            <SelectUnitComponent @bind-Model=@ProcessCondition.TemperatureCommand UpdateParent=DialogParent.Validateform>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.Temperature UpdateParent=DialogParent.Validateform>
 
             </SelectUnitComponent>
-            <SelectUnitComponent @bind-Model=@ProcessCondition.PressureCommand UpdateParent=DialogParent.Validateform>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.Pressure UpdateParent=DialogParent.Validateform>
 
             </SelectUnitComponent>
         </MudItem>

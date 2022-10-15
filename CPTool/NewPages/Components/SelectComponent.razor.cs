@@ -2,7 +2,7 @@
 
 namespace CPTool.NewPages.Components
 {
-    public partial class SelectComponent<T> where T : AddEditCommand, new()
+    public partial class SelectComponent<T> where T : EditCommand, new()
     {
 
         [Parameter]

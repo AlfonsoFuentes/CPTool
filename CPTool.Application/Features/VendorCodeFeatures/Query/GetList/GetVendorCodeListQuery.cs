@@ -1,16 +1,16 @@
 ﻿
-using CPTool.Application.Features.VendorCodeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.VendorCodeFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.VendorCodeFeatures.Query.GetList
 {
 
-    public class GetVendorCodeListQuery : GetListQuery, IRequest<List<AddEditVendorCodeCommand>>
+    public class GetVendorCodeListQuery : GetListQuery, IRequest<List<EditVendorCode>>
     {
 
 
 
     }
-    public class GetVendorCodeListQueryHandler : IRequestHandler<GetVendorCodeListQuery, List<AddEditVendorCodeCommand>>
+    public class GetVendorCodeListQueryHandler : IRequestHandler<GetVendorCodeListQuery, List<EditVendorCode>>
     {
 
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace CPTool.Application.Features.VendorCodeFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditVendorCodeCommand>> Handle(GetVendorCodeListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditVendorCode>> Handle(GetVendorCodeListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<VendorCode>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditVendorCodeCommand>>(list);
+            return _mapper.Map<List<EditVendorCode>>(list);
 
         }
     }

@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.TaxCodeLPFeatures.Command.Delete
+namespace CPTool.Application.Features.TaxCodeLPFeatures
 {
-    public class DeleteTaxCodeLPCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteTaxCodeLP : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteTaxCodeLPCommandHandler : IRequestHandler<DeleteTaxCodeLPCommand, Result<int>>
+    public class DeleteTaxCodeLPHandler : IRequestHandler<DeleteTaxCodeLP, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteTaxCodeLPCommand> _logger;
+        private readonly ILogger<DeleteTaxCodeLP> _logger;
 
-        public DeleteTaxCodeLPCommandHandler(IUnitOfWork unitofwork,
+        public DeleteTaxCodeLPHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteTaxCodeLPCommand> logger)
+            ILogger<DeleteTaxCodeLP> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.TaxCodeLPFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteTaxCodeLPCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteTaxCodeLP request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<TaxCodeLP>().GetByIdAsync(request.Id);
 

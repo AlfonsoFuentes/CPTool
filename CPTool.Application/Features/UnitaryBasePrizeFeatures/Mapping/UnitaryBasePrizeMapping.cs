@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Mapping
 {
@@ -10,11 +10,10 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Mapping
     {
         public UnitaryBasePrizeMapping()
         {
-            CreateMap<UnitaryBasePrize, AddEditUnitaryBasePrizeCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
+            CreateMap<UnitaryBasePrize,EditUnitaryBasePrize>();
 
-            CreateMap<AddEditUnitaryBasePrizeCommand, UnitaryBasePrize>();
+            CreateMap<EditUnitaryBasePrize, UnitaryBasePrize>();
+            CreateMap<AddUnitaryBasePrize, UnitaryBasePrize>();
         }
     }
 }

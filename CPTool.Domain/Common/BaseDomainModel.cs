@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.Domain.Common
 {
+   
     public abstract class BaseDomainModel
     {
         public int Id { get; set; }

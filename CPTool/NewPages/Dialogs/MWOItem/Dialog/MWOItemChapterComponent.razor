@@ -1,16 +1,16 @@
-﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
+﻿@using CPTool.Application.Features.ChapterFeatures.CreateEdit
 
 @if (assign)
 {
     <MudGrid>
         <MudItem xs="12" sm="12" Class="pa-4">
 
-            <SelectComponent T="AddEditChapterCommand"
+            <SelectComponent T="EditChapter"
                          Elements=@GlobalTables.Chapters
                          Label="Chapter"
                          SelectionChanged="Model.AssignInternalItem"
-                         Disable=@(Model.ChapterCommand.Id==0?false:true)
-                         @bind-Value="@Model.ChapterCommand">
+                         Disable=@(Model.ChapterId==0?false:true)
+                         @bind-Value="@Model.Chapter">
 
 
             </SelectComponent>

@@ -1,13 +1,14 @@
-﻿@using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit
-@using CPTool.Application.Features.NozzleFeatures.Command.Delete
+﻿@using CPTool.Application.Features.NozzleFeatures.CreateEdit
+@using CPTool.Application.Features.NozzleFeatures
 @using CPTool.Application.Features.NozzleFeatures.Query.GetById
 @using CPTool.Application.Features.NozzleFeatures.Query.GetList
-<DetailListComponent TDetail="AddEditNozzleCommand"
+<DetailListComponent TDetail="EditNozzle"
+                     TAddDetail="AddNozzle"
                      TDetailList="GetNozzleListQuery"
-                     TDeleteDetail="DeleteNozzleCommand"
+                     TDeleteDetail="DeleteNozzle"
                      TDetailGedById="GetByIdNozzleQuery"
-                    
-                     @bind-ElementsDetails=@Nozzles
+                     ElementsDetailsChanged="NozzlesChanged"
+                     ElementsDetails=@Nozzles
                      @bind-SelectedDetail=@SelectedNozzle
                      OnShowDialogDetails="ToolDialogService.ShowNozzleDialog"
                      SelectedMaster="@Master">
@@ -21,19 +22,19 @@
         <MudTh Style="width:40px">Material</MudTh>
         <MudTh Style="width:40px">Connection Type</MudTh>
         <MudTh Style="width:40px">Gasket</MudTh>
-        
+
     </DetailContextTh>
     <DetailContextTd>
         <MudTd DataLabel="Name">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="In/Out">@context.StreamType.ToString()</MudTd>
-        <MudTd DataLabel="Diameter">@context.PipeDiameterCommand?.Name</MudTd>
-        <MudTd DataLabel="Class">@context.PipeClassCommand?.Name</MudTd>
-        <MudTd DataLabel="Material">@context.MaterialCommand?.Name</MudTd>
-        <MudTd DataLabel="Connection Type">@context.ConnectionTypeCommand?.Name</MudTd>
-        <MudTd DataLabel="Gasket">@context.GasketCommand?.Name</MudTd>
-       
-     
+        <MudTd DataLabel="Diameter">@context.PipeDiameter?.Name</MudTd>
+        <MudTd DataLabel="Class">@context.PipeClass?.Name</MudTd>
+        <MudTd DataLabel="Material">@context.Material?.Name</MudTd>
+        <MudTd DataLabel="Connection Type">@context.ConnectionType?.Name</MudTd>
+        <MudTd DataLabel="Gasket">@context.Gasket?.Name</MudTd>
+
+
     </DetailContextTd>
 </DetailListComponent>
 

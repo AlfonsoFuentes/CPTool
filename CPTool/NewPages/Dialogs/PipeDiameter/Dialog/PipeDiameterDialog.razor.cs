@@ -1,5 +1,5 @@
-﻿using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
-using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 
 namespace CPTool.NewPages.Dialogs.PipeDiameter.Dialog
 {
@@ -7,7 +7,7 @@ namespace CPTool.NewPages.Dialogs.PipeDiameter.Dialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditPipeDiameterCommand Model { get; set; } = null!;
+        public EditPipeDiameter Model { get; set; } = null!;
 
 
 
@@ -29,7 +29,7 @@ namespace CPTool.NewPages.Dialogs.PipeDiameter.Dialog
             if (form.IsValid)
             {
 
-
+                var result = await mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

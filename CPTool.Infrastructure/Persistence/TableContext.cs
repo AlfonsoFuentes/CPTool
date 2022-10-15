@@ -20,12 +20,15 @@ namespace CPTool.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.ProcessFluidEquipment).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eInnerMaterial).WithMany(t => t.EquipmentItemInnerMaterials).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eOuterMaterial).WithMany(t => t.EquipmentItemOuterMaterials).OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.ProcessFluidInstrument).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iInnerMaterial).WithMany(t => t.InstrumentItemInnerMaterials).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iOuterMaterial).WithMany(t => t.InstrumentItemOuterMaterials).OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.ProcessFluidPiping).WithMany(t => t.PipingItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleStart).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleFinish).WithMany(t => t.FinishPipingItems).OnDelete(DeleteBehavior.NoAction);
 
@@ -71,10 +74,10 @@ namespace CPTool.Infrastructure.Persistence
 
 
             //Relation Many to Many Purchase Order  MWOItem
-            modelBuilder.Entity<PurchaseOrderMWOItem>().HasKey(i => new { i.PurchaseOrderId, i.MWOItemId });
+           
             modelBuilder.Entity<PurchaseOrder>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.PurchaseOrder).OnDelete(DeleteBehavior.NoAction);
             
-            modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrders).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
         
        
         }
@@ -132,7 +135,8 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<ProcessCondition>? ProcessConditions { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
-            foreach (var entry in ChangeTracker.Entries<BaseDomainModel>())
+            var entittes = ChangeTracker.Entries<BaseDomainModel>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).ToList();
+            foreach (var entry in entittes)
             {
                 switch (entry.State)
                 {
@@ -140,6 +144,7 @@ namespace CPTool.Infrastructure.Persistence
                         entry.Entity.CreatedBy = "system";
                         entry.Entity.CreatedDate = DateTime.UtcNow;
                         entry.Entity.UpdateDate = DateTime.UtcNow;
+                        entry.Entity.UpdateBy = "system";
                         break;
                     case EntityState.Modified:
                         entry.Entity.UpdateBy = "system";

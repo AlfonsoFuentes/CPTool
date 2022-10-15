@@ -1,21 +1,23 @@
 ﻿
 
-namespace CPTool.Application.Features.ChapterFeatures.Command.Delete
+using CPTool.Application.Features.Base.DeleteCommand;
+
+namespace CPTool.Application.Features.ChapterFeatures
 {
-    public class DeleteChapterCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteChapter : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteChapterCommandHandler : IRequestHandler<DeleteChapterCommand, Result<int>>
+    public class DeleteChapterHandler : IRequestHandler<DeleteChapter, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteChapterCommand> _logger;
+        private readonly ILogger<DeleteChapter> _logger;
 
-        public DeleteChapterCommandHandler(IUnitOfWork unitofwork,
+        public DeleteChapterHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteChapterCommand> logger)
+            ILogger<DeleteChapter> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +26,7 @@ namespace CPTool.Application.Features.ChapterFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteChapterCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteChapter request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<Chapter>().GetByIdAsync(request.Id);
 

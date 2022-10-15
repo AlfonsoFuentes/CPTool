@@ -14,16 +14,16 @@
                                       Margin="Margin.Dense"
                                       Immediate="true"
                                       Required=true
-                                      Validation="@(new Func<string, string>(Model.PipeClassCommand.ValidatePipeDiameterName))"
+                                      Validation="@(new Func<string, string>(Model.PipeClass.ValidatePipeDiameterName))"
                                       Label="Size"></MudTextField>
 
-                            <SelectUnitComponent @bind-Model=@Model.ODCommand UpdateParent=ValidateForm>
+                            <SelectUnitComponent @bind-Model=@Model.OD UpdateParent=ValidateForm>
 
                             </SelectUnitComponent>
-                            <SelectUnitComponent @bind-Model=@Model.ThicknessCommand UpdateParent=ValidateForm>
+                            <SelectUnitComponent @bind-Model=@Model.Thickness UpdateParent=ValidateForm>
 
                             </SelectUnitComponent>
-                            <SelectUnitComponent Disable=true @bind-Model=@Model.IDCommand UpdateParent=ValidateForm>
+                            <SelectUnitComponent Disable=true @bind-Model=@Model.ID UpdateParent=ValidateForm>
 
                             </SelectUnitComponent>
 

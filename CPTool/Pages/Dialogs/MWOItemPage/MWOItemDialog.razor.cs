@@ -23,7 +23,7 @@ namespace CPTool.Pages.Dialogs.MWOItemPage
     //    public void ChapterChange()
     //    {
 
-    //        switch (Model.ChapterDTO?.Id)
+    //        switch (Model.ChapterDTO?Id)
     //        {
     //            case 4:
                    

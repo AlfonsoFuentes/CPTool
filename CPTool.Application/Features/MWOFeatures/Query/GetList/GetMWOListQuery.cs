@@ -1,15 +1,15 @@
-﻿using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.MWOFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.MWOFeatures.Query.GetList
 {
 
-    public class GetMWOListQuery : GetListQuery, IRequest<List<AddEditMWOCommand>>
+    public class GetMWOListQuery : GetListQuery, IRequest<List<EditMWO>>
     {
 
 
 
     }
-    public class GetMWOListQueryHandler : IRequestHandler<GetMWOListQuery, List<AddEditMWOCommand>>
+    public class GetMWOListQueryHandler : IRequestHandler<GetMWOListQuery, List<EditMWO>>
     {
 
         private readonly IMapper _mapper;
@@ -20,11 +20,11 @@ namespace CPTool.Application.Features.MWOFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditMWOCommand>> Handle(GetMWOListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditMWO>> Handle(GetMWOListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<MWO>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditMWOCommand>>(list);
+            return _mapper.Map<List<EditMWO>>(list);
 
         }
     }

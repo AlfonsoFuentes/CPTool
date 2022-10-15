@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.ContingencyItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ContingencyItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ContingencyItemFeatures.Mapping
 {
@@ -10,11 +10,11 @@ namespace CPTool.Application.Features.ContingencyItemFeatures.Mapping
     {
         public ContingencyItemMapping()
         {
-            CreateMap<ContingencyItem, AddEditContingencyItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
+            CreateMap<ContingencyItem, EditContingencyItem>();
            
 
-            CreateMap<AddEditContingencyItemCommand, ContingencyItem>();
+            CreateMap<EditContingencyItem, ContingencyItem>();
+            CreateMap<AddContingencyItem, ContingencyItem>();
         }
     }
 }

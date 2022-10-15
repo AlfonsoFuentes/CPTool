@@ -1,12 +1,13 @@
-﻿using CPTool.Application.Features.InstrumentItemFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.InstrumentItemFeatures.Query.GetById
 {
-    
-    public class GetByIdInstrumentItemQuery : GetByIdQuery, IRequest<AddEditInstrumentItemCommand>
+
+    public class GetByIdInstrumentItemQuery : GetByIdQuery, IRequest<EditInstrumentItem>
     {
+        
     }
-    public class GetByIdInstrumentItemQueryHandler : IRequestHandler<GetByIdInstrumentItemQuery, AddEditInstrumentItemCommand>
+    public class GetByIdInstrumentItemQueryHandler : IRequestHandler<GetByIdInstrumentItemQuery, EditInstrumentItem>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +18,11 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditInstrumentItemCommand> Handle(GetByIdInstrumentItemQuery request, CancellationToken cancellationToken)
+        public async Task<EditInstrumentItem> Handle(GetByIdInstrumentItemQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<InstrumentItem>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditInstrumentItemCommand>(table);
+            return _mapper.Map<EditInstrumentItem>(table);
 
         }
     }

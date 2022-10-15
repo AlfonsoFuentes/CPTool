@@ -1,5 +1,5 @@
-﻿@using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit
-@using CPTool.Application.Features.NozzleFeatures.Command.Delete
+﻿@using CPTool.Application.Features.NozzleFeatures.CreateEdit
+@using CPTool.Application.Features.NozzleFeatures
 @using CPTool.Application.Features.NozzleFeatures.Query.GetById
 @using CPTool.Application.Features.NozzleFeatures.Query.GetList
 @using CPTool.NewPages.Dialogs.Nozzle.List
@@ -26,9 +26,9 @@
                             </MudGrid>
                         </MudTabPanel>
                         <MudTabPanel Text="Specs">
-                            @if (Model.ChapterCommand.Id != 0)
+                            @if (Model.ChapterId != 0)
                             {
-                                switch (Model.ChapterCommand.Id)
+                                switch (Model.ChapterId)
                                 {
                                     case 4:
                                         <MWOItemEquipmentComponent></MWOItemEquipmentComponent>
@@ -38,39 +38,39 @@
 
                         </MudTabPanel>
                         <MudTabPanel Text="Materials">
-                            @if (Model.ChapterCommand.Id != 0)
+                            @if (Model.ChapterId != 0)
                             {
-                                switch (Model.ChapterCommand.Id)
+                                switch (Model.ChapterId)
                                 {
                                     case 4:
-                                        <MWOItemMaterialsComponent @bind-Gasket="@Model.EquipmentItemCommand.GasketCommand"
-                                                       @bind-InnerMaterial="@Model.EquipmentItemCommand.eInnerMaterialCommand"
-                                                       @bind-OuterMaterial=@Model.EquipmentItemCommand.eOuterMaterialCommand></MWOItemMaterialsComponent>
+                                        <MWOItemMaterialsComponent @bind-Gasket="@Model.EquipmentItem.Gasket"
+                                                       @bind-InnerMaterial="@Model.EquipmentItem.eInnerMaterial"
+                                                       @bind-OuterMaterial=@Model.EquipmentItem.eOuterMaterial></MWOItemMaterialsComponent>
                                         break;
                                 }
                             }
                         </MudTabPanel>
                         <MudTabPanel Text="Nozzles">
-                            @if (Model.Id!=0&&Model.ChapterCommand.Id != 0)
+                            @if (Model.Id!=0&&Model.ChapterId != 0)
                             {
-                                switch (Model.ChapterCommand.Id)
+                                switch (Model.ChapterId)
                                 {
                                     case 4:
-                                        <NozzleList @bind-Nozzles="@Model.EquipmentItemCommand.NozzlesCommand"
-                                        UpdateParent="UpdateFormFromChild" Master="@Model.EquipmentItemCommand"></NozzleList>
+                                        <NozzleList @bind-Nozzles="@Model.EquipmentItem.Nozzles"
+                                        UpdateParent="UpdateFormFromChild" Master="@Model.EquipmentItem"></NozzleList>
 
                                         break;
                                 }
                             }
                         </MudTabPanel>
                         <MudTabPanel Text="Process Conditions">
-                            @if (Model.Id != 0 && Model.ChapterCommand.Id != 0)
+                            @if (Model.Id != 0 && Model.ChapterId != 0)
                             {
-                                switch (Model.ChapterCommand.Id)
+                                switch (Model.ChapterId)
                                 {
                                     case 4:
-                                        <MWOItemProcessConditions @bind-bind-ProcessCondition="@Model.EquipmentItemCommand.ProcessConditionCommand"
-                                                      @bind-ProcessFluid=@Model.EquipmentItemCommand.ProcessFluidCommand></MWOItemProcessConditions>
+                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.EquipmentItem.ProcessCondition"
+                                                      @bind-ProcessFluid=@Model.EquipmentItem.ProcessFluid></MWOItemProcessConditions>
 
                                         break;
                                 }

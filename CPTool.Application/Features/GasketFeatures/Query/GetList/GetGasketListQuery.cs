@@ -1,16 +1,16 @@
 ﻿
-using CPTool.Application.Features.GasketsFeatures.Command.CreateEdit;
+using CPTool.Application.Features.GasketsFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.GasketFeatures.Query.GetList
 {
 
-    public class GetGasketListQuery : GetListQuery, IRequest<List<AddEditGasketCommand>>
+    public class GetGasketListQuery : GetListQuery, IRequest<List<EditGasket>>
     {
 
 
 
     }
-    public class GetGasketListQueryHandler : IRequestHandler<GetGasketListQuery, List<AddEditGasketCommand>>
+    public class GetGasketListQueryHandler : IRequestHandler<GetGasketListQuery, List<EditGasket>>
     {
 
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace CPTool.Application.Features.GasketFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditGasketCommand>> Handle(GetGasketListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditGasket>> Handle(GetGasketListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<Gasket>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditGasketCommand>>(list);
+            return _mapper.Map<List<EditGasket>>(list);
 
         }
     }

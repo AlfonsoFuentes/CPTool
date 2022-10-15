@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.TaxCodeLPFeatures.Command.CreateEdit;
+using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
 
 
 namespace CPTool.Application.Features.TaxCodeLPFeatures.Mapping
@@ -11,10 +11,10 @@ namespace CPTool.Application.Features.TaxCodeLPFeatures.Mapping
     {
         public TaxCodeLPMapping()
         {
-            CreateMap<TaxCodeLP, AddEditTaxCodeLPCommand>()
-                 .ForMember(dest => dest.SuppliersCommand, act => { act.PreCondition(src => (src.Suppliers != null)); act.MapFrom(src => src.Suppliers); }); 
+            CreateMap<TaxCodeLP, EditTaxCodeLP>();
 
-            CreateMap<AddEditTaxCodeLPCommand, TaxCodeLP>();
+            CreateMap<EditTaxCodeLP, TaxCodeLP>(); 
+            CreateMap<AddTaxCodeLP, TaxCodeLP>();
         }
     }
 }

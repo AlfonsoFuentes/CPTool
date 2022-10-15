@@ -17,7 +17,7 @@ namespace CPTool.Infrastructure.Repositories
                  .Include(x => x.UnitaryBasePrize)
                  .Include(x => x.EquipmentItem).ThenInclude(y => y!.Nozzles)
                  .Include(x => x.EquipmentItem).ThenInclude(x => x!.ProcessCondition)
-                 .Include(x => x.EquipmentItem).ThenInclude(x => x!.ProcessFluid)
+                 .Include(x => x.EquipmentItem).ThenInclude(x => x!.ProcessFluidEquipment)
                  .FirstOrDefaultAsync(x => x.Id == id);
 
             return result!;

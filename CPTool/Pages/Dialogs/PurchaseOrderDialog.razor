@@ -28,7 +28,7 @@ DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderSta
                     <ComponentSelect TDTO="BrandDTO"
                                  Label="Brand or Service"
                                  Required=true
-                                 Disable=@(Model.PurchaseOrderDTO.SupplierDTO.Id==0?true:false)
+                                 Disable=@(Model.PurchaseOrderDTO.SupplierDTOId==0?true:false)
                                  RequiredError="Must Submit Brand or Service"
                                  Elements=@Model.PurchaseOrderDTO.SupplierDTO.BrandSuppliersDTO.Select(x=>x.BrandDTO).ToList()
                                  @bind-Model=@Model.PurchaseOrderDTO.BrandDTO></ComponentSelect>
@@ -41,7 +41,7 @@ DisableButtonSave=@(Model.PurchaseOrderDTO.PurchaseOrderStatus==PurchaseOrderSta
                     <MudField Label="Brand or Service" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.BrandDTO.Name</MudField>
 
                 }
-                @if (Model.PurchaseOrderDTO.MWOItemDTO?.ChapterDTO?.Id == 1)
+                @if (Model.PurchaseOrderDTO.MWOItemDTO?.ChapterDTO?Id == 1)
                 {
                     <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.PurchaseOrderDTO.SupplierDTO.Name</MudField>
                 }

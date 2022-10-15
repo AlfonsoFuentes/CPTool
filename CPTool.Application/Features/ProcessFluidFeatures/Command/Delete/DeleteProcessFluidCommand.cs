@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.ProcessFluidFeatures.Command.Delete
+namespace CPTool.Application.Features.ProcessFluidFeatures
 {
-    public class DeleteProcessFluidCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteProcessFluid : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteProcessFluidCommandHandler : IRequestHandler<DeleteProcessFluidCommand, Result<int>>
+    public class DeleteProcessFluidHandler : IRequestHandler<DeleteProcessFluid, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteProcessFluidCommand> _logger;
+        private readonly ILogger<DeleteProcessFluid> _logger;
 
-        public DeleteProcessFluidCommandHandler(IUnitOfWork unitofwork,
+        public DeleteProcessFluidHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteProcessFluidCommand> logger)
+            ILogger<DeleteProcessFluid> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.ProcessFluidFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteProcessFluidCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteProcessFluid request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<ProcessFluid>().GetByIdAsync(request.Id);
 

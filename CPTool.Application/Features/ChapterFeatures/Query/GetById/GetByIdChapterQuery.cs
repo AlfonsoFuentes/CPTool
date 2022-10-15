@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.ChapterFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ChapterFeatures.Query.GetById
 {
-    
-    public class GetByIdChapterQuery : GetByIdQuery, IRequest<AddEditChapterCommand>
+
+    public class GetByIdChapterQuery : GetByIdQuery, IRequest<AddChapter>
     {
+        public GetByIdChapterQuery() { }
+        
     }
-    public class GetByIdChapterQueryHandler : IRequestHandler<GetByIdChapterQuery, AddEditChapterCommand>
+    public class GetByIdChapterQueryHandler : IRequestHandler<GetByIdChapterQuery, AddChapter>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.ChapterFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditChapterCommand> Handle(GetByIdChapterQuery request, CancellationToken cancellationToken)
+        public async Task<AddChapter> Handle(GetByIdChapterQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<Chapter>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditChapterCommand>(table);
+            return _mapper.Map<AddChapter>(table);
 
         }
     }

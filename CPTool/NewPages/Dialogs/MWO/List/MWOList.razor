@@ -1,15 +1,17 @@
 ﻿@page "/"
 @page "/mwolist"
+@using CPTool.Application.Features.MWOFeatures
 @using CPTool.Application.Features.MWOItemFeatures.Query.GetById
 <PageTitle> CP Tool</PageTitle>
 @if (ShowAddButton)
 {
-    <OneToManyListComponent TMaster="AddEditMWOCommand" TDetail="AddEditMWOItemCommand"
-                        TDeleteMaster="DeleteMWOCommand" TDeleteDetail="DeleteMWOItemCommand"
+    <OneToManyListComponent TMaster="EditMWO" TDetail="EditMWOItem"
+                        TAddMaster="AddMWO" TAddDetail="AddMWOItem"
+                        TDeleteMaster="DeleteMWO" TDeleteDetail="DeleteMWOItem"
                         TMasterList="GetMWOListQuery" TDetailList="GetMWOItemListQuery"
                         TMasterGedById="GetByIdMWOQuery" TDetailGedById="GetByIdMWOItemQuery"
                         @bind-ElementsMasters="@GlobalTables.MWOs"
-                        ElementsDetails="@SelectedMaster.MWOItemsCommand"
+                        ElementsDetails="@SelectedMaster.MWOItems"
                         @bind-SelectedMaster="@SelectedMaster"
                         @bind-SelectedDetail="@SelectedDetail"
                         OnShowDialogMaster="ToolDialogService.ShowMWO"

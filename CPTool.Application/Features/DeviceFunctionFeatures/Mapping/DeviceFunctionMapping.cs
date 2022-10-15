@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.DeviceFunctionFeatures.Command.CreateEdit;
+using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.DeviceFunctionFeatures.Mapping
 {
@@ -10,12 +10,11 @@ namespace CPTool.Application.Features.DeviceFunctionFeatures.Mapping
     {
         public DeviceFunctionMapping()
         {
-            CreateMap<DeviceFunction, AddEditDeviceFunctionCommand>()
-                .ForMember(dest => dest.InstrumentItemsCommand,
-                act => { act.PreCondition(src => (src.InstrumentItems != null)); act.MapFrom(src => src.InstrumentItems); });
+            CreateMap<DeviceFunction, EditDeviceFunction>();
            
 
-            CreateMap<AddEditDeviceFunctionCommand, DeviceFunction>();
+            CreateMap<AddDeviceFunction, DeviceFunction>();
+            CreateMap<EditDeviceFunction, DeviceFunction>();
         }
     }
 }

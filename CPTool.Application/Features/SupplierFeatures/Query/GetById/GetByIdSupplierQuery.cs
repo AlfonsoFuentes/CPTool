@@ -1,11 +1,13 @@
-﻿using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.SupplierFeatures.Query.GetById
 {
-    public class GetByIdSupplierQuery : GetByIdQuery, IRequest<AddEditSupplierCommand>
+    public class GetByIdSupplierQuery : GetByIdQuery, IRequest<EditSupplier>
     {
+        public GetByIdSupplierQuery() { }
+       
     }
-    public class GetByIdSupplierQueryHandler : IRequestHandler<GetByIdSupplierQuery, AddEditSupplierCommand>
+    public class GetByIdSupplierQueryHandler : IRequestHandler<GetByIdSupplierQuery, EditSupplier>
     {
 
         private readonly IMapper _mapper;
@@ -16,11 +18,11 @@ namespace CPTool.Application.Features.SupplierFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditSupplierCommand> Handle(GetByIdSupplierQuery request, CancellationToken cancellationToken)
+        public async Task<EditSupplier> Handle(GetByIdSupplierQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<Supplier>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditSupplierCommand>(table);
+            return _mapper.Map<EditSupplier>(table);
 
         }
     }

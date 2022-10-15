@@ -1,4 +1,4 @@
-﻿using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.Query.GetList;
 using System.Text.RegularExpressions;
 
@@ -8,14 +8,14 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditMWOCommand Model { get; set; } = null!;
+        public EditMWO Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
         public GetMWOListQuery MWOList = new();
         public GetMWOTypeListQuery MWOTypeList = new();
 
-        public List<AddEditMWOCommand> MWOs = new();
-        public List<AddEditMWOTypeCommand> MWOTypes = new();
+        public List<EditMWO> MWOs = new();
+        public List<EditMWOType> MWOTypes = new();
         [Parameter]
         public MudForm form { get; set; } = null!;
 

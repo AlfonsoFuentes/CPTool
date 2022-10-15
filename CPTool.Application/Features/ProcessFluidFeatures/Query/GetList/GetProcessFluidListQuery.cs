@@ -1,16 +1,16 @@
 ﻿
-using CPTool.Application.Features.ProcessFluidFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
 {
 
-    public class GetProcessFluidListQuery : GetListQuery, IRequest<List<AddEditProcessFluidCommand>>
+    public class GetProcessFluidListQuery : GetListQuery, IRequest<List<EditProcessFluid>>
     {
 
 
 
     }
-    public class GetProcessFluidListQueryHandler : IRequestHandler<GetProcessFluidListQuery, List<AddEditProcessFluidCommand>>
+    public class GetProcessFluidListQueryHandler : IRequestHandler<GetProcessFluidListQuery, List<EditProcessFluid>>
     {
 
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditProcessFluidCommand>> Handle(GetProcessFluidListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditProcessFluid>> Handle(GetProcessFluidListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<ProcessFluid>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditProcessFluidCommand>>(list);
+            return _mapper.Map<List<EditProcessFluid>>(list);
 
         }
     }

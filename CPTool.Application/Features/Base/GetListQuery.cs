@@ -4,7 +4,7 @@ namespace CPTool.Application.Features.Base
 {
     public class GetListQuery
     {
-        public virtual bool FilterFunc(AddEditCommand element, string searchString)
+        public virtual bool FilterFunc(EditCommand element, string searchString)
         {
 
            

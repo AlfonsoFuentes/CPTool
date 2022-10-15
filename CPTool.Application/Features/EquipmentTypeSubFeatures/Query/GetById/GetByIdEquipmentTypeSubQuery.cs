@@ -1,9 +1,11 @@
 ﻿namespace CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
 {
-    public class GetByIdEquipmentTypeSubQuery : GetByIdQuery, IRequest<AddEditEquipmentTypeSubCommand>
+    public class GetByIdEquipmentTypeSubQuery : GetByIdQuery, IRequest<EditEquipmentTypeSub>
     {
+        public GetByIdEquipmentTypeSubQuery() { }
+        
     }
-    public class GetByIdEquipmentTypeSubQueryHandler : IRequestHandler<GetByIdEquipmentTypeSubQuery, AddEditEquipmentTypeSubCommand>
+    public class GetByIdEquipmentTypeSubQueryHandler : IRequestHandler<GetByIdEquipmentTypeSubQuery, EditEquipmentTypeSub>
     {
 
         private readonly IMapper _mapper;
@@ -14,11 +16,11 @@
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditEquipmentTypeSubCommand> Handle(GetByIdEquipmentTypeSubQuery request, CancellationToken cancellationToken)
+        public async Task<EditEquipmentTypeSub> Handle(GetByIdEquipmentTypeSubQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<EquipmentTypeSub>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditEquipmentTypeSubCommand>(table);
+            return _mapper.Map<EditEquipmentTypeSub>(table);
 
         }
     }

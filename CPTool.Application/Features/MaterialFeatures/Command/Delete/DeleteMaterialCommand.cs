@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.MaterialFeatures.Command.Delete
+namespace CPTool.Application.Features.MaterialFeatures
 {
-    public class DeleteMaterialCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteMaterial : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteMaterialCommandHandler : IRequestHandler<DeleteMaterialCommand, Result<int>>
+    public class DeleteMaterialHandler : IRequestHandler<DeleteMaterial, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteMaterialCommand> _logger;
+        private readonly ILogger<DeleteMaterial> _logger;
 
-        public DeleteMaterialCommandHandler(IUnitOfWork unitofwork,
+        public DeleteMaterialHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteMaterialCommand> logger)
+            ILogger<DeleteMaterial> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.MaterialFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteMaterialCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteMaterial request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<Material>().GetByIdAsync(request.Id);
 

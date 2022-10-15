@@ -1,11 +1,11 @@
 ﻿
 
-using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.SupplierFeatures.Query.GetList
 {
    
-    public class GetSupplierListQuery : GetListQuery, IRequest<List<AddEditSupplierCommand>>
+    public class GetSupplierListQuery : GetListQuery, IRequest<List<EditSupplier>>
     {
         public GetSupplierListQuery()
         {
@@ -14,7 +14,7 @@ namespace CPTool.Application.Features.SupplierFeatures.Query.GetList
       
 
     }
-    public class GetSupplierListQueryHandler : IRequestHandler<GetSupplierListQuery, List<AddEditSupplierCommand>>
+    public class GetSupplierListQueryHandler : IRequestHandler<GetSupplierListQuery, List<EditSupplier>>
     {
 
         private readonly IMapper _mapper;
@@ -25,11 +25,11 @@ namespace CPTool.Application.Features.SupplierFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditSupplierCommand>> Handle(GetSupplierListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditSupplier>> Handle(GetSupplierListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<Supplier>().GetAllAsync();
 
-            var retorno= _mapper.Map<List<AddEditSupplierCommand>>(list);
+            var retorno= _mapper.Map<List<EditSupplier>>(list);
             return retorno;
 
         }

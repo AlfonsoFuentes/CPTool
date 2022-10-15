@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.StructuralItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.StructuralItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.StructuralItemFeatures.Mapping
 {
@@ -10,11 +10,10 @@ namespace CPTool.Application.Features.StructuralItemFeatures.Mapping
     {
         public StructuralItemMapping()
         {
-            CreateMap<StructuralItem, AddEditStructuralItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
+            CreateMap<StructuralItem, EditStructuralItem>();
 
-            CreateMap<AddEditStructuralItemCommand, StructuralItem>();
+            CreateMap<AddStructuralItem, StructuralItem>();
+            CreateMap<EditStructuralItem, StructuralItem>();
         }
     }
 }

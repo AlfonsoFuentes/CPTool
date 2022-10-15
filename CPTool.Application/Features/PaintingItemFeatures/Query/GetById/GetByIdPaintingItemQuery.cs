@@ -1,12 +1,13 @@
-﻿using CPTool.Application.Features.PaintingItemFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.PaintingItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PaintingItemFeatures.Query.GetById
 {
-    
-    public class GetByIdPaintingItemQuery : GetByIdQuery, IRequest<AddEditPaintingItemCommand>
+
+    public class GetByIdPaintingItemQuery : GetByIdQuery, IRequest<EditPaintingItem>
     {
+        
     }
-    public class GetByIdPaintingItemQueryHandler : IRequestHandler<GetByIdPaintingItemQuery, AddEditPaintingItemCommand>
+    public class GetByIdPaintingItemQueryHandler : IRequestHandler<GetByIdPaintingItemQuery, EditPaintingItem>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +18,11 @@ namespace CPTool.Application.Features.PaintingItemFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditPaintingItemCommand> Handle(GetByIdPaintingItemQuery request, CancellationToken cancellationToken)
+        public async Task<EditPaintingItem> Handle(GetByIdPaintingItemQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<PaintingItem>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditPaintingItemCommand>(table);
+            return _mapper.Map<EditPaintingItem>(table);
 
         }
     }

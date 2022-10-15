@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.EngineeringCostItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.EngineeringCostItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.EngineeringCostItemFeatures.Mapping
 {
@@ -10,11 +10,11 @@ namespace CPTool.Application.Features.EngineeringCostItemFeatures.Mapping
     {
         public EngineeringCostItemMapping()
         {
-            CreateMap<EngineeringCostItem, AddEditEngineeringCostItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
+            CreateMap<EngineeringCostItem, EditEngineeringCostItem>();
            
 
-            CreateMap<AddEditEngineeringCostItemCommand, EngineeringCostItem>();
+            CreateMap<EditEngineeringCostItem, EngineeringCostItem>();
+            CreateMap<AddEngineeringCostItem, EngineeringCostItem>();
         }
     }
 }

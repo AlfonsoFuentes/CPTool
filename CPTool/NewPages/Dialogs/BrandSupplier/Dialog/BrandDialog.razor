@@ -10,11 +10,11 @@
 
 
                     <MudForm Model="Model" @ref="form">
-                        <SelectComponent T="AddEditSupplierCommand"
+                        <SelectComponent T="EditSupplier"
                                          Elements=@GlobalTables.Suppliers
                                          
                                          Label="Supplier"
-                                         @bind-Value="@Model.SupplierCommand">
+                                         @bind-Value="@Model.Supplier">
 
 
                         </SelectComponent>
@@ -23,7 +23,7 @@
                                    T="BrandType"
                                    Label="Select Type Brand or Service"
                                    AnchorOrigin="Origin.BottomCenter"
-                                   @bind-Value=@Model.BrandCommand.BrandType
+                                   @bind-Value=@Model.Brand.BrandType
                                    Validation="@(new Func<BrandType, string>(ValidateBrandType))"
                                    Variant="Variant.Outlined">
                             @foreach (var item in Enum.GetValues<BrandType>())
@@ -32,15 +32,15 @@
                             }
 
                         </MudSelect>
-                        @if (Model.BrandCommand.BrandType != BrandType.None)
+                        @if (Model.Brand.BrandType != BrandType.None)
                         {
-                            <MudTextField @bind-Value="Model.BrandCommand.Name"
+                            <MudTextField @bind-Value="Model.Brand.Name"
                                       Variant="Variant.Outlined"
                                       Margin="Margin.Dense"
                                       Immediate="true"
                                       Required=true
                                       Validation="@(new Func<string, string>(ValidateBrandName))"
-                                      Label=@Model.BrandCommand.BrandType.ToString() />
+                                      Label=@Model.Brand.BrandType.ToString() />
                         }
                     </MudForm>
                 </CascadingValue>

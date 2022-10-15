@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.TaxCodeLDFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.TaxCodeLDFeatures.Query.GetById
 {
 
-    public class GetByIdTaxCodeLDQuery : GetByIdQuery, IRequest<AddEditTaxCodeLDCommand>
+    public class GetByIdTaxCodeLDQuery : GetByIdQuery, IRequest<EditTaxCodeLD>
     {
+        public GetByIdTaxCodeLDQuery() { }
+        
     }
-    public class GetByIdTaxCodeLDQueryHandler : IRequestHandler<GetByIdTaxCodeLDQuery, AddEditTaxCodeLDCommand>
+    public class GetByIdTaxCodeLDQueryHandler : IRequestHandler<GetByIdTaxCodeLDQuery, EditTaxCodeLD>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.TaxCodeLDFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditTaxCodeLDCommand> Handle(GetByIdTaxCodeLDQuery request, CancellationToken cancellationToken)
+        public async Task<EditTaxCodeLD> Handle(GetByIdTaxCodeLDQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<TaxCodeLD>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditTaxCodeLDCommand>(table);
+            return _mapper.Map<EditTaxCodeLD>(table);
 
         }
     }

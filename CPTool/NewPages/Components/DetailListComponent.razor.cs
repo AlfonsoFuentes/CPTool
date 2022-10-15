@@ -1,11 +1,13 @@
-﻿namespace CPTool.NewPages.Components
-{
-    public partial class DetailListComponent<TDetail, TDetailList, TDeleteDetail, TDetailGedById>
-        where TDetail : AddEditCommand, new()
+﻿using CPTool.Application.Features.Base.DeleteCommand;
 
+namespace CPTool.NewPages.Components
+{
+    public partial class DetailListComponent<TDetail, TAddDetail, TDetailList, TDeleteDetail, TDetailGedById>
+        where TDetail : EditCommand, new()
+        where TAddDetail : AddCommand, new()
         where TDetailList : GetListQuery, new()
 
-        where TDeleteDetail : DeleteCommand, new()
+        where TDeleteDetail : Delete, new()
 
         where TDetailGedById : GetByIdQuery, new()
     {
@@ -23,7 +25,7 @@
         public EventCallback<List<TDetail>> ElementsDetailsChanged { get; set; }
         [Parameter]
         [EditorRequired]
-        public AddEditCommand SelectedMaster { get; set; } = new();
+        public EditCommand SelectedMaster { get; set; } = new();
 
         [Parameter]
 

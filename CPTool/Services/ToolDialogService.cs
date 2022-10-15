@@ -3,12 +3,13 @@
 
 
 
-using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
-using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
-using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
+using CPTool.Application.Features.Base.DeleteCommand;
+using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
+using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 using CPTool.NewPages.Dialogs.BrandSupplier.Dialog;
 using CPTool.NewPages.Dialogs.Material;
 using CPTool.NewPages.Dialogs.Material.Dialog;
@@ -30,7 +31,7 @@ namespace CPTool.Services
             DialogService = dialogService;
 
         }
-        public async Task<DialogResult> ShowEquipmentType(AddEditEquipmentTypeCommand model)
+        public async Task<DialogResult> ShowEquipmentType(EditEquipmentType model)
         {
 
             ParameterDialogModel modeldialog = new();
@@ -46,7 +47,7 @@ namespace CPTool.Services
 
 
         }
-        public async Task<DialogResult> ShowEquipmentTypeSub(AddEditEquipmentTypeSubCommand model)
+        public async Task<DialogResult> ShowEquipmentTypeSub(EditEquipmentTypeSub model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
@@ -60,7 +61,7 @@ namespace CPTool.Services
 
             return result;
         }
-        public async Task<DialogResult> ShowNameDialog(AddEditCommand model)
+        public async Task<DialogResult> ShowNameDialog(EditCommand model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
@@ -75,7 +76,7 @@ namespace CPTool.Services
             return result;
         }
 
-        public async Task<DialogResult> DeleteRow(DeleteCommand model)
+        public async Task<DialogResult> DeleteRow(Delete model)
         {
 
             ParameterDialogModel modeldialog = new();
@@ -91,13 +92,13 @@ namespace CPTool.Services
 
             return result;
         }
-        public async Task<DialogResult> ShowBrandDialog(AddEditBrandSupplierCommand Model)
+        public async Task<DialogResult> ShowBrandDialog(EditBrandSupplier Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.BrandCommand.Id == 0 ? $"Add new Brand or Service" : $"Edit {Model.BrandCommand.Name}";
+            modeldialog.DialogTitle = Model.Brand.Id == 0 ? $"Add new Brand or Service" : $"Edit {Model.Brand.Name}";
 
 
             modeldialog.parameters.Add("Model", Model);
@@ -105,13 +106,13 @@ namespace CPTool.Services
             var result = await dialog.Result;
             return result;
         }
-        public async Task<DialogResult> ShowSupplierDialog(AddEditBrandSupplierCommand Model)
+        public async Task<DialogResult> ShowSupplierDialog(EditBrandSupplier Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.SupplierCommand.Id == 0 ? $"Add new Brand or Service" : $"Edit {Model.BrandCommand.Name}";
+            modeldialog.DialogTitle = Model.Supplier.Id == 0 ? $"Add new Brand or Service" : $"Edit {Model.Brand.Name}";
 
 
             modeldialog.parameters.Add("Model", Model);
@@ -131,7 +132,7 @@ namespace CPTool.Services
 
             return await dialog.Result;
         }
-        public async Task<DialogResult> ShowMaterial(AddEditMaterialCommand model)
+        public async Task<DialogResult> ShowMaterial(EditMaterial model)
         {
 
             ParameterDialogModel modeldialog = new();
@@ -147,7 +148,7 @@ namespace CPTool.Services
 
 
         }
-        public async Task<DialogResult> ShowMWO(AddEditMWOCommand model)
+        public async Task<DialogResult> ShowMWO(EditMWO model)
         {
 
             ParameterDialogModel modeldialog = new();
@@ -163,7 +164,7 @@ namespace CPTool.Services
 
 
         }
-        public async Task<DialogResult> ShowMWOItem(AddEditMWOItemCommand model)
+        public async Task<DialogResult> ShowMWOItem(EditMWOItem model)
         {
 
             ParameterDialogModel modeldialog = new();
@@ -179,17 +180,17 @@ namespace CPTool.Services
 
 
         }
-        public async Task<DialogResult> ShowDialogName<T>(T Model) where T : AddEditCommand, new()
-        {
-            ParameterDialogModel modeldialog = new();
-            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
-            modeldialog.parameters = new DialogParameters();
+        //public async Task<DialogResult> ShowDialogName<T>(T Model) where T : AddCommand, new()
+        //{
+        //    ParameterDialogModel modeldialog = new();
+        //    modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
+        //    modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Id == 0 ? $"Add new row " : $"Edit Item: {Model.Name}";
-            modeldialog.parameters.Add("Model", Model);
-            var dialog = DialogService.Show<TableNameDialog<T>>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-            return await dialog.Result;
-        }
+        //    modeldialog.DialogTitle =model.Id == 0 ? $"Add new row " : $"Edit Item: {Model.Name}";
+        //    modeldialog.parameters.Add("Model", Model);
+        //    var dialog = DialogService.Show<TableNameDialog<T>>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+        //    return await dialog.Result;
+        //}
 
 
         //    public async Task<DialogResult> ShowPurchaseOrderDialog(PurchaseOrderMWOItemDTO Model)
@@ -226,7 +227,7 @@ namespace CPTool.Services
         //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
         //        modeldialog.parameters = new DialogParameters();
 
-        //        modeldialog.DialogTitle = Model.Id==0?$"Add downpayment to PO#: {Model.PurchaseOrderDTO.PONumber}":$"Edit Downpayment {Model.Name}";
+        //        modeldialog.DialogTitle =model.Id==0?$"Add downpayment to PO#: {Model.PurchaseOrderDTO.PONumber}":$"Edit Downpayment {Model.Name}";
 
 
         //        modeldialog.parameters.Add("Model", Model);
@@ -234,32 +235,32 @@ namespace CPTool.Services
         //        var result = await dialog.Result;
         //        return result;
         //    }
-        public async Task<DialogResult> ShowNozzleDialog(AddEditNozzleCommand Model)
+        public async Task<DialogResult> ShowNozzleDialog(EditNozzle model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Id == 0 ? $"Add Nozzle " : $"Edit Nozzle {Model.Name}";
+            modeldialog.DialogTitle =model.Id == 0 ? $"Add Nozzle " : $"Edit Nozzle {model.Name}";
 
 
-            modeldialog.parameters.Add("Model", Model);
+            modeldialog.parameters.Add("Model", model);
             var dialog = DialogService.Show<NozzleDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
             var result = await dialog.Result;
             return result;
         }
 
 
-        public async Task<DialogResult> ShowPipeDiameterDialog(AddEditPipeDiameterCommand Model)
+        public async Task<DialogResult> ShowPipeDiameterDialog(EditPipeDiameter model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Id == 0 ? $"Add Pipe Diameter " : $"Edit Pipe Diameter {Model.Name}";
+            modeldialog.DialogTitle =model.Id == 0 ? $"Add Pipe Diameter " : $"Edit Pipe Diameter {model.Name}";
 
 
-            modeldialog.parameters.Add("Model", Model);
+            modeldialog.parameters.Add("Model", model);
             var dialog = DialogService.Show<PipeDiameterDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
             var result = await dialog.Result;
             return result;

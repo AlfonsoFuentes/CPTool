@@ -1,8 +1,9 @@
-﻿using CPTool.Application.Features.GasketsFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit;
-using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
-using CPTool.Application.Features.PipeClassFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.GasketsFeatures.CreateEdit;
+using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.Query.GetById;
+using CPTool.Application.Features.PipeClassFeatures.Query.GetList;
 using CPTool.Domain.Entities;
 
 namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
@@ -11,7 +12,7 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditNozzleCommand Model { get; set; } = null!;
+        public EditNozzle Model { get; set; } = null!;
 
 
 
@@ -44,7 +45,7 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
         {
             if (arg == null || arg == "")
                 return "Must submit Nozzle name";
-            if (Model.ParentNozzles.Where(x => x.Id != Model.Id).Any(x => x.Name == arg))
+            if (Model.ParentNozzles.Where(x => x.Id !=Model.Id).Any(x => x.Name == arg))
             {
                 return $"Nozzle name: {arg} is in the list";
 
@@ -53,7 +54,21 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
 
             return null;
         }
-      
+        private string ValidatePipeDiameter(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must define pipe diameter";
+
+          
+            if (!Model.PipeClass.PipeDiameters.Any(x => x.Name == arg))
+            {
+                return $"Diameter : {arg} is not the list";
+
+            }
+
+
+            return null;
+        }
         private string ValidateNozzleType(StreamType arg)
         {
             if (arg == StreamType.None)
@@ -62,20 +77,28 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
 
             return null;
         }
-        async Task PipeClassChanged(AddEditPipeClassCommand arg)
+        async Task PipeClassChanged(EditPipeClass arg)
         {
-            if(arg.Id!=0)
+            if (arg.Id != 0)
             {
-                GetByIdPipeClassQuery getclass = new() { Id = arg.Id, };
-                Model.PipeClassCommand = await mediator.Send(getclass);
-                Model.PipeDiameterCommand = new();
-              
+                GetByIdPipeClassQuery getclass = new() { Id=arg.Id }; 
+                Model.PipeClass = await mediator.Send(getclass);
+                Model.PipeDiameter = new();
+
             }
             else
             {
-                Model.PipeClassCommand = new();
-                Model.PipeDiameterCommand = new();
+                Model.PipeClass = new();
+                Model.PipeDiameter = new();
             }
+            StateHasChanged();
+        }
+        async Task UpdatePipeClassFromPipeDiameter()
+        {
+            GetPipeClassListQuery pipeclaslist = new();
+
+            GlobalTables.PipeClasses = await mediator.Send(pipeclaslist);
+            await PipeClassChanged(Model.PipeClass);
             StateHasChanged();
         }
     }

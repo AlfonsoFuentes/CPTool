@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Command.Delete
+namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures
 {
-    public class DeletePurchaseOrderMWOItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeletePurchaseOrderMWOItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeletePurchaseOrderMWOItemCommandHandler : IRequestHandler<DeletePurchaseOrderMWOItemCommand, Result<int>>
+    public class DeletePurchaseOrderMWOItemHandler : IRequestHandler<DeletePurchaseOrderMWOItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeletePurchaseOrderMWOItemCommand> _logger;
+        private readonly ILogger<DeletePurchaseOrderMWOItem> _logger;
 
-        public DeletePurchaseOrderMWOItemCommandHandler(IUnitOfWork unitofwork,
+        public DeletePurchaseOrderMWOItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeletePurchaseOrderMWOItemCommand> logger)
+            ILogger<DeletePurchaseOrderMWOItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Command.Delet
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeletePurchaseOrderMWOItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeletePurchaseOrderMWOItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<PurchaseOrderMWOItem>().GetByIdAsync(request.Id);
 

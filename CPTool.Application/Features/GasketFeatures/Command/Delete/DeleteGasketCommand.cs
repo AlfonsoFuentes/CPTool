@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.GasketsFeatures.Command.Delete
+namespace CPTool.Application.Features.GasketsFeatures
 {
-    public class DeleteGasketCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteGasket : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteGasketCommandHandler : IRequestHandler<DeleteGasketCommand, Result<int>>
+    public class DeleteGasketHandler : IRequestHandler<DeleteGasket, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteGasketCommand> _logger;
+        private readonly ILogger<DeleteGasket> _logger;
 
-        public DeleteGasketCommandHandler(IUnitOfWork unitofwork,
+        public DeleteGasketHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteGasketCommand> logger)
+            ILogger<DeleteGasket> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.GasketsFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteGasketCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteGasket request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<Gasket>().GetByIdAsync(request.Id);
 

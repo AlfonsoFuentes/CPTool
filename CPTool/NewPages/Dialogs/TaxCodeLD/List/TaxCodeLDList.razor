@@ -1,10 +1,11 @@
-﻿@using CPTool.Application.Features.TaxCodeLDFeatures.Command.CreateEdit
-@using CPTool.Application.Features.TaxCodeLDFeatures.Command.Delete
+﻿@using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit
+@using CPTool.Application.Features.TaxCodeLDFeatures
 @using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetById
 @using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList
 
-<SimpleListComponent TMaster="AddEditTaxCodeLDCommand"
-                     TDeleteMaster="DeleteTaxCodeLDCommand"
+<SimpleListComponent TMaster="EditTaxCodeLD"
+                     TAddMaster="AddTaxCodeLD"
+                     TDeleteMaster="DeleteTaxCodeLD"
                      TMasterList="GetTaxCodeLDListQuery" TGedById="GetByIdTaxCodeLDQuery"
                      @bind-ElementsMasters="GlobalTables.TaxCodeLDs"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">

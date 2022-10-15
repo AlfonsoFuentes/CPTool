@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.NozzleFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.NozzleFeatures.Query.GetById
 {
-    
-    public class GetByIdNozzleQuery : GetByIdQuery, IRequest<AddEditNozzleCommand>
+
+    public class GetByIdNozzleQuery : GetByIdQuery, IRequest<EditNozzle>
     {
+        public GetByIdNozzleQuery() { }
+       
     }
-    public class GetByIdNozzleQueryHandler : IRequestHandler<GetByIdNozzleQuery, AddEditNozzleCommand>
+    public class GetByIdNozzleQueryHandler : IRequestHandler<GetByIdNozzleQuery, EditNozzle>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.NozzleFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditNozzleCommand> Handle(GetByIdNozzleQuery request, CancellationToken cancellationToken)
+        public async Task<EditNozzle> Handle(GetByIdNozzleQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<Nozzle>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditNozzleCommand>(table);
+            return _mapper.Map<EditNozzle>(table);
 
         }
     }

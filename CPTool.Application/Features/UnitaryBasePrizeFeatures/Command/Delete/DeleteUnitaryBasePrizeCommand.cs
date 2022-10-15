@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.Delete
+namespace CPTool.Application.Features.UnitaryBasePrizeFeatures
 {
-    public class DeleteUnitaryBasePrizeCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteUnitaryBasePrize : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteUnitaryBasePrizeCommandHandler : IRequestHandler<DeleteUnitaryBasePrizeCommand, Result<int>>
+    public class DeleteUnitaryBasePrizeHandler : IRequestHandler<DeleteUnitaryBasePrize, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteUnitaryBasePrizeCommand> _logger;
+        private readonly ILogger<DeleteUnitaryBasePrize> _logger;
 
-        public DeleteUnitaryBasePrizeCommandHandler(IUnitOfWork unitofwork,
+        public DeleteUnitaryBasePrizeHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteUnitaryBasePrizeCommand> logger)
+            ILogger<DeleteUnitaryBasePrize> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteUnitaryBasePrizeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteUnitaryBasePrize request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<UnitaryBasePrize>().GetByIdAsync(request.Id);
 

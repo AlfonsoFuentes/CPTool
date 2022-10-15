@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.PurchaseOrderFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.Mapping
 {
@@ -10,11 +10,9 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.Mapping
     {
         public PurchaseOrderMapping()
         {
-            CreateMap<PurchaseOrder, AddEditPurchaseOrderCommand>()
-                .ForMember(dest => dest.MWOCommand, act => { act.PreCondition(src => (src.MWO != null)); act.MapFrom(src => src.MWO); });
-           
-
-            CreateMap<AddEditPurchaseOrderCommand, PurchaseOrder>();
+            CreateMap<PurchaseOrder, EditPurchaseOrder>();
+            CreateMap<EditPurchaseOrder, PurchaseOrder>();
+            CreateMap<AddPurchaseOrder, PurchaseOrder>();
         }
     }
 }

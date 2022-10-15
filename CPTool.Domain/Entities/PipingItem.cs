@@ -7,8 +7,8 @@
         public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
         public int? MaterialId { get; set; }
         public Material? Material { get; set; }
-        public int? ProcessFluidId { get; set; }
-        public ProcessFluid? ProcessFluid { get; set; }
+        public int? ProcessFluidPipingId { get; set; }
+        public ProcessFluid? ProcessFluidPiping { get; set; }
         public int? DiameterId { get; set; }
         public PipeDiameter? Diameter { get; set; }
         public int? NozzleStartId { get; set; }

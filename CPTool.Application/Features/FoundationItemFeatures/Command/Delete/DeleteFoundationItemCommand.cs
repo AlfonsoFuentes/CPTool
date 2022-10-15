@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.FoundationItemFeatures.Command.Delete
+namespace CPTool.Application.Features.FoundationItemFeatures
 {
-    public class DeleteFoundationItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteFoundationItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteFoundationItemCommandHandler : IRequestHandler<DeleteFoundationItemCommand, Result<int>>
+    public class DeleteFoundationItemHandler : IRequestHandler<DeleteFoundationItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteFoundationItemCommand> _logger;
+        private readonly ILogger<DeleteFoundationItem> _logger;
 
-        public DeleteFoundationItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteFoundationItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteFoundationItemCommand> logger)
+            ILogger<DeleteFoundationItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.FoundationItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteFoundationItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteFoundationItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<FoundationItem>().GetByIdAsync(request.Id);
 

@@ -6,7 +6,7 @@ namespace CPTool.NewPages.Dialogs.EquipmentType.Dialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditEquipmentTypeSubCommand Model { get; set; } = null!;
+        public EditEquipmentTypeSub Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
 

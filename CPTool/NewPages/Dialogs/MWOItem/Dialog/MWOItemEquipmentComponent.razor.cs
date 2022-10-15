@@ -1,8 +1,8 @@
-﻿using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
-using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit;
-using CPTool.Application.Features.EquipmentItemFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
-using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
+using CPTool.Application.Features.ChapterFeatures.CreateEdit;
+using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 
 namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
 {
@@ -10,7 +10,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
     {
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
-        protected AddEditEquipmentItemCommand Model => DialogParent.Model.EquipmentItemCommand;
+        protected EditEquipmentItem Model => DialogParent.Model.EquipmentItem;
 
         [Inject]
         public IMediator mediator { get; set; }
@@ -27,26 +27,26 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         {
             if (arg == null || arg == "")
                 return null;
-            if (!Model.EquipmentTypeCommand.EquipmentTypesSubCommand.Any(x => x.Name == arg))
+            if (!Model.EquipmentType.EquipmentTypeSubs.Any(x => x.Name == arg))
                 return $"Equipment Sub Type: {arg} is not in the list";
             return null;
         }
-        void BrandChanged(AddEditBrandCommand brand)
+        void BrandChanged(EditBrand brand)
         {
 
-            if (brand.Id != Model.BrandCommand.Id)
+            if (brand.Id != Model.Brand.Id)
             {
-                Model.BrandCommand = brand;
-                Model.SupplierCommand = new();
+                Model.Brand = brand;
+                Model.Supplier = new();
                 StateHasChanged();
             }
         }
         async Task UpdateEquipmentType()
         {
-            if (Model.EquipmentTypeCommand.Id!=0)
+            if (Model.EquipmentType.Id!=0)
             {
-                GetByIdEquipmentTypeQuery getbyid = new() { Id = Model.EquipmentTypeCommand.Id };
-                Model.EquipmentTypeCommand = await mediator.Send(getbyid);
+                GetByIdEquipmentTypeQuery getbyid = new() {Id= Model.EquipmentType.Id }; 
+                Model.EquipmentType = await mediator.Send(getbyid);
                 StateHasChanged();
             }
            

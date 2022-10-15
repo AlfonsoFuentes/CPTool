@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.FoundationItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.FoundationItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.FoundationItemFeatures.Mapping
 {
@@ -10,11 +10,10 @@ namespace CPTool.Application.Features.FoundationItemFeatures.Mapping
     {
         public FoundationItemMapping()
         {
-            CreateMap<FoundationItem, AddEditFoundationItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
+            CreateMap<FoundationItem, AddFoundationItem>();
 
-            CreateMap<AddEditFoundationItemCommand, FoundationItem>();
+            CreateMap<AddFoundationItem, FoundationItem>();
+            CreateMap<EditFoundationItem, FoundationItem>();
         }
     }
 }

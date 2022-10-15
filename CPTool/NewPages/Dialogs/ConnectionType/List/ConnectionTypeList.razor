@@ -1,12 +1,15 @@
-﻿@using CPTool.Application.Features.VendorCodeFeatures.Command.CreateEdit
-@using CPTool.Application.Features.VendorCodeFeatures.Command.Delete
-@using CPTool.Application.Features.VendorCodeFeatures.Query.GetById
-@using CPTool.Application.Features.VendorCodeFeatures.Query.GetList
+﻿@using CPTool.Application.Features.ConnectionTypeFeatures
+@using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit
 
-<SimpleListComponent TMaster="AddEditVendorCodeCommand"
-                     TDeleteMaster="DeleteVendorCodeCommand"
-                     TMasterList="GetVendorCodeListQuery" TGedById="GetByIdVendorCodeQuery"
-                     @bind-ElementsMasters="GlobalTables.VendorCodes"
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList
+
+
+<SimpleListComponent TMaster="EditConnectionType"
+                     TAddMaster="AddConnectionType"
+                     TDeleteMaster="DeleteConnectionType"
+                     TMasterList="GetConnectionTypeListQuery" TGedById="GetByIdConnectionTypeQuery"
+                     @bind-ElementsMasters="GlobalTables.ConnectionTypes"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">
     <MasterContextTh>
         <MudTh Style="width:40px">#</MudTh>

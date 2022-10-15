@@ -1,17 +1,17 @@
 ﻿
-using CPTool.Application.Features.DownPaymentFeatures.Command.CreateEdit;
+using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 
 
 namespace CPTool.Application.Features.DownPaymentFeatures.Query.GetList
 {
 
-    public class GetDownPaymentListQuery : GetListQuery, IRequest<List<AddEditDownPaymentCommand>>
+    public class GetDownPaymentListQuery : GetListQuery, IRequest<List<EditDownPayment>>
     {
 
 
 
     }
-    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetDownPaymentListQuery, List<AddEditDownPaymentCommand>>
+    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetDownPaymentListQuery, List<EditDownPayment>>
     {
 
         private readonly IMapper _mapper;
@@ -22,11 +22,11 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditDownPaymentCommand>> Handle(GetDownPaymentListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditDownPayment>> Handle(GetDownPaymentListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<DownPayment>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditDownPaymentCommand>>(list);
+            return _mapper.Map<List<EditDownPayment>>(list);
 
         }
     }

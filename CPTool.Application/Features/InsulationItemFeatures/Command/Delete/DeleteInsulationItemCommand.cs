@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.InsulationItemFeatures.Command.Delete
+namespace CPTool.Application.Features.InsulationItemFeatures
 {
-    public class DeleteInsulationItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteInsulationItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteInsulationItemCommandHandler : IRequestHandler<DeleteInsulationItemCommand, Result<int>>
+    public class DeleteInsulationItemHandler : IRequestHandler<DeleteInsulationItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteInsulationItemCommand> _logger;
+        private readonly ILogger<DeleteInsulationItem> _logger;
 
-        public DeleteInsulationItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteInsulationItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteInsulationItemCommand> logger)
+            ILogger<DeleteInsulationItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.InsulationItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteInsulationItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteInsulationItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<InsulationItem>().GetByIdAsync(request.Id);
 

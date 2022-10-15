@@ -1,4 +1,4 @@
-﻿using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 
 namespace CPTool.NewPages.Dialogs.Material.Dialog
 {
@@ -6,7 +6,7 @@ namespace CPTool.NewPages.Dialogs.Material.Dialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditMaterialCommand Model { get; set; } = null!;
+        public EditMaterial Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
 

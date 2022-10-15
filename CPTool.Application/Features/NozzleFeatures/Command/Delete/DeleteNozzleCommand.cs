@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.NozzleFeatures.Command.Delete
+namespace CPTool.Application.Features.NozzleFeatures
 {
-    public class DeleteNozzleCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteNozzle : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteNozzleCommandHandler : IRequestHandler<DeleteNozzleCommand, Result<int>>
+    public class DeleteNozzleHandler : IRequestHandler<DeleteNozzle, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteNozzleCommand> _logger;
+        private readonly ILogger<DeleteNozzle> _logger;
 
-        public DeleteNozzleCommandHandler(IUnitOfWork unitofwork,
+        public DeleteNozzleHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteNozzleCommand> logger)
+            ILogger<DeleteNozzle> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.NozzleFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteNozzleCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteNozzle request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<Nozzle>().GetByIdAsync(request.Id);
 

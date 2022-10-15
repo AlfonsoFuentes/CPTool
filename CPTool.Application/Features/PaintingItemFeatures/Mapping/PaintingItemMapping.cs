@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.PaintingItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PaintingItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PaintingItemFeatures.Mapping
 {
@@ -10,11 +10,9 @@ namespace CPTool.Application.Features.PaintingItemFeatures.Mapping
     {
         public PaintingItemMapping()
         {
-            CreateMap<PaintingItem, AddEditPaintingItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
-
-            CreateMap<AddEditPaintingItemCommand, PaintingItem>();
+            CreateMap<PaintingItem, EditPaintingItem>();
+            CreateMap<EditPaintingItem, PaintingItem>();
+            CreateMap<AddPaintingItem, PaintingItem>();
         }
     }
 }

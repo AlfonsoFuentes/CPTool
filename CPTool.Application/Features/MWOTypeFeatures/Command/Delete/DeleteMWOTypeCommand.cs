@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.MMOTypeFeatures.Command.Delete
+namespace CPTool.Application.Features.MMOTypeFeatures
 {
-    public class DeleteMWOTypeCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteMWOType : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteMWOTypeCommandHandler : IRequestHandler<DeleteMWOTypeCommand, Result<int>>
+    public class DeleteMWOTypeHandler : IRequestHandler<DeleteMWOType, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteMWOTypeCommand> _logger;
+        private readonly ILogger<DeleteMWOType> _logger;
 
-        public DeleteMWOTypeCommandHandler(IUnitOfWork unitofwork,
+        public DeleteMWOTypeHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteMWOTypeCommand> logger)
+            ILogger<DeleteMWOType> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.MMOTypeFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteMWOTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteMWOType request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<MWOType>().GetByIdAsync(request.Id);
 

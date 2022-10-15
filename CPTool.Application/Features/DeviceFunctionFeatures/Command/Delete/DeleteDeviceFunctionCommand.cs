@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.DeviceFunctionFeatures.Command.Delete
+namespace CPTool.Application.Features.DeviceFunctionFeatures
 {
-    public class DeleteDeviceFunctionCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteDeviceFunction : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteDeviceFunctionCommandHandler : IRequestHandler<DeleteDeviceFunctionCommand, Result<int>>
+    public class DeleteDeviceFunctionHandler : IRequestHandler<DeleteDeviceFunction, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteDeviceFunctionCommand> _logger;
+        private readonly ILogger<DeleteDeviceFunction> _logger;
 
-        public DeleteDeviceFunctionCommandHandler(IUnitOfWork unitofwork,
+        public DeleteDeviceFunctionHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteDeviceFunctionCommand> logger)
+            ILogger<DeleteDeviceFunction> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.DeviceFunctionFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteDeviceFunctionCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteDeviceFunction request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<DeviceFunction>().GetByIdAsync(request.Id);
 

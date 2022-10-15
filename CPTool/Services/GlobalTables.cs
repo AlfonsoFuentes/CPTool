@@ -1,30 +1,30 @@
-﻿using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.BrandFeatures.Query.GetList;
-using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ChapterFeatures.CreateEdit;
 using CPTool.Application.Features.ChapterFeatures.Query.GetList;
-using CPTool.Application.Features.ConnectionTypeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit;
 using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList;
 using CPTool.Application.Features.GasketFeatures.Query.GetList;
-using CPTool.Application.Features.GasketsFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit;
+using CPTool.Application.Features.GasketsFeatures.CreateEdit;
+using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 using CPTool.Application.Features.MaterialFeatures.Query.GetList;
-using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.Query.GetList;
-using CPTool.Application.Features.PipeClassFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.Query.GetList;
-using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
-using CPTool.Application.Features.ProcessFluidFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
-using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
-using CPTool.Application.Features.TaxCodeLDFeatures.Command.CreateEdit;
+using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
 using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList;
-using CPTool.Application.Features.TaxCodeLPFeatures.Command.CreateEdit;
+using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
 using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList;
-using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
-using CPTool.Application.Features.VendorCodeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.VendorCodeFeatures.CreateEdit;
 using CPTool.Application.Features.VendorCodeFeatures.Query.GetList;
 using CPTool.Domain.Entities;
 
@@ -32,24 +32,24 @@ namespace CPTool.Services
 {
     public static class GlobalTables
     {
-        public static List<AddEditMWOTypeCommand> MWOTypes { get; set; } = new();
-        public static List<AddEditMWOCommand> MWOs { get; set; } = new();
-        public static List<AddEditChapterCommand> Chapters { get; set; } = new();
-        public static List<AddEditUnitaryBasePrizeCommand> UnitaryBasePrizes { get; set; } = new();
-        public static List<AddEditEquipmentTypeCommand> EquipmentTypes { get; set; } = new();
-        public static List<AddEditBrandCommand> Brands { get; set; } = new();
-        public static List<AddEditSupplierCommand> Suppliers { get; set; } = new();
-        public static List<AddEditGasketCommand> Gaskets { get; set; } = new();
-        public static List<AddEditMaterialCommand> Materials { get; set; } = new();
-        public static List<AddEditTaxCodeLDCommand> TaxCodeLDs { get; set; } = new();
-        public static List<AddEditTaxCodeLPCommand> TaxCodeLPs { get; set; } = new();
-        public static List<AddEditVendorCodeCommand> VendorCodes { get; set; } = new();
+        public static List<EditMWOType> MWOTypes { get; set; } = new();
+        public static List<EditMWO> MWOs { get; set; } = new();
+        public static List<EditChapter> Chapters { get; set; } = new();
+        public static List<EditUnitaryBasePrize> UnitaryBasePrizes { get; set; } = new();
+        public static List<EditEquipmentType> EquipmentTypes { get; set; } = new();
+        public static List<EditBrand> Brands { get; set; } = new();
+        public static List<EditSupplier> Suppliers { get; set; } = new();
+        public static List<EditGasket> Gaskets { get; set; } = new();
+        public static List<EditMaterial> Materials { get; set; } = new();
+        public static List<EditTaxCodeLD> TaxCodeLDs { get; set; } = new();
+        public static List<EditTaxCodeLP> TaxCodeLPs { get; set; } = new();
+        public static List<EditVendorCode> VendorCodes { get; set; } = new();
 
-        public static List<AddEditPipeDiameterCommand> PipeDiameters { get; set; } = new();
+        public static List<EditPipeDiameter> PipeDiameters { get; set; } = new();
 
-        public static List<AddEditPipeClassCommand> PipeClasses { get; set; } = new();
-        public static List<AddEditConnectionTypeCommand> ConnectionTypes { get; set; } = new();
-        public static List<AddEditProcessFluidCommand> ProcessFluids { get; set; } = new();
+        public static List<EditPipeClass> PipeClasses { get; set; } = new();
+        public static List<EditConnectionType> ConnectionTypes { get; set; } = new();
+        public static List<EditProcessFluid> ProcessFluids { get; set; } = new();
      
         public static async Task InitializeTables( IMediator mediator)
         {
@@ -105,6 +105,24 @@ namespace CPTool.Services
                 return null;
             if (!Materials.Any(x => x.Name == arg))
                 return $"Material: {arg} is not in the list";
+
+            return null;
+        }
+        public static string ValidateMaterialName(string arg)
+        {
+            if (arg == null || arg == "")
+                return null;
+            if (Materials.Any(x => x.Name == arg))
+                return $"Material: {arg} is in the list";
+
+            return null;
+        }
+        public static string ValidateMaterialAbbName(string arg)
+        {
+            if (arg == null || arg == "")
+                return null;
+            if (Materials.Any(x => x.Abbreviation == arg))
+                return $"Material: {arg} is in the list";
 
             return null;
         }

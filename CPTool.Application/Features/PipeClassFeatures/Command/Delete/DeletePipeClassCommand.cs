@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.PipeClassFeatures.Command.Delete
+namespace CPTool.Application.Features.PipeClassFeatures
 {
-    public class DeletePipeClassCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeletePipeClass : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeletePipeClassCommandHandler : IRequestHandler<DeletePipeClassCommand, Result<int>>
+    public class DeletePipeClassHandler : IRequestHandler<DeletePipeClass, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeletePipeClassCommand> _logger;
+        private readonly ILogger<DeletePipeClass> _logger;
 
-        public DeletePipeClassCommandHandler(IUnitOfWork unitofwork,
+        public DeletePipeClassHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeletePipeClassCommand> logger)
+            ILogger<DeletePipeClass> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.PipeClassFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeletePipeClassCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeletePipeClass request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<PipeClass>().GetByIdAsync(request.Id);
 

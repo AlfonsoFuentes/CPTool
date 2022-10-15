@@ -6,7 +6,7 @@ using CPTool.Application.Features.Base;
 
 namespace CPTool.NewPages.Components
 {
-    public partial class TableComponent<T> where T : AddEditCommand, new()
+    public partial class TableComponent<T> where T : EditCommand, new()
     {
 
         [Parameter]

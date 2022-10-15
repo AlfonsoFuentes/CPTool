@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.DownPaymentFeatures.Command.CreateEdit;
+using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.DownPaymentFeatures.Mapping
 {
@@ -10,11 +10,10 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Mapping
     {
         public DownPaymentMapping()
         {
-            CreateMap<DownPayment, AddEditDownPaymentCommand>()
-                .ForMember(dest => dest.PurchaseOrderCommand, act => { act.PreCondition(src => (src.PurchaseOrder != null)); act.MapFrom(src => src.PurchaseOrder); });
-           
+            CreateMap<DownPayment, EditDownPayment>();
 
-            CreateMap<AddEditDownPaymentCommand, DownPayment>();
+            CreateMap<AddDownPayment, DownPayment>();
+            CreateMap<EditDownPayment, DownPayment>();
         }
     }
 }

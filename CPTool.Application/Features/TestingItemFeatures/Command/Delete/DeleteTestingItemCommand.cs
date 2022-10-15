@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.TestingItemFeatures.Command.Delete
+namespace CPTool.Application.Features.TestingItemFeatures
 {
-    public class DeleteTestingItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteTestingItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteTestingItemCommandHandler : IRequestHandler<DeleteTestingItemCommand, Result<int>>
+    public class DeleteTestingItemHandler : IRequestHandler<DeleteTestingItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteTestingItemCommand> _logger;
+        private readonly ILogger<DeleteTestingItem> _logger;
 
-        public DeleteTestingItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteTestingItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteTestingItemCommand> logger)
+            ILogger<DeleteTestingItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.TestingItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteTestingItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteTestingItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<TestingItem>().GetByIdAsync(request.Id);
 

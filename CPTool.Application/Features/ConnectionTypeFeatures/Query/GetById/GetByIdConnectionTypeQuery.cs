@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.ConnectionTypeFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
 {
-    
-    public class GetByIdConnectionTypeQuery : GetByIdQuery, IRequest<AddEditConnectionTypeCommand>
+
+    public class GetByIdConnectionTypeQuery : GetByIdQuery, IRequest<EditConnectionType>
     {
+        public GetByIdConnectionTypeQuery() { }
+        
     }
-    public class GetByIdConnectionTypeQueryHandler : IRequestHandler<GetByIdConnectionTypeQuery, AddEditConnectionTypeCommand>
+    public class GetByIdConnectionTypeQueryHandler : IRequestHandler<GetByIdConnectionTypeQuery, EditConnectionType>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditConnectionTypeCommand> Handle(GetByIdConnectionTypeQuery request, CancellationToken cancellationToken)
+        public async Task<EditConnectionType> Handle(GetByIdConnectionTypeQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<ConnectionType>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditConnectionTypeCommand>(table);
+            return _mapper.Map<EditConnectionType>(table);
 
         }
     }

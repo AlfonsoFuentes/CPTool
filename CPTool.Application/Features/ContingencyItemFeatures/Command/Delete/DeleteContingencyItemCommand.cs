@@ -1,21 +1,23 @@
 ﻿
 
-namespace CPTool.Application.Features.ContingencyItemFeatures.Command.Delete
+using CPTool.Application.Features.Base.DeleteCommand;
+
+namespace CPTool.Application.Features.ContingencyItemFeatures
 {
-    public class DeleteContingencyItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteContingencyItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteContingencyItemCommandHandler : IRequestHandler<DeleteContingencyItemCommand, Result<int>>
+    public class DeleteContingencyItemHandler : IRequestHandler<DeleteContingencyItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteContingencyItemCommand> _logger;
+        private readonly ILogger<DeleteContingencyItem> _logger;
 
-        public DeleteContingencyItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteContingencyItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteContingencyItemCommand> logger)
+            ILogger<DeleteContingencyItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +26,7 @@ namespace CPTool.Application.Features.ContingencyItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteContingencyItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteContingencyItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<ContingencyItem>().GetByIdAsync(request.Id);
 

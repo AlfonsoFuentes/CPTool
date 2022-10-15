@@ -3,24 +3,24 @@
 
 
 using CPtool.ExtensionMethods;
-using CPTool.Application.Features.EquipmentTypeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit;
 
-namespace CPTool.Application.Features.EquipmentTypeFeatures.Command.Delete
+namespace CPTool.Application.Features.EquipmentTypeFeatures
 {
-    public class DeleteEquipmentTypeCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteEquipmentType : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteEquipmentTypeCommandHandler : IRequestHandler<DeleteEquipmentTypeCommand, Result<int>>
+    public class DeleteEquipmentTypeHandler : IRequestHandler<DeleteEquipmentType, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteEquipmentTypeCommand> _logger;
+        private readonly ILogger<DeleteEquipmentType> _logger;
 
-        public DeleteEquipmentTypeCommandHandler(IUnitOfWork unitofwork,
+        public DeleteEquipmentTypeHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteEquipmentTypeCommand> logger)
+            ILogger<DeleteEquipmentType> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -29,7 +29,7 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteEquipmentTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteEquipmentType request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<EquipmentType>().GetByIdAsync(request.Id);
 

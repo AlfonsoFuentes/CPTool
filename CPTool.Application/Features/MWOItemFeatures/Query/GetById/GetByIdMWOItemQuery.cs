@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.MWOItemFeatures.Query.GetById
 {
-    
-    public class GetByIdMWOItemQuery : GetByIdQuery, IRequest<AddEditMWOItemCommand>
+
+    public class GetByIdMWOItemQuery : GetByIdQuery, IRequest<EditMWOItem>
     {
+        public GetByIdMWOItemQuery() { }
+       
     }
-    public class GetByIdMWOItemQueryHandler : IRequestHandler<GetByIdMWOItemQuery, AddEditMWOItemCommand>
+    public class GetByIdMWOItemQueryHandler : IRequestHandler<GetByIdMWOItemQuery, EditMWOItem>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.MWOItemFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditMWOItemCommand> Handle(GetByIdMWOItemQuery request, CancellationToken cancellationToken)
+        public async Task<EditMWOItem> Handle(GetByIdMWOItemQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.RepositoryMWOItem.GetMWOItemIdAsync(request.Id);
 
-            var result= _mapper.Map<AddEditMWOItemCommand>(table);
+            var result= _mapper.Map<EditMWOItem>(table);
 
             _unitofwork.RepositoryMWOItem.GetTracker();
             return result;

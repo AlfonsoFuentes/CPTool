@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.MeasuredVariableModifierFeatures.Command.Delete
+namespace CPTool.Application.Features.MeasuredVariableModifierFeatures
 {
-    public class DeleteMeasuredVariableModifierCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteMeasuredVariableModifier : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteMeasuredVariableModifierCommandHandler : IRequestHandler<DeleteMeasuredVariableModifierCommand, Result<int>>
+    public class DeleteMeasuredVariableModifierHandler : IRequestHandler<DeleteMeasuredVariableModifier, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteMeasuredVariableModifierCommand> _logger;
+        private readonly ILogger<DeleteMeasuredVariableModifier> _logger;
 
-        public DeleteMeasuredVariableModifierCommandHandler(IUnitOfWork unitofwork,
+        public DeleteMeasuredVariableModifierHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteMeasuredVariableModifierCommand> logger)
+            ILogger<DeleteMeasuredVariableModifier> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.MeasuredVariableModifierFeatures.Command.D
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteMeasuredVariableModifierCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteMeasuredVariableModifier request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<MeasuredVariableModifier>().GetByIdAsync(request.Id);
 

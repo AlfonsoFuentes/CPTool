@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.PaintingItemFeatures.Command.Delete
+namespace CPTool.Application.Features.PaintingItemFeatures
 {
-    public class DeletePaintingItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeletePaintingItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeletePaintingItemCommandHandler : IRequestHandler<DeletePaintingItemCommand, Result<int>>
+    public class DeletePaintingItemHandler : IRequestHandler<DeletePaintingItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeletePaintingItemCommand> _logger;
+        private readonly ILogger<DeletePaintingItem> _logger;
 
-        public DeletePaintingItemCommandHandler(IUnitOfWork unitofwork,
+        public DeletePaintingItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeletePaintingItemCommand> logger)
+            ILogger<DeletePaintingItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.PaintingItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeletePaintingItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeletePaintingItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<PaintingItem>().GetByIdAsync(request.Id);
 

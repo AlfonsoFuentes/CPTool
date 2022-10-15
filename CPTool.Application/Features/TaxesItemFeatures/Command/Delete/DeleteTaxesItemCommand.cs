@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.TaxesItemFeatures.Command.Delete
+namespace CPTool.Application.Features.TaxesItemFeatures
 {
-    public class DeleteTaxesItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteTaxesItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteTaxesItemCommandHandler : IRequestHandler<DeleteTaxesItemCommand, Result<int>>
+    public class DeleteTaxesItemHandler : IRequestHandler<DeleteTaxesItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteTaxesItemCommand> _logger;
+        private readonly ILogger<DeleteTaxesItem> _logger;
 
-        public DeleteTaxesItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteTaxesItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteTaxesItemCommand> logger)
+            ILogger<DeleteTaxesItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.TaxesItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteTaxesItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteTaxesItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<TaxesItem>().GetByIdAsync(request.Id);
 

@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.PipeDiameterFeatures.Command.Delete
+namespace CPTool.Application.Features.PipeDiameterFeatures
 {
-    public class DeletePipeDiameterCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeletePipeDiameter : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeletePipeDiameterCommandHandler : IRequestHandler<DeletePipeDiameterCommand, Result<int>>
+    public class DeletePipeDiameterHandler : IRequestHandler<DeletePipeDiameter, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeletePipeDiameterCommand> _logger;
+        private readonly ILogger<DeletePipeDiameter> _logger;
 
-        public DeletePipeDiameterCommandHandler(IUnitOfWork unitofwork,
+        public DeletePipeDiameterHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeletePipeDiameterCommand> logger)
+            ILogger<DeletePipeDiameter> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeletePipeDiameterCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeletePipeDiameter request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<PipeDiameter>().GetByIdAsync(request.Id);
 

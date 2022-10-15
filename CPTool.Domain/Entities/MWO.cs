@@ -10,10 +10,10 @@
         public decimal Budget { get; set; }
         public decimal Expenses { get; set; }
 
-        public int MWOTypeId { get; set; }
-        public MWOType MWOType { get; set; } = null!;
+        public int? MWOTypeId { get; set; }
+        public MWOType? MWOType { get; set; } = null!;
         public ICollection<MWOItem> MWOItems { get; set; } = null!;
-        public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = null!;
+       
     }
 
 

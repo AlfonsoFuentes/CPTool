@@ -5,8 +5,8 @@ namespace CPTool.Domain.Entities
     public class PurchaseOrder  : BaseDomainModel
     {
 
-        public int MWOId { get; set; }
-        public MWO MWO { get; set; } = null!;
+        public int? MWOItemId { get; set; }
+        public MWOItem? MWOItem { get; set; } = null!;
         public ICollection<DownPayment>? DownPayments { get; set; }
         public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
 

@@ -3,7 +3,7 @@
 namespace CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList
 {
    
-    public class GetEquipmentTypeListQuery : GetListQuery, IRequest<List<AddEditEquipmentTypeCommand>>
+    public class GetEquipmentTypeListQuery : GetListQuery, IRequest<List<EditEquipmentType>>
     {
         public GetEquipmentTypeListQuery()
         {
@@ -12,7 +12,7 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList
       
 
     }
-    public class GetEquipmentTypeListQueryHandler : IRequestHandler<GetEquipmentTypeListQuery, List<AddEditEquipmentTypeCommand>>
+    public class GetEquipmentTypeListQueryHandler : IRequestHandler<GetEquipmentTypeListQuery, List<EditEquipmentType>>
     {
 
         private readonly IMapper _mapper;
@@ -23,11 +23,11 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditEquipmentTypeCommand>> Handle(GetEquipmentTypeListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditEquipmentType>> Handle(GetEquipmentTypeListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<EquipmentType>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditEquipmentTypeCommand>>(list);
+            return _mapper.Map<List<EditEquipmentType>>(list);
 
         }
     }

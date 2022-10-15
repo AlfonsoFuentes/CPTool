@@ -1,14 +1,16 @@
 ﻿
 
 
-using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.BrandFeatures.Query.GetById;
 using CPTool.Application.Features.BrandFeatures.Query.GetList;
-using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.Query.GetById;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
 using CPTool.Domain.Entities;
 using MudBlazor;
+using static MudBlazor.Icons.Custom;
 
 namespace CPTool.NewPages.Dialogs.BrandSupplier.List
 {
@@ -17,14 +19,11 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.List
         [Inject]
         public IMediator mediator { get; set; }
 
-        GetBrandListQuery BrandListQuery = new();
-        GetSupplierListQuery SupplierListQuery = new();
+        EditBrand SelectedBrand { get; set; } = new();
+        EditSupplier SelectedSupplier { get; set; } = new();
 
-        AddEditBrandCommand SelectedBrand { get; set; } = new();
-        AddEditSupplierCommand SelectedSupplier { get; set; } = new();
-
-        List<AddEditSupplierCommand> Suppliers = new();
-        List<AddEditBrandCommand> Brands = new();
+        List<EditSupplier> Suppliers = new();
+        List<EditBrand> Brands = new();
         GetBrandListQuery BrandList = new();
         GetSupplierListQuery SupplierList = new();
 
@@ -39,35 +38,52 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.List
             Suppliers = await mediator.Send(SupplierList);
             Brands = await mediator.Send(BrandList);
         }
-        async Task RowClickedMaster(AddEditBrandCommand row)
+        async Task RowClickedMaster(EditBrand row)
         {
+            GlobalTables.Brands = Brands = await mediator.Send(BrandList);
             await AsignBrand(row);
 
-            GlobalTables.Brands = await mediator.Send(BrandList);
+          
         }
-        async Task RowClickedDetails(AddEditSupplierCommand row)
+        async Task RowClickedDetails(EditSupplier row)
         {
+            GlobalTables.Suppliers = Suppliers = await mediator.Send(SupplierList);
             await AsignSupplier(row);
 
-            GlobalTables.Suppliers = await mediator.Send(SupplierList);
 
         }
-        async Task AsignBrand(AddEditBrandCommand brand)
+        
+        async Task AsignBrand(EditBrand brand)
         {
+            if(brand.Id!=0)
+            {
+                GetByIdBrandQuery getbyd = new() { Id = brand.Id };
 
-            GetByIdBrandQuery getbyd = new() { Id = brand.Id };
-
-            SelectedBrand = await mediator.Send(getbyd);
-            SelectedSupplier = new();
-            Suppliers = SelectedBrand.BrandSuppliersCommand.Select(x => x.SupplierCommand).ToList();
+                SelectedBrand = await mediator.Send(getbyd);
+                SelectedSupplier = new();
+                Suppliers = SelectedBrand.BrandSuppliers.Select(x => x.Supplier).ToList();
+            }
+            else
+            {
+                SelectedBrand = new();
+                
+            }
+           
         }
-        async Task AsignSupplier(AddEditSupplierCommand suplier)
+        async Task AsignSupplier(EditSupplier suplier)
         {
-            GetByIdSupplierQuery getbyd = new() { Id = suplier.Id };
+            if (suplier.Id != 0)
+            {
+                GetByIdSupplierQuery getbyd = new() { Id = suplier.Id };
 
-            SelectedSupplier = await mediator.Send(getbyd);
-            SelectedBrand = new();
-            Brands = SelectedSupplier.BrandSuppliersCommand.Select(x => x.BrandCommand).ToList();
+                SelectedSupplier = await mediator.Send(getbyd);
+                SelectedBrand = new();
+                Brands = SelectedSupplier.BrandSuppliers.Select(x => x.Brand).ToList();
+            }
+            else
+            {
+                SelectedSupplier = new();
+            }
         }
 
 

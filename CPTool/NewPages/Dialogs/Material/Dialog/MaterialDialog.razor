@@ -11,10 +11,12 @@
                                       Variant="Variant.Outlined"
                                       Margin="Margin.Dense"
                                       Immediate="true"
+                                      Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialName))"
                                       Label="Name" />
                         <MudTextField @bind-Value="Model.Abbreviation"
                                       Variant="Variant.Outlined"
                                       Margin="Margin.Dense"
+                                      Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialAbbName))"
                                       Immediate="true"
                                       Label="Letter" />
                     </MudForm>

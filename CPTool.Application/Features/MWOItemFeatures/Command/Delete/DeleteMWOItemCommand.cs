@@ -1,21 +1,23 @@
 ﻿
 
-namespace CPTool.Application.Features.MWOItemFeatures.Command.Delete
+using CPTool.Application.Features.Base.DeleteCommand;
+
+namespace CPTool.Application.Features.MWOItemFeatures
 {
-    public class DeleteMWOItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteMWOItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteMWOItemCommandHandler : IRequestHandler<DeleteMWOItemCommand, Result<int>>
+    public class DeleteMWOItemHandler : IRequestHandler<DeleteMWOItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteMWOItemCommand> _logger;
+        private readonly ILogger<DeleteMWOItem> _logger;
 
-        public DeleteMWOItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteMWOItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteMWOItemCommand> logger)
+            ILogger<DeleteMWOItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +26,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteMWOItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteMWOItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<MWOItem>().GetByIdAsync(request.Id);
 

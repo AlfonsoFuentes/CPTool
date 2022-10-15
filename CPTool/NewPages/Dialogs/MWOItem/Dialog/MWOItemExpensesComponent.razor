@@ -1,18 +1,20 @@
-﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
+﻿@using CPTool.Application.Features.ChapterFeatures.CreateEdit
 
 @if (assign)
 {
     <MudGrid>
         <MudItem xs="12" sm="12" Class="pa-4">
-            <AutoCompleteComponent T="AddEditUnitaryBasePrizeCommand"
+            <AutoCompleteComponent T="EditUnitaryBasePrize"
+                               TAdd="AddUnitaryBasePrize"
+                               TGedById="GetByIdUnitaryBasePrizeQuery"
                                TList="GetUnitaryBasePrizeListQuery"
                                TableName="Unitary prize unit"
                                Label="Unitary prize unit"
-                               SelectionChanged="@((arg)=>{Model.UnitaryBasePrizeCommand=arg;})"
+                               SelectionChanged="@((arg)=>{Model.UnitaryBasePrize=arg;})"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.UnitaryBasePrizes"
                                Validation="@(new Func<string, string>(ValidateUnitaryPrizeName))"
-                              Model=@Model.UnitaryBasePrizeCommand></AutoCompleteComponent>
+                              Model=@Model.UnitaryBasePrize></AutoCompleteComponent>
 
 
            

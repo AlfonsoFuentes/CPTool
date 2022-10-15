@@ -1,30 +1,35 @@
-﻿@using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit
+﻿@using CPTool.Application.Features.ChapterFeatures.CreateEdit
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
 
 @if (assign)
 {
     <MudGrid>
         <MudItem xs="12" sm="6">
-            <AutoCompleteComponent T="AddEditEquipmentTypeCommand"
+            <AutoCompleteComponent T="EditEquipmentType"
+                               TAdd="AddEquipmentType"
+                               TGedById="GetByIdEquipmentTypeQuery"
                                TList="GetEquipmentTypeListQuery"
                                TableName="Equipment Type"
                                Label="Equipment Type"
-                               SelectionChanged="@((arg)=>{Model.EquipmentTypeCommand=arg;})"
+                               SelectionChanged="@((arg)=>{Model.EquipmentType=arg;})"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.EquipmentTypes"
-                               Model=@Model.EquipmentTypeCommand
+                               Model=@Model.EquipmentType
                                ShowDialogOverrided="ToolDialogService.ShowEquipmentType"
                                Validation="@(new Func<string, string>(ValidateEquipmentType))"></AutoCompleteComponent>
-            <AutoCompleteComponent T="AddEditEquipmentTypeSubCommand"
+            <AutoCompleteComponent T="EditEquipmentTypeSub"
+                               TAdd="AddEquipmentTypeSub"
+                               TGedById="GetByIdEquipmentTypeSubQuery"
                                TList="GetEquipmentTypeSubListQuery"
                                TableName="Sub Equipment Type"
                                Label="Sub Equipment Type"
-                               Parent=@Model.EquipmentTypeCommand
-                               SelectionChanged="@((arg)=>{Model.EquipmentTypeSubCommand=arg;})"
-                               Model=@Model.EquipmentTypeSubCommand
+                               Parent=@Model.EquipmentType
+                               SelectionChanged="@((arg)=>{Model.EquipmentTypeSub=arg;})"
+                               Model=@Model.EquipmentTypeSub
                                ValidateForm="DialogParent.Validateform"
                                UpdateMasterParent=UpdateEquipmentType
-                               Disable=@(Model.EquipmentTypeCommand.Id==0?true:false)
-                               Elements="@(Model.EquipmentTypeCommand.EquipmentTypesSubCommand)"
+                               Disable=@(Model.EquipmentType.Id==0?true:false)
+                               Elements="@(Model.EquipmentType.EquipmentTypeSubs)"
                                ShowDialogOverrided="ToolDialogService.ShowEquipmentTypeSub"
                                Validation="@(new Func<string, string>(ValidateEquipmentSubType))"></AutoCompleteComponent>
 
@@ -47,19 +52,19 @@
 
         </MudItem>
         <MudItem xs="12" sm="6">
-            <SelectComponent T="AddEditBrandCommand"
+            <SelectComponent T="EditBrand"
                          Elements=@GlobalTables.Brands
                          Label="Brand or Service"
                          SelectionChanged="BrandChanged"
-                         @bind-Value="@Model.BrandCommand">
+                         @bind-Value="@Model.Brand">
 
 
             </SelectComponent>
-            <SelectComponent T="AddEditSupplierCommand"
-                         Elements=@Model.BrandCommand.BrandSuppliersCommand.Select(x=>x.SupplierCommand).ToList()
-                         Label="Brand or Service"
-                         Disable=@(Model.BrandCommand.Id==0?true:false)
-                         @bind-Value="@Model.SupplierCommand">
+            <SelectComponent T="EditSupplier"
+                         Elements=@Model.Brand.BrandSuppliers.Select(x=>x.Supplier).ToList()
+                         Label="Supplier"
+                         Disable=@(Model.Brand.Id==0?true:false)
+                         @bind-Value="@Model.Supplier">
 
 
             </SelectComponent>

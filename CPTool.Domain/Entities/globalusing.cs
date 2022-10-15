@@ -4,3 +4,4 @@ global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
+global using CPTool.Domain.Common;

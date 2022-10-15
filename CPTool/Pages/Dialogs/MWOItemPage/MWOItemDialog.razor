@@ -10,7 +10,7 @@
                         <MudToolBar>
                             <MudButton Variant="Variant.Outlined" OnClick="ViewName" Size="Size.Small" Color="Color.Primary"> Name</MudButton>
 
-                            @if (Model.ChapterDTO?.Id == 4 || Model.ChapterDTO?.Id == 7)
+                            @if (Model.ChapterDTO?Id == 4 || Model.ChapterDTO?Id == 7)
                             {
                                 <MudButton Variant="Variant.Outlined" OnClick="ViewSpecs" Size="Size.Small" Color="Color.Primary">Specs</MudButton>
                                 <MudButton Variant="Variant.Outlined" OnClick="ViewMaterials" Size="Size.Small" Color="Color.Primary">Materials</MudButton>
@@ -39,7 +39,7 @@
                         }
                         @if (bViewSpecs)
                         {
-                            @switch (Model.ChapterDTO?.Id)
+                            @switch (Model.ChapterDTO?Id)
                             {
                                 case 4:
                                     <EquipmentItemPage></EquipmentItemPage>
@@ -59,7 +59,7 @@
                         }
                         @if (bNozzles)
                         { 
-                            @switch (Model.ChapterDTO?.Id)
+                            @switch (Model.ChapterDTO?Id)
                             {
                                 case 4:
                                     <ComponentTableList TDTO="NozzleDTO" T="Nozzle" TableName="Nozzles in Equipment" 

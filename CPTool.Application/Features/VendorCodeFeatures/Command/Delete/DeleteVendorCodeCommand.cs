@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.VendorCodeFeatures.Command.Delete
+namespace CPTool.Application.Features.VendorCodeFeatures
 {
-    public class DeleteVendorCodeCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteVendorCode : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteVendorCodeCommandHandler : IRequestHandler<DeleteVendorCodeCommand, Result<int>>
+    public class DeleteVendorCodeHandler : IRequestHandler<DeleteVendorCode, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteVendorCodeCommand> _logger;
+        private readonly ILogger<DeleteVendorCode> _logger;
 
-        public DeleteVendorCodeCommandHandler(IUnitOfWork unitofwork,
+        public DeleteVendorCodeHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteVendorCodeCommand> logger)
+            ILogger<DeleteVendorCode> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.VendorCodeFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteVendorCodeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteVendorCode request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<VendorCode>().GetByIdAsync(request.Id);
 

@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.EngineeringCostItemFeatures.Command.Delete
+namespace CPTool.Application.Features.EngineeringCostItemFeatures
 {
-    public class DeleteEngineeringCostItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteEngineeringCostItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteEngineeringCostItemCommandHandler : IRequestHandler<DeleteEngineeringCostItemCommand, Result<int>>
+    public class DeleteEngineeringCostItemHandler : IRequestHandler<DeleteEngineeringCostItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteEngineeringCostItemCommand> _logger;
+        private readonly ILogger<DeleteEngineeringCostItem> _logger;
 
-        public DeleteEngineeringCostItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteEngineeringCostItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteEngineeringCostItemCommand> logger)
+            ILogger<DeleteEngineeringCostItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.EngineeringCostItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteEngineeringCostItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteEngineeringCostItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<EngineeringCostItem>().GetByIdAsync(request.Id);
 

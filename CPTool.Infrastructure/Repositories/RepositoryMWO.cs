@@ -18,8 +18,8 @@ namespace CPTool.Infrastructure.Repositories
         {
             var result = await dbcontext!.MWOs!
                  .Include(x => x.MWOType)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.Chapter).ThenInclude(x => x.MWOItems)
-
+                 .Include(x => x.MWOItems).ThenInclude(x => x.Chapter).ThenInclude(x => x!.MWOItems)
+                 .Include(x => x.MWOItems).ThenInclude(x=>x.EquipmentItem)
                  .FirstOrDefaultAsync(x => x.Id == id);
 
             return result!;
@@ -29,7 +29,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             var result = await dbcontext!.MWOs!
                  .Include(x => x.MWOType)
-                 .Include(x => x.PurchaseOrders)
+                .Include(x=>x.MWOItems).ThenInclude(x=>x.PurchaseOrders)
 
                  .FirstOrDefaultAsync(x => x.Id == id);
 

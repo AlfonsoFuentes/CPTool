@@ -1,12 +1,14 @@
 ﻿
 
+using CPTool.Application.Features.Base.DeleteCommand;
+
 namespace CPTool.NewPages.Components
 {
     public partial class DeleteDialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public DeleteCommand Model { get; set; } = null!;
+        public Delete Model { get; set; } = null!;
 
         [Parameter]
         public string Message { get; set; } = null!;

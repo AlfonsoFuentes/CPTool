@@ -1,11 +1,13 @@
-﻿using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.BrandFeatures.Query.GetById
 {
-    public class GetByIdBrandQuery : GetByIdQuery, IRequest<AddEditBrandCommand>
+    public class GetByIdBrandQuery : GetByIdQuery, IRequest<EditBrand>
     {
+        public GetByIdBrandQuery() { }
+        
     }
-    public class GetByIdBrandQueryHandler : IRequestHandler<GetByIdBrandQuery, AddEditBrandCommand>
+    public class GetByIdBrandQueryHandler : IRequestHandler<GetByIdBrandQuery, EditBrand>
     {
 
         private readonly IMapper _mapper;
@@ -16,11 +18,11 @@ namespace CPTool.Application.Features.BrandFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditBrandCommand> Handle(GetByIdBrandQuery request, CancellationToken cancellationToken)
+        public async Task<EditBrand> Handle(GetByIdBrandQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.RepositoryBrand.GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditBrandCommand>(table);
+            return _mapper.Map<EditBrand>(table);
 
         }
     }

@@ -1,21 +1,23 @@
 ﻿
 
-namespace CPTool.Application.Features.BrandSupplierFeatures.Command.Delete
+using CPTool.Application.Features.Base.DeleteCommand;
+
+namespace CPTool.Application.Features.BrandSupplierFeatures
 {
-    public class DeleteBrandSupplierCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteBrandSupplier : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteBrandSupplierCommandHandler : IRequestHandler<DeleteBrandSupplierCommand, Result<int>>
+    public class DeleteBrandSupplierHandler : IRequestHandler<DeleteBrandSupplier, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteBrandSupplierCommand> _logger;
+        private readonly ILogger<DeleteBrandSupplier> _logger;
 
-        public DeleteBrandSupplierCommandHandler(IUnitOfWork unitofwork,
+        public DeleteBrandSupplierHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteBrandSupplierCommand> logger)
+            ILogger<DeleteBrandSupplier> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +26,7 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteBrandSupplierCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteBrandSupplier request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<BrandSupplier>().GetByIdAsync(request.Id);
 

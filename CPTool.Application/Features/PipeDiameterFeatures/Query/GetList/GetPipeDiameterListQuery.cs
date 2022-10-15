@@ -1,17 +1,17 @@
 ﻿
 using AutoMapper;
-using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
 {
 
-    public class GetPipeDiameterListQuery : GetListQuery, IRequest<List<AddEditPipeDiameterCommand>>
+    public class GetPipeDiameterListQuery : GetListQuery, IRequest<List<EditPipeDiameter>>
     {
 
 
 
     }
-    public class GetPipeDiameterListQueryHandler : IRequestHandler<GetPipeDiameterListQuery, List<AddEditPipeDiameterCommand>>
+    public class GetPipeDiameterListQueryHandler : IRequestHandler<GetPipeDiameterListQuery, List<EditPipeDiameter>>
     {
 
         private readonly IMapper _mapper;
@@ -22,13 +22,13 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditPipeDiameterCommand>> Handle(GetPipeDiameterListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditPipeDiameter>> Handle(GetPipeDiameterListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<PipeDiameter>().GetAllAsync();
 
             try
             {
-                return _mapper.Map<List<AddEditPipeDiameterCommand>>(list);
+                return _mapper.Map<List<EditPipeDiameter>>(list);
             }
             catch (AutoMapperMappingException ex)
             {

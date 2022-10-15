@@ -6,11 +6,11 @@
         public ICollection<PipingItem>? StartPipingItems { get; set; }
         [ForeignKey("FinishMWOItemId")]
         public ICollection<PipingItem>? FisnishPipingItems { get; set; }
-        public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
-        public int ChapterId { get; set; }
-        public Chapter Chapter { get; set; } = null!;
-        public int MWOId { get; set; }
-        public MWO MWO { get; set; } = null!;
+        public ICollection<PurchaseOrder>? PurchaseOrders { get; set; }
+        public int? ChapterId { get; set; }
+        public Chapter? Chapter { get; set; } = null!;
+        public int? MWOId { get; set; }
+        public MWO? MWO { get; set; } = null!;
         public int? UnitaryBasePrizeId { get; set; }
         public UnitaryBasePrize? UnitaryBasePrize { get; set; }
 

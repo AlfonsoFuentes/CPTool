@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.DownPaymentFeatures.Command.Delete
+namespace CPTool.Application.Features.DownPaymentFeatures
 {
-    public class DeleteDownPaymentCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteDownPayment : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteDownPaymentCommandHandler : IRequestHandler<DeleteDownPaymentCommand, Result<int>>
+    public class DeleteDownPaymentHandler : IRequestHandler<DeleteDownPayment, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteDownPaymentCommand> _logger;
+        private readonly ILogger<DeleteDownPayment> _logger;
 
-        public DeleteDownPaymentCommandHandler(IUnitOfWork unitofwork,
+        public DeleteDownPaymentHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteDownPaymentCommand> logger)
+            ILogger<DeleteDownPayment> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteDownPaymentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteDownPayment request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<DownPayment>().GetByIdAsync(request.Id);
 

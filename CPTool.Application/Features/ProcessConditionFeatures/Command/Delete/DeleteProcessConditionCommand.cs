@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.ProcessConditionFeatures.Command.Delete
+namespace CPTool.Application.Features.ProcessConditionFeatures
 {
-    public class DeleteProcessConditionCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteProcessCondition : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteProcessConditionCommandHandler : IRequestHandler<DeleteProcessConditionCommand, Result<int>>
+    public class DeleteProcessConditionHandler : IRequestHandler<DeleteProcessCondition, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteProcessConditionCommand> _logger;
+        private readonly ILogger<DeleteProcessCondition> _logger;
 
-        public DeleteProcessConditionCommandHandler(IUnitOfWork unitofwork,
+        public DeleteProcessConditionHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteProcessConditionCommand> logger)
+            ILogger<DeleteProcessCondition> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteProcessConditionCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteProcessCondition request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<ProcessCondition>().GetByIdAsync(request.Id);
 

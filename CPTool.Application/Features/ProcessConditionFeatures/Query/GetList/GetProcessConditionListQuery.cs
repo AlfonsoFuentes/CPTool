@@ -1,16 +1,16 @@
 ﻿
-using CPTool.Application.Features.ProcessConditionFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ProcessConditionFeatures.Query.GetList
 {
 
-    public class GetProcessConditionListQuery : GetListQuery, IRequest<List<AddEditProcessConditionCommand>>
+    public class GetProcessConditionListQuery : GetListQuery, IRequest<List<EditProcessCondition>>
     {
 
 
 
     }
-    public class GetProcessConditionListQueryHandler : IRequestHandler<GetProcessConditionListQuery, List<AddEditProcessConditionCommand>>
+    public class GetProcessConditionListQueryHandler : IRequestHandler<GetProcessConditionListQuery, List<EditProcessCondition>>
     {
 
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditProcessConditionCommand>> Handle(GetProcessConditionListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditProcessCondition>> Handle(GetProcessConditionListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<ProcessCondition>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditProcessConditionCommand>>(list);
+            return _mapper.Map<List<EditProcessCondition>>(list);
 
         }
     }

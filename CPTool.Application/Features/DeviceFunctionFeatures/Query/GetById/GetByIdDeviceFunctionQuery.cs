@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.DeviceFunctionFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.DeviceFunctionFeatures.Query.GetById
 {
-    
-    public class GetByIdDeviceFunctionQuery : GetByIdQuery, IRequest<AddEditDeviceFunctionCommand>
+
+    public class GetByIdDeviceFunctionQuery : GetByIdQuery, IRequest<EditDeviceFunction>
     {
+        public GetByIdDeviceFunctionQuery() { }
+       
     }
-    public class GetByIdDeviceFunctionQueryHandler : IRequestHandler<GetByIdDeviceFunctionQuery, AddEditDeviceFunctionCommand>
+    public class GetByIdDeviceFunctionQueryHandler : IRequestHandler<GetByIdDeviceFunctionQuery, EditDeviceFunction>
     {
 
         private readonly IMapper _mapper;
@@ -17,13 +19,13 @@ namespace CPTool.Application.Features.DeviceFunctionFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditDeviceFunctionCommand> Handle(GetByIdDeviceFunctionQuery request, CancellationToken cancellationToken)
+        public async Task<EditDeviceFunction> Handle(GetByIdDeviceFunctionQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<DeviceFunction>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditDeviceFunctionCommand>(table);
+            return _mapper.Map<EditDeviceFunction>(table);
 
         }
     }
-    
+
 }

@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.TestingItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.TestingItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.TestingItemFeatures.Mapping
 {
@@ -10,11 +10,10 @@ namespace CPTool.Application.Features.TestingItemFeatures.Mapping
     {
         public TestingItemMapping()
         {
-            CreateMap<TestingItem, AddEditTestingItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
+            CreateMap<TestingItem, EditTestingItem>();
 
-            CreateMap<AddEditTestingItemCommand, TestingItem>();
+            CreateMap<EditTestingItem, TestingItem>();
+            CreateMap<AddTestingItem, TestingItem>();
         }
     }
 }

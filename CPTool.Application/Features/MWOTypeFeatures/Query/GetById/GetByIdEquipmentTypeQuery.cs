@@ -1,10 +1,12 @@
 ﻿namespace CPTool.Application.Features.MMOTypeFeatures.Query.GetById
 {
-    
-    public class GetByIdMWOTypeQuery : GetByIdQuery, IRequest<AddEditMWOTypeCommand>
+
+    public class GetByIdMWOTypeQuery : GetByIdQuery, IRequest<EditMWOType>
     {
+        public GetByIdMWOTypeQuery() { }
+       
     }
-    public class GetByIdMWOTypeQueryHandler : IRequestHandler<GetByIdMWOTypeQuery, AddEditMWOTypeCommand>
+    public class GetByIdMWOTypeQueryHandler : IRequestHandler<GetByIdMWOTypeQuery, EditMWOType>
     {
 
         private readonly IMapper _mapper;
@@ -15,11 +17,11 @@
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditMWOTypeCommand> Handle(GetByIdMWOTypeQuery request, CancellationToken cancellationToken)
+        public async Task<EditMWOType> Handle(GetByIdMWOTypeQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<MWOType>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditMWOTypeCommand>(table);
+            return _mapper.Map<EditMWOType>(table);
 
         }
     }

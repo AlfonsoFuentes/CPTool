@@ -1,6 +1,8 @@
 ﻿@typeparam TMasterDetail
 @typeparam TMaster
+@typeparam TAddMaster
 @typeparam TDetail
+@typeparam TAddDetail
 @typeparam TMasterList
 @typeparam TDetailList
 @typeparam TDeleteMaster
@@ -18,16 +20,12 @@
                             @OtherButtonsMaster
                         </OtherButtons>
                 <ContextTh>
-                    <MudTh Style="width:20px">#</MudTh>
-
-                    <MudTh Style="width:50px">Name</MudTh>
+                    
                     @if (MasterContextTh != null)
                         @MasterContextTh
                     </ContextTh>
                     <ContextTd>
-                        <MudTd DataLabel="Id">@context.Id</MudTd>
-
-                        <MudTd DataLabel="Name">@context.Name</MudTd>
+                       
                         @if (MasterContextTh != null)
                         @MasterContextTd!(context)
                     </ContextTd>
@@ -43,17 +41,13 @@
                         @OtherButtonsDetails
                     </OtherButtons>
                     <ContextTh>
-                        <MudTh Style="width:20px">#</MudTh>
-
-                        <MudTh Style="width:50px">Name</MudTh>
+                       
                         @if (DetailContextTh != null)
                         @DetailContextTh
 
                     </ContextTh>
                     <ContextTd>
-                        <MudTd DataLabel="Id">@context.Id</MudTd>
-
-                        <MudTd DataLabel="Name">@context.Name</MudTd>
+                       
                         @if (DetailContextTh != null)
                         @DetailContextTd!(context)
                     </ContextTd>

@@ -2,8 +2,10 @@
 
 namespace CPTool.NewPages.Components
 {
-    public partial class AutoCompleteComponent<T, TList>
-        where T : AddEditCommand, new()
+    public partial class AutoCompleteComponent<T, TAdd, TList, TGedById>
+        where T : EditCommand, new()
+      where TAdd : AddCommand, new()
+        where TGedById : GetByIdQuery, new()
         where TList : GetListQuery, new()
     {
         [Inject]
@@ -23,7 +25,7 @@ namespace CPTool.NewPages.Components
         public string Label { get; set; }
 
         [Parameter]
-        public AddEditCommand Parent { get; set; } = null!;
+        public EditCommand Parent { get; set; } = null!;
 
         [Parameter]
         public bool Disable { get; set; } = false;
@@ -79,14 +81,7 @@ namespace CPTool.NewPages.Components
 
             return ListNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
         }
-        protected override void OnParametersSet()
-        {
-            if (Model != null)
-            {
-                AutocompleteText = Model.Name;
-            }
-            base.OnParametersSet();
-        }
+
         bool IsExist => ListNames.Contains(AutocompleteText);
         string AutocompleteText = "";
 
@@ -131,22 +126,24 @@ namespace CPTool.NewPages.Components
 
             if (!dialogResult.Cancelled)
             {
+                TAdd modeladd = new();
 
                 if (Parent != null)
                 {
-                    Model = Parent.AddDetailtoMaster<T>();
+                    modeladd = Parent.AddDetailtoMaster<TAdd>();
                 }
                 else
                 {
-                    Model = new();
+                    modeladd = new();
                 }
-                Model.Name = AutocompleteText;
-                dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowDialogName<T>(Model) : await ShowDialogOverrided.Invoke(Model);
-
-                if (!dialogResult.Cancelled)
+                var resultadd = await Mediator.Send(modeladd) as Result<int>;
+                if (resultadd.Succeeded)
                 {
-                    var created = await Mediator.Send(Model) as Result<T>;
-                    if (created.Succeeded)
+                    TGedById gedById = new() { Id = resultadd.Data };
+                    Model = await Mediator.Send(gedById) as T;
+                    dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowNameDialog(Model) : await ShowDialogOverrided.Invoke(Model);
+
+                    if (!dialogResult.Cancelled)
                     {
                         if (Parent != null)
                         {
@@ -159,15 +156,13 @@ namespace CPTool.NewPages.Components
                             await ElementsChanged.InvokeAsync(Elements);
 
                         }
-                        Model = created.Data;
+                        Model = dialogResult.Data as T;
                         await SelectionChanged.InvokeAsync(Model);
                         await ValidateForm.Invoke();
-                    
-
-
-
                     }
                 }
+
+
             }
         }
 

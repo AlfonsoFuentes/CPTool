@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.ConnectionTypeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ConnectionTypeFeatures.Mapping
 {
@@ -10,11 +10,11 @@ namespace CPTool.Application.Features.ConnectionTypeFeatures.Mapping
     {
         public ConnectionTypeMapping()
         {
-            CreateMap<ConnectionType, AddEditConnectionTypeCommand>()
-                .ForMember(dest => dest.NozzlesCommand, act => { act.PreCondition(src => (src.Nozzles != null)); act.MapFrom(src => src.Nozzles); });
-           
+            
+            CreateMap<ConnectionType, EditConnectionType>();
 
-            CreateMap<AddEditConnectionTypeCommand, ConnectionType>();
+            CreateMap<EditConnectionType, ConnectionType>();
+            CreateMap<AddConnectionType, ConnectionType>();
         }
     }
 }

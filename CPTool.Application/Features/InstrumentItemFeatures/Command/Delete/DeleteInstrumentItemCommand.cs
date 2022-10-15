@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.InstrumentItemFeatures.Command.Delete
+namespace CPTool.Application.Features.InstrumentItemFeatures
 {
-    public class DeleteInstrumentItemCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteInstrumentItem : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteInstrumentItemCommandHandler : IRequestHandler<DeleteInstrumentItemCommand, Result<int>>
+    public class DeleteInstrumentItemHandler : IRequestHandler<DeleteInstrumentItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteInstrumentItemCommand> _logger;
+        private readonly ILogger<DeleteInstrumentItem> _logger;
 
-        public DeleteInstrumentItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteInstrumentItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteInstrumentItemCommand> logger)
+            ILogger<DeleteInstrumentItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteInstrumentItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteInstrumentItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<InstrumentItem>().GetByIdAsync(request.Id);
 

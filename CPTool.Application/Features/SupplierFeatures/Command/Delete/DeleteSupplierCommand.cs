@@ -3,22 +3,22 @@
 
 
 
-namespace CPTool.Application.Features.SupplierFeatures.Command.Delete
+namespace CPTool.Application.Features.SupplierFeatures
 {
-    public class DeleteSupplierCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteSupplier : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteSupplierCommandHandler : IRequestHandler<DeleteSupplierCommand, Result<int>>
+    public class DeleteSupplierHandler : IRequestHandler<DeleteSupplier, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteSupplierCommand> _logger;
+        private readonly ILogger<DeleteSupplier> _logger;
 
-        public DeleteSupplierCommandHandler(IUnitOfWork unitofwork,
+        public DeleteSupplierHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteSupplierCommand> logger)
+            ILogger<DeleteSupplier> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -27,7 +27,7 @@ namespace CPTool.Application.Features.SupplierFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteSupplierCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteSupplier request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<Supplier>().GetByIdAsync(request.Id);
 

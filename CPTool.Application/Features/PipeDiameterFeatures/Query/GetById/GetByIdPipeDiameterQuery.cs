@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
 {
-    
-    public class GetByIdPipeDiameterQuery : GetByIdQuery, IRequest<AddEditPipeDiameterCommand>
+
+    public class GetByIdPipeDiameterQuery : GetByIdQuery, IRequest<EditPipeDiameter>
     {
+        public GetByIdPipeDiameterQuery() { }
+        
     }
-    public class GetByIdPipeDiameterQueryHandler : IRequestHandler<GetByIdPipeDiameterQuery, AddEditPipeDiameterCommand>
+    public class GetByIdPipeDiameterQueryHandler : IRequestHandler<GetByIdPipeDiameterQuery, EditPipeDiameter>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditPipeDiameterCommand> Handle(GetByIdPipeDiameterQuery request, CancellationToken cancellationToken)
+        public async Task<EditPipeDiameter> Handle(GetByIdPipeDiameterQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<PipeDiameter>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditPipeDiameterCommand>(table);
+            return _mapper.Map<EditPipeDiameter>(table);
 
         }
     }

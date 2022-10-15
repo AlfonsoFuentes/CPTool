@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.ElectricalItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ElectricalItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ElectricalItemFeatures.Mapping
 {
@@ -10,11 +10,10 @@ namespace CPTool.Application.Features.ElectricalItemFeatures.Mapping
     {
         public ElectricalItemMapping()
         {
-            CreateMap<ElectricalItem, AddEditElectricalItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
+            CreateMap<ElectricalItem, EditElectricalItem>();
 
-            CreateMap<AddEditElectricalItemCommand, ElectricalItem>();
+            CreateMap<EditElectricalItem, ElectricalItem>();
+            CreateMap<AddElectricalItem, ElectricalItem>();
         }
     }
 }

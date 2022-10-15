@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.MeasuredVariableModifierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.MeasuredVariableModifierFeatures.Mapping
 {
@@ -10,12 +10,10 @@ namespace CPTool.Application.Features.MeasuredVariableModifierFeatures.Mapping
     {
         public MeasuredVariableModifierMapping()
         {
-            CreateMap<MeasuredVariableModifier, AddEditMeasuredVariableModifierCommand>()
-                .ForMember(dest => dest.InstrumentItemsCommand,
-                act => { act.PreCondition(src => (src.InstrumentItems != null)); act.MapFrom(src => src.InstrumentItems); });
+            CreateMap<MeasuredVariableModifier, EditMeasuredVariableModifier>();
 
-
-            CreateMap<AddEditMeasuredVariableModifierCommand, MeasuredVariableModifier>();
+            CreateMap<EditMeasuredVariableModifier, MeasuredVariableModifier>();
+            CreateMap<AddMeasuredVariableModifier, MeasuredVariableModifier>();
         }
     }
 }

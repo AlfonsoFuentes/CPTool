@@ -1,5 +1,5 @@
 ﻿
-using CPTool.Application.Features.EquipmentTypeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit;
 
 
 namespace CPTool.Application.Features.EquipmentTypeFeatures.Mapping
@@ -8,13 +8,11 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Mapping
     {
         public EquipmentTypeMapping()
         {
-            CreateMap<EquipmentType, AddEditEquipmentTypeCommand>()
-                .ForMember(dest => dest.EquipmentTypesSubCommand,
-                act => { act.PreCondition(src => (src.EquipmentTypeSubs != null)); act.MapFrom(src => src.EquipmentTypeSubs); })
-                .ForMember(dest => dest.EquipmentItemsCommand,
-                act => { act.PreCondition(src => (src.EquipmentItems != null)); act.MapFrom(src => src.EquipmentItems); });
+            CreateMap<EquipmentType,EditEquipmentType>();
 
-            CreateMap<AddEditEquipmentTypeCommand, EquipmentType>();
+
+            CreateMap<AddEquipmentType, EquipmentType>();
+            CreateMap<EditEquipmentType, EquipmentType>();
         }
     }
 }

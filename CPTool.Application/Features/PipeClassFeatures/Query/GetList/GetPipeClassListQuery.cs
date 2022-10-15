@@ -1,16 +1,16 @@
 ﻿
-using CPTool.Application.Features.PipeClassFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PipeClassFeatures.Query.GetList
 {
 
-    public class GetPipeClassListQuery : GetListQuery, IRequest<List<AddEditPipeClassCommand>>
+    public class GetPipeClassListQuery : GetListQuery, IRequest<List<EditPipeClass>>
     {
 
 
 
     }
-    public class GetPipeClassListQueryHandler : IRequestHandler<GetPipeClassListQuery, List<AddEditPipeClassCommand>>
+    public class GetPipeClassListQueryHandler : IRequestHandler<GetPipeClassListQuery, List<EditPipeClass>>
     {
 
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace CPTool.Application.Features.PipeClassFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditPipeClassCommand>> Handle(GetPipeClassListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditPipeClass>> Handle(GetPipeClassListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<PipeClass>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditPipeClassCommand>>(list);
+            return _mapper.Map<List<EditPipeClass>>(list);
 
         }
     }

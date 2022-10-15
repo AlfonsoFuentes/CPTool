@@ -1,6 +1,7 @@
 ﻿
 
-using CPTool.Application.Features.AlterationItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.AlterationItemFeatures.CreateEdit;
+using System.ComponentModel.Design;
 
 namespace CPTool.Application.Features.AlterationItemFeatures.Mapping
 {
@@ -8,11 +9,10 @@ namespace CPTool.Application.Features.AlterationItemFeatures.Mapping
     {
         public AlterationItemMapping()
         {
-            CreateMap<AlterationItem, AddEditAlterationItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
+            CreateMap<AlterationItem, EditAlterationItem>();
 
-            CreateMap<AddEditAlterationItemCommand, AlterationItem>();
+            CreateMap<AddAlterationItem, AlterationItem>();
+            CreateMap<EditAlterationItem, AlterationItem>();
         }
     }
 }

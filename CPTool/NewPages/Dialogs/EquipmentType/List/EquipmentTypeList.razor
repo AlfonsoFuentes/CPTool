@@ -2,12 +2,13 @@
 @using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList
 @if (ShowAddButton)
 {
-    <OneToManyListComponent TMaster="AddEditEquipmentTypeCommand" TDetail="AddEditEquipmentTypeSubCommand"
-                        TDeleteMaster="DeleteEquipmentTypeCommand" TDeleteDetail="DeleteEquipmentTypeSubCommand"
+    <OneToManyListComponent TMaster="EditEquipmentType" TDetail="EditEquipmentTypeSub"
+                        TAddMaster="AddEquipmentType" TAddDetail="AddEquipmentTypeSub"
+                        TDeleteMaster="DeleteEquipmentType" TDeleteDetail="DeleteEquipmentTypeSub"
                         TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
                         TMasterGedById="GetByIdEquipmentTypeQuery" TDetailGedById="GetByIdEquipmentTypeSubQuery"
                         @bind-ElementsMasters="@GlobalTables.EquipmentTypes"
-                        ElementsDetails="@SelectedEqu.EquipmentTypesSubCommand"
+                        ElementsDetails="@SelectedEqu.EquipmentTypeSubs"
                         @bind-SelectedMaster="@SelectedEqu"
                         @bind-SelectedDetail="@SelectedEquSub"
                         OnShowDialogMaster="ToolDialogService.ShowEquipmentType"

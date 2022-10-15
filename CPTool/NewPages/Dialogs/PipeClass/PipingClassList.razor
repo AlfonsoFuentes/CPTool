@@ -1,23 +1,24 @@
 ﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
-@using CPTool.Application.Features.PipeClassFeatures.Command.CreateEdit
-@using CPTool.Application.Features.PipeClassFeatures.Command.Delete
+@using CPTool.Application.Features.PipeClassFeatures.CreateEdit
+@using CPTool.Application.Features.PipeClassFeatures
 @using CPTool.Application.Features.PipeClassFeatures.Query.GetById
 @using CPTool.Application.Features.PipeClassFeatures.Query.GetList
-@using CPTool.Application.Features.PipeDiameterFeatures.Command.CreateEdit
-@using CPTool.Application.Features.PipeDiameterFeatures.Command.Delete
+@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
+@using CPTool.Application.Features.PipeDiameterFeatures
 @using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
 @using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
 @if (ShowAddButton)
 {
-    <OneToManyListComponent TMaster="AddEditPipeClassCommand" TDetail="AddEditPipeDiameterCommand"
-                        TDeleteMaster="DeletePipeClassCommand" TDeleteDetail="DeletePipeDiameterCommand"
+    <OneToManyListComponent TMaster="EditPipeClass" TDetail="EditPipeDiameter"
+                        TAddMaster="AddPipeClass" TAddDetail="AddPipeDiameter"
+                        TDeleteMaster="DeletePipeClass" TDeleteDetail="DeletePipeDiameter"
                         TMasterList="GetPipeClassListQuery" TDetailList="GetPipeDiameterListQuery"
                         TMasterGedById="GetByIdPipeClassQuery" TDetailGedById="GetByIdPipeDiameterQuery"
                         @bind-ElementsMasters="GlobalTables.PipeClasses"
-                        ElementsDetails="@SelectedMaster.PipeDiametersCommand"
+                        ElementsDetails="@SelectedMaster.PipeDiameters"
                         @bind-SelectedMaster="@SelectedMaster"
                         @bind-SelectedDetail="@SelectedDetail"
-                        OnShowDialogMaster="ToolDialogService.ShowDialogName"
+                        OnShowDialogMaster="ToolDialogService.ShowNameDialog"
                         OnShowDialogDetails="ToolDialogService.ShowPipeDiameterDialog">
         <MasterContextTh>
             <MudTh Style="width:40px">#</MudTh>
@@ -37,9 +38,9 @@
         <DetailContextTd>
             <MudTd DataLabel="TagLetter">@context.Id</MudTd>
             <MudTd DataLabel="TagLetter">@context.Name</MudTd>
-            <MudTd DataLabel="TagLetter">@context.ODCommand.StringValue</MudTd>
-            <MudTd DataLabel="TagLetter">@context.IDCommand.StringValue</MudTd>
-            <MudTd DataLabel="TagLetter">@context.ThicknessCommand.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.OD.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.ID.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Thickness.StringValue</MudTd>
         </DetailContextTd>
 
     </OneToManyListComponent>
@@ -53,8 +54,8 @@
     int mastersm => 6;
     int detailsm => 6;
 
-    AddEditPipeClassCommand SelectedMaster { get; set; } = new();
-    AddEditPipeDiameterCommand SelectedDetail { get; set; } = new();
+    EditPipeClass SelectedMaster { get; set; } = new();
+    EditPipeDiameter SelectedDetail { get; set; } = new();
     [Parameter]
     public RenderFragment OtherButtons { get; set; }
 }

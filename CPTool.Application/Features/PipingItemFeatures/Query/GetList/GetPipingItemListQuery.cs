@@ -1,16 +1,16 @@
 ﻿
-using CPTool.Application.Features.PipingItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PipingItemFeatures.Query.GetList
 {
 
-    public class GetPipingItemListQuery : GetListQuery, IRequest<List<AddEditPipingItemCommand>>
+    public class GetPipingItemListQuery : GetListQuery, IRequest<List<EditPipingItem>>
     {
 
 
 
     }
-    public class GetPipingItemListQueryHandler : IRequestHandler<GetPipingItemListQuery, List<AddEditPipingItemCommand>>
+    public class GetPipingItemListQueryHandler : IRequestHandler<GetPipingItemListQuery, List<EditPipingItem>>
     {
 
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace CPTool.Application.Features.PipingItemFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditPipingItemCommand>> Handle(GetPipingItemListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditPipingItem>> Handle(GetPipingItemListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<PipingItem>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditPipingItemCommand>>(list);
+            return _mapper.Map<List<EditPipingItem>>(list);
 
         }
     }

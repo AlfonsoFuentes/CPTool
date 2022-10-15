@@ -1,13 +1,13 @@
-﻿using CPTool.Application.Features.UnitFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.UnitFeatures.CreateEdit;
 
 namespace CPTool.NewPages.Components
 {
     public partial class SelectUnitComponent
     {
         [Parameter]
-        public AddEditUnitCommand Model { get; set; }
+        public EditUnit Model { get; set; }
         [Parameter]
-        public EventCallback<AddEditUnitCommand> ModelChanged { get; set; }
+        public EventCallback<EditUnit> ModelChanged { get; set; }
         [Parameter]
         public bool Disable { get; set; }
         async Task UnitChanged(string name)

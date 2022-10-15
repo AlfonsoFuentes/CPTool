@@ -1,6 +1,6 @@
-﻿using CPTool.Application.Features.GasketsFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MaterialFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.GasketsFeatures.CreateEdit;
+using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Domain.Entities;
 
 namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
@@ -11,30 +11,30 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         protected MWOItemDialog DialogParent { get; set; }
         [Parameter]
 
-        public AddEditGasketCommand Gasket { get; set; }
+        public EditGasket Gasket { get; set; }
         [Parameter]
-        public EventCallback<AddEditGasketCommand> GasketChanged { get; set; }
+        public EventCallback<EditGasket> GasketChanged { get; set; }
         [Parameter]
-        public AddEditMaterialCommand InnerMaterial { get; set; }
+        public EditMaterial InnerMaterial { get; set; }
         [Parameter]
-        public EventCallback<AddEditMaterialCommand> InnerMaterialChanged { get; set; }
+        public EventCallback<EditMaterial> InnerMaterialChanged { get; set; }
         [Parameter]
 
-        public AddEditMaterialCommand OuterMaterial { get; set; }
+        public EditMaterial OuterMaterial { get; set; }
         [Parameter]
-        public EventCallback<AddEditMaterialCommand> OuterMaterialChanged { get; set; }
+        public EventCallback<EditMaterial> OuterMaterialChanged { get; set; }
 
-        async Task OnGasketChanged(AddEditGasketCommand gas)
+        async Task OnGasketChanged(EditGasket gas)
         {
             Gasket = gas;
             await GasketChanged.InvokeAsync(Gasket);
         }
-        async Task OnInnerMaterialChanged(AddEditMaterialCommand mat)
+        async Task OnInnerMaterialChanged(EditMaterial mat)
         {
             InnerMaterial = mat;
             await InnerMaterialChanged.InvokeAsync(InnerMaterial);
         }
-        async Task OnOuterMaterialChanged(AddEditMaterialCommand mat)
+        async Task OnOuterMaterialChanged(EditMaterial mat)
         {
             OuterMaterial = mat;
             await OuterMaterialChanged.InvokeAsync(OuterMaterial);

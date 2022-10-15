@@ -63,7 +63,7 @@
             <ComponentSelect TDTO="SupplierDTO"
                        
                          Label="Supplier"
-                         Disable="@(Model.BrandDTO.Id==0?true:false)"
+                         Disable="@(Model.BrandDTOId==0?true:false)"
                          Elements=@Model.BrandDTO.BrandSuppliersDTO.Select(x=>x.SupplierDTO).ToList()
                          @bind-Model=@Model.SupplierDTO>
 

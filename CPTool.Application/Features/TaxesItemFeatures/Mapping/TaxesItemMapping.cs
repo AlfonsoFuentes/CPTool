@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.TaxesItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.TaxesItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.TaxesItemFeatures.Mapping
 {
@@ -10,11 +10,9 @@ namespace CPTool.Application.Features.TaxesItemFeatures.Mapping
     {
         public TaxesItemMapping()
         {
-            CreateMap<TaxesItem, AddEditTaxesItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
-           
-
-            CreateMap<AddEditTaxesItemCommand, TaxesItem>();
+            CreateMap<TaxesItem, EditTaxesItem>();
+            CreateMap<EditTaxesItem, TaxesItem>();
+            CreateMap<AddTaxesItem, TaxesItem>();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
-using CPTool.Application.Features.ProcessConditionFeatures.Command.CreateEdit;
-using CPTool.Application.Features.ProcessFluidFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
+using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 
 namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
 {
@@ -9,20 +9,20 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
         [Parameter]
-        public AddEditProcessConditionCommand ProcessCondition { get; set; }
+        public EditProcessCondition ProcessCondition { get; set; }
 
         [Parameter]
-        public EventCallback<AddEditProcessConditionCommand> ProcessConditionChanged { get; set; }
+        public EventCallback<EditProcessCondition> ProcessConditionChanged { get; set; }
 
         [Parameter]
-        public AddEditProcessFluidCommand ProcessFluid { get; set; }
+        public EditProcessFluid ProcessFluid { get; set; }
 
         [Inject]
         public IMediator mediator { get; set; }
         [Parameter]
-        public EventCallback<AddEditProcessFluidCommand> ProcessFluidChanged { get; set; }
+        public EventCallback<EditProcessFluid> ProcessFluidChanged { get; set; }
 
-        async Task OnProcessFluidChanged(AddEditProcessFluidCommand pro)
+        async Task OnProcessFluidChanged(EditProcessFluid pro)
         {
             ProcessFluid = pro;
             await ProcessFluidChanged.InvokeAsync(ProcessFluid);

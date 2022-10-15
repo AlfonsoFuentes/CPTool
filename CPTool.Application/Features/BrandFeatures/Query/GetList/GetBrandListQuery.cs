@@ -1,11 +1,11 @@
 ﻿
 
-using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.BrandFeatures.Query.GetList
 {
    
-    public class GetBrandListQuery : GetListQuery, IRequest<List<AddEditBrandCommand>>
+    public class GetBrandListQuery : GetListQuery, IRequest<List<EditBrand>>
     {
         public GetBrandListQuery()
         {
@@ -14,7 +14,7 @@ namespace CPTool.Application.Features.BrandFeatures.Query.GetList
       
 
     }
-    public class GetBrandListQueryHandler : IRequestHandler<GetBrandListQuery, List<AddEditBrandCommand>>
+    public class GetBrandListQueryHandler : IRequestHandler<GetBrandListQuery, List<EditBrand>>
     {
 
         private readonly IMapper _mapper;
@@ -25,11 +25,11 @@ namespace CPTool.Application.Features.BrandFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditBrandCommand>> Handle(GetBrandListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditBrand>> Handle(GetBrandListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.RepositoryBrand.GetAllAsync();
 
-            var reteorno= _mapper.Map<List<AddEditBrandCommand>>(list);
+            var reteorno= _mapper.Map<List<EditBrand>>(list);
             return reteorno;
 
         }

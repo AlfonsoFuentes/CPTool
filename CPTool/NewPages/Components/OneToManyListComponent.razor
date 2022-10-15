@@ -1,5 +1,7 @@
 ﻿@typeparam TMaster
+@typeparam TAddMaster
 @typeparam TDetail
+@typeparam TAddDetail
 @typeparam TMasterList
 @typeparam TDetailList
 @typeparam TDeleteMaster
@@ -40,7 +42,7 @@
 
             <MudItem xs="12" sm="@detailsm">
                 <TableComponent T="TDetail" Elements="@ElementsDetails" DisableAddButton=@(SelectedMaster.Id==0?true:false)
-                        OnRowClicked="RowClickedDetail"
+                        OnRowClicked="RowClickedDetail" DisableEditButton=@(SelectedDetail.Id==0?true:false)
                         OnAdd="AddDetail" OnDelete="DeleteDetail" OnEdit="EditDetail" SearchFunc=DetailList.FilterFunc @bind-SelectedItem="@SelectedDetail">
                     <ContextTh>
 

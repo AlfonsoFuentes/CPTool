@@ -3,7 +3,7 @@
 
 namespace CPTool.NewPages.Components
 {
-    public partial class TableNameDialog<T> where T : AddEditCommand, new()
+    public partial class TableNameDialog<T> where T : EditCommand, new()
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         public MudForm form { get; set; } = null!;
@@ -14,8 +14,6 @@ namespace CPTool.NewPages.Components
             await form.Validate();
             if (form.IsValid)
             {
-
-
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

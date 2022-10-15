@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetById
 {
-    
-    public class GetByIdPurchaseOrderMWOItemQuery : GetByIdQuery, IRequest<AddEditPurchaseOrderMWOItemCommand>
+
+    public class GetByIdPurchaseOrderMWOItemQuery : GetByIdQuery, IRequest<EditPurchaseOrderMWOItem>
     {
+        public GetByIdPurchaseOrderMWOItemQuery() { }
+       
     }
-    public class GetByIdPurchaseOrderMWOItemQueryHandler : IRequestHandler<GetByIdPurchaseOrderMWOItemQuery, AddEditPurchaseOrderMWOItemCommand>
+    public class GetByIdPurchaseOrderMWOItemQueryHandler : IRequestHandler<GetByIdPurchaseOrderMWOItemQuery, EditPurchaseOrderMWOItem>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditPurchaseOrderMWOItemCommand> Handle(GetByIdPurchaseOrderMWOItemQuery request, CancellationToken cancellationToken)
+        public async Task<EditPurchaseOrderMWOItem> Handle(GetByIdPurchaseOrderMWOItemQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<PurchaseOrderMWOItem>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditPurchaseOrderMWOItemCommand>(table);
+            return _mapper.Map<EditPurchaseOrderMWOItem>(table);
 
         }
     }

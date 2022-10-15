@@ -2,7 +2,13 @@
 {
     public class GetByIdQuery
     {
-        public int Id { get; set; }
+        public GetByIdQuery()
+        {
+
+        }
+      
+
+        public int Id { get; init; }
     }
 
 }

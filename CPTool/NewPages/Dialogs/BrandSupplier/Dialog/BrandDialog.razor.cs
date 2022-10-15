@@ -1,12 +1,12 @@
 ﻿
 
-using CPTool.Application.Features.BrandFeatures.Command.CreateEdit;
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.BrandFeatures.Query.GetList;
 using CPTool.Application.Features.BrandSupplierFeatures;
 
-using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
 
-using CPTool.Application.Features.SupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
 using CPTool.Domain.Entities;
 
@@ -16,7 +16,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditBrandSupplierCommand Model { get; set; } = null!;
+        public EditBrandSupplier Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
 
@@ -32,7 +32,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
                 Model.InletBy = InletBy.Brand;
                 var result = await mediator.Send(Model);
 
-                MudDialog.Close(DialogResult.Ok(Model.BrandCommand));
+                MudDialog.Close(DialogResult.Ok(Model.Brand));
             }
         }
 
@@ -52,7 +52,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
                 return "Must submit Brand or Service Type";
             if (arg == "")
                 return "Must submit Brand or Service Type";
-            if(Model.BrandCommand.Id==0)
+            if(Model.Brand.Id==0)
             {
                 if (GlobalTables.Brands.Any(x => x.Name == arg))
                     return "Name already exist";
@@ -60,7 +60,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
             else
             {
                
-                if (GlobalTables.Brands.Where(x => x.Id != Model.BrandCommand.Id).Any(x => x.Name == arg))
+                if (GlobalTables.Brands.Where(x => x.Id != Model.Brand.Id).Any(x => x.Name == arg))
                     return "Name already exist";
             }
             

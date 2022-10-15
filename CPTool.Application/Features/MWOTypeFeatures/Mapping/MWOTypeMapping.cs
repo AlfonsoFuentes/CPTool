@@ -8,11 +8,9 @@ namespace CPTool.Application.Features.MMOTypeFeatures.Mapping
     {
         public MWOTypeMapping()
         {
-            CreateMap<MWOType, AddEditMWOTypeCommand>()
-                .ForMember(dest => dest.MWOsCommand, act => { act.PreCondition(src => (src.MWOs != null)); act.MapFrom(src => src.MWOs); });
-            ;
-
-            CreateMap<AddEditMWOTypeCommand, MWOType>();
+            CreateMap<MWOType,EditMWOType>();
+            CreateMap<EditMWOType, MWOType>();
+            CreateMap<AddMWOType, MWOType>();
         }
     }
 }

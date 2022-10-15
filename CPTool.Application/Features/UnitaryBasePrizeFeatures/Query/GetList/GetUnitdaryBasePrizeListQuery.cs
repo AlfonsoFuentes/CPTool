@@ -1,16 +1,16 @@
 ﻿
-using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList
 {
 
-    public class GetUnitaryBasePrizeListQuery : GetListQuery, IRequest<List<AddEditUnitaryBasePrizeCommand>>
+    public class GetUnitaryBasePrizeListQuery : GetListQuery, IRequest<List<EditUnitaryBasePrize>>
     {
 
 
 
     }
-    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetUnitaryBasePrizeListQuery, List<AddEditUnitaryBasePrizeCommand>>
+    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetUnitaryBasePrizeListQuery, List<EditUnitaryBasePrize>>
     {
 
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditUnitaryBasePrizeCommand>> Handle(GetUnitaryBasePrizeListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditUnitaryBasePrize>> Handle(GetUnitaryBasePrizeListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<UnitaryBasePrize>().GetAllAsync();
 
-            return _mapper.Map<List<AddEditUnitaryBasePrizeCommand>>(list);
+            return _mapper.Map<List<EditUnitaryBasePrize>>(list);
 
         }
     }

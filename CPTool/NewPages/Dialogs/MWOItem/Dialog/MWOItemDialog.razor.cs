@@ -1,11 +1,11 @@
-﻿using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.ChapterFeatures.CreateEdit;
 using CPTool.Application.Features.ChapterFeatures.Query.GetList;
-using CPTool.Application.Features.MWOFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.Query.GetList;
-using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetById;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
-using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
 
 namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
@@ -14,7 +14,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditMWOItemCommand Model { get; set; } = null!;
+        public EditMWOItem Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
 
@@ -45,17 +45,17 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             await form.Validate();
             StateHasChanged();
         }
-        public string AnyName(string model)
+        public string AnyName(string arg)
         {
 
-            if (model == null || model == "") return "Must define a name";
+            if (arg == null || arg == "") return "Must define a name";
             if (Model.Id != 0)
             {
-                if (Model.MWOCommand.MWOItemsCommand.Where(x => x.Id != Model.Id).Any(x => x.Name == model)) return "Name already existing";
+                if (Model.MWO.MWOItems.Where(x => x.Id !=Model.Id).Any(x => x.Name == arg)) return "Name already existing";
             }
             else
             {
-                if (Model.MWOCommand.MWOItemsCommand.Any(x => x.Name == model)) return "Name already existing";
+                if (Model.MWO.MWOItems.Any(x => x.Name == arg)) return "Name already existing";
             }
 
 
@@ -64,8 +64,8 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         }
        async Task UpdateFormFromChild()
         {
-            GetByIdMWOItemQuery getbyid = new();
-            getbyid.Id = Model.Id;
+            GetByIdMWOItemQuery getbyid = new() {Id= Model.Id }; 
+          
             var model = await mediator.Send(getbyid);
         }
     }

@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.ReadoutFeatures.Command.Delete
+namespace CPTool.Application.Features.ReadoutFeatures
 {
-    public class DeleteReadoutCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteReadout : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteReadoutCommandHandler : IRequestHandler<DeleteReadoutCommand, Result<int>>
+    public class DeleteReadoutHandler : IRequestHandler<DeleteReadout, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteReadoutCommand> _logger;
+        private readonly ILogger<DeleteReadout> _logger;
 
-        public DeleteReadoutCommandHandler(IUnitOfWork unitofwork,
+        public DeleteReadoutHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteReadoutCommand> logger)
+            ILogger<DeleteReadout> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.ReadoutFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteReadoutCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteReadout request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<Readout>().GetByIdAsync(request.Id);
 

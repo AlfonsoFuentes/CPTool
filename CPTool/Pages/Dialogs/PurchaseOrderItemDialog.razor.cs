@@ -19,10 +19,10 @@ namespace CPTool.Pages.Dialogs
     //    async Task ProperInitialize()
     //    {
     //        var mwosearch = Model.PurchaseOrderDTO.PurchaseOrderMWOItemsDTO.FirstOrDefault().MWOItemDTO.MWODTO;
-    //        var mwo = await ManagerMWO.GetById(mwosearch.Id);
+    //        var mwo = await ManagerMWO.GetById(mwosearchId);
 
 
-    //        MWOItemsDTO = mwo.MWOItemsDTO.Select(x => x).Where(y => !y.PurchaseOrderMWOItemsDTO.Any(z => z.PurchaseOrderDTO.Id == Model.PurchaseOrderDTO.Id)).ToList();
+    //        MWOItemsDTO = mwo.MWOItemsDTO.Select(x => x).Where(y => !y.PurchaseOrderMWOItemsDTO.Any(z => z.PurchaseOrderDTOId == Model.PurchaseOrderDTOId)).ToList();
     //    }
         
 

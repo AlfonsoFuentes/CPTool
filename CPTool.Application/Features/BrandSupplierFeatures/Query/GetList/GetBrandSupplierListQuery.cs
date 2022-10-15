@@ -1,11 +1,11 @@
 ﻿
 
-using CPTool.Application.Features.BrandSupplierFeatures.Command.CreateEdit;
+using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
 {
    
-    public class GetBrandSupplierListQuery : GetListQuery, IRequest<List<AddEditBrandSupplierCommand>>
+    public class GetBrandSupplierListQuery : GetListQuery, IRequest<List<AddBrandSupplier>>
     {
         public GetBrandSupplierListQuery()
         {
@@ -14,7 +14,7 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
       
 
     }
-    public class GetBrandSupplierListQueryHandler : IRequestHandler<GetBrandSupplierListQuery, List<AddEditBrandSupplierCommand>>
+    public class GetBrandSupplierListQueryHandler : IRequestHandler<GetBrandSupplierListQuery, List<AddBrandSupplier>>
     {
 
         private readonly IMapper _mapper;
@@ -25,11 +25,11 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddEditBrandSupplierCommand>> Handle(GetBrandSupplierListQuery request, CancellationToken cancellationToken)
+        public async Task<List<AddBrandSupplier>> Handle(GetBrandSupplierListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<BrandSupplier>().GetAllAsync();
 
-            var retorno = _mapper.Map<List<AddEditBrandSupplierCommand>>(list);
+            var retorno = _mapper.Map<List<AddBrandSupplier>>(list);
             return retorno;
 
         }

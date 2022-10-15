@@ -1,5 +1,5 @@
-﻿using CPTool.Application.Features.ChapterFeatures.Command.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.ChapterFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 
 
 namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
@@ -8,7 +8,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
     {
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
-        protected AddEditMWOItemCommand Model => DialogParent.Model;
+        protected EditMWOItem Model => DialogParent.Model;
 
         
         string ValidateUnitaryPrize(double valor)

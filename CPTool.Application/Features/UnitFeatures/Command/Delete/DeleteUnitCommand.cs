@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.UnitFeatures.Command.Delete
+namespace CPTool.Application.Features.UnitFeatures
 {
-    public class DeleteUnitCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteUnit : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteUnitCommandHandler : IRequestHandler<DeleteUnitCommand, Result<int>>
+    public class DeleteUnitHandler : IRequestHandler<DeleteUnit, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteUnitCommand> _logger;
+        private readonly ILogger<DeleteUnit> _logger;
 
-        public DeleteUnitCommandHandler(IUnitOfWork unitofwork,
+        public DeleteUnitHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteUnitCommand> logger)
+            ILogger<DeleteUnit> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.UnitFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteUnitCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteUnit request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<CPTool.Domain.Entities.Unit>().GetByIdAsync(request.Id);
 

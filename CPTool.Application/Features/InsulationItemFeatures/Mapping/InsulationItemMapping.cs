@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.InsulationItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.InsulationItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.InsulationItemFeatures.Mapping
 {
@@ -10,11 +10,11 @@ namespace CPTool.Application.Features.InsulationItemFeatures.Mapping
     {
         public InsulationItemMapping()
         {
-            CreateMap<InsulationItem, AddEditInsulationItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
+            CreateMap<InsulationItem, EditInsulationItem>();
            
 
-            CreateMap<AddEditInsulationItemCommand, InsulationItem>();
+            CreateMap<EditInsulationItem, InsulationItem>();
+            CreateMap<AddInsulationItem, InsulationItem>();
         }
     }
 }

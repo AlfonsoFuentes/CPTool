@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.ConnectionTypeFeatures.Command.Delete
+namespace CPTool.Application.Features.ConnectionTypeFeatures
 {
-    public class DeleteConnectionTypeCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeleteConnectionType : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeleteConnectionTypeCommandHandler : IRequestHandler<DeleteConnectionTypeCommand, Result<int>>
+    public class DeleteConnectionTypeHandler : IRequestHandler<DeleteConnectionType, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteConnectionTypeCommand> _logger;
+        private readonly ILogger<DeleteConnectionType> _logger;
 
-        public DeleteConnectionTypeCommandHandler(IUnitOfWork unitofwork,
+        public DeleteConnectionTypeHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteConnectionTypeCommand> logger)
+            ILogger<DeleteConnectionType> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.ConnectionTypeFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteConnectionTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteConnectionType request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<ConnectionType>().GetByIdAsync(request.Id);
 

@@ -61,7 +61,7 @@ namespace CPTool.Pages.Dialogs
         //        return "PO number must start with 850";
         //    if (arg.Length != 10)
         //        return "PO number must have ten numbers";
-        //    if (TablesService.PurchaseOrderMWOItems.Where(x => x.MWOItemDTO.Id != Model.MWOItemDTO.Id).Any(x => x.PurchaseOrderDTO.PONumber == arg))
+        //    if (TablesService.PurchaseOrderMWOItems.Where(x => x.MWOItemDTOId != Model.MWOItemDTOId).Any(x => x.PurchaseOrderDTO.PONumber == arg))
         //        return "PO number existing";
         //    return null;
 

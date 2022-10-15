@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.ReadoutFeatures.Command.CreateEdit;
+using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ReadoutFeatures.Mapping
 {
@@ -10,12 +10,10 @@ namespace CPTool.Application.Features.ReadoutFeatures.Mapping
     {
         public ReadoutMapping()
         {
-            CreateMap<Readout, AddEditReadoutCommand>()
-                .ForMember(dest => dest.InstrumentItemsCommand,
-                act => { act.PreCondition(src => (src.InstrumentItems != null)); act.MapFrom(src => src.InstrumentItems); });
+            CreateMap<Readout, EditReadout>();
 
-
-            CreateMap<AddEditReadoutCommand, Readout>();
+            CreateMap<EditReadout, Readout>();
+            CreateMap<AddReadout, Readout>();
         }
     }
 }

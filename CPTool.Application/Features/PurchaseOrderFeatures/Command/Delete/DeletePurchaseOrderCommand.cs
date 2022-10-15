@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.PurchaseOrderFeatures.Command.Delete
+namespace CPTool.Application.Features.PurchaseOrderFeatures
 {
-    public class DeletePurchaseOrderCommand : DeleteCommand, IRequest<Result<int>> 
+    public class DeletePurchaseOrder : Delete, IRequest<Result<int>> 
     {
       
     }
-    public class DeletePurchaseOrderCommandHandler : IRequestHandler<DeletePurchaseOrderCommand, Result<int>>
+    public class DeletePurchaseOrderHandler : IRequestHandler<DeletePurchaseOrder, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeletePurchaseOrderCommand> _logger;
+        private readonly ILogger<DeletePurchaseOrder> _logger;
 
-        public DeletePurchaseOrderCommandHandler(IUnitOfWork unitofwork,
+        public DeletePurchaseOrderHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeletePurchaseOrderCommand> logger)
+            ILogger<DeletePurchaseOrder> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeletePurchaseOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeletePurchaseOrder request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<PurchaseOrder>().GetByIdAsync(request.Id);
 

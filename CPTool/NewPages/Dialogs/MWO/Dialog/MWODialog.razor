@@ -6,15 +6,17 @@
 
 
                     <MudForm Model="Model" @ref="form">
-                        <AutoCompleteComponent T="AddEditMWOTypeCommand"
+                        <AutoCompleteComponent T="EditMWOType"
+                                               TAdd="AddMWOType"
+                                               TGedById="GetByIdMWOTypeQuery"
                                                TList="GetMWOTypeListQuery"
                                                TableName="MWO Type"
                                                Label="MWO Type"
-                                               SelectionChanged="@((arg)=>{Model.MWOTypeCommand=arg;})"
+                                               SelectionChanged="@((arg)=>{Model.MWOType=arg;})"
                                                ValidateForm="Validateform"
-                                               @bind-Elements="@MWOTypes"
+                                               @bind-Elements="@GlobalTables.MWOTypes"
                                                Validation="@(new Func<string, string>(ReviewMWOType))"
-                                               Model=@Model.MWOTypeCommand></AutoCompleteComponent>
+                                               Model=@Model.MWOType></AutoCompleteComponent>
 
 
                        

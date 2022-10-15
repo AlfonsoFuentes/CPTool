@@ -1,12 +1,14 @@
-﻿using CPTool.Application.Features.ProcessFluidFeatures.Command.CreateEdit;
+﻿using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ProcessFluidFeatures.Query.GetById
 {
-    
-    public class GetByIdProcessFluidQuery : GetByIdQuery, IRequest<AddEditProcessFluidCommand>
+
+    public class GetByIdProcessFluidQuery : GetByIdQuery, IRequest<EditProcessFluid>
     {
+        public GetByIdProcessFluidQuery() { }
+        
     }
-    public class GetByIdProcessFluidQueryHandler : IRequestHandler<GetByIdProcessFluidQuery, AddEditProcessFluidCommand>
+    public class GetByIdProcessFluidQueryHandler : IRequestHandler<GetByIdProcessFluidQuery, EditProcessFluid>
     {
 
         private readonly IMapper _mapper;
@@ -17,11 +19,11 @@ namespace CPTool.Application.Features.ProcessFluidFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<AddEditProcessFluidCommand> Handle(GetByIdProcessFluidQuery request, CancellationToken cancellationToken)
+        public async Task<EditProcessFluid> Handle(GetByIdProcessFluidQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.Repository<ProcessFluid>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<AddEditProcessFluidCommand>(table);
+            return _mapper.Map<EditProcessFluid>(table);
 
         }
     }

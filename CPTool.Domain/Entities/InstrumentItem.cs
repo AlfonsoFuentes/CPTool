@@ -4,8 +4,8 @@
     {
         public int? ProcessConditionId { get; set; }
         public ProcessCondition? ProcessCondition { get; set; }
-        public int? ProcessFluidId { get; set; }
-        public ProcessFluid? ProcessFluid { get; set; }
+        public int? ProcessFluidInstrumentId { get; set; }
+        public ProcessFluid? ProcessFluidInstrument { get; set; }
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
         public ICollection<MWOItem>? MWOItems { get; set; } = null!;
         public int? GasketId { get; set; }

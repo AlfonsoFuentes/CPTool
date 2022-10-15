@@ -1,19 +1,19 @@
-﻿namespace CPTool.Application.Features.EquipmentTypeSubFeatures.Command.Delete
+﻿namespace CPTool.Application.Features.EquipmentTypeSubFeatures
 {
-    public class DeleteEquipmentTypeSubCommand : DeleteCommand, IRequest<Result<int>>
+    public class DeleteEquipmentTypeSub : Delete, IRequest<Result<int>>
     {
        
     }
-    public class DeleteEquipmentTypeSubCommandHandler : IRequestHandler<DeleteEquipmentTypeSubCommand, Result<int>>
+    public class DeleteEquipmentTypeSubHandler : IRequestHandler<DeleteEquipmentTypeSub, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteEquipmentTypeSubCommand> _logger;
+        private readonly ILogger<DeleteEquipmentTypeSub> _logger;
 
-        public DeleteEquipmentTypeSubCommandHandler(IUnitOfWork unitofwork,
+        public DeleteEquipmentTypeSubHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteEquipmentTypeSubCommand> logger)
+            ILogger<DeleteEquipmentTypeSub> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -22,7 +22,7 @@
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteEquipmentTypeSubCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteEquipmentTypeSub request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<EquipmentTypeSub>().GetByIdAsync(request.Id);
 

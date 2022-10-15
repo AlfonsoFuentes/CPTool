@@ -2,7 +2,7 @@
 
 
 
-using CPTool.Application.Features.EHSItemFeatures.Command.CreateEdit;
+using CPTool.Application.Features.EHSItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.EHSItemFeatures.Mapping
 {
@@ -10,11 +10,11 @@ namespace CPTool.Application.Features.EHSItemFeatures.Mapping
     {
         public EHSItemMapping()
         {
-            CreateMap<EHSItem, AddEditEHSItemCommand>()
-                .ForMember(dest => dest.MWOItemsCommand, act => { act.PreCondition(src => (src.MWOItems != null)); act.MapFrom(src => src.MWOItems); });
+            CreateMap<EHSItem, EditEHSItem>();
            
 
-            CreateMap<AddEditEHSItemCommand, EHSItem>();
+            CreateMap<AddEHSItem, EHSItem>();
+            CreateMap<EditEHSItem, EHSItem>();
         }
     }
 }

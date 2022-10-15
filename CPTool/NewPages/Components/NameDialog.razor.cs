@@ -1,6 +1,6 @@
 ﻿
 
-using CPTool.Application.Features.UnitaryBasePrizeFeatures.Command.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 
 namespace CPTool.NewPages.Components
 {
@@ -8,7 +8,7 @@ namespace CPTool.NewPages.Components
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddEditCommand Model { get; set; } = null!;
+        public AddCommand Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
 

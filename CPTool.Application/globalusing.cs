@@ -12,13 +12,15 @@ global using AutoMapper;
 global using CPTool.Application.Contracts.Persistence;
 global using CPTool.Domain.Entities;
 global using CPTool.Application.Features.Base;
-global using CPTool.Application.Features.EquipmentTypeFeatures.Command.CreateEdit;
+global using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit;
 global using CPTool.Application.Contracts.Infrastructure;
 global using CPTool.Application.Exceptions;
 global using Unit = MediatR.Unit;
-global using CPTool.Application.Features.EquipmentTypeSubFeatures.Command.CreateEdit;
+global using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
 global using  CPtool.ExtensionMethods;
-global using CPTool.Application.Features.MMOTypeFeatures.Command.CreateEdit; 
+global using CPTool.Application.Features.MMOTypeFeatures.CreateEdit; 
+global using CPTool.Application.Features.Base.DeleteCommand;
+
 
 
 

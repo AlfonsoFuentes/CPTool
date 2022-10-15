@@ -1,21 +1,21 @@
 ﻿
 
-namespace CPTool.Application.Features.StructuralItemFeatures.Command.Delete
+namespace CPTool.Application.Features.StructuralItemFeatures
 {
-    public class DeleteStructuralItemCommand : DeleteCommand, IRequest<Result<int>>
+    public class DeleteStructuralItem : Delete, IRequest<Result<int>>
     {
 
     }
-    public class DeleteStructuralItemCommandHandler : IRequestHandler<DeleteStructuralItemCommand, Result<int>>
+    public class DeleteStructuralItemHandler : IRequestHandler<DeleteStructuralItem, Result<int>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        private readonly ILogger<DeleteStructuralItemCommand> _logger;
+        private readonly ILogger<DeleteStructuralItem> _logger;
 
-        public DeleteStructuralItemCommandHandler(IUnitOfWork unitofwork,
+        public DeleteStructuralItemHandler(IUnitOfWork unitofwork,
             IMapper mapper,
-            ILogger<DeleteStructuralItemCommand> logger)
+            ILogger<DeleteStructuralItem> logger)
         {
             _unitofwork = unitofwork;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace CPTool.Application.Features.StructuralItemFeatures.Command.Delete
             _logger = logger;
         }
 
-        public async Task<Result<int>> Handle(DeleteStructuralItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteStructuralItem request, CancellationToken cancellationToken)
         {
             var ToDelete = await _unitofwork.Repository<StructuralItem>().GetByIdAsync(request.Id);
 

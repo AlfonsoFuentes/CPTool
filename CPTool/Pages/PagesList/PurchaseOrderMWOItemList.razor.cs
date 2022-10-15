@@ -138,7 +138,7 @@ namespace CPTool.Pages.PagesList
     //            SelectedDetail = new();
     //            SelectedMaster = new();
 
-    //            if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
+    //            if (purchaseOrderMWOItemDTO.PurchaseOrderDTOId != 0 && purchaseOrderMWOItemDTO.MWOItemDTOId != 0)
     //            {
     //                var result2 = await ManagerPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
     //                if (result2.Succeeded)
@@ -146,7 +146,7 @@ namespace CPTool.Pages.PagesList
                         
     //                    TablesService.MWOItems = await GetMWOItemList.Handle();
                     
-    //                    SelectedDetail = await ManagerMWOItem.GetById(purchaseOrderMWOItemDTO.MWOItemDTO.Id);
+    //                    SelectedDetail = await ManagerMWOItem.GetById(purchaseOrderMWOItemDTO.MWOItemDTOId);
     //                }
 
     //            }
@@ -170,14 +170,14 @@ namespace CPTool.Pages.PagesList
     //            SelectedMaster = new();
 
 
-    //            if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
+    //            if (purchaseOrderMWOItemDTO.PurchaseOrderDTOId != 0 && purchaseOrderMWOItemDTO.MWOItemDTOId != 0)
     //            {
     //                var result2 = await ManagerPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
     //                if (result2.Succeeded)
     //                {
     //                    TablesService.PurchaseOrders = await GetPurchaseOrderList.Handle();
 
-    //                    SelectedMaster = await ManagerPurchaseOrder.GetById(purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id);
+    //                    SelectedMaster = await ManagerPurchaseOrder.GetById(purchaseOrderMWOItemDTO.PurchaseOrderDTOId);
     //                }
     //            }
                
@@ -193,7 +193,7 @@ namespace CPTool.Pages.PagesList
     //    async Task<IResult<IAuditableEntityDTO>> SaveBrandSupplier(IAuditableEntityDTO dto)
     //    {
     //        var purchaseOrderMWOItemDTO = dto as PurchaseOrderMWOItemDTO;
-    //        if (purchaseOrderMWOItemDTO.PurchaseOrderDTO.Id != 0 && purchaseOrderMWOItemDTO.MWOItemDTO.Id != 0)
+    //        if (purchaseOrderMWOItemDTO.PurchaseOrderDTOId != 0 && purchaseOrderMWOItemDTO.MWOItemDTOId != 0)
     //        {
     //            var result = await ManagerPurchaseOrderMWOItem.AddUpdate(purchaseOrderMWOItemDTO, _cts.Token);
     //            if (result.Succeeded)
