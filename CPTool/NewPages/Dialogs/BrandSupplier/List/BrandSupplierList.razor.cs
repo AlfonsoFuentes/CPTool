@@ -43,7 +43,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.List
             GlobalTables.Brands = Brands = await mediator.Send(BrandList);
             await AsignBrand(row);
 
-          
+
         }
         async Task RowClickedDetails(EditSupplier row)
         {
@@ -52,33 +52,35 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.List
 
 
         }
-        
+
         async Task AsignBrand(EditBrand brand)
         {
-            if(brand.Id!=0)
+            if (brand.Id != 0)
             {
-                GetByIdBrandQuery getbyd = new() { Id = brand.Id };
+                GetByIdBrandQuery query = new() { Id = brand.Id };
 
-                SelectedBrand = await mediator.Send(getbyd);
-                SelectedSupplier = new();
-                Suppliers = SelectedBrand.BrandSuppliers.Select(x => x.Supplier).ToList();
+                SelectedBrand = await mediator.Send(query);
+
+                Suppliers = GlobalTables.BrandSuppliers.Where(x => x.BrandId == SelectedBrand.Id).Select(x => x.Supplier).ToList();// SelectedBrand.BrandSuppliers.Select(x => x.Supplier).ToList();
             }
             else
             {
                 SelectedBrand = new();
-                
+
             }
-           
+
         }
         async Task AsignSupplier(EditSupplier suplier)
         {
             if (suplier.Id != 0)
             {
-                GetByIdSupplierQuery getbyd = new() { Id = suplier.Id };
+                GetByIdSupplierQuery query = new() { Id = suplier.Id };
 
-                SelectedSupplier = await mediator.Send(getbyd);
-                SelectedBrand = new();
-                Brands = SelectedSupplier.BrandSuppliers.Select(x => x.Brand).ToList();
+                SelectedSupplier = await mediator.Send(query);
+
+
+                Brands = GlobalTables.BrandSuppliers.Where(x => x.SupplierId == SelectedSupplier.Id).Select(x => x.Brand).ToList();
+
             }
             else
             {

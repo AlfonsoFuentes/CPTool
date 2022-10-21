@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.ProcessFluidFeatures.Mapping
             CreateMap<ProcessFluid, EditProcessFluid>();
             CreateMap<EditProcessFluid, ProcessFluid>();
             CreateMap<AddProcessFluid, ProcessFluid>();
+            CreateMap<EditProcessFluid, AddProcessFluid>();
         }
     }
 }

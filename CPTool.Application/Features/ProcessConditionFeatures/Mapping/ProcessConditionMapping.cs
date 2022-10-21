@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.Mapping
 
             CreateMap<EditProcessCondition, ProcessCondition>();
             CreateMap<AddProcessCondition, ProcessCondition>();
+            CreateMap<EditProcessCondition, AddProcessCondition>();
         }
     }
 }

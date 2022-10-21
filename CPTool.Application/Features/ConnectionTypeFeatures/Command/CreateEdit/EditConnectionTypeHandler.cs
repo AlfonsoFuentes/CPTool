@@ -1,11 +1,11 @@
 ﻿namespace CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit
 {
-    internal class EditConnectionTypeHandler : EditBaseHandler<EditConnectionType, ConnectionType>, IRequestHandler<EditConnectionType, Result<int>>
+    internal class ConnectionTypeHandler : AddEditBaseHandler<AddConnectionType,EditConnectionType, ConnectionType>, IRequestHandler<EditConnectionType, Result<int>>
     {
 
 
-        public EditConnectionTypeHandler(IUnitOfWork unitofwork, IMapper mapper, IEmailService emailService, ILogger<EditConnectionType> logger)
-             : base(unitofwork, mapper, emailService, logger)
+        public ConnectionTypeHandler(IUnitOfWork unitofwork, IMapper mapper,  ILogger<EditConnectionType> logger)
+             : base(unitofwork, mapper,  logger)
         {
 
         }

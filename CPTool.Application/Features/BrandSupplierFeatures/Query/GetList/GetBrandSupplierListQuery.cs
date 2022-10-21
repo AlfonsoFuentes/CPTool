@@ -5,7 +5,7 @@ using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
 namespace CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
 {
    
-    public class GetBrandSupplierListQuery : GetListQuery, IRequest<List<AddBrandSupplier>>
+    public class GetBrandSupplierListQuery : GetListQuery, IRequest<List<EditBrandSupplier>>
     {
         public GetBrandSupplierListQuery()
         {
@@ -14,7 +14,7 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
       
 
     }
-    public class GetBrandSupplierListQueryHandler : IRequestHandler<GetBrandSupplierListQuery, List<AddBrandSupplier>>
+    public class GetBrandSupplierListQueryHandler : IRequestHandler<GetBrandSupplierListQuery, List<EditBrandSupplier>>
     {
 
         private readonly IMapper _mapper;
@@ -25,11 +25,11 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<List<AddBrandSupplier>> Handle(GetBrandSupplierListQuery request, CancellationToken cancellationToken)
+        public async Task<List<EditBrandSupplier>> Handle(GetBrandSupplierListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<BrandSupplier>().GetAllAsync();
 
-            var retorno = _mapper.Map<List<AddBrandSupplier>>(list);
+            var retorno = _mapper.Map<List<EditBrandSupplier>>(list);
             return retorno;
 
         }

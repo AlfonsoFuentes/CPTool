@@ -15,6 +15,7 @@ namespace CPTool.Application.Features.EHSItemFeatures.Mapping
 
             CreateMap<AddEHSItem, EHSItem>();
             CreateMap<EditEHSItem, EHSItem>();
+            CreateMap<EditEHSItem, AddEHSItem>();
         }
     }
 }

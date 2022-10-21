@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Application.Features.MWOFeatures.CreateEdit
 {
-    public class AddMWO : AddCommand, IRequest<Result<int>>
+    public class AddMWO : AddCommand
     {
 
         public int Number { get; set; }
@@ -12,9 +12,9 @@
         public decimal Expenses { get; set; }
 
 
-        public int? MWOTypeId => MWOTypeCommand == null ? null : MWOTypeCommand.Id;
+        public int? MWOTypeId { get; set; }
 
-        public EditMWOType? MWOTypeCommand { get; set; }
+
 
     }
 }

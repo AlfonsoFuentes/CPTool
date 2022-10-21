@@ -9,7 +9,7 @@
                          Elements=@GlobalTables.Chapters
                          Label="Chapter"
                          SelectionChanged="Model.AssignInternalItem"
-                         Disable=@(Model.ChapterId==0?false:true)
+                         Disable=@(Model.Chapter?.Id==0?false:true)
                          @bind-Value="@Model.Chapter">
 
 

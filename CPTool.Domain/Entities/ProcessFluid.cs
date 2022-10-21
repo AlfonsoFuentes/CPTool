@@ -3,13 +3,15 @@
     public class ProcessFluid  : BaseDomainModel
     {
         
-        [ForeignKey("ProcessFluidEquipmentId")]
+        [ForeignKey("eProcessFluidId")]
         public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
-        [ForeignKey("ProcessFluidInstrumentId")]
+        [ForeignKey("iProcessFluidId")]
         public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
-        [ForeignKey("ProcessFluidPipingId")]
+        [ForeignKey("pProcessFluidId")]
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;
-       
+        [ForeignKey("paProcessFluidId")]
+        public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
+        public string TagLetter { get; set; } = "";
     }
 
 }

@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Pages\Dialogs\MWOItemPage\" />
   </ItemGroup>
 
 </Project>

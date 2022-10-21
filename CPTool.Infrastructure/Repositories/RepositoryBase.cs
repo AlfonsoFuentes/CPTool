@@ -3,6 +3,7 @@ using CPTool.Domain.Common;
 using CPTool.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using SendGrid.Helpers.Mail;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -22,7 +23,8 @@ namespace CPTool.Infrastructure.Repositories
             try
             {
                 IQueryable<T> query = dbcontext.Set<T>();
-                query=Query(query);
+                //query = query.AsNoTracking();
+                query =Query(query);
                 var retorno = await query.ToListAsync();
                 return retorno;
             }
@@ -68,10 +70,16 @@ namespace CPTool.Infrastructure.Repositories
 
         public async virtual Task<T> GetByIdAsync(int id)
         {
-            return (await dbcontext.Set<T>().FindAsync(id))!;
+            var result2 = await dbcontext.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await dbcontext.Set<T>().FindAsync(id);
+            return result!;
         }
 
-
+        public async Task<bool> Any(Expression<Func<T, bool>> filter = null!)
+        {
+            IQueryable<T> query = dbcontext.Set<T>();
+            return await query.AnyAsync(filter);
+        }
 
         public void Add(T entity)
         {
@@ -82,7 +90,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             try
             {
-             
+                
                 dbcontext.Set<T>().Attach(entity);
                 dbcontext.Entry(entity).State = EntityState.Modified;
 

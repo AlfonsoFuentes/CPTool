@@ -10,10 +10,11 @@ namespace CPTool.Application.Features.FoundationItemFeatures.Mapping
     {
         public FoundationItemMapping()
         {
-            CreateMap<FoundationItem, AddFoundationItem>();
-
+            CreateMap<FoundationItem, EditFoundationItem>();
+            CreateMap<EditFoundationItem, AddFoundationItem>();
             CreateMap<AddFoundationItem, FoundationItem>();
             CreateMap<EditFoundationItem, FoundationItem>();
+          
         }
     }
 }

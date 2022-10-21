@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.TaxesItemFeatures.Mapping
             CreateMap<TaxesItem, EditTaxesItem>();
             CreateMap<EditTaxesItem, TaxesItem>();
             CreateMap<AddTaxesItem, TaxesItem>();
+            CreateMap<EditTaxesItem, AddTaxesItem>();
         }
     }
 }

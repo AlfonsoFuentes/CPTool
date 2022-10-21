@@ -6,11 +6,11 @@ using CPtool.ExtensionMethods;
 
 namespace CPTool.NewPages.Components
 {
-    public partial class OneToManyListComponent<TMaster, TAddMaster, TDetail, TAddDetail, TMasterList, TDetailList, TDeleteMaster, TDeleteDetail, TMasterGedById, TDetailGedById>
+    public partial class OneToManyListComponent<TMaster, TDetail, TMasterList, TDetailList, TDeleteMaster, TDeleteDetail, TMasterGedById, TDetailGedById>
         where TMaster : EditCommand, new()
-        where TAddMaster : AddCommand, new()
+
         where TDetail : EditCommand, new()
-        where TAddDetail : AddCommand, new()
+
         where TMasterList : GetListQuery, new()
         where TDetailList : GetListQuery, new()
         where TDeleteMaster : Delete, new()
@@ -31,6 +31,7 @@ namespace CPTool.NewPages.Components
 
         [Parameter]
         public List<TDetail> ElementsDetails { get; set; } = new();
+
 
         [Parameter]
 
@@ -69,7 +70,7 @@ namespace CPTool.NewPages.Components
 
         async Task RowClickedMaster(TableRowClickEventArgs<TMaster> eq)
         {
-
+            if (eq.Item.Id == SelectedMaster.Id) return;
             TMasterGedById getbyid = new()
             {
                 Id = eq.Item.Id,
@@ -79,38 +80,31 @@ namespace CPTool.NewPages.Components
         }
         async Task RowClickedDetail(TableRowClickEventArgs<TDetail> eq)
         {
-
+            if (eq.Item.Id == SelectedDetail.Id) return;
             TDetailGedById getbyid = new()
             {
                 Id = eq.Item.Id,
             };
-            SelectedDetail = await mediator.Send(getbyid) as TDetail;
+            SelectedDetail =  await mediator.Send(getbyid) as TDetail;
             await SelectedDetailChanged.InvokeAsync(SelectedDetail);
         }
+
         async Task Add()
         {
-            TAddMaster addmodel = new();
-            Result<int> resultaddmodel = await mediator.Send(addmodel) as Result<int>;
 
-            if (resultaddmodel.Succeeded)
+            TMaster model = new();
+            var result = await OnShowDialogMaster.Invoke(model);
+            if (!result.Cancelled)
             {
-                TMasterGedById gedById = new() { Id = resultaddmodel.Data };
+                SelectedMaster = result.Data as TMaster;
+                //TMasterGedById querydetail = new() { Id = data.Id };
+                //SelectedMaster = await mediator.Send(querydetail) as TMaster;
 
-                var model = await mediator.Send(gedById) as TMaster;
-                var result = await OnShowDialogMaster.Invoke(model);
-                if (!result.Cancelled)
-                {
-                    SelectedMaster = result.Data as TMaster;
-                    ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
-                }
+                ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
             }
-
-
-
         }
-
 
 
         async Task Edit()
@@ -120,8 +114,13 @@ namespace CPTool.NewPages.Components
 
             if (!result.Cancelled)
             {
+                SelectedMaster = result.Data as TMaster;
+                //TMasterGedById querydetail = new() { Id = data.Id };
+                //SelectedMaster = await mediator.Send(querydetail) as TMaster;
+
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
                 await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
             }
         }
         async Task Delete()
@@ -142,35 +141,26 @@ namespace CPTool.NewPages.Components
         }
         async Task AddDetail()
         {
-            TAddDetail addmodel = SelectedMaster.AddDetailtoMaster<TAddDetail>();
-            Result<int> resultaddmodel = await mediator.Send(addmodel) as Result<int>;
-            if (resultaddmodel.Succeeded)
+            TDetail model = SelectedMaster.AddDetailtoMaster<TDetail>();
+
+            var result = await OnShowDialogDetails.Invoke(model);
+            if (!result.Cancelled)
             {
-                TDetailGedById gedById = new() { Id = resultaddmodel.Data };
+                SelectedDetail = result.Data as TDetail;
+                //TDetailGedById querydetail = new() { Id = data.Id };
+                //SelectedDetail = await mediator.Send(querydetail) as TDetail;
+                ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
 
-                var model = await mediator.Send(gedById) as TDetail;
-                var result = await OnShowDialogDetails.Invoke(model);
-                if (!result.Cancelled)
-                {
+                TMasterGedById query = new() { Id = SelectedMaster.Id };
 
-                    ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                SelectedMaster = (await mediator.Send(query)) as TMaster;
 
-                    var data = result.Data as TDetail;
-                    TMasterGedById query = new() { Id = SelectedMaster.Id };
+                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
 
-                    SelectedMaster = (await mediator.Send(query)) as TMaster;
-                    TDetailGedById querydetail = new() { Id = data.Id };
 
-                    SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
-                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
-                    await SelectedDetailChanged.InvokeAsync(SelectedDetail);
-
-                }
             }
-
-            
-
         }
 
         async Task EditDetail()
@@ -179,15 +169,16 @@ namespace CPTool.NewPages.Components
 
             if (!result.Cancelled)
             {
-                var data = result.Data as TDetail;
+                SelectedDetail = result.Data as TDetail;
+                //TDetailGedById querydetail = new() { Id = data.Id };
+                //SelectedDetail = await mediator.Send(querydetail) as TDetail;
                 ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
                 await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+
                 TMasterGedById query = new() { Id = SelectedMaster.Id };
 
                 SelectedMaster = (await mediator.Send(query)) as TMaster;
-                TDetailGedById querydetail = new() { Id = data.Id };
 
-                SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
                 await SelectedMasterChanged.InvokeAsync(SelectedMaster);
                 await SelectedDetailChanged.InvokeAsync(SelectedDetail);
             }

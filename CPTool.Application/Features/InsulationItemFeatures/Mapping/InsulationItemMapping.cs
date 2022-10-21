@@ -11,8 +11,8 @@ namespace CPTool.Application.Features.InsulationItemFeatures.Mapping
         public InsulationItemMapping()
         {
             CreateMap<InsulationItem, EditInsulationItem>();
-           
 
+            CreateMap<EditInsulationItem, AddInsulationItem>();
             CreateMap<EditInsulationItem, InsulationItem>();
             CreateMap<AddInsulationItem, InsulationItem>();
         }

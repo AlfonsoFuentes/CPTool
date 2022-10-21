@@ -8,7 +8,7 @@ namespace CPTool.NewPages.Components
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public AddCommand Model { get; set; } = null!;
+        public EditCommand Model { get; set; } = null!;
         [Inject]
         public IMediator mediator { get; set; }
 

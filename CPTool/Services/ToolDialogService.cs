@@ -10,6 +10,7 @@ using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
+using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.NewPages.Dialogs.BrandSupplier.Dialog;
 using CPTool.NewPages.Dialogs.Material;
 using CPTool.NewPages.Dialogs.Material.Dialog;
@@ -18,6 +19,7 @@ using CPTool.NewPages.Dialogs.MWOItem.Dialog;
 using CPTool.NewPages.Dialogs.Nozzle;
 using CPTool.NewPages.Dialogs.Nozzle.Dialog;
 using CPTool.NewPages.Dialogs.PipeDiameter.Dialog;
+using CPTool.NewPages.Dialogs.ProcessFluid.Dialog;
 using CPTool.Pages.Dialogs;
 
 namespace CPTool.Services
@@ -75,6 +77,20 @@ namespace CPTool.Services
 
             return result;
         }
+        public async Task<DialogResult> ShowProcessFluidDialog(EditProcessFluid model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Process fluid" : $"Edit {model.Name} ";
+            modeldialog.parameters.Add("Model", model);
+
+            var dialog = DialogService.Show<ProcessFluidDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+
+            return result;
+        }
 
         public async Task<DialogResult> DeleteRow(Delete model)
         {
@@ -98,7 +114,7 @@ namespace CPTool.Services
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Brand.Id == 0 ? $"Add new Brand or Service" : $"Edit {Model.Brand.Name}";
+            modeldialog.DialogTitle = Model.Brand.Id==0 ? $"Add new Brand or Service" : $"Edit {Model.Brand.Name}";
 
 
             modeldialog.parameters.Add("Model", Model);

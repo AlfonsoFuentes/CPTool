@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Application.Features.TaxesItemFeatures.CreateEdit
 {
-    public class EditTaxesItem : AddCommand
+    public class EditTaxesItem : EditCommand
     {
 
 

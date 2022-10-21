@@ -1,0 +1,57 @@
+﻿@using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList
+@using CPTool.Application.Features.MaterialFeatures.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+@using CPTool.Application.Features.PipeClassFeatures.CreateEdit
+@using CPTool.Application.Features.PipeClassFeatures.Query.GetById
+@using CPTool.Application.Features.PipeClassFeatures.Query.GetList
+@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
+@using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
+@using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
+@if (debug)
+{
+    <MudDialog DisableSidePadding="true">
+        <DialogContent>
+            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                    <CascadingValue Value="this">
+
+
+                        <MudForm Model="Model" @ref="form">
+
+                            <MudTextField @bind-Value="Model.Name"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                   
+                                      Immediate="true"
+                                      Required=true
+                                      Validation="@(new Func<string, string>(ValidateProcessFluidName))"
+                                      Label="Process Fluid Name"></MudTextField>
+                            <MudTextField @bind-Value="Model.TagLetter"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                     
+                                      Immediate="true"
+                                      Required=true
+                                      Validation="@(new Func<string, string>(ValidateProcessFluidName))"
+                                      Label="Abreviation"></MudTextField>
+                          
+                        </MudForm>
+                    </CascadingValue>
+
+                </MudPaper>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+@code {
+    bool debug = true;
+}

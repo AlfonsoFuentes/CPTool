@@ -12,7 +12,7 @@ namespace CPTool.Application.Features.TaxCodeLPFeatures.Mapping
         public TaxCodeLPMapping()
         {
             CreateMap<TaxCodeLP, EditTaxCodeLP>();
-
+            CreateMap<EditTaxCodeLP, AddTaxCodeLP>();
             CreateMap<EditTaxCodeLP, TaxCodeLP>(); 
             CreateMap<AddTaxCodeLP, TaxCodeLP>();
         }

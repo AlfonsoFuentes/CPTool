@@ -7,14 +7,17 @@ namespace CPTool.Domain.Entities
 
         public int? MWOItemId { get; set; }
         public MWOItem? MWOItem { get; set; } = null!;
+
+        [ForeignKey("PurchaseOrderId")]
         public ICollection<DownPayment>? DownPayments { get; set; }
+        [ForeignKey("PurchaseOrderId")]
         public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
 
         public PurchaseOrderStatus PurchaseOrderStatus { get; set; }
-        public int? BrandId { get; set; }
-        public Brand? Brand { get; set; }
-        public int? SupplierId { get; set; }
-        public Supplier? Supplier { get; set; }
+        public int? pBrandId { get; set; }
+        public Brand? pBrand { get; set; }
+        public int? pSupplierId { get; set; }
+        public Supplier? pSupplier { get; set; }
 
 
         public string PurchaseRequisition { get; set; } = "";

@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.NozzleFeatures.Mapping
 
             CreateMap<EditNozzle, Nozzle>();
             CreateMap<AddNozzle, Nozzle>();
+            CreateMap<EditNozzle, AddNozzle>();
         }
     }
 }

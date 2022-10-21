@@ -1,0 +1,159 @@
+﻿@using CPTool.Application.Features.ChapterFeatures.CreateEdit
+@using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit
+@using CPTool.Application.Features.DeviceFunctionModifierFeatures.CreateEdit
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+@using CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit
+@using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit
+@using CPTool.Application.Features.ReadoutFeatures.CreateEdit
+
+@if (assign)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+
+            <SelectComponent T="EditMeasuredVariable"
+                         Elements=@GlobalTables.MeasuredVariables
+                         Label="Measured Variable"
+                         
+                         @bind-Value="@Model.MeasuredVariable">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditMeasuredVariableModifier"
+                         Elements=@GlobalTables.MeasuredVariableModifiers
+                         Label="Measured Variable Modifier"
+                        
+                         @bind-Value="@Model.MeasuredVariableModifier">
+
+
+            </SelectComponent>
+             <SelectComponent T="EditReadout"
+                         Elements=@GlobalTables.Readouts
+                         Label="Readout"
+                      
+                         @bind-Value="@Model.Readout">
+
+
+            </SelectComponent>
+             <SelectComponent T="EditDeviceFunction"
+                         Elements=@GlobalTables.DeviceFunctions
+                         Label="Device function"
+                         
+                         @bind-Value="@Model.DeviceFunction">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditDeviceFunctionModifier"
+                         Elements=@GlobalTables.DeviceFunctionModifiers
+                         Label="Device function modifier"
+                         @bind-Value="@Model.DeviceFunctionModifier">
+
+
+            </SelectComponent>
+
+
+            <MudTextField T="string" @bind-Value="Model.TagNumber"
+                      Required="true"
+                      Immediate="true"
+                      Label="Tag Number"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      RequiredError="Must have Tag Number"></MudTextField>
+
+            <MudTextField T="string" Value="@Model.TagId"
+                      Immediate="true"
+                      Disabled="true"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Label="Tag"></MudTextField>
+
+
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <SelectComponent T="EditBrand"
+                         Elements=@GlobalTables.Brands
+                         Label="Brand or Service"
+                         SelectionChanged="BrandChanged"
+                         @bind-Value="@Model.iBrand">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditSupplier"
+                         Elements=@((Model.iBrand==null||Model.iBrand?.Id==0)?new():Model.iBrand.BrandSuppliers.Where(x=>x.BrandId==Model.iBrandId).Select(y=>y.Supplier).ToList())
+                         Label="Supplier"
+                         Disable=@(Model.iBrand?.Id==0?true:false)
+                         @bind-Value="@Model.iSupplier">
+
+
+            </SelectComponent>
+
+
+
+
+        </MudItem>
+        <MudItem xs="12" sm="6">
+
+            <MudTextField T="string" @bind-Value="Model.Model"
+                      Immediate="true"
+                      Label="Model"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"></MudTextField>
+            <MudTextField T="string" @bind-Value="Model.Reference"
+                      Immediate="true"
+                      Label="Reference"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"></MudTextField>
+            <MudTextField T="string" @bind-Value="Model.SerialNumber"
+                      Immediate="true"
+                      Label="Serial Number"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"></MudTextField>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <AutoCompleteComponent TEdit="EditGasket"
+                               TGedById="GetByIdGasketQuery"
+                               TList="GetGasketListQuery"
+                               TableName="Gasket"
+                               Label="Gasket"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.Gaskets"
+                               SelectionChanged="OnGasketChanged"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateGasket))"
+                               Model=@Model.iGasket></AutoCompleteComponent>
+
+            <AutoCompleteComponent TEdit="EditMaterial"
+                               TGedById="GetByIdMaterialQuery"
+                               TList="GetMaterialListQuery"
+                               Label="Outer Material"
+                               TableName="Material"
+                               SelectionChanged="OnOuterMaterialChanged"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.Materials"
+                               ShowDialogOverrided="ToolDialogService.ShowMaterial"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
+                               Model=@Model.iOuterMaterial></AutoCompleteComponent>
+
+            <AutoCompleteComponent TEdit="EditMaterial"
+                               TGedById="GetByIdMaterialQuery"
+                               TList="GetMaterialListQuery"
+                               Label="Inner Material"
+                               TableName="Material"
+                               SelectionChanged="OnInnerMaterialChanged"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.Materials"
+                               ShowDialogOverrided="ToolDialogService.ShowMaterial"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
+                               Model=@Model.iInnerMaterial></AutoCompleteComponent>
+        </MudItem>
+      
+    </MudGrid>
+}
+
+
+@code {
+    bool assign = true;
+
+}

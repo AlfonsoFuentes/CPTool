@@ -66,7 +66,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         {
             GetByIdMWOItemQuery getbyid = new() {Id= Model.Id }; 
           
-            var model = await mediator.Send(getbyid);
+            Model = await mediator.Send(getbyid);
         }
     }
 }

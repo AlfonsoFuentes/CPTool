@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Mapping
 
             CreateMap<AddDownPayment, DownPayment>();
             CreateMap<EditDownPayment, DownPayment>();
+            CreateMap<EditDownPayment, AddDownPayment>();
         }
     }
 }

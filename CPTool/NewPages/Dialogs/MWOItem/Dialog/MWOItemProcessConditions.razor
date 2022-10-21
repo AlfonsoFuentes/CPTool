@@ -4,9 +4,8 @@
 @if (assign)
 {
     <MudGrid>
-        <MudItem xs="12" sm="6">
-            <AutoCompleteComponent T="EditProcessFluid"
-                               TAdd="AddProcessFluid"
+        <MudItem xs="12" sm="10">
+            <AutoCompleteComponent TEdit="EditProcessFluid"
                                TGedById="GetByIdProcessFluidQuery"
                                TList="GetProcessFluidListQuery"
                                TableName="Process Fluid"
@@ -19,13 +18,21 @@
 
             </AutoCompleteComponent>
         </MudItem>
-        <MudItem xs="12" sm="12">
-            <SelectUnitComponent @bind-Model=@ProcessCondition.Temperature UpdateParent=DialogParent.Validateform>
-
-            </SelectUnitComponent>
-            <SelectUnitComponent @bind-Model=@ProcessCondition.Pressure UpdateParent=DialogParent.Validateform>
-
-            </SelectUnitComponent>
+        <MudItem xs="12" sm="10">
+            <MudStack >
+            <SelectUnitComponent @bind-Model=@ProcessCondition.Temperature UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.Pressure UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.MassFlow UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.VolumetricFlow UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.Density UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+       @* </MudItem>
+        <MudItem xs="12" sm="6">*@
+            <SelectUnitComponent @bind-Model=@ProcessCondition.SpecificCp UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.SpecificEnthalpy UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.EnthalpyFlow UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.Viscosity UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            <SelectUnitComponent @bind-Model=@ProcessCondition.ThermalConductivity UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            </MudStack>
         </MudItem>
     </MudGrid>
 }

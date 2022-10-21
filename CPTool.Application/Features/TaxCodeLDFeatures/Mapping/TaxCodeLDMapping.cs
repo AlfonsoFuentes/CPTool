@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.TaxCodeLDFeatures.Mapping
             CreateMap<TaxCodeLD, EditTaxCodeLD>();
             CreateMap<EditTaxCodeLD, TaxCodeLD>();
             CreateMap<AddTaxCodeLD, TaxCodeLD>();
+            CreateMap<EditTaxCodeLD, AddTaxCodeLD>();
         }
     }
 }

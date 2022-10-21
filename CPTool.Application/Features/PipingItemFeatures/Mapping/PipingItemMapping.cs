@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.PipingItemFeatures.Mapping
         public PipingItemMapping()
         {
             CreateMap<PipingItem, EditPipingItem>();
-
+            CreateMap<EditPipingItem, AddPipingItem>();
             CreateMap<EditPipingItem, PipingItem>();
             CreateMap<AddPipingItem, PipingItem>();
         }

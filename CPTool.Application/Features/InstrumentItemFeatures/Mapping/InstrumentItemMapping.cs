@@ -15,6 +15,7 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.Mapping
 
             CreateMap<AddInstrumentItem, InstrumentItem>();
             CreateMap<EditInstrumentItem, InstrumentItem>();
+            CreateMap<EditInstrumentItem, AddInstrumentItem>();
         }
     }
 }

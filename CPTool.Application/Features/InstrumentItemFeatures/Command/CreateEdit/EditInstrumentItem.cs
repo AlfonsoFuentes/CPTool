@@ -22,41 +22,66 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.CreateEdit
 {
     public class EditInstrumentItem : EditCommand, IRequest<Result<int>>
     {
-        //public int? ProcessConditionId => ProcessCondition.Id == 0 ? null : ProcessCondition.Id;
-        public EditProcessCondition? ProcessCondition { get; set; } = new();
-        //public int? ProcessFluidId => ProcessFluid == null ? null : ProcessFluid.Id;
-        public EditProcessFluid? ProcessFluid { get; set; } = new();
-        public List<EditNozzle>? Nozzles { get; set; } = new();
-
-        //public int? GasketId => Gasket == null ? null : Gasket.Id;
-        public EditGasket? Gasket { get; set; } = new();
-        //public int? iInnerMaterialId => iInnerMaterial == null ? null : iInnerMaterial.Id;
+        public List<EditNozzle>? Nozzles { get; set; }
+        public int? iProcessConditionId => iProcessCondition?.Id == 0 ? null : iProcessCondition?.Id;
+        public EditProcessCondition? iProcessCondition { get; set; } = new();
+        public int? iProcessFluidId => iProcessFluid?.Id == 0 ? null : iProcessFluid?.Id;
+        public EditProcessFluid? iProcessFluid { get; set; } = new();
+         public int? iGasketId => iGasket?.Id == 0 ? null : iGasket?.Id;
+        public EditGasket? iGasket { get; set; } = new();
+        public int? iInnerMaterialId => iInnerMaterial?.Id == 0 ? null : iInnerMaterial?.Id;
         public EditMaterial? iInnerMaterial { get; set; } = new();
-        //public int? iOuterMaterialId => iOuterMaterial == null ? null : iOuterMaterial.Id;
+        public int? iOuterMaterialId => iOuterMaterial?.Id == 0 ? null : iOuterMaterial?.Id;
         public EditMaterial? iOuterMaterial { get; set; } = new();
-        //public int? MeasuredVariableId => MeasuredVariable == null ? null : MeasuredVariable.Id;
+        public int? MeasuredVariableId => MeasuredVariable?.Id == 0 ? null : MeasuredVariable?.Id;
         public EditMeasuredVariable? MeasuredVariable { get; set; } = new();
-        //public int? MeasuredVariableModifierId => MeasuredVariableModifier == null ? null : MeasuredVariableModifier.Id;
+        public int? MeasuredVariableModifierId => MeasuredVariableModifier?.Id == 0 ? null : MeasuredVariableModifier?.Id;
         public EditMeasuredVariableModifier? MeasuredVariableModifier { get; set; } = new();
-        //public int? DeviceFunctionId => DeviceFunction == null ? null : DeviceFunction.Id;
+        public int? DeviceFunctionId => DeviceFunction?.Id == 0 ? null : DeviceFunction?.Id;
         public EditDeviceFunction? DeviceFunction { get; set; } = new();
-        //public int? DeviceFunctionModifierId => DeviceFunctionModifier == null ? null : DeviceFunctionModifier.Id;
+        public int? DeviceFunctionModifierId => DeviceFunctionModifier?.Id == 0 ? null : DeviceFunctionModifier?.Id;
         public EditDeviceFunctionModifier? DeviceFunctionModifier { get; set; } = new();
-        //public int? ReadoutId => Readout == null ? null : Readout.Id;
+        public int? ReadoutId => Readout?.Id == 0 ? null : Readout?.Id;
         public EditReadout? Readout { get; set; } = new();
 
-        //public int? BrandId => Brand == null ? null : Brand.Id;
-        public AddBrand? Brand { get; set; } = new();
-        //public int? SupplierId => Supplier == null ? null : Supplier.Id;
-        public EditSupplier? Supplier { get; set; } = new();
-        public string TagId { get; set; } = String.Empty;
-        public string? TagLetter { get; set; }
+        public int? iBrandId => iBrand?.Id == 0 ? null : iBrand?.Id;
+        public EditBrand? iBrand { get; set; } = new();
+        public int? iSupplierId => iSupplier?.Id == 0 ? null : iSupplier?.Id;
+        public EditSupplier? iSupplier { get; set; } = new();
+        public string TagId => SetTagId();
+        public string? TagLetter => SetTagLetter();
         public string? TagNumber { get; set; }
         public string? Model { get; set; }
         public string? Reference { get; set; }
         public string? SerialNumber { get; set; }
+        public override T AddDetailtoMaster<T>()
+        {
+            if (typeof(T) == typeof(EditNozzle))
+            {
+                EditNozzle detail = new();
 
-       
+                detail.Order = Nozzles!.Count == 0 ? 1 : this.Nozzles.OrderBy(x => x.Order).Last().Order + 1;
+                detail.Name = $"N{detail.Order}";
+                detail.InstrumentItem = this;
+                Nozzles.Add(detail);
+
+
+                return (detail as T)!;
+            }
+            return null!;
+        }
+        string SetTagLetter()
+        {
+            string tag = $"{MeasuredVariable?.TagLetter}{MeasuredVariableModifier?.TagLetter}{Readout?.TagLetter}{DeviceFunction?.TagLetter}{DeviceFunctionModifier?.TagLetter}";
+
+            return tag;
+        }
+        string SetTagId()
+        {
+            var tag = $"{TagLetter}_{TagNumber}";
+
+            return tag;
+        }
     }
 
 }

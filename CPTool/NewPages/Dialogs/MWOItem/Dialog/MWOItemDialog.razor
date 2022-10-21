@@ -26,53 +26,71 @@
                             </MudGrid>
                         </MudTabPanel>
                         <MudTabPanel Text="Specs">
-                            @if (Model.ChapterId != 0)
+                            @if (Model.Chapter != null)
                             {
-                                switch (Model.ChapterId)
+                                switch (Model.Chapter?.Id)
                                 {
                                     case 4:
                                         <MWOItemEquipmentComponent></MWOItemEquipmentComponent>
+                                        
+                                        break;
+                                    case 7:
+                                        <MWOItemInstrumentComponent></MWOItemInstrumentComponent>
+
+                                        break;
+                                    case 6:
+                                        <MWOItemPipingComponent></MWOItemPipingComponent>
+
                                         break;
                                 }
                             }
 
                         </MudTabPanel>
-                        <MudTabPanel Text="Materials">
-                            @if (Model.ChapterId != 0)
-                            {
-                                switch (Model.ChapterId)
-                                {
-                                    case 4:
-                                        <MWOItemMaterialsComponent @bind-Gasket="@Model.EquipmentItem.Gasket"
-                                                       @bind-InnerMaterial="@Model.EquipmentItem.eInnerMaterial"
-                                                       @bind-OuterMaterial=@Model.EquipmentItem.eOuterMaterial></MWOItemMaterialsComponent>
-                                        break;
-                                }
-                            }
-                        </MudTabPanel>
+                      
                         <MudTabPanel Text="Nozzles">
-                            @if (Model.Id!=0&&Model.ChapterId != 0)
+                            @if (Model.Id != 0 && Model.Chapter != null)
                             {
-                                switch (Model.ChapterId)
+                                switch (Model.Chapter?.Id)
                                 {
                                     case 4:
                                         <NozzleList @bind-Nozzles="@Model.EquipmentItem.Nozzles"
-                                        UpdateParent="UpdateFormFromChild" Master="@Model.EquipmentItem"></NozzleList>
+                                        UpdateParentList="UpdateFormFromChild" Master="@Model.EquipmentItem"></NozzleList>
+
+                                        break;
+                                    case 7:
+                                        <NozzleList @bind-Nozzles="@Model.InstrumentItem.Nozzles"
+                                        UpdateParentList="UpdateFormFromChild" Master="@Model.InstrumentItem"></NozzleList>
+
+                                        break;
+                                    case 6:
+                                        <NozzleList @bind-Nozzles="@Model.PipingItem.Nozzles"
+                                        UpdateParentList="UpdateFormFromChild" Master="@Model.PipingItem"></NozzleList>
 
                                         break;
                                 }
                             }
                         </MudTabPanel>
                         <MudTabPanel Text="Process Conditions">
-                            @if (Model.Id != 0 && Model.ChapterId != 0)
+                            @if (Model.Id != 0 && Model.Chapter != null)
                             {
-                                switch (Model.ChapterId)
+                                switch (Model.Chapter?.Id)
                                 {
                                     case 4:
-                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.EquipmentItem.ProcessCondition"
-                                                      @bind-ProcessFluid=@Model.EquipmentItem.ProcessFluid></MWOItemProcessConditions>
+                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.EquipmentItem.eProcessCondition"
+                                                      @bind-ProcessFluid=@Model.EquipmentItem.eProcessFluid></MWOItemProcessConditions>
 
                                         break;
+                                    case 7:
+                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.InstrumentItem.iProcessCondition"
+                                                      @bind-ProcessFluid=@Model.InstrumentItem.iProcessFluid></MWOItemProcessConditions>
+
+                                        break;
+                                    case 6:
+                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.PipingItem.pProcessCondition"
+                                                      @bind-ProcessFluid=@Model.PipingItem.pProcessFluid></MWOItemProcessConditions>
+
+                                        break;
+                                   
                                 }
                             }
                         </MudTabPanel>

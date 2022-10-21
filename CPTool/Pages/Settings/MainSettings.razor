@@ -25,6 +25,7 @@
 @using CPTool.NewPages.Dialogs.MWOType.List
 @using CPTool.NewPages.Dialogs.Material.List
 @using CPTool.NewPages.Dialogs.PipeClass
+@using CPTool.NewPages.Dialogs.ProcessFluid.LIst
 @using CPTool.NewPages.Dialogs.TaxCodeLD.List
 @using CPTool.NewPages.Dialogs.TaxCodeLP.List
 @using CPTool.NewPages.Dialogs.UnitaryBasePrize
@@ -55,7 +56,7 @@
         break;
     case 5:
         {
-           <GasketsList></GasketsList>
+            <GasketsList></GasketsList>
         }
         break;
     case 6:
@@ -66,7 +67,7 @@
     case 7:
         {
             <TaxCodeLDList></TaxCodeLDList>
-           
+
 
         }
         break;
@@ -77,31 +78,32 @@
         break;
     case 9:
         {
-             <VendorCodeList></VendorCodeList>
-           
+            <VendorCodeList></VendorCodeList>
+
 
         }
         break;
-   
+
     case 10:
         {
             <ConnectionTypeList></ConnectionTypeList>
-           
+
 
         }
         break;
     case 11:
         {
             <PipingClassList></PipingClassList>
-        }break;
-        @*   case 11:
+        }
+        break;
+    case 12:
         {
 
-            <DownPaymenList></DownPaymenList>
+            <ProcessFluidList></ProcessFluidList>
 
 
         }
-        break;*@
+        break;
 }
 @code {
     [Parameter]

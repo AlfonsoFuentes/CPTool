@@ -1,12 +1,14 @@
-﻿@if (ShowAddButton)
+﻿@using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
+@if (ShowAddButton)
 {
     <ManyToManyComponent TMasterDetail="EditBrandSupplier"
                      TMaster="EditBrand" TDetail="EditSupplier"
-                     TAddMaster="AddBrand" TAddDetail="AddSupplier"
+                     TMasterDetailList="GetBrandSupplierListQuery"
                      TMasterList="GetBrandListQuery" TDetailList="GetSupplierListQuery"
                      TDeleteMaster="DeleteBrand" TDeleteDetail="DeleteSupplier"
                      @bind-SelectedDetail="@SelectedSupplier"
                      @bind-SelectedMaster="@SelectedBrand"
+                     @bind-ElementsMastersDetails=@GlobalTables.BrandSuppliers
                      ElementsMasters=@Brands
                      ElementsDetails=@Suppliers
                      OnShowDialogMaster="ToolDialogService.ShowBrandDialog"

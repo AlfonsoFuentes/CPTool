@@ -12,6 +12,7 @@ namespace CPTool.Application.Features.BrandFeatures.Mapping
 
             CreateMap<AddBrand, Brand>();
             CreateMap<EditBrand, Brand>();
+            CreateMap<EditBrand, AddBrand>();
         }
     }
 }

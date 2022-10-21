@@ -12,36 +12,33 @@ namespace CPTool.Application.Features.NozzleFeatures.CreateEdit
 {
     public class EditNozzle : EditCommand, IRequest<Result<int>>
     {
-        //public int? PipeAccesoryId => PipeAccesoryCommand?.Id == 0 ? null : PipeAccesoryCommand?.Id;
-        public EditPipeAccesory? PipeAccesory { get; set; } = new();
+        public int? PipeAccesoryId => PipeAccesory?.Id == 0 ? null : PipeAccesory?.Id;
+        public EditPipeAccesory? PipeAccesory { get; set; }
         public int Order { get; set; }
-        public List<EditPipingItem>? StartPipingItems { get; set; } = new();
+       
 
-        public List<EditPipingItem>? FinishPipingItems { get; set; } = new();
-
-        //public int? EquipmentItemId => EquipmentItemCommand?.Id == 0 ? null : EquipmentItemCommand?.Id;
+        public int? EquipmentItemId => EquipmentItem?.Id == 0  ? null : EquipmentItem?.Id;
         public EditEquipmentItem? EquipmentItem { get; set; } 
-        //public int? InstrumentItemId => InstrumentItemCommand?.Id == 0 ? null : InstrumentItemCommand?.Id;
+        public int? InstrumentItemId => InstrumentItem?.Id == 0  ? null : InstrumentItem?.Id;
         public EditInstrumentItem? InstrumentItem { get; set; }
 
-        //public int? PipingItemId => PipingItemCommand?.Id == 0 ? null : PipingItemCommand?.Id;
+        public int? PipingItemId => PipingItem?.Id == 0  ? null : PipingItem?.Id;
         public EditPipingItem? PipingItem { get; set; } 
 
-        //public int? PipeDiameterId => PipeDiameterCommand?.Id == 0 ? null : PipeDiameterCommand?.Id;
+        public int? PipeDiameterId => PipeDiameter?.Id == 0  ? null : PipeDiameter?.Id;
         public EditPipeDiameter? PipeDiameter { get; set; } = new();
-        //public int? ConnectionTypeId => ConnectionTypeCommand?.Id == 0 ? null : ConnectionTypeCommand?.Id;
+        public int? ConnectionTypeId => ConnectionType?.Id == 0  ? null : ConnectionType?.Id;
         public EditConnectionType? ConnectionType { get; set; } = new();
-        //public int? GasketId => GasketCommand?.Id == 0 ? null : GasketCommand?.Id;
-        public EditGasket? Gasket { get; set; } = new();
-        //public int? MaterialID => MaterialCommand?.Id == 0 ? null : MaterialCommand?.Id;
-        public EditMaterial? Material { get; set; } = new();
+        public int? nGasketId => nGasket?.Id == 0  ? null : nGasket?.Id;
+        public EditGasket? nGasket { get; set; } = new();
+        public int? nMaterialId => nMaterial?.Id == 0  ? null : nMaterial?.Id;
+        public EditMaterial? nMaterial { get; set; } = new();
 
         public StreamType StreamType { get; set; }
+        public int? nPipeClassId => nPipeClass?.Id == 0  ? null : nPipeClass?.Id;
+        public EditPipeClass? nPipeClass { get; set; } = new();
 
+      
 
-
-        //public int? PipeClassId => PipeClassCommand?.Id == 0 ? null : PipeClassCommand?.Id;
-        public EditPipeClass? PipeClass { get; set; } = new();
-        public List<EditNozzle> ParentNozzles { get; set; } = new();
     }
 }

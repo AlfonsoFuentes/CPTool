@@ -15,7 +15,8 @@ namespace CPTool.Application.Features.MWOItemFeatures.Mapping
 
             CreateMap<EditMWOItem, MWOItem>();
             CreateMap<AddMWOItem, MWOItem>();
-
+            CreateMap<EditMWOItem, AddMWOItem>();
+       
         }
     }
     

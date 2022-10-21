@@ -2,10 +2,10 @@
 
 namespace CPTool.NewPages.Components
 {
-    public partial class AutoCompleteComponent<T, TAdd, TList, TGedById>
-        where T : EditCommand, new()
-      where TAdd : AddCommand, new()
+    public partial class AutoCompleteComponent<TEdit, TList, TGedById>
+        where TEdit : EditCommand, new()
         where TGedById : GetByIdQuery, new()
+
         where TList : GetListQuery, new()
     {
         [Inject]
@@ -34,17 +34,17 @@ namespace CPTool.NewPages.Components
         public object Validation { get; set; }
         [Parameter]
         [EditorRequired]
-        public T Model { get; set; } = new();
+        public TEdit Model { get; set; }
 
         [Parameter]
         [EditorRequired]
-        public EventCallback<T> SelectionChanged { get; set; }
+        public EventCallback<TEdit> SelectionChanged { get; set; }
         [Parameter]
-        public List<T> Elements { get; set; } = new();
+        public List<TEdit> Elements { get; set; } = new();
         [Parameter]
-        public EventCallback<List<T>> ElementsChanged { get; set; }
+        public EventCallback<List<TEdit>> ElementsChanged { get; set; }
         [Parameter]
-        public Func<T, Task<DialogResult>> ShowDialogOverrided { get; set; }
+        public Func<TEdit, Task<DialogResult>> ShowDialogOverrided { get; set; }
         List<string> ListNames => Elements.Select(x => x.Name).ToList();
         [Parameter]
         [EditorRequired]
@@ -59,11 +59,14 @@ namespace CPTool.NewPages.Components
 
         protected override void OnInitialized()
         {
-            if (Model != null)
+            if (Model!=null&&Model.Id != 0)
             {
                 AutocompleteText = Model.Name;
             }
-
+            else
+            {
+                AutocompleteText = "";
+            }
             base.OnInitialized();
         }
 
@@ -126,40 +129,35 @@ namespace CPTool.NewPages.Components
 
             if (!dialogResult.Cancelled)
             {
-                TAdd modeladd = new();
+                TEdit Model = new();
 
                 if (Parent != null)
                 {
-                    modeladd = Parent.AddDetailtoMaster<TAdd>();
+                    Model = Parent.AddDetailtoMaster<TEdit>();
                 }
-                else
-                {
-                    modeladd = new();
-                }
-                var resultadd = await Mediator.Send(modeladd) as Result<int>;
-                if (resultadd.Succeeded)
-                {
-                    TGedById gedById = new() { Id = resultadd.Data };
-                    Model = await Mediator.Send(gedById) as T;
-                    dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowNameDialog(Model) : await ShowDialogOverrided.Invoke(Model);
+                Model.Name = AutocompleteText;
 
-                    if (!dialogResult.Cancelled)
+                dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowNameDialog(Model) : await ShowDialogOverrided.Invoke(Model);
+
+                if (!dialogResult.Cancelled)
+                {
+                    var data = dialogResult.Data as TEdit;
+                    if (Parent != null)
                     {
-                        if (Parent != null)
-                        {
 
-                            await UpdateMasterParent.Invoke();
-                        }
-                        else
-                        {
-                            Elements = await Mediator.Send(ModelList) as List<T>;
-                            await ElementsChanged.InvokeAsync(Elements);
-
-                        }
-                        Model = dialogResult.Data as T;
-                        await SelectionChanged.InvokeAsync(Model);
-                        await ValidateForm.Invoke();
+                        await UpdateMasterParent.Invoke();
                     }
+                    else
+                    {
+                        Elements = await Mediator.Send(ModelList) as List<TEdit>;
+                        await ElementsChanged.InvokeAsync(Elements);
+
+                    }
+                    TGedById gedById = new() { Id = data.Id };
+                    Model = await Mediator.Send(gedById) as TEdit;
+                    await SelectionChanged.InvokeAsync(Model);
+                    await ValidateForm.Invoke();
+
                 }
 
 

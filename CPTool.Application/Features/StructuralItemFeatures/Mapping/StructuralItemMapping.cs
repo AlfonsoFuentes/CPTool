@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.StructuralItemFeatures.Mapping
 
             CreateMap<AddStructuralItem, StructuralItem>();
             CreateMap<EditStructuralItem, StructuralItem>();
+            CreateMap<EditStructuralItem, AddStructuralItem>();
         }
     }
 }

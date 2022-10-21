@@ -1,10 +1,10 @@
-﻿using CPTool.Application.Features.Base.DeleteCommand;
+﻿using CPtool.ExtensionMethods;
+using CPTool.Application.Features.Base.DeleteCommand;
 
 namespace CPTool.NewPages.Components
 {
-    public partial class DetailListComponent<TDetail, TAddDetail, TDetailList, TDeleteDetail, TDetailGedById>
+    public partial class DetailListComponent<TDetail, TDetailList, TDeleteDetail, TDetailGedById>
         where TDetail : EditCommand, new()
-        where TAddDetail : AddCommand, new()
         where TDetailList : GetListQuery, new()
 
         where TDeleteDetail : Delete, new()
@@ -21,8 +21,7 @@ namespace CPTool.NewPages.Components
         [Parameter]
 
         public List<TDetail> ElementsDetails { get; set; } = new();
-        [Parameter]
-        public EventCallback<List<TDetail>> ElementsDetailsChanged { get; set; }
+       
         [Parameter]
         [EditorRequired]
         public EditCommand SelectedMaster { get; set; } = new();
@@ -46,9 +45,12 @@ namespace CPTool.NewPages.Components
         [EditorRequired]
         public Func<TDetail, Task<DialogResult>> OnShowDialogDetails { get; set; }
 
-
+        [Parameter]
+        [EditorRequired]
+        public EventCallback UpdateParentList { get; set; }
         async Task RowClickedDetail(TableRowClickEventArgs<TDetail> eq)
         {
+            if (eq.Item.Id == SelectedDetail.Id) return;
             TDetailGedById getbyid = new()
             {
                 Id = eq.Item.Id,
@@ -60,22 +62,25 @@ namespace CPTool.NewPages.Components
 
         async Task AddDetail()
         {
-            TDetail model = SelectedMaster.AddDetailtoMaster<TDetail>();
+            TDetail modeladd = SelectedMaster.AddDetailtoMaster<TDetail>();
 
-            var result = await OnShowDialogDetails.Invoke(model);
+            var result = await OnShowDialogDetails.Invoke(modeladd);
             if (!result.Cancelled)
             {
-                var data = result.Data as TDetail;
-               
-                TDetailGedById querydetail = new() { Id = data.Id };
+                SelectedDetail = result.Data as TDetail;
 
-                SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
-                ElementsDetails = await mediator.Send(DetailList) as List<TDetail>;
-                await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
+                ////TDetailGedById querydetail = new() { Id = data.Id };
+
+                //////SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
+                //ElementsDetails = await mediator.Send(DetailList) as List<TDetail>;
+                //await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
+                await UpdateParentList.InvokeAsync();
                 await SelectedDetailChanged.InvokeAsync(SelectedDetail);
             }
 
-           
+
+
+
 
         }
 
@@ -85,16 +90,20 @@ namespace CPTool.NewPages.Components
 
             if (!result.Cancelled)
             {
-                var data = result.Data as TDetail;
-              
-                TDetailGedById querydetail = new() { Id = data.Id };
+                SelectedDetail = result.Data as TDetail;
 
-                SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
-                ElementsDetails = await mediator.Send(DetailList) as List<TDetail>;
-                await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
+                //TDetailGedById querydetail = new() { Id = data.Id };
+
+                ////SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
+                //if (SelectedMaster != null)
+                //{
+                //}
+                //ElementsDetails = await mediator.Send(DetailList) as List<TDetail>;
+                //await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
+                await UpdateParentList.InvokeAsync();
                 await SelectedDetailChanged.InvokeAsync(SelectedDetail);
             }
-           
+
         }
 
         async Task DeleteDetail()
@@ -105,8 +114,7 @@ namespace CPTool.NewPages.Components
             if (!result.Cancelled)
             {
                 SelectedDetail = new();
-                ElementsDetails = await mediator.Send(DetailList) as List<TDetail>;
-                await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
+                await UpdateParentList.InvokeAsync();
 
             }
 

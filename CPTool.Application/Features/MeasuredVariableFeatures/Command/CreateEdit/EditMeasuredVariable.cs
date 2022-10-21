@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit
 {
     public class EditMeasuredVariable : EditCommand
     {
-
+        public string? TagLetter { get; set; }
 
     }
 }

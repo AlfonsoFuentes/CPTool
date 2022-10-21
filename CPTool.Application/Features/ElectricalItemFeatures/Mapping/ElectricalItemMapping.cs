@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.ElectricalItemFeatures.Mapping
 
             CreateMap<EditElectricalItem, ElectricalItem>();
             CreateMap<AddElectricalItem, ElectricalItem>();
+            CreateMap<EditElectricalItem, AddElectricalItem>();
         }
     }
 }

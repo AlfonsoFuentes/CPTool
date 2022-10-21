@@ -6,7 +6,7 @@ using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.GasketsFeatures.CreateEdit
 {
-    public class AddGasket : AddCommand, IRequest<Result<int>>
+    public class AddGasket : AddCommand
     {
 
 

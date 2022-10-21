@@ -3,11 +3,12 @@
 @if (ShowAddButton)
 {
     <OneToManyListComponent TMaster="EditEquipmentType" TDetail="EditEquipmentTypeSub"
-                        TAddMaster="AddEquipmentType" TAddDetail="AddEquipmentTypeSub"
+                      
                         TDeleteMaster="DeleteEquipmentType" TDeleteDetail="DeleteEquipmentTypeSub"
                         TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
                         TMasterGedById="GetByIdEquipmentTypeQuery" TDetailGedById="GetByIdEquipmentTypeSubQuery"
                         @bind-ElementsMasters="@GlobalTables.EquipmentTypes"
+                     
                         ElementsDetails="@SelectedEqu.EquipmentTypeSubs"
                         @bind-SelectedMaster="@SelectedEqu"
                         @bind-SelectedDetail="@SelectedEquSub"

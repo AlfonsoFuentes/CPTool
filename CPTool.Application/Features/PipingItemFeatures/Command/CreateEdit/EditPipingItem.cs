@@ -1,9 +1,11 @@
-﻿using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+﻿using AutoMapper.Execution;
+using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
+using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
@@ -11,28 +13,48 @@ namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
     public class EditPipingItem : EditCommand, IRequest<Result<int>>
     {
         public List<EditNozzle>? Nozzles { get; set; } = new();
-        public List<EditMWOItem>? MWOItems { get; set; } = new();
-        public List<EditPipeAccesory>? PipeAccesorys { get; set; } = new();
-        public int? MaterialId => MaterialCommand?.Id == 0 ? null : MaterialCommand?.Id;
-        public EditMaterial? MaterialCommand { get; set; } = new();
-        public int? ProcessFluidId => ProcessFluidCommand?.Id == 0 ? null : ProcessFluidCommand?.Id;
-        public EditProcessFluid? ProcessFluidCommand { get; set; }
-        public int? DiameterId => DiameterCommand?.Id == 0 ? null : DiameterCommand?.Id;
-        public EditPipeDiameter? DiameterCommand { get; set; }
-        public int? NozzleStartId => NozzleStartCommand?.Id == 0 ? null : NozzleStartCommand?.Id;
-        public EditNozzle? NozzleStartCommand { get; set; }
-        public int? NozzleFinishId => NozzleFinishCommand?.Id == 0 ? null : NozzleFinishCommand?.Id;
-        public EditNozzle? NozzleFinishCommand { get; set; }
-        public int? StartMWOItemId => StartMWOItemCommand?.Id == 0 ? null : StartMWOItemCommand?.Id;
-        public EditMWOItem? StartMWOItemCommand { get; set; }
-        public int? FinishMWOItemId => FinishMWOItemCommand?.Id == 0 ? null : FinishMWOItemCommand?.Id;
-        public EditMWOItem? FinishMWOItemCommand { get; set; }
-        public int? PipeClassId => PipeClassCommand?.Id == 0 ? null : PipeClassCommand?.Id;
-        public EditPipeClass? PipeClassCommand { get; set; }
-        public string TagId { get; set; } = String.Empty;
+        public int? pProcessConditionId => pProcessCondition?.Id == 0 ? null : pProcessCondition?.Id;
+        public EditProcessCondition? pProcessCondition { get; set; } = new();
+        public int? pMaterialId => pMaterial?.Id == 0 ? null : pMaterial?.Id;
+        public EditMaterial? pMaterial { get; set; }
+        public int? pProcessFluidId => pProcessFluid?.Id == 0 ? null : pProcessFluid?.Id;
+        public EditProcessFluid? pProcessFluid { get; set; }
+        public int? pDiameterId => pDiameter?.Id == 0 ? null : pDiameter?.Id;
+        public EditPipeDiameter? pDiameter { get; set; }
+        public int? NozzleStartId => NozzleStart?.Id == 0 ? null : NozzleStart?.Id;
+        public EditNozzle? NozzleStart { get; set; }
+        public int? NozzleFinishId => NozzleFinish?.Id == 0 ? null : NozzleFinish?.Id;
+        public EditNozzle? NozzleFinish { get; set; }
+        public int? StartMWOItemId => StartMWOItem?.Id == 0 ? null : StartMWOItem?.Id;
+        public EditMWOItem? StartMWOItem { get; set; }
+        public int? FinishMWOItemId => FinishMWOItem?.Id == 0 ? null : FinishMWOItem?.Id;
+        public EditMWOItem? FinishMWOItem { get; set; }
+        public int? pPipeClassId => pPipeClass?.Id == 0 ? null : pPipeClass?.Id;
+        public EditPipeClass? pPipeClass { get; set; }
+        public string TagId => SetTagId();
         public bool Insulation { get; set; }
+        public string TagNumber { get; set; } = "";
+        public override T AddDetailtoMaster<T>()
+        {
+            if (typeof(T) == typeof(EditNozzle))
+            {
+                EditNozzle detail = new();
+
+                detail.Order = Nozzles!.Count == 0 ? 1 : this.Nozzles.OrderBy(x => x.Order).Last().Order + 1;
+                detail.Name = $"N{detail.Order}";
+                detail.PipingItem = this;
+                Nozzles.Add(detail);
 
 
+                return (detail as T)!;
+            }
+            return null!;
+        }
+        string SetTagId()
+        {
+            var tag =$"{pDiameter?.Name}-{pProcessFluid?.TagLetter}-{TagNumber}-{pMaterial?.Abbreviation}-{(Insulation ? 1 : 0)}";
 
+            return tag;
+        }
     }
 }

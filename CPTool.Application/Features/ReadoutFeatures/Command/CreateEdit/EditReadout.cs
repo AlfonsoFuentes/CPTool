@@ -11,8 +11,8 @@ namespace CPTool.Application.Features.ReadoutFeatures.CreateEdit
     public class EditReadout : EditCommand
     {
 
+        public string? TagLetter { get; set; }
 
-        public List<EditInstrumentItem> InstrumentItems { get; set; } = new();
     }
    
 }

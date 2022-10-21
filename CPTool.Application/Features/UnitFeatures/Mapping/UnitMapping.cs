@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.UnitFeatures.Mapping
         public UnitMapping()
         {
             CreateMap<CPTool.Domain.Entities.Unit, EditUnit>();
-
+            CreateMap<EditUnit, AddUnit>();
             CreateMap<EditUnit, CPTool.Domain.Entities.Unit>();
             CreateMap<AddUnit, CPTool.Domain.Entities.Unit>();
         }

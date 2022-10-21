@@ -15,6 +15,7 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.Mapping
 
             CreateMap<EditEquipmentItem, EquipmentItem>();
             CreateMap<AddEquipmentItem, EquipmentItem>();
+            CreateMap<EditEquipmentItem, AddEquipmentItem>();
 
         }
     }

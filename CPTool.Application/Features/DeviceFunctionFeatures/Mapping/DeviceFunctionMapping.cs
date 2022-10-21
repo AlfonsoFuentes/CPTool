@@ -15,6 +15,7 @@ namespace CPTool.Application.Features.DeviceFunctionFeatures.Mapping
 
             CreateMap<AddDeviceFunction, DeviceFunction>();
             CreateMap<EditDeviceFunction, DeviceFunction>();
+            CreateMap<EditDeviceFunction, AddDeviceFunction>();
         }
     }
 }

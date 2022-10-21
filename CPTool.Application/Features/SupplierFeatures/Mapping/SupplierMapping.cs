@@ -11,6 +11,7 @@ namespace CPTool.Application.Features.SupplierFeatures.Mapping
             CreateMap<Supplier, EditSupplier>();
             CreateMap<EditSupplier, Supplier>();
             CreateMap<AddSupplier, Supplier>();
+            CreateMap<EditSupplier, AddSupplier>();
         }
     }
 }

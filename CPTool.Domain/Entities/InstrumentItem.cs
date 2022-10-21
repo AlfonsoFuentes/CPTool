@@ -2,14 +2,18 @@
 {
     public class InstrumentItem  : BaseDomainModel
     {
-        public int? ProcessConditionId { get; set; }
-        public ProcessCondition? ProcessCondition { get; set; }
-        public int? ProcessFluidInstrumentId { get; set; }
-        public ProcessFluid? ProcessFluidInstrument { get; set; }
-        public ICollection<Nozzle>? Nozzles { get; set; } = null!;
+        [ForeignKey("InstrumentItemId")]
         public ICollection<MWOItem>? MWOItems { get; set; } = null!;
-        public int? GasketId { get; set; }
-        public Gasket? Gasket { get; set; } = null!;
+        public int? iProcessConditionId { get; set; }
+        public ProcessCondition? iProcessCondition { get; set; }
+        public int? iProcessFluidId { get; set; }
+        public ProcessFluid? iProcessFluid { get; set; }
+
+        [ForeignKey("InstrumentItemId")]
+        public ICollection<Nozzle>? Nozzles { get; set; } = null!;
+    
+        public int? iGasketId { get; set; }
+        public Gasket? iGasket { get; set; } = null!;
         public int? iInnerMaterialId { get; set; }
         public Material? iInnerMaterial { get; set; } = null!;
         public int? iOuterMaterialId { get; set; }
@@ -25,10 +29,10 @@
         public int? ReadoutId { get; set; }
         public Readout? Readout { get; set; }
 
-        public int? BrandId { get; set; }
-        public Brand? Brand { get; set; }
-        public int? SupplierId { get; set; }
-        public Supplier? Supplier { get; set; }
+        public int? iBrandId { get; set; }
+        public Brand? iBrand { get; set; }
+        public int? iSupplierId { get; set; }
+        public Supplier? iSupplier { get; set; }
         public string TagId { get; set; } = string.Empty;
         public string? TagLetter { get; set; }
         public string? TagNumber { get; set; }

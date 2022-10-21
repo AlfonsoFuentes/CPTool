@@ -21,51 +21,52 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
     public class EditMWOItem : EditCommand, IRequest<Result<int>>
     {
        
-        //public int? UnitaryBasePrizeId => UnitaryBasePrize?.Id == 0 ? null : UnitaryBasePrize?.Id;
+        public int? UnitaryBasePrizeId => UnitaryBasePrize?.Id == 0 ? null : UnitaryBasePrize?.Id;
         public EditUnitaryBasePrize? UnitaryBasePrize { get; set; } = new();
         public int Order { get; set; }
-        public string? Nomenclatore => $"{Chapter.Letter}{Order}";
+        public string? Nomenclatore => $"{Chapter?.Letter}{Order}";
         public decimal BudgetPrize => UnitaryPrize * Quantity;
         public decimal RealPrize { get; set; }
         public decimal UnitaryPrize { get; set; }
         public decimal Quantity { get; set; }
         public string TagId => GetTagId();
 
-        public int ChapterId => Chapter.Id;
-        public EditChapter Chapter { get; set; } = new();
-        //public int? AlterationItemId => AlterationItem == null ? null : AlterationItem?.Id;
+        public int? ChapterId => Chapter?.Id==0?null: Chapter?.Id;
+        public EditChapter? Chapter { get; set; } = new();
+        public int? AlterationItemId => AlterationItem == null ? null : AlterationItem?.Id;
         public EditAlterationItem? AlterationItem { get; set; }
-        //public int? FoundationItemId => FoundationItem == null ? null : FoundationItem?.Id;
-        public AddFoundationItem? FoundationItem { get; set; }
-        //public int? StructuralItemId => StructuralItem == null ? null : StructuralItem?.Id;
+        public int? FoundationItemId => FoundationItem == null ? null : FoundationItem?.Id;
+        public EditFoundationItem? FoundationItem { get; set; }
+        public int? StructuralItemId => StructuralItem == null ? null : StructuralItem?.Id;
         public EditStructuralItem? StructuralItem { get; set; }
-        //public int? EquipmentItemId => EquipmentItem == null ? null : EquipmentItem?.Id;
+        public int? EquipmentItemId => EquipmentItem == null ? null : EquipmentItem?.Id;
         public EditEquipmentItem? EquipmentItem { get; set; }
-        //public int? ElectricalItemId => ElectricalItem == null ? null : ElectricalItem?.Id;
+        public int? ElectricalItemId => ElectricalItem == null ? null : ElectricalItem?.Id;
         public EditElectricalItem? ElectricalItem { get; set; }
-        //public int? PipingItemId => PipingItem == null ? null : PipingItem?.Id;
+        public int? PipingItemId => PipingItem == null ? null : PipingItem?.Id;
         public EditPipingItem? PipingItem { get; set; }
-        //public int? InstrumentItemId => InstrumentItem == null ? null : InstrumentItem?.Id;
+        public int? InstrumentItemId => InstrumentItem == null ? null : InstrumentItem?.Id;
         public EditInstrumentItem? InstrumentItem { get; set; }
-        //public int? InsulationItemId => InsulationItem == null ? null : InsulationItem?.Id;
+        public int? InsulationItemId => InsulationItem == null ? null : InsulationItem?.Id;
         public EditInsulationItem? InsulationItem { get; set; }
-        //public int? PaintingItemId => PaintingItem == null ? null : PaintingItem?.Id;
+        public int? PaintingItemId => PaintingItem == null ? null : PaintingItem?.Id;
         public EditPaintingItem? PaintingItem { get; set; }
-        //public int? EHSItemId => EHSItem == null ? null : EHSItem?.Id;
+        public int? EHSItemId => EHSItem == null ? null : EHSItem?.Id;
         public EditEHSItem? EHSItem { get; set; }
-        //public int? TaxesItemId => TaxesItem == null ? null : TaxesItem?.Id;
+        public int? TaxesItemId => TaxesItem == null ? null : TaxesItem?.Id;
         public EditTaxesItem? TaxesItem { get; set; }
-        //public int? TestingItemId => TestingItem == null ? null : TestingItem?.Id;
+        public int? TestingItemId => TestingItem == null ? null : TestingItem?.Id;
         public EditTestingItem? TestingItem { get; set; }
-        //public int? EngineeringCostItemId => EngineeringCostItem == null ? null : EngineeringCostItem?.Id;
+        public int? EngineeringCostItemId => EngineeringCostItem == null ? null : EngineeringCostItem?.Id;
         public EditEngineeringCostItem? EngineeringCostItem { get; set; }
-        //public int? ContingencyItemId => ContingencyItem == null ? null : ContingencyItem?.Id;
+        public int? ContingencyItemId => ContingencyItem == null ? null : ContingencyItem?.Id;
         public EditContingencyItem? ContingencyItem { get; set; }
+        public int? MWOId => MWO?.Id == 0 ? null : MWO?.Id;
 
-        public EditMWO? MWO { get; set; }
+        public EditMWO? MWO { get; set; } = new();
         string GetTagId()
         {
-            switch (Chapter.Id)
+            switch (Chapter?.Id)
             {
                 case 4:
                     return EquipmentItem!.TagId;
@@ -82,11 +83,13 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
 
         public void AssignInternalItem()
         {
-            var list = MWO!.MWOItems!.Where(x => x.ChapterId == Chapter.Id).ToList();
+            var chapterlist= MWO!.MWOItems!.Where(x => x.ChapterId!=0).ToList();
+
+            var list = chapterlist.Where(x => x.ChapterId == ChapterId).ToList();
             Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
 
 
-            switch (Chapter.Id)
+            switch (Chapter?.Id)
             {
                 case 1:
                     AlterationItem = new();

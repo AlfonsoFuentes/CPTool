@@ -7,7 +7,7 @@ namespace CPTool.Application.Features.MMOTypeFeatures.CreateEdit
     {
 
 
-        public List<EditMWO> MWOs { get; set; } = null!;
+       
     }
 
 }

@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.ChapterFeatures.Mapping
             CreateMap<Chapter, EditChapter>();
             CreateMap<AddChapter, Chapter>();
             CreateMap<EditChapter, Chapter>();
+            CreateMap<EditChapter, AddChapter>();
         }
     }
 }

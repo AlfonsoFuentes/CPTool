@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.MaterialFeatures.Mapping
 
             CreateMap<AddMaterial, Material>();
             CreateMap<EditMaterial, Material>();
+            CreateMap<EditMaterial, AddMaterial>();
         }
     }
 }

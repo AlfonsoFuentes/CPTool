@@ -10,7 +10,7 @@
 @if (ShowAddButton)
 {
     <OneToManyListComponent TMaster="EditPipeClass" TDetail="EditPipeDiameter"
-                        TAddMaster="AddPipeClass" TAddDetail="AddPipeDiameter"
+                      
                         TDeleteMaster="DeletePipeClass" TDeleteDetail="DeletePipeDiameter"
                         TMasterList="GetPipeClassListQuery" TDetailList="GetPipeDiameterListQuery"
                         TMasterGedById="GetByIdPipeClassQuery" TDetailGedById="GetByIdPipeDiameterQuery"
@@ -38,9 +38,9 @@
         <DetailContextTd>
             <MudTd DataLabel="TagLetter">@context.Id</MudTd>
             <MudTd DataLabel="TagLetter">@context.Name</MudTd>
-            <MudTd DataLabel="TagLetter">@context.OD.StringValue</MudTd>
-            <MudTd DataLabel="TagLetter">@context.ID.StringValue</MudTd>
-            <MudTd DataLabel="TagLetter">@context.Thickness.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.OuterDiameter?.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.InternalDiameter?.StringValue</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Thickness?.StringValue</MudTd>
         </DetailContextTd>
 
     </OneToManyListComponent>

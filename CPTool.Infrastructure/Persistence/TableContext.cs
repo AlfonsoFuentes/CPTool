@@ -20,21 +20,71 @@ namespace CPTool.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.ProcessFluidEquipment).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MWOType>().HasMany(c => c.MWOs).WithOne(t => t.MWOType).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWO>().HasMany(c => c.MWOItems).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Chapter>().HasMany(c => c.MWOItems).WithOne(t => t.Chapter).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.UnitaryBasePrize).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrders).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.AlterationItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.FoundationItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.StructuralItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.EquipmentItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.ElectricalItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.PipingItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.InstrumentItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.InsulationItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.PaintingItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.TaxesItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.EHSItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.TestingItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.EngineeringCostItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasOne(c => c.ContingencyItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EquipmentType>().HasMany(c => c.EquipmentTypeSubs).WithOne(t => t.EquipmentType).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eEquipmentType).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eEquipmentTypeSub).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eProcessCondition).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eBrand).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eSupplier).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasMany(c => c.Nozzles).WithOne(t => t.EquipmentItem).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eProcessFluid).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eInnerMaterial).WithMany(t => t.EquipmentItemInnerMaterials).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eOuterMaterial).WithMany(t => t.EquipmentItemOuterMaterials).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EquipmentItem>().HasOne(c => c.eGasket).WithMany(t => t.EquipmentItems).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.ProcessFluidInstrument).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iProcessFluid).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iInnerMaterial).WithMany(t => t.InstrumentItemInnerMaterials).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iOuterMaterial).WithMany(t => t.InstrumentItemOuterMaterials).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iProcessCondition).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iGasket).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iBrand).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iSupplier).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.DeviceFunction).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.DeviceFunctionModifier).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.Readout).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.MeasuredVariable).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.MeasuredVariableModifier).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<InstrumentItem>().HasMany(c => c.Nozzles).WithOne(t => t.InstrumentItem).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<InstrumentItem>().HasOne(c => c.iProcessCondition).WithMany(t => t.InstrumentItems).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<PipingItem>().HasOne(c => c.ProcessFluidPiping).WithMany(t => t.PipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.pProcessFluid).WithMany(t => t.PipingItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleStart).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipingItem>().HasOne(c => c.NozzleFinish).WithMany(t => t.FinishPipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.pMaterial).WithMany(t => t.PipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.pDiameter).WithMany(t => t.PipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.StartMWOItem).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.FinishMWOItem).WithMany(t => t.FisnishPipingItems).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipingItem>().HasMany(c => c.Nozzles).WithOne(t => t.PipingItem).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PipingItem>().HasMany(c => c.PipeAccesorys).WithOne(t => t.pPipingItem).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PipingItem>().HasOne(c => c.pProcessCondition).WithMany(t => t.PipingItems).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<PipeDiameter>().HasOne(c => c.OuterDiameter).WithMany(t => t.ODs).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeDiameter>().HasOne(c => c.InternalDiameter).WithMany(t => t.IDs).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeDiameter>().HasOne(c => c.Thickness).WithMany(t => t.Thicknesss).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pBrand).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Pressure).WithMany(t => t.Pressures).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ProcessCondition>().HasOne(c => c.Temperature).WithMany(t => t.Temperatures).OnDelete(DeleteBehavior.NoAction);
@@ -47,8 +97,7 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<ProcessCondition>().HasOne(c => c.ThermalConductivity).WithMany(t => t.ThermalConductivitys).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ProcessCondition>().HasOne(c => c.SpecificCp).WithMany(t => t.SpecificCps).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<PipingItem>().HasOne(c => c.StartMWOItem).WithMany(t => t.StartPipingItems).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<PipingItem>().HasOne(c => c.FinishMWOItem).WithMany(t => t.FisnishPipingItems).OnDelete(DeleteBehavior.NoAction);
+            
 
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.Friction).WithMany(t => t.FrictionPipeAccesorys).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.Reynold).WithMany(t => t.ReynoldPipeAccesorys).OnDelete(DeleteBehavior.NoAction);
@@ -57,6 +106,22 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.FrictionDropPressure).WithMany(t => t.FrictionDropPressurePipeAccesorys).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.OverallDropPressure).WithMany(t => t.OverallDropPressurePipeAccesorys).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.ElevationChange).WithMany(t => t.ElevationChangePipeAccesorys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeAccesory>().HasOne(c => c.pProcessCondition).WithMany(t => t.PipeAccesorys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeAccesory>().HasOne(c => c.paProcessFluid).WithMany(t => t.PipeAccesorys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeAccesory>().HasMany(c => c.Nozzles).WithOne(t => t.PipeAccesory).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Supplier>().HasOne(c => c.TaxCodeLD).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Supplier>().HasOne(c => c.TaxCodeLP).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Supplier>().HasOne(c => c.VendorCode).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Nozzle>().HasOne(c => c.ConnectionType).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Nozzle>().HasOne(c => c.nGasket).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Nozzle>().HasOne(c => c.nMaterial).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Nozzle>().HasOne(c => c.PipeDiameter).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Nozzle>().HasOne(c => c.nPipeClass).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
+
+           
+            modelBuilder.Entity<DownPayment>().HasOne(c => c.PurchaseOrder).WithMany(t => t.DownPayments).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<BrandSupplier>()
              .HasKey(t => new { t.BrandId, t.SupplierId });
@@ -75,9 +140,10 @@ namespace CPTool.Infrastructure.Persistence
 
             //Relation Many to Many Purchase Order  MWOItem
            
-            modelBuilder.Entity<PurchaseOrder>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.PurchaseOrder).OnDelete(DeleteBehavior.NoAction);
-            
-            modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrders).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PurchaseOrder>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.PurchaseOrder).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pSupplier).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
+
+          
         
        
         }

@@ -8,7 +8,8 @@ namespace CPTool.Application.Features.BrandFeatures.CreateEdit
 {
     public class EditBrand :EditCommand, IRequest<Result<int>>
     {
-        public List<EditBrandSupplier>? BrandSuppliers { get; set; } 
+      
+        public List<EditBrandSupplier>? BrandSuppliers { get; set; }
         public BrandType BrandType { get; set; }
 
        

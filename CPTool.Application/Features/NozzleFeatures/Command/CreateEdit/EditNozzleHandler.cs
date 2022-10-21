@@ -1,10 +1,10 @@
 ﻿namespace CPTool.Application.Features.NozzleFeatures.CreateEdit
 {
-    internal class EditNozzleHandler : EditBaseHandler<EditNozzle, Nozzle>, IRequestHandler<EditNozzle, Result<int>>
+    internal class NozzleHandler : AddEditBaseHandler<AddNozzle,EditNozzle, Nozzle>, IRequestHandler<EditNozzle, Result<int>>
     {
 
-        public EditNozzleHandler(IUnitOfWork unitofwork, IMapper mapper, IEmailService emailService, ILogger<EditNozzle> logger)
-            : base(unitofwork, mapper, emailService, logger)
+        public NozzleHandler(IUnitOfWork unitofwork, IMapper mapper, ILogger<EditNozzle> logger)
+            : base(unitofwork, mapper,  logger)
         {
 
         }

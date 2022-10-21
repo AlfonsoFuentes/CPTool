@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.PipeAccesoryFeatures.Mapping
         public PipeAccesoryMapping()
         {
             CreateMap<PipeAccesory, EditPipeAccesory>();
-
+            CreateMap<EditPipeAccesory, AddPipeAccesory>();
             CreateMap<EditPipeAccesory, PipeAccesory>();
             CreateMap<AddPipeAccesory, PipeAccesory>();
         }

@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.ReadoutFeatures.Mapping
 
             CreateMap<EditReadout, Readout>();
             CreateMap<AddReadout, Readout>();
+            CreateMap<EditReadout, AddReadout>();
         }
     }
 }

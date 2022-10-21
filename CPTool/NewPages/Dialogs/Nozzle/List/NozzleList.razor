@@ -2,12 +2,12 @@
 @using CPTool.Application.Features.NozzleFeatures
 @using CPTool.Application.Features.NozzleFeatures.Query.GetById
 @using CPTool.Application.Features.NozzleFeatures.Query.GetList
+
 <DetailListComponent TDetail="EditNozzle"
-                     TAddDetail="AddNozzle"
                      TDetailList="GetNozzleListQuery"
                      TDeleteDetail="DeleteNozzle"
                      TDetailGedById="GetByIdNozzleQuery"
-                     ElementsDetailsChanged="NozzlesChanged"
+                     UpdateParentList="UpdateParentList"
                      ElementsDetails=@Nozzles
                      @bind-SelectedDetail=@SelectedNozzle
                      OnShowDialogDetails="ToolDialogService.ShowNozzleDialog"
@@ -29,10 +29,10 @@
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="In/Out">@context.StreamType.ToString()</MudTd>
         <MudTd DataLabel="Diameter">@context.PipeDiameter?.Name</MudTd>
-        <MudTd DataLabel="Class">@context.PipeClass?.Name</MudTd>
-        <MudTd DataLabel="Material">@context.Material?.Name</MudTd>
+        <MudTd DataLabel="Class">@context.nPipeClass?.Name</MudTd>
+        <MudTd DataLabel="Material">@context.nMaterial?.Name</MudTd>
         <MudTd DataLabel="Connection Type">@context.ConnectionType?.Name</MudTd>
-        <MudTd DataLabel="Gasket">@context.Gasket?.Name</MudTd>
+        <MudTd DataLabel="Gasket">@context.nGasket?.Name</MudTd>@**@
 
 
     </DetailContextTd>

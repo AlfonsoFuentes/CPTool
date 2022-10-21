@@ -3,7 +3,7 @@
     public class GetEquipmentTypeSubListQuery : GetListQuery, IRequest<List<EditEquipmentTypeSub>>
     {
 
-        public int EquipmentTypeId { get; set; }
+       
        
     }
     public class GetEquipmentTypeSubListQueryHandler : IRequestHandler<GetEquipmentTypeSubListQuery, List<EditEquipmentTypeSub>>
@@ -19,7 +19,7 @@
         }
         public async Task<List<EditEquipmentTypeSub>> Handle(GetEquipmentTypeSubListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<EquipmentTypeSub>().GetAsync(x => x.EquipmentTypeId == request.EquipmentTypeId);
+            var list = await _unitofwork.Repository<EquipmentTypeSub>().GetAllAsync();
 
             return _mapper.Map<List<EditEquipmentTypeSub>>(list);
 

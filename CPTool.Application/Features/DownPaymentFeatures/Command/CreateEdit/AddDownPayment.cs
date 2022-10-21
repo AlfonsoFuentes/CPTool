@@ -9,12 +9,11 @@ using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
 {
-    public class AddDownPayment : AddCommand, IRequest<Result<int>>
+    public class AddDownPayment : AddCommand
     {
-        public int? PurchaseOrderId => PurchaseOrderCommand?.Id == 0 ? null : PurchaseOrderCommand!.Id;
+        public int? PurchaseOrderId { get; set; }
 
 
-        public EditPurchaseOrder? PurchaseOrderCommand { get; set; }
         public DateTime? RequestDate { get; set; }
         public string? ManagerEmail { get; set; }
         public string? CBSRequesText { get; set; }

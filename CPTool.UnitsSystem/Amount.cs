@@ -98,6 +98,7 @@ namespace CPTool.UnitsSystem
             {
                 this.dvalue = dvalue;
                 this.unit = unit;
+                
                 if (OnValueChanged != null) OnValueChanged();
 
 

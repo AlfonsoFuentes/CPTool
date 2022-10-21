@@ -14,37 +14,28 @@ using CPTool.UnitsSystem;
 
 namespace CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit
 {
-    public class AddPipeAccesory : AddCommand, IRequest<Result<int>>
+    public class AddPipeAccesory : AddCommand
     {
-        public int? PipingItemId => PipingItemCommand?.Id==0 ? null : PipingItemCommand?.Id;
-        public EditPipingItem? PipingItemCommand { get; set; } = new();
-       
-        public EditProcessCondition? ProcessCondition { get; set; } = new();
+        public int? pPipingItemId { get; set; }
+        public EditProcessCondition? pProcessCondition { get; set; }
 
-        public int? ProcessFluidId => ProcessFluidCommand?.Id==0 ? null : ProcessFluidCommand?.Id;
-        public EditProcessFluid? ProcessFluidCommand { get; set; } =new();
-        //public int? FrictionId => FrictionCommand?.Id==0 ? null : Friction?.Id;
-        public EditUnit? Friction { get; set; } = new(UnitLessUnits.None);
-        //public int? ReynoldId => ReynoldCommand?.Id==0 ? null : Reynold?.Id;
-        public EditUnit? Reynold { get; set; } = new(UnitLessUnits.None);
-        //public int? LevelInletId => LevelInletCommand?.Id==0 ? null : LevelInlet?.Id;
-        public EditUnit? LevelInlet { get; set; } = new(LengthUnits.MilliMeter);
-        //public int? LevelOutletId => LevelOutletCommand?.Id==0 ? null : LevelOutlet?.Id;
-        public EditUnit? LevelOutlet { get; set; } = new(LengthUnits.MilliMeter);
-        //public int? FrictionDropPressureId => FrictionDropPressureCommand?.Id==0 ? null : FrictionDropPressure?.Id;
-        public EditUnit? FrictionDropPressure { get; set; } = new(PressureDropUnits.psi);
-        //public int? OverallDropPressureId => OverallDropPressureCommand?.Id==0 ? null : OverallDropPressure?.Id;
-        public EditUnit? OverallDropPressure { get; set; } = new(PressureDropUnits.psi);
-        //public int? ElevationChangeId => ElevationChangeCommand?.Id==0 ? null : ElevationChange?.Id;
-        public EditUnit? ElevationChange { get; set; } = new(PressureDropUnits.psi);
+        public int? paProcessFluidId { get; set; }
+
+        public EditUnit? Friction { get; set; }
+        public EditUnit? Reynold { get; set; }
+        public EditUnit? LevelInlet { get; set; }
+        public EditUnit? LevelOutlet { get; set; }
+        public EditUnit? FrictionDropPressure { get; set; }
+        public EditUnit? OverallDropPressure { get; set; }
+        public EditUnit? ElevationChange { get; set; }
 
 
         public FlowDirection FlowDirection { get; set; }
         public PipeAccesorySectionType SectionType { get; set; }
 
-        public List<EditNozzle>? Nozzles { get; set; } = new();
 
-       
+
+
     }
 
 }

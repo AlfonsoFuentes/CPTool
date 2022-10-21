@@ -1,12 +1,15 @@
 ﻿
 
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 {
-    public class AddPurchaseOrder : AddCommand, IRequest<Result<int>>
+    public class AddPurchaseOrder : AddCommand
     {
-
+        public int? pBrandId { get; set; }
+        public int? pSupplier { get; set; }
+        public int? MWOItemId { get; set; }
         public string PurchaseRequisition { get; set; } = "";
 
         public DateTime POCreatedDate { get; set; }
@@ -27,8 +30,7 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
         public double Tax { get; set; }
         public double PrizeCurrencyTax { get; set; }
         public double TotalPrizeCurrency { get; set; }
-        public int? MWOId => MWOCommand?.Id==0?null: MWOCommand?.Id;
-        public EditMWO? MWOCommand { get; set; } = new();
+       
     }
 
 }

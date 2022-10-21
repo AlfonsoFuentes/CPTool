@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.UnitaryBasePrizeFeatures.Mapping
         public UnitaryBasePrizeMapping()
         {
             CreateMap<UnitaryBasePrize,EditUnitaryBasePrize>();
-
+            CreateMap<EditUnitaryBasePrize, AddUnitaryBasePrize>();
             CreateMap<EditUnitaryBasePrize, UnitaryBasePrize>();
             CreateMap<AddUnitaryBasePrize, UnitaryBasePrize>();
         }

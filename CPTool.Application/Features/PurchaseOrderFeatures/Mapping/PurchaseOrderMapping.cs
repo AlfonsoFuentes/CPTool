@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.Mapping
             CreateMap<PurchaseOrder, EditPurchaseOrder>();
             CreateMap<EditPurchaseOrder, PurchaseOrder>();
             CreateMap<AddPurchaseOrder, PurchaseOrder>();
+            CreateMap<EditPurchaseOrder, AddPurchaseOrder>();
         }
     }
 }

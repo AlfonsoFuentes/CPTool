@@ -1,16 +1,24 @@
 ﻿
+using CPtool.ExtensionMethods;
 using CPTool.Application.Features.Base.DeleteCommand;
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
+using CPTool.Application.Features.BrandFeatures.Query.GetById;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.Query.GetById;
+using CPTool.Domain.Entities;
 using MediatR;
 using MudBlazor;
+using static MudBlazor.Icons.Custom;
 
 namespace CPTool.NewPages.Components
 {
-    public partial class ManyToManyComponent<TMasterDetail, TMaster, TAddMaster, TDetail, TAddDetail, TMasterList, TDetailList, TDeleteMaster, TDeleteDetail>
+    public partial class ManyToManyComponent<TMasterDetail, TMasterDetailList, TMaster, 
+        TDetail, TMasterList, TDetailList, TDeleteMaster, TDeleteDetail>
          where TMasterDetail : EditCommand, new()
         where TMaster : EditCommand, new()
-        where TAddMaster : AddCommand, new()
+        where TMasterDetailList : GetListQuery, new()
         where TDetail : EditCommand, new()
-        where TAddDetail : AddCommand, new()
+
         where TMasterList : GetListQuery, new()
          where TDetailList : GetListQuery, new()
          where TDeleteMaster : Delete, new()
@@ -22,20 +30,21 @@ namespace CPTool.NewPages.Components
 
         TMasterList MasterList = new();
         TDetailList DetailList = new();
+        TMasterDetailList MasterDetailList = new();
 
         [Parameter]
         public RenderFragment OtherButtonsMaster { get; set; }
         [Parameter]
         public RenderFragment OtherButtonsDetails { get; set; }
         [Parameter]
-
         public List<TMaster> ElementsMasters { get; set; } = new();
 
         [Parameter]
-
         public List<TDetail> ElementsDetails { get; set; } = new();
-
-
+        [Parameter]
+        public List<TMasterDetail> ElementsMastersDetails { get; set; } = new();
+        [Parameter]
+        public EventCallback<List<TMasterDetail>> ElementsMastersDetailsChanged { get; set; }
         [Parameter]
         public TMaster SelectedMaster { get; set; } = new();
         [Parameter]
@@ -74,7 +83,9 @@ namespace CPTool.NewPages.Components
         [Parameter]
         [EditorRequired]
         public Func<TMasterDetail, Task<DialogResult>> OnShowDialogDetails { get; set; }
-
+        
+       
+       
         async Task RowClickedMaster(TableRowClickEventArgs<TMaster> row)
         {
             await OnRowClickedMaster.InvokeAsync(row.Item);
@@ -86,9 +97,9 @@ namespace CPTool.NewPages.Components
         async void AddMaster()
         {
             TMasterDetail model = new();
-            SelectedMaster = new TMaster();
-            model.CreateMasterRelations(SelectedMaster, SelectedDetail);
+            SelectedMaster = new();
 
+            model.CreateMasterRelations(SelectedMaster, SelectedDetail);
 
             var result = await OnShowDialogMaster(model);
             if (!result.Cancelled)
@@ -100,13 +111,14 @@ namespace CPTool.NewPages.Components
 
             }
 
+
         }
         async void AddDetail()
         {
             TMasterDetail model = new();
-            SelectedDetail = new TDetail();
-            model.CreateMasterRelations(SelectedMaster, new TDetail());
 
+            SelectedDetail = new();
+            model.CreateMasterRelations(SelectedMaster, SelectedDetail);
 
             var result = await OnShowDialogDetails(model);
             if (!result.Cancelled)
@@ -166,7 +178,9 @@ namespace CPTool.NewPages.Components
             if (!result.Cancelled)
             {
                 TMaster model = new();
+                ElementsMastersDetails = await mediator.Send(MasterDetailList) as List<TMasterDetail>;
 
+                await ElementsMastersDetailsChanged.InvokeAsync(ElementsMastersDetails);
 
                 await OnRowClickedMaster.InvokeAsync(model);
             }
@@ -182,7 +196,9 @@ namespace CPTool.NewPages.Components
             if (!result.Cancelled)
             {
                 TDetail model = new();
+                ElementsMastersDetails = await mediator.Send(MasterDetailList) as List<TMasterDetail>;
 
+                await ElementsMastersDetailsChanged.InvokeAsync(ElementsMastersDetails);
 
                 await OnRowClickedDetails.InvokeAsync(model);
             }

@@ -61,8 +61,8 @@
                                       Label="Address"></MudTextField>
 
 
-                        <AutoCompleteComponent T="EditVendorCode"
-                                               TAdd="AddVendorCode"
+                        <AutoCompleteComponent TEdit="EditVendorCode"
+                                              
                                                TGedById="GetByIdVendorCodeQuery"
                                                TList="GetVendorCodeListQuery"
                                                TableName="Vendor Code"
@@ -72,8 +72,8 @@
                                                @bind-Elements="@GlobalTables.VendorCodes"
                                                Validation="@(new Func<string, string>(ReviewVendorCode))"
                                                Model=@Model.Supplier.VendorCode></AutoCompleteComponent>
-                        <AutoCompleteComponent T="EditTaxCodeLD"
-                                               TAdd="AddTaxCodeLD"
+                        <AutoCompleteComponent TEdit="EditTaxCodeLD"
+                                              
                                                TGedById="GetByIdTaxCodeLDQuery"
                                                TList="GetTaxCodeLDListQuery"
                                                TableName="Tax Codel LD"
@@ -84,8 +84,8 @@
                                                @bind-Elements="@GlobalTables.TaxCodeLDs"
                                                Validation="@(new Func<string, string>(GlobalTables.ReviewTaxCodeLD))"
                                                Model=@Model.Supplier.TaxCodeLD></AutoCompleteComponent>
-                        <AutoCompleteComponent T="EditTaxCodeLP"
-                                               TAdd="AddTaxCodeLP"
+                        <AutoCompleteComponent TEdit="EditTaxCodeLP"
+                                              
                                                TGedById="GetByIdTaxCodeLPQuery"
                                                TList="GetTaxCodeLPListQuery"
                                                TableName="Tax Code LP"

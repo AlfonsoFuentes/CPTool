@@ -2,7 +2,8 @@
 {
     public class EditDownPayment : EditCommand, IRequest<Result<int>>
     {
-       
+        public int? PurchaseOrderId { get; set; }
+        public PurchaseOrder? PurchaseOrder { get; set; }
         public DateTime? RequestDate { get; set; }
         public string? ManagerEmail { get; set; }
         public string? CBSRequesText { get; set; }

@@ -2,10 +2,15 @@
 {
     public class ProcessCondition  : BaseDomainModel
     {
-
+        [ForeignKey("pProcessConditionId")]
         public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
+        [ForeignKey("eProcessConditionId")]
         public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
+        [ForeignKey("iProcessConditionId")]
         public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
+
+        [ForeignKey("pProcessConditionId")]
+        public ICollection<PipingItem>? PipingItems { get; set; } = null!;
         public int? PressureId { get; set; }
         public Unit? Pressure { get; set; }
         public int? TemperatureId { get; set; }

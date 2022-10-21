@@ -1,10 +1,10 @@
 ﻿namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 {
-    internal class EditPurchaseOrderHandler : EditBaseHandler<EditPurchaseOrder, PurchaseOrder>, IRequestHandler<EditPurchaseOrder, Result<int>>
+    internal class PurchaseOrderHandler : AddEditBaseHandler<AddPurchaseOrder,EditPurchaseOrder, PurchaseOrder>, IRequestHandler<EditPurchaseOrder, Result<int>>
     {
 
-        public EditPurchaseOrderHandler(IUnitOfWork unitofwork, IMapper mapper, IEmailService emailService, ILogger<EditPurchaseOrder> logger)
-            : base(unitofwork, mapper, emailService, logger)
+        public PurchaseOrderHandler(IUnitOfWork unitofwork, IMapper mapper, ILogger<EditPurchaseOrder> logger)
+            : base(unitofwork, mapper,  logger)
         {
 
         }

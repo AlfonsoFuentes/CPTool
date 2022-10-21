@@ -25,7 +25,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.Query.GetById
 
             var result= _mapper.Map<EditMWOItem>(table);
 
-            _unitofwork.RepositoryMWOItem.GetTracker();
+          
             return result;
 
         }

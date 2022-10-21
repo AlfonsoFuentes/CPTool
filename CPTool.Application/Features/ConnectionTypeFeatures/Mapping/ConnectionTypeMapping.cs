@@ -15,6 +15,7 @@ namespace CPTool.Application.Features.ConnectionTypeFeatures.Mapping
 
             CreateMap<EditConnectionType, ConnectionType>();
             CreateMap<AddConnectionType, ConnectionType>();
+            CreateMap<EditConnectionType, AddConnectionType>();
         }
     }
 }

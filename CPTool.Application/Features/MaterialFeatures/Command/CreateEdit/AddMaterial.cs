@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CPTool.Application.Features.MaterialFeatures.CreateEdit
 {
-    public class AddMaterial : AddCommand, IRequest<Result<int>>
+    public class AddMaterial : AddCommand
     {
         public string? Abbreviation { get; set; }
 

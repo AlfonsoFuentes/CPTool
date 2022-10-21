@@ -11,10 +11,10 @@ using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ProcessFluidFeatures.CreateEdit
 {
-    public class AddProcessFluid : AddCommand, IRequest<Result<int>>
+    public class AddProcessFluid : AddCommand
     {
 
-        
+        public string TagLetter { get; set; } = "";
 
     }
 }

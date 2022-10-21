@@ -7,17 +7,17 @@
         [ForeignKey("NozzleFinishId")]
         public ICollection<PipingItem>? FinishPipingItems { get; set; } = null!;
 
-        public int? PipeClassId { get; set; }
-        public PipeClass? PipeClass { get; set; }
+        public int? nPipeClassId { get; set; }
+        public PipeClass? nPipeClass { get; set; }
 
         public int? PipeDiameterId { get; set; }
         public PipeDiameter? PipeDiameter { get; set; }
         public int? ConnectionTypeId { get; set; }
         public ConnectionType? ConnectionType { get; set; }
-        public int? GasketId { get; set; }
-        public Gasket? Gasket { get; set; }
-        public int? MaterialID { get; set; }
-        public Material? Material { get; set; }
+        public int? nGasketId { get; set; }
+        public Gasket? nGasket { get; set; }
+        public int? nMaterialId { get; set; }
+        public Material? nMaterial { get; set; }
 
         public StreamType StreamType { get; set; }
 

@@ -24,11 +24,12 @@
                             <MudTextField @bind-Value="Model.Name"
                                       Variant="Variant.Outlined"
                                       Margin="Margin.Dense"
+                                      Disabled=true
                                       Immediate="true"
                                       Required=true
                                       Validation="@(new Func<string, string>(ValidateNozzleName))"
                                       Label="Nozzle Name"></MudTextField>
-                            <MudSelect Dense="true"
+                           <MudSelect Dense="true"
                                    Margin="Margin.Dense"
                                    T="StreamType"
                                    Label="Select Nozzle In/Out Type"
@@ -42,8 +43,8 @@
                                 }
 
                             </MudSelect>
-                            <AutoCompleteComponent T="EditPipeClass"
-                                               TAdd="AddPipeClass"
+                             <AutoCompleteComponent TEdit="EditPipeClass"
+                                             
                                                TGedById="GetByIdPipeClassQuery"
                                                TList="GetPipeClassListQuery"
                                                TableName="Pipe Class"
@@ -52,27 +53,27 @@
                                                @bind-Elements="@GlobalTables.PipeClasses"
                                                SelectionChanged="PipeClassChanged"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidatePipeClass))"
-                                               Model=@Model.PipeClass></AutoCompleteComponent>
-                            <AutoCompleteComponent T="EditPipeDiameter"
-                                               TAdd="AddPipeDiameter"
+                                               Model=@Model.nPipeClass></AutoCompleteComponent>
+                          <AutoCompleteComponent TEdit="EditPipeDiameter"
+                                             
                                                TGedById="GetByIdPipeDiameterQuery"
                                                TList="GetPipeDiameterListQuery"
                                                TableName="Pipe Diameter"
-                                               Parent="@(GlobalTables.PipeClasses.FirstOrDefault(x=>x.Id==Model.PipeClass.Id))"
+                                               Parent="@(GlobalTables.PipeClasses.FirstOrDefault(x=>x.Id==Model.nPipeClass.Id))"
                                                Label="Size"
                                                UpdateMasterParent="UpdatePipeClassFromPipeDiameter"
-                                               Disable=@(Model.PipeClass.Id==0?true:false)
+                                               Disable=@(Model.nPipeClass.Id==0?true:false)
                                                ValidateForm="ValidateForm"
                                                ShowDialogOverrided="ToolDialogService.ShowPipeDiameterDialog"
-                                               Elements="@Model.PipeClass.PipeDiameters"
+                                               Elements="@Model.nPipeClass.PipeDiameters"
                                                SelectionChanged="@((arg)=>{Model.PipeDiameter=arg;})"
                                                Validation="@(new Func<string, string>(ValidatePipeDiameter))"
                                                Model=@Model.PipeDiameter></AutoCompleteComponent>
 
-                            <AutoCompleteComponent T="EditConnectionType"
-                                               TAdd="AddConnectionType"
+                              <AutoCompleteComponent TEdit="EditConnectionType"
+                                             
                                                TGedById="GetByIdConnectionTypeQuery"
-                                               TList="GetPipeClassListQuery"
+                                              
                                                TList="GetConnectionTypeListQuery"
                                                TableName="Connection Type"
                                                Label="Connection Type"
@@ -81,30 +82,30 @@
                                                SelectionChanged="@((arg)=>{Model.ConnectionType=arg;})"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidateConnectionType))"
                                                Model=@Model.ConnectionType></AutoCompleteComponent>
-                            <AutoCompleteComponent T="EditGasket"
-                                               TAdd="AddGasket"
+                            <AutoCompleteComponent TEdit="EditGasket"
+                                              
                                                TGedById="GetByIdGasketQuery"
                                                TList="GetGasketListQuery"
                                                TableName="Gasket"
                                                Label="Gasket"
                                                ValidateForm="ValidateForm"
                                                @bind-Elements="@GlobalTables.Gaskets"
-                                               SelectionChanged="@((arg)=>{Model.Gasket=arg;})"
+                                               SelectionChanged="@((arg)=>{Model.nGasket=arg;})"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidateGasket))"
-                                               Model=@Model.Gasket></AutoCompleteComponent>
+                                               Model=@Model.nGasket></AutoCompleteComponent>
 
-                            <AutoCompleteComponent T="EditMaterial"
-                                               TAdd="AddMaterial"
+                            <AutoCompleteComponent TEdit="EditMaterial"
+                                              
                                                TGedById="GetByIdMaterialQuery"
                                                TList="GetMaterialListQuery"
                                                Label="Nozzle Material"
                                                TableName="Material"
-                                               SelectionChanged="@((arg)=>{Model.Material=arg;})"
+                                               SelectionChanged="@((arg)=>{Model.nMaterial=arg;})"
                                                ValidateForm="ValidateForm"
                                                @bind-Elements="@GlobalTables.Materials"
                                                ShowDialogOverrided="ToolDialogService.ShowMaterial"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
-                                               Model=@Model.Material></AutoCompleteComponent>
+                                               Model=@Model.nMaterial></AutoCompleteComponent> @**@
                         </MudForm>
                     </CascadingValue>
 

@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.MWOFeatures.Mapping
             CreateMap<MWO, EditMWO>();
             CreateMap<EditMWO, MWO>();
             CreateMap<AddMWO, MWO>();
+            CreateMap<EditMWO, AddMWO>();
         }
     }
 }

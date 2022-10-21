@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.MeasuredVariableFeatures.Mapping
             CreateMap<MeasuredVariable, EditMeasuredVariable>();
 
             CreateMap<EditMeasuredVariable, MeasuredVariable>();
+            CreateMap<EditMeasuredVariable, AddMeasuredVariable>();
             CreateMap<AddMeasuredVariable, MeasuredVariable>();
         }
     }

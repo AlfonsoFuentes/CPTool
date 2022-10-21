@@ -5,10 +5,9 @@
 @if (debug)
 {
     <MudGrid>
-
+        
         <MudItem xs="12" sm="6">
-            <AutoCompleteComponent T="EditGasket"
-                               TAdd="AddGasket"
+            <AutoCompleteComponent TEdit="EditGasket"
                                TGedById="GetByIdGasketQuery"
                                TList="GetGasketListQuery"
                                TableName="Gasket"
@@ -19,8 +18,7 @@
                                Validation="@(new Func<string, string>(GlobalTables.ValidateGasket))"
                                Model=@Gasket></AutoCompleteComponent>
 
-            <AutoCompleteComponent T="EditMaterial"
-                               TAdd="AddMaterial"
+            <AutoCompleteComponent TEdit="EditMaterial"
                                TGedById="GetByIdMaterialQuery"
                                TList="GetMaterialListQuery"
                                Label="Outer Material"
@@ -32,8 +30,7 @@
                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
                                Model=@OuterMaterial></AutoCompleteComponent>
 
-            <AutoCompleteComponent T="EditMaterial"
-                               TAdd="AddMaterial"
+            <AutoCompleteComponent TEdit="EditMaterial"
                                TGedById="GetByIdMaterialQuery"
                                TList="GetMaterialListQuery"
                                Label="Inner Material"

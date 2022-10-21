@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.PipeClassFeatures.Mapping
             CreateMap<PipeClass, EditPipeClass>();
             CreateMap<EditPipeClass, PipeClass>();
             CreateMap<AddPipeClass, PipeClass>();
+            CreateMap<EditPipeClass, AddPipeClass>();
         }
     }
 }

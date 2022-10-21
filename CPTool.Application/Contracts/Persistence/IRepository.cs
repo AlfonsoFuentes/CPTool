@@ -6,7 +6,7 @@ namespace CPTool.Application.Contracts.Persistence
     {
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
-
+        Task<bool> Any(Expression<Func<T, bool>> filter = null!);
         Task<IReadOnlyList<T>> GetAsync(
             Expression<Func<T, bool>> predicate = null!,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!,

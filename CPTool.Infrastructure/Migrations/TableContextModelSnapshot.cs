@@ -497,9 +497,6 @@ namespace CPTool.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -510,15 +507,6 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EquipmentTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EquipmentTypeSubId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GasketId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -527,12 +515,6 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProcessConditionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProcessFluidEquipmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Reference")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -540,9 +522,6 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<string>("SerialNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SupplierId")
-                        .HasColumnType("int");
 
                     b.Property<string>("TagId")
                         .IsRequired()
@@ -562,31 +541,52 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("eBrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eEquipmentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eEquipmentTypeSubId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eGasketId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("eInnerMaterialId")
                         .HasColumnType("int");
 
                     b.Property<int?>("eOuterMaterialId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("eProcessConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eProcessFluidId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eSupplierId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("eBrandId");
 
-                    b.HasIndex("EquipmentTypeId");
+                    b.HasIndex("eEquipmentTypeId");
 
-                    b.HasIndex("EquipmentTypeSubId");
+                    b.HasIndex("eEquipmentTypeSubId");
 
-                    b.HasIndex("GasketId");
-
-                    b.HasIndex("ProcessConditionId");
-
-                    b.HasIndex("ProcessFluidEquipmentId");
-
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("eGasketId");
 
                     b.HasIndex("eInnerMaterialId");
 
                     b.HasIndex("eOuterMaterialId");
+
+                    b.HasIndex("eProcessConditionId");
+
+                    b.HasIndex("eProcessFluidId");
+
+                    b.HasIndex("eSupplierId");
 
                     b.ToTable("EquipmentItems");
                 });
@@ -742,9 +742,6 @@ namespace CPTool.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -761,9 +758,6 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("DeviceFunctionModifierId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GasketId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("MeasuredVariableId")
                         .HasColumnType("int");
 
@@ -777,12 +771,6 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProcessConditionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProcessFluidInstrumentId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ReadoutId")
                         .HasColumnType("int");
 
@@ -791,9 +779,6 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Property<string>("SerialNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SupplierId")
-                        .HasColumnType("int");
 
                     b.Property<string>("TagId")
                         .IsRequired()
@@ -811,37 +796,52 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("iBrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("iGasketId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("iInnerMaterialId")
                         .HasColumnType("int");
 
                     b.Property<int?>("iOuterMaterialId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("iProcessConditionId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("BrandId");
+                    b.Property<int?>("iProcessFluidId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("iSupplierId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("DeviceFunctionId");
 
                     b.HasIndex("DeviceFunctionModifierId");
 
-                    b.HasIndex("GasketId");
-
                     b.HasIndex("MeasuredVariableId");
 
                     b.HasIndex("MeasuredVariableModifierId");
 
-                    b.HasIndex("ProcessConditionId");
-
-                    b.HasIndex("ProcessFluidInstrumentId");
-
                     b.HasIndex("ReadoutId");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("iBrandId");
+
+                    b.HasIndex("iGasketId");
 
                     b.HasIndex("iInnerMaterialId");
 
                     b.HasIndex("iOuterMaterialId");
+
+                    b.HasIndex("iProcessConditionId");
+
+                    b.HasIndex("iProcessFluidId");
+
+                    b.HasIndex("iSupplierId");
 
                     b.ToTable("InstrumentItems");
                 });
@@ -1239,13 +1239,7 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("EquipmentItemId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GasketId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("InstrumentItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MaterialID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -1256,9 +1250,6 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("PipeAccesoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PipeClassId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PipeDiameterId")
@@ -1276,25 +1267,34 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("nGasketId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("nMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("nPipeClassId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ConnectionTypeId");
 
                     b.HasIndex("EquipmentItemId");
 
-                    b.HasIndex("GasketId");
-
                     b.HasIndex("InstrumentItemId");
 
-                    b.HasIndex("MaterialID");
-
                     b.HasIndex("PipeAccesoryId");
-
-                    b.HasIndex("PipeClassId");
 
                     b.HasIndex("PipeDiameterId");
 
                     b.HasIndex("PipingItemId");
+
+                    b.HasIndex("nGasketId");
+
+                    b.HasIndex("nMaterialId");
+
+                    b.HasIndex("nPipeClassId");
 
                     b.ToTable("Nozzles");
                 });
@@ -1375,15 +1375,6 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("OverallDropPressureId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PipingItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProcessConditionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProcessFluidId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ReynoldId")
                         .HasColumnType("int");
 
@@ -1395,6 +1386,15 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("pPipingItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("pProcessConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("paProcessFluidId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1410,13 +1410,13 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("OverallDropPressureId");
 
-                    b.HasIndex("PipingItemId");
-
-                    b.HasIndex("ProcessConditionId");
-
-                    b.HasIndex("ProcessFluidId");
-
                     b.HasIndex("ReynoldId");
+
+                    b.HasIndex("pPipingItemId");
+
+                    b.HasIndex("pProcessConditionId");
+
+                    b.HasIndex("paProcessFluidId");
 
                     b.ToTable("PipeAccesorys");
                 });
@@ -1482,9 +1482,6 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("OuterDiameterId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PipeClassId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ThicknessId")
                         .HasColumnType("int");
 
@@ -1494,15 +1491,18 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("dPipeClassId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InternalDiameterId");
 
                     b.HasIndex("OuterDiameterId");
 
-                    b.HasIndex("PipeClassId");
-
                     b.HasIndex("ThicknessId");
+
+                    b.HasIndex("dPipeClassId");
 
                     b.ToTable("PipeDiameters");
                 });
@@ -1525,17 +1525,11 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DiameterId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("FinishMWOItemId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Insulation")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("MaterialId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1547,16 +1541,14 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("NozzleStartId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PipeClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProcessFluidPipingId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("StartMWOItemId")
                         .HasColumnType("int");
 
                     b.Property<string>("TagId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1566,23 +1558,40 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("pDiameterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("pMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("pPipeClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("pProcessConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("pProcessFluidId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DiameterId");
-
                     b.HasIndex("FinishMWOItemId");
-
-                    b.HasIndex("MaterialId");
 
                     b.HasIndex("NozzleFinishId");
 
                     b.HasIndex("NozzleStartId");
 
-                    b.HasIndex("PipeClassId");
-
-                    b.HasIndex("ProcessFluidPipingId");
-
                     b.HasIndex("StartMWOItemId");
+
+                    b.HasIndex("pDiameterId");
+
+                    b.HasIndex("pMaterialId");
+
+                    b.HasIndex("pPipeClassId");
+
+                    b.HasIndex("pProcessConditionId");
+
+                    b.HasIndex("pProcessFluidId");
 
                     b.ToTable("PipingItems");
                 });
@@ -1692,6 +1701,10 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TagLetter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -1710,9 +1723,6 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1773,9 +1783,6 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SupplierId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Tax")
                         .HasColumnType("float");
 
@@ -1798,13 +1805,19 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("pBrandId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("BrandId");
+                    b.Property<int?>("pSupplierId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("MWOItemId");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("pBrandId");
+
+                    b.HasIndex("pSupplierId");
 
                     b.ToTable("PurchaseOrders");
                 });
@@ -1823,6 +1836,9 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Currency")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1831,8 +1847,29 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("PrizeCurrency")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PrizeCurrencyTax")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PrizeUSD")
+                        .HasColumnType("float");
+
                     b.Property<int?>("PurchaseOrderId")
                         .HasColumnType("int");
+
+                    b.Property<double>("Tax")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalPrizeCurrency")
+                        .HasColumnType("float");
+
+                    b.Property<double>("USDCOP")
+                        .HasColumnType("float");
+
+                    b.Property<double>("USDEUR")
+                        .HasColumnType("float");
 
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
@@ -2240,41 +2277,33 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.HasOne("CPTool.Domain.Entities.PurchaseOrder", "PurchaseOrder")
                         .WithMany("DownPayments")
-                        .HasForeignKey("PurchaseOrderId");
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("PurchaseOrder");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.EquipmentItem", b =>
                 {
-                    b.HasOne("CPTool.Domain.Entities.Brand", "Brand")
+                    b.HasOne("CPTool.Domain.Entities.Brand", "eBrand")
                         .WithMany("EquipmentItems")
-                        .HasForeignKey("BrandId");
-
-                    b.HasOne("CPTool.Domain.Entities.EquipmentType", "EquipmentType")
-                        .WithMany("EquipmentItems")
-                        .HasForeignKey("EquipmentTypeId");
-
-                    b.HasOne("CPTool.Domain.Entities.EquipmentTypeSub", "EquipmentTypeSub")
-                        .WithMany("EquipmentItems")
-                        .HasForeignKey("EquipmentTypeSubId");
-
-                    b.HasOne("CPTool.Domain.Entities.Gasket", "Gasket")
-                        .WithMany("EquipmentItems")
-                        .HasForeignKey("GasketId");
-
-                    b.HasOne("CPTool.Domain.Entities.ProcessCondition", "ProcessCondition")
-                        .WithMany("EquipmentItems")
-                        .HasForeignKey("ProcessConditionId");
-
-                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "ProcessFluidEquipment")
-                        .WithMany("EquipmentItems")
-                        .HasForeignKey("ProcessFluidEquipmentId")
+                        .HasForeignKey("eBrandId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.Supplier", "Supplier")
+                    b.HasOne("CPTool.Domain.Entities.EquipmentType", "eEquipmentType")
                         .WithMany("EquipmentItems")
-                        .HasForeignKey("SupplierId");
+                        .HasForeignKey("eEquipmentTypeId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.EquipmentTypeSub", "eEquipmentTypeSub")
+                        .WithMany("EquipmentItems")
+                        .HasForeignKey("eEquipmentTypeSubId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Gasket", "eGasket")
+                        .WithMany("EquipmentItems")
+                        .HasForeignKey("eGasketId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.Material", "eInnerMaterial")
                         .WithMany("EquipmentItemInnerMaterials")
@@ -2286,76 +2315,86 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("eOuterMaterialId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Brand");
+                    b.HasOne("CPTool.Domain.Entities.ProcessCondition", "eProcessCondition")
+                        .WithMany("EquipmentItems")
+                        .HasForeignKey("eProcessConditionId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("EquipmentType");
+                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "eProcessFluid")
+                        .WithMany("EquipmentItems")
+                        .HasForeignKey("eProcessFluidId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("EquipmentTypeSub");
+                    b.HasOne("CPTool.Domain.Entities.Supplier", "eSupplier")
+                        .WithMany("EquipmentItems")
+                        .HasForeignKey("eSupplierId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Gasket");
+                    b.Navigation("eBrand");
 
-                    b.Navigation("ProcessCondition");
+                    b.Navigation("eEquipmentType");
 
-                    b.Navigation("ProcessFluidEquipment");
+                    b.Navigation("eEquipmentTypeSub");
 
-                    b.Navigation("Supplier");
+                    b.Navigation("eGasket");
 
                     b.Navigation("eInnerMaterial");
 
                     b.Navigation("eOuterMaterial");
+
+                    b.Navigation("eProcessCondition");
+
+                    b.Navigation("eProcessFluid");
+
+                    b.Navigation("eSupplier");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.EquipmentTypeSub", b =>
                 {
                     b.HasOne("CPTool.Domain.Entities.EquipmentType", "EquipmentType")
                         .WithMany("EquipmentTypeSubs")
-                        .HasForeignKey("EquipmentTypeId");
+                        .HasForeignKey("EquipmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("EquipmentType");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.InstrumentItem", b =>
                 {
-                    b.HasOne("CPTool.Domain.Entities.Brand", "Brand")
-                        .WithMany("InstrumentItems")
-                        .HasForeignKey("BrandId");
-
                     b.HasOne("CPTool.Domain.Entities.DeviceFunction", "DeviceFunction")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("DeviceFunctionId");
+                        .HasForeignKey("DeviceFunctionId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.DeviceFunctionModifier", "DeviceFunctionModifier")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("DeviceFunctionModifierId");
-
-                    b.HasOne("CPTool.Domain.Entities.Gasket", "Gasket")
-                        .WithMany("InstrumentItems")
-                        .HasForeignKey("GasketId");
+                        .HasForeignKey("DeviceFunctionModifierId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.MeasuredVariable", "MeasuredVariable")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("MeasuredVariableId");
+                        .HasForeignKey("MeasuredVariableId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.MeasuredVariableModifier", "MeasuredVariableModifier")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("MeasuredVariableModifierId");
-
-                    b.HasOne("CPTool.Domain.Entities.ProcessCondition", "ProcessCondition")
-                        .WithMany("InstrumentItems")
-                        .HasForeignKey("ProcessConditionId");
-
-                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "ProcessFluidInstrument")
-                        .WithMany("InstrumentItems")
-                        .HasForeignKey("ProcessFluidInstrumentId")
+                        .HasForeignKey("MeasuredVariableModifierId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.Readout", "Readout")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("ReadoutId");
+                        .HasForeignKey("ReadoutId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.Supplier", "Supplier")
+                    b.HasOne("CPTool.Domain.Entities.Brand", "iBrand")
                         .WithMany("InstrumentItems")
-                        .HasForeignKey("SupplierId");
+                        .HasForeignKey("iBrandId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Gasket", "iGasket")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("iGasketId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.Material", "iInnerMaterial")
                         .WithMany("InstrumentItemInnerMaterials")
@@ -2367,36 +2406,52 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("iOuterMaterialId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Brand");
+                    b.HasOne("CPTool.Domain.Entities.ProcessCondition", "iProcessCondition")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("iProcessConditionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "iProcessFluid")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("iProcessFluidId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Supplier", "iSupplier")
+                        .WithMany("InstrumentItems")
+                        .HasForeignKey("iSupplierId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("DeviceFunction");
 
                     b.Navigation("DeviceFunctionModifier");
 
-                    b.Navigation("Gasket");
-
                     b.Navigation("MeasuredVariable");
 
                     b.Navigation("MeasuredVariableModifier");
 
-                    b.Navigation("ProcessCondition");
-
-                    b.Navigation("ProcessFluidInstrument");
-
                     b.Navigation("Readout");
 
-                    b.Navigation("Supplier");
+                    b.Navigation("iBrand");
+
+                    b.Navigation("iGasket");
 
                     b.Navigation("iInnerMaterial");
 
                     b.Navigation("iOuterMaterial");
+
+                    b.Navigation("iProcessCondition");
+
+                    b.Navigation("iProcessFluid");
+
+                    b.Navigation("iSupplier");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.MWO", b =>
                 {
                     b.HasOne("CPTool.Domain.Entities.MWOType", "MWOType")
                         .WithMany("MWOs")
-                        .HasForeignKey("MWOTypeId");
+                        .HasForeignKey("MWOTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("MWOType");
                 });
@@ -2405,71 +2460,88 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.HasOne("CPTool.Domain.Entities.AlterationItem", "AlterationItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("AlterationItemId");
+                        .HasForeignKey("AlterationItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.Chapter", "Chapter")
                         .WithMany("MWOItems")
-                        .HasForeignKey("ChapterId");
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.ContingencyItem", "ContingencyItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("ContingencyItemId");
+                        .HasForeignKey("ContingencyItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.EHSItem", "EHSItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("EHSItemId");
+                        .HasForeignKey("EHSItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.ElectricalItem", "ElectricalItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("ElectricalItemId");
+                        .HasForeignKey("ElectricalItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.EngineeringCostItem", "EngineeringCostItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("EngineeringCostItemId");
+                        .HasForeignKey("EngineeringCostItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.EquipmentItem", "EquipmentItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("EquipmentItemId");
+                        .HasForeignKey("EquipmentItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.FoundationItem", "FoundationItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("FoundationItemId");
+                        .HasForeignKey("FoundationItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.InstrumentItem", "InstrumentItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("InstrumentItemId");
+                        .HasForeignKey("InstrumentItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.InsulationItem", "InsulationItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("InsulationItemId");
+                        .HasForeignKey("InsulationItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.MWO", "MWO")
                         .WithMany("MWOItems")
-                        .HasForeignKey("MWOId");
+                        .HasForeignKey("MWOId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.PaintingItem", "PaintingItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("PaintingItemId");
+                        .HasForeignKey("PaintingItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.PipingItem", "PipingItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("PipingItemId");
+                        .HasForeignKey("PipingItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.StructuralItem", "StructuralItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("StructuralItemId");
+                        .HasForeignKey("StructuralItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.TaxesItem", "TaxesItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("TaxesItemId");
+                        .HasForeignKey("TaxesItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.TestingItem", "TestingItem")
                         .WithMany("MWOItems")
-                        .HasForeignKey("TestingItemId");
+                        .HasForeignKey("TestingItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.UnitaryBasePrize", "UnitaryBasePrize")
                         .WithMany("MWOItems")
-                        .HasForeignKey("UnitaryBasePrizeId");
+                        .HasForeignKey("UnitaryBasePrizeId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AlterationItem");
 
@@ -2510,57 +2582,66 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.HasOne("CPTool.Domain.Entities.ConnectionType", "ConnectionType")
                         .WithMany("Nozzles")
-                        .HasForeignKey("ConnectionTypeId");
+                        .HasForeignKey("ConnectionTypeId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.EquipmentItem", "EquipmentItem")
                         .WithMany("Nozzles")
-                        .HasForeignKey("EquipmentItemId");
-
-                    b.HasOne("CPTool.Domain.Entities.Gasket", "Gasket")
-                        .WithMany("Nozzles")
-                        .HasForeignKey("GasketId");
+                        .HasForeignKey("EquipmentItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.InstrumentItem", "InstrumentItem")
                         .WithMany("Nozzles")
-                        .HasForeignKey("InstrumentItemId");
-
-                    b.HasOne("CPTool.Domain.Entities.Material", "Material")
-                        .WithMany("Nozzles")
-                        .HasForeignKey("MaterialID");
+                        .HasForeignKey("InstrumentItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CPTool.Domain.Entities.PipeAccesory", "PipeAccesory")
                         .WithMany("Nozzles")
-                        .HasForeignKey("PipeAccesoryId");
-
-                    b.HasOne("CPTool.Domain.Entities.PipeClass", "PipeClass")
-                        .WithMany("Nozzles")
-                        .HasForeignKey("PipeClassId");
+                        .HasForeignKey("PipeAccesoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.PipeDiameter", "PipeDiameter")
                         .WithMany("Nozzles")
-                        .HasForeignKey("PipeDiameterId");
+                        .HasForeignKey("PipeDiameterId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.PipingItem", "PipingItem")
                         .WithMany("Nozzles")
-                        .HasForeignKey("PipingItemId");
+                        .HasForeignKey("PipingItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CPTool.Domain.Entities.Gasket", "nGasket")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("nGasketId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Material", "nMaterial")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("nMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.PipeClass", "nPipeClass")
+                        .WithMany("Nozzles")
+                        .HasForeignKey("nPipeClassId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("ConnectionType");
 
                     b.Navigation("EquipmentItem");
 
-                    b.Navigation("Gasket");
-
                     b.Navigation("InstrumentItem");
 
-                    b.Navigation("Material");
-
                     b.Navigation("PipeAccesory");
-
-                    b.Navigation("PipeClass");
 
                     b.Navigation("PipeDiameter");
 
                     b.Navigation("PipingItem");
+
+                    b.Navigation("nGasket");
+
+                    b.Navigation("nMaterial");
+
+                    b.Navigation("nPipeClass");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipeAccesory", b =>
@@ -2595,21 +2676,24 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("OverallDropPressureId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.PipingItem", "PipingItem")
-                        .WithMany("PipeAccesorys")
-                        .HasForeignKey("PipingItemId");
-
-                    b.HasOne("CPTool.Domain.Entities.ProcessCondition", "ProcessCondition")
-                        .WithMany("PipeAccesorys")
-                        .HasForeignKey("ProcessConditionId");
-
-                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "ProcessFluid")
-                        .WithMany()
-                        .HasForeignKey("ProcessFluidId");
-
                     b.HasOne("CPTool.Domain.Entities.Unit", "Reynold")
                         .WithMany("ReynoldPipeAccesorys")
                         .HasForeignKey("ReynoldId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.PipingItem", "pPipingItem")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("pPipingItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CPTool.Domain.Entities.ProcessCondition", "pProcessCondition")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("pProcessConditionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "paProcessFluid")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("paProcessFluidId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("ElevationChange");
@@ -2624,13 +2708,13 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Navigation("OverallDropPressure");
 
-                    b.Navigation("PipingItem");
-
-                    b.Navigation("ProcessCondition");
-
-                    b.Navigation("ProcessFluid");
-
                     b.Navigation("Reynold");
+
+                    b.Navigation("pPipingItem");
+
+                    b.Navigation("pProcessCondition");
+
+                    b.Navigation("paProcessFluid");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipeDiameter", b =>
@@ -2645,38 +2729,30 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("OuterDiameterId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.PipeClass", "PipeClass")
-                        .WithMany("PipeDiameters")
-                        .HasForeignKey("PipeClassId");
-
                     b.HasOne("CPTool.Domain.Entities.Unit", "Thickness")
                         .WithMany("Thicknesss")
                         .HasForeignKey("ThicknessId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("CPTool.Domain.Entities.PipeClass", "dPipeClass")
+                        .WithMany("PipeDiameters")
+                        .HasForeignKey("dPipeClassId");
+
                     b.Navigation("InternalDiameter");
 
                     b.Navigation("OuterDiameter");
 
-                    b.Navigation("PipeClass");
-
                     b.Navigation("Thickness");
+
+                    b.Navigation("dPipeClass");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipingItem", b =>
                 {
-                    b.HasOne("CPTool.Domain.Entities.PipeDiameter", "Diameter")
-                        .WithMany("PipingItems")
-                        .HasForeignKey("DiameterId");
-
                     b.HasOne("CPTool.Domain.Entities.MWOItem", "FinishMWOItem")
                         .WithMany("FisnishPipingItems")
                         .HasForeignKey("FinishMWOItemId")
                         .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("CPTool.Domain.Entities.Material", "Material")
-                        .WithMany("PipingItems")
-                        .HasForeignKey("MaterialId");
 
                     b.HasOne("CPTool.Domain.Entities.Nozzle", "NozzleFinish")
                         .WithMany("FinishPipingItems")
@@ -2688,35 +2764,52 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("NozzleStartId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.PipeClass", "PipeClass")
-                        .WithMany("PipingItems")
-                        .HasForeignKey("PipeClassId");
-
-                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "ProcessFluidPiping")
-                        .WithMany("PipingItems")
-                        .HasForeignKey("ProcessFluidPipingId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("CPTool.Domain.Entities.MWOItem", "StartMWOItem")
                         .WithMany("StartPipingItems")
                         .HasForeignKey("StartMWOItemId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Diameter");
+                    b.HasOne("CPTool.Domain.Entities.PipeDiameter", "pDiameter")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("pDiameterId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Material", "pMaterial")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("pMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.PipeClass", "pPipeClass")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("pPipeClassId");
+
+                    b.HasOne("CPTool.Domain.Entities.ProcessCondition", "pProcessCondition")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("pProcessConditionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.ProcessFluid", "pProcessFluid")
+                        .WithMany("PipingItems")
+                        .HasForeignKey("pProcessFluidId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FinishMWOItem");
-
-                    b.Navigation("Material");
 
                     b.Navigation("NozzleFinish");
 
                     b.Navigation("NozzleStart");
 
-                    b.Navigation("PipeClass");
-
-                    b.Navigation("ProcessFluidPiping");
-
                     b.Navigation("StartMWOItem");
+
+                    b.Navigation("pDiameter");
+
+                    b.Navigation("pMaterial");
+
+                    b.Navigation("pPipeClass");
+
+                    b.Navigation("pProcessCondition");
+
+                    b.Navigation("pProcessFluid");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ProcessCondition", b =>
@@ -2794,24 +2887,26 @@ namespace CPTool.Infrastructure.Migrations
 
             modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrder", b =>
                 {
-                    b.HasOne("CPTool.Domain.Entities.Brand", "Brand")
-                        .WithMany("PurchaseOrders")
-                        .HasForeignKey("BrandId");
-
                     b.HasOne("CPTool.Domain.Entities.MWOItem", "MWOItem")
                         .WithMany("PurchaseOrders")
                         .HasForeignKey("MWOItemId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.Supplier", "Supplier")
+                    b.HasOne("CPTool.Domain.Entities.Brand", "pBrand")
                         .WithMany("PurchaseOrders")
-                        .HasForeignKey("SupplierId");
+                        .HasForeignKey("pBrandId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Brand");
+                    b.HasOne("CPTool.Domain.Entities.Supplier", "pSupplier")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("pSupplierId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("MWOItem");
 
-                    b.Navigation("Supplier");
+                    b.Navigation("pBrand");
+
+                    b.Navigation("pSupplier");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrderMWOItem", b =>
@@ -2819,7 +2914,7 @@ namespace CPTool.Infrastructure.Migrations
                     b.HasOne("CPTool.Domain.Entities.PurchaseOrder", "PurchaseOrder")
                         .WithMany("PurchaseOrderMWOItems")
                         .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("PurchaseOrder");
                 });
@@ -2828,15 +2923,18 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.HasOne("CPTool.Domain.Entities.TaxCodeLD", "TaxCodeLD")
                         .WithMany("Suppliers")
-                        .HasForeignKey("TaxCodeLDId");
+                        .HasForeignKey("TaxCodeLDId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.TaxCodeLP", "TaxCodeLP")
                         .WithMany("Suppliers")
-                        .HasForeignKey("TaxCodeLPId");
+                        .HasForeignKey("TaxCodeLPId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.VendorCode", "VendorCode")
                         .WithMany("Suppliers")
-                        .HasForeignKey("VendorCodeId");
+                        .HasForeignKey("VendorCodeId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("TaxCodeLD");
 
@@ -3039,6 +3137,8 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("InstrumentItems");
 
                     b.Navigation("PipeAccesorys");
+
+                    b.Navigation("PipingItems");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ProcessFluid", b =>
@@ -3046,6 +3146,8 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("EquipmentItems");
 
                     b.Navigation("InstrumentItems");
+
+                    b.Navigation("PipeAccesorys");
 
                     b.Navigation("PipingItems");
                 });

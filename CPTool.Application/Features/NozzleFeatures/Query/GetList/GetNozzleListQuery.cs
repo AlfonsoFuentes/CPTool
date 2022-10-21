@@ -13,9 +13,9 @@ namespace CPTool.Application.Features.NozzleFeatures.Query.GetList
 
             var retorno = element!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)||
                 element!.PipeDiameter!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                element!.PipeClass!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                element!.Gasket!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                element!.Material!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                element!.nPipeClass!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                element!.nGasket!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                element!.nMaterial!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                 element!.StreamType.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                 element!.ConnectionType!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                 ;

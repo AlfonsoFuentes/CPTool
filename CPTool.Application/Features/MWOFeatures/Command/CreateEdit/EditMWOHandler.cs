@@ -1,10 +1,10 @@
 ﻿namespace CPTool.Application.Features.MWOFeatures.CreateEdit
 {
-    internal class EditMWOHandler : EditBaseHandler<EditMWO, MWO>, IRequestHandler<EditMWO, Result<int>>
+    internal class MWOHandler : AddEditBaseHandler<AddMWO, EditMWO, MWO>, IRequestHandler<EditMWO, Result<int>>
     {
 
 
-        public EditMWOHandler(IUnitOfWork unitofwork, IMapper mapper, IEmailService emailService, ILogger<EditMWO> logger)
-            : base(unitofwork, mapper, emailService, logger) { }
+        public MWOHandler(IUnitOfWork unitofwork, IMapper mapper, ILogger<EditMWO> logger)
+            : base(unitofwork, mapper,  logger) { }
     }
 }

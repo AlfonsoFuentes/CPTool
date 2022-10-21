@@ -7,6 +7,7 @@
             CreateMap<BaseDomainModel, EditCommand>();
             CreateMap<AddCommand, BaseDomainModel>();
             CreateMap<EditCommand, BaseDomainModel>();
+            CreateMap<EditCommand, AddCommand>();
         }
     }
 }

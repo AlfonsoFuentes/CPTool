@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Mapping
 
             CreateMap<AddEquipmentType, EquipmentType>();
             CreateMap<EditEquipmentType, EquipmentType>();
+            CreateMap<EditEquipmentType, AddEquipmentType>();
         }
     }
 }

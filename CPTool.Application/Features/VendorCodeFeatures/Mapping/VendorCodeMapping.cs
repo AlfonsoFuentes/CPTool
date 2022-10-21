@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.VendorCodeFeatures.Mapping
             CreateMap<VendorCode, EditVendorCode>();
             CreateMap<EditVendorCode, VendorCode>();
             CreateMap<AddVendorCode, VendorCode>();
+            CreateMap<EditVendorCode, AddVendorCode>();
         }
     }
 }

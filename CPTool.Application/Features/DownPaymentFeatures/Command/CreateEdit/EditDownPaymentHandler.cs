@@ -1,11 +1,11 @@
 ﻿namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
 {
-    internal class EditDownPaymentHandler : EditBaseHandler<EditDownPayment, DownPayment>, IRequestHandler<EditDownPayment, Result<int>>
+    internal class DownPaymentHandler : AddEditBaseHandler<AddDownPayment,EditDownPayment, DownPayment>, IRequestHandler<EditDownPayment, Result<int>>
     {
 
 
-        public EditDownPaymentHandler(IUnitOfWork unitofwork, IMapper mapper, IEmailService emailService, ILogger<EditDownPayment> logger) 
-            : base(unitofwork, mapper, emailService, logger)
+        public DownPaymentHandler(IUnitOfWork unitofwork, IMapper mapper, ILogger<EditDownPayment> logger) 
+            : base(unitofwork, mapper,  logger)
         {
 
         }

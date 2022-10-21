@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.TestingItemFeatures.Mapping
         public TestingItemMapping()
         {
             CreateMap<TestingItem, EditTestingItem>();
-
+            CreateMap<EditTestingItem, AddTestingItem>();
             CreateMap<EditTestingItem, TestingItem>();
             CreateMap<AddTestingItem, TestingItem>();
         }

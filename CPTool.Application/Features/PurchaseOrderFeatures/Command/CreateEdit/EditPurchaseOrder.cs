@@ -1,4 +1,7 @@
-﻿using CPTool.Application.Features.MWOFeatures.CreateEdit;
+﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 {
@@ -25,8 +28,14 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
         public double Tax { get; set; }
         public double PrizeCurrencyTax { get; set; }
         public double TotalPrizeCurrency { get; set; }
-        //public int MWOId => MWO.Id;
-        public EditMWO MWO { get; set; } = new();
+        public int? MWOItemId => MWOItem?.Id==0?null: MWOItem?.Id;
+        public EditMWOItem? MWOItem { get; set; }
+
+        public int? pBrandId => pBrand?.Id == 0 ? null : pBrand?.Id;
+        public EditBrand? pBrand { get; set; }
+        public int? pSupplierId => pSupplier?.Id == 0 ? null : pSupplier?.Id;
+        public EditSupplier? pSupplier { get; set; }
+
     }
 
 }

@@ -14,6 +14,7 @@ namespace CPTool.Application.Features.GasketsFeatures.Mapping
             CreateMap<Gasket, EditGasket>();
             CreateMap<AddGasket, Gasket>();
             CreateMap<EditGasket, Gasket>();
+            CreateMap<EditGasket, AddGasket>();
         }
     }
 }

@@ -11,6 +11,8 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Mapping
             CreateMap<BrandSupplier,EditBrandSupplier>();
             CreateMap<EditBrandSupplier, BrandSupplier>();
             CreateMap<AddBrandSupplier, BrandSupplier>();
+            CreateMap<EditBrandSupplier, AddBrandSupplier>();
+
         }
     }
 }

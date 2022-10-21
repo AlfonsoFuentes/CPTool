@@ -16,9 +16,11 @@ namespace CPTool.NewPages.Dialogs.Nozzle.List
 
         [Parameter]
         [EditorRequired]
-        public EventCallback UpdateParent { get; set; }
+        public EventCallback UpdateParentList { get; set; }
 
         EditNozzle SelectedNozzle { get; set; } = new();
+
+        
 
     }
 }

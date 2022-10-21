@@ -23,9 +23,9 @@ namespace CPTool.Domain.Entities
 
         [ForeignKey("eOuterMaterialId")]
         public ICollection<EquipmentItem>? EquipmentItemOuterMaterials { get; set; } = null!;
-
+        [ForeignKey("pMaterialId")]
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;
-
+        [ForeignKey("nMaterialId")]
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
 
 

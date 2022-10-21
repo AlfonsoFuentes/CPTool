@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.PaintingItemFeatures.Mapping
             CreateMap<PaintingItem, EditPaintingItem>();
             CreateMap<EditPaintingItem, PaintingItem>();
             CreateMap<AddPaintingItem, PaintingItem>();
+            CreateMap<EditPaintingItem, AddPaintingItem>();
         }
     }
 }

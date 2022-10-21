@@ -12,17 +12,15 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
         Brand,
         Supplier
     }
-    public class AddBrandSupplier : AddCommand, IRequest<Result<int>>
+    public class AddBrandSupplier : AddCommand
     {
 
         public InletBy InletBy { get; set; } = InletBy.None;
-        public int? BrandId => BrandCommand?.Id != 0 ? null : BrandCommand.Id;
-        public EditBrand? BrandCommand { get; set; }
+        public int? BrandId { get; set; }
+        public int? SupplierId { get; set; }
+  
 
-        public int? SupplierId => SupplierCommand?.Id != 0 ? null : SupplierCommand.Id;
-        public EditSupplier? SupplierCommand { get; set; } 
-        
-
+       
     }
 
 }

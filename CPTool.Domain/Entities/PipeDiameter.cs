@@ -1,10 +1,13 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class PipeDiameter  : BaseDomainModel
+    public class PipeDiameter : BaseDomainModel
     {
-        public int? PipeClassId { get; set; }
-        public PipeClass?  PipeClass { get; set; }
+        public int? dPipeClassId { get; set; }
+        public PipeClass? dPipeClass { get; set; }
+
+        [ForeignKey("pDiameterId")]
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;
+        [ForeignKey("PipeDiameterId")]
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
         public int? OuterDiameterId { get; set; }
         public Unit? OuterDiameter { get; set; }

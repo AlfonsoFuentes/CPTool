@@ -9,7 +9,7 @@ using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit
 {
-    public class AddDeviceFunction : AddCommand, IRequest<Result<int>>
+    public class AddDeviceFunction : AddCommand
     {
 
        

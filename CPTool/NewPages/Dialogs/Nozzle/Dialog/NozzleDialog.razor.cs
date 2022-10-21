@@ -45,11 +45,7 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
         {
             if (arg == null || arg == "")
                 return "Must submit Nozzle name";
-            if (Model.ParentNozzles.Where(x => x.Id !=Model.Id).Any(x => x.Name == arg))
-            {
-                return $"Nozzle name: {arg} is in the list";
 
-            }
 
 
             return null;
@@ -59,8 +55,8 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
             if (arg == null || arg == "")
                 return "Must define pipe diameter";
 
-          
-            if (!Model.PipeClass.PipeDiameters.Any(x => x.Name == arg))
+
+            if (!Model.nPipeClass.PipeDiameters.Any(x => x.Name == arg))
             {
                 return $"Diameter : {arg} is not the list";
 
@@ -77,18 +73,19 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
 
             return null;
         }
-        async Task PipeClassChanged(EditPipeClass arg)
+        async void PipeClassChanged(EditPipeClass arg)
         {
             if (arg.Id != 0)
             {
-                GetByIdPipeClassQuery getclass = new() { Id=arg.Id }; 
-                Model.PipeClass = await mediator.Send(getclass);
+                GetByIdPipeClassQuery query = new() { Id = arg.Id };
+
+                Model.nPipeClass = await mediator.Send(query);
                 Model.PipeDiameter = new();
 
             }
             else
             {
-                Model.PipeClass = new();
+                Model.nPipeClass = new();
                 Model.PipeDiameter = new();
             }
             StateHasChanged();
@@ -98,7 +95,7 @@ namespace CPTool.NewPages.Dialogs.Nozzle.Dialog
             GetPipeClassListQuery pipeclaslist = new();
 
             GlobalTables.PipeClasses = await mediator.Send(pipeclaslist);
-            await PipeClassChanged(Model.PipeClass);
+            PipeClassChanged(Model.nPipeClass);
             StateHasChanged();
         }
     }

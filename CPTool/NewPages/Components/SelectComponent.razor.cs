@@ -14,7 +14,7 @@ namespace CPTool.NewPages.Components
         [Parameter]
         public EventCallback<T> SelectionChanged { get; set; }
 
-        public int ValueInt => Value.Id;
+        public int ValueInt => Value == null ? 0 : Value.Id;
         [Parameter]
         public string RequiredError { get; set; }
         [Parameter]
@@ -34,7 +34,7 @@ namespace CPTool.NewPages.Components
         async Task InternaSelectChanged(int id)
         {
             if (id != 0) Value = Elements.FirstOrDefault(x => x.Id == id);
-            else Value = new();
+            else Value = null;
             await ValueChanged.InvokeAsync(Value);
             await SelectionChanged.InvokeAsync(Value);
 

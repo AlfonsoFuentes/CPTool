@@ -5,7 +5,7 @@ using CPTool.Application.Features.BrandFeatures.Query.GetList;
 using CPTool.Application.Features.BrandSupplierFeatures;
 
 using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
-
+using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
 using CPTool.Domain.Entities;
@@ -23,14 +23,24 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         [Parameter]
         public MudForm form { get; set; } = null!;
 
-       
+        GetBrandSupplierListQuery brandsuplierlist = new();
         public async virtual Task Submit()
         {
             await form.Validate();
             if (form.IsValid)
             {
-                Model.InletBy = InletBy.Brand;
-                var result = await mediator.Send(Model);
+              
+                var resultbrand = await mediator.Send(Model.Brand);
+                if(resultbrand.Succeeded)
+                {
+                   
+                    var result = await mediator.Send(Model);
+                    if(result.Succeeded)
+                    {
+                        GlobalTables.BrandSuppliers = await mediator.Send(brandsuplierlist);
+                    }
+                }
+               
 
                 MudDialog.Close(DialogResult.Ok(Model.Brand));
             }

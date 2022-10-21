@@ -15,6 +15,7 @@ namespace CPTool.Application.Features.ContingencyItemFeatures.Mapping
 
             CreateMap<EditContingencyItem, ContingencyItem>();
             CreateMap<AddContingencyItem, ContingencyItem>();
+            CreateMap<EditContingencyItem, AddContingencyItem>();
         }
     }
 }

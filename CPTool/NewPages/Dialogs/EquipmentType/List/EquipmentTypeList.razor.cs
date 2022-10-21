@@ -9,7 +9,7 @@ namespace CPTool.NewPages.Dialogs.EquipmentType.List
         [Parameter]
         public RenderFragment OtherButtons { get; set; }
 
-      
-        
+
+        List<EditEquipmentTypeSub> EquipmentSubs => SelectedEqu.Id==0?new(): GlobalTables.EquipmentTypeSubs.Where(x => x.EquipmentTypeId == SelectedEqu.Id).ToList();
     }
 }

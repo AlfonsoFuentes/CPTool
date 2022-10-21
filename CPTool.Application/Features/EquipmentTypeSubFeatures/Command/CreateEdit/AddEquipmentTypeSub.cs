@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit
 {
 
-    public class AddEquipmentTypeSub : AddCommand, IRequest<Result<int>>
+    public class AddEquipmentTypeSub : AddCommand
     {
         public int? EquipmentTypeId { get; set; }
 

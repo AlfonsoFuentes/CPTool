@@ -1,38 +1,42 @@
 ﻿@if (debug)
 {
     <MudGrid>
-        <MudItem xs="5" sm="5">
+        <MudItem xs="12" sm="5">
+         @*   <MudStack Row="true">*@
             <MudField Variant="Variant.Outlined" FullWidth=true Margin="Margin.Dense">@Model.Name</MudField>
         </MudItem>
-        <MudItem xs="4" sm="4">
-            <MudNumericField @bind-Value=@Model.Value
-                         TextChanged=OnValueChanged
-                      Immediate=true
-                      Variant="Variant.Outlined"
-                      Margin="Margin.Dense"
-                    
-                      FullWidth=true
-                      Disabled=@Disable>
+        <MudItem xs="12" sm="3">
+          @*  <MudItem xs="12" sm="6">*@
+                <MudNumericField @bind-Value=@Model.Value
+                             TextChanged=OnValueChanged
+                             Immediate=true
+                             Variant="Variant.Outlined"
+                             Margin="Margin.Dense"
+                             HideSpinButtons=true
+                             FullWidth=true
+                             Disabled=@Disable>
 
-            </MudNumericField>
-        </MudItem>
-        <MudItem xs="3" sm="3">
-            <MudSelect Dense="true"
-                   Margin="Margin.Dense"
-                   T="string"
-                   FullWidth=true
-                   AdornmentColor="Color.Primary"
-                   AnchorOrigin="Origin.BottomCenter"
-                   Value=@Model.UnitName
-                   ValueChanged="UnitChanged"
-                   Variant="Variant.Outlined">
+                </MudNumericField>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudSelect Dense="true"
+                       Margin="Margin.Dense"
+                       T="string"
+                       FullWidth=true
+                       AdornmentColor="Color.Primary"
+                       AnchorOrigin="Origin.BottomCenter"
+                       Value=@Model.UnitName
+                       ValueChanged="UnitChanged"
+                       Variant="Variant.Outlined">
 
-                @foreach (var item in Model.UnitsList)
-                {
-                    <MudSelectItem Value="item.Name">@item.Symbol</MudSelectItem>
-                }
+                    @foreach (var item in Model.UnitsList)
+                    {
+                        <MudSelectItem Value="item.Name">@item.Symbol</MudSelectItem>
+                    }
 
-            </MudSelect>
+                </MudSelect>
+        @*    </MudItem>*@
+  @*  </MudStack>*@
         </MudItem>
     </MudGrid>
 

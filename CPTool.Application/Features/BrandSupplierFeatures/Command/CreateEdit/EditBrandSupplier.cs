@@ -5,14 +5,18 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
 {
     public class EditBrandSupplier : EditCommand, IRequest<Result<int>>
     {
-
-        public InletBy InletBy { get; set; } = InletBy.None;
-        //public int? BrandId => BrandCommand?.Id != 0 ? null : BrandCommand.Id;
+       
+        public int BrandId => Brand==null? 0 :Brand!.Id;
         public EditBrand? Brand { get; set; }
 
-        //public int? SupplierId => SupplierCommand?.Id != 0 ? null : SupplierCommand.Id;
+        public int SupplierId => Supplier==null? 0 : Supplier!.Id;
         public EditSupplier? Supplier { get; set; }
 
+        public override void CreateMasterRelations<T1, T2>(T1 Master1, T2 Master2)
+        {
+            Brand = Master1 as EditBrand;
+            Supplier = Master2 as EditSupplier;
+        }
     }
 
 }

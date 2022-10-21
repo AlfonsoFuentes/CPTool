@@ -6,11 +6,11 @@
         public string TagLetter { get; set; } = string.Empty;
 
 
-        public List<EditEquipmentTypeSub>? EquipmentTypeSubs { get; set; }
+        public List<EditEquipmentTypeSub>? EquipmentTypeSubs { get; set; } = new();
         public override T AddDetailtoMaster<T>() 
         {
             T detail = new();
-            (detail as AddEquipmentTypeSub)!.EquipmentTypeId = Id;
+            (detail as EditEquipmentTypeSub)!.EquipmentType = this;
             return detail!;
         }
     }

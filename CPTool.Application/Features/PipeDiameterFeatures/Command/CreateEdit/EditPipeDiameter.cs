@@ -8,29 +8,38 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
 {
     public class EditPipeDiameter : EditCommand, IRequest<Result<int>>, IDisposable
     {
-       
+        public EditPipeDiameter()
+        {
+            OuterDiameter.Name = "Outer diameter";
+            InternalDiameter.Name = "Inner diameter";
+            Thickness.Name = "Thickness";
+            OuterDiameter.Amount!.OnValueChanged += CalculateInternalDiameter;
+            Thickness.Amount!.OnValueChanged += CalculateInternalDiameter;
+
+        }
+
         public List<EditPipingItem>? PipingItems { get; set; } = null!;
         public List<EditNozzle>? Nozzles { get; set; } = null!;
-        //public int? ODId => OD.Id == 0 ? null : OD.Id;
-        public EditUnit OD { get; set; } = new(LengthUnits.Inch);
-        //public int? IDId => ID.Id == 0 ? null : ID.Id;
-        public EditUnit ID { get; set; } = new(LengthUnits.Inch);
+        public int? OuterDiameterId => OuterDiameter.Id == 0 ? null : OuterDiameter.Id;
+        public EditUnit OuterDiameter { get; set; } = new(LengthUnits.Inch);
+        public int? InternalDiameterId => InternalDiameter.Id == 0 ? null : InternalDiameter.Id;
+        public EditUnit InternalDiameter { get; set; } = new(LengthUnits.Inch);
 
 
         public int? ThicknessId => Thickness.Id == 0 ? null : Thickness.Id;
         public EditUnit Thickness { get; set; } = new(LengthUnits.Inch);
 
-        //public int? PipeClassId => PipeClass?.Id == 0 ? null : PipeClass?.Id;
-        public EditPipeClass? PipeClass { get; set; } = new();
+        public int? dPipeClassId => dPipeClass?.Id == 0 ? null : dPipeClass?.Id;
+        public EditPipeClass? dPipeClass { get; set; }
 
         void CalculateInternalDiameter()
         {
-            ID.Amount = OD.Amount - 2 * Thickness.Amount;
+            InternalDiameter.Amount = OuterDiameter.Amount - 2 * Thickness.Amount;
         }
 
         public void Dispose()
         {
-            OD.Amount!.OnValueChanged -= CalculateInternalDiameter;
+            OuterDiameter.Amount!.OnValueChanged -= CalculateInternalDiameter;
             Thickness.Amount!.OnValueChanged -= CalculateInternalDiameter;
         }
     }

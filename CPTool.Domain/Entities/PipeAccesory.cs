@@ -2,13 +2,13 @@
 {
     public class PipeAccesory  : BaseDomainModel
     {
-        public int? PipingItemId { get; set; }
-        public PipingItem? PipingItem { get; set; }
-        public int? ProcessConditionId { get; set; }
-        public ProcessCondition? ProcessCondition { get; set; }
+        public int? pPipingItemId { get; set; }
+        public PipingItem? pPipingItem { get; set; }
+        public int? pProcessConditionId { get; set; }
+        public ProcessCondition? pProcessCondition { get; set; }
 
-        public int? ProcessFluidId { get; set; }
-        public ProcessFluid? ProcessFluid { get; set; }
+        public int? paProcessFluidId { get; set; }
+        public ProcessFluid? paProcessFluid { get; set; }
         public int? FrictionId { get; }
         public Unit? Friction { get; set; }
         public int? ReynoldId { get; }
@@ -26,7 +26,7 @@
 
         public FlowDirection FlowDirection { get; set; }
         public PipeAccesorySectionType SectionType { get; set; }
-
+        [ForeignKey("PipeAccesoryId")]
         public ICollection<Nozzle>? Nozzles { get; set; }
     }
 

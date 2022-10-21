@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.AlterationItemFeatures.Mapping
 
             CreateMap<AddAlterationItem, AlterationItem>();
             CreateMap<EditAlterationItem, AlterationItem>();
+            CreateMap<EditAlterationItem, AddAlterationItem>();
         }
     }
 }

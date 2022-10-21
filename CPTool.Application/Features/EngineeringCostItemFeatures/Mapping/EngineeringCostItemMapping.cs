@@ -11,8 +11,8 @@ namespace CPTool.Application.Features.EngineeringCostItemFeatures.Mapping
         public EngineeringCostItemMapping()
         {
             CreateMap<EngineeringCostItem, EditEngineeringCostItem>();
-           
 
+            CreateMap<EditEngineeringCostItem, AddEngineeringCostItem>();
             CreateMap<EditEngineeringCostItem, EngineeringCostItem>();
             CreateMap<AddEngineeringCostItem, EngineeringCostItem>();
         }
