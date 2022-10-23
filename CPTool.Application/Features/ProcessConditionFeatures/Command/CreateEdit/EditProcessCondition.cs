@@ -1,6 +1,7 @@
 ﻿using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
 using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.UnitFeatures.CreateEdit;
 using CPTool.UnitsSystem;
 
@@ -45,6 +46,6 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.CreateEdit
         public int? SpecificCpId => SpecificCp?.Id == 0 ? null : SpecificCp?.Id;
         public EditUnit? SpecificCp { get; set; } = new(MassEntropyUnits.Kcal_Kg_C);
 
-
+        public EditProcessFluid ProcessFluid { get; set; } = new();
     }
 }

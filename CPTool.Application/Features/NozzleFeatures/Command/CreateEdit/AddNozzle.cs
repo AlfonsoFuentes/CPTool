@@ -20,7 +20,7 @@ namespace CPTool.Application.Features.NozzleFeatures.CreateEdit
         public int? PipeAccesoryId { get; set; }
         public int Order { get; set; }
 
-
+        public int? ConnectedToId { get; set; }
         public int? EquipmentItemId { get; set; }
         public int? InstrumentItemId { get; set; }
 

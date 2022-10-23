@@ -8,6 +8,7 @@
 @using CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit
 @using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit
 @using CPTool.Application.Features.NozzleFeatures.CreateEdit
+@using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 @using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
 @using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit
 @using CPTool.Application.Features.ReadoutFeatures.CreateEdit
@@ -16,9 +17,17 @@
 {
     <MudGrid>
         <MudItem xs="12" sm="6">
+            <SelectComponent T="EditPipeClass"
+                         Elements=@GlobalTables.PipeClasses
+                         SelectionChanged="OnChangePipeClass"
+                         Label="Pipe Class"
+                         @bind-Value="@Model.pPipeClass">
 
+
+            </SelectComponent>
             <SelectComponent T="EditPipeDiameter"
-                         Elements=@GlobalTables.PipeDiameters
+                         Disable=@(Model.pPipeClass==null?true:false)
+                         Elements=@(Model.pPipeClass==null?new():Model.pPipeClass.PipeDiameters)
                          Label="Diameter"
                          @bind-Value="@Model.pDiameter">
 
@@ -38,7 +47,7 @@
 
 
             </SelectComponent>
-            <MudSwitch @bind-Checked="@Model.Insulation" Color="Color.Primary" />
+            <MudSwitch @bind-Checked="@Model.Insulation" Color="Color.Primary" Label="Insulation" LabelPosition="LabelPosition.Start"/>
             
 
             <MudTextField T="string" @bind-Value="Model.TagNumber"
@@ -63,9 +72,8 @@
         <MudItem xs="12" sm="6">
 
             <SelectComponent T="EditMWOItem"
-                         Elements=@(Model.Id==0?
-                         MWOItems.Where(x=>x.ChapterId==4||x.ChapterId==6||x.ChapterId==7).ToList():
-                         MWOItems.Where(x=>x.Id!=Model.Id).Where(x=>x.ChapterId==4||x.ChapterId==6||x.ChapterId==7).ToList())
+                         Elements=@MWOItemsStarts
+                         SelectionChanged="OnChangeEquipmentStart"
                          Label="Pipe Start in"
                          @bind-Value="@Model.StartMWOItem">
 
@@ -74,14 +82,14 @@
             <SelectComponent T="EditNozzle"
                          Elements=@NozzlesStart
                          Label="Nozzle Start"
+                         SelectionChanged="OnChangeNozzleStart"
                          @bind-Value="@Model.NozzleStart">
 
 
             </SelectComponent>
             <SelectComponent T="EditMWOItem"
-                         Elements=@(Model.Id==0?
-                         MWOItems.Where(x=>x.ChapterId==4||x.ChapterId==6||x.ChapterId==7).ToList():
-                         MWOItems.Where(x=>x.Id!=Model.Id).Where(x=>x.ChapterId==4||x.ChapterId==6||x.ChapterId==7).ToList())
+                         Elements=@MWOItemsFinish
+                         SelectionChanged="OnChangeEquipmentFinish"
                          Label="Pipe Finish in"
                          @bind-Value="@Model.FinishMWOItem">
 
@@ -89,6 +97,7 @@
             </SelectComponent>
             <SelectComponent T="EditNozzle"
                          Elements=@NozzlesFinish
+                         SelectionChanged="OnChangeNozzleFinish"
                          Label="Nozzle Finish"
                          @bind-Value="@Model.NozzleFinish">
 

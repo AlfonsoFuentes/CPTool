@@ -70,7 +70,7 @@ namespace CPTool.Infrastructure.Repositories
 
         public async virtual Task<T> GetByIdAsync(int id)
         {
-            var result2 = await dbcontext.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        
             var result = await dbcontext.Set<T>().FindAsync(id);
             return result!;
         }

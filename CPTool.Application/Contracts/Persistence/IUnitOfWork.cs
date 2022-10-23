@@ -16,5 +16,8 @@ namespace CPTool.Application.Contracts.Persistence
 
         IRepositoryBrand RepositoryBrand { get; }
         IRepositorySupplier RepositorySupplier { get; }
+        IRepositoryEquipmentItem RepositoryEquipmentItem { get; }
+        IRepositoryInstrumentItem RepositoryInstrumentItem { get; }
+        IRepositoryPipingItem RepositoryPipingItem { get; }
     }
 }

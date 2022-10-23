@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Infrastructure.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20221020233515_processconditionpipng")]
-    partial class processconditionpipng
+    [Migration("20221022213039_propertypackage")]
+    partial class propertypackage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1225,6 +1225,9 @@ namespace CPTool.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("ConnectedToId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ConnectionTypeId")
                         .HasColumnType("int");
 
@@ -1279,6 +1282,8 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConnectedToId");
 
                     b.HasIndex("ConnectionTypeId");
 
@@ -1550,6 +1555,10 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TagNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -1699,6 +1708,9 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PropertyPackageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TagLetter")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1711,7 +1723,42 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PropertyPackageId");
+
                     b.ToTable("ProcessFluids");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.PropertyPackage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PropertyPackages");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrder", b =>
@@ -2449,7 +2496,7 @@ namespace CPTool.Infrastructure.Migrations
                     b.HasOne("CPTool.Domain.Entities.MWOType", "MWOType")
                         .WithMany("MWOs")
                         .HasForeignKey("MWOTypeId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("MWOType");
                 });
@@ -2578,6 +2625,11 @@ namespace CPTool.Infrastructure.Migrations
 
             modelBuilder.Entity("CPTool.Domain.Entities.Nozzle", b =>
                 {
+                    b.HasOne("CPTool.Domain.Entities.MWOItem", "ConnectedTo")
+                        .WithMany("NozzlesConnecteds")
+                        .HasForeignKey("ConnectedToId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("CPTool.Domain.Entities.ConnectionType", "ConnectionType")
                         .WithMany("Nozzles")
                         .HasForeignKey("ConnectionTypeId")
@@ -2622,6 +2674,8 @@ namespace CPTool.Infrastructure.Migrations
                         .WithMany("Nozzles")
                         .HasForeignKey("nPipeClassId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ConnectedTo");
 
                     b.Navigation("ConnectionType");
 
@@ -2783,7 +2837,8 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasOne("CPTool.Domain.Entities.ProcessCondition", "pProcessCondition")
                         .WithMany("PipingItems")
-                        .HasForeignKey("pProcessConditionId");
+                        .HasForeignKey("pProcessConditionId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.ProcessFluid", "pProcessFluid")
                         .WithMany("PipingItems")
@@ -2882,6 +2937,16 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("VolumetricFlow");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.ProcessFluid", b =>
+                {
+                    b.HasOne("CPTool.Domain.Entities.PropertyPackage", "PropertyPackage")
+                        .WithMany("ProcessFluids")
+                        .HasForeignKey("PropertyPackageId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("PropertyPackage");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrder", b =>
                 {
                     b.HasOne("CPTool.Domain.Entities.MWOItem", "MWOItem")
@@ -2911,7 +2976,7 @@ namespace CPTool.Infrastructure.Migrations
                     b.HasOne("CPTool.Domain.Entities.PurchaseOrder", "PurchaseOrder")
                         .WithMany("PurchaseOrderMWOItems")
                         .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("PurchaseOrder");
                 });
@@ -3075,6 +3140,8 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.Navigation("FisnishPipingItems");
 
+                    b.Navigation("NozzlesConnecteds");
+
                     b.Navigation("PurchaseOrders");
 
                     b.Navigation("StartPipingItems");
@@ -3147,6 +3214,11 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("PipeAccesorys");
 
                     b.Navigation("PipingItems");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.PropertyPackage", b =>
+                {
+                    b.Navigation("ProcessFluids");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrder", b =>

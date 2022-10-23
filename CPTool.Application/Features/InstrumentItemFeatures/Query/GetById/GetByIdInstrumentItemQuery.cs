@@ -20,7 +20,7 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.Query.GetById
         }
         public async Task<EditInstrumentItem> Handle(GetByIdInstrumentItemQuery request, CancellationToken cancellationToken)
         {
-            var table = await _unitofwork.Repository<InstrumentItem>().GetByIdAsync(request.Id);
+            var table = await _unitofwork.RepositoryInstrumentItem.GetByIdAsync(request.Id);
 
             return _mapper.Map<EditInstrumentItem>(table);
 

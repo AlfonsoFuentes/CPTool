@@ -9,6 +9,7 @@ using CPTool.Application.Features.FoundationItemFeatures.CreateEdit;
 using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 using CPTool.Application.Features.InsulationItemFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.PaintingItemFeatures.CreateEdit;
 using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
 using CPTool.Application.Features.StructuralItemFeatures.CreateEdit;
@@ -80,8 +81,26 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
             }
             return "";
         }
-
-        public void AssignInternalItem()
+        public List<EditNozzle> Nozzles => GetNozzles();
+        List<EditNozzle> GetNozzles()
+        {
+            List<EditNozzle> nozzles = new();
+            switch (ChapterId)
+            {
+                case 4:
+                    nozzles = EquipmentItem!.Nozzles!;
+                    break;
+                case 6:
+                    nozzles = PipingItem!.Nozzles!;
+                    break;
+                case 7:
+                    nozzles = InstrumentItem!.Nozzles!;
+                    break;
+            }
+            return nozzles!;
+        }
+        
+    public void AssignInternalItem()
         {
             var chapterlist= MWO!.MWOItems!.Where(x => x.ChapterId!=0).ToList();
 

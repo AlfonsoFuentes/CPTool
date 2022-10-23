@@ -16,23 +16,26 @@
     <DetailContextTh>
         <MudTh Style="width:40px">#</MudTh>
         <MudTh Style="width:40px">Name</MudTh>
+        <MudTh Style="width:40px">Connected to</MudTh>
         <MudTh Style="width:40px">In/Out</MudTh>
         <MudTh Style="width:40px">Diameter</MudTh>
         <MudTh Style="width:40px">Class</MudTh>
         <MudTh Style="width:40px">Material</MudTh>
         <MudTh Style="width:40px">Connection Type</MudTh>
-        <MudTh Style="width:40px">Gasket</MudTh>
+  
 
     </DetailContextTh>
     <DetailContextTd>
         <MudTd DataLabel="Name">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Connected">
+            @(context.ConnectedTo == null ? "" : context.ConnectedTo.TagId)</MudTd>
         <MudTd DataLabel="In/Out">@context.StreamType.ToString()</MudTd>
         <MudTd DataLabel="Diameter">@context.PipeDiameter?.Name</MudTd>
         <MudTd DataLabel="Class">@context.nPipeClass?.Name</MudTd>
         <MudTd DataLabel="Material">@context.nMaterial?.Name</MudTd>
         <MudTd DataLabel="Connection Type">@context.ConnectionType?.Name</MudTd>
-        <MudTd DataLabel="Gasket">@context.nGasket?.Name</MudTd>@**@
+      
 
 
     </DetailContextTd>

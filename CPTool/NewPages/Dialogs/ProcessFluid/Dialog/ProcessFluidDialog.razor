@@ -10,6 +10,7 @@
 @using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
 @using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
 @using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
+@using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
 @if (debug)
 {
     <MudDialog DisableSidePadding="true">
@@ -24,7 +25,6 @@
                             <MudTextField @bind-Value="Model.Name"
                                       Variant="Variant.Outlined"
                                       Margin="Margin.Dense"
-                                   
                                       Immediate="true"
                                       Required=true
                                       Validation="@(new Func<string, string>(ValidateProcessFluidName))"
@@ -32,12 +32,17 @@
                             <MudTextField @bind-Value="Model.TagLetter"
                                       Variant="Variant.Outlined"
                                       Margin="Margin.Dense"
-                                     
                                       Immediate="true"
                                       Required=true
                                       Validation="@(new Func<string, string>(ValidateProcessFluidName))"
                                       Label="Abreviation"></MudTextField>
-                          
+                            <SelectComponent T="EditPropertyPackage"
+                                         Elements=@GlobalTables.PropertyPackages
+                                         Label="Property Package"
+                                         @bind-Value="@Model.PropertyPackage">
+
+
+                            </SelectComponent>
                         </MudForm>
                     </CascadingValue>
 

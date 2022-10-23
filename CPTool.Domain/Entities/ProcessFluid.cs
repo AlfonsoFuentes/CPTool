@@ -1,8 +1,8 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class ProcessFluid  : BaseDomainModel
+    public class ProcessFluid : BaseDomainModel
     {
-        
+
         [ForeignKey("eProcessFluidId")]
         public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
         [ForeignKey("iProcessFluidId")]
@@ -12,6 +12,8 @@
         [ForeignKey("paProcessFluidId")]
         public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
         public string TagLetter { get; set; } = "";
-    }
 
+        public int? PropertyPackageId { get; set; }
+        public PropertyPackage? PropertyPackage { get; set; }
+    }
 }

@@ -20,7 +20,7 @@ namespace CPTool.Application.Features.PipingItemFeatures.Query.GetById
         }
         public async Task<EditPipingItem> Handle(GetByIdPipingItemQuery request, CancellationToken cancellationToken)
         {
-            var table = await _unitofwork.Repository<PipingItem>().GetByIdAsync(request.Id);
+            var table = await _unitofwork.RepositoryPipingItem.GetByIdAsync(request.Id);
 
             return _mapper.Map<EditPipingItem>(table);
 

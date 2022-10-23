@@ -19,6 +19,7 @@
     <ProjectReference Include="..\CPTool.Domain\CPTool.Domain.csproj" />
     <ProjectReference Include="..\CPtool.ExtensionMethods\CPtool.ExtensionMethods.csproj" />
     <ProjectReference Include="..\CPTool.UnitsSystem\CPTool.UnitsSystem.csproj" />
+    <ProjectReference Include="..\EquipmentCalculation\EquipmentCalculation.csproj" />
   </ItemGroup>
 
 </Project>

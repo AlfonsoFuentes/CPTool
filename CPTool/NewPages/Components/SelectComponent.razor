@@ -16,7 +16,7 @@
            Variant="Variant.Outlined"
            Validation="@Validation"
            ValueChanged=InternaSelectChanged>
-        <MudSelectItem Value=ValueInt>Must select @Label ...</MudSelectItem>
+        <MudSelectItem Value=0>Must select @Label ...</MudSelectItem>
         @foreach (var item in Elements)
         {
             <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>

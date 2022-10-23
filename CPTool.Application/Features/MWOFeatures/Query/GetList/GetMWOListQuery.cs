@@ -22,7 +22,7 @@ namespace CPTool.Application.Features.MWOFeatures.Query.GetList
         }
         public async Task<List<EditMWO>> Handle(GetMWOListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<MWO>().GetAllAsync();
+            var list = await _unitofwork.RepositoryMWO.GetAllAsync();
 
             return _mapper.Map<List<EditMWO>>(list);
 

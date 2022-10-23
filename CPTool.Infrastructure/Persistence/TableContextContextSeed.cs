@@ -46,6 +46,10 @@ namespace CPTool.Infrastructure.Persistence
                 {
                     AddDeviceFunctionModifier(db);
                 }
+                if(!db.PropertyPackages!.Any())
+                {
+                    AddPropertyPackage(db);
+                }
             }
         }
 
@@ -943,6 +947,27 @@ namespace CPTool.Infrastructure.Persistence
 
 
             context.DeviceFunctionModifiers!.AddRange(variables);
+
+            context.SaveChanges();
+        }
+        static void AddPropertyPackage(TableContext context)
+        {
+            PropertyPackage[] variables = new[]
+            {
+
+                 new PropertyPackage()
+                 {
+                     Name="Water",
+
+                 },
+
+
+
+
+            };
+
+
+            context.PropertyPackages!.AddRange(variables);
 
             context.SaveChanges();
         }

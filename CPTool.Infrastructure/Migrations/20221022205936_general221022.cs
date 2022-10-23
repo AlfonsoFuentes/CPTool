@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPTool.Infrastructure.Migrations
 {
-    public partial class Generaloct192022 : Migration
+    public partial class general221022 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -384,6 +384,7 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    TagLetter = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -615,7 +616,8 @@ namespace CPTool.Infrastructure.Migrations
                         name: "FK_MWOs_MWOTypes_MWOTypeId",
                         column: x => x.MWOTypeId,
                         principalTable: "MWOTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1235,7 +1237,8 @@ namespace CPTool.Infrastructure.Migrations
                         name: "FK_PurchaseOrderMWOItems_PurchaseOrders_PurchaseOrderId",
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1244,6 +1247,7 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ConnectedToId = table.Column<int>(type: "int", nullable: true),
                     nPipeClassId = table.Column<int>(type: "int", nullable: true),
                     PipeDiameterId = table.Column<int>(type: "int", nullable: true),
                     ConnectionTypeId = table.Column<int>(type: "int", nullable: true),
@@ -1293,6 +1297,11 @@ namespace CPTool.Infrastructure.Migrations
                         principalTable: "Materials",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_Nozzles_MWOItems_ConnectedToId",
+                        column: x => x.ConnectedToId,
+                        principalTable: "MWOItems",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Nozzles_PipeClasss_nPipeClassId",
                         column: x => x.nPipeClassId,
                         principalTable: "PipeClasss",
@@ -1310,6 +1319,7 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    pProcessConditionId = table.Column<int>(type: "int", nullable: true),
                     pMaterialId = table.Column<int>(type: "int", nullable: true),
                     pProcessFluidId = table.Column<int>(type: "int", nullable: true),
                     pDiameterId = table.Column<int>(type: "int", nullable: true),
@@ -1320,6 +1330,7 @@ namespace CPTool.Infrastructure.Migrations
                     pPipeClassId = table.Column<int>(type: "int", nullable: true),
                     TagId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Insulation = table.Column<bool>(type: "bit", nullable: false),
+                    TagNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -1364,6 +1375,11 @@ namespace CPTool.Infrastructure.Migrations
                         name: "FK_PipingItems_PipeDiameters_pDiameterId",
                         column: x => x.pDiameterId,
                         principalTable: "PipeDiameters",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PipingItems_ProcessConditions_pProcessConditionId",
+                        column: x => x.pProcessConditionId,
+                        principalTable: "ProcessConditions",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PipingItems_ProcessFluids_pProcessFluidId",
@@ -1664,6 +1680,11 @@ namespace CPTool.Infrastructure.Migrations
                 column: "MWOTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Nozzles_ConnectedToId",
+                table: "Nozzles",
+                column: "ConnectedToId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Nozzles_ConnectionTypeId",
                 table: "Nozzles",
                 column: "ConnectionTypeId");
@@ -1807,6 +1828,11 @@ namespace CPTool.Infrastructure.Migrations
                 name: "IX_PipingItems_pPipeClassId",
                 table: "PipingItems",
                 column: "pPipeClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PipingItems_pProcessConditionId",
+                table: "PipingItems",
+                column: "pProcessConditionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PipingItems_pProcessFluidId",
@@ -2011,6 +2037,10 @@ namespace CPTool.Infrastructure.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_PipeAccesorys_ProcessConditions_pProcessConditionId",
                 table: "PipeAccesorys");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_PipingItems_ProcessConditions_pProcessConditionId",
+                table: "PipingItems");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_EquipmentItems_ProcessFluids_eProcessFluidId",
@@ -2219,10 +2249,19 @@ namespace CPTool.Infrastructure.Migrations
                 name: "PipingItems");
 
             migrationBuilder.DropTable(
+                name: "Nozzles");
+
+            migrationBuilder.DropTable(
+                name: "ConnectionTypes");
+
+            migrationBuilder.DropTable(
                 name: "MWOItems");
 
             migrationBuilder.DropTable(
-                name: "Nozzles");
+                name: "PipeAccesorys");
+
+            migrationBuilder.DropTable(
+                name: "PipeDiameters");
 
             migrationBuilder.DropTable(
                 name: "StructuralItems");
@@ -2235,15 +2274,6 @@ namespace CPTool.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "UnitaryBasePrizes");
-
-            migrationBuilder.DropTable(
-                name: "ConnectionTypes");
-
-            migrationBuilder.DropTable(
-                name: "PipeAccesorys");
-
-            migrationBuilder.DropTable(
-                name: "PipeDiameters");
 
             migrationBuilder.DropTable(
                 name: "PipeClasss");

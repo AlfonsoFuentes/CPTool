@@ -13,7 +13,7 @@ namespace CPTool.Application.Features.ProcessFluidFeatures.CreateEdit
 {
     public class AddProcessFluid : AddCommand
     {
-
+        public int? PropertyPackageId { get; set; }
         public string TagLetter { get; set; } = "";
 
     }

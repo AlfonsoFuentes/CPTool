@@ -2,6 +2,9 @@
 {
     public class MWOItem  : BaseDomainModel
     {
+        [ForeignKey("ConnectedToId")]
+        public ICollection<Nozzle>? NozzlesConnecteds { get; set; }
+
         [ForeignKey("StartMWOItemId")]
         public ICollection<PipingItem>? StartPipingItems { get; set; }
         [ForeignKey("FinishMWOItemId")]

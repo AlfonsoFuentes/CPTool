@@ -3,6 +3,7 @@ using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
 using CPTool.Application.Features.GasketsFeatures.CreateEdit;
 using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
@@ -15,15 +16,16 @@ namespace CPTool.Application.Features.NozzleFeatures.CreateEdit
         public int? PipeAccesoryId => PipeAccesory?.Id == 0 ? null : PipeAccesory?.Id;
         public EditPipeAccesory? PipeAccesory { get; set; }
         public int Order { get; set; }
-       
+        public int? ConnectedToId => ConnectedTo?.Id == 0 ? null : ConnectedTo?.Id;
+        public EditMWOItem? ConnectedTo { get; set; } = new();
 
         public int? EquipmentItemId => EquipmentItem?.Id == 0  ? null : EquipmentItem?.Id;
-        public EditEquipmentItem? EquipmentItem { get; set; } 
+        public EditEquipmentItem? EquipmentItem { get; set; } = new();
         public int? InstrumentItemId => InstrumentItem?.Id == 0  ? null : InstrumentItem?.Id;
-        public EditInstrumentItem? InstrumentItem { get; set; }
+        public EditInstrumentItem? InstrumentItem { get; set; } = new();
 
         public int? PipingItemId => PipingItem?.Id == 0  ? null : PipingItem?.Id;
-        public EditPipingItem? PipingItem { get; set; } 
+        public EditPipingItem? PipingItem { get; set; } = new();
 
         public int? PipeDiameterId => PipeDiameter?.Id == 0  ? null : PipeDiameter?.Id;
         public EditPipeDiameter? PipeDiameter { get; set; } = new();

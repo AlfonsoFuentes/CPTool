@@ -5,6 +5,7 @@ using CPTool.Domain;
 using CPTool.Domain.Entities;
 using CPTool.Domain.Common;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using CPTool.UnitsSystem;
 
 namespace CPTool.Infrastructure.Persistence
 {
@@ -119,8 +120,11 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<Nozzle>().HasOne(c => c.nMaterial).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Nozzle>().HasOne(c => c.PipeDiameter).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Nozzle>().HasOne(c => c.nPipeClass).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Nozzle>().HasOne(c => c.ConnectedTo).WithMany(t => t.NozzlesConnecteds).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Nozzle>().Navigation(e => e.ConnectedTo).AutoInclude();
 
-           
+            modelBuilder.Entity<ProcessFluid>().HasOne(c => c.PropertyPackage).WithMany(t => t.ProcessFluids).OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<DownPayment>().HasOne(c => c.PurchaseOrder).WithMany(t => t.DownPayments).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<BrandSupplier>()
@@ -191,7 +195,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<DeviceFunction>? DeviceFunctions { get; set; }
         public DbSet<DeviceFunctionModifier>? DeviceFunctionModifiers { get; set; }
         public DbSet<Readout>? Readouts { get; set; }
-        public DbSet<Unit>? Units { get; set; }
+        public DbSet<CPTool.Domain.Entities.Unit>? Units { get; set; }
         public DbSet<ProcessFluid>? ProcessFluids { get; set; }
         public DbSet<PipeDiameter>? PipeDiameters { get; set; }
         public DbSet<Nozzle>? Nozzles { get; set; }
@@ -199,6 +203,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<PipeClass>? PipeClasss { get; set; }
         public DbSet<ConnectionType>? ConnectionTypes { get; set; }
         public DbSet<ProcessCondition>? ProcessConditions { get; set; }
+        public DbSet<PropertyPackage>? PropertyPackages { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             var entittes = ChangeTracker.Entries<BaseDomainModel>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).ToList();

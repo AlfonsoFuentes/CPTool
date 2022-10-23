@@ -11,6 +11,7 @@
                         TMasterList="GetMWOListQuery" TDetailList="GetMWOItemListQuery"
                         TMasterGedById="GetByIdMWOQuery" TDetailGedById="GetByIdMWOItemQuery"
                         @bind-ElementsMasters="@GlobalTables.MWOs"
+                        @bind-GlobalElementsDetails=@GlobalTables.MWOItems
                         ElementsDetails="@SelectedMaster.MWOItems"
                         @bind-SelectedMaster="@SelectedMaster"
                         @bind-SelectedDetail="@SelectedDetail"

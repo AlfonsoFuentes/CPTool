@@ -7,6 +7,9 @@
         [ForeignKey("NozzleFinishId")]
         public ICollection<PipingItem>? FinishPipingItems { get; set; } = null!;
 
+        public int? ConnectedToId { get; set; }
+        public MWOItem? ConnectedTo { get; set; }
+
         public int? nPipeClassId { get; set; }
         public PipeClass? nPipeClass { get; set; }
 

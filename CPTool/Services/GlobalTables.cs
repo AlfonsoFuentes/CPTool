@@ -21,12 +21,15 @@ using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
 using CPTool.Application.Features.MeasuredVariableModifierFeatures.Query.GetList;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.Query.GetList;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
 using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.Query.GetList;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
+using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
 using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 using CPTool.Application.Features.ReadoutFeatures.Query.GetList;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
@@ -47,6 +50,7 @@ namespace CPTool.Services
     {
         public static List<EditMWOType> MWOTypes { get; set; } = new();
         public static List<EditMWO> MWOs { get; set; } = new();
+        public static List<EditMWOItem> MWOItems { get; set; } = new();
         public static List<EditChapter> Chapters { get; set; } = new();
         public static List<EditUnitaryBasePrize> UnitaryBasePrizes { get; set; } = new();
         public static List<EditEquipmentType> EquipmentTypes { get; set; } = new();
@@ -64,6 +68,7 @@ namespace CPTool.Services
         public static List<EditPipeClass> PipeClasses { get; set; } = new();
         public static List<EditConnectionType> ConnectionTypes { get; set; } = new();
         public static List<EditProcessFluid> ProcessFluids { get; set; } = new();
+        public static List<EditPropertyPackage> PropertyPackages { get; set; } = new();
         public static List<EditBrandSupplier> BrandSuppliers { get; set; } = new();
         public static List<EditMeasuredVariable> MeasuredVariables { get; set; } = new();
         public static List<EditMeasuredVariableModifier> MeasuredVariableModifiers { get; set; } = new();
@@ -75,6 +80,7 @@ namespace CPTool.Services
           
             GetChapterListQuery ChapterList = new();
             GetMWOListQuery MWOList = new();
+            GetMWOItemListQuery MWOItemList = new();
             GetMWOTypeListQuery MWOTypeList = new();
             GetEquipmentTypeListQuery EquipmenTypeList = new();
             GetEquipmentTypeSubListQuery EquipmenTypeSubList = new();
@@ -91,6 +97,7 @@ namespace CPTool.Services
             GetTaxCodeLPListQuery TaxCodeLPlist = new();
             GetVendorCodeListQuery VendorCodelist = new();
             GetProcessFluidListQuery ProcessFluidlist = new();
+            GetPropertyPackageListQuery propertyPackageListQuery = new();
             GetBrandSupplierListQuery brandSupplierListQuery = new();
             GetMeasuredVariableListQuery getMeasuredVariableListQuery = new();
             GetMeasuredVariableModifierListQuery getMeasuredVariableModifierListQuery = new();
@@ -99,6 +106,7 @@ namespace CPTool.Services
             GetDeviceFunctionModifierListQuery getDeviceFunctionModifierListQuery = new();
             Chapters = await mediator.Send(ChapterList);
             MWOs = await mediator.Send(MWOList);
+            MWOItems = await mediator.Send(MWOItemList);
             MWOTypes = await mediator.Send(MWOTypeList);
             UnitaryBasePrizes = await mediator.Send(unitarybaseprie);
             EquipmentTypes = await mediator.Send(EquipmenTypeList);
@@ -123,6 +131,7 @@ namespace CPTool.Services
             Readouts = await mediator.Send(getReadoutListQuery);
             DeviceFunctions = await mediator.Send(getDeviceFunctionListQuery);
             DeviceFunctionModifiers=await mediator.Send(getDeviceFunctionModifierListQuery);
+            PropertyPackages = await mediator.Send(propertyPackageListQuery);
         }
         public static string ValidateGasket(string arg)
         {

@@ -1,10 +1,14 @@
 ﻿using CPTool.Application.Features.ChapterFeatures.CreateEdit;
 using CPTool.Application.Features.ChapterFeatures.Query.GetList;
+using CPTool.Application.Features.EquipmentItemFeatures.Query.GetById;
+using CPTool.Application.Features.InstrumentItemFeatures.Query.GetById;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.Query.GetById;
 using CPTool.Application.Features.MWOFeatures.Query.GetList;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetById;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
+using CPTool.Application.Features.PipingItemFeatures.Query.GetById;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
 
@@ -18,14 +22,37 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         [Inject]
         public IMediator mediator { get; set; }
 
-
+        protected override async Task OnInitializedAsync()
+        {
+            await GetDetails();
+        }
         [Parameter]
         public MudForm form { get; set; } = null!;
 
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    //var model = await mediator.Send(Model);
-        //}
+        async Task GetDetails()
+        {
+            switch (Model.ChapterId)
+            {
+                case 4:
+                    {
+                        GetByIdEquipmentItemQuery getbyid = new() { Id = Model.EquipmentItemId.Value };
+                        Model.EquipmentItem = await mediator.Send(getbyid);
+                    }
+                    break;
+                case 6:
+                    {
+                        GetByIdPipingItemQuery getbyid = new() { Id = Model.PipingItemId.Value };
+                        Model.PipingItem = await mediator.Send(getbyid);
+                    }
+                    break;
+                case 7:
+                    {
+                        GetByIdInstrumentItemQuery getbyid = new() { Id = Model.InstrumentItemId.Value };
+                        Model.InstrumentItem = await mediator.Send(getbyid);
+                    }
+                    break;
+            }
+        }
         public async virtual Task Submit()
         {
             await Validateform();
@@ -51,7 +78,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             if (arg == null || arg == "") return "Must define a name";
             if (Model.Id != 0)
             {
-                if (Model.MWO.MWOItems.Where(x => x.Id !=Model.Id).Any(x => x.Name == arg)) return "Name already existing";
+                if (Model.MWO.MWOItems.Where(x => x.Id != Model.Id).Any(x => x.Name == arg)) return "Name already existing";
             }
             else
             {
@@ -62,10 +89,10 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
 
             return null;
         }
-       async Task UpdateFormFromChild()
+        async Task UpdateFormFromChild()
         {
-            GetByIdMWOItemQuery getbyid = new() {Id= Model.Id }; 
-          
+            GetByIdMWOItemQuery getbyid = new() { Id = Model.Id };
+
             Model = await mediator.Send(getbyid);
         }
     }

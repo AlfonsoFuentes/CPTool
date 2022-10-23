@@ -10,5 +10,6 @@ namespace CPTool.Application.Contracts.Persistence
     {
         Task<MWO> GetMWO_ItemsIdAsync(int id);
         Task<MWO> GetMWO_PurchaseOrderIdAsync(int id);
+        
     }
 }
