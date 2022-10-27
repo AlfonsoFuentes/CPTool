@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Application.Features.EquipmentTypeSubFeatures
 {
-    public class DeleteEquipmentTypeSub : Delete, IRequest<Result<int>>
+    public class DeleteEquipmentTypeSub : DeleteCommand, IRequest<Result<int>>
     {
        
     }

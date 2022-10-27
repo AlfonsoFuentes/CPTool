@@ -1,0 +1,28 @@
+﻿@if(debug)
+{
+    
+}
+
+<SimpleListComponent TMaster="EditMWOType"
+                   
+                     TDeleteMaster="DeleteMWOType"
+                     TMasterList="GetMWOTypeListQuery"
+                     TGedById="GetByIdMWOTypeQuery"
+                     @bind-ElementsMasters="GlobalTables.MWOTypes"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="Name">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+    bool debug = true;
+}

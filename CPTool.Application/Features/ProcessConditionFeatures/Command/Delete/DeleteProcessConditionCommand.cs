@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.ProcessConditionFeatures
 {
-    public class DeleteProcessCondition : Delete, IRequest<Result<int>> 
+    public class DeleteProcessCondition : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

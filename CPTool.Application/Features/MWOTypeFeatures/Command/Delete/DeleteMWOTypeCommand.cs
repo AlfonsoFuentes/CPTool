@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.MMOTypeFeatures
 {
-    public class DeleteMWOType : Delete, IRequest<Result<int>> 
+    public class DeleteMWOType : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

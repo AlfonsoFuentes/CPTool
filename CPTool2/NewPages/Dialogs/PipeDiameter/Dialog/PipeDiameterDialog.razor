@@ -1,0 +1,46 @@
+﻿@if (debug)
+{
+    <MudDialog DisableSidePadding="true">
+        <DialogContent>
+            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                    <CascadingValue Value="this">
+
+
+                        <MudForm Model="Model" @ref="form">
+
+                            <MudTextField @bind-Value="Model.Name"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense"
+                                      Immediate="true"
+                                      Required=true
+                                      Validation="@(new Func<string, string>(ValidatePipeDiameter))"
+                                      Label="Nominal diameter"></MudTextField>
+
+                            <SelectUnitComponent @bind-Model=@Model.OuterDiameter UpdateParent=ValidateForm>
+
+                            </SelectUnitComponent>
+                            <SelectUnitComponent @bind-Model=@Model.Thickness UpdateParent=ValidateForm>
+
+                            </SelectUnitComponent>
+                            <SelectUnitComponent Disable=true @bind-Model=@Model.InternalDiameter UpdateParent=ValidateForm>
+
+                            </SelectUnitComponent>
+
+                        </MudForm>
+                    </CascadingValue>
+
+                </MudPaper>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+@code {
+    bool debug = true;
+}

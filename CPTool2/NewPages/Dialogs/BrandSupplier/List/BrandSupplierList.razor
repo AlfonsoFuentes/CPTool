@@ -1,0 +1,74 @@
+﻿@using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
+@if (ShowAddButton)
+{
+    <ManyToManyComponent TMasterDetail="EditBrandSupplier"
+                     TMaster="EditBrand" TDetail="EditSupplier"
+                     TMasterDetailList="GetBrandSupplierListQuery"
+                     TMasterList="GetBrandListQuery" TDetailList="GetSupplierListQuery"
+                     TDeleteMaster="DeleteBrand" TDeleteDetail="DeleteSupplier"
+                     @bind-SelectedDetail="@SelectedSupplier"
+                     @bind-SelectedMaster="@SelectedBrand"
+                     @bind-ElementsMastersDetails=@GlobalTables.BrandSuppliers
+                     ElementsMasters=@Brands
+                     ElementsDetails=@Suppliers
+                     OnShowDialogMaster="ToolDialogService.ShowBrandDialog"
+                     OnShowDialogDetails="ToolDialogService.ShowSupplierDialog"
+                     OnRowClickedMaster="RowClickedMaster" OnRowClickedDetails="RowClickedDetails">
+        <OtherButtonsMaster>
+            <MudTooltip Text="Restore List">
+                <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+            </MudTooltip>
+        </OtherButtonsMaster>
+        <OtherButtonsDetails>
+            <MudTooltip Text="Restore List">
+                <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+            </MudTooltip>
+        </OtherButtonsDetails>
+        <MasterContextTh>
+            <MudTh Style="width:20px">#</MudTh>
+
+            <MudTh Style="width:50px">Name</MudTh>
+            <MudTh Style="width:50px">Type</MudTh>
+        </MasterContextTh>
+        <MasterContextTd>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Name">@context.BrandType.ToString()</MudTd>
+        </MasterContextTd>
+        <DetailContextTh>
+            <MudTh Style="width:20px">#</MudTh>
+
+            <MudTh Style="width:50px">Name</MudTh>
+            <MudTh Style="width:50px">Vendor Code</MudTh>
+            <MudTh Style="width:50px">Tax Code LD</MudTh>
+            <MudTh Style="width:50px">Tax Code Lp</MudTh>
+        </DetailContextTh>
+        <DetailContextTd>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Name">@context.VendorCode.Name </MudTd>
+            <MudTd DataLabel="Name">@context.TaxCodeLD.Name</MudTd>
+            <MudTd DataLabel="Name">@context.TaxCodeLP.Name</MudTd>
+        </DetailContextTd>
+    </ManyToManyComponent>
+
+
+
+
+
+}
+
+@code {
+
+
+
+
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}
+@*   SearchFuncMaster="FilterFuncEqu" SearchFuncDetails="FilterFuncEquSub"*@

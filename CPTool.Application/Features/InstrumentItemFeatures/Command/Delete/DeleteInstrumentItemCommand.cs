@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.InstrumentItemFeatures
 {
-    public class DeleteInstrumentItem : Delete, IRequest<Result<int>> 
+    public class DeleteInstrumentItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

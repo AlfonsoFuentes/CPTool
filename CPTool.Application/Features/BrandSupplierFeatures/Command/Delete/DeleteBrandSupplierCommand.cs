@@ -4,7 +4,7 @@ using CPTool.Application.Features.Base.DeleteCommand;
 
 namespace CPTool.Application.Features.BrandSupplierFeatures
 {
-    public class DeleteBrandSupplier : Delete, IRequest<Result<int>> 
+    public class DeleteBrandSupplier : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

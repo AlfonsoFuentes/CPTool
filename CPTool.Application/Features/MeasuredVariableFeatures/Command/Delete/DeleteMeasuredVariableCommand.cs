@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.MeasuredVariableFeatures
 {
-    public class DeleteMeasuredVariable : Delete, IRequest<Result<int>> 
+    public class DeleteMeasuredVariable : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

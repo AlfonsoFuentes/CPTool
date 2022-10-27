@@ -1,0 +1,37 @@
+﻿@typeparam TMaster
+
+@typeparam TMasterList
+@typeparam TDeleteMaster
+
+@typeparam TGedById
+@if (Show)
+{
+    <MudGrid>
+
+        <MudItem xs="12" sm="12">
+            <TableComponent T="TMaster" Elements="@ElementsMasters" OnAdd="Add" OnDelete="Delete"
+                        OnRowClicked="RowClickedMaster"
+                        OnEdit="Edit" SearchFunc=ModelList.FilterFunc @bind-SelectedItem="@SelectedMaster">
+                <ContextTh>
+            
+                    @if (MasterContextTh != null)
+                        @MasterContextTh
+
+
+                    </ContextTh>
+                    <ContextTd>
+                    
+                        @if (MasterContextTh != null)
+                        @MasterContextTd!(context)
+
+
+                    </ContextTd>
+                </TableComponent>
+            </MudItem>
+        </MudGrid>
+}
+
+
+@code {
+    bool Show = true;
+}

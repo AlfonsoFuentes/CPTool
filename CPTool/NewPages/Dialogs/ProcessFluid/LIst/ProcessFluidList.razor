@@ -2,7 +2,10 @@
 @using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit
 @using CPTool.Application.Features.ProcessFluidFeatures.Query.GetById
 @using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
+@if(debug)
+{
 
+}
 <SimpleListComponent TMaster="EditProcessFluid"
                      TDeleteMaster="DeleteProcessFluid"
                      TMasterList="GetProcessFluidListQuery" TGedById="GetByIdProcessFluidQuery"
@@ -24,5 +27,5 @@
 </SimpleListComponent>
 
 @code {
-
+    bool debug = true;
 }

@@ -4,7 +4,7 @@ using CPTool.Application.Features.Base.DeleteCommand;
 
 namespace CPTool.Application.Features.ChapterFeatures
 {
-    public class DeleteChapter : Delete, IRequest<Result<int>> 
+    public class DeleteChapter : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

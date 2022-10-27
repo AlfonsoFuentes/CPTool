@@ -1,5 +1,7 @@
 ﻿
 
+using CPTool.Application.Contracts.Infrastructure;
+
 namespace CPTool.Infrastructure.MailService
 {
     public class EmailService : IEmailService

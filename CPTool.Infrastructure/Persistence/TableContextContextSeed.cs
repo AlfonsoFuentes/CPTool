@@ -11,17 +11,17 @@ namespace CPTool.Infrastructure.Persistence
 
     public static class SeedData
     {
-        public static void InitializeDatabase(this IServiceProvider service)
+        public static void  InitializeDatabase(this IServiceProvider service)
         {
             var scopeFactory = service.GetRequiredService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<TableContext>();
-                if (!db.Chapters!.Any())
+                if (!( db.Chapters!.Any()))
                 {
                     AddChapters(db);
                 }
-
+              
                 if (!db.MWOTypes!.Any())
                 {
                     AddMWOType(db);
@@ -60,7 +60,7 @@ namespace CPTool.Infrastructure.Persistence
                 new Chapter()
                 {    
                     //Id = 1,
-                        Name = "Alterations and Other P&L Expense Items",
+                        Name = "Alterations",
                         Letter="A"
                 },
                 new Chapter()
@@ -121,13 +121,13 @@ namespace CPTool.Infrastructure.Persistence
                 new Chapter()
                 {
                         //Id = 11,
-                        Name = "Taxes/Freight/Insurance/Duties/Consular Fees",
+                        Name = "Taxes",
                         Letter="L"
                 },
                 new Chapter()
                 {
                         //Id = 12,
-                        Name = "Testing/Inspection/Start-up",
+                        Name = "Testing",
                         Letter="N"
                 },
                 new Chapter()
@@ -139,7 +139,7 @@ namespace CPTool.Infrastructure.Persistence
                 new Chapter()
                 {
                         //Id = 14,
-                        Name = "Escalation/Unforseen/Contingency",
+                        Name = "Contingency",
                         Letter="P"
                 },
             };

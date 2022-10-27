@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures
 {
-    public class DeletePurchaseOrder : Delete, IRequest<Result<int>> 
+    public class DeletePurchaseOrder : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

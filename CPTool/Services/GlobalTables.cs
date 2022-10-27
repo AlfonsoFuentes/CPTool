@@ -30,6 +30,10 @@ using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
 using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
+using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList;
 using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 using CPTool.Application.Features.ReadoutFeatures.Query.GetList;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
@@ -42,10 +46,170 @@ using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
 using CPTool.Application.Features.VendorCodeFeatures.CreateEdit;
 using CPTool.Application.Features.VendorCodeFeatures.Query.GetList;
+using CPTool.ApplicationCA.Base.Ports;
 using CPTool.Domain.Entities;
 
 namespace CPTool.Services
 {
+    //public class GlobalTablesService
+    //{
+    //    public List<EditChapter> Chapters { get; set; } = new();
+
+    //    public List<EditMWOType> MWOTypes { get; set; } = new();
+    //    public List<EditMWO> MWOs { get; set; } = new();
+    //    //public static List<EditMWOItem> MWOItems { get; set; } = new();
+
+    //    //public static List<EditUnitaryBasePrize> UnitaryBasePrizes { get; set; } = new();
+    //    //public static List<EditEquipmentType> EquipmentTypes { get; set; } = new();
+    //    //public static List<EditEquipmentTypeSub> EquipmentTypeSubs { get; set; } = new();
+    //    //public static List<EditBrand> Brands { get; set; } = new();
+    //    //public static List<EditSupplier> Suppliers { get; set; } = new();
+    //    //public static List<EditGasket> Gaskets { get; set; } = new();
+    //    //public static List<EditMaterial> Materials { get; set; } = new();
+    //    //public static List<EditTaxCodeLD> TaxCodeLDs { get; set; } = new();
+    //    //public static List<EditTaxCodeLP> TaxCodeLPs { get; set; } = new();
+    //    //public static List<EditVendorCode> VendorCodes { get; set; } = new();
+
+    //    //public static List<EditPipeDiameter> PipeDiameters { get; set; } = new();
+
+    //    //public static List<EditPipeClass> PipeClasses { get; set; } = new();
+    //    //public static List<EditConnectionType> ConnectionTypes { get; set; } = new();
+    //    //public static List<EditProcessFluid> ProcessFluids { get; set; } = new();
+    //    //public static List<EditPropertyPackage> PropertyPackages { get; set; } = new();
+    //    //public static List<EditBrandSupplier> BrandSuppliers { get; set; } = new();
+    //    //public static List<EditMeasuredVariable> MeasuredVariables { get; set; } = new();
+    //    //public static List<EditMeasuredVariableModifier> MeasuredVariableModifiers { get; set; } = new();
+    //    //public static List<EditReadout> Readouts { get; set; } = new();
+    //    //public static List<EditDeviceFunction> DeviceFunctions { get; set; } = new();
+    //    //public static List<EditDeviceFunctionModifier> DeviceFunctionModifiers { get; set; } = new();
+
+    //    IListPort<EditChapter, Chapter> chapterlist { get; set; }
+    //    IListPort<EditMWOType, MWOType> mwotypelist { get; set; }
+    //    IListPort<EditMWO, MWO> mwolist { get; set; }
+
+    //    public GlobalTablesService(IListPort<EditChapter, Chapter> chapterlist, IListPort<EditMWOType, MWOType> mwotypelist, IListPort<EditMWO, MWO> mwolist)
+    //    {
+    //        this.chapterlist = chapterlist;
+    //        this.mwotypelist = mwotypelist;
+    //        this.mwolist = mwolist;
+    //    }
+
+    //    public async Task InitializeTables()
+    //    {
+    //        Chapters = await chapterlist.Handle();
+
+    //        MWOTypes = await mwotypelist.Handle();
+
+    //        MWOs = await mwolist.Handle();
+    //        //MWOItems = await mediator.Send(MWOItemList);
+
+    //        //UnitaryBasePrizes = await mediator.Send(unitarybaseprie);
+    //        //EquipmentTypes = await mediator.Send(EquipmenTypeList);
+    //        //EquipmentTypeSubs = await mediator.Send(EquipmenTypeSubList);
+    //        //Brands = await mediator.Send(brandlist);
+    //        //Suppliers = await mediator.Send(supplierlist);
+    //        //Materials = await mediator.Send(materiallist);
+    //        //Gaskets = await mediator.Send(gasketlist);
+    //        //PipeClasses = await mediator.Send(pipeclaslist);
+    //        //PipeDiameters = await mediator.Send(pipediamterlist);
+
+    //        //ConnectionTypes = await mediator.Send(connectiontypelist);
+    //        //TaxCodeLDs = await mediator.Send(TaxCodeLDlist);
+    //        //TaxCodeLPs = await mediator.Send(TaxCodeLPlist);
+    //        //VendorCodes = await mediator.Send(VendorCodelist);
+
+    //        //ProcessFluids = await mediator.Send(ProcessFluidlist);
+
+    //        //BrandSuppliers = await mediator.Send(brandSupplierListQuery);
+    //        //MeasuredVariables = await mediator.Send(getMeasuredVariableListQuery);
+    //        //MeasuredVariableModifiers = await mediator.Send(getMeasuredVariableModifierListQuery);
+    //        //Readouts = await mediator.Send(getReadoutListQuery);
+    //        //DeviceFunctions = await mediator.Send(getDeviceFunctionListQuery);
+    //        //DeviceFunctionModifiers = await mediator.Send(getDeviceFunctionModifierListQuery);
+    //        //PropertyPackages = await mediator.Send(propertyPackageListQuery);
+    //    }
+    //    //public static string ValidateGasket(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return null;
+    //    //    if (!Gaskets.Any(x => x.Name == arg))
+    //    //        return $"Gasket: {arg} is not in the list";
+
+    //    //    return null;
+    //    //}
+    //    //public static string ValidateMaterial(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return null;
+    //    //    if (!Materials.Any(x => x.Name == arg))
+    //    //        return $"Material: {arg} is not in the list";
+
+    //    //    return null;
+    //    //}
+    //    //public static string ValidateMaterialName(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return null;
+    //    //    if (Materials.Any(x => x.Name == arg))
+    //    //        return $"Material: {arg} is in the list";
+
+    //    //    return null;
+    //    //}
+    //    //public static string ValidateMaterialAbbName(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return null;
+    //    //    if (Materials.Any(x => x.Abbreviation == arg))
+    //    //        return $"Material: {arg} is in the list";
+
+    //    //    return null;
+    //    //}
+
+    //    //public static string ValidatePipeClass(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return null;
+    //    //    if (!PipeClasses.Any(x => x.Name == arg))
+    //    //        return $"Class: {arg} is not in the list";
+
+    //    //    return null;
+    //    //}
+    //    //public static string ValidateProcessFluid(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return null;
+    //    //    if (!ProcessFluids.Any(x => x.Name == arg))
+    //    //        return $"Process fluid: {arg} is not in the list";
+
+    //    //    return null;
+    //    //}
+    //    //public static string ValidateConnectionType(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return null;
+    //    //    if (!ConnectionTypes.Any(x => x.Name == arg))
+    //    //        return $"Class: {arg} is not in the list";
+
+    //    //    return null;
+    //    //}
+
+    //    //public static string ReviewTaxCodeLD(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return "Must submit Tax Code LD";
+    //    //    if (!TaxCodeLDs.Any(x => x.Name == arg))
+    //    //        return $"Tax Code LD: {arg} is not in the list";
+    //    //    return null;
+    //    //}
+    //    //public static string ReviewTaxCodeLP(string arg)
+    //    //{
+    //    //    if (arg == null || arg == "")
+    //    //        return "Must submit Tax Code LP";
+    //    //    if (!TaxCodeLPs.Any(x => x.Name == arg))
+    //    //        return $"Tax Code LP: {arg} is not in the list";
+    //    //    return null;
+    //    //}
+    //}
     public static class GlobalTables
     {
         public static List<EditMWOType> MWOTypes { get; set; } = new();
@@ -64,7 +228,8 @@ namespace CPTool.Services
         public static List<EditVendorCode> VendorCodes { get; set; } = new();
 
         public static List<EditPipeDiameter> PipeDiameters { get; set; } = new();
-
+        public static List<EditPurchaseOrder> PurchaseOrders { get; set; } = new();
+        public static List<EditPurchaseOrderMWOItem> PurchaseOrderMWOItems { get; set; } = new();
         public static List<EditPipeClass> PipeClasses { get; set; } = new();
         public static List<EditConnectionType> ConnectionTypes { get; set; } = new();
         public static List<EditProcessFluid> ProcessFluids { get; set; } = new();
@@ -75,9 +240,9 @@ namespace CPTool.Services
         public static List<EditReadout> Readouts { get; set; } = new();
         public static List<EditDeviceFunction> DeviceFunctions { get; set; } = new();
         public static List<EditDeviceFunctionModifier> DeviceFunctionModifiers { get; set; } = new();
-        public static async Task InitializeTables( IMediator mediator)
+        public static async Task InitializeTables(IMediator mediator)
         {
-          
+
             GetChapterListQuery ChapterList = new();
             GetMWOListQuery MWOList = new();
             GetMWOItemListQuery MWOItemList = new();
@@ -104,10 +269,13 @@ namespace CPTool.Services
             GetReadoutListQuery getReadoutListQuery = new();
             GetDeviceFunctionListQuery getDeviceFunctionListQuery = new();
             GetDeviceFunctionModifierListQuery getDeviceFunctionModifierListQuery = new();
+            GetPurchaseOrderListQuery getPurchaseOrderListQuery = new();
+            GetPurchaseOrderMWOItemListQuery getPurchaseOrderMWOItemListQuery = new();
+            MWOTypes = await mediator.Send(MWOTypeList);
             Chapters = await mediator.Send(ChapterList);
             MWOs = await mediator.Send(MWOList);
             MWOItems = await mediator.Send(MWOItemList);
-            MWOTypes = await mediator.Send(MWOTypeList);
+
             UnitaryBasePrizes = await mediator.Send(unitarybaseprie);
             EquipmentTypes = await mediator.Send(EquipmenTypeList);
             EquipmentTypeSubs = await mediator.Send(EquipmenTypeSubList);
@@ -117,7 +285,7 @@ namespace CPTool.Services
             Gaskets = await mediator.Send(gasketlist);
             PipeClasses = await mediator.Send(pipeclaslist);
             PipeDiameters = await mediator.Send(pipediamterlist);
-           
+
             ConnectionTypes = await mediator.Send(connectiontypelist);
             TaxCodeLDs = await mediator.Send(TaxCodeLDlist);
             TaxCodeLPs = await mediator.Send(TaxCodeLPlist);
@@ -125,13 +293,15 @@ namespace CPTool.Services
 
             ProcessFluids = await mediator.Send(ProcessFluidlist);
 
-            BrandSuppliers=await mediator.Send(brandSupplierListQuery);
-            MeasuredVariables=await mediator.Send(getMeasuredVariableListQuery);
+            BrandSuppliers = await mediator.Send(brandSupplierListQuery);
+            MeasuredVariables = await mediator.Send(getMeasuredVariableListQuery);
             MeasuredVariableModifiers = await mediator.Send(getMeasuredVariableModifierListQuery);
             Readouts = await mediator.Send(getReadoutListQuery);
             DeviceFunctions = await mediator.Send(getDeviceFunctionListQuery);
-            DeviceFunctionModifiers=await mediator.Send(getDeviceFunctionModifierListQuery);
+            DeviceFunctionModifiers = await mediator.Send(getDeviceFunctionModifierListQuery);
             PropertyPackages = await mediator.Send(propertyPackageListQuery);
+            PurchaseOrders = await mediator.Send(getPurchaseOrderListQuery);
+            PurchaseOrderMWOItems = await mediator.Send(getPurchaseOrderMWOItemListQuery);
         }
         public static string ValidateGasket(string arg)
         {
@@ -169,7 +339,7 @@ namespace CPTool.Services
 
             return null;
         }
-       
+
         public static string ValidatePipeClass(string arg)
         {
             if (arg == null || arg == "")

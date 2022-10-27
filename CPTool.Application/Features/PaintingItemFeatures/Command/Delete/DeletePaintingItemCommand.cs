@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.PaintingItemFeatures
 {
-    public class DeletePaintingItem : Delete, IRequest<Result<int>> 
+    public class DeletePaintingItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

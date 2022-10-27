@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.TaxCodeLDFeatures
 {
-    public class DeleteTaxCodeLD : Delete, IRequest<Result<int>> 
+    public class DeleteTaxCodeLD : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

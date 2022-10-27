@@ -1,0 +1,115 @@
+﻿@using CPTool.Application.Features.ChapterFeatures.CreateEdit
+@using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit
+@using CPTool.Application.Features.DeviceFunctionModifierFeatures.CreateEdit
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+@using CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit
+@using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit
+@using CPTool.Application.Features.NozzleFeatures.CreateEdit
+@using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
+@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
+@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit
+@using CPTool.Application.Features.ReadoutFeatures.CreateEdit
+
+@if (assign)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+            <SelectComponent T="EditPipeClass"
+                         Elements=@GlobalTables.PipeClasses
+                         SelectionChanged="OnChangePipeClass"
+                         Label="Pipe Class"
+                         @bind-Value="@Model.pPipeClass">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditPipeDiameter"
+                         Disable=@(Model.pPipeClass==null?true:false)
+                         Elements=@(Model.pPipeClass==null?new():Model.pPipeClass.PipeDiameters)
+                         Label="Diameter"
+                         @bind-Value="@Model.pDiameter">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditProcessFluid"
+                         Elements=@GlobalTables.ProcessFluids
+                         Label="Process Fluid"
+                         @bind-Value="@Model.pProcessFluid">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditMaterial"
+                         Elements=@GlobalTables.Materials
+                         Label="Pipe Material"
+                         @bind-Value="@Model.pMaterial">
+
+
+            </SelectComponent>
+            <MudSwitch @bind-Checked="@Model.Insulation" Color="Color.Primary" Label="Insulation" LabelPosition="LabelPosition.Start"/>
+            
+
+            <MudTextField T="string" @bind-Value="Model.TagNumber"
+                      Required="true"
+                      Immediate="true"
+                      Label="Tag Number"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      RequiredError="Must have Tag Number"></MudTextField>
+
+            <MudTextField T="string" Value="@Model.TagId"
+                      Immediate="true"
+                      Disabled="true"
+                      Margin="Margin.Dense"
+                      Variant="Variant.Outlined"
+                      Label="Tag"></MudTextField>
+
+
+        </MudItem>
+       
+       
+        <MudItem xs="12" sm="6">
+
+            <SelectComponent T="EditMWOItem"
+                         Elements=@MWOItemsStarts
+                         SelectionChanged="OnChangeEquipmentStart"
+                         Label="Pipe Start in"
+                         @bind-Value="@Model.StartMWOItem">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditNozzle"
+                         Elements=@NozzlesStart
+                         Label="Nozzle Start"
+                         SelectionChanged="OnChangeNozzleStart"
+                         @bind-Value="@Model.NozzleStart">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditMWOItem"
+                         Elements=@MWOItemsFinish
+                         SelectionChanged="OnChangeEquipmentFinish"
+                         Label="Pipe Finish in"
+                         @bind-Value="@Model.FinishMWOItem">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditNozzle"
+                         Elements=@NozzlesFinish
+                         SelectionChanged="OnChangeNozzleFinish"
+                         Label="Nozzle Finish"
+                         @bind-Value="@Model.NozzleFinish">
+
+
+            </SelectComponent>
+        </MudItem>
+
+    </MudGrid>
+}
+
+
+@code {
+    bool assign = true;
+
+}

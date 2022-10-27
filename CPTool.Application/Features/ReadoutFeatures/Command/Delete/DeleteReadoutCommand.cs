@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.ReadoutFeatures
 {
-    public class DeleteReadout : Delete, IRequest<Result<int>> 
+    public class DeleteReadout : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

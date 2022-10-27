@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.EngineeringCostItemFeatures
 {
-    public class DeleteEngineeringCostItem : Delete, IRequest<Result<int>> 
+    public class DeleteEngineeringCostItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

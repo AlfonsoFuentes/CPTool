@@ -8,7 +8,7 @@ namespace CPTool.NewPages.Components
     {
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public Delete Model { get; set; } = null!;
+        public DeleteCommand Model { get; set; } = null!;
 
         [Parameter]
         public string Message { get; set; } = null!;

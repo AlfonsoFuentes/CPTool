@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.DownPaymentFeatures
 {
-    public class DeleteDownPayment : Delete, IRequest<Result<int>> 
+    public class DeleteDownPayment : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

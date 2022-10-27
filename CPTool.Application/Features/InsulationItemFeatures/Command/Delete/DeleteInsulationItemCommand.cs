@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.InsulationItemFeatures
 {
-    public class DeleteInsulationItem : Delete, IRequest<Result<int>> 
+    public class DeleteInsulationItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

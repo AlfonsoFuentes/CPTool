@@ -26,7 +26,9 @@ namespace CPTool.Infrastructure.Persistence
 
             modelBuilder.Entity<Chapter>().HasMany(c => c.MWOItems).WithOne(t => t.Chapter).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.UnitaryBasePrize).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrders).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<MWOItem>().HasMany(c => c.MWOItemCurrencyValues).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<MWOItem>().HasOne(c => c.AlterationItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.FoundationItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.StructuralItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
@@ -140,16 +142,27 @@ namespace CPTool.Infrastructure.Persistence
                 .WithMany(t => t.BrandSuppliers)
                 .HasForeignKey(pt => pt.SupplierId);
 
+            modelBuilder.Entity<PurchaseOrderMWOItem>()
+           .HasKey(t => new { t.PurchaseOrderId, t.MWOItemId });
 
+            modelBuilder.Entity<PurchaseOrderMWOItem>()
+                .HasOne(pt => pt.PurchaseOrder)
+                .WithMany(p => p.PurchaseOrderMWOItems)
+                .HasForeignKey(pt => pt.PurchaseOrderId);
+
+            modelBuilder.Entity<PurchaseOrderMWOItem>()
+                .HasOne(pt => pt.MWOItem)
+                .WithMany(t => t.PurchaseOrderMWOItems)
+                .HasForeignKey(pt => pt.MWOItemId);
 
             //Relation Many to Many Purchase Order  MWOItem
-           
-            modelBuilder.Entity<PurchaseOrder>().HasMany(c => c.PurchaseOrderMWOItems).WithOne(t => t.PurchaseOrder).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pSupplier).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
 
-          
-        
-       
+            modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pSupplier).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pBrand).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
+
+
+
+
         }
 
 
@@ -159,6 +172,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<MWOType>? MWOTypes { get; set; }
         public DbSet<MWO>? MWOs { get; set; }
         public DbSet<MWOItem>? MWOItems { get; set; }
+        public DbSet<MWOItemCurrencyValue>? MWOItemCurrencyValues { get; set; }
         public DbSet<PurchaseOrder>? PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
         public DbSet<AlterationItem>? AlterationItems { get; set; }

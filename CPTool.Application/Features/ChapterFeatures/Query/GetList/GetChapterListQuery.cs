@@ -10,12 +10,12 @@ namespace CPTool.Application.Features.ChapterFeatures.Query.GetList
 
 
     }
-    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetChapterListQuery, List<EditChapter>>
+    public class GetChapterListQueryHandler : IRequestHandler<GetChapterListQuery, List<EditChapter>>
     {
 
         private readonly IMapper _mapper;
         private IUnitOfWork _unitofwork;
-        public GetUnitaryBasePrizeListQueryHandler(IUnitOfWork unitofwork,
+        public GetChapterListQueryHandler(IUnitOfWork unitofwork,
             IMapper mapper)
         {
             _unitofwork = unitofwork;

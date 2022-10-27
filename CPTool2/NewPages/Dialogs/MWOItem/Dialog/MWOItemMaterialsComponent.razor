@@ -1,0 +1,53 @@
+﻿@using CPTool.Application.Features.MaterialFeatures.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+
+@if (debug)
+{
+    <MudGrid>
+        
+        <MudItem xs="12" sm="6">
+            <AutoCompleteComponent TEdit="EditGasket"
+                               TGedById="GetByIdGasketQuery"
+                               TList="GetGasketListQuery"
+                               TableName="Gasket"
+                               Label="Gasket"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.Gaskets"
+                               SelectionChanged="OnGasketChanged"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateGasket))"
+                               Model=@Gasket></AutoCompleteComponent>
+
+            <AutoCompleteComponent TEdit="EditMaterial"
+                               TGedById="GetByIdMaterialQuery"
+                               TList="GetMaterialListQuery"
+                               Label="Outer Material"
+                               TableName="Material"
+                               SelectionChanged="OnOuterMaterialChanged"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.Materials"
+                               ShowDialogOverrided="ToolDialogService.ShowMaterial"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
+                               Model=@OuterMaterial></AutoCompleteComponent>
+
+            <AutoCompleteComponent TEdit="EditMaterial"
+                               TGedById="GetByIdMaterialQuery"
+                               TList="GetMaterialListQuery"
+                               Label="Inner Material"
+                               TableName="Material"
+                               SelectionChanged="OnInnerMaterialChanged"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.Materials"
+                               ShowDialogOverrided="ToolDialogService.ShowMaterial"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
+                               Model=@InnerMaterial></AutoCompleteComponent>
+        </MudItem>
+    </MudGrid>
+}
+
+
+
+@code {
+    bool debug = true;
+
+}

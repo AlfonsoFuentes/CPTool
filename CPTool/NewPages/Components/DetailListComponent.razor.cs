@@ -7,7 +7,7 @@ namespace CPTool.NewPages.Components
         where TDetail : EditCommand, new()
         where TDetailList : GetListQuery, new()
 
-        where TDeleteDetail : Delete, new()
+        where TDeleteDetail : DeleteCommand, new()
 
         where TDetailGedById : GetByIdQuery, new()
     {

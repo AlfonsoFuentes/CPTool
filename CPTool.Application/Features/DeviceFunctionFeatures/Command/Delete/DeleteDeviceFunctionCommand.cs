@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.DeviceFunctionFeatures
 {
-    public class DeleteDeviceFunction : Delete, IRequest<Result<int>> 
+    public class DeleteDeviceFunction : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

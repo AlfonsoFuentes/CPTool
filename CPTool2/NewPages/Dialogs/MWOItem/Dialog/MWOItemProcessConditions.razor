@@ -1,0 +1,43 @@
+﻿@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit
+@using CPTool.Application.Features.ProcessFluidFeatures.Query.GetById
+@using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
+@if (assign)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="10">
+            <AutoCompleteComponent TEdit="EditProcessFluid"
+                               TGedById="GetByIdProcessFluidQuery"
+                               TList="GetPropertyPackageListQuery"
+                               TableName="Process Fluid"
+                               Label="Process Fluid"
+                               SelectionChanged="OnProcessFluidChanged"
+                               ValidateForm="DialogParent.Validateform"
+                               @bind-Elements="@GlobalTables.ProcessFluids"
+                               ShowDialogOverrided="ToolDialogService.ShowProcessFluidDialog"
+                               Validation="@(new Func<string, string>(GlobalTables.ValidateProcessFluid))"
+                               Model=@ProcessFluid>
+
+            </AutoCompleteComponent>
+        </MudItem>
+        <MudItem xs="12" sm="10">
+            <MudStack>
+                <SelectUnitComponent Model=@ProcessCondition.Temperature UpdateParent=DialogParent.Validateform ModelChanged="OnChangeTemperaturePressure"></SelectUnitComponent>
+                <SelectUnitComponent Model=@ProcessCondition.Pressure UpdateParent=DialogParent.Validateform ModelChanged="OnChangeTemperaturePressure"></SelectUnitComponent>
+                <SelectUnitComponent Model=@ProcessCondition.MassFlow UpdateParent=DialogParent.Validateform
+                                 ModelChanged="OnChangeMassFlow"></SelectUnitComponent>
+                <SelectUnitComponent Model=@ProcessCondition.VolumetricFlow UpdateParent=DialogParent.Validateform
+                                 ModelChanged="OnChangeVolumetricFlow"></SelectUnitComponent>
+                <SelectUnitComponent @bind-Model=@ProcessCondition.Density Disable="true" UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+
+                <SelectUnitComponent @bind-Model=@ProcessCondition.SpecificCp Disable="true" UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+                <SelectUnitComponent @bind-Model=@ProcessCondition.SpecificEnthalpy Disable="true" UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+                <SelectUnitComponent @bind-Model=@ProcessCondition.EnthalpyFlow Disable="true" UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+                <SelectUnitComponent @bind-Model=@ProcessCondition.Viscosity Disable="true" UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+                <SelectUnitComponent @bind-Model=@ProcessCondition.ThermalConductivity Disable="true" UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+}
+@code {
+    bool assign = true;
+}

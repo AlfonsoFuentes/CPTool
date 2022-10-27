@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.TestingItemFeatures
 {
-    public class DeleteTestingItem : Delete, IRequest<Result<int>> 
+    public class DeleteTestingItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

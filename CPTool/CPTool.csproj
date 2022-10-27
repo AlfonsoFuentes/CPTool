@@ -2,9 +2,16 @@
 
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
-	  <!--<Nullable>enable</Nullable>-->
+	
 	  <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Dialogs\MWOItemPage\**" />
+    <Content Remove="Pages\Dialogs\MWOItemPage\**" />
+    <EmbeddedResource Remove="Pages\Dialogs\MWOItemPage\**" />
+    <None Remove="Pages\Dialogs\MWOItemPage\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
@@ -16,10 +23,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MudBlazor" Version="6.0.16" />
+    <PackageReference Include="MudBlazor" Version="6.0.17" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Refit" Version="6.3.2" />
-    <PackageReference Include="RestSharp" Version="108.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Pages\Dialogs\MWOItemPage\" />
   </ItemGroup>
 
 </Project>

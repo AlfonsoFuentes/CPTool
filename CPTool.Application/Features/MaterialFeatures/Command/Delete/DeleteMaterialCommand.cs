@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.MaterialFeatures
 {
-    public class DeleteMaterial : Delete, IRequest<Result<int>> 
+    public class DeleteMaterial : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

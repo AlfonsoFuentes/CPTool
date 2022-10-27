@@ -1,5 +1,5 @@
 ﻿@typeparam T
-@if (ShowAddButton)
+@if (debug)
 {
     <MudTable T="T"
           @ref="mudTable"
@@ -19,6 +19,7 @@
             <ToolBarComponent ShowAddButton=@ShowAddButton
                           DisableEditButton=@DisableEditButton
                           DisableAddButton=@DisableAddButton
+                          ShowDeleteButton=@ShowDeleteButton
                           OnAdd="OnAdd"
                           OnDelete="OnDelete"
                           OnEdit="OnEdit">
@@ -53,6 +54,7 @@
 }
 
 @code {
+    bool debug = true;
     private MudTable<T> mudTable;
     private bool hover = true;
     private bool striped = true;
@@ -65,6 +67,7 @@
     public bool DisableAddButton { get; set; } = false;
     [Parameter]
     public bool DisableEditButton { get; set; } = false;
- 
+    [Parameter]
+    public bool ShowDeleteButton { get; set; } = true;
     
 }

@@ -42,7 +42,7 @@ namespace CPTool.Application.Features.Base
                     if (table != null)
                     {
                         var addcommand = _mapper.Map<TAdd>(command);
-                        _mapper.Map(addcommand, table, typeof(TEdit), typeof(TEntity));
+                        _mapper.Map(addcommand, table, typeof(TAdd), typeof(TEntity));
 
                         _unitOfWork.Repository<TEntity>().Update(table);
                         await _unitOfWork.Complete();

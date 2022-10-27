@@ -1,0 +1,31 @@
+﻿@typeparam TDetail
+
+@typeparam TDetailList
+@typeparam TDeleteDetail
+@typeparam TDetailGedById
+
+<TableComponent T="TDetail" Elements="@ElementsDetails" DisableAddButton=@(SelectedMaster.Id==0?true:false)
+                OnRowClicked="RowClickedDetail"
+                OnAdd="AddDetail" OnDelete="DeleteDetail" OnEdit="EditDetail" SearchFunc=DetailList.FilterFunc @bind-SelectedItem="@SelectedDetail">
+    <ContextTh>
+       
+        @if (DetailContextTh != null)
+            @DetailContextTh
+
+
+
+
+
+        </ContextTh>
+        <ContextTd>
+           
+            @if (DetailContextTh != null)
+            @DetailContextTd!(context)
+
+
+
+        </ContextTd>
+    </TableComponent>
+@code {
+
+}

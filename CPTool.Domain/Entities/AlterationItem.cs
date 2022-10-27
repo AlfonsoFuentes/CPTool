@@ -10,7 +10,7 @@ namespace CPTool.Domain.Entities
         [ForeignKey("AlterationItemId")]
         public ICollection<MWOItem> MWOItems { get; set; } = null!;
 
-        public string CostCenter { get; set; } = null!;
+        public string? CostCenter { get; set; } = null!;
     }
 
 

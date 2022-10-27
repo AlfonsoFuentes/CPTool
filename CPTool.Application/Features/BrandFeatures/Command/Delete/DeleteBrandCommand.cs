@@ -5,7 +5,7 @@
 
 namespace CPTool.Application.Features.BrandFeatures
 {
-    public class DeleteBrand : Delete, IRequest<Result<int>> 
+    public class DeleteBrand : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

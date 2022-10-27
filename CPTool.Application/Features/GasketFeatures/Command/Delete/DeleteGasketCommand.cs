@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.GasketsFeatures
 {
-    public class DeleteGasket : Delete, IRequest<Result<int>> 
+    public class DeleteGasket : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.StructuralItemFeatures
 {
-    public class DeleteStructuralItem : Delete, IRequest<Result<int>>
+    public class DeleteStructuralItem : DeleteCommand, IRequest<Result<int>>
     {
 
     }

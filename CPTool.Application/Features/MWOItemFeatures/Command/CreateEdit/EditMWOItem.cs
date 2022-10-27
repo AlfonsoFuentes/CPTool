@@ -21,18 +21,17 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
 {
     public class EditMWOItem : EditCommand, IRequest<Result<int>>
     {
-       
+
         public int? UnitaryBasePrizeId => UnitaryBasePrize?.Id == 0 ? null : UnitaryBasePrize?.Id;
         public EditUnitaryBasePrize? UnitaryBasePrize { get; set; } = new();
         public int Order { get; set; }
         public string? Nomenclatore => $"{Chapter?.Letter}{Order}";
-        public decimal BudgetPrize => UnitaryPrize * Quantity;
-        public decimal RealPrize { get; set; }
-        public decimal UnitaryPrize { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal BudgetPrize { get; set; }
+        public EditMWOItemCurrencyValue MWOItemCurrencyValue { get; set; } = new();
+        public List<EditMWOItemCurrencyValue> MWOItemCurrencyValues { get; set; } = new();
         public string TagId => GetTagId();
 
-        public int? ChapterId => Chapter?.Id==0?null: Chapter?.Id;
+        public int? ChapterId => Chapter?.Id == 0 ? null : Chapter?.Id;
         public EditChapter? Chapter { get; set; } = new();
         public int? AlterationItemId => AlterationItem == null ? null : AlterationItem?.Id;
         public EditAlterationItem? AlterationItem { get; set; }
@@ -99,10 +98,10 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
             }
             return nozzles!;
         }
-        
-    public void AssignInternalItem()
+
+        public void AssignInternalItem()
         {
-            var chapterlist= MWO!.MWOItems!.Where(x => x.ChapterId!=0).ToList();
+            var chapterlist = MWO!.MWOItems!.Where(x => x.ChapterId != 0).ToList();
 
             var list = chapterlist.Where(x => x.ChapterId == ChapterId).ToList();
             Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;

@@ -1,11 +1,12 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Pages.Dialogs
 {
     public partial class PurchaseOrderDialog
     {
-
-
+        [Parameter]
+        public EditPurchaseOrder Model { get; set; }
         //[Parameter]
         //public PurchaseOrderMWOItemDTO Model { get; set; }
         //[Inject]

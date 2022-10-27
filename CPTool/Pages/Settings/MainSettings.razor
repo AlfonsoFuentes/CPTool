@@ -26,6 +26,7 @@
 @using CPTool.NewPages.Dialogs.Material.List
 @using CPTool.NewPages.Dialogs.PipeClass
 @using CPTool.NewPages.Dialogs.ProcessFluid.LIst
+@using CPTool.NewPages.Dialogs.PurchaseOrder.List
 @using CPTool.NewPages.Dialogs.TaxCodeLD.List
 @using CPTool.NewPages.Dialogs.TaxCodeLP.List
 @using CPTool.NewPages.Dialogs.UnitaryBasePrize
@@ -104,6 +105,11 @@
 
         }
         break;
+        case 13:
+
+        {
+            <PurchaseOrderList></PurchaseOrderList>
+        }break;
 }
 @code {
     [Parameter]

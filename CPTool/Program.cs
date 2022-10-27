@@ -3,6 +3,7 @@
 
 
 using CPTool.Application;
+using CPTool.ApplicationCA;
 using CPTool.Identity;
 using CPTool.Infrastructure;
 using CPTool.Infrastructure.Persistence;
@@ -12,19 +13,20 @@ using MudBlazor.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
 var asse = Assembly.GetExecutingAssembly();
 
 builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddApplicationCAServices();
+builder.Services.ConfigureIdentityServices(builder.Configuration);
 builder.Services.AddCors(options =>
-options.AddPolicy("CorsPolicy",
-builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
-
-
+{
+    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    );
+});
+//builder.Services.AddScoped<GlobalTablesService>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -34,6 +36,8 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped<ToolDialogService>();
 var app = builder.Build();
 app.Services.InitializeDatabase();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -4,7 +4,7 @@ using CPTool.Application.Features.Base.DeleteCommand;
 
 namespace CPTool.Application.Features.ContingencyItemFeatures
 {
-    public class DeleteContingencyItem : Delete, IRequest<Result<int>> 
+    public class DeleteContingencyItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

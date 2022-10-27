@@ -1,0 +1,132 @@
+﻿@using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList
+@using CPTool.Application.Features.MaterialFeatures.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+@using CPTool.Application.Features.PipeClassFeatures.CreateEdit
+@using CPTool.Application.Features.PipeClassFeatures.Query.GetById
+@using CPTool.Application.Features.PipeClassFeatures.Query.GetList
+@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
+@using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
+@using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
+@using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
+@if (debug)
+{
+    <MudDialog DisableSidePadding="true">
+        <DialogContent>
+            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                    <CascadingValue Value="this">
+
+                        <MudForm Model="Model" @ref="form">
+                            <MudGrid>
+                                <MudItem xs="12" sm="6" Class="pa-4">
+                                    <MudField Label="MWO Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWO.CECName</MudField>
+                                    <MudField Label="Item Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWOItem.Name</MudField>
+                                    <MudField Label="Brand" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.pBrand.Name</MudField>
+                                    <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.pSupplier.Name</MudField>
+                                    <MudField Label="Tax Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.TaxCode</MudField>
+                                    <MudField Label="SPL" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.SPL</MudField>
+                                    @if (Model.MWOItem.ChapterId == 1)
+                                    {
+                                        <MudField Label="Cost Center" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.CostCenter</MudField>
+                                    }
+
+                                </MudItem>
+                                <MudItem xs="12" sm="6" Class="pa-4">
+                                    @if (Model.MWOItem.ChapterId == 4)
+                                    {
+                                        <MudTextField T="string" @bind-Value="Model.MWOItem.EquipmentItem.Model"
+                                              Immediate="true"
+                                              Label="Model"
+                                              Margin="Margin.Dense"
+                                              Variant="Variant.Outlined"></MudTextField>
+                                        <MudTextField T="string" @bind-Value="Model.MWOItem.EquipmentItem.Reference"
+                                              Immediate="true"
+                                              Label="Reference"
+                                              Margin="Margin.Dense"
+                                              Variant="Variant.Outlined"></MudTextField>
+
+                                    }
+                                    @if (Model.MWOItem.ChapterId == 6)
+                                    {
+                                        <MudTextField T="string" @bind-Value="Model.MWOItem.InstrumentItem.Model"
+                                              Immediate="true"
+                                              Label="Model"
+                                              Margin="Margin.Dense"
+                                              Variant="Variant.Outlined"></MudTextField>
+                                        <MudTextField T="string" @bind-Value="Model.MWOItem.InstrumentItem.Reference"
+                                              Immediate="true"
+                                              Label="Reference"
+                                              Margin="Margin.Dense"
+                                              Variant="Variant.Outlined"></MudTextField>
+
+                                    }
+                                    <MudSelect Dense="true"
+                                           Margin="Margin.Dense"
+                                           T="Currency"
+                                           Label="Select Type of Currency"
+                                           AnchorOrigin="Origin.BottomCenter"
+                                           @bind-Value=@Model.MWOItem.MWOItemCurrencyValue.Currency
+                                           Validation="@(new Func<Currency, string>(ValidateCurrency))"
+                                           Variant="Variant.Outlined">
+                                        @foreach (var item in Enum.GetValues<Currency>())
+                                        {
+                                            <MudSelectItem Value="item">@item</MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                    <MudNumericField T="double" @bind-Value="Model.MWOItem.MWOItemCurrencyValue.PrizeCurrency"
+                                                 Immediate="true"
+                                                 HideSpinButtons="true"
+                                                 Margin="Margin.Dense"
+                                                 Variant="Variant.Outlined"
+                                                 Format="C0"
+                                                 Culture="@_en"
+                                                 Required="true"
+                                                 Validation="@(new Func<double, string>(ValidatePOAmount))"
+                                                 Label=@($"PO Value, {Model.MWOItem.MWOItemCurrencyValue.Currency}")></MudNumericField>
+                                    @if (Model.MWOItem.MWOItemCurrencyValue.Currency == Currency.EUR || Model.MWOItem.MWOItemCurrencyValue.Currency == Currency.COP)
+                                    {
+                                        <MudNumericField T="double" Value="@Model.MWOItem.MWOItemCurrencyValue.ValueExchangeRate"
+                                                 Immediate="true"
+                                                 HideSpinButtons="true"
+                                                 Margin="Margin.Dense"
+                                                 Disabled=true
+                                                 Culture="@_en"
+                                                 Format="C2"
+                                                 Variant="Variant.Outlined"
+                                                 Label=@(Model.MWOItem.MWOItemCurrencyValue.Currency==Currency.EUR?"Exchange Rate, EUR to USD":"Exchange Rate, COP to USD" )></MudNumericField>
+                                        <MudNumericField T="double" Value="@Model.MWOItem.MWOItemCurrencyValue.PrizeUSD"
+                                                 Format="C0"
+                                                 Disabled=true
+                                                 Culture="@_en"
+                                                 Margin="Margin.Dense"
+                                                 Variant="Variant.Outlined"
+                                                 Label="Value, $USD"></MudNumericField>
+                                    }
+                                </MudItem>
+
+                            </MudGrid>
+
+                        </MudForm>
+                    </CascadingValue>
+
+
+
+                </MudPaper>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+@code {
+    bool debug = true;
+    public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+
+}

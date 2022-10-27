@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.PipingItemFeatures
 {
-    public class DeletePipingItem : Delete, IRequest<Result<int>> 
+    public class DeletePipingItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

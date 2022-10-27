@@ -5,7 +5,7 @@
 
 namespace CPTool.Application.Features.SupplierFeatures
 {
-    public class DeleteSupplier : Delete, IRequest<Result<int>> 
+    public class DeleteSupplier : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

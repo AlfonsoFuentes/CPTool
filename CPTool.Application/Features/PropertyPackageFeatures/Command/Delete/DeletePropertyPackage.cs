@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.PropertyPackageFeatures
 {
-    public class DeletePropertyPackage : Delete, IRequest<Result<int>> 
+    public class DeletePropertyPackage : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.PipeAccesoryFeatures
 {
-    public class DeletePipeAccesory : Delete, IRequest<Result<int>> 
+    public class DeletePipeAccesory : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

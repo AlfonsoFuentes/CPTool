@@ -13,8 +13,8 @@ namespace CPTool.NewPages.Components
 
         where TMasterList : GetListQuery, new()
         where TDetailList : GetListQuery, new()
-        where TDeleteMaster : Delete, new()
-        where TDeleteDetail : Delete, new()
+        where TDeleteMaster : DeleteCommand, new()
+        where TDeleteDetail : DeleteCommand, new()
         where TMasterGedById : GetByIdQuery, new()
         where TDetailGedById : GetByIdQuery, new()
     {
@@ -47,8 +47,9 @@ namespace CPTool.NewPages.Components
         [Parameter]
         public EventCallback<TDetail> SelectedDetailChanged { get; set; }
         [Parameter]
-        public RenderFragment OtherButtons { get; set; }
-
+        public RenderFragment MasterOtherButtons { get; set; }
+        [Parameter]
+        public RenderFragment DetailsOtherButtons { get; set; }
         [Parameter]
         [EditorRequired]
         public RenderFragment MasterContextTh { get; set; }

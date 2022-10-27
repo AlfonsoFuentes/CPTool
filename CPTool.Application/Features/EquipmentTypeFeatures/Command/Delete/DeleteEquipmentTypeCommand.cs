@@ -7,7 +7,7 @@ using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.EquipmentTypeFeatures
 {
-    public class DeleteEquipmentType : Delete, IRequest<Result<int>> 
+    public class DeleteEquipmentType : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

@@ -18,7 +18,7 @@ namespace CPTool.Application.Features.MWOFeatures.CreateEdit
         public decimal Expenses { get; set; }
         public int? MWOTypeId => MWOType == null ? null : MWOType?.Id;
         public EditMWOType? MWOType { get; set; }
-        public List<EditMWOItem>? MWOItems { get; set; }
+        public List<EditMWOItem>? MWOItems { get; set; } = new();
         public List<EditPurchaseOrder>? PurchaseOrders { get; set; }
 
         public override T AddDetailtoMaster<T>() 

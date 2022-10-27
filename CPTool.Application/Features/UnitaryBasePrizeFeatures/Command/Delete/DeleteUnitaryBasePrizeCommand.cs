@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.UnitaryBasePrizeFeatures
 {
-    public class DeleteUnitaryBasePrize : Delete, IRequest<Result<int>> 
+    public class DeleteUnitaryBasePrize : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.FoundationItemFeatures
 {
-    public class DeleteFoundationItem : Delete, IRequest<Result<int>> 
+    public class DeleteFoundationItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

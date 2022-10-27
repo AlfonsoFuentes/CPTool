@@ -5,19 +5,14 @@ namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit
 {
     public class EditPurchaseOrderMWOItem : EditCommand, IRequest<Result<int>>
     {
+       
+        public bool PurchaseOrderCreated { get; set; }=false;
+        public EditPurchaseOrder? PurchaseOrder { get; set; } = new();
+
         public int? PurchaseOrderId => PurchaseOrder?.Id == 0 ? null : PurchaseOrder?.Id;
 
-        public EditPurchaseOrder? PurchaseOrder { get; set; }
-
-        public Currency Currency { get; set; } = Currency.COP;
-        public double PrizeCurrency { get; set; }
-        public double PrizeUSD { get; set; }
-        public double USDCOP { get; set; }
-        public double USDEUR { get; set; }
-
-        public double Tax { get; set; }
-        public double PrizeCurrencyTax { get; set; }
-        public double TotalPrizeCurrency { get; set; }
+        public int? MWOItemId => MWOItem?.Id == 0 ? null : MWOItem?.Id;
+        public EditMWOItem? MWOItem { get; set; } = new();
 
     }
 }

@@ -34,7 +34,7 @@
             <MudTd DataLabel="Id">@context.Id</MudTd>
 
             <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="Name">@context.BrandType.ToString()</MudTd>
+            <MudTd DataLabel="BrandType">@context.BrandType.ToString()</MudTd>
         </MasterContextTd>
         <DetailContextTh>
             <MudTh Style="width:20px">#</MudTh>
@@ -48,9 +48,9 @@
             <MudTd DataLabel="Id">@context.Id</MudTd>
 
             <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="Name">@context.VendorCode.Name </MudTd>
-            <MudTd DataLabel="Name">@context.TaxCodeLD.Name</MudTd>
-            <MudTd DataLabel="Name">@context.TaxCodeLP.Name</MudTd>
+            <MudTd DataLabel="Vendor Code">@context.VendorCode.Name </MudTd>
+            <MudTd DataLabel="Tax Code LD">@context.TaxCodeLD.Name</MudTd>
+            <MudTd DataLabel="Tax Code LP">@context.TaxCodeLP.Name</MudTd>
         </DetailContextTd>
     </ManyToManyComponent>
 

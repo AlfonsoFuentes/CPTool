@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.ProcessFluidFeatures
 {
-    public class DeleteProcessFluid : Delete, IRequest<Result<int>> 
+    public class DeleteProcessFluid : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

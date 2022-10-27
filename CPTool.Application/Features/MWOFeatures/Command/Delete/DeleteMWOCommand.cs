@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.MWOFeatures
 {
-    public class DeleteMWO : Delete, IRequest<Result<int>> 
+    public class DeleteMWO : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

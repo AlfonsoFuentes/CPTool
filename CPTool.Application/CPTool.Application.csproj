@@ -18,8 +18,14 @@
   <ItemGroup>
     <ProjectReference Include="..\CPTool.Domain\CPTool.Domain.csproj" />
     <ProjectReference Include="..\CPtool.ExtensionMethods\CPtool.ExtensionMethods.csproj" />
+    <ProjectReference Include="..\CPTool.InfrastructureCA\CPTool.ApplicationCA.csproj" />
     <ProjectReference Include="..\CPTool.UnitsSystem\CPTool.UnitsSystem.csproj" />
     <ProjectReference Include="..\EquipmentCalculation\EquipmentCalculation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CleanArchictecture\DTOS\" />
+    <Folder Include="CleanArchictecture\NewFolder\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,27 @@
+﻿@using CPTool.Application.Features.VendorCodeFeatures.CreateEdit
+@using CPTool.Application.Features.VendorCodeFeatures
+@using CPTool.Application.Features.VendorCodeFeatures.Query.GetById
+@using CPTool.Application.Features.VendorCodeFeatures.Query.GetList
+
+<SimpleListComponent TMaster="EditVendorCode"
+                   
+                     TDeleteMaster="DeleteVendorCode"
+                     TMasterList="GetVendorCodeListQuery" TGedById="GetByIdVendorCodeQuery"
+                     @bind-ElementsMasters="GlobalTables.VendorCodes"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="Name">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+
+}

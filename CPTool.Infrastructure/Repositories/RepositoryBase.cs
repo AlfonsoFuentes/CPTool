@@ -22,9 +22,13 @@ namespace CPTool.Infrastructure.Repositories
         {
             try
             {
+                if (!(await dbcontext.Set<T>().AnyAsync()))
+                {
+
+                }
                 IQueryable<T> query = dbcontext.Set<T>();
                 //query = query.AsNoTracking();
-                query =Query(query);
+                query = Query(query);
                 var retorno = await query.ToListAsync();
                 return retorno;
             }
@@ -40,13 +44,13 @@ namespace CPTool.Infrastructure.Repositories
             return await dbcontext.Set<T>().Where(predicate).ToListAsync();
         }
 
-       public  void GetTracker()
+        public void GetTracker()
         {
             //dbcontext.ChangeTracker.DetectChanges();
             var traked = dbcontext.ChangeTracker.DebugView.LongView;
             foreach (var entry in dbcontext.ChangeTracker.Entries<BaseDomainModel>())
             {
-               var state=entry.State;
+                var state = entry.State;
             }
         }
         public async Task<IReadOnlyList<T>> GetAsync(
@@ -70,7 +74,7 @@ namespace CPTool.Infrastructure.Repositories
 
         public async virtual Task<T> GetByIdAsync(int id)
         {
-        
+
             var result = await dbcontext.Set<T>().FindAsync(id);
             return result!;
         }
@@ -90,7 +94,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             try
             {
-                
+
                 dbcontext.Set<T>().Attach(entity);
                 dbcontext.Entry(entity).State = EntityState.Modified;
 

@@ -1,0 +1,53 @@
+﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList
+@if (ShowAddButton)
+{
+    <OneToManyListComponent TMaster="EditEquipmentType" TDetail="EditEquipmentTypeSub"
+                      
+                        TDeleteMaster="DeleteEquipmentType" TDeleteDetail="DeleteEquipmentTypeSub"
+                        TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
+                        TMasterGedById="GetByIdEquipmentTypeQuery" TDetailGedById="GetByIdEquipmentTypeSubQuery"
+                        @bind-ElementsMasters="@GlobalTables.EquipmentTypes"
+                     
+                        ElementsDetails="@SelectedEqu.EquipmentTypeSubs"
+                        @bind-SelectedMaster="@SelectedEqu"
+                        @bind-SelectedDetail="@SelectedEquSub"
+                        OnShowDialogMaster="ToolDialogService.ShowEquipmentType"
+                        OnShowDialogDetails="ToolDialogService.ShowEquipmentTypeSub">
+        <MasterContextTh>
+            <MudTh Style="width:40px">#</MudTh>
+            <MudTh Style="width:40px">Name</MudTh>
+            <MudTh Style="width:40px">Tag Letter</MudTh>
+        </MasterContextTh>
+        <MasterContextTd>
+            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
+            <MudTd DataLabel="TagLetter">@context.TagLetter</MudTd>
+        </MasterContextTd>
+        <DetailContextTh>
+            <MudTh Style="width:40px">#</MudTh>
+            <MudTh Style="width:40px">Name</MudTh>
+            <MudTh Style="width:40px">Tag Letter</MudTh>
+        </DetailContextTh>
+        <DetailContextTd>
+            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
+            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
+            <MudTd DataLabel="TagLetter">@context.TagLetter</MudTd>
+        </DetailContextTd>
+
+    </OneToManyListComponent>
+
+}
+
+@code {
+
+
+
+
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}
+@*   SearchFuncMaster="FilterFuncEqu" SearchFuncDetails="FilterFuncEquSub"*@

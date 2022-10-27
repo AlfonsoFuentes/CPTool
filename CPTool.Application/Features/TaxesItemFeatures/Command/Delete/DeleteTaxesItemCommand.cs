@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.TaxesItemFeatures
 {
-    public class DeleteTaxesItem : Delete, IRequest<Result<int>> 
+    public class DeleteTaxesItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.NozzleFeatures
 {
-    public class DeleteNozzle : Delete, IRequest<Result<int>> 
+    public class DeleteNozzle : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

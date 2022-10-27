@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.PipeDiameterFeatures
 {
-    public class DeletePipeDiameter : Delete, IRequest<Result<int>> 
+    public class DeletePipeDiameter : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

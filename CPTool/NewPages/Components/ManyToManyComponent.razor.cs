@@ -12,7 +12,7 @@ using static MudBlazor.Icons.Custom;
 
 namespace CPTool.NewPages.Components
 {
-    public partial class ManyToManyComponent<TMasterDetail, TMasterDetailList, TMaster, 
+    public partial class ManyToManyComponent<TMasterDetail, TMasterDetailList, TMaster,
         TDetail, TMasterList, TDetailList, TDeleteMaster, TDeleteDetail>
          where TMasterDetail : EditCommand, new()
         where TMaster : EditCommand, new()
@@ -21,8 +21,8 @@ namespace CPTool.NewPages.Components
 
         where TMasterList : GetListQuery, new()
          where TDetailList : GetListQuery, new()
-         where TDeleteMaster : Delete, new()
-         where TDeleteDetail : Delete, new()
+         where TDeleteMaster : DeleteCommand, new()
+         where TDeleteDetail : DeleteCommand, new()
 
     {
         [Inject]
@@ -83,9 +83,9 @@ namespace CPTool.NewPages.Components
         [Parameter]
         [EditorRequired]
         public Func<TMasterDetail, Task<DialogResult>> OnShowDialogDetails { get; set; }
-        
-       
-       
+
+
+
         async Task RowClickedMaster(TableRowClickEventArgs<TMaster> row)
         {
             await OnRowClickedMaster.InvokeAsync(row.Item);

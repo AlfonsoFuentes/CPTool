@@ -26,7 +26,7 @@
 
     </DetailContextTh>
     <DetailContextTd>
-        <MudTd DataLabel="Name">@context.Id</MudTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Connected">
             @(context.ConnectedTo == null ? "" : context.ConnectedTo.TagId)</MudTd>
@@ -34,7 +34,7 @@
         <MudTd DataLabel="Diameter">@context.PipeDiameter?.Name</MudTd>
         <MudTd DataLabel="Class">@context.nPipeClass?.Name</MudTd>
         <MudTd DataLabel="Material">@context.nMaterial?.Name</MudTd>
-        <MudTd DataLabel="Connection Type">@context.ConnectionType?.Name</MudTd>
+        <MudTd DataLabel="Type">@context.ConnectionType?.Name</MudTd>
       
 
 

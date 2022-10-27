@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.UnitFeatures
 {
-    public class DeleteUnit : Delete, IRequest<Result<int>> 
+    public class DeleteUnit : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

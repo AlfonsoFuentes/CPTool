@@ -1,10 +1,15 @@
-﻿namespace CPTool.Application.Features.ChapterFeatures.CreateEdit
+﻿using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit;
+using CPTool.ApplicationCA.Base.Interactors;
+
+namespace CPTool.Application.Features.ChapterFeatures.CreateEdit
 {
+    
     internal class ChapterHandler : AddEditBaseHandler<AddChapter, EditChapter, Chapter>, IRequestHandler<EditChapter, Result<int>>
     {
 
-        public ChapterHandler(IUnitOfWork unitofwork, IMapper mapper,ILogger<EditChapter> logger) 
-            : base(unitofwork, mapper, logger)
+
+        public ChapterHandler(IUnitOfWork unitofwork, IMapper mapper, ILogger<EditChapter> logger)
+             : base(unitofwork, mapper, logger)
         {
 
         }

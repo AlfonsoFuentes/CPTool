@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.ConnectionTypeFeatures
 {
-    public class DeleteConnectionType : Delete, IRequest<Result<int>> 
+    public class DeleteConnectionType : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

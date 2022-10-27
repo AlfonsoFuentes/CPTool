@@ -4,7 +4,7 @@ using CPTool.Application.Features.Base.DeleteCommand;
 
 namespace CPTool.Application.Features.MWOItemFeatures
 {
-    public class DeleteMWOItem : Delete, IRequest<Result<int>> 
+    public class DeleteMWOItem : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

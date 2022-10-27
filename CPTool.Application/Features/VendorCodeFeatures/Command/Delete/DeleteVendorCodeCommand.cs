@@ -2,7 +2,7 @@
 
 namespace CPTool.Application.Features.VendorCodeFeatures
 {
-    public class DeleteVendorCode : Delete, IRequest<Result<int>> 
+    public class DeleteVendorCode : DeleteCommand, IRequest<Result<int>> 
     {
       
     }

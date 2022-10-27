@@ -28,40 +28,20 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
         public decimal UnitaryPrize { get; set; }
         public decimal Quantity { get; set; }
         public string? TagId { get; set; }
-
         public int? ChapterId { get; set; }
-      
         public AddAlterationItem? AlterationItem { get; set; }
-      
         public AddFoundationItem? FoundationItem { get; set; }
-      
         public AddStructuralItem? StructuralItem { get; set; }
-      
         public AddEquipmentItem? EquipmentItem { get; set; }
-       
         public AddElectricalItem? ElectricalItem { get; set; }
-      
         public AddPipingItem? PipingItem { get; set; }
-       
         public AddInstrumentItem? InstrumentItem { get; set; }
-      
         public AddInsulationItem? InsulationItem { get; set; }
-      
         public AddPaintingItem? PaintingItem { get; set; }
-      
         public AddEHSItem? EHSItem { get; set; }
-       
         public AddTaxesItem? TaxesItem { get; set; }
-      
         public AddTestingItem? TestingItem { get; set; }
-      
         public AddEngineeringCostItem? EngineeringCostItem { get; set; }
-       
         public AddContingencyItem? ContingencyItem { get; set; }
-
-
-
-
-
     }
 }
