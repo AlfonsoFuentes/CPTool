@@ -22,45 +22,45 @@
                         <MudForm Model="Model" @ref="form">
                             <MudGrid>
                                 <MudItem xs="12" sm="6" Class="pa-4">
-                                    <MudField Label="MWO Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWO.CECName</MudField>
-                                    <MudField Label="Item Name" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.MWOItem.Name</MudField>
-                                    <MudField Label="Brand" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.pBrand.Name</MudField>
-                                    <MudField Label="Supplier" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.pSupplier.Name</MudField>
-                                    <MudField Label="Tax Code" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.TaxCode</MudField>
-                                    <MudField Label="SPL" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.SPL</MudField>
-                                    @if (Model.MWOItem.ChapterId == 1)
+                                    <FieldComponent Label="MWO Code" Value=@Model.MWO.CECName></FieldComponent>
+                                    <FieldComponent Label="Item Name" Value=@Model.MWOItem.Name></FieldComponent>
+                                    <FieldComponent Label="Brand" Value=@Model.pBrand.Name></FieldComponent>
+                                    <FieldComponent Label="Supplier" Value=@Model.pSupplier.Name></FieldComponent>
+                                    <FieldComponent Label="Tax Code" Value=@Model.TaxCode></FieldComponent>
+                                    <FieldComponent Label="SPL" Value=@Model.SPL></FieldComponent>
+
+                                       @if (Model.MWOItem.ChapterId == 1)
                                     {
-                                        <MudField Label="Cost Center" Variant="Variant.Outlined" Margin="Margin.Dense">@Model.CostCenter</MudField>
+                                        <FieldComponent Label="Cost Center" Value=@Model.CostCenter></FieldComponent>
+                                        
                                     }
 
                                 </MudItem>
                                 <MudItem xs="12" sm="6" Class="pa-4">
                                     @if (Model.MWOItem.ChapterId == 4)
                                     {
-                                        <MudTextField T="string" @bind-Value="Model.MWOItem.EquipmentItem.Model"
-                                              Immediate="true"
-                                              Label="Model"
-                                              Margin="Margin.Dense"
-                                              Variant="Variant.Outlined"></MudTextField>
-                                        <MudTextField T="string" @bind-Value="Model.MWOItem.EquipmentItem.Reference"
-                                              Immediate="true"
-                                              Label="Reference"
-                                              Margin="Margin.Dense"
-                                              Variant="Variant.Outlined"></MudTextField>
+                                        <TextComponent @bind-Model="@Model"
+                                               Label="Equipment Model"
+                                               Required=true
+                                               PropertyName="@nameof(Model.MWOItem.EquipmentItem.Model)"></TextComponent>
+                                        <TextComponent @bind-Model="@Model"
+                                               Label="Reference"
+                                               Required=true
+                                               PropertyName="@nameof(Model.MWOItem.EquipmentItem.Reference)"></TextComponent>
+
 
                                     }
                                     @if (Model.MWOItem.ChapterId == 6)
                                     {
-                                        <MudTextField T="string" @bind-Value="Model.MWOItem.InstrumentItem.Model"
-                                              Immediate="true"
-                                              Label="Model"
-                                              Margin="Margin.Dense"
-                                              Variant="Variant.Outlined"></MudTextField>
-                                        <MudTextField T="string" @bind-Value="Model.MWOItem.InstrumentItem.Reference"
-                                              Immediate="true"
-                                              Label="Reference"
-                                              Margin="Margin.Dense"
-                                              Variant="Variant.Outlined"></MudTextField>
+                                        <TextComponent @bind-Model="@Model"
+                                                 Label="Equipment Model"
+                                                 Required=true
+                                                 PropertyName="@nameof(Model.MWOItem.InstrumentItem.Model)"></TextComponent>
+                                        <TextComponent @bind-Model="@Model"
+                                               Label="Reference"
+                                               Required=true
+                                               PropertyName="@nameof(Model.MWOItem.InstrumentItem.Reference)"></TextComponent>
+                                       
 
                                     }
                                     <MudSelect Dense="true"

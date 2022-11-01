@@ -1,4 +1,9 @@
-﻿namespace CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit
+﻿using CPTool.Application.Features.EquipmentTypeFeatures.Query.GetById;
+using CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList;
+using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById;
+using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList;
+
+namespace CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit
 {
     public class EditEquipmentTypeSub : EditCommand, IRequest<Result<int>>
     {

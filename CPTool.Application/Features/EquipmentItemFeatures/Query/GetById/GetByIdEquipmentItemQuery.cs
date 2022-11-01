@@ -1,4 +1,5 @@
-﻿using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
+﻿using CPTool.Application.Features.Base;
+using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.EquipmentItemFeatures.Query.GetById
 {
@@ -6,7 +7,8 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.Query.GetById
     public class GetByIdEquipmentItemQuery : GetByIdQuery, IRequest<EditEquipmentItem>
     {
     }
-    public class GetByIdEquipmentItemQueryHandler : IRequestHandler<GetByIdEquipmentItemQuery, EditEquipmentItem>
+    public class GetByIdEquipmentItemQueryHandler : 
+        IRequestHandler<GetByIdEquipmentItemQuery, EditEquipmentItem>
     {
 
         private readonly IMapper _mapper;
@@ -17,7 +19,7 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.Query.GetById
             _unitofwork = unitofwork;
             _mapper = mapper;
         }
-        public async Task<EditEquipmentItem> Handle(GetByIdEquipmentItemQuery request, CancellationToken cancellationToken)
+        public  async Task<EditEquipmentItem> Handle(GetByIdEquipmentItemQuery request, CancellationToken cancellationToken)
         {
             var table = await _unitofwork.RepositoryEquipmentItem.GetByIdAsync(request.Id);
 

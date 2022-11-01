@@ -1,5 +1,9 @@
 ﻿using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.Query.GetById;
+using CPTool.Application.Features.NozzleFeatures.Query.GetList;
+using CPTool.Application.Features.PipeAccesoryFeatures.Query.GetById;
+using CPTool.Application.Features.PipeAccesoryFeatures.Query.GetList;
 using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
@@ -10,7 +14,7 @@ namespace CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit
 {
     public class EditPipeAccesory : EditCommand, IRequest<Result<int>>
     {
-        public int? pPipingItemId => pPipingItem?.Id == 0 ? null : pPipingItem?.Id;
+         public int? pPipingItemId => pPipingItem?.Id == 0 ? null : pPipingItem?.Id;
         public EditPipingItem? pPipingItem { get; set; } = new();
         public int? pProcessConditionId => pProcessCondition == null ? null : pProcessCondition?.Id;
         public EditProcessCondition? pProcessCondition { get; set; } = new();

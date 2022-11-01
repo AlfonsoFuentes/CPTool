@@ -21,7 +21,7 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
 {
     public class EditMWOItem : EditCommand, IRequest<Result<int>>
     {
-
+        public double prueba = 2.0;
         public int? UnitaryBasePrizeId => UnitaryBasePrize?.Id == 0 ? null : UnitaryBasePrize?.Id;
         public EditUnitaryBasePrize? UnitaryBasePrize { get; set; } = new();
         public int Order { get; set; }

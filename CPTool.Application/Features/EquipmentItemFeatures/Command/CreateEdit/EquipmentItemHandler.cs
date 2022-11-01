@@ -1,6 +1,7 @@
 ﻿namespace CPTool.Application.Features.EquipmentItemFeatures.CreateEdit
 {
-    internal class EquipmentItemHandler : AddEditBaseHandler<AddEquipmentItem, EditEquipmentItem, EquipmentItem>, IRequestHandler<EditEquipmentItem, Result<int>>
+    internal class EquipmentItemHandler : AddEditBaseHandler<AddEquipmentItem, EditEquipmentItem, EquipmentItem>, 
+        IRequestHandler<EditEquipmentItem, Result<int>>
     {
 
 

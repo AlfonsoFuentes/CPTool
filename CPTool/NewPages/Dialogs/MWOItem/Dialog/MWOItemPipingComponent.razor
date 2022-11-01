@@ -48,15 +48,13 @@
 
             </SelectComponent>
             <MudSwitch @bind-Checked="@Model.Insulation" Color="Color.Primary" Label="Insulation" LabelPosition="LabelPosition.Start"/>
-            
+            <TextComponent @bind-Model="@DialogParent.Model.PipingItem" Label="Tag Number"
+                       RequiredError="Must have Tag Number"
+                      Required=true
+                       PropertyName="@nameof(Model.TagNumber)"></TextComponent>
 
-            <MudTextField T="string" @bind-Value="Model.TagNumber"
-                      Required="true"
-                      Immediate="true"
-                      Label="Tag Number"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      RequiredError="Must have Tag Number"></MudTextField>
+
+            
 
             <MudTextField T="string" Value="@Model.TagId"
                       Immediate="true"

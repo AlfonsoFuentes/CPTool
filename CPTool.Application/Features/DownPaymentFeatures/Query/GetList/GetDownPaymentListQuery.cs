@@ -9,6 +9,19 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Query.GetList
     {
 
 
+        public override bool FilterFunc(EditCommand element1, string searchString)
+        {
+            var element = element1 as EditDownPayment;
+            var retorno = element!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PurchaseOrder!.PONumber.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PurchaseOrder!.pSupplier!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PurchaseOrder!.MWO!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PurchaseOrder!.MWO!.CECName!.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.DownpaymentStatus.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.CBSRequesNo!.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            element.PurchaseOrder!.pBrand!.Name.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase);
+            return retorno;
+        }
 
     }
     public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetDownPaymentListQuery, List<EditDownPayment>>

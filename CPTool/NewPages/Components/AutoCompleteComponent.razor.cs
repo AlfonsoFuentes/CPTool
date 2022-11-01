@@ -1,4 +1,5 @@
 ﻿using CPtool.ExtensionMethods;
+using Microsoft.Extensions.Primitives;
 
 namespace CPTool.NewPages.Components
 {
@@ -10,12 +11,14 @@ namespace CPTool.NewPages.Components
     {
         [Inject]
         public IMediator Mediator { get; set; }
-
+        TList ModelList = new();
         [Parameter]
         [EditorRequired]
         public string TableName { get; set; }
-
-        TList ModelList = new();
+        [Parameter]
+        [EditorRequired]
+        public string PropertyName { get; set; } = string.Empty;
+        //TList ModelList = new();
 
         public string RequiredError => Required ? "" : $"Must submit {Label} ";
         [Parameter]
@@ -33,11 +36,11 @@ namespace CPTool.NewPages.Components
         [Category(CategoryTypes.FormComponent.Validation)]
         public object Validation { get; set; }
         [Parameter]
-        [EditorRequired]
-        public TEdit Model { get; set; }
 
+        public TEdit Model { get; set; }
         [Parameter]
-        [EditorRequired]
+        public EventCallback<TEdit> ModelChanged { get; set; }
+        [Parameter]
         public EventCallback<TEdit> SelectionChanged { get; set; }
         [Parameter]
         public List<TEdit> Elements { get; set; } = new();
@@ -59,9 +62,9 @@ namespace CPTool.NewPages.Components
 
         protected override void OnInitialized()
         {
-            if (Model!=null&&Model.Id != 0)
+            if (Model != null && Model.Id != 0)
             {
-                AutocompleteText = Model.Name;
+                AutocompleteText = Model.GetType().GetProperty(PropertyName).GetValue(Model).ToString();
             }
             else
             {
@@ -104,13 +107,15 @@ namespace CPTool.NewPages.Components
             else
             {
                 Model = new();
-                Model.Name = AutocompleteText;
+                Model.GetType().GetProperty(PropertyName).SetValue(Model, AutocompleteText, null);
+               
 
                 //CreatingNewRow = true;
             }
 
 
-            await SelectionChanged.InvokeAsync(Model);
+            if (SelectionChanged.HasDelegate) await SelectionChanged.InvokeAsync(Model);
+            await ModelChanged.InvokeAsync(Model);
             await ValidateForm.Invoke();
         }
 
@@ -135,7 +140,7 @@ namespace CPTool.NewPages.Components
                 {
                     Model = Parent.AddDetailtoMaster<TEdit>();
                 }
-                Model.Name = AutocompleteText;
+                Model.GetType().GetProperty(PropertyName).SetValue(Model, AutocompleteText, null);
 
                 dialogResult = ShowDialogOverrided == null ? await ToolDialogService.ShowNameDialog(Model) : await ShowDialogOverrided.Invoke(Model);
 
@@ -155,7 +160,8 @@ namespace CPTool.NewPages.Components
                     }
                     TGedById gedById = new() { Id = data.Id };
                     Model = await Mediator.Send(gedById) as TEdit;
-                    await SelectionChanged.InvokeAsync(Model);
+                    if (SelectionChanged.HasDelegate) await SelectionChanged.InvokeAsync(Model);
+                    await ModelChanged.InvokeAsync(Model);
                     await ValidateForm.Invoke();
 
                 }

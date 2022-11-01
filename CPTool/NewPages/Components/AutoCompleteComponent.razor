@@ -1,8 +1,14 @@
 ﻿@typeparam TEdit
-
 @typeparam TList
 @typeparam TGedById
-<MudAutocomplete T="string" Label="@Label"
+
+@if(Disable)
+{
+    <FieldComponent Label=@Label Value=@Model.Name></FieldComponent>
+}
+else
+{
+    <MudAutocomplete T="string" Label="@Label"
                  Value="@AutocompleteText"
                  SearchFunc="@SearchAsync"
                  Immediate="@Inmediate"
@@ -21,6 +27,8 @@
                  RequiredError=@RequiredError
                  Validation="@Validation"
                  OnKeyUp="KeyUp"></MudAutocomplete>
+}
+
 
 @code {
 

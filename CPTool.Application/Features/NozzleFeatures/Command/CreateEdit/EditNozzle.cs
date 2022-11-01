@@ -3,7 +3,11 @@ using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
 using CPTool.Application.Features.GasketsFeatures.CreateEdit;
 using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+using CPTool.Application.Features.MMOTypeFeatures.Query.GetById;
+using CPTool.Application.Features.MMOTypeFeatures.Query.GetList;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.NozzleFeatures.Query.GetById;
+using CPTool.Application.Features.NozzleFeatures.Query.GetList;
 using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
@@ -13,6 +17,7 @@ namespace CPTool.Application.Features.NozzleFeatures.CreateEdit
 {
     public class EditNozzle : EditCommand, IRequest<Result<int>>
     {
+      
         public int? PipeAccesoryId => PipeAccesory?.Id == 0 ? null : PipeAccesory?.Id;
         public EditPipeAccesory? PipeAccesory { get; set; }
         public int Order { get; set; }

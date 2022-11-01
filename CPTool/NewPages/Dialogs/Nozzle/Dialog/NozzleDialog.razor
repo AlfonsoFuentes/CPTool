@@ -20,16 +20,13 @@
 
 
                         <MudForm Model="Model" @ref="form">
+                            <TextComponent @bind-Model="@Model"
+                                       Label="Nozzle Name"
+                                       Required=true
+                                       Validation="@(new Func<string, string>(ValidateNozzleName))"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
 
-                            <MudTextField @bind-Value="Model.Name"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Disabled=true
-                                      Immediate="true"
-                                      Required=true
-                                      Validation="@(new Func<string, string>(ValidateNozzleName))"
-                                      Label="Nozzle Name"></MudTextField>
-                           <MudSelect Dense="true"
+                            <MudSelect Dense="true"
                                    Margin="Margin.Dense"
                                    T="StreamType"
                                    Label="Select Nozzle In/Out Type"
@@ -43,21 +40,21 @@
                                 }
 
                             </MudSelect>
-                             <AutoCompleteComponent TEdit="EditPipeClass"
-                                             
-                                               TGedById="GetByIdPipeClassQuery"
+                            <AutoCompleteComponent TEdit="EditPipeClass"
                                                TList="GetPipeClassListQuery"
+                                               TGedById="GetByIdPipeClassQuery"
+                                               PropertyName="@nameof(Model.nPipeClass.Name)"
                                                TableName="Pipe Class"
                                                Label="Class"
                                                ValidateForm="ValidateForm"
                                                @bind-Elements="@GlobalTables.PipeClasses"
                                                SelectionChanged="PipeClassChanged"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidatePipeClass))"
-                                               Model=@Model.nPipeClass></AutoCompleteComponent>
-                          <AutoCompleteComponent TEdit="EditPipeDiameter"
-                                             
-                                               TGedById="GetByIdPipeDiameterQuery"
+                                               @bind-Model=@Model.nPipeClass></AutoCompleteComponent>
+                            <AutoCompleteComponent TEdit="EditPipeDiameter"
                                                TList="GetPipeDiameterListQuery"
+                                               TGedById="GetByIdPipeDiameterQuery"
+                                               PropertyName="@nameof(Model.PipeDiameter.Name)"
                                                TableName="Pipe Diameter"
                                                Parent="@(GlobalTables.PipeClasses.FirstOrDefault(x=>x.Id==Model.nPipeClass.Id))"
                                                Label="Size"
@@ -66,46 +63,43 @@
                                                ValidateForm="ValidateForm"
                                                ShowDialogOverrided="ToolDialogService.ShowPipeDiameterDialog"
                                                Elements="@Model.nPipeClass.PipeDiameters"
-                                               SelectionChanged="@((arg)=>{Model.PipeDiameter=arg;})"
                                                Validation="@(new Func<string, string>(ValidatePipeDiameter))"
-                                               Model=@Model.PipeDiameter></AutoCompleteComponent>
+                                               @bind-Model=@Model.PipeDiameter></AutoCompleteComponent>
 
-                              <AutoCompleteComponent TEdit="EditConnectionType"
-                                             
-                                               TGedById="GetByIdConnectionTypeQuery"
-                                              
+                            <AutoCompleteComponent TEdit="EditConnectionType"
                                                TList="GetConnectionTypeListQuery"
+                                               TGedById="GetByIdConnectionTypeQuery"
+                                               PropertyName="@nameof(Model.ConnectionType.Name)"
                                                TableName="Connection Type"
                                                Label="Connection Type"
                                                ValidateForm="ValidateForm"
                                                @bind-Elements="@GlobalTables.ConnectionTypes"
-                                               SelectionChanged="@((arg)=>{Model.ConnectionType=arg;})"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidateConnectionType))"
-                                               Model=@Model.ConnectionType></AutoCompleteComponent>
+                                               @bind-Model=@Model.ConnectionType></AutoCompleteComponent>
+
+
                             <AutoCompleteComponent TEdit="EditGasket"
-                                              
-                                               TGedById="GetByIdGasketQuery"
                                                TList="GetGasketListQuery"
+                                               TGedById="GetByIdGasketQuery"
+                                               PropertyName="@nameof(Model.nGasket.Name)"
                                                TableName="Gasket"
                                                Label="Gasket"
                                                ValidateForm="ValidateForm"
                                                @bind-Elements="@GlobalTables.Gaskets"
-                                               SelectionChanged="@((arg)=>{Model.nGasket=arg;})"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidateGasket))"
-                                               Model=@Model.nGasket></AutoCompleteComponent>
+                                               @bind-Model=@Model.nGasket></AutoCompleteComponent>
 
                             <AutoCompleteComponent TEdit="EditMaterial"
-                                              
-                                               TGedById="GetByIdMaterialQuery"
                                                TList="GetMaterialListQuery"
+                                               TGedById="GetByIdMaterialQuery"
+                                               PropertyName="@nameof(Model.nMaterial.Name)"
                                                Label="Nozzle Material"
                                                TableName="Material"
-                                               SelectionChanged="@((arg)=>{Model.nMaterial=arg;})"
                                                ValidateForm="ValidateForm"
                                                @bind-Elements="@GlobalTables.Materials"
                                                ShowDialogOverrided="ToolDialogService.ShowMaterial"
                                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
-                                               Model=@Model.nMaterial></AutoCompleteComponent> @**@
+                                               @bind-Model=@Model.nMaterial></AutoCompleteComponent>
                         </MudForm>
                     </CascadingValue>
 

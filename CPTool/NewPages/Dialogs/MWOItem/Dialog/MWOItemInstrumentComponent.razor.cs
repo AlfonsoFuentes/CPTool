@@ -75,20 +75,8 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         //    }
 
         //}
-        void OnGasketChanged(EditGasket gas)
-        {
-            Model.iGasket = gas;
-            StateHasChanged();
-        }
-        void OnInnerMaterialChanged(EditMaterial mat)
-        {
-            Model.iInnerMaterial = mat;
-            StateHasChanged();
-        }
-        void OnOuterMaterialChanged(EditMaterial mat)
-        {
-            Model.iOuterMaterial = mat;
-            StateHasChanged();
-        }
+       
+        
+       
     }
 }

@@ -21,6 +21,7 @@
 @using CPTool.Application.Features.VendorCodeFeatures.Query.GetList
 @using CPTool.NewPages.Dialogs.BrandSupplier.List
 @using CPTool.NewPages.Dialogs.ConnectionType.List
+@using CPTool.NewPages.Dialogs.Downpayment.List
 @using CPTool.NewPages.Dialogs.Gaskets.List
 @using CPTool.NewPages.Dialogs.MWOType.List
 @using CPTool.NewPages.Dialogs.Material.List
@@ -110,6 +111,12 @@
         {
             <PurchaseOrderList></PurchaseOrderList>
         }break;
+    case 14:
+
+        {
+            <DownpaymentList></DownpaymentList>
+        }
+        break;
 }
 @code {
     [Parameter]

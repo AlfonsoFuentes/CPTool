@@ -1,0 +1,53 @@
+﻿@using CPTool.Application.Features.DownPaymentFeatures
+@using CPTool.Application.Features.DownPaymentFeatures.CreateEdit
+@using CPTool.Application.Features.DownPaymentFeatures.Query.GetById
+@using CPTool.Application.Features.DownPaymentFeatures.Query.GetList
+
+@if (debug)
+{
+
+}
+<SimpleListComponent TMaster="EditDownPayment"
+                     TDeleteMaster="DeleteDownPayment"
+                     TMasterList="GetDownPaymentListQuery" TGedById="GetByIdDownPaymentQuery"
+                     @bind-ElementsMasters="GlobalTables.DownPayments"
+                     ShowAddButtonMaster=false
+                     ShowDeleteButtonMaster=false
+                     OnShowDialogMaster="ToolDialogService.ShowDownpaymentDialog">
+
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+       
+        <MudTh Style="width:40px">Status</MudTh>
+        <MudTh Style="width:40px">CEC Name</MudTh>
+        <MudTh Style="width:40px">MWO Name</MudTh>
+        <MudTh Style="width:40px">PO No</MudTh>
+        <MudTh Style="width:40px">Supplier</MudTh>
+        <MudTh Style="width:40px">CBS Request No</MudTh>
+        <MudTh Style="width:40px">Request Date</MudTh>
+        <MudTh Style="width:40px">Approved Date</MudTh>
+        <MudTh Style="width:40px">Paid Date</MudTh>
+        <MudTh Style="width:40px">Delivery Date</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
+       
+        <MudTd DataLabel="Status">@context.DownpaymentStatus</MudTd>
+        <MudTd DataLabel="CEC Name">@context.PurchaseOrder.MWO.CECName</MudTd>
+        <MudTd DataLabel="MWO Name">@context.PurchaseOrder.MWO.Name</MudTd>
+        <MudTd DataLabel="PO No">@context.PurchaseOrder.PONumber</MudTd>
+        <MudTd DataLabel="Supplier">@context.PurchaseOrder.pSupplier.Name</MudTd>
+        <MudTd DataLabel="CBS Request No">@context.CBSRequesNo</MudTd>
+        <MudTd DataLabel="Request Date">@context.RequestDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Approved Date">@context.ApprovedDate?.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Paid Date">@context.RealDate?.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Delivery Date">@context.DeliveryDueDate?.ToShortDateString()</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+    bool debug = true;
+}

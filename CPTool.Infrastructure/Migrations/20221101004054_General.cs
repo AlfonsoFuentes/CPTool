@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPTool.Infrastructure.Migrations
 {
-    public partial class General24102022 : Migration
+    public partial class General : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -1078,6 +1078,7 @@ namespace CPTool.Infrastructure.Migrations
                     DownpaymentDescrption = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Incotherm = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApprovedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DownpaymentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -1093,6 +1094,34 @@ namespace CPTool.Infrastructure.Migrations
                         column: x => x.PurchaseOrderId,
                         principalTable: "PurchaseOrders",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MWOItemCurrencyValues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PurchaseOrderId = table.Column<int>(type: "int", nullable: true),
+                    MWOItemId = table.Column<int>(type: "int", nullable: true),
+                    Currency = table.Column<int>(type: "int", nullable: false),
+                    PrizeCurrency = table.Column<double>(type: "float", nullable: false),
+                    PrizeUSD = table.Column<double>(type: "float", nullable: false),
+                    USDCOP = table.Column<double>(type: "float", nullable: false),
+                    USDEUR = table.Column<double>(type: "float", nullable: false),
+                    CurrencyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Tax = table.Column<double>(type: "float", nullable: false),
+                    PrizeCurrencyTax = table.Column<double>(type: "float", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MWOItemCurrencyValues", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1607,6 +1636,11 @@ namespace CPTool.Infrastructure.Migrations
                 column: "ReadoutId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MWOItemCurrencyValues_MWOItemId",
+                table: "MWOItemCurrencyValues",
+                column: "MWOItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MWOItems_AlterationItemId",
                 table: "MWOItems",
                 column: "AlterationItemId");
@@ -1952,6 +1986,14 @@ namespace CPTool.Infrastructure.Migrations
                 column: "VendorCodeId");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_MWOItemCurrencyValues_MWOItems_MWOItemId",
+                table: "MWOItemCurrencyValues",
+                column: "MWOItemId",
+                principalTable: "MWOItems",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_MWOItems_PipingItems_PipingItemId",
                 table: "MWOItems",
                 column: "PipingItemId",
@@ -2094,64 +2136,24 @@ namespace CPTool.Infrastructure.Migrations
                 table: "InstrumentItems");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_AlterationItems_AlterationItemId",
-                table: "MWOItems");
+                name: "FK_Nozzles_MWOItems_ConnectedToId",
+                table: "Nozzles");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_Chapters_ChapterId",
-                table: "MWOItems");
+                name: "FK_PipingItems_MWOItems_FinishMWOItemId",
+                table: "PipingItems");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_ContingencyItems_ContingencyItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_EHSItems_EHSItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_ElectricalItems_ElectricalItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_EngineeringCostItems_EngineeringCostItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_EquipmentItems_EquipmentItemId",
-                table: "MWOItems");
+                name: "FK_PipingItems_MWOItems_StartMWOItemId",
+                table: "PipingItems");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Nozzles_EquipmentItems_EquipmentItemId",
                 table: "Nozzles");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_FoundationItems_FoundationItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_InstrumentItems_InstrumentItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Nozzles_InstrumentItems_InstrumentItemId",
                 table: "Nozzles");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_InsulationItems_InsulationItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_MWOs_MWOId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_PaintingItems_PaintingItemId",
-                table: "MWOItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MWOItems_PipingItems_PipingItemId",
-                table: "MWOItems");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Nozzles_PipingItems_PipingItemId",
@@ -2166,6 +2168,9 @@ namespace CPTool.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "DownPayments");
+
+            migrationBuilder.DropTable(
+                name: "MWOItemCurrencyValues");
 
             migrationBuilder.DropTable(
                 name: "PurchaseOrderMWOItems");
@@ -2225,6 +2230,9 @@ namespace CPTool.Infrastructure.Migrations
                 name: "Readouts");
 
             migrationBuilder.DropTable(
+                name: "MWOItems");
+
+            migrationBuilder.DropTable(
                 name: "AlterationItems");
 
             migrationBuilder.DropTable(
@@ -2243,13 +2251,7 @@ namespace CPTool.Infrastructure.Migrations
                 name: "EngineeringCostItems");
 
             migrationBuilder.DropTable(
-                name: "EquipmentItems");
-
-            migrationBuilder.DropTable(
                 name: "FoundationItems");
-
-            migrationBuilder.DropTable(
-                name: "InstrumentItems");
 
             migrationBuilder.DropTable(
                 name: "InsulationItems");
@@ -2258,28 +2260,7 @@ namespace CPTool.Infrastructure.Migrations
                 name: "MWOs");
 
             migrationBuilder.DropTable(
-                name: "MWOTypes");
-
-            migrationBuilder.DropTable(
                 name: "PaintingItems");
-
-            migrationBuilder.DropTable(
-                name: "PipingItems");
-
-            migrationBuilder.DropTable(
-                name: "Nozzles");
-
-            migrationBuilder.DropTable(
-                name: "ConnectionTypes");
-
-            migrationBuilder.DropTable(
-                name: "MWOItems");
-
-            migrationBuilder.DropTable(
-                name: "PipeAccesorys");
-
-            migrationBuilder.DropTable(
-                name: "PipeDiameters");
 
             migrationBuilder.DropTable(
                 name: "StructuralItems");
@@ -2292,6 +2273,30 @@ namespace CPTool.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "UnitaryBasePrizes");
+
+            migrationBuilder.DropTable(
+                name: "MWOTypes");
+
+            migrationBuilder.DropTable(
+                name: "EquipmentItems");
+
+            migrationBuilder.DropTable(
+                name: "InstrumentItems");
+
+            migrationBuilder.DropTable(
+                name: "PipingItems");
+
+            migrationBuilder.DropTable(
+                name: "Nozzles");
+
+            migrationBuilder.DropTable(
+                name: "ConnectionTypes");
+
+            migrationBuilder.DropTable(
+                name: "PipeAccesorys");
+
+            migrationBuilder.DropTable(
+                name: "PipeDiameters");
 
             migrationBuilder.DropTable(
                 name: "PipeClasss");

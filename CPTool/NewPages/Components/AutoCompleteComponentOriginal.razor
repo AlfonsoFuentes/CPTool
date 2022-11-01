@@ -1,0 +1,35 @@
+﻿@typeparam TEdit
+
+@typeparam TList
+@typeparam TGedById
+@if(Disable)
+{
+    <FieldComponent Label=@Label Value=@Model.Name></FieldComponent>
+}
+else
+{
+    <MudAutocomplete T="string" Label="@Label"
+                 Value="@AutocompleteText"
+                 SearchFunc="@SearchAsync"
+                 Immediate="@Inmediate"
+                 AdornmentColor="Color.Primary"
+                 ResetValueOnEmptyText="@resetValueOnEmptyText"
+                 CoerceText="@coerceText"
+                 CoerceValue="@coerceValue"
+                 CloseIcon="@Icons.Material.Filled.Search"
+                 InputMode="InputMode.text"
+                 Margin="Margin.Dense"
+                 Dense="true"
+                 Disabled=@Disable
+                 Variant="Variant.Outlined"
+                 ValueChanged=ValueChanged
+                 Required=@Required
+                 RequiredError=@RequiredError
+                 Validation="@Validation"
+                 OnKeyUp="KeyUp"></MudAutocomplete>
+}
+
+
+@code {
+
+}

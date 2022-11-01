@@ -1,6 +1,8 @@
 ﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.BrandFeatures.Query.GetById;
 using CPTool.Application.Features.BrandFeatures.Query.GetList;
+using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
+using CPTool.Application.Features.DownPaymentFeatures.Query.GetList;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetById;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
@@ -29,12 +31,6 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
         GetMWOItemListQuery mWOItemList = new();
 
 
-        protected override async Task OnInitializedAsync()
-        {
-
-            SelectedPurchaseOrder = PurchaseOrders.FirstOrDefault();
-            await AsignPurchaseOrder(SelectedPurchaseOrder);
-        }
 
         async Task RowClickedMaster(EditPurchaseOrder row)
         {
@@ -50,21 +46,39 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
 
 
         }
+        async Task AddDownPayment()
+        {
+            EditDownPayment model = new();
+            model.PurchaseOrder = SelectedPurchaseOrder;
+            var result = await ToolDialogService.ShowDownpaymentDialog(model);
+
+            if (!result.Cancelled)
+            {
+                GetDownPaymentListQuery getDownPaymentListQuery = new GetDownPaymentListQuery();
+                GlobalTables.DownPayments = await mediator.Send(getDownPaymentListQuery);
+            }
+
+        }
         async Task<DialogResult> ShowPurchaseOrder(EditPurchaseOrderMWOItem pomwo)
         {
 
-            return await ToolDialogService.ShowEditPurchaseOrderDialog(SelectedPurchaseOrder);
+            var result = await ToolDialogService.ShowEditPurchaseOrderDialog(SelectedPurchaseOrder);
+            if (!result.Cancelled)
+            {
+                GlobalTables.PurchaseOrders = await mediator.Send(purchaseorderList);
+            }
+            return result;
         }
         async Task AsignPurchaseOrder(EditPurchaseOrder PO)
         {
-            if (PO.Id != 0)
+            if (PO != null && PO.Id != 0)
             {
                 GetByIdPurchaseOrderQuery query = new() { Id = PO.Id };
 
                 SelectedPurchaseOrder = await mediator.Send(query);
 
                 MWOItems = GlobalTables.PurchaseOrderMWOItems.Where(x => x.PurchaseOrderId == SelectedPurchaseOrder.Id).Select(x => x.MWOItem).ToList();// SelectedBrand.BrandSuppliers.Select(x => x.Supplier).ToList();
-                
+
             }
             else
             {

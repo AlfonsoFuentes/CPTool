@@ -42,7 +42,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             Model.eSupplier = new();
             StateHasChanged();
         }
-        void EquipmentTypeChanged(EditEquipmentType eq)
+       void EquipmentTypeChanged(EditEquipmentType eq)
         {
             if (eq==null||eq.Id==0)
             {
@@ -74,21 +74,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             }
 
         }
-       void OnGasketChanged(EditGasket gas)
-        {
-            Model.eGasket = gas;
-            StateHasChanged();
-        }
-        void OnInnerMaterialChanged(EditMaterial mat)
-        {
-            Model.eInnerMaterial = mat;
-            StateHasChanged();
-        }
-        void OnOuterMaterialChanged(EditMaterial mat)
-        {
-            Model.eOuterMaterial = mat;
-            StateHasChanged();
-        }
+      
         EditEquipmentType EquipmentParent => Model.eEquipmentType == null ? null : GlobalTables.EquipmentTypes.FirstOrDefault(x => x.Id == Model.eEquipmentType.Id);
     }
 }

@@ -17,7 +17,6 @@
             <SelectComponent T="EditMeasuredVariable"
                          Elements=@GlobalTables.MeasuredVariables
                          Label="Measured Variable"
-                         
                          @bind-Value="@Model.MeasuredVariable">
 
 
@@ -25,23 +24,20 @@
             <SelectComponent T="EditMeasuredVariableModifier"
                          Elements=@GlobalTables.MeasuredVariableModifiers
                          Label="Measured Variable Modifier"
-                        
                          @bind-Value="@Model.MeasuredVariableModifier">
 
 
             </SelectComponent>
-             <SelectComponent T="EditReadout"
+            <SelectComponent T="EditReadout"
                          Elements=@GlobalTables.Readouts
                          Label="Readout"
-                      
                          @bind-Value="@Model.Readout">
 
 
             </SelectComponent>
-             <SelectComponent T="EditDeviceFunction"
+            <SelectComponent T="EditDeviceFunction"
                          Elements=@GlobalTables.DeviceFunctions
                          Label="Device function"
-                         
                          @bind-Value="@Model.DeviceFunction">
 
 
@@ -53,15 +49,12 @@
 
 
             </SelectComponent>
+            <TextComponent @bind-Model="@DialogParent.Model.InstrumentItem" Label="Tag Number"
+                       RequiredError="Must have Tag Number"
+                       Required=true
+                       PropertyName="@nameof(Model.TagNumber)"></TextComponent>
 
 
-            <MudTextField T="string" @bind-Value="Model.TagNumber"
-                      Required="true"
-                      Immediate="true"
-                      Label="Tag Number"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      RequiredError="Must have Tag Number"></MudTextField>
 
             <MudTextField T="string" Value="@Model.TagId"
                       Immediate="true"
@@ -95,60 +88,53 @@
 
         </MudItem>
         <MudItem xs="12" sm="6">
-
-            <MudTextField T="string" @bind-Value="Model.Model"
-                      Immediate="true"
-                      Label="Model"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"></MudTextField>
-            <MudTextField T="string" @bind-Value="Model.Reference"
-                      Immediate="true"
-                      Label="Reference"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"></MudTextField>
-            <MudTextField T="string" @bind-Value="Model.SerialNumber"
-                      Immediate="true"
-                      Label="Serial Number"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"></MudTextField>
+            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
+                       Label="Equipment Model"
+                       PropertyName="@nameof(Model.Model)"></TextComponent>
+            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
+                       Label="Reference"
+                       PropertyName="@nameof(Model.Reference)"></TextComponent>
+            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
+                       Label="Serial Number"
+                       PropertyName="@nameof(Model.SerialNumber)"></TextComponent>
         </MudItem>
         <MudItem xs="12" sm="6">
             <AutoCompleteComponent TEdit="EditGasket"
-                               TGedById="GetByIdGasketQuery"
                                TList="GetGasketListQuery"
+                               TGedById="GetByIdGasketQuery"
+                               PropertyName="@nameof(Model.iGasket.Name)"
                                TableName="Gasket"
                                Label="Gasket"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.Gaskets"
-                               SelectionChanged="OnGasketChanged"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateGasket))"
-                               Model=@Model.iGasket></AutoCompleteComponent>
+                               @bind-Model=@Model.iGasket></AutoCompleteComponent>
 
             <AutoCompleteComponent TEdit="EditMaterial"
-                               TGedById="GetByIdMaterialQuery"
                                TList="GetMaterialListQuery"
+                               TGedById="GetByIdMaterialQuery"
+                               PropertyName="@nameof(Model.iOuterMaterial.Name)"
                                Label="Outer Material"
                                TableName="Material"
-                               SelectionChanged="OnOuterMaterialChanged"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.Materials"
                                ShowDialogOverrided="ToolDialogService.ShowMaterial"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
-                               Model=@Model.iOuterMaterial></AutoCompleteComponent>
+                               @bind-Model=@Model.iOuterMaterial></AutoCompleteComponent>
 
             <AutoCompleteComponent TEdit="EditMaterial"
-                               TGedById="GetByIdMaterialQuery"
                                TList="GetMaterialListQuery"
+                               TGedById="GetByIdMaterialQuery"
+                               PropertyName="@nameof(Model.iInnerMaterial.Name)"
                                Label="Inner Material"
                                TableName="Material"
-                               SelectionChanged="OnInnerMaterialChanged"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.Materials"
                                ShowDialogOverrided="ToolDialogService.ShowMaterial"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
-                               Model=@Model.iInnerMaterial></AutoCompleteComponent>
+                               @bind-Model=@Model.iInnerMaterial></AutoCompleteComponent>
         </MudItem>
-      
+
     </MudGrid>
 }
 

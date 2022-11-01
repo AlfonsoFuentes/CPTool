@@ -25,8 +25,8 @@
             <MudTh Style="width:40px">Name</MudTh>
         </MasterContextTh>
         <MasterContextTd>
-            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
-            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
+            <MudTd DataLabel="#">@context.Id</MudTd>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
         </MasterContextTd>
         <DetailContextTh>
             <MudTh Style="width:40px">#</MudTh>
@@ -36,11 +36,11 @@
             <MudTh Style="width:40px">Thickness</MudTh>
         </DetailContextTh>
         <DetailContextTd>
-            <MudTd DataLabel="TagLetter">@context.Id</MudTd>
-            <MudTd DataLabel="TagLetter">@context.Name</MudTd>
-            <MudTd DataLabel="TagLetter">@context.OuterDiameter?.StringValue</MudTd>
-            <MudTd DataLabel="TagLetter">@context.InternalDiameter?.StringValue</MudTd>
-            <MudTd DataLabel="TagLetter">@context.Thickness?.StringValue</MudTd>
+            <MudTd DataLabel="#">@context.Id</MudTd>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="OD">@context.OuterDiameter?.StringValue</MudTd>
+            <MudTd DataLabel="ID">@context.InternalDiameter?.StringValue</MudTd>
+            <MudTd DataLabel="Thickness">@context.Thickness?.StringValue</MudTd>
         </DetailContextTd>
 
     </OneToManyListComponent>

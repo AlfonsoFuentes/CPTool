@@ -5,6 +5,7 @@
 
 using CPTool.Application.Features.Base.DeleteCommand;
 using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
+using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
@@ -15,6 +16,7 @@ using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
 using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
 using CPTool.NewPages.Dialogs.BrandSupplier.Dialog;
+using CPTool.NewPages.Dialogs.Downpayment.Dialogs;
 using CPTool.NewPages.Dialogs.Material;
 using CPTool.NewPages.Dialogs.Material.Dialog;
 using CPTool.NewPages.Dialogs.MWO.Dialog;
@@ -264,34 +266,21 @@ namespace CPTool.Services
             var result = await dialog.Result;
             return result;
         }
-        //    public async Task<DialogResult> ShowPurchaseOrderItemDialog(PurchaseOrderMWOItemDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
 
-        //        modeldialog.DialogTitle = "Relate PurchaseOrder to Items";
+        public async Task<DialogResult> ShowDownpaymentDialog(EditDownPayment Model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
 
-
-        //        modeldialog.parameters.Add("Model", Model);
-        //        var dialog = DialogService.Show<PurchaseOrderItemDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
-        //    public async Task<DialogResult> ShowDownpaymentDialog(DownPaymentDTO Model)
-        //    {
-        //        ParameterDialogModel modeldialog = new();
-        //        modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        //        modeldialog.parameters = new DialogParameters();
-
-        //        modeldialog.DialogTitle =model.Id==0?$"Add downpayment to PO#: {Model.PurchaseOrderDTO.PONumber}":$"Edit Downpayment {Model.Name}";
+            modeldialog.DialogTitle = Model.Id == 0 ? $"Add downpayment to PO#: {Model.PurchaseOrder.PONumber}" : $"Edit Downpayment {Model.Name}";
 
 
-        //        modeldialog.parameters.Add("Model", Model);
-        //        var dialog = DialogService.Show<DownpaymentDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //        var result = await dialog.Result;
-        //        return result;
-        //    }
+            modeldialog.parameters.Add("Model", Model);
+            var dialog = DialogService.Show<CreateDownpaymentDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
         public async Task<DialogResult> ShowNozzleDialog(EditNozzle model)
         {
             ParameterDialogModel modeldialog = new();

@@ -5,29 +5,22 @@
     <MudGrid>
         <MudItem xs="12" sm="12" Class="pa-4">
 
+
             <SelectComponent T="EditChapter"
                          Elements=@GlobalTables.Chapters
                          Label="Chapter"
                          SelectionChanged="Model.AssignInternalItem"
                          Disable=@(Model.Chapter?.Id==0?false:true)
                          @bind-Value="@Model.Chapter">
-
-
             </SelectComponent>
 
-            <MudTextField T="string" Value="Model.Nomenclatore"
-                      Immediate="true"
-                      Disabled="true"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      Label="Nomenclatore" />
-            <MudTextField T="string" @bind-Value="Model.Name"
-                      Immediate="true"
-                      Required="true"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      Validation="@(new Func<string,string>(DialogParent.AnyName))"
-                      Label="item Name" />
+            <FieldComponent Label="Nomenclatore" Value="@Model.Nomenclatore"></FieldComponent>
+            <TextComponent @bind-Model="@Model" Label="Item Name" Disable=false PropertyName="@nameof(Model.Name)"
+                       Validation="@(new Func<string,string>(DialogParent.AnyName))"
+                       Required=true></TextComponent>
+
+
+           
 
         </MudItem>
     </MudGrid>

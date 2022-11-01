@@ -2,12 +2,17 @@
 
 @if (show)
 {
-    <MudSelect Dense="true"
+    @if (Disable)
+    {
+        <FieldComponent Label=@Label Value=@Value.Name></FieldComponent>
+    }
+    else
+    {
+        <MudSelect Dense="true"
            Margin="Margin.Dense"
            T="int"
            AdornmentColor="Color.Primary"
            Clearable=true
-         
            Placeholder=@($"Must select {Label} ...")
            Label=@Label
            Disabled=@Disable
@@ -16,13 +21,15 @@
            Variant="Variant.Outlined"
            Validation="@Validation"
            ValueChanged=InternaSelectChanged>
-        <MudSelectItem Value=0>Must select @Label ...</MudSelectItem>
-        @foreach (var item in Elements)
-        {
-            <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
-        }
+            <MudSelectItem Value=0>Must select @Label ...</MudSelectItem>
+            @foreach (var item in Elements)
+            {
+                <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
+            }
 
-    </MudSelect>
+        </MudSelect>
+    }
+
 }
 
 

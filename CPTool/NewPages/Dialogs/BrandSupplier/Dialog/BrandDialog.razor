@@ -12,7 +12,6 @@
                     <MudForm Model="Model" @ref="form">
                         <SelectComponent T="EditSupplier"
                                          Elements=@GlobalTables.Suppliers
-                                         
                                          Label="Supplier"
                                          @bind-Value="@Model.Supplier">
 
@@ -34,13 +33,10 @@
                         </MudSelect>
                         @if (Model.Brand.BrandType != BrandType.None)
                         {
-                            <MudTextField @bind-Value="Model.Brand.Name"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Required=true
-                                      Validation="@(new Func<string, string>(ValidateBrandName))"
-                                      Label=@Model.Brand.BrandType.ToString() />
+                            <TextComponent @bind-Model="@Model" Label=@Model.Brand.BrandType.ToString()
+                                       Validation="@(new Func<string, string>(ValidateBrandName))"
+                                       PropertyName="@nameof(Model.Brand.Name)" Required=true></TextComponent>
+
                         }
                     </MudForm>
                 </CascadingValue>

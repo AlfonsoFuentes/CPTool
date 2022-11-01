@@ -1,0 +1,24 @@
+﻿@typeparam T
+@if (Disable)
+{
+    <FieldComponent Label=@Label Value=@StringValue></FieldComponent>
+}
+else
+{
+    <MudTextField T="string" Value="@StringValue"
+              Immediate="true"
+              Disabled="@Disable"
+              ValueChanged="OnValueChanged"
+              Margin="Margin.Dense"
+              Variant="Variant.Outlined"
+              Required=@Required
+              RequiredError="@RequiredError"
+              Validation="Validation"
+              InputMode=@InputMode
+              Mask="@Mask"
+              Label="@Label" />
+}
+
+@code {
+  
+}

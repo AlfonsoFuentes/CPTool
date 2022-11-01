@@ -6,19 +6,13 @@
 
 
                     <MudForm Model="Model" @ref="form">
-
-                        <MudTextField @bind-Value="Model.Name"
-                                     
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Name" />
-                        <MudTextField @bind-Value="Model.TagLetter"
-                                    
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Letter" />
+                        <TextComponent @bind-Model="@Model"
+                                       Label="Name"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                        <TextComponent @bind-Model="@Model"
+                                       Label="Letter"
+                                       PropertyName="@nameof(Model.TagLetter)"></TextComponent>
+                      
                     </MudForm>
                 </CascadingValue>
 
@@ -29,9 +23,9 @@
 
         <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
 
-            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
-        </DialogActions>
-    </MudDialog>
-    @code {
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
 
 }

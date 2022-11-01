@@ -22,21 +22,18 @@
                         <MudForm Model="Model" @ref="form">
                             <MudGrid>
                                 <MudItem xs="12" sm="6" Class="pa-4">
-                                    <MudTextField @bind-Value="Model.PurchaseOrder.Name"
-                                              Variant="Variant.Outlined"
-                                              Margin="Margin.Dense"
-                                              Immediate="true"
-                                              Required=true
-                                              Validation="@(new Func<string, string>(ValidatePurchaseOrderName))"
-                                              Label="Purchase Order Name"></MudTextField>
+                                    <TextComponent @bind-Model="@Model"
+                                               Label="Purchase Order Name"
+                                               Required=true
+                                               Validation="@(new Func<string, string>(ValidatePurchaseOrderName))"
+                                               PropertyName="@nameof(Model.PurchaseOrder.Name)"></TextComponent>
+                                    <TextComponent @bind-Model="@Model"
+                                               Label="Purchase requistion Name"
+                                               Required=true
+                                               Validation="@(new Func<string, string>(ValidatePurchaseRequisition))"
+                                               PropertyName="@nameof(Model.PurchaseOrder.PurchaseRequisition)"></TextComponent>
 
-                                    <MudTextField @bind-Value="Model.PurchaseOrder.PurchaseRequisition"
-                                              Variant="Variant.Outlined"
-                                              Margin="Margin.Dense"
-                                              Immediate="true"
-                                              Required=true
-                                              Validation="@(new Func<string, string>(ValidatePurchaseRequisition))"
-                                              Label="Purchase requistion Name"></MudTextField>
+
                                 </MudItem>
                                 <MudItem xs="12" sm="6" Class="pa-4">
                                     <SelectComponent T="EditBrand"

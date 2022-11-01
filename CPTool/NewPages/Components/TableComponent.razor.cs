@@ -32,6 +32,8 @@ namespace CPTool.NewPages.Components
         [Parameter]
         [EditorRequired]
         public Func<T, string, bool> SearchFunc { get; set; }
+
+        string SelectedItemName=>SelectedItem==null? string.Empty:SelectedItem.Name;
         private bool FilterFunc(T element, string searchString)
         {
             var retorno = SearchFunc.Invoke(element, searchString);///* SearchFunc == null ?*/ element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) /*: SearchFunc.Invoke(element, searchString)*/;

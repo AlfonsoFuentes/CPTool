@@ -24,7 +24,10 @@
                      OnShowDialogDetails="ToolDialogService.ShowPurchaseOrderMWOItem"
                      OnRowClickedMaster="RowClickedMaster" OnRowClickedDetails="RowClickedDetails">
         <OtherButtonsMaster>
-
+            <MudTooltip Text="Downpayment">
+                <MudIconButton Icon="@Icons.Filled.CurrencyExchange" Color="Color.Inherit"
+                           Disabled=@(SelectedPurchaseOrder.PurchaseOrderStatus== PurchaseOrderStatus.Created?false:true) Size="Size.Small" OnClick="AddDownPayment" />
+            </MudTooltip>
             <MudTooltip Text="Restore List">
                 <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick=@(()=>ShowTableDetails=!ShowTableDetails) />
             </MudTooltip>
@@ -36,27 +39,17 @@
         <MasterContextTh>
             <MudTh Style="width:20px">#</MudTh>
             <MudTh Style="width:50px">MWO</MudTh>
-            @if (ShowTableDetails)
+            <MudTh Style="width:50px">PR#</MudTh>
+            <MudTh Style="width:50px">PO#</MudTh>
+            <MudTh Style="width:50px">Supplier</MudTh>
+            <MudTh Style="width:50px">Status</MudTh>
+            @if (!ShowTableDetails)
             {
 
-                <MudTh Style="width:50px">Status</MudTh>
-                <MudTh Style="width:50px">PR#</MudTh>
-                <MudTh Style="width:50px">PO#</MudTh>
-                <MudTh Style="width:50px">Supplier</MudTh>
-            }
-            else
-            {
-                
-                <MudTh Style="width:50px">MWO Name</MudTh>
-                <MudTh Style="width:50px">PO Name</MudTh>
-                <MudTh Style="width:50px">Status</MudTh>
-                <MudTh Style="width:50px">PR#</MudTh>
-                <MudTh Style="width:50px">PO#</MudTh>
-                <MudTh Style="width:50px">Brand</MudTh>
-                <MudTh Style="width:50px">Supplier</MudTh>
-
-                <MudTh Style="width:50px">Value</MudTh>
-                <MudTh Style="width:50px">Value, USD</MudTh>
+                <MudTh Style="width:50px">Dates</MudTh>
+                <MudTh Style="width:50px">Currency</MudTh>
+                <MudTh Style="width:50px">$Currency</MudTh>
+                <MudTh Style="width:50px">$USD</MudTh>
             }
 
 
@@ -65,23 +58,23 @@
         <MasterContextTd>
             <MudTd DataLabel="Id">@context.Id</MudTd>
             <MudTd DataLabel="MWO">@context.MWO.CECName</MudTd>
-            @if (ShowTableDetails)
+            <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
+            <MudTd DataLabel="PO">@context.PONumber</MudTd>
+            <MudTd DataLabel="Supplier">@context.pSupplier?.Name</MudTd>
+            <MudTd DataLabel="PO">@context.PurchaseOrderStatus.ToString()</MudTd>
+            @if (!ShowTableDetails)
             {
-                <MudTd DataLabel="PO">@context.PurchaseOrderStatus.ToString()</MudTd>
-                <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
-                <MudTd DataLabel="PO">@context.PONumber</MudTd>
-                <MudTd DataLabel="Supplier">@context.pSupplier?.Name</MudTd>
-            }
-            else
-            {
-                <MudTd DataLabel="MWO Name">@context.MWO.Name</MudTd>
-                <MudTd DataLabel="PO">@context.Name</MudTd>
-                <MudTd DataLabel="PO">@context.PurchaseOrderStatus.ToString()</MudTd>
-                <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
-                <MudTd DataLabel="PO">@context.PONumber</MudTd>
-                <MudTd DataLabel="Supplier">@context.pSupplier?.Name</MudTd>
-                <MudTd DataLabel="Brand">@context.pBrand?.Name</MudTd>
-                <MudTd DataLabel="Value">@($"{context.Currency} {context.Value.ToString("C0")}")</MudTd>
+
+
+                <MudTd DataLabel="date">
+                    @(
+                        context.PurchaseOrderStatus == PurchaseOrderStatus.Ordering ? context.POCreatedDate.ToString("d", _en) :
+                        context.PurchaseOrderStatus == PurchaseOrderStatus.Created ? context.POEstimatedDate?.ToString("d", _en) :
+                        context.PurchaseOrderStatus == PurchaseOrderStatus.Received ? context.POReceivedDate.ToString("d", _en) :
+                        context.POInstalledDate.ToString("d", _en))
+                </MudTd>
+                <MudTd DataLabel="Value">@($"{context.Currency.ToString()}")</MudTd>
+                <MudTd DataLabel="Value">@($"{context.Value.ToString("C0")}")</MudTd>
                 <MudTd DataLabel="Value">@($"{context.ValueUSD.ToString("C0")}")</MudTd>
             }
         </MasterContextTd>
@@ -124,7 +117,7 @@
 
     public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
 
-    string value = "";
+
 
     bool ShowTableDetails = true;
 

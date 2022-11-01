@@ -21,21 +21,18 @@
 
 
                         <MudForm Model="Model" @ref="form">
+                            <TextComponent @bind-Model="@Model"
+                                       Label="Process Fluid Name"
+                                       Required=true
+                                       Validation="@(new Func<string, string>(ValidateProcessFluidName))"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
 
-                            <MudTextField @bind-Value="Model.Name"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Required=true
-                                      Validation="@(new Func<string, string>(ValidateProcessFluidName))"
-                                      Label="Process Fluid Name"></MudTextField>
-                            <MudTextField @bind-Value="Model.TagLetter"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Required=true
-                                      Validation="@(new Func<string, string>(ValidateProcessFluidName))"
-                                      Label="Abreviation"></MudTextField>
+                            <TextComponent @bind-Model="@Model"
+                                       Label="Abreviation"
+                                       Required=true
+                                       Validation="@(new Func<string, string>(ValidateProcessFluidName))"
+                                       PropertyName="@nameof(Model.TagLetter)"></TextComponent>
+
                             <SelectComponent T="EditPropertyPackage"
                                          Elements=@GlobalTables.PropertyPackages
                                          Label="Property Package"

@@ -8,7 +8,8 @@
         Created,
 
         Received,
-        Installed
+        Installed,
+        Closed
     }
 
 

@@ -7,46 +7,27 @@
 
                     <MudForm Model="Model" @ref="form">
                         <AutoCompleteComponent TEdit="EditMWOType"
-                                               
-                                               TGedById="GetByIdMWOTypeQuery"
-                                               TList="GetMWOTypeListQuery"
+                                               TList="GetMWOTypeListQuery" TGedById="GetByIdMWOTypeQuery"
+                                               PropertyName="@nameof(ProcessFluid.Name)"
                                                TableName="MWO Type"
                                                Label="MWO Type"
-                                               SelectionChanged="@((arg)=>{Model.MWOType=arg;})"
+                                              
                                                ValidateForm="Validateform"
                                                @bind-Elements="@GlobalTables.MWOTypes"
                                                Validation="@(new Func<string, string>(ReviewMWOType))"
-                                               Model=@Model.MWOType></AutoCompleteComponent>
+                                               @bind-Model=@Model.MWOType></AutoCompleteComponent>
 
+                        <TextComponent @bind-Model="@Model" Label="MWO Name" PropertyName="@nameof(Model.Name)"></TextComponent>
+                        <NumericComponent @bind-Model="@Model" Label="MWO number"
+                                          Validation="@(new Func<int, string>(AnyNumber))"
+                                          Mask="@mask1"
+                                          PropertyName="@nameof(Model.Number)"></NumericComponent>
 
-                       
-                        <MudTextField @bind-Value="Model.Name"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Name" />
-
-                        <MudTextField T="int" @bind-Value="Model.Number"
-                                      Immediate="true"
-                                      Validation="@(new Func<int, string>(AnyNumber))"
-                                      Label="Number"
-                                      Required=true
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      InputMode="InputMode.numeric"
-                                      Mask="@mask1" />
-                        <MudTextField T="string" Value="Model.CEBName"
-                                      Immediate="true"
-                                      Disabled="true"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Label="Number" />
-                        <MudTextField T="string" Value="Model.CECName"
-                                      Immediate="true"
-                                      Disabled="true"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Label="CECName" />
+                        
+                        <FieldComponent Value="Model.CEBName"
+                                        Label="CEB Name" />
+                        <FieldComponent Value="Model.CECName"
+                                        Label="CEC Name" />
                     </MudForm>
                 </CascadingValue>
 

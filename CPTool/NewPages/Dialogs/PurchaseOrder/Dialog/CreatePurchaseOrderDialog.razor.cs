@@ -4,6 +4,7 @@ using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
@@ -31,7 +32,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
             await ValidateForm();
             if (form.IsValid)
             {
-                Model.PurchaseOrder.POCreatedDate = DateTime.UtcNow;
+                Model.PurchaseOrder.POOrderingdDate = DateTime.UtcNow;
                 Model.PurchaseOrder.PurchaseOrderStatus = Domain.Entities.PurchaseOrderStatus.Ordering;
                 await mediator.Send(Model);
 
@@ -74,15 +75,21 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         private async Task ItemUpdated(MudItemDropInfo<DropItem> dropItem)
         {
             dropItem.Item.Identifier = dropItem.DropzoneIdentifier;
-         
-           Model.PurchaseOrder.MWOItem = dropItem.Item.MWOItem;
-         
+            var MWOItem = dropItem.Item.MWOItem;
+
+            Model.PurchaseOrder.TaxCode = Model.PurchaseOrder.TaxCode == "" ?
+                MWOItem.ChapterId == 1 ? 
+                Model.PurchaseOrder.pSupplier!.TaxCodeLP!.Name : Model.PurchaseOrder.pSupplier!.TaxCodeLD!.Name: Model.PurchaseOrder.TaxCode;
+            Model.PurchaseOrder.SPL = Model.PurchaseOrder.SPL == "" ?  "43000" : "15000";
+            Model.PurchaseOrder.CostCenter = Model.PurchaseOrder.CostCenter == "" ? 
+                MWOItem!.ChapterId! == 1 ? MWOItem!.AlterationItem!.CostCenter! : "" : Model.PurchaseOrder.CostCenter;
+            Model.PurchaseOrder.MWOItem = MWOItem;
             var result = await ToolDialogService.ShowAddDataToPurchaseOrderDialog(Model.PurchaseOrder);
             if (!result.Cancelled)
             {
                 var retorno = result.Data as EditPurchaseOrder;
-                Model.MWOItems.Add(retorno.MWOItem);
-               
+                Model.MWOItems.Add(dropItem.Item.MWOItem);
+
             }
 
 

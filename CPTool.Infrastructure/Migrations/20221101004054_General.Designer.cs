@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Infrastructure.Migrations
 {
     [DbContext(typeof(TableContext))]
-    [Migration("20221026235620_currencyvalues")]
-    partial class currencyvalues
+    [Migration("20221101004054_General")]
+    partial class General
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -345,6 +345,9 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DownpaymentDescrption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DownpaymentName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DownpaymentStatus")

@@ -19,7 +19,8 @@
         public string? DownpaymentDescrption { get; set; }
         public string? Incotherm { get; set; }
         public DateTime? ApprovedDate { get; set; }
-
+       
+        public string? DownpaymentName { get; set; }
 
     }
 }

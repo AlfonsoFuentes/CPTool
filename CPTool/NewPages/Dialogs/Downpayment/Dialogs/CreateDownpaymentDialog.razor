@@ -1,0 +1,95 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using CPTool.Application.Features.DownPaymentFeatures.CreateEdit
+<MudDialog DisableSidePadding="true">
+    <DialogContent>
+        <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+            <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                <CascadingValue Value="this">
+
+
+                    <MudForm Model="Model" @ref="form">
+                        <MudGrid>
+                            <MudItem xs="12" sm="6" Class="pa-1">
+
+                                <FieldComponent Label="Request date" Value=@Model.RequestDate.ToShortDateString()></FieldComponent>
+
+                                <FieldComponent Label="MWO Name" Value=@Model.PurchaseOrder.MWO.Name></FieldComponent>
+                                <FieldComponent Label="Supplier Name" Value=@Model.PurchaseOrder.pSupplier.Name></FieldComponent>
+                                <FieldComponent Label="Vendor No" Value=@Model.PurchaseOrder.pSupplier.VendorCode.Name></FieldComponent>
+                                <FieldComponent Label="PO No" Value=@Model.PurchaseOrder.PONumber></FieldComponent>
+                                <FieldComponent Label="PO Currency" Value=@Model.PurchaseOrder.Currency.ToString()></FieldComponent>
+                                <FieldComponent Label="Downpayment Currency" Value=@Model.PurchaseOrder.Currency.ToString()></FieldComponent>
+
+                                <FieldComponent Label="@($"PO Value ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrency.ToString("C2")></FieldComponent>
+                                <FieldComponent Label="@($"PO Tax ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrencyTax.ToString("C2")></FieldComponent>
+                                <FieldComponent Label="@($"PO Total ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.TotalPrizeCurrency.ToString("C2")></FieldComponent>
+                                <MudDatePicker Label="Downpayment due date"
+                                               Editable=true
+                                               Required=true
+                                               Disabled=@(Model.Id == 0?false:true)
+                                               Margin="Margin.Dense"
+                                               DisableToolbar="true"
+                                               Variant="Variant.Outlined"
+                                               ShowWeekNumbers=true
+                                               RequiredError="Must define estimated Downpayment due date"
+                                               @bind-Date="Model.DownPaymentDueDate" Culture="@_en"></MudDatePicker>
+
+                               
+                            </MudItem>
+                            <MudItem xs="12" sm="6" Class="pa-1">
+                                <TextComponent @bind-Model="@Model" Label="Downpayment Name" Disable=@(Model.Id == 0?false:true)
+                                               PropertyName="@nameof(Model.DownpaymentName)" Required=true></TextComponent>
+                                <TextComponent @bind-Model="@Model" Label="Manager email" Disable=@(Model.Id == 0?false:true)
+                                               Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"
+                                               PropertyName="@nameof(Model.ManagerEmail)" Required=true></TextComponent>
+                                <TextComponent @bind-Model="@Model" Label="Proforma Invoice #" Disable=@(Model.Id == 0?false:true)
+                                               PropertyName="@nameof(Model.ProformaInvoice)" Required=true></TextComponent>
+
+                                <TextComponent @bind-Model="@Model" Label="Pay terms" Disable=@(Model.Id == 0?false:true)
+                                               PropertyName="@nameof(Model.Payterms)" Required=true Lines="3"></TextComponent>
+                                <TextComponent @bind-Model="@Model" Label="Incotherm" Disable=@(Model.Id == 0?false:true)
+                                               PropertyName="@nameof(Model.Incotherm)" Required=true></TextComponent>
+                                <NumericComponent @bind-Model="@Model" Label="Percentage" Disable=@(Model.Id == 0?false:true)
+                                                  PropertyName="@nameof(Model.Percentage)" Required=true></NumericComponent>
+                                <FieldComponent Label="Downpayment Value" Value=@Model.DownPaymentAmount.ToString("C2")></FieldComponent>
+                                
+                                <TextComponent @bind-Model="@Model" Label="CBS Request Text" Disable=@(Model.Id == 0?false:true)
+                                               PropertyName="@nameof(Model.CBSRequesText)" Required=true></TextComponent>
+                                <TextComponent @bind-Model="@Model" Label="CBS Request #" Disable=@(Model.Id == 0?false:true)
+                                               PropertyName="@nameof(Model.CBSRequesNo)" Required=true></TextComponent>
+                                <MudDatePicker Label="Delivery due date"
+                                               DisableToolbar="true"
+                                               Editable=true
+                                               Required=true
+                                               Disabled=@(Model.Id == 0?false:true)
+                                               Margin="Margin.Dense"
+                                               Variant="Variant.Outlined"
+                                               ShowWeekNumbers=true
+                                               RequiredError="Must define estimated Delivery due due date"
+                                               @bind-Date="Model.DeliveryDueDate" Culture="@_en"></MudDatePicker>
+                            </MudItem>
+                        </MudGrid>
+
+
+
+
+
+
+                    </MudForm>
+                </CascadingValue>
+
+            </MudPaper>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" Disabled=@(Model.DownpaymentStatus==DownpaymentStatus.Closed?true:false) OnClick="Submit">@ButtonName</MudButton>
+
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+
+}
+

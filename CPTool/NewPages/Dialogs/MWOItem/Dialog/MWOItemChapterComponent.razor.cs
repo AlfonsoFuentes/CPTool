@@ -7,9 +7,12 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
     {
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
-        protected EditMWOItem Model => DialogParent.Model;
+        protected EditMWOItem Model { get; set; }
 
-       
 
+        protected override void OnInitialized()
+        {
+            Model = DialogParent.Model;
+        }
     }
 }

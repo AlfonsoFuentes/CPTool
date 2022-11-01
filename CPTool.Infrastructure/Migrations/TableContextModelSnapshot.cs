@@ -345,6 +345,9 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<string>("DownpaymentDescrption")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DownpaymentName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DownpaymentStatus")
                         .HasColumnType("int");
 

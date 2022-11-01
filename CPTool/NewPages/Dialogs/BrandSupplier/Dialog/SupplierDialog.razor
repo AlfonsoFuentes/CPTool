@@ -26,76 +26,56 @@
 
 
                         </SelectComponent>
-                        <MudTextField @bind-Value="Model.Supplier.Name"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Supplier Name"
-                                      Required=true
-                                      Validation="@(new Func<string, string>(ValidateSupplieName))" />
+                        <TextComponent @bind-Model="@Model" Label="Supplier Name"
+                                       Validation="@(new Func<string, string>(ValidateSupplieName))"
+                                       PropertyName="@nameof(Model.Supplier.Name)" Required=true></TextComponent>
 
+                        <TextComponent @bind-Model="@Model" Label="Contact person"
+                                       PropertyName="@nameof(Model.Supplier.ContactPerson)" Required=true></TextComponent>
+                        <TextComponent @bind-Model="@Model" Label="email"
+                                       InputType="InputType.Email"
+                                       PropertyName="@nameof(Model.Supplier.Email)" Required=true></TextComponent>
 
+                        <TextComponent @bind-Model="@Model" Label="Phone"
+                                       InputType="InputType.Telephone"
+                                       PropertyName="@nameof(Model.Supplier.Phone)" Required=true></TextComponent>
+                        <TextComponent @bind-Model="@Model" Label="Address"
+                                       PropertyName="@nameof(Model.Supplier.Address)" Required=true></TextComponent>
 
-
-                        <MudTextField @bind-Value="@Model.Supplier.ContactPerson"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Contact person" />
-                        <MudTextField @bind-Value="@Model.Supplier.Email"
-                                      InputType="InputType.Email"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="email" />
-                        <MudTextField @bind-Value="@Model.Supplier.Phone"
-                                      InputType="InputType.Telephone"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Phone" />
-                        <MudTextField @bind-Value="@Model.Supplier.Address"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Address"></MudTextField>
 
 
                         <AutoCompleteComponent TEdit="EditVendorCode"
-                                              
-                                               TGedById="GetByIdVendorCodeQuery"
                                                TList="GetVendorCodeListQuery"
+                                               TGedById="GetByIdVendorCodeQuery"
+                                               @bind-Model=@Model.Supplier.VendorCode
+                                               PropertyName="@nameof(Model.Supplier.VendorCode.Name)"
                                                TableName="Vendor Code"
                                                Label="Vendor Code"
-                                               SelectionChanged="@((arg)=>{Model.Supplier.VendorCode=arg;})"
                                                ValidateForm="Validateform"
                                                @bind-Elements="@GlobalTables.VendorCodes"
-                                               Validation="@(new Func<string, string>(ReviewVendorCode))"
-                                               Model=@Model.Supplier.VendorCode></AutoCompleteComponent>
+                                               Validation="@(new Func<string, string>(ReviewVendorCode))"></AutoCompleteComponent>
                         <AutoCompleteComponent TEdit="EditTaxCodeLD"
-                                              
-                                               TGedById="GetByIdTaxCodeLDQuery"
                                                TList="GetTaxCodeLDListQuery"
+                                               TGedById="GetByIdTaxCodeLDQuery"
+                                               PropertyName="@nameof(Model.Supplier.TaxCodeLD.Name)"
                                                TableName="Tax Codel LD"
                                                Required=true
                                                Label="Tax Codel LD"
                                                ValidateForm="Validateform"
-                                               SelectionChanged="@((arg)=>{Model.Supplier.TaxCodeLD=arg;})"
                                                @bind-Elements="@GlobalTables.TaxCodeLDs"
                                                Validation="@(new Func<string, string>(GlobalTables.ReviewTaxCodeLD))"
-                                               Model=@Model.Supplier.TaxCodeLD></AutoCompleteComponent>
+                                               @bind-Model=@Model.Supplier.TaxCodeLD></AutoCompleteComponent>
                         <AutoCompleteComponent TEdit="EditTaxCodeLP"
-                                              
-                                               TGedById="GetByIdTaxCodeLPQuery"
                                                TList="GetTaxCodeLPListQuery"
+                                               TGedById="GetByIdTaxCodeLPQuery" 
+                                               PropertyName="@nameof(Model.Supplier.TaxCodeLP.Name)"
                                                TableName="Tax Code LP"
                                                Label="Tax Code LP"
                                                ValidateForm="Validateform"
                                                Required=true
-                                               SelectionChanged="@((arg)=>{Model.Supplier.TaxCodeLP=arg;})"
                                                @bind-Elements="@GlobalTables.TaxCodeLPs"
                                                Validation="@(new Func<string, string>(GlobalTables.ReviewTaxCodeLP))"
-                                               Model=@Model.Supplier.TaxCodeLP></AutoCompleteComponent>
+                                               @bind-Model=@Model.Supplier.TaxCodeLP></AutoCompleteComponent>
 
 
                     </MudForm>

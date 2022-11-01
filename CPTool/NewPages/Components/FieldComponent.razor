@@ -1,0 +1,10 @@
+﻿<MudField Variant="Variant.Outlined"
+          Margin="Margin.Dense"
+          Label=@Label>@Value</MudField>
+
+@code {
+    [Parameter]
+    public object Value{ get; set; }
+    [Parameter]
+    public string Label { get; set; }
+}

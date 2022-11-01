@@ -6,16 +6,16 @@
     <MudGrid>
         <MudItem xs="12" sm="10">
             <AutoCompleteComponent TEdit="EditProcessFluid"
-                               TGedById="GetByIdProcessFluidQuery"
                                TList="GetProcessFluidListQuery"
+                               TGedById="GetByIdProcessFluidQuery" PropertyName="@nameof(ProcessFluid.Name)"
                                TableName="Process Fluid"
                                Label="Process Fluid"
-                               SelectionChanged="OnProcessFluidChanged"
+                               
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.ProcessFluids"
                                ShowDialogOverrided="ToolDialogService.ShowProcessFluidDialog"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateProcessFluid))"
-                               Model=@ProcessFluid>
+                               @bind-Model=@ProcessFluid>
 
             </AutoCompleteComponent>
         </MudItem>

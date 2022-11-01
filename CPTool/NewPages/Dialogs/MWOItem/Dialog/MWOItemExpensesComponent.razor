@@ -5,30 +5,29 @@
     <MudGrid>
         <MudItem xs="12" sm="12" Class="pa-4">
             <AutoCompleteComponent TEdit="EditUnitaryBasePrize"
-                              
-                               TGedById="GetByIdUnitaryBasePrizeQuery"
                                TList="GetUnitaryBasePrizeListQuery"
+                               TGedById="GetByIdUnitaryBasePrizeQuery"
+                               PropertyName="@nameof(Model.UnitaryBasePrize.Name)"
                                TableName="Unitary prize unit"
                                Label="Unitary prize unit"
-                               SelectionChanged="@((arg)=>{Model.UnitaryBasePrize=arg;})"
+                              
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.UnitaryBasePrizes"
                                Validation="@(new Func<string, string>(ValidateUnitaryPrizeName))"
-                              Model=@Model.UnitaryBasePrize></AutoCompleteComponent>
+                               @bind-Model=@Model.UnitaryBasePrize></AutoCompleteComponent>
 
 
-           
-           
 
 
-            <MudTextField T="string" Value="@(Model.BudgetPrize.ToString())"
-                      Adornment="@Adornment.Start"
-                      AdornmentIcon=@Icons.Material.Filled.AttachMoney
-                      Format="C"
-                      Disabled="true"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      Label="Budget Prize, USD"></MudTextField>
+
+
+            <MudNumericField T="decimal" @bind-Value="@Model.BudgetPrize"
+                        HideSpinButtons=true
+                         Format="C2"
+                         Immediate=true
+                         Margin="Margin.Dense"
+                         Variant="Variant.Outlined"
+                         Label="Budget Prize, USD"></MudNumericField>
 
         </MudItem>
     </MudGrid>

@@ -6,19 +6,14 @@
 
 
                     <MudForm Model="Model" @ref="form">
+                        <TextComponent @bind-Model="@Model" Label="Name"
+                                       Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialName))"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                        <TextComponent @bind-Model="@Model" Label="Letter"
+                                       Required=true
+                                       Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialAbbName))"
+                                       PropertyName="@nameof(Model.Abbreviation)"></TextComponent>
 
-                        <MudTextField @bind-Value="Model.Name"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialName))"
-                                      Label="Name" />
-                        <MudTextField @bind-Value="Model.Abbreviation"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialAbbName))"
-                                      Immediate="true"
-                                      Label="Letter" />
                     </MudForm>
                 </CascadingValue>
 

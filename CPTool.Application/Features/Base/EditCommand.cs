@@ -4,6 +4,9 @@ namespace CPTool.Application.Features.Base
 {
     public class EditCommand : IRequest<Result<int>>
     {
+       
+      
+     
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public virtual T AddDetailtoMaster<T>() where T : EditCommand, new()

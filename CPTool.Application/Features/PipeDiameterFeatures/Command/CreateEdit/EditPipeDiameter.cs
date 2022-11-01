@@ -1,5 +1,9 @@
 ﻿using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
+using CPTool.Application.Features.PipeClassFeatures.Query.GetById;
+using CPTool.Application.Features.PipeClassFeatures.Query.GetList;
+using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById;
+using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
 using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
 using CPTool.Application.Features.UnitFeatures.CreateEdit;
 using CPTool.UnitsSystem;
@@ -8,7 +12,7 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
 {
     public class EditPipeDiameter : EditCommand, IRequest<Result<int>>, IDisposable
     {
-        public EditPipeDiameter()
+         public EditPipeDiameter()
         {
             OuterDiameter.Name = "Outer diameter";
             InternalDiameter.Name = "Inner diameter";

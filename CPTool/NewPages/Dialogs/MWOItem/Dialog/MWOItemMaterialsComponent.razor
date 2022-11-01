@@ -5,42 +5,42 @@
 @if (debug)
 {
     <MudGrid>
-        
+
         <MudItem xs="12" sm="6">
             <AutoCompleteComponent TEdit="EditGasket"
-                               TGedById="GetByIdGasketQuery"
                                TList="GetGasketListQuery"
+                               TGedById="GetByIdGasketQuery"
+                               PropertyName="@nameof(Gasket.Name)"
                                TableName="Gasket"
                                Label="Gasket"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.Gaskets"
-                               SelectionChanged="OnGasketChanged"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateGasket))"
-                               Model=@Gasket></AutoCompleteComponent>
+                               @bind-Model=@Gasket></AutoCompleteComponent>
 
             <AutoCompleteComponent TEdit="EditMaterial"
-                               TGedById="GetByIdMaterialQuery"
                                TList="GetMaterialListQuery"
+                               TGedById="GetByIdMaterialQuery"
+                               PropertyName="@nameof(OuterMaterial.Name)"
                                Label="Outer Material"
                                TableName="Material"
-                               SelectionChanged="OnOuterMaterialChanged"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.Materials"
                                ShowDialogOverrided="ToolDialogService.ShowMaterial"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
-                               Model=@OuterMaterial></AutoCompleteComponent>
+                               @bind-Model=@OuterMaterial></AutoCompleteComponent>
 
             <AutoCompleteComponent TEdit="EditMaterial"
-                               TGedById="GetByIdMaterialQuery"
                                TList="GetMaterialListQuery"
+                               TGedById="GetByIdMaterialQuery"
+                               PropertyName="@nameof(InnerMaterial.Name)"
                                Label="Inner Material"
                                TableName="Material"
-                               SelectionChanged="OnInnerMaterialChanged"
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.Materials"
                                ShowDialogOverrided="ToolDialogService.ShowMaterial"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
-                               Model=@InnerMaterial></AutoCompleteComponent>
+                               @bind-Model=@InnerMaterial></AutoCompleteComponent>
         </MudItem>
     </MudGrid>
 }

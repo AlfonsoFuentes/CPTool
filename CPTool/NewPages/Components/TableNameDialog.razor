@@ -8,12 +8,10 @@
 
 
                     <MudForm Model="Model" @ref="form">
-
-                        <MudTextField @bind-Value="Model.Name"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense"
-                                      Immediate="true"
-                                      Label="Name" />
+                        <TextComponent @bind-Model="@Model"
+                                       Label="Name"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                   
                     </MudForm>
                 </CascadingValue>
 
