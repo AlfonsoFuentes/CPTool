@@ -51,17 +51,15 @@
             <TextComponent @bind-Model="@DialogParent.Model.PipingItem" Label="Tag Number"
                        RequiredError="Must have Tag Number"
                       Required=true
-                       PropertyName="@nameof(Model.TagNumber)"></TextComponent>
+                       PropertyName="@nameof(DialogParent.Model.PipingItem.TagNumber)"></TextComponent>
 
 
-            
+            <TextComponent @bind-Model="@DialogParent.Model.PipingItem" Label="Tag"
+                       
+                       Disable="true"
+                       PropertyName="@nameof(DialogParent.Model.TagId)"></TextComponent>
 
-            <MudTextField T="string" Value="@Model.TagId"
-                      Immediate="true"
-                      Disabled="true"
-                      Margin="Margin.Dense"
-                      Variant="Variant.Outlined"
-                      Label="Tag"></MudTextField>
+           
 
 
         </MudItem>

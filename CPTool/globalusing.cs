@@ -7,7 +7,7 @@ global using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
 global using CPTool.NewPages.Components;
 global using CPTool.Application.Features.Base;
 global using CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList;
-
+global using CPTool.NewPages.Dialogs.ProcessFluid.List;
 global using CPTool.Application.Features.EquipmentTypeFeatures;
 global using CPTool.Application.Features.EquipmentTypeFeatures.Query.GetById;
 global using CPTool.Application.Features.EquipmentTypeSubFeatures;

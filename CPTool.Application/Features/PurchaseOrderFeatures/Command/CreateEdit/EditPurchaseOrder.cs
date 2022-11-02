@@ -4,6 +4,7 @@ using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
 using System.Reflection;
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
@@ -46,6 +47,9 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
         public List<EditPurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; } = new();
 
         public List<EditDownPayment>? DownPayments { get; set; }
+        public List<EditTaks>? Taks { get; set; }
+
+        public EditTaks? EditTaks => Taks!.Count==0 ? null : Taks.FirstOrDefault();  
 
     }
 }

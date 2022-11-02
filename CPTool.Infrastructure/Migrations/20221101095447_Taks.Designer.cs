@@ -4,6 +4,7 @@ using CPTool.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPTool.Infrastructure.Migrations
 {
     [DbContext(typeof(TableContext))]
-    partial class TableContextModelSnapshot : ModelSnapshot
+    [Migration("20221101095447_Taks")]
+    partial class Taks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2115,9 +2117,6 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("TaksStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaksType")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdateBy")

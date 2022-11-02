@@ -23,6 +23,7 @@ namespace CPTool.Infrastructure.Persistence
         {
             modelBuilder.Entity<MWOType>().HasMany(c => c.MWOs).WithOne(t => t.MWOType).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<MWO>().HasMany(c => c.MWOItems).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
+           
 
             modelBuilder.Entity<Chapter>().HasMany(c => c.MWOItems).WithOne(t => t.Chapter).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.UnitaryBasePrize).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
@@ -128,6 +129,13 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<ProcessFluid>().HasOne(c => c.PropertyPackage).WithMany(t => t.ProcessFluids).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<DownPayment>().HasOne(c => c.PurchaseOrder).WithMany(t => t.DownPayments).OnDelete(DeleteBehavior.NoAction);
+           
+            
+            modelBuilder.Entity<Taks>().HasOne(c => c.MWO).WithMany(t => t.Taks).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Taks>().HasOne(c => c.MWOItem).WithMany(t => t.Taks).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Taks>().HasOne(c => c.PurchaseOrder).WithMany(t => t.Taks).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Taks>().HasOne(c => c.DownPayment).WithMany(t => t.Taks).OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<BrandSupplier>()
              .HasKey(t => new { t.BrandId, t.SupplierId });
@@ -218,6 +226,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<ConnectionType>? ConnectionTypes { get; set; }
         public DbSet<ProcessCondition>? ProcessConditions { get; set; }
         public DbSet<PropertyPackage>? PropertyPackages { get; set; }
+        public DbSet<Taks>? Takss { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             var entittes = ChangeTracker.Entries<BaseDomainModel>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).ToList();

@@ -1,7 +1,4 @@
-﻿@using CPTool.Application.Features.DownPaymentFeatures
-@using CPTool.Application.Features.DownPaymentFeatures.CreateEdit
-@using CPTool.Application.Features.DownPaymentFeatures.Query.GetById
-@using CPTool.Application.Features.DownPaymentFeatures.Query.GetList
+﻿
 
 @if (debug)
 {
@@ -11,13 +8,14 @@
                      TDeleteMaster="DeleteDownPayment"
                      TMasterList="GetDownPaymentListQuery" TGedById="GetByIdDownPaymentQuery"
                      @bind-ElementsMasters="GlobalTables.DownPayments"
+                     @bind-SelectedMaster="@SelectedPurchaseOrder"
                      ShowAddButtonMaster=false
                      ShowDeleteButtonMaster=false
-                     OnShowDialogMaster="ToolDialogService.ShowDownpaymentDialog">
+                     OnShowDialogMaster=ShowDownpayment>
 
     <MasterContextTh>
         <MudTh Style="width:40px">#</MudTh>
-       
+
         <MudTh Style="width:40px">Status</MudTh>
         <MudTh Style="width:40px">CEC Name</MudTh>
         <MudTh Style="width:40px">MWO Name</MudTh>
@@ -31,7 +29,7 @@
     </MasterContextTh>
     <MasterContextTd>
         <MudTd DataLabel="#">@context.Id</MudTd>
-       
+
         <MudTd DataLabel="Status">@context.DownpaymentStatus</MudTd>
         <MudTd DataLabel="CEC Name">@context.PurchaseOrder.MWO.CECName</MudTd>
         <MudTd DataLabel="MWO Name">@context.PurchaseOrder.MWO.Name</MudTd>

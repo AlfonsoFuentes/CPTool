@@ -100,13 +100,15 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogMaster.Invoke(model);
             if (!result.Cancelled)
             {
-                SelectedMaster = result.Data as TMaster;
-                //TMasterGedById querydetail = new() { Id = data.Id };
-                //SelectedMaster = await mediator.Send(querydetail) as TMaster;
+                if (result.Data is TMaster)
+                {
+                    SelectedMaster = result.Data as TMaster;
+                   
 
-                ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                    ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                }
             }
         }
 
@@ -118,12 +120,15 @@ namespace CPTool.NewPages.Components
 
             if (!result.Cancelled)
             {
-                SelectedMaster = result.Data as TMaster;
-               
-               
-                ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                if (result.Data is TMaster)
+                {
+                    SelectedMaster = result.Data as TMaster;
+
+
+                    ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                }
             }
         }
         async Task Delete()
@@ -149,20 +154,22 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogDetails.Invoke(model);
             if (!result.Cancelled)
             {
-                SelectedDetail = result.Data as TDetail;
-                //TDetailGedById querydetail = new() { Id = data.Id };
-                //SelectedDetail = await mediator.Send(querydetail) as TDetail;
-                GlobalElementsDetails = (await mediator.Send(DetailList)) as List<TDetail>;
-                await GlobalElementsDetailsChanged.InvokeAsync(GlobalElementsDetails);
-                ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                if (result.Data is TDetail)
+                {
+                    SelectedDetail = result.Data as TDetail;
+                  
+                    GlobalElementsDetails = (await mediator.Send(DetailList)) as List<TDetail>;
+                    await GlobalElementsDetailsChanged.InvokeAsync(GlobalElementsDetails);
+                    ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
 
-                TMasterGedById query = new() { Id = SelectedMaster.Id };
+                    TMasterGedById query = new() { Id = SelectedMaster.Id };
 
-                SelectedMaster = (await mediator.Send(query)) as TMaster;
+                    SelectedMaster = (await mediator.Send(query)) as TMaster;
 
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
-                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                    await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                }
 
 
             }
@@ -174,20 +181,23 @@ namespace CPTool.NewPages.Components
 
             if (!result.Cancelled)
             {
-                SelectedDetail = result.Data as TDetail;
-                //TDetailGedById querydetail = new() { Id = data.Id };
-                //SelectedDetail = await mediator.Send(querydetail) as TDetail;
-                GlobalElementsDetails = (await mediator.Send(DetailList)) as List<TDetail>;
-                await GlobalElementsDetailsChanged.InvokeAsync(GlobalElementsDetails);
-                ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
-                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                if (result.Data is TDetail)
+                {
+                    SelectedDetail = result.Data as TDetail;
+                    //TDetailGedById querydetail = new() { Id = data.Id };
+                    //SelectedDetail = await mediator.Send(querydetail) as TDetail;
+                    GlobalElementsDetails = (await mediator.Send(DetailList)) as List<TDetail>;
+                    await GlobalElementsDetailsChanged.InvokeAsync(GlobalElementsDetails);
+                    ElementsMasters = (await mediator.Send(MasterList)) as List<TMaster>;
+                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
 
-                TMasterGedById query = new() { Id = SelectedMaster.Id };
+                    TMasterGedById query = new() { Id = SelectedMaster.Id };
 
-                SelectedMaster = (await mediator.Send(query)) as TMaster;
+                    SelectedMaster = (await mediator.Send(query)) as TMaster;
 
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
-                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                    await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                }
             }
         }
 

@@ -15,6 +15,8 @@ using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
 using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.Query.GetList;
 using CPTool.NewPages.Dialogs.BrandSupplier.Dialog;
 using CPTool.NewPages.Dialogs.Downpayment.Dialogs;
 using CPTool.NewPages.Dialogs.Material;
@@ -26,6 +28,8 @@ using CPTool.NewPages.Dialogs.Nozzle.Dialog;
 using CPTool.NewPages.Dialogs.PipeDiameter.Dialog;
 using CPTool.NewPages.Dialogs.ProcessFluid.Dialog;
 using CPTool.NewPages.Dialogs.PurchaseOrder.Dialog;
+using CPTool.NewPages.Dialogs.Taks.Dialog;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CPTool.Services
 {
@@ -81,6 +85,26 @@ namespace CPTool.Services
             var result = await dialog.Result;
 
             return result;
+        }
+
+        public async Task<DialogResult> ShowTaksDialog(EditTaks model)
+        {
+            if(model.TaksType== Domain.Entities.TaksType.Manual)
+            {
+                ParameterDialogModel modeldialog = new();
+                modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
+                modeldialog.parameters = new DialogParameters();
+
+                modeldialog.DialogTitle = model.Id == 0 ? $"Add new Task" : $"Edit {model.Name} ";
+                modeldialog.parameters.Add("Model", model);
+
+                var dialog = DialogService.Show<TaksDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+                var result = await dialog.Result;
+
+                return result;
+            }
+            return await ShowMessageDialogYesNo($"Automatic Task!!! ");
+
         }
         public async Task<DialogResult> ShowProcessFluidDialog(EditProcessFluid model)
         {
@@ -210,17 +234,7 @@ namespace CPTool.Services
 
 
         }
-        //public async Task<DialogResult> ShowDialogName<T>(T Model) where T : AddCommand, new()
-        //{
-        //    ParameterDialogModel modeldialog = new();
-        //    modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
-        //    modeldialog.parameters = new DialogParameters();
-
-        //    modeldialog.DialogTitle =model.Id == 0 ? $"Add new row " : $"Edit Item: {Model.Name}";
-        //    modeldialog.parameters.Add("Model", Model);
-        //    var dialog = DialogService.Show<TableNameDialog<T>>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-        //    return await dialog.Result;
-        //}
+       
 
 
         public async Task<DialogResult> ShowPurchaseOrderDialog(CreateEditPurchaseOrder Model)
@@ -279,6 +293,8 @@ namespace CPTool.Services
             modeldialog.parameters.Add("Model", Model);
             var dialog = DialogService.Show<CreateDownpaymentDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
             var result = await dialog.Result;
+           
+            
             return result;
         }
         public async Task<DialogResult> ShowNozzleDialog(EditNozzle model)

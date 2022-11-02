@@ -20,7 +20,15 @@
             <MudTooltip Text="Create Purchase Order">
                 <MudIconButton Icon="@Icons.Filled.CurrencyExchange" OnClick="AddPurchaseOrder" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
             </MudTooltip>
+            <MudTooltip Text="Create Task">
+                <MudIconButton Icon="@Icons.Filled.AddTask" OnClick="CreateTaskMWO" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
+            </MudTooltip>
         </MasterOtherButtons>
+        <DetailsOtherButtons>
+            <MudTooltip Text="Create Task">
+                <MudIconButton Icon="@Icons.Filled.AddTask" OnClick="CreateTaskMWOItem" Size="Size.Small" Disabled=@(SelectedDetail.Id==0?true:false) />
+            </MudTooltip>
+        </DetailsOtherButtons>
         <MasterContextTh>
             <MudTh Style="width:40px">#</MudTh>
             <MudTh Style="width:40px">Name</MudTh>

@@ -6,6 +6,8 @@ using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
 using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.Query.GetList;
 
 namespace CPTool.NewPages.Dialogs.MWO.List
 {
@@ -34,12 +36,39 @@ namespace CPTool.NewPages.Dialogs.MWO.List
 
                 GetMWOItemListQuery getMWOItemListQuery = new();
                 GlobalTables.MWOItems = await mediator.Send(getMWOItemListQuery);
+                GetTaksListQuery getTaksListQuery = new();
+                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
             }
             
         }
+        async Task CreateTaskMWO()
+        {
+            EditTaks editTaks = new EditTaks();
+            editTaks.MWO = SelectedMaster;
+            editTaks.TaksType = Domain.Entities.TaksType.Manual;
+            var result=await ToolDialogService.ShowTaksDialog(editTaks);
+            if(!result.Cancelled)
+            {
+                GetTaksListQuery getTaksListQuery = new GetTaksListQuery();
+                GlobalTables.Takss=await mediator.Send(getTaksListQuery);
+            }
+        }
+        async Task CreateTaskMWOItem()
+        {
+            EditTaks editTaks = new EditTaks();
+            editTaks.MWO = SelectedMaster;
+            editTaks.MWOItem = SelectedDetail;
+            editTaks.TaksType = Domain.Entities.TaksType.Manual;
+
+            var result = await ToolDialogService.ShowTaksDialog(editTaks);
+            if (!result.Cancelled)
+            {
+                GetTaksListQuery getTaksListQuery = new GetTaksListQuery();
+                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
+            }
+        }
 
 
-      
-        
+
     }
 }

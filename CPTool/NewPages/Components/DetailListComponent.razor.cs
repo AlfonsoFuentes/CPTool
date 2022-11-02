@@ -67,15 +67,14 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogDetails.Invoke(modeladd);
             if (!result.Cancelled)
             {
-                SelectedDetail = result.Data as TDetail;
+                if (result.Data is TDetail)
+                {
+                    SelectedDetail = result.Data as TDetail;
 
-                ////TDetailGedById querydetail = new() { Id = data.Id };
-
-                //////SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
-                //ElementsDetails = await mediator.Send(DetailList) as List<TDetail>;
-                //await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
-                await UpdateParentList.InvokeAsync();
-                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                    
+                    await UpdateParentList.InvokeAsync();
+                    await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                }
             }
 
 
@@ -90,18 +89,14 @@ namespace CPTool.NewPages.Components
 
             if (!result.Cancelled)
             {
-                SelectedDetail = result.Data as TDetail;
+                if (result.Data is TDetail)
+                {
+                    SelectedDetail = result.Data as TDetail;
 
-                //TDetailGedById querydetail = new() { Id = data.Id };
-
-                ////SelectedDetail = (await mediator.Send(querydetail)) as TDetail;
-                //if (SelectedMaster != null)
-                //{
-                //}
-                //ElementsDetails = await mediator.Send(DetailList) as List<TDetail>;
-                //await ElementsDetailsChanged.InvokeAsync(ElementsDetails);
-                await UpdateParentList.InvokeAsync();
-                await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                    
+                    await UpdateParentList.InvokeAsync();
+                    await SelectedDetailChanged.InvokeAsync(SelectedDetail);
+                }
             }
 
         }

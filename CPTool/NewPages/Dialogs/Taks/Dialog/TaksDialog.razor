@@ -1,0 +1,70 @@
+﻿@if (debug)
+{
+    <MudDialog DisableSidePadding="true">
+        <DialogContent>
+            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                    <CascadingValue Value="this">
+
+
+                        <MudForm Model="Model" @ref="form">
+                            <TextComponent @bind-Model="@Model"
+                                       Label="Name"
+                                       Lines="2"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                            <MudDatePicker Label="Estimated Task Date"
+                                       Editable=true
+                                       Required=true
+                                       Margin="Margin.Dense"
+                                       DisableToolbar="false"
+                                       Variant="Variant.Outlined"
+                                       ShowWeekNumbers=true
+                                       RequiredError="Must define estimated Downpayment due date"
+                                       @bind-Date="Model.ExpectedDate" Culture="@_en"></MudDatePicker>
+
+                            @if (Model.MWO != null)
+                            {
+                                <FieldComponent Label="MWO CEC" Value="@Model.MWO.CECName"></FieldComponent>
+                                <FieldComponent Label="MWO Name" Value="@Model.MWO.Name"></FieldComponent>
+
+                            }
+                            @if (Model.MWOItem != null)
+                            {
+                                <FieldComponent Label="MWO Item" Value="@Model.MWOItem.Name"></FieldComponent>
+                                <FieldComponent Label="MWO Item Tag" Value="@Model.MWOItem.TagId"></FieldComponent>
+
+                            }
+                            @if (Model.PurchaseOrder != null)
+                            {
+                                <FieldComponent Label="Status" Value="@Model.PurchaseOrder.PurchaseOrderStatus"></FieldComponent>
+
+                                <FieldComponent Label="Purchase Requisition" Value="@Model.PurchaseOrder.PurchaseRequisition"></FieldComponent>
+                                <FieldComponent Label="Purchase Order No" Value="@Model.PurchaseOrder.PONumber"></FieldComponent>
+                                <FieldComponent Label="Supplier" Value="@Model.PurchaseOrder.pSupplier.Name"></FieldComponent>
+                            }
+                            @if (Model.DownPayment != null)
+                            {
+                                <FieldComponent Label="Status" Value="@Model.DownPayment.DownpaymentStatus"></FieldComponent>
+
+                                <FieldComponent Label="CBS No" Value="@Model.DownPayment.CBSRequesNo"></FieldComponent>
+
+
+                            }
+                        </MudForm>
+                    </CascadingValue>
+
+                </MudPaper>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+@code {
+    bool debug = true;
+    public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+}

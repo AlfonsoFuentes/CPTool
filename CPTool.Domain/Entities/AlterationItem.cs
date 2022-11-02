@@ -16,5 +16,4 @@ namespace CPTool.Domain.Entities
 
 
 
-
 }

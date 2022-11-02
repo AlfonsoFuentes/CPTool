@@ -10,7 +10,8 @@ namespace CPTool.Domain.Entities
 
         [ForeignKey("PurchaseOrderId")]
         public ICollection<DownPayment>? DownPayments { get; set; }
-
+        [ForeignKey("PurchaseOrderId")]
+        public ICollection<Taks> Taks { get; set; } = null!;
         public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
 
         public PurchaseOrderStatus PurchaseOrderStatus { get; set; }

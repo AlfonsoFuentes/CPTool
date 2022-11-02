@@ -20,6 +20,7 @@ namespace CPTool.NewPages.Components
         [Parameter]
 
         public EventCallback<List<TMaster>> ElementsMastersChanged { get; set; }
+        [Parameter]
         public TMaster SelectedMaster { get; set; } = new();
         [Parameter]
         public EventCallback<TMaster> SelectedMasterChanged { get; set; }
@@ -52,14 +53,18 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogMaster.Invoke(model);
             if (!result.Cancelled)
             {
-                var data = result.Data as TMaster;
-                TGedById querydetail = new() { Id = data.Id };
-                SelectedMaster = await mediator.Send(querydetail) as TMaster;
+                if(result.Data is TMaster)
+                {
+                    var data = result.Data as TMaster;
+                    TGedById querydetail = new() { Id = data.Id };
+                    SelectedMaster = await mediator.Send(querydetail) as TMaster;
 
 
-                ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
-                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                    ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
+                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                }
+                
             }
         }
         async Task Edit()
@@ -69,12 +74,15 @@ namespace CPTool.NewPages.Components
 
             if (!result.Cancelled)
             {
-                var data = result.Data as TMaster;
-                TGedById querydetail = new() { Id = data.Id };
-                SelectedMaster = await mediator.Send(querydetail) as TMaster;
-                ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
-                await ElementsMastersChanged.InvokeAsync(ElementsMasters);
-                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                if (result.Data is TMaster)
+                {
+                    var data = result.Data as TMaster;
+                    TGedById querydetail = new() { Id = data.Id };
+                    SelectedMaster = await mediator.Send(querydetail) as TMaster;
+                    ElementsMasters = (await mediator.Send(ModelList)) as List<TMaster>;
+                    await ElementsMastersChanged.InvokeAsync(ElementsMasters);
+                    await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+                }
             }
         }
         async Task Delete()

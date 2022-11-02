@@ -46,18 +46,38 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         {
             if (arg == null || arg == "")
                 return "Must submit Purchase Order name";
-
+            
             return null;
         }
         private string ValidatePurchaseRequisition(string arg)
         {
             if (arg == null || arg == "")
                 return "Must submit Purchase Requistion Name";
-
+            if(GlobalTables.PurchaseOrders.Any(x => x.PurchaseRequisition == arg))
+            {
+                return "Existing Purchase Requistion ";
+            }
             if (arg.StartsWith("PR") || arg.StartsWith("RFQ"))
                 return null;
             else
                 return "Must submit Valid code PR or RFQ";
+
+
+        }
+        private string ValidateBrand(int arg)
+        {
+            if (arg == 0 )
+                return "Must submit Brand";
+        
+            return null;
+
+        }
+        private string ValidateSupplier(int arg)
+        {
+            if (arg == 0)
+                return "Must submit Supplier";
+
+            return null;
 
         }
         void BrandChanged(EditBrand brand)

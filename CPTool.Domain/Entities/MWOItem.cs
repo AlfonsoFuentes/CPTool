@@ -11,6 +11,9 @@
         public ICollection<PipingItem>? FisnishPipingItems { get; set; }
         public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
         public ICollection<MWOItemCurrencyValue>? MWOItemCurrencyValues { get; set; }
+
+        [ForeignKey("MWOItemId")]
+        public ICollection<Taks> Taks { get; set; } = null!;
         public int? ChapterId { get; set; }
         public Chapter? Chapter { get; set; } = null!;
         public int? MWOId { get; set; }

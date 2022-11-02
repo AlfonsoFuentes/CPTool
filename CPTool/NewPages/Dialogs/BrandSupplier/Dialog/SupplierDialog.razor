@@ -26,20 +26,20 @@
 
 
                         </SelectComponent>
-                        <TextComponent @bind-Model="@Model" Label="Supplier Name"
+                        <TextComponent @bind-Model="@Model.Supplier" Label="Supplier Name"
                                        Validation="@(new Func<string, string>(ValidateSupplieName))"
                                        PropertyName="@nameof(Model.Supplier.Name)" Required=true></TextComponent>
 
-                        <TextComponent @bind-Model="@Model" Label="Contact person"
+                        <TextComponent @bind-Model="@Model.Supplier" Label="Contact person"
                                        PropertyName="@nameof(Model.Supplier.ContactPerson)" Required=true></TextComponent>
-                        <TextComponent @bind-Model="@Model" Label="email"
+                        <TextComponent @bind-Model="@Model.Supplier" Label="email"
                                        InputType="InputType.Email"
                                        PropertyName="@nameof(Model.Supplier.Email)" Required=true></TextComponent>
 
-                        <TextComponent @bind-Model="@Model" Label="Phone"
+                        <TextComponent @bind-Model="@Model.Supplier" Label="Phone"
                                        InputType="InputType.Telephone"
                                        PropertyName="@nameof(Model.Supplier.Phone)" Required=true></TextComponent>
-                        <TextComponent @bind-Model="@Model" Label="Address"
+                        <TextComponent @bind-Model="@Model.Supplier" Label="Address"
                                        PropertyName="@nameof(Model.Supplier.Address)" Required=true></TextComponent>
 
 

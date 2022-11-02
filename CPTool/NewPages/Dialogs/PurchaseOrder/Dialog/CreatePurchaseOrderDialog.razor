@@ -22,12 +22,12 @@
                         <MudForm Model="Model" @ref="form">
                             <MudGrid>
                                 <MudItem xs="12" sm="6" Class="pa-4">
-                                    <TextComponent @bind-Model="@Model"
+                                    <TextComponent @bind-Model="@Model.PurchaseOrder"
                                                Label="Purchase Order Name"
                                                Required=true
                                                Validation="@(new Func<string, string>(ValidatePurchaseOrderName))"
                                                PropertyName="@nameof(Model.PurchaseOrder.Name)"></TextComponent>
-                                    <TextComponent @bind-Model="@Model"
+                                    <TextComponent @bind-Model="@Model.PurchaseOrder"
                                                Label="Purchase requistion Name"
                                                Required=true
                                                Validation="@(new Func<string, string>(ValidatePurchaseRequisition))"
@@ -40,6 +40,9 @@
                                                  Elements=@GlobalTables.Brands
                                                  Label="Brand or Service"
                                                  SelectionChanged="BrandChanged"
+                                                 Validation="@(new Func<int, string>(ValidateBrand))"
+                                                 Required=true
+                                                
                                                  @bind-Value="@Model.PurchaseOrder.pBrand">
 
 
@@ -48,6 +51,9 @@
                                                  Elements=@((Model.PurchaseOrder.pBrand==null||Model.PurchaseOrder.pBrand?.Id==0)?new():
                                                  GlobalTables.BrandSuppliers.Where(x=>x.BrandId==Model.PurchaseOrder.pBrand?.Id).Select(x=>x.Supplier).ToList())
                                                  Label="Supplier"
+                                                 Required=true
+                                                 Validation="@(new Func<int, string>(ValidateSupplier))"
+                                                
                                                  Disable=@(Model.PurchaseOrder.pBrand?.Id==0?true:false)
                                                  @bind-Value="@Model.PurchaseOrder.pSupplier">
 

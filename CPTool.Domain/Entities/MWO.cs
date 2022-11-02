@@ -15,6 +15,8 @@
         public ICollection<MWOItem> MWOItems { get; set; } = null!;
 
         public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = null!;
+        [ForeignKey("MWOId")]
+        public ICollection<Taks> Taks { get; set; } = null!;
 
     }
 

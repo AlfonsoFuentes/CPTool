@@ -104,10 +104,13 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogMaster(model);
             if (!result.Cancelled)
             {
-                var resultmodel = result.Data as TMaster;
+                if (result.Data is TMaster)
+                {
+                    var resultmodel = result.Data as TMaster;
 
 
-                await OnRowClickedMaster.InvokeAsync(resultmodel);
+                    await OnRowClickedMaster.InvokeAsync(resultmodel);
+                }
 
             }
 
@@ -123,10 +126,13 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogDetails(model);
             if (!result.Cancelled)
             {
-                var resultmodel = result.Data as TDetail;
+                if (result.Data is TDetail)
+                {
+                    var resultmodel = result.Data as TDetail;
 
 
-                await OnRowClickedDetails.InvokeAsync(resultmodel);
+                    await OnRowClickedDetails.InvokeAsync(resultmodel);
+                }
 
             }
 
@@ -143,10 +149,13 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogMaster(model);
             if (!result.Cancelled)
             {
-                var resultmodel = result.Data as TMaster;
+                if (result.Data is TMaster)
+                {
+                    var resultmodel = result.Data as TMaster;
 
 
-                await OnRowClickedMaster.InvokeAsync(resultmodel);
+                    await OnRowClickedMaster.InvokeAsync(resultmodel);
+                }
 
             }
 
@@ -160,11 +169,13 @@ namespace CPTool.NewPages.Components
             var result = await OnShowDialogDetails(model);
             if (!result.Cancelled)
             {
+                if (result.Data is TDetail)
+                {
+                    var resultmodel = result.Data as TDetail;
 
-                var resultmodel = result.Data as TDetail;
 
-
-                await OnRowClickedDetails.InvokeAsync(resultmodel);
+                    await OnRowClickedDetails.InvokeAsync(resultmodel);
+                }
 
             }
 

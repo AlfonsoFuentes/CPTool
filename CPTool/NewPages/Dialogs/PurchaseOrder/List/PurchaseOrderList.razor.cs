@@ -13,6 +13,7 @@ using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.Query.GetById;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
+using CPTool.Application.Features.TaksFeatures.Query.GetList;
 using CPTool.Services;
 
 namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
@@ -28,8 +29,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
         List<EditPurchaseOrder> PurchaseOrders => GlobalTables.PurchaseOrders;
         List<EditMWOItem> MWOItems = new();
         GetPurchaseOrderListQuery purchaseorderList = new();
-        GetMWOItemListQuery mWOItemList = new();
-
+       
 
 
         async Task RowClickedMaster(EditPurchaseOrder row)
@@ -50,12 +50,15 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
         {
             EditDownPayment model = new();
             model.PurchaseOrder = SelectedPurchaseOrder;
-            var result = await ToolDialogService.ShowDownpaymentDialog(model);
+            var result = await  ToolDialogService.ShowDownpaymentDialog(model);
 
             if (!result.Cancelled)
             {
                 GetDownPaymentListQuery getDownPaymentListQuery = new GetDownPaymentListQuery();
                 GlobalTables.DownPayments = await mediator.Send(getDownPaymentListQuery);
+
+                GetTaksListQuery getTaksListQuery = new();
+                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
             }
 
         }
@@ -66,6 +69,8 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
             if (!result.Cancelled)
             {
                 GlobalTables.PurchaseOrders = await mediator.Send(purchaseorderList);
+                GetTaksListQuery getTaksListQuery = new();
+                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
             }
             return result;
         }

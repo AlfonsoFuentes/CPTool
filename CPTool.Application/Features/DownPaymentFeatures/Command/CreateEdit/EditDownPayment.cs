@@ -3,6 +3,7 @@ using CPTool.Application.Features.DeviceFunctionModifierFeatures.Query.GetList;
 using CPTool.Application.Features.DownPaymentFeatures.Query.GetById;
 using CPTool.Application.Features.DownPaymentFeatures.Query.GetList;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
 {
@@ -29,6 +30,8 @@ namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
        
         public string? DownpaymentName { get; set; } = "";
 
+        public List<EditTaks>? Taks { get; set; }
 
+        public EditTaks? EditTaks => Taks!.Count == 0 ? null : Taks.FirstOrDefault();
     }
 }

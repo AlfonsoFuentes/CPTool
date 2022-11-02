@@ -33,7 +33,7 @@
                         </MudSelect>
                         @if (Model.Brand.BrandType != BrandType.None)
                         {
-                            <TextComponent @bind-Model="@Model" Label=@Model.Brand.BrandType.ToString()
+                            <TextComponent @bind-Model="@Model.Brand" Label=@Model.Brand.BrandType.ToString()
                                        Validation="@(new Func<string, string>(ValidateBrandName))"
                                        PropertyName="@nameof(Model.Brand.Name)" Required=true></TextComponent>
 

@@ -39,11 +39,11 @@
                                 <MudItem xs="12" sm="6" Class="pa-4">
                                     @if (Model.MWOItem.ChapterId == 4)
                                     {
-                                        <TextComponent @bind-Model="@Model"
+                                        <TextComponent @bind-Model="@Model.MWOItem.EquipmentItem"
                                                Label="Equipment Model"
                                                Required=true
                                                PropertyName="@nameof(Model.MWOItem.EquipmentItem.Model)"></TextComponent>
-                                        <TextComponent @bind-Model="@Model"
+                                        <TextComponent @bind-Model="@Model.MWOItem.EquipmentItem"
                                                Label="Reference"
                                                Required=true
                                                PropertyName="@nameof(Model.MWOItem.EquipmentItem.Reference)"></TextComponent>
@@ -52,11 +52,11 @@
                                     }
                                     @if (Model.MWOItem.ChapterId == 6)
                                     {
-                                        <TextComponent @bind-Model="@Model"
+                                        <TextComponent @bind-Model="@Model.MWOItem.InstrumentItem"
                                                  Label="Equipment Model"
                                                  Required=true
                                                  PropertyName="@nameof(Model.MWOItem.InstrumentItem.Model)"></TextComponent>
-                                        <TextComponent @bind-Model="@Model"
+                                        <TextComponent @bind-Model="@Model.MWOItem.InstrumentItem"
                                                Label="Reference"
                                                Required=true
                                                PropertyName="@nameof(Model.MWOItem.InstrumentItem.Reference)"></TextComponent>

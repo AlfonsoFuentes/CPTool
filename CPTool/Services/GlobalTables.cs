@@ -40,6 +40,8 @@ using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 using CPTool.Application.Features.ReadoutFeatures.Query.GetList;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.Query.GetList;
 using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
 using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList;
 using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
@@ -85,6 +87,8 @@ namespace CPTool.Services
         public static List<EditReadout> Readouts { get; set; } = new();
         public static List<EditDeviceFunction> DeviceFunctions { get; set; } = new();
         public static List<EditDeviceFunctionModifier> DeviceFunctionModifiers { get; set; } = new();
+
+        public static List<EditTaks> Takss { get; set; } = new();
         public static async Task InitializeTables(IMediator mediator)
         {
 
@@ -117,6 +121,7 @@ namespace CPTool.Services
             GetPurchaseOrderListQuery getPurchaseOrderListQuery = new();
             GetPurchaseOrderMWOItemListQuery getPurchaseOrderMWOItemListQuery = new();
             GetDownPaymentListQuery getDownPaymentListQuery = new();
+            GetTaksListQuery getTaksListQuery = new();
             MWOTypes = await mediator.Send(MWOTypeList);
             Chapters = await mediator.Send(ChapterList);
             MWOs = await mediator.Send(MWOList);
@@ -149,6 +154,7 @@ namespace CPTool.Services
             PurchaseOrders = await mediator.Send(getPurchaseOrderListQuery);
             PurchaseOrderMWOItems = await mediator.Send(getPurchaseOrderMWOItemListQuery);
             DownPayments = await mediator.Send(getDownPaymentListQuery);
+            Takss = await mediator.Send(getTaksListQuery);
         }
         public static string ValidateGasket(string arg)
         {

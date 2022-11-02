@@ -2,6 +2,8 @@
 {
     public class DownPayment  : BaseDomainModel
     {
+        [ForeignKey("DownpaymentId")]
+        public ICollection<Taks> Taks { get; set; } = null!;
         public int? PurchaseOrderId { get; set; }
         public PurchaseOrder? PurchaseOrder { get; set; }
         public DateTime? RequestDate { get; set; }

@@ -1,0 +1,40 @@
+﻿@using CPTool.Application.Features.TaksFeatures
+@using CPTool.Application.Features.TaksFeatures.CreateEdit
+@using CPTool.Application.Features.TaksFeatures.Query.GetById
+@using CPTool.Application.Features.TaksFeatures.Query.GetList
+
+
+<SimpleListComponent TMaster="EditTaks"
+                     TDeleteMaster="DeleteTaks"
+                     TMasterList="GetTaksListQuery" TGedById="GetByIdTaksQuery"
+                     @bind-ElementsMasters="GlobalTables.Takss"
+                     OnShowDialogMaster="ToolDialogService.ShowTaksDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+        <MudTh Style="width:40px">Status</MudTh>
+
+        <MudTh Style="width:40px">Created On?</MudTh>
+        <MudTh Style="width:40px">Completed On?</MudTh>
+        <MudTh Style="width:40px">MWO CEC</MudTh>
+        <MudTh Style="width:40px">MWO Name</MudTh>
+   
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Status">@context.TaksStatus</MudTd>
+        <MudTd DataLabel="Created On?">@context.CreatedDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Completed On?">@context.CompletionDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="MWO CEC">@context.MWO.CECName</MudTd>
+        <MudTd DataLabel="MWO Name">@context.MWO.Name</MudTd>
+      
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+
+}

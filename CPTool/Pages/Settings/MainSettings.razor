@@ -28,6 +28,7 @@
 @using CPTool.NewPages.Dialogs.PipeClass
 @using CPTool.NewPages.Dialogs.ProcessFluid.LIst
 @using CPTool.NewPages.Dialogs.PurchaseOrder.List
+@using CPTool.NewPages.Dialogs.Taks.List
 @using CPTool.NewPages.Dialogs.TaxCodeLD.List
 @using CPTool.NewPages.Dialogs.TaxCodeLP.List
 @using CPTool.NewPages.Dialogs.UnitaryBasePrize
@@ -117,6 +118,11 @@
             <DownpaymentList></DownpaymentList>
         }
         break;
+        case 15:
+        {
+            <TaksList></TaksList>
+
+        }break;
 }
 @code {
     [Parameter]

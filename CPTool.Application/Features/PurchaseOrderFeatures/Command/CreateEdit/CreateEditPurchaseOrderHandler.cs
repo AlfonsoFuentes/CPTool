@@ -1,4 +1,6 @@
 ﻿using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
+using MediatR;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
@@ -21,10 +23,12 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 
             var addcommandPurchaseOrder = _mapper.Map<AddPurchaseOrder>(request.PurchaseOrder);
             var table = _mapper.Map<PurchaseOrder>(addcommandPurchaseOrder);
+           
             _unitOfWork.Repository<PurchaseOrder>().Add(table);
 
             await _unitOfWork.Complete();
-
+            request.PurchaseOrder.Id = table.Id;
+            await CreateTask(request.PurchaseOrder);
             foreach (var row in request.MWOItems)
             {
                 PurchaseOrderMWOItem purchaseOrderMWOItem = new()
@@ -52,6 +56,22 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
             }
             await _unitOfWork.Complete();
             return await Result<int>.SuccessAsync(table.Id, $"{table.Name} Added to {nameof(PurchaseOrder)}");
+        }
+        async Task CreateTask(EditPurchaseOrder purchaseOrder)
+        {
+            EditTaks editTaks = new();
+            editTaks.MWO=purchaseOrder.MWO;
+            editTaks.Name = $"Create PO from {purchaseOrder.PurchaseRequisition}";
+            editTaks.PurchaseOrder = purchaseOrder;
+            editTaks.TaksType = TaksType.Automatic;
+            editTaks.CreatedDate = DateTime.Now;
+            editTaks.TaksStatus = TaksStatus.Pending;
+            var addcommandTaks = _mapper.Map<AddTaks>(editTaks);
+            var table = _mapper.Map<Taks>(addcommandTaks);
+
+            _unitOfWork.Repository<Taks>().Add(table);
+
+            await _unitOfWork.Complete();
         }
     }
 }
