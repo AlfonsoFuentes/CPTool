@@ -1,21 +1,4 @@
-﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
-using CPTool.Application.Features.BrandFeatures.Query.GetById;
-using CPTool.Application.Features.BrandFeatures.Query.GetList;
-using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
-using CPTool.Application.Features.DownPaymentFeatures.Query.GetList;
-using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.Query.GetById;
-using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
-using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetById;
-using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.SupplierFeatures.CreateEdit;
-using CPTool.Application.Features.SupplierFeatures.Query.GetById;
-using CPTool.Application.Features.SupplierFeatures.Query.GetList;
-using CPTool.Application.Features.TaksFeatures.Query.GetList;
-using CPTool.Services;
-
+﻿
 namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
 {
     public partial class PurchaseOrderList
@@ -50,7 +33,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
         {
             EditDownPayment model = new();
             model.PurchaseOrder = SelectedPurchaseOrder;
-            var result = await  ToolDialogService.ShowDownpaymentDialog(model);
+            var result = await   ToolDialogService.ShowDownpaymentDialog(model);
 
             if (!result.Cancelled)
             {

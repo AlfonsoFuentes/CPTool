@@ -3,7 +3,7 @@
 
 
 using CPTool.Application;
-using CPTool.ApplicationCA;
+
 using CPTool.Identity;
 using CPTool.Infrastructure;
 using CPTool.Infrastructure.Persistence;
@@ -17,16 +17,16 @@ var asse = Assembly.GetExecutingAssembly();
 
 builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddApplicationCAServices();
+
 builder.Services.ConfigureIdentityServices(builder.Configuration);
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    );
-});
-//builder.Services.AddScoped<GlobalTablesService>();
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin()
+//    .AllowAnyMethod()
+//    .AllowAnyHeader()
+//    );
+//});
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -46,10 +46,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseMiddleware<ExceptionMiddleWare>();
+//app.UseMiddleware<ExceptionMiddleWare>();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors("CorsPolicy");
+//app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

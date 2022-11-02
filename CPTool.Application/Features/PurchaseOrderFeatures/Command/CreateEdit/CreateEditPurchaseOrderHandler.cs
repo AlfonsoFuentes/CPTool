@@ -40,10 +40,10 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
                 var mwoitem = await _unitOfWork.Repository<MWOItem>().GetByIdAsync(row.Id);
                 if (mwoitem != null)
                 {
-                    //var addcommand = _mapper.Map<AddMWOItem>(row);
-                    //_mapper.Map(addcommand, mwoitem, typeof(AddMWOItem), typeof(MWOItem));
+                    var addcommand = _mapper.Map<AddMWOItem>(row);
+                    _mapper.Map(addcommand, mwoitem, typeof(AddMWOItem), typeof(MWOItem));
 
-                    //_unitOfWork.Repository<MWOItem>().Update(mwoitem);
+                    _unitOfWork.Repository<MWOItem>().Update(mwoitem);
                     var addMwoItemValue = _mapper.Map<AddMWOItemCurrencyValue>(row.MWOItemCurrencyValue);
                     var tableMwoItemValue = _mapper.Map<MWOItemCurrencyValue>(addMwoItemValue);
                     tableMwoItemValue.MWOItemId = mwoitem.Id;

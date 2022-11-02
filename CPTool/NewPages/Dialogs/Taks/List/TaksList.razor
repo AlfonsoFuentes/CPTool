@@ -11,24 +11,27 @@
                      OnShowDialogMaster="ToolDialogService.ShowTaksDialog">
     <MasterContextTh>
         <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">MWO CEC</MudTh>
+        <MudTh Style="width:40px">MWO Name</MudTh>
         <MudTh Style="width:40px">Name</MudTh>
         <MudTh Style="width:40px">Status</MudTh>
 
         <MudTh Style="width:40px">Created On?</MudTh>
         <MudTh Style="width:40px">Completed On?</MudTh>
-        <MudTh Style="width:40px">MWO CEC</MudTh>
-        <MudTh Style="width:40px">MWO Name</MudTh>
-   
+
+
     </MasterContextTh>
     <MasterContextTd>
         <MudTd DataLabel="#">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Status">@context.TaksStatus</MudTd>
-        <MudTd DataLabel="Created On?">@context.CreatedDate.ToShortDateString()</MudTd>
-        <MudTd DataLabel="Completed On?">@context.CompletionDate.ToShortDateString()</MudTd>
         <MudTd DataLabel="MWO CEC">@context.MWO.CECName</MudTd>
         <MudTd DataLabel="MWO Name">@context.MWO.Name</MudTd>
-      
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+
+        <MudTd DataLabel="Status">@context.TaksStatus</MudTd>
+        <MudTd DataLabel="Created On?">@context.CreatedDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Completed On?">@(context.TaksStatus ==TaksStatus.Completed? context.CompletionDate.ToShortDateString():"")</MudTd>
+
+
     </MasterContextTd>
 
 

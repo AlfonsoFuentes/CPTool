@@ -96,13 +96,12 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         {
             dropItem.Item.Identifier = dropItem.DropzoneIdentifier;
             var MWOItem = dropItem.Item.MWOItem;
-
+          
             Model.PurchaseOrder.TaxCode = Model.PurchaseOrder.TaxCode == "" ?
                 MWOItem.ChapterId == 1 ? 
                 Model.PurchaseOrder.pSupplier!.TaxCodeLP!.Name : Model.PurchaseOrder.pSupplier!.TaxCodeLD!.Name: Model.PurchaseOrder.TaxCode;
-            Model.PurchaseOrder.SPL = Model.PurchaseOrder.SPL == "" ?  "43000" : "15000";
-            Model.PurchaseOrder.CostCenter = Model.PurchaseOrder.CostCenter == "" ? 
-                MWOItem!.ChapterId! == 1 ? MWOItem!.AlterationItem!.CostCenter! : "" : Model.PurchaseOrder.CostCenter;
+            Model.PurchaseOrder.SPL = Model.PurchaseOrder.SPL==""? MWOItem.ChapterId == 1 ? "0735015000" : "151605000" : Model.PurchaseOrder.SPL;
+            Model.PurchaseOrder.CostCenter = MWOItem!.ChapterId! == 1 ? MWOItem!.AlterationItem!.CostCenter! : "";
             Model.PurchaseOrder.MWOItem = MWOItem;
             var result = await ToolDialogService.ShowAddDataToPurchaseOrderDialog(Model.PurchaseOrder);
             if (!result.Cancelled)

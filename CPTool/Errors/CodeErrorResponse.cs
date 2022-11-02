@@ -5,9 +5,9 @@
 
 
         public int StatusCode { get; set; }
-        public string? Message { get; set; } 
+        public string Message { get; set; } 
 
-        public CodeErrorResponse(int statusCode, string? message=null)
+        public CodeErrorResponse(int statusCode, string message=null)
         {
             StatusCode = statusCode;
             Message = message ?? GetDefaultMessageStatusCode(StatusCode);

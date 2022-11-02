@@ -50,7 +50,7 @@ using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
 using CPTool.Application.Features.VendorCodeFeatures.CreateEdit;
 using CPTool.Application.Features.VendorCodeFeatures.Query.GetList;
-using CPTool.ApplicationCA.Base.Ports;
+
 using CPTool.Domain.Entities;
 
 namespace CPTool.Services

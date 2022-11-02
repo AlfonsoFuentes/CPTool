@@ -32,10 +32,6 @@
                                                Required=true
                                                Validation="@(new Func<string, string>(ValidatePurchaseRequisition))"
                                                PropertyName="@nameof(Model.PurchaseOrder.PurchaseRequisition)"></TextComponent>
-
-
-                                </MudItem>
-                                <MudItem xs="12" sm="6" Class="pa-4">
                                     <SelectComponent T="EditBrand"
                                                  Elements=@GlobalTables.Brands
                                                  Label="Brand or Service"
@@ -59,6 +55,14 @@
 
 
                                     </SelectComponent>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" Class="pa-4">
+                                    <FieldComponent Label="Vendor Code" Value="Model.PurchaseOrder.VendorCode"></FieldComponent>
+                                    <FieldComponent Label="Tax Code" Value="Model.PurchaseOrder.TaxCode"></FieldComponent>
+                                    <FieldComponent Label="SPL" Value="Model.PurchaseOrder.SPL"></FieldComponent>
+                                    <FieldComponent Label="Cost Center" Value="Model.PurchaseOrder.CostCenter"></FieldComponent>
+                                    
+                                    
                                 </MudItem>
                                 <MudItem xs="12" sm="12" Class="pa-1">
                                     @if (Model.PurchaseOrder.pSupplier.Id != 0)

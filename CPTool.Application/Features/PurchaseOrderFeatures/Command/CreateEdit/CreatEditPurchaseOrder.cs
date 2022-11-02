@@ -7,6 +7,7 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
     {
         public EditPurchaseOrder PurchaseOrder { get; set; } = new();
         public List<EditMWOItem> MWOItems { get; set; } = new();
+        public EditMWOItem FirstMWOItem => MWOItems.Count > 0 ? MWOItems.First() : new();
     }
     
 }

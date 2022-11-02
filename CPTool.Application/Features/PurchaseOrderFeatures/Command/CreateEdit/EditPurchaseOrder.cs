@@ -13,7 +13,7 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
     {
         public string TaxCode { get; set; } = "";
         public string SPL { get; set; } = "";
-
+        public string VendorCode => pSupplier!.VendorCode!=null? pSupplier!.VendorCode!.Name:"";
         public string CostCenter { get; set; } = "";
 
      
