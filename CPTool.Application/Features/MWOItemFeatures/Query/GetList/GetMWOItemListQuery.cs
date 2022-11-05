@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+﻿using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
+using CPTool.Application.Features.MeasuredVariableModifierFeatures.Query.GetList;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.MWOItemFeatures.Query.GetList
 {
@@ -9,18 +11,15 @@ namespace CPTool.Application.Features.MWOItemFeatures.Query.GetList
 
        
     }
-    public class GetMWOItemListQueryHandler : IRequestHandler<GetMWOItemListQuery, List<EditMWOItem>>
+    public class GetMWOItemListQueryHandler :
+        GetListQueryHandler<EditMWOItem, MWOItem, GetMWOItemListQuery>, 
+        IRequestHandler<GetMWOItemListQuery, List<EditMWOItem>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetMWOItemListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetMWOItemListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
         }
-        public async Task<List<EditMWOItem>> Handle(GetMWOItemListQuery request, CancellationToken cancellationToken)
+
+        public override async Task<List<EditMWOItem>> Handle(GetMWOItemListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.RepositoryMWOItem.GetAllAsync();
             list=list.OrderBy(x=>x.ChapterId).ToList();

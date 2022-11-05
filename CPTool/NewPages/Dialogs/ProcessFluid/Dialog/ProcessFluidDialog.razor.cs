@@ -17,8 +17,7 @@ namespace CPTool.NewPages.Dialogs.ProcessFluid.Dialog
 
 
 
-        [Inject]
-        public IMediator mediator { get; set; }
+        
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -34,7 +33,7 @@ namespace CPTool.NewPages.Dialogs.ProcessFluid.Dialog
             if (form.IsValid)
             {
 
-                await mediator.Send(Model);
+                await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

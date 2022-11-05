@@ -17,8 +17,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditBrandSupplier Model { get; set; } = null!;
-        [Inject]
-        public IMediator mediator { get; set; }
+        
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -30,15 +29,12 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
             if (form.IsValid)
             {
               
-                var resultbrand = await mediator.Send(Model.Brand);
+                var resultbrand = await Mediator.Send(Model.Brand);
                 if(resultbrand.Succeeded)
                 {
                    
-                    var result = await mediator.Send(Model);
-                    if(result.Succeeded)
-                    {
-                        GlobalTables.BrandSuppliers = await mediator.Send(brandsuplierlist);
-                    }
+                    var result = await Mediator.Send(Model);
+                    
                 }
                
 

@@ -1,0 +1,27 @@
+﻿@using CPTool.Application.Features.FieldLocationFeatures.Query.GetById
+@using CPTool.Application.Features.FieldLocationFeatures.Query.GetList
+@using CPTool.Application.Features.FieldLocationsFeatures
+@using CPTool.Application.Features.FieldLocationsFeatures.CreateEdit
+
+
+
+<SimpleListComponent TMaster="EditFieldLocation"
+                     TDeleteMaster="DeleteFieldLocation"
+                     TMasterList="GetFieldLocationListQuery" TGedById="GetByIdFieldLocationQuery"
+                     @bind-ElementsMasters="GlobalTables.FieldLocations"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+@code {
+
+}

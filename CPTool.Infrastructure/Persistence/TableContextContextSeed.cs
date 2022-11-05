@@ -11,17 +11,17 @@ namespace CPTool.Infrastructure.Persistence
 
     public static class SeedData
     {
-        public static void  InitializeDatabase(this IServiceProvider service)
+        public static void InitializeDatabase(this IServiceProvider service)
         {
             var scopeFactory = service.GetRequiredService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<TableContext>();
-                if (!( db.Chapters!.Any()))
+                if (!(db.Chapters!.Any()))
                 {
                     AddChapters(db);
                 }
-              
+
                 if (!db.MWOTypes!.Any())
                 {
                     AddMWOType(db);
@@ -46,9 +46,18 @@ namespace CPTool.Infrastructure.Persistence
                 {
                     AddDeviceFunctionModifier(db);
                 }
-                if(!db.PropertyPackages!.Any())
+                if (!db.PropertyPackages!.Any())
                 {
                     AddPropertyPackage(db);
+                }
+             
+                if (!db.UserRequirementTypes!.Any())
+                {
+                    AddUserRequirmentType(db);
+                }
+                if (!db.SignalTypes!.Any())
+                {
+                    AddSignalType(db);
                 }
             }
         }
@@ -968,6 +977,172 @@ namespace CPTool.Infrastructure.Persistence
 
 
             context.PropertyPackages!.AddRange(variables);
+
+            context.SaveChanges();
+        }
+        static void AddUserRequirmentType(TableContext context)
+        {
+            UserRequirementType[] variables = new[]
+            {
+
+                 new UserRequirementType()
+                 {
+                     Name="Products",
+                     Key="URS 01"
+
+                 },
+                  new UserRequirementType()
+                 {
+                     Name="Functional specifications",
+                     Key="URS 02"
+
+                 },
+                   new UserRequirementType()
+                 {
+                     Name="Technical specifications",
+                     Key="URS 03"
+
+                 },
+                    new UserRequirementType()
+                 {
+                     Name="Process conditions",
+                     Key="URS 04"
+
+                 },
+                     new UserRequirementType()
+                 {
+                     Name="Materials",
+                     Key="URS 05"
+
+                 },
+                      new UserRequirementType()
+                 {
+                     Name="Standard components",
+                     Key="URS 06"
+
+                 },
+                 
+                        new UserRequirementType()
+                 {
+                     Name="Utilities and media",
+                     Key="URS 07"
+
+                 },
+                         new UserRequirementType()
+                 {
+                     Name="Controls",
+                     Key="URS 08"
+
+                 },
+                          new UserRequirementType()
+                 {
+                     Name="Software/Hardware/Network",
+                     Key="URS 09"
+
+                 },
+                           new UserRequirementType()
+                 {
+                     Name="Construction process",
+                     Key="URS 10"
+
+                 },
+                            new UserRequirementType()
+                 {
+                     Name="Regulatory",
+                     Key="URS 11"
+
+                 },
+                             new UserRequirementType()
+                 {
+                     Name="Quality and GMP",
+                     Key="URS 12"
+
+                 },
+                              new UserRequirementType()
+                 {
+                     Name="Facility and space",
+                     Key="URS 13"
+
+                 },
+                               new UserRequirementType()
+                 {
+                     Name="Qualification and Validation",
+                     Key="URS 14"
+
+                 },
+                                new UserRequirementType()
+                 {
+                     Name="Calibration",
+                     Key="URS 15"
+
+                 },
+                                 new UserRequirementType()
+                 {
+                     Name="C&S requirements",
+                     Key="URS 16"
+
+                 },
+                                  new UserRequirementType()
+                 {
+                     Name="Preventive maintenance",
+                     Key="URS 17"
+
+                 },
+                                   new UserRequirementType()
+                 {
+                     Name="Training",
+                     Key="URS 18"
+
+                 },
+                                    new UserRequirementType()
+                 {
+                     Name="EOHS",
+                     Key="URS 19"
+
+                 },
+
+
+
+            };
+
+
+            context.UserRequirementTypes!.AddRange(variables);
+
+            context.SaveChanges();
+        }
+        static void AddSignalType(TableContext context)
+        {
+            SignalType[] variables = new[]
+            {
+
+                 new SignalType()
+                 {
+                     Name="24 VDC",
+                   
+                 },
+                  new SignalType()
+                 {
+                     Name="110 VAC",
+                 
+                 },
+                   new SignalType()
+                 {
+                     Name="4-20 mA",
+                   
+
+                 },
+            new SignalType()
+                 {
+                     Name="Ethernet",
+
+
+                 },
+
+
+            };
+
+
+            context.SignalTypes!.AddRange(variables);
 
             context.SaveChanges();
         }

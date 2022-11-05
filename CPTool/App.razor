@@ -19,11 +19,10 @@
 </CascadingValue>
 @code
 {
-    [Inject]
-    public IMediator mediator { get; set; }
+   
     protected override async Task OnInitializedAsync()
     {
-        await GlobalTables.InitializeTables(mediator);
+        await GlobalTables.InitializeTables(Mediator);
         //await GlobalTablesService.InitializeTables();
     }
 

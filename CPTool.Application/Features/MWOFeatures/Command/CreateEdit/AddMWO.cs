@@ -8,8 +8,8 @@
         public DateTime ApprovalDate { get; set; }
         public string? CEBName => $"CEB0000{Number}";
         public string? CECName => $"CEC0000{Number}";
-        public decimal Budget { get; set; }
-        public decimal Expenses { get; set; }
+        public double Budget { get; set; }
+        public double Expenses { get; set; }
 
 
         public int? MWOTypeId { get; set; }

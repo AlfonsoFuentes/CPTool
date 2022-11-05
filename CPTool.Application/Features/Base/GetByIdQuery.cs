@@ -13,16 +13,16 @@ namespace CPTool.Application.Features.Base
         }
       
 
-        public int Id { get; init; }
+        public int Id { get; set; }
     }
     public class GetByIdQueryHandler<TEdit, TEntity,TGetById> 
-        where TEdit : EditCommand 
+        where TEdit : EditCommand ,new()
         where TEntity : BaseDomainModel
         where TGetById : GetByIdQuery
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+        protected readonly IMapper _mapper;
+        protected IUnitOfWork _unitofwork;
         public GetByIdQueryHandler(IUnitOfWork unitofwork,
             IMapper mapper)
         {
@@ -31,9 +31,16 @@ namespace CPTool.Application.Features.Base
         }
         public virtual async Task<TEdit> Handle(TGetById request, CancellationToken cancellationToken)
         {
-            var table = await _unitofwork.Repository<TEntity>().GetByIdAsync(request.Id);
+            TEdit result = new TEdit();
 
-            return _mapper.Map<TEdit>(table);
+            if (request.Id!=0)
+            {
+                var table = await _unitofwork.Repository<TEntity>().GetByIdAsync(request.Id);
+                result = _mapper.Map<TEdit>(table);
+            }
+            
+
+            return result;
 
         }
     }

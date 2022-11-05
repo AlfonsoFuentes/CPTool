@@ -1,4 +1,6 @@
 ﻿
+using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList;
 using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ReadoutFeatures.Query.GetList
@@ -10,23 +12,12 @@ namespace CPTool.Application.Features.ReadoutFeatures.Query.GetList
 
 
     }
-    public class GetReadoutListQueryHandler : IRequestHandler<GetReadoutListQuery, List<EditReadout>>
+    public class GetReadoutListQueryHandler :
+         GetListQueryHandler<EditReadout, Readout, GetReadoutListQuery>,
+        IRequestHandler<GetReadoutListQuery, List<EditReadout>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetReadoutListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetReadoutListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditReadout>> Handle(GetReadoutListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<Readout>().GetAllAsync();
-
-            return _mapper.Map<List<EditReadout>>(list);
-
         }
     }
 }

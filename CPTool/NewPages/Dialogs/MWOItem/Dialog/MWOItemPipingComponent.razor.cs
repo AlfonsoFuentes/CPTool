@@ -96,7 +96,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             if (Model.NozzleStart != null)
             {
                 Model.NozzleStart.ConnectedTo = null;
-                await mediator.Send(Model.NozzleStart);
+                await Mediator.Send(Model.NozzleStart);
                 Model.NozzleStart = null;
                
             }
@@ -107,7 +107,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             if (Model.NozzleFinish != null)
             {
                 Model.NozzleFinish.ConnectedTo = null;
-                await mediator.Send(Model.NozzleFinish);
+                await Mediator.Send(Model.NozzleFinish);
                 Model.NozzleFinish = null;
                
             }
@@ -119,7 +119,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             if (Model.NozzleFinish != null)
             {
                 Model.NozzleFinish.ConnectedTo = DialogParent.Model;
-                await mediator.Send(Model.NozzleFinish);
+                await Mediator.Send(Model.NozzleFinish);
 
             }
             else
@@ -130,7 +130,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
                     if (row.ConnectedTo != null && row.ConnectedTo.Id == DialogParent.Model.Id)
                     {
                         row.ConnectedTo = null;
-                        await mediator.Send(row);
+                        await Mediator.Send(row);
                         break;
                     }
                 }
@@ -142,7 +142,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             if (Model.NozzleStart != null)
             {
                 Model.NozzleStart.ConnectedTo = DialogParent.Model;
-                await mediator.Send(Model.NozzleStart);
+                await Mediator.Send(Model.NozzleStart);
             }
             else
             {
@@ -152,22 +152,17 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
                     if (row.ConnectedTo != null && row.ConnectedTo.Id == DialogParent.Model.Id)
                     {
                         row.ConnectedTo = null;
-                        await mediator.Send(row);
+                        await Mediator.Send(row);
                         break;
                     }
                 }
             }
         }
-        [Inject]
-        public IMediator mediator { get; set; }
+        
 
 
 
-        void OnMaterialChanged(EditMaterial mat)
-        {
-            Model.pMaterial = mat;
-            StateHasChanged();
-        }
+       
 
     }
 }

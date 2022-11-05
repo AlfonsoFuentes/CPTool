@@ -17,7 +17,9 @@
                                                Validation="@(new Func<string, string>(ReviewMWOType))"
                                                @bind-Model=@Model.MWOType></AutoCompleteComponent>
 
-                        <TextComponent @bind-Model="@Model" Label="MWO Name" PropertyName="@nameof(Model.Name)"></TextComponent>
+                        <TextComponent @bind-Model="@Model" Label="MWO Name" PropertyName="@nameof(Model.Name)"
+                         Validation="@(new Func<string, string>(ReviewMWOName))"
+                        ></TextComponent>
                         <NumericComponent @bind-Model="@Model" Label="MWO number"
                                           Validation="@(new Func<int, string>(AnyNumber))"
                                           Mask="@mask1"

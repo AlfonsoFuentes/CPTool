@@ -1,47 +1,20 @@
-﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
+﻿using CPTool.Application.Features.BrandFeatures;
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
+using CPTool.Application.Features.BrandFeatures.Query.GetById;
+using CPTool.Application.Features.BrandFeatures.Query.GetList;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
 {
-    internal class BrandSupplierHandler : AddEditBaseHandler<AddBrandSupplier,EditBrandSupplier, BrandSupplier>, IRequestHandler<EditBrandSupplier, Result<int>>
+    internal class EditBrandSupplierHandler : AddEditBaseHandler<AddBrandSupplier, EditBrandSupplier, BrandSupplier>, IRequestHandler<EditBrandSupplier, Result<int>>
     {
 
 
-        public BrandSupplierHandler(IUnitOfWork unitofwork, IMapper mapper,  ILogger<EditBrandSupplier> logger)
-            : base(unitofwork, mapper,  logger) { }
+        public EditBrandSupplierHandler(IUnitOfWork unitofwork, IMapper mapper, ILogger<EditBrandSupplier> logger)
+            : base(unitofwork, mapper, logger) { }
 
         public override async Task<Result<int>> Handle(EditBrandSupplier command, CancellationToken cancellationToken)
         {
-            //var brand= _mapper.Map<Brand>(command.Brand);
-            //var supplier = _mapper.Map<Supplier>(command.Supplier);
-
-            //if (brand != null||supplier!=null)
-            //{
-            //    if ((await _unitOfWork.Repository<BrandSupplier>().Any(x => x.Brand == brand && x.Supplier == supplier)))
-            //    {
-            //        var commandbrandsupplier = _mapper.Map<AddBrandSupplier>(command);
-            //        var table = _mapper.Map<BrandSupplier>(commandbrandsupplier);
-
-            //        _unitOfWork.Repository<BrandSupplier>().Add(table);
-            //        await _unitOfWork.Complete();
-
-
-            //        return await Result<int>.SuccessAsync(table.Id, $"{table.Name} Added to {nameof(BrandSupplier)}");
-            //    }
-            //}
-
-
-            //if (!(await _unitOfWork.Repository<BrandSupplier>().Any(x => x.Brand == brand && x.Supplier == supplier)))
-            //{
-            //    var table = _mapper.Map<BrandSupplier>(command);
-            //    _unitOfWork.Repository<BrandSupplier>().Update(table);
-            //    await _unitOfWork.Complete();
-            //    return await Result<int>.SuccessAsync(table.Id, $"{table.Name} Added to {nameof(BrandSupplier)}");
-            //}
-            //else
-            //{
-
-            //}
 
             if (command.BrandId != 0 && command.SupplierId != 0)
             {
@@ -61,6 +34,38 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
                 }
 
             }
+            else if(command.BrandId!=0&& command.SupplierOriginalId!=0)
+            {
+                var table = await _unitOfWork.Repository<BrandSupplier>().FirstOrDefaultAsync(
+                   x => x.BrandId == command.BrandId && x.SupplierId == command.SupplierOriginalId);
+
+                if (table!=null)
+                {
+                  
+
+                    _unitOfWork.Repository<BrandSupplier>().Delete(table);
+                    await _unitOfWork.Complete();
+
+
+                    return await Result<int>.SuccessAsync(table.Id, $"{table.Name} Added to {nameof(BrandSupplier)}");
+                }
+            }
+            else if (command.BrandOriginalId != 0 && command.SupplierId != 0)
+            {
+                var table = await _unitOfWork.Repository<BrandSupplier>().FirstOrDefaultAsync(
+                   x => x.BrandId == command.BrandOriginalId && x.SupplierId == command.SupplierId);
+
+                if (table != null)
+                {
+                   
+
+                    _unitOfWork.Repository<BrandSupplier>().Delete(table);
+                    await _unitOfWork.Complete();
+
+
+                    return await Result<int>.SuccessAsync(table.Id, $"{table.Name} Added to {nameof(BrandSupplier)}");
+                }
+            }
 
 
             return await Result<int>.SuccessAsync(0, $"Updated in {nameof(BrandSupplier)}");
@@ -70,7 +75,7 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
         {
             if (command.Id == 0)
             {
-               
+
                 var table = _mapper.Map<Brand>(command);
 
                 _unitOfWork.Repository<Brand>().Add(table);

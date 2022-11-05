@@ -8,24 +8,14 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
         public GetByIdPipeDiameterQuery() { }
         
     }
-    public class GetByIdPipeDiameterQueryHandler : IRequestHandler<GetByIdPipeDiameterQuery, EditPipeDiameter>
+    public class GetByIdPipeDiameterQueryHandler :
+        GetByIdQueryHandler<EditPipeDiameter, PipeDiameter, GetByIdPipeDiameterQuery>, 
+        IRequestHandler<GetByIdPipeDiameterQuery, EditPipeDiameter>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetByIdPipeDiameterQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditPipeDiameter> Handle(GetByIdPipeDiameterQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<PipeDiameter>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditPipeDiameter>(table);
-
-        }
+            IMapper mapper):base(unitofwork, mapper) { }
     }
     
 }

@@ -6,8 +6,7 @@ namespace CPTool.NewPages.Dialogs.Downpayment.List
 {
     public partial class DownpaymentList
     {
-        [Inject]
-        public IMediator mediator { get; set; }
+        
 
         [Parameter]
         public List<EditDownPayment> DownPayments { get; set; } = new();
@@ -27,7 +26,7 @@ namespace CPTool.NewPages.Dialogs.Downpayment.List
             {
 
                 GetTaksListQuery getTaksListQuery = new();
-                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
+                GlobalTables.Takss = await Mediator.Send(getTaksListQuery);
             }
             return result;
         }

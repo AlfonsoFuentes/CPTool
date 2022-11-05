@@ -16,8 +16,6 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         [Parameter]
         public CreateEditPurchaseOrder Model { get; set; } = null!;
 
-        [Inject]
-        public IMediator mediator { get; set; }
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -34,7 +32,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
             {
                 Model.PurchaseOrder.POOrderingdDate = DateTime.UtcNow;
                 Model.PurchaseOrder.PurchaseOrderStatus = Domain.Entities.PurchaseOrderStatus.Ordering;
-                await mediator.Send(Model);
+                await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

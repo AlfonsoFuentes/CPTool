@@ -425,6 +425,39 @@ namespace CPTool.Infrastructure.Migrations
                     b.ToTable("EHSItems");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.ElectricalBox", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ElectricalBoxs");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.ElectricalItem", b =>
                 {
                     b.Property<int>("Id")
@@ -668,6 +701,39 @@ namespace CPTool.Infrastructure.Migrations
                     b.HasIndex("EquipmentTypeId");
 
                     b.ToTable("EquipmentTypeSubs");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.FieldLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FieldLocations");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.FoundationItem", b =>
@@ -1000,8 +1066,8 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("ApprovalDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Budget")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Budget")
+                        .HasColumnType("float");
 
                     b.Property<string>("CEBName")
                         .HasColumnType("nvarchar(max)");
@@ -1019,8 +1085,8 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Expenses")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Expenses")
+                        .HasColumnType("float");
 
                     b.Property<int?>("MWOTypeId")
                         .HasColumnType("int");
@@ -1059,8 +1125,8 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("AlterationItemId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("BudgetPrize")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("BudgetPrize")
+                        .HasColumnType("float");
 
                     b.Property<int?>("ChapterId")
                         .HasColumnType("int");
@@ -1977,6 +2043,114 @@ namespace CPTool.Infrastructure.Migrations
                     b.ToTable("Readouts");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.Signal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disconect")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ElectricalBoxId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FieldLocationId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("FrequencyInverter")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("IOType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("InstrumentAir")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MWOId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MWOItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SignalTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("WireId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ElectricalBoxId");
+
+                    b.HasIndex("FieldLocationId");
+
+                    b.HasIndex("MWOId");
+
+                    b.HasIndex("MWOItemId");
+
+                    b.HasIndex("SignalTypeId");
+
+                    b.HasIndex("WireId");
+
+                    b.ToTable("Signals");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.SignalType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SignalTypes");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.StructuralItem", b =>
                 {
                     b.Property<int>("Id")
@@ -2060,16 +2234,14 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("VendorCodeId")
-                        .HasColumnType("int");
+                    b.Property<string>("VendorCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TaxCodeLDId");
 
                     b.HasIndex("TaxCodeLPId");
-
-                    b.HasIndex("VendorCodeId");
 
                     b.ToTable("Suppliers");
                 });
@@ -2343,7 +2515,140 @@ namespace CPTool.Infrastructure.Migrations
                     b.ToTable("UnitaryBasePrizes");
                 });
 
-            modelBuilder.Entity("CPTool.Domain.Entities.VendorCode", b =>
+            modelBuilder.Entity("CPTool.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobilPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.UserRequirement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MWOId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestedById")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RequestedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserRequirementTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MWOId");
+
+                    b.HasIndex("RequestedById");
+
+                    b.HasIndex("UserRequirementTypeId");
+
+                    b.ToTable("UserRequirements");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.UserRequirementType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRequirementTypes");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.Wire", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2373,7 +2678,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VendorCodes");
+                    b.ToTable("Wires");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.BrandSupplier", b =>
@@ -3076,6 +3381,53 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("PurchaseOrder");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.Signal", b =>
+                {
+                    b.HasOne("CPTool.Domain.Entities.ElectricalBox", "ElectricalBox")
+                        .WithMany("Signals")
+                        .HasForeignKey("ElectricalBoxId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.FieldLocation", "FieldLocation")
+                        .WithMany("Signals")
+                        .HasForeignKey("FieldLocationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CPTool.Domain.Entities.MWO", "MWO")
+                        .WithMany("Signals")
+                        .HasForeignKey("MWOId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CPTool.Domain.Entities.MWOItem", "MWOItem")
+                        .WithMany("Signals")
+                        .HasForeignKey("MWOItemId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.SignalType", "SignalType")
+                        .WithMany("Signals")
+                        .HasForeignKey("SignalTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CPTool.Domain.Entities.Wire", "Wire")
+                        .WithMany("Signals")
+                        .HasForeignKey("WireId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ElectricalBox");
+
+                    b.Navigation("FieldLocation");
+
+                    b.Navigation("MWO");
+
+                    b.Navigation("MWOItem");
+
+                    b.Navigation("SignalType");
+
+                    b.Navigation("Wire");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.Supplier", b =>
                 {
                     b.HasOne("CPTool.Domain.Entities.TaxCodeLD", "TaxCodeLD")
@@ -3088,16 +3440,9 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("TaxCodeLPId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("CPTool.Domain.Entities.VendorCode", "VendorCode")
-                        .WithMany("Suppliers")
-                        .HasForeignKey("VendorCodeId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("TaxCodeLD");
 
                     b.Navigation("TaxCodeLP");
-
-                    b.Navigation("VendorCode");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Taks", b =>
@@ -3129,6 +3474,31 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("MWOItem");
 
                     b.Navigation("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.UserRequirement", b =>
+                {
+                    b.HasOne("CPTool.Domain.Entities.MWO", "MWO")
+                        .WithMany("UserRequirements")
+                        .HasForeignKey("MWOId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CPTool.Domain.Entities.User", "RequestedByUser")
+                        .WithMany("UserRequirements")
+                        .HasForeignKey("RequestedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CPTool.Domain.Entities.UserRequirementType", "UserRequirementType")
+                        .WithMany("UserRequirements")
+                        .HasForeignKey("UserRequirementTypeId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("MWO");
+
+                    b.Navigation("RequestedByUser");
+
+                    b.Navigation("UserRequirementType");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.AlterationItem", b =>
@@ -3182,6 +3552,11 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("MWOItems");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.ElectricalBox", b =>
+                {
+                    b.Navigation("Signals");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.ElectricalItem", b =>
                 {
                     b.Navigation("MWOItems");
@@ -3209,6 +3584,11 @@ namespace CPTool.Infrastructure.Migrations
             modelBuilder.Entity("CPTool.Domain.Entities.EquipmentTypeSub", b =>
                 {
                     b.Navigation("EquipmentItems");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.FieldLocation", b =>
+                {
+                    b.Navigation("Signals");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.FoundationItem", b =>
@@ -3268,7 +3648,11 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Navigation("PurchaseOrders");
 
+                    b.Navigation("Signals");
+
                     b.Navigation("Taks");
+
+                    b.Navigation("UserRequirements");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.MWOItem", b =>
@@ -3280,6 +3664,8 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("NozzlesConnecteds");
 
                     b.Navigation("PurchaseOrderMWOItems");
+
+                    b.Navigation("Signals");
 
                     b.Navigation("StartPipingItems");
 
@@ -3374,6 +3760,11 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("InstrumentItems");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.SignalType", b =>
+                {
+                    b.Navigation("Signals");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.StructuralItem", b =>
                 {
                     b.Navigation("MWOItems");
@@ -3458,9 +3849,19 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("MWOItems");
                 });
 
-            modelBuilder.Entity("CPTool.Domain.Entities.VendorCode", b =>
+            modelBuilder.Entity("CPTool.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Suppliers");
+                    b.Navigation("UserRequirements");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.UserRequirementType", b =>
+                {
+                    b.Navigation("UserRequirements");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.Wire", b =>
+                {
+                    b.Navigation("Signals");
                 });
 #pragma warning restore 612, 618
         }

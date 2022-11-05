@@ -8,8 +8,7 @@ namespace CPTool.NewPages.Components
 
         where TList : GetListQuery, new()
     {
-        [Inject]
-        public IMediator Mediator { get; set; }
+       
 
         [Parameter]
         [EditorRequired]

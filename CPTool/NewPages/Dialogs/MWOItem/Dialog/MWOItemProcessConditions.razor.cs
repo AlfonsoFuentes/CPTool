@@ -18,8 +18,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         [Parameter]
         public EditProcessFluid ProcessFluid { get; set; }
 
-        [Inject]
-        public IMediator mediator { get; set; }
+        
         [Parameter]
         public EventCallback<EditProcessFluid> ProcessFluidChanged { get; set; }
 

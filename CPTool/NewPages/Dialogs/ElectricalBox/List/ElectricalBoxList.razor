@@ -1,0 +1,27 @@
+﻿@using CPTool.Application.Features.ElectricalBoxFeatures.Query.GetById
+@using CPTool.Application.Features.ElectricalBoxFeatures.Query.GetList
+@using CPTool.Application.Features.ElectricalBoxsFeatures
+@using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit
+
+
+
+<SimpleListComponent TMaster="EditElectricalBox"
+                     TDeleteMaster="DeleteElectricalBox"
+                     TMasterList="GetElectricalBoxListQuery" TGedById="GetByIdElectricalBoxQuery"
+                     @bind-ElementsMasters="GlobalTables.ElectricalBoxs"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+@code {
+
+}

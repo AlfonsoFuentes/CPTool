@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+﻿using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
+using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList
 {
@@ -21,18 +23,15 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList
         }
 
     }
-    public class GetPurchaseOrderListQueryHandler : IRequestHandler<GetPurchaseOrderListQuery, List<EditPurchaseOrder>>
+    public class GetPurchaseOrderListQueryHandler :
+         GetListQueryHandler<EditPurchaseOrder, PurchaseOrder, GetPurchaseOrderListQuery>, 
+        IRequestHandler<GetPurchaseOrderListQuery, List<EditPurchaseOrder>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetPurchaseOrderListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetPurchaseOrderListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
         }
-        public async Task<List<EditPurchaseOrder>> Handle(GetPurchaseOrderListQuery request, CancellationToken cancellationToken)
+
+        public override async Task<List<EditPurchaseOrder>> Handle(GetPurchaseOrderListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<PurchaseOrder>().GetAllAsync();
             list = list.OrderBy(x => x.PurchaseOrderStatus).ToList();

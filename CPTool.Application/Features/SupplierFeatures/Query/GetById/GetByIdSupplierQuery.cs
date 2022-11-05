@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+﻿using CPTool.Application.Features.SignalTypeFeatures.Query.GetById;
+using CPTool.Application.Features.SignalTypesFeatures.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.SupplierFeatures.Query.GetById
 {
@@ -7,22 +9,26 @@ namespace CPTool.Application.Features.SupplierFeatures.Query.GetById
         public GetByIdSupplierQuery() { }
        
     }
-    public class GetByIdSupplierQueryHandler : IRequestHandler<GetByIdSupplierQuery, EditSupplier>
+    public class GetByIdSupplierQueryHandler :
+        GetByIdQueryHandler<EditSupplier, Supplier, GetByIdSupplierQuery>, 
+        IRequestHandler<GetByIdSupplierQuery, EditSupplier>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+       
         public GetByIdSupplierQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditSupplier> Handle(GetByIdSupplierQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<Supplier>().GetByIdAsync(request.Id);
+            IMapper mapper):base(unitofwork, mapper) { }
 
-            return _mapper.Map<EditSupplier>(table);
+        public override async Task<EditSupplier> Handle(GetByIdSupplierQuery request, CancellationToken cancellationToken)
+        {
+            EditSupplier result = new();
+            if(request.Id!=0)
+            {
+                var table = await _unitofwork.RepositorySupplier.GetByIdAsync(request.Id);
+
+                result= _mapper.Map<EditSupplier>(table);
+            }
+          
+            return result;
 
         }
     }

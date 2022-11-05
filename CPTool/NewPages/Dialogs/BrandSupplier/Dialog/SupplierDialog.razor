@@ -1,12 +1,4 @@
-﻿@using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit
-@using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetById
-@using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList
-@using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit
-@using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetById
-@using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList
-@using CPTool.Application.Features.VendorCodeFeatures.CreateEdit
-@using CPTool.Application.Features.VendorCodeFeatures.Query.GetById
-@using CPTool.Application.Features.VendorCodeFeatures.Query.GetList
+﻿
 @if (debug)
 {
 
@@ -42,18 +34,10 @@
                         <TextComponent @bind-Model="@Model.Supplier" Label="Address"
                                        PropertyName="@nameof(Model.Supplier.Address)" Required=true></TextComponent>
 
+                        <TextComponent @bind-Model="@Model.Supplier" Label="Vendor Code"
+                                       PropertyName="@nameof(Model.Supplier.VendorCode)" Required=true></TextComponent>
 
-
-                        <AutoCompleteComponent TEdit="EditVendorCode"
-                                               TList="GetVendorCodeListQuery"
-                                               TGedById="GetByIdVendorCodeQuery"
-                                               @bind-Model=@Model.Supplier.VendorCode
-                                               PropertyName="@nameof(Model.Supplier.VendorCode.Name)"
-                                               TableName="Vendor Code"
-                                               Label="Vendor Code"
-                                               ValidateForm="Validateform"
-                                               @bind-Elements="@GlobalTables.VendorCodes"
-                                               Validation="@(new Func<string, string>(ReviewVendorCode))"></AutoCompleteComponent>
+                     
                         <AutoCompleteComponent TEdit="EditTaxCodeLD"
                                                TList="GetTaxCodeLDListQuery"
                                                TGedById="GetByIdTaxCodeLDQuery"

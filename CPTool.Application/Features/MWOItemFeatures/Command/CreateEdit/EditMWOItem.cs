@@ -26,7 +26,8 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
         public EditUnitaryBasePrize? UnitaryBasePrize { get; set; } = new();
         public int Order { get; set; }
         public string? Nomenclatore => $"{Chapter?.Letter}{Order}";
-        public decimal BudgetPrize { get; set; }
+        public double BudgetPrize { get; set; }
+        public double Assigned => MWOItemCurrencyValues.Count==0?0: MWOItemCurrencyValues.Sum(x => x.PrizeUSD);
         public EditMWOItemCurrencyValue MWOItemCurrencyValue { get; set; } = new();
         public List<EditMWOItemCurrencyValue> MWOItemCurrencyValues { get; set; } = new();
         public string TagId => GetTagId();

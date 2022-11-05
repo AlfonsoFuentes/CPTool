@@ -1,0 +1,52 @@
+﻿@page "/MWOItemList/{MWOId:int}"
+<MudGrid>
+    <MudItem xs="12" sm="12">
+        <MudPaper Height="32px" Width="100%" Square="true">
+
+            <MudText Align="Align.Center" Typo="Typo.h5">Items for <b>@MWO.Name</b> </MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="12">
+
+        <SimpleListComponent TMaster="EditMWOItem"
+                             TDeleteMaster="DeleteMWOItem"
+                             OnAdd="AddMWOItem"
+                             OnEdit="EditMWOItem"
+                             TMasterList="GetMWOItemListQuery" TGedById="GetByIdMWOItemQuery"
+                             ElementsMasters="@MWOItems"
+                             @bind-SelectedMaster="@MWOItemSelected"
+                             OnShowDialogMaster="ToolDialogService.ShowMWOItem">
+            <MasterOtherButtons>
+                <MudTooltip Text="Create Task">
+                    <MudIconButton Icon="@Icons.Filled.AddTask" OnClick="CreateTaskMWOItem" Size="Size.Small" Disabled=@(MWOItemSelected.Id==0?true:false) />
+                </MudTooltip>
+            </MasterOtherButtons>
+            <MasterContextTh>
+                <MudTh Style="width:40px">#</MudTh>
+                <MudTh Style="width:40px">Tag</MudTh>
+                <MudTh Style="width:40px">Name</MudTh>
+                <MudTh Style="width:40px">Budget, USD</MudTh>
+                <MudTh Style="width:40px">Assigned, USD</MudTh>
+            </MasterContextTh>
+            <MasterContextTd>
+                <MudTd DataLabel="#">@context.Nomenclatore</MudTd>
+                <MudTd DataLabel="Tag">@context.TagId</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Budget, USD">@context.BudgetPrize.ToString("C1")</MudTd>
+                <MudTd DataLabel="Budget, USD">@context.Assigned.ToString("C1")</MudTd>
+            </MasterContextTd>
+
+
+
+        </SimpleListComponent>
+
+    </MudItem>
+</MudGrid>
+
+
+
+
+@code {
+
+
+}

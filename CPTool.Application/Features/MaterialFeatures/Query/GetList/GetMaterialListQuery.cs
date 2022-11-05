@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+﻿using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
+using CPTool.Application.Features.InstrumentItemFeatures.Query.GetList;
+using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.MaterialFeatures.Query.GetList
 {
@@ -9,23 +11,11 @@ namespace CPTool.Application.Features.MaterialFeatures.Query.GetList
 
 
     }
-    public class GetMaterialListQueryHandler : IRequestHandler<GetMaterialListQuery, List<EditMaterial>>
+    public class GetMaterialListQueryHandler : GetListQueryHandler<EditMaterial, Material, GetMaterialListQuery>,
+        IRequestHandler<GetMaterialListQuery, List<EditMaterial>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetMaterialListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetMaterialListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditMaterial>> Handle(GetMaterialListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<Material>().GetAllAsync();
-
-            return _mapper.Map<List<EditMaterial>>(list);
-
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿@using CPTool.Application.Features.UserRequirementTypeFeatures
+@using CPTool.Application.Features.UserRequirementTypeFeatures.CreateEdit
+@using CPTool.Application.Features.UserRequirementTypeFeatures.Query.GetById
+@using CPTool.Application.Features.UserRequirementTypeFeatures.Query.GetList
+
+
+<SimpleListComponent TMaster="EditUserRequirementType"
+                   
+                     TDeleteMaster="DeleteUserRequirementType"
+                     TMasterList="GetUserRequirementTypeListQuery" TGedById="GetByIdUserRequirementTypeQuery"
+                     @bind-ElementsMasters="GlobalTables.UserRequirementTypes"
+                     OnAdd="AddUserRequirementType"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Key</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
+        <MudTd DataLabel="Key">@context.Key</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+    
+}

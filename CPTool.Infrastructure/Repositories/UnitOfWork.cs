@@ -9,6 +9,7 @@ namespace CPTool.Infrastructure.Repositories
         public IRepositoryMWO RepositoryMWO => _repositorymwo ??= new RepositoryMWO(_context);
         public IRepositoryMWOItem RepositoryMWOItem => _repositorymwoitem ??= new RepositoryMWOItem(_context);
         public IRepositoryBrand RepositoryBrand => _repositorybrand ??= new RepositoryBrand(_context);
+        public IRepositoryBrandSupplier RepositoryBrandSupplier => _repositorybrandsupplier ??= new RepositoryBrandSupplier(_context);
         public IRepositorySupplier RepositorySupplier => _repositorysupplier ??= new RepositorySupplier(_context);
         public IRepositoryEquipmentItem RepositoryEquipmentItem => _repositoryEquipmentItem ??= new RepositoryEquipmentItem(_context);
         public IRepositoryInstrumentItem RepositoryInstrumentItem => _repositoryInstrumentItem ??= new RepositoryInstrumentItem(_context);
@@ -21,6 +22,7 @@ namespace CPTool.Infrastructure.Repositories
         private IRepositoryEquipmentItem _repositoryEquipmentItem = null!;
         private IRepositoryInstrumentItem _repositoryInstrumentItem = null!;
         private IRepositoryPipingItem _repositoryPipingItem = null!;
+        private IRepositoryBrandSupplier _repositorybrandsupplier = null!;
         public UnitOfWork(TableContext context)
         {
 

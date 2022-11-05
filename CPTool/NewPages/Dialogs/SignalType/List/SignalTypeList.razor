@@ -1,0 +1,27 @@
+﻿@using CPTool.Application.Features.SignalTypeFeatures.Query.GetById
+@using CPTool.Application.Features.SignalTypeFeatures.Query.GetList
+@using CPTool.Application.Features.SignalTypesFeatures
+@using CPTool.Application.Features.SignalTypesFeatures.CreateEdit
+
+
+<SimpleListComponent TMaster="EditSignalType"
+                     TDeleteMaster="DeleteSignalType"
+                     TMasterList="GetSignalTypeListQuery" TGedById="GetByIdSignalTypeQuery"
+                     @bind-ElementsMasters="GlobalTables.SignalTypes"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+
+@code {
+
+}

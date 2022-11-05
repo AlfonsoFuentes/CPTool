@@ -1,0 +1,25 @@
+﻿@using CPTool.Application.Features.WireFeatures
+@using CPTool.Application.Features.WireFeatures.CreateEdit
+@using CPTool.Application.Features.WireFeatures.Query.GetById
+@using CPTool.Application.Features.WireFeatures.Query.GetList
+
+<SimpleListComponent TMaster="EditWire"
+                     TDeleteMaster="DeleteWire"
+                     TMasterList="GetWireListQuery" TGedById="GetByIdWireQuery"
+                     @bind-ElementsMasters="GlobalTables.Wires"
+                     OnShowDialogMaster="ToolDialogService.ShowNameDialog">
+    <MasterContextTh>
+        <MudTh Style="width:40px">#</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
+    </MasterContextTh>
+    <MasterContextTd>
+        <MudTd DataLabel="#">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+    </MasterContextTd>
+
+
+
+</SimpleListComponent>
+@code {
+
+}

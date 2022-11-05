@@ -3,8 +3,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
 {
     public partial class PurchaseOrderList
     {
-        [Inject]
-        public IMediator mediator { get; set; }
+      
 
         EditPurchaseOrder SelectedPurchaseOrder { get; set; } = new();
         EditMWOItem SelectedMWOItem { get; set; } = new();
@@ -38,10 +37,10 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
             if (!result.Cancelled)
             {
                 GetDownPaymentListQuery getDownPaymentListQuery = new GetDownPaymentListQuery();
-                GlobalTables.DownPayments = await mediator.Send(getDownPaymentListQuery);
+                GlobalTables.DownPayments = await Mediator.Send(getDownPaymentListQuery);
 
                 GetTaksListQuery getTaksListQuery = new();
-                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
+                GlobalTables.Takss = await Mediator.Send(getTaksListQuery);
             }
 
         }
@@ -51,9 +50,9 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
             var result = await ToolDialogService.ShowEditPurchaseOrderDialog(SelectedPurchaseOrder);
             if (!result.Cancelled)
             {
-                GlobalTables.PurchaseOrders = await mediator.Send(purchaseorderList);
+                GlobalTables.PurchaseOrders = await Mediator.Send(purchaseorderList);
                 GetTaksListQuery getTaksListQuery = new();
-                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
+                GlobalTables.Takss = await Mediator.Send(getTaksListQuery);
             }
             return result;
         }
@@ -63,7 +62,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
             {
                 GetByIdPurchaseOrderQuery query = new() { Id = PO.Id };
 
-                SelectedPurchaseOrder = await mediator.Send(query);
+                SelectedPurchaseOrder = await Mediator.Send(query);
 
                 MWOItems = GlobalTables.PurchaseOrderMWOItems.Where(x => x.PurchaseOrderId == SelectedPurchaseOrder.Id).Select(x => x.MWOItem).ToList();// SelectedBrand.BrandSuppliers.Select(x => x.Supplier).ToList();
 
@@ -81,7 +80,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
             {
                 GetByIdMWOItemQuery query = new() { Id = mwoitem.Id };
 
-                SelectedMWOItem = await mediator.Send(query);
+                SelectedMWOItem = await Mediator.Send(query);
 
 
 

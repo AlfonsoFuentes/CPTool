@@ -1,4 +1,4 @@
-﻿namespace CPTool.Application.Features.Base.DeleteCommand
+﻿namespace CPTool.Application.Features.Base.Delete
 {
     public class DeleteCommand
     {

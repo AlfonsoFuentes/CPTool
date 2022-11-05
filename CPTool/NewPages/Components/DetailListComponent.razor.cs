@@ -1,5 +1,5 @@
 ﻿using CPtool.ExtensionMethods;
-using CPTool.Application.Features.Base.DeleteCommand;
+using CPTool.Application.Features.Base.Delete;
 
 namespace CPTool.NewPages.Components
 {
@@ -11,9 +11,7 @@ namespace CPTool.NewPages.Components
 
         where TDetailGedById : GetByIdQuery, new()
     {
-        [Inject]
-        public IMediator mediator { get; set; }
-
+        
 
         TDetailList DetailList { get; set; } = new();
 
@@ -55,7 +53,7 @@ namespace CPTool.NewPages.Components
             {
                 Id = eq.Item.Id,
             };
-            SelectedDetail = await mediator.Send(getbyid) as TDetail;
+            SelectedDetail = await Mediator.Send(getbyid) as TDetail;
             await SelectedDetailChanged.InvokeAsync(SelectedDetail);
         }
 

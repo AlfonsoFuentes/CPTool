@@ -10,23 +10,13 @@ namespace CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
 
 
     }
-    public class GetPropertyPackageListQueryHandler : IRequestHandler<GetPropertyPackageListQuery, List<EditPropertyPackage>>
+    public class GetPropertyPackageListQueryHandler :
+
+         GetListQueryHandler<EditPropertyPackage, PropertyPackage, GetPropertyPackageListQuery>,
+        IRequestHandler<GetPropertyPackageListQuery, List<EditPropertyPackage>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetPropertyPackageListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetPropertyPackageListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditPropertyPackage>> Handle(GetPropertyPackageListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<PropertyPackage>().GetAllAsync();
-
-            return _mapper.Map<List<EditPropertyPackage>>(list);
-
         }
     }
 }

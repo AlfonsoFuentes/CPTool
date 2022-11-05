@@ -10,23 +10,12 @@ namespace CPTool.Application.Features.ProcessFluidFeatures.Query.GetList
 
 
     }
-    public class GetProcessFluidListQueryHandler : IRequestHandler<GetProcessFluidListQuery, List<EditProcessFluid>>
+    public class GetProcessFluidListQueryHandler :
+          GetListQueryHandler<EditProcessFluid, ProcessFluid, GetProcessFluidListQuery>,
+        IRequestHandler<GetProcessFluidListQuery, List<EditProcessFluid>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetProcessFluidListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetProcessFluidListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditProcessFluid>> Handle(GetProcessFluidListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<ProcessFluid>().GetAllAsync();
-
-            return _mapper.Map<List<EditProcessFluid>>(list);
-
         }
     }
 }

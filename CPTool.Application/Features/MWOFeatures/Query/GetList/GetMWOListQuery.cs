@@ -1,4 +1,6 @@
 ﻿using CPTool.Application.Features.MWOFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
 
 namespace CPTool.Application.Features.MWOFeatures.Query.GetList
 {
@@ -9,18 +11,15 @@ namespace CPTool.Application.Features.MWOFeatures.Query.GetList
 
 
     }
-    public class GetMWOListQueryHandler : IRequestHandler<GetMWOListQuery, List<EditMWO>>
+    public class GetMWOListQueryHandler :
+         GetListQueryHandler<EditMWO, MWO, GetMWOListQuery>, 
+        IRequestHandler<GetMWOListQuery, List<EditMWO>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetMWOListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetMWOListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
         }
-        public async Task<List<EditMWO>> Handle(GetMWOListQuery request, CancellationToken cancellationToken)
+
+        public override async Task<List<EditMWO>> Handle(GetMWOListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.RepositoryMWO.GetAllAsync();
 

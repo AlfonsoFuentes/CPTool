@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+﻿using CPTool.Application.Features.MWOFeatures.CreateEdit;
+using CPTool.Application.Features.MWOFeatures.Query.GetList;
+using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.NozzleFeatures.Query.GetList
 {
@@ -24,23 +26,12 @@ namespace CPTool.Application.Features.NozzleFeatures.Query.GetList
 
         }
     }
-    public class GetNozzleListQueryHandler : IRequestHandler<GetNozzleListQuery, List<EditNozzle>>
+    public class GetNozzleListQueryHandler : 
+        GetListQueryHandler<EditNozzle, Nozzle, GetNozzleListQuery>,
+        IRequestHandler<GetNozzleListQuery, List<EditNozzle>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetNozzleListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetNozzleListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditNozzle>> Handle(GetNozzleListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<Nozzle>().GetAllAsync();
-
-            return _mapper.Map<List<EditNozzle>>(list);
-
         }
     }
 }

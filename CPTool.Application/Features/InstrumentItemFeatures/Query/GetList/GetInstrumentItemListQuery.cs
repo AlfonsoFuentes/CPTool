@@ -10,23 +10,12 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.Query.GetList
 
 
     }
-    public class GetInstrumentItemListQueryHandler : IRequestHandler<GetInstrumentItemListQuery, List<EditInstrumentItem>>
+    public class GetInstrumentItemListQueryHandler :
+        GetListQueryHandler<EditInstrumentItem, InstrumentItem, GetInstrumentItemListQuery>,
+        IRequestHandler<GetInstrumentItemListQuery, List<EditInstrumentItem>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetInstrumentItemListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetInstrumentItemListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditInstrumentItem>> Handle(GetInstrumentItemListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<InstrumentItem>().GetAllAsync();
-
-            return _mapper.Map<List<EditInstrumentItem>>(list);
-
         }
     }
 }

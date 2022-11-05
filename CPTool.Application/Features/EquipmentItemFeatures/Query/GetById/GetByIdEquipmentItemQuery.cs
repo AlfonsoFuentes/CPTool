@@ -1,5 +1,9 @@
 ﻿using CPTool.Application.Features.Base;
+using CPTool.Application.Features.ElectricalBoxFeatures.Query.GetById;
+using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
 using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
+using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
+using CPTool.Application.Features.InstrumentItemFeatures.Query.GetById;
 
 namespace CPTool.Application.Features.EquipmentItemFeatures.Query.GetById
 {
@@ -7,23 +11,30 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.Query.GetById
     public class GetByIdEquipmentItemQuery : GetByIdQuery, IRequest<EditEquipmentItem>
     {
     }
-    public class GetByIdEquipmentItemQueryHandler : 
+    public class GetByIdEquipmentItemQueryHandler :
+         GetByIdQueryHandler<EditEquipmentItem, EquipmentItem, GetByIdEquipmentItemQuery>,
         IRequestHandler<GetByIdEquipmentItemQuery, EditEquipmentItem>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+     
         public GetByIdEquipmentItemQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+            IMapper mapper):base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public  async Task<EditEquipmentItem> Handle(GetByIdEquipmentItemQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.RepositoryEquipmentItem.GetByIdAsync(request.Id);
 
-            return _mapper.Map<EditEquipmentItem>(table);
+        }
+       
+        public override async Task<EditEquipmentItem> Handle(GetByIdEquipmentItemQuery request, CancellationToken cancellationToken)
+        {
+            EditEquipmentItem retorno = new();
+            if (request.Id != 0)
+            {
+                var table = await _unitofwork.RepositoryEquipmentItem.GetByIdAsync(request.Id);
+
+                retorno = _mapper.Map<EditEquipmentItem>(table);
+            }
+
+
+            return retorno;
 
         }
     }

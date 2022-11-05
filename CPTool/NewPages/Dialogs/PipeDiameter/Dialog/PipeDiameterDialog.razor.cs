@@ -10,8 +10,7 @@ namespace CPTool.NewPages.Dialogs.PipeDiameter.Dialog
         [Parameter]
         public EditPipeDiameter Model { get; set; } = null!;
 
-        [Inject]
-        public IMediator mediator { get; set; }
+      
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -28,7 +27,7 @@ namespace CPTool.NewPages.Dialogs.PipeDiameter.Dialog
             if (form.IsValid)
             {
 
-                var result = await mediator.Send(Model);
+                var result = await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

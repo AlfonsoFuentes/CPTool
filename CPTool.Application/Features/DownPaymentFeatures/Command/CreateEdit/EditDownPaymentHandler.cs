@@ -58,7 +58,7 @@ namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
         {
             EditTaks editTaks = new();
             editTaks.MWO = downPayment.PurchaseOrder!.MWO;
-            editTaks.Name = $"Approve Dowpayment {downPayment.Name}";
+            editTaks.Name = $"Approve Dowpayment {downPayment.DownpaymentName}";
             editTaks.PurchaseOrder = downPayment.PurchaseOrder;
             editTaks.DownPayment = downPayment;
             editTaks.TaksType = TaksType.Automatic;
@@ -80,11 +80,12 @@ namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
 
                 if (command.DownpaymentStatus ==  DownpaymentStatus.Created)
                 {
-                    addcommand.Name = $"Approve Downpayment {command.Name}";
+                    addcommand.Name = $"Pay Downpayment {command.DownpaymentName}";
                 }
                 else if (command.DownpaymentStatus ==  DownpaymentStatus.Approved)
                 {
-                    addcommand.Name = $"Pay Downpayment {command.Name}";
+                    addcommand.Name = $"Confirm Downpayment Paid {command.Name}";
+            
                 }
                 else if (command.DownpaymentStatus ==  DownpaymentStatus.Paid)
                 {

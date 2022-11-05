@@ -13,7 +13,7 @@
 @using CPTool.Shared
 @using CPTool.NewPages.Components
 @using CPTool.NewPages.Dialogs.ProcessFluid.List
-@using CPTool.Pages.Settings
+
 @using CPTool.NewPages.Dialogs.EquipmentType.List
 @using static CPTool.App
 @using System.Globalization
@@ -50,7 +50,9 @@
 @using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList
 @using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit
 @using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList
-
+@using CPTool.Application.Features.UserRequirementFeatures.CreateEdit
+@using CPTool.Application.Features.UserRequirementFeatures.Query.GetById
+@using CPTool.Application.Features.UserRequirementFeatures.Query.GetList
 @using CPTool.Application.Features.DownPaymentFeatures
 @using CPTool.Application.Features.DownPaymentFeatures.CreateEdit
 @using CPTool.Application.Features.DownPaymentFeatures.Query.GetById
@@ -60,18 +62,71 @@
 @using CPTool.Application.Features.MWOItemFeatures.CreateEdit
 @using CPTool.Application.Features.MWOItemFeatures
 @using CPTool.Application.Features.MWOItemFeatures.Query.GetList
-
-
+@using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit
+@using CPTool.Application.Features.ConnectionTypeFeatures
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetById
+@using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList
+@using CPTool.Application.Features.MaterialFeatures.CreateEdit
+@using CPTool.Application.Features.MaterialFeatures
+@using CPTool.Application.Features.MaterialFeatures.Query.GetById
+@using CPTool.Application.Features.MaterialFeatures.Query.GetList
+@using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit
+@using CPTool.Application.Features.TaxCodeLDFeatures
+@using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetById
+@using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList
+@using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit
+@using CPTool.Application.Features.TaxCodeLPFeatures
+@using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetById
+@using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList
 @using CPTool.Application.Features.TaksFeatures.Query.GetList;
+@using CPTool.Application.Features.UserFeatures.Query.GetById
+@using CPTool.Application.Features.UserFeatures.Query.GetList
+@using CPTool.Application.Features.UserRequirementFeatures
+
+@using CPTool.NewPages.Dialogs.ElectricalBox.List
+@using CPTool.NewPages.Dialogs.FieldLocation.List
+@using CPTool.NewPages.Dialogs.SignalType.List
+@using CPTool.NewPages.Dialogs.UserRequirement.List
+@using CPTool.NewPages.Dialogs.Wire.List
+@using CPTool.NewPages.Dialogs.BrandSupplier.Dialog
+@using CPTool.NewPages.Dialogs.Downpayment.Dialogs
+@using CPTool.NewPages.Dialogs.Material.Dialog
+@using CPTool.NewPages.Dialogs.MWO.Dialog
+@using CPTool.NewPages.Dialogs.MWOItem.Dialog
+@using CPTool.NewPages.Dialogs.Nozzle.Dialog
+@using CPTool.NewPages.Dialogs.PipeDiameter.Dialog
+@using CPTool.NewPages.Dialogs.ProcessFluid.Dialog
+@using CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
+@using CPTool.NewPages.Dialogs.RequestedBy.Dialog
+@using CPTool.NewPages.Dialogs.Signal.Dialog
+@using CPTool.NewPages.Dialogs.Taks.Dialog
+@using CPTool.NewPages.Dialogs.UserRequirement.Dialog;
+@using CPTool.NewPages.Dialogs.BrandSupplier.List
+@using CPTool.NewPages.Dialogs.ConnectionType.List
+@using CPTool.NewPages.Dialogs.Downpayment.List
+@using CPTool.NewPages.Dialogs.Gaskets.List
+@using CPTool.NewPages.Dialogs.MWOType.List
+@using CPTool.NewPages.Dialogs.Material.List
+@using CPTool.NewPages.Dialogs.PipeClass
+@using CPTool.NewPages.Dialogs.ProcessFluid.LIst
+@using CPTool.NewPages.Dialogs.PurchaseOrder.List
+@using CPTool.NewPages.Dialogs.Taks.List
+@using CPTool.NewPages.Dialogs.TaxCodeLD.List
+@using CPTool.NewPages.Dialogs.TaxCodeLP.List
+@using CPTool.NewPages.Dialogs.UnitaryBasePrize
+@using CPTool.NewPages.Dialogs.VendorCode.List
+@using CPTool.NewPages.Dialogs.UserRequirementType.List
+
 @using MediatR;
 @using Microsoft.AspNetCore.Components;
 
 @using CPTool.Domain.Entities
-
-@inject IDialogService DialogService 
-@inject ISnackbar Snackbar 
-@inject NavigationManager NavigationManager 
+@inject IMediator Mediator
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
 
 @inject ToolDialogService ToolDialogService
-@inject IMapper _mapper 
+@inject IMapper _mapper
 @*@inject ICurrencyApi _CurrencyService *@
+@inject NavigationManager Navigation

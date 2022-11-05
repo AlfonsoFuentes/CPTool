@@ -14,20 +14,17 @@ namespace CPTool.Application.Features.SupplierFeatures.Query.GetList
       
 
     }
-    public class GetSupplierListQueryHandler : IRequestHandler<GetSupplierListQuery, List<EditSupplier>>
+    public class GetSupplierListQueryHandler :
+         GetListQueryHandler<EditSupplier, Supplier, GetSupplierListQuery>, 
+        IRequestHandler<GetSupplierListQuery, List<EditSupplier>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetSupplierListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetSupplierListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
         }
-        public async Task<List<EditSupplier>> Handle(GetSupplierListQuery request, CancellationToken cancellationToken)
+
+        public override async Task<List<EditSupplier>> Handle(GetSupplierListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitofwork.Repository<Supplier>().GetAllAsync();
+            var list = await _unitofwork.RepositorySupplier.GetAllAsync();
 
             var retorno= _mapper.Map<List<EditSupplier>>(list);
             return retorno;

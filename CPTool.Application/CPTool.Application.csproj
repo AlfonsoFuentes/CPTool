@@ -22,4 +22,8 @@
     <ProjectReference Include="..\EquipmentCalculation\EquipmentCalculation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\NewFolder\" />
+  </ItemGroup>
+
 </Project>

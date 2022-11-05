@@ -10,23 +10,13 @@ namespace CPTool.Application.Features.DeviceFunctionModifierFeatures.Query.GetLi
 
 
     }
-    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetDeviceFunctionModifierListQuery, List<EditDeviceFunctionModifier>>
+    public class GetUnitaryBasePrizeListQueryHandler :
+           GetListQueryHandler<EditDeviceFunctionModifier, DeviceFunctionModifier, GetDeviceFunctionModifierListQuery>, 
+        IRequestHandler<GetDeviceFunctionModifierListQuery, List<EditDeviceFunctionModifier>>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+
         public GetUnitaryBasePrizeListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditDeviceFunctionModifier>> Handle(GetDeviceFunctionModifierListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<DeviceFunctionModifier>().GetAllAsync();
-
-            return _mapper.Map<List<EditDeviceFunctionModifier>>(list);
-
-        }
+            IMapper mapper) : base(unitofwork, mapper) { }
     }
 }

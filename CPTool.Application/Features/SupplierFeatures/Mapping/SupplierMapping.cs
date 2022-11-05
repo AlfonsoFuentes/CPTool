@@ -8,7 +8,9 @@ namespace CPTool.Application.Features.SupplierFeatures.Mapping
     {
         public SupplierMapping()
         {
-            CreateMap<Supplier, EditSupplier>();
+            CreateMap<Supplier, EditSupplier>()
+               
+                .ForMember(dest => dest.SupplierOriginalId, act => act.MapFrom(src => src.Id)); ;
             CreateMap<EditSupplier, Supplier>();
             CreateMap<AddSupplier, Supplier>();
             CreateMap<EditSupplier, AddSupplier>();

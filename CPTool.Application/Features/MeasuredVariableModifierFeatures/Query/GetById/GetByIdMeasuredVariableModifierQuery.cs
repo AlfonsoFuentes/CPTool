@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
+﻿using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+using CPTool.Application.Features.MaterialFeatures.Query.GetById;
+using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.MeasuredVariableModifierFeatures.Query.GetById
 {
@@ -8,24 +10,15 @@ namespace CPTool.Application.Features.MeasuredVariableModifierFeatures.Query.Get
         public GetByIdMeasuredVariableModifierQuery() { }
        
     }
-    public class GetByIdMeasuredVariableModifierQueryHandler : IRequestHandler<GetByIdMeasuredVariableModifierQuery, EditMeasuredVariableModifier>
+    public class GetByIdMeasuredVariableModifierQueryHandler :
+         GetByIdQueryHandler<EditMeasuredVariableModifier, MeasuredVariableModifier, GetByIdMeasuredVariableModifierQuery>,
+
+        IRequestHandler<GetByIdMeasuredVariableModifierQuery, EditMeasuredVariableModifier>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+       
         public GetByIdMeasuredVariableModifierQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditMeasuredVariableModifier> Handle(GetByIdMeasuredVariableModifierQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<MeasuredVariableModifier>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditMeasuredVariableModifier>(table);
-
-        }
+            IMapper mapper):base(unitofwork, mapper) { }
     }
     
 }

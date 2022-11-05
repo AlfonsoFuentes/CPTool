@@ -9,8 +9,7 @@ namespace CPTool.NewPages.Components
 
         where TList : GetListQuery, new()
     {
-        [Inject]
-        public IMediator Mediator { get; set; }
+       
         TList ModelList = new();
         [Parameter]
         [EditorRequired]
@@ -50,7 +49,7 @@ namespace CPTool.NewPages.Components
         public Func<TEdit, Task<DialogResult>> ShowDialogOverrided { get; set; }
         List<string> ListNames => Elements.Select(x => x.Name).ToList();
         [Parameter]
-        [EditorRequired]
+       
         public Func<Task> ValidateForm { get; set; }
         [Parameter]
         public Func<Task> UpdateMasterParent { get; set; } //For use in master details relation
@@ -116,7 +115,8 @@ namespace CPTool.NewPages.Components
 
             if (SelectionChanged.HasDelegate) await SelectionChanged.InvokeAsync(Model);
             await ModelChanged.InvokeAsync(Model);
-            await ValidateForm.Invoke();
+            if(ValidateForm!=null) await ValidateForm.Invoke();
+
         }
 
 
@@ -162,7 +162,7 @@ namespace CPTool.NewPages.Components
                     Model = await Mediator.Send(gedById) as TEdit;
                     if (SelectionChanged.HasDelegate) await SelectionChanged.InvokeAsync(Model);
                     await ModelChanged.InvokeAsync(Model);
-                    await ValidateForm.Invoke();
+                    if (ValidateForm != null) await ValidateForm.Invoke();
 
                 }
 

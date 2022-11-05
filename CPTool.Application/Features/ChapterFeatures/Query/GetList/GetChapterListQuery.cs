@@ -1,5 +1,6 @@
 ﻿
 using CPTool.Application.Features.ChapterFeatures.CreateEdit;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CPTool.Application.Features.ChapterFeatures.Query.GetList
 {
@@ -10,22 +11,15 @@ namespace CPTool.Application.Features.ChapterFeatures.Query.GetList
 
 
     }
-    public class GetChapterListQueryHandler : IRequestHandler<GetChapterListQuery, List<EditChapter>>
+    public class GetChapterListQueryHandler :
+        GetListQueryHandler<EditChapter, Chapter, GetChapterListQuery>,
+        IRequestHandler<GetChapterListQuery, List<EditChapter>>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+       
         public GetChapterListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+            IMapper mapper):base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditChapter>> Handle(GetChapterListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<Chapter>().GetAllAsync();
-
-            return _mapper.Map<List<EditChapter>>(list);
 
         }
     }

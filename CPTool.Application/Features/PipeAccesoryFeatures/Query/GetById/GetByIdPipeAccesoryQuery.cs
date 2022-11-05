@@ -8,24 +8,14 @@ namespace CPTool.Application.Features.PipeAccesoryFeatures.Query.GetById
         public GetByIdPipeAccesoryQuery() { }
        
     }
-    public class GetByIdPipeAccesoryQueryHandler : IRequestHandler<GetByIdPipeAccesoryQuery, EditPipeAccesory>
+    public class GetByIdPipeAccesoryQueryHandler :
+         GetByIdQueryHandler<EditPipeAccesory, PipeAccesory, GetByIdPipeAccesoryQuery>, 
+        IRequestHandler<GetByIdPipeAccesoryQuery, EditPipeAccesory>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetByIdPipeAccesoryQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditPipeAccesory> Handle(GetByIdPipeAccesoryQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<PipeAccesory>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditPipeAccesory>(table);
-
-        }
+            IMapper mapper):base(unitofwork, mapper) { }
     }
     
 }

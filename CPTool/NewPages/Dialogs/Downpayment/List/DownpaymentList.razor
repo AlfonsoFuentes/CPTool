@@ -1,6 +1,4 @@
-﻿
-
-@if (debug)
+﻿@if (debug)
 {
 
 }
@@ -17,8 +15,8 @@
         <MudTh Style="width:40px">#</MudTh>
 
         <MudTh Style="width:40px">Status</MudTh>
+        <MudTh Style="width:40px">Name</MudTh>
         <MudTh Style="width:40px">CEC Name</MudTh>
-        <MudTh Style="width:40px">MWO Name</MudTh>
         <MudTh Style="width:40px">PO No</MudTh>
         <MudTh Style="width:40px">Supplier</MudTh>
         <MudTh Style="width:40px">CBS Request No</MudTh>
@@ -31,8 +29,9 @@
         <MudTd DataLabel="#">@context.Id</MudTd>
 
         <MudTd DataLabel="Status">@context.DownpaymentStatus</MudTd>
+        <MudTd DataLabel="Name">@context.DownpaymentName</MudTd>
         <MudTd DataLabel="CEC Name">@context.PurchaseOrder.MWO.CECName</MudTd>
-        <MudTd DataLabel="MWO Name">@context.PurchaseOrder.MWO.Name</MudTd>
+
         <MudTd DataLabel="PO No">@context.PurchaseOrder.PONumber</MudTd>
         <MudTd DataLabel="Supplier">@context.PurchaseOrder.pSupplier.Name</MudTd>
         <MudTd DataLabel="CBS Request No">@context.CBSRequesNo</MudTd>

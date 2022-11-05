@@ -145,5 +145,10 @@ namespace CPTool.Infrastructure.Repositories
             }
             return query;
         }
+
+        public virtual async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+        {
+            return (await dbcontext.Set<T>().FirstOrDefaultAsync(predicate))!;
+        }
     }
 }

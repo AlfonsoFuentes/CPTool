@@ -1,0 +1,41 @@
+﻿@using System.ComponentModel.DataAnnotations
+@if (debug)
+{
+    <MudDialog DisableSidePadding="true">
+        <DialogContent>
+            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                    <CascadingValue Value="this">
+
+
+                        <MudForm Model="Model" @ref="form">
+                            <TextComponent @bind-Model="@Model"
+                                       Label="Name"
+                                       Required=true
+                                       Validation="@(new Func<string, string>(ValidateRequestedByName))"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+
+                            
+
+                           <TextComponent @bind-Model="@Model" Label="User email" Disable=@(Model.Id == 0?false:true)
+                                               Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"
+                                       PropertyName="@nameof(Model.Email)" Required=true></TextComponent>
+
+
+                        </MudForm>
+                    </CascadingValue>
+
+                </MudPaper>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+@code {
+    bool debug = true;
+}

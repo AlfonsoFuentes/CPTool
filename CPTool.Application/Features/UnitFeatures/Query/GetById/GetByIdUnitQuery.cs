@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.UnitFeatures.CreateEdit;
+﻿using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetById;
+using CPTool.Application.Features.UnitFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.UnitFeatures.Query.GetById
 {
@@ -8,24 +10,14 @@ namespace CPTool.Application.Features.UnitFeatures.Query.GetById
         public GetByIdUnitQuery() { }
         
     }
-    public class GetByIdUnitQueryHandler : IRequestHandler<GetByIdUnitQuery, EditUnit>
+    public class GetByIdUnitQueryHandler :
+        GetByIdQueryHandler<EditUnit, CPTool.Domain.Entities.Unit, GetByIdUnitQuery>, 
+        IRequestHandler<GetByIdUnitQuery, EditUnit>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetByIdUnitQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditUnit> Handle(GetByIdUnitQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<CPTool.Domain.Entities.Unit>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditUnit>(table);
-
-        }
+            IMapper mapper):base(unitofwork, mapper) { }    
     }
     
 }

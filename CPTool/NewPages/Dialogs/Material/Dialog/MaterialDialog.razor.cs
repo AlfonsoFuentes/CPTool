@@ -7,8 +7,7 @@ namespace CPTool.NewPages.Dialogs.Material.Dialog
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditMaterial Model { get; set; } = null!;
-        [Inject]
-        public IMediator mediator { get; set; }
+       
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -20,7 +19,7 @@ namespace CPTool.NewPages.Dialogs.Material.Dialog
             if (form.IsValid)
             {
 
-                var result = await mediator.Send(Model);
+                var result = await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

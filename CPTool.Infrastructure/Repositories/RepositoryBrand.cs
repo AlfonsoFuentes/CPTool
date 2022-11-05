@@ -11,6 +11,8 @@ namespace CPTool.Infrastructure.Repositories
         {
             var result = await dbcontext!.Brands!
                 .Include(x => x.BrandSuppliers).ThenInclude(x => x.Supplier)
+                .Include(x => x.BrandSuppliers).ThenInclude(x => x.Supplier).ThenInclude(x => x.TaxCodeLD)
+                .Include(x => x.BrandSuppliers).ThenInclude(x => x.Supplier).ThenInclude(x => x.TaxCodeLP)
 
                 .ToListAsync();
             return result;
@@ -20,7 +22,8 @@ namespace CPTool.Infrastructure.Repositories
         {
             var result = await dbcontext!.Brands!
                .Include(x => x.BrandSuppliers).ThenInclude(x => x.Supplier)
-
+               .Include(x => x.BrandSuppliers).ThenInclude(x => x.Supplier).ThenInclude(x => x.TaxCodeLD)
+                .Include(x => x.BrandSuppliers).ThenInclude(x => x.Supplier).ThenInclude(x => x.TaxCodeLP)
                .FirstOrDefaultAsync(x => x.Id == id);
             return result!;
         }

@@ -5,10 +5,10 @@ using CPTool.Application.Features.VendorCodeFeatures.Query.GetList;
 
 namespace CPTool.Application.Features.VendorCodeFeatures.CreateEdit
 {
-    public class EditVendorCode : EditCommand, IRequest<Result<int>>
-    {
+    //public class EditVendorCode : EditCommand, IRequest<Result<int>>
+    //{
 
        
 
-    }
+    //}
 }

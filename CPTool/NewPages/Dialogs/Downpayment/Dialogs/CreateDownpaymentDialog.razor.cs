@@ -1,5 +1,7 @@
 ﻿using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 using CPTool.Domain.Entities;
+using static MudBlazor.Icons;
+
 namespace CPTool.NewPages.Dialogs.Downpayment.Dialogs
 {
     public partial class CreateDownpaymentDialog
@@ -7,8 +9,7 @@ namespace CPTool.NewPages.Dialogs.Downpayment.Dialogs
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditDownPayment Model { get; set; } = null!;
-        [Inject]
-        public IMediator mediator { get; set; }
+        
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -41,13 +42,30 @@ namespace CPTool.NewPages.Dialogs.Downpayment.Dialogs
                     Model.DownpaymentStatus = DownpaymentStatus.Paid;
                 }
                    
-                var result = await mediator.Send(Model);
+                var result = await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }
         }
 
         void Cancel() => MudDialog.Cancel();
+        public static string ValidateDownpaymentName(string arg)
+        {
+            if (arg == null || arg == "")
+                return null;
+            if (GlobalTables.DownPayments.Any(x => x.DownpaymentName == arg))
+                return $"Downpayment Name: {arg} is in the list";
 
+            return null;
+        }
+        public static string ValidateCBSRequestNo(string arg)
+        {
+            if (arg == null || arg == "")
+                return null;
+            if (GlobalTables.DownPayments.Any(x => x.CBSRequesNo == arg))
+                return $"CBS Reques No: {arg} is in the list";
+
+            return null;
+        }
     }
 }

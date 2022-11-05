@@ -23,7 +23,8 @@ namespace CPTool.Infrastructure.Persistence
         {
             modelBuilder.Entity<MWOType>().HasMany(c => c.MWOs).WithOne(t => t.MWOType).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<MWO>().HasMany(c => c.MWOItems).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
-           
+            modelBuilder.Entity<MWO>().HasMany(c => c.UserRequirements).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWO>().HasMany(c => c.Signals).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Chapter>().HasMany(c => c.MWOItems).WithOne(t => t.Chapter).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.UnitaryBasePrize).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
@@ -116,7 +117,7 @@ namespace CPTool.Infrastructure.Persistence
 
             modelBuilder.Entity<Supplier>().HasOne(c => c.TaxCodeLD).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Supplier>().HasOne(c => c.TaxCodeLP).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Supplier>().HasOne(c => c.VendorCode).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<Supplier>().HasOne(c => c.VendorCode).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Nozzle>().HasOne(c => c.ConnectionType).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Nozzle>().HasOne(c => c.nGasket).WithMany(t => t.Nozzles).OnDelete(DeleteBehavior.NoAction);
@@ -136,6 +137,8 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<Taks>().HasOne(c => c.PurchaseOrder).WithMany(t => t.Taks).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Taks>().HasOne(c => c.DownPayment).WithMany(t => t.Taks).OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<UserRequirement>().HasOne(c => c.UserRequirementType).WithMany(t => t.UserRequirements).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<UserRequirement>().HasOne(c => c.RequestedByUser).WithMany(t => t.UserRequirements).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<BrandSupplier>()
              .HasKey(t => new { t.BrandId, t.SupplierId });
@@ -167,6 +170,12 @@ namespace CPTool.Infrastructure.Persistence
 
             modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pSupplier).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pBrand).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Signal>().HasOne(c => c.SignalType).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Signal>().HasOne(c => c.Wire).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Signal>().HasOne(c => c.FieldLocation).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Signal>().HasOne(c => c.ElectricalBox).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Signal>().HasOne(c => c.MWOItem).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
 
 
 
@@ -207,7 +216,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<BrandSupplier>? BrandSuppliers { get; set; }
         public DbSet<Material>? Materials { get; set; }
         public DbSet<TaxCodeLD>? TaxCodeLDs { get; set; }
-        public DbSet<VendorCode>? VendorCodes { get; set; }
+        //public DbSet<VendorCode>? VendorCodes { get; set; }
         public DbSet<TaxCodeLP>? TaxCodeLPs { get; set; }
 
         public DbSet<DownPayment>? DownPayments { get; set; }
@@ -227,6 +236,16 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<ProcessCondition>? ProcessConditions { get; set; }
         public DbSet<PropertyPackage>? PropertyPackages { get; set; }
         public DbSet<Taks>? Takss { get; set; }
+        public DbSet<UserRequirementType>? UserRequirementTypes { get; set; }
+        public DbSet<UserRequirement>? UserRequirements { get; set; }
+        public DbSet<User>? Users { get; set; }
+
+        public DbSet<SignalType>? SignalTypes { get; set; }
+        public DbSet<Wire>? Wires { get; set; }
+        public DbSet<FieldLocation>? FieldLocations { get; set; }
+        public DbSet<ElectricalBox>? ElectricalBoxs { get; set; }
+        public DbSet<Signal>? Signals { get; set; }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             var entittes = ChangeTracker.Entries<BaseDomainModel>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).ToList();

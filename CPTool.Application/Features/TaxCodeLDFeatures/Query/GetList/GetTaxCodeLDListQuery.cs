@@ -1,4 +1,6 @@
 ﻿
+using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+using CPTool.Application.Features.SupplierFeatures.Query.GetList;
 using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList
@@ -10,23 +12,12 @@ namespace CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList
 
 
     }
-    public class GetTaxCodeLDListQueryHandler : IRequestHandler<GetTaxCodeLDListQuery, List<EditTaxCodeLD>>
+    public class GetTaxCodeLDListQueryHandler :
+          GetListQueryHandler<EditTaxCodeLD, TaxCodeLD, GetTaxCodeLDListQuery>,
+        IRequestHandler<GetTaxCodeLDListQuery, List<EditTaxCodeLD>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetTaxCodeLDListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetTaxCodeLDListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditTaxCodeLD>> Handle(GetTaxCodeLDListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<TaxCodeLD>().GetAllAsync();
-
-            return _mapper.Map<List<EditTaxCodeLD>>(list);
-
         }
     }
 }

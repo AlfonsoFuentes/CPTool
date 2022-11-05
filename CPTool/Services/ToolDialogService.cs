@@ -3,33 +3,9 @@
 
 
 
-using CPTool.Application.Features.Base.DeleteCommand;
-using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
-using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
-using CPTool.Application.Features.MaterialFeatures.CreateEdit;
-using CPTool.Application.Features.MWOFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.NozzleFeatures.CreateEdit;
-using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
-using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.TaksFeatures.CreateEdit;
-using CPTool.Application.Features.TaksFeatures.Query.GetList;
-using CPTool.NewPages.Dialogs.BrandSupplier.Dialog;
-using CPTool.NewPages.Dialogs.Downpayment.Dialogs;
-using CPTool.NewPages.Dialogs.Material;
-using CPTool.NewPages.Dialogs.Material.Dialog;
-using CPTool.NewPages.Dialogs.MWO.Dialog;
-using CPTool.NewPages.Dialogs.MWOItem.Dialog;
-using CPTool.NewPages.Dialogs.Nozzle;
-using CPTool.NewPages.Dialogs.Nozzle.Dialog;
-using CPTool.NewPages.Dialogs.PipeDiameter.Dialog;
 using CPTool.NewPages.Dialogs.ProcessFluid.Dialog;
-using CPTool.NewPages.Dialogs.PurchaseOrder.Dialog;
+using CPTool.NewPages.Dialogs.RequestedBy.Dialog;
 using CPTool.NewPages.Dialogs.Taks.Dialog;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CPTool.Services
 {
@@ -157,7 +133,7 @@ namespace CPTool.Services
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Supplier.Id == 0 ? $"Add new Brand or Service" : $"Edit {Model.Brand.Name}";
+            modeldialog.DialogTitle = Model.Supplier.Id == 0 ? $"Add new Supplier" : $"Edit {Model.Supplier.Name}";
 
 
             modeldialog.parameters.Add("Model", Model);
@@ -287,7 +263,7 @@ namespace CPTool.Services
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Id == 0 ? $"Add downpayment to PO#: {Model.PurchaseOrder.PONumber}" : $"Edit Downpayment {Model.Name}";
+            modeldialog.DialogTitle = Model.Id == 0 ? $"Add downpayment to PO#: {Model.PurchaseOrder.PONumber}" : $"Edit Downpayment {Model.DownpaymentName}";
 
 
             modeldialog.parameters.Add("Model", Model);
@@ -324,6 +300,48 @@ namespace CPTool.Services
 
             modeldialog.parameters.Add("Model", model);
             var dialog = DialogService.Show<PipeDiameterDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
+        public async Task<DialogResult> ShowRequestedByDialog(EditUser model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new User " : $"Edit User {model.Name}";
+
+
+            modeldialog.parameters.Add("Model", model);
+            var dialog = DialogService.Show<UserDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
+        public async Task<DialogResult> ShowUserRequirementDialog(EditUserRequirement model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new User Requirement" : $"Edit User Requirement ";
+
+
+            modeldialog.parameters.Add("Model", model);
+            var dialog = DialogService.Show<UserRequirementDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+            return result;
+        }
+        public async Task<DialogResult> ShowSignalDialog(EditSignal model)
+        {
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Signal" : $"Edit Signal ";
+
+
+            modeldialog.parameters.Add("Model", model);
+            var dialog = DialogService.Show<SignalDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
             var result = await dialog.Result;
             return result;
         }

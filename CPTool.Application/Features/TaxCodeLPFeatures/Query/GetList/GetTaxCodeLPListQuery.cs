@@ -10,23 +10,12 @@ namespace CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList
 
 
     }
-    public class GetTaxCodeLPListQueryHandler : IRequestHandler<GetTaxCodeLPListQuery, List<EditTaxCodeLP>>
+    public class GetTaxCodeLPListQueryHandler :
+         GetListQueryHandler<EditTaxCodeLP, TaxCodeLP, GetTaxCodeLPListQuery>,
+        IRequestHandler<GetTaxCodeLPListQuery, List<EditTaxCodeLP>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetTaxCodeLPListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetTaxCodeLPListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditTaxCodeLP>> Handle(GetTaxCodeLPListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<TaxCodeLP>().GetAllAsync();
-
-            return _mapper.Map<List<EditTaxCodeLP>>(list);
-
         }
     }
 }

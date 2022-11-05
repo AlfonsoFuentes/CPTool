@@ -1,0 +1,77 @@
+﻿@page "/UserRequirementList/{MWOId:int}"
+
+
+
+
+<MudGrid>
+    <MudItem xs="12" sm="12">
+        <MudPaper Height="32px" Width="100%" Square="true">
+
+            <MudText Align="Align.Center" Typo="Typo.h5">User requirement for <b>@MWO.Name</b> </MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="12">
+        <MudGrid>
+            <MudItem xs="12" sm="3">
+                <MudPaper Width="250px" Square="true" Style="max-height: 800px; overflow-y: scroll">
+                    <MudList Clickable="true" Dense=true @bind-SelectedItem="selectedItem" @bind-SelectedValue="selectedValue" Color="_color">
+                        <MudListSubheader>
+                            <MudText Align="Align.Left" Typo="Typo.subtitle1"> <b>Type:  </b>  @(selectedItem?.Text ?? "Not Selected") </MudText>
+
+                        </MudListSubheader>
+                        @foreach (var row in GlobalTables.UserRequirementTypes)
+                        {
+                            <MudListItem Text="@row.Name" OnClick=@(()=>URType=row) Value="@row.Id" />
+
+                        }
+
+                    </MudList>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="9">
+                <SimpleListComponent TMaster="EditUserRequirement"
+                                     TDeleteMaster="DeleteUserRequirement"
+                                     OnAdd="AddUserRequirement"
+                                     OnEdit="EditUserRequirement"
+                                     TMasterList="GetUserRequirementListQuery" TGedById="GetByIdUserRequirementQuery"
+                                     ElementsMasters="@UserRequirements"
+                                     @bind-SelectedMaster="@EditUserRequirementSelected"
+                                     OnShowDialogMaster="ToolDialogService.ShowUserRequirementDialog">
+                    <MasterContextTh>
+                        <MudTh Style="width:40px">#</MudTh>
+
+                        <MudTh Style="width:40px">Name</MudTh>
+                        <MudTh Style="width:40px">Requested By:</MudTh>
+                    </MasterContextTh>
+                    <MasterContextTd>
+                        <MudTd DataLabel="#">@context.Id</MudTd>
+
+                        <MudTd DataLabel="Description">@context.Name</MudTd>
+                        <MudTd DataLabel="Requested By:">@context.RequestedBy.Name</MudTd>
+                    </MasterContextTd>
+
+
+
+                </SimpleListComponent>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+</MudGrid>
+
+
+
+
+@code {
+    MudListItem selectedItem;
+    object selectedValue = 1;
+    Color _color = Color.Primary;
+    void RowClicked(DataGridRowClickEventArgs<EditUserRequirement> args)
+    {
+        //_events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<EditUserRequirement> items)
+    {
+        //_events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+}

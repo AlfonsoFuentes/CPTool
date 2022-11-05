@@ -13,8 +13,7 @@ namespace CPTool.NewPages.Dialogs.MWO.List
 {
     public partial class MWOList
     {
-        [Inject]
-        public IMediator mediator { get; set; }
+      
         EditMWO SelectedMaster { get; set; } = new();
         EditMWOItem SelectedDetail { get; set; } = new();
        
@@ -29,15 +28,15 @@ namespace CPTool.NewPages.Dialogs.MWO.List
             if(!result.Cancelled)
             {
                 GetPurchaseOrderListQuery getPurchaseOrderListQuery = new();
-                GlobalTables.PurchaseOrders = await mediator.Send(getPurchaseOrderListQuery);
+                GlobalTables.PurchaseOrders = await Mediator.Send(getPurchaseOrderListQuery);
 
                 GetPurchaseOrderMWOItemListQuery getPurchaseOrderMWOItemListQuery = new();
-                GlobalTables.PurchaseOrderMWOItems = await mediator.Send(getPurchaseOrderMWOItemListQuery);
+                GlobalTables.PurchaseOrderMWOItems = await Mediator.Send(getPurchaseOrderMWOItemListQuery);
 
                 GetMWOItemListQuery getMWOItemListQuery = new();
-                GlobalTables.MWOItems = await mediator.Send(getMWOItemListQuery);
+                GlobalTables.MWOItems = await Mediator.Send(getMWOItemListQuery);
                 GetTaksListQuery getTaksListQuery = new();
-                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
+                GlobalTables.Takss = await Mediator.Send(getTaksListQuery);
             }
             
         }
@@ -50,25 +49,22 @@ namespace CPTool.NewPages.Dialogs.MWO.List
             if(!result.Cancelled)
             {
                 GetTaksListQuery getTaksListQuery = new GetTaksListQuery();
-                GlobalTables.Takss=await mediator.Send(getTaksListQuery);
+                GlobalTables.Takss=await Mediator.Send(getTaksListQuery);
             }
         }
-        async Task CreateTaskMWOItem()
+      
+
+        void GoToUserRequirmentPage()
         {
-            EditTaks editTaks = new EditTaks();
-            editTaks.MWO = SelectedMaster;
-            editTaks.MWOItem = SelectedDetail;
-            editTaks.TaksType = Domain.Entities.TaksType.Manual;
-
-            var result = await ToolDialogService.ShowTaksDialog(editTaks);
-            if (!result.Cancelled)
-            {
-                GetTaksListQuery getTaksListQuery = new GetTaksListQuery();
-                GlobalTables.Takss = await mediator.Send(getTaksListQuery);
-            }
+            Navigation.NavigateTo($"UserRequirementList/{SelectedMaster.Id}");
         }
-
-
-
+        void GoToUserSignalList()
+        {
+            Navigation.NavigateTo($"SignaList/{SelectedMaster.Id}");
+        }
+        void GoToMWOItemList()
+        {
+            Navigation.NavigateTo($"MWOItemList/{SelectedMaster.Id}");
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿
 
 using CPTool.Application.Features.BrandFeatures.CreateEdit;
+using CPTool.Application.Features.ChapterFeatures.CreateEdit;
+using CPTool.Application.Features.ChapterFeatures.Query.GetList;
 
 namespace CPTool.Application.Features.BrandFeatures.Query.GetList
 {
@@ -14,18 +16,18 @@ namespace CPTool.Application.Features.BrandFeatures.Query.GetList
       
 
     }
-    public class GetBrandListQueryHandler : IRequestHandler<GetBrandListQuery, List<EditBrand>>
+    public class GetBrandListQueryHandler :
+        GetListQueryHandler<EditBrand, Brand, GetBrandListQuery>, 
+        IRequestHandler<GetBrandListQuery, List<EditBrand>>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+     
         public GetBrandListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+            IMapper mapper):base(unitofwork,mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
+
         }
-        public async Task<List<EditBrand>> Handle(GetBrandListQuery request, CancellationToken cancellationToken)
+        public override async Task<List<EditBrand>> Handle(GetBrandListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.RepositoryBrand.GetAllAsync();
 

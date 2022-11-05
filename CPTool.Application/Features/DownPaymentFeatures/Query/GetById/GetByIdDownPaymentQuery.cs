@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
+﻿using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit;
+using CPTool.Application.Features.DeviceFunctionFeatures.Query.GetById;
+using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.DownPaymentFeatures.Query.GetById
 {
@@ -8,24 +10,17 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Query.GetById
         public GetByIdDownPaymentQuery() { }
        
     }
-    public class GetByIdDownPaymentQueryHandler : IRequestHandler<GetByIdDownPaymentQuery, EditDownPayment>
+    public class GetByIdDownPaymentQueryHandler : GetByIdQueryHandler<EditDownPayment, DownPayment, GetByIdDownPaymentQuery>, 
+        IRequestHandler<GetByIdDownPaymentQuery, EditDownPayment>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetByIdDownPaymentQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+            IMapper mapper):base(unitofwork,mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
+            
         }
-        public async Task<EditDownPayment> Handle(GetByIdDownPaymentQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<DownPayment>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditDownPayment>(table);
-
-        }
+       
     }
     
 }

@@ -20,8 +20,8 @@
         public int? TaxCodeLPId { get; set; }
         public TaxCodeLP? TaxCodeLP { get; set; }
 
-        public int? VendorCodeId { get; set; }
-        public VendorCode? VendorCode { get; set; }
+        //public int? VendorCodeId { get; set; }
+        public string? VendorCode { get; set; }
         
 
         public int? TaxCodeLDId { get; set; }

@@ -1,27 +1,29 @@
 ﻿@using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
 @if (ShowAddButton)
 {
-    <ManyToManyComponent TMasterDetail="EditBrandSupplier"
+    <ManyToManyComponentOriginal TMasterDetail="EditBrandSupplier"
                      TMaster="EditBrand" TDetail="EditSupplier"
-                     TMasterDetailList="GetBrandSupplierListQuery"
-                     TMasterList="GetBrandListQuery" TDetailList="GetSupplierListQuery"
-                     TDeleteMaster="DeleteBrand" TDeleteDetail="DeleteSupplier"
+                     TManagerMasterDetail="ManagerBrandSupplier"
+                     TManagerMaster="ManagerBrand"
+                     TManagerDetail="ManagerSupplier"
                      @bind-SelectedDetail="@SelectedSupplier"
                      @bind-SelectedMaster="@SelectedBrand"
                      @bind-ElementsMastersDetails=@GlobalTables.BrandSuppliers
-                     ElementsMasters=@Brands
-                     ElementsDetails=@Suppliers
+                     @bind-ElementsMasters=@GlobalTables.Brands
+                     @bind-ElementsDetails=@GlobalTables.Suppliers
+                     ElementsMastersSelected="@(SelectedSupplier.Id==0?GlobalTables.Brands:SelectedSupplier.BrandSuppliers.Select(y=>y.Brand).ToList())"
+                     ElementsDetailsSelected="@(SelectedBrand.Id==0?GlobalTables.Suppliers:SelectedBrand.BrandSuppliers.Select(y=>y.Supplier).ToList())"
                      OnShowDialogMaster="ToolDialogService.ShowBrandDialog"
                      OnShowDialogDetails="ToolDialogService.ShowSupplierDialog"
-                     OnRowClickedMaster="RowClickedMaster" OnRowClickedDetails="RowClickedDetails">
+                     >
         <OtherButtonsMaster>
-            <MudTooltip Text="Restore List">
-                <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+            <MudTooltip Text="Restore Page">
+                <MudIconButton Icon="@Icons.Material.Outlined.RestorePage" OnClick="@(()=>{SelectedSupplier=new();})" Size="Size.Small" />
             </MudTooltip>
         </OtherButtonsMaster>
         <OtherButtonsDetails>
-            <MudTooltip Text="Restore List">
-                <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick="ViewMasterList" />
+            <MudTooltip Text="Restore Page">
+                <MudIconButton Icon="@Icons.Material.Outlined.RestorePage" OnClick="@(()=>{SelectedBrand=new();})" Size="Size.Small" />
             </MudTooltip>
         </OtherButtonsDetails>
         <MasterContextTh>
@@ -48,11 +50,11 @@
             <MudTd DataLabel="Id">@context.Id</MudTd>
 
             <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="Vendor Code">@context.VendorCode.Name </MudTd>
+            <MudTd DataLabel="Vendor Code">@context.VendorCode </MudTd>
             <MudTd DataLabel="Tax Code LD">@context.TaxCodeLD.Name</MudTd>
             <MudTd DataLabel="Tax Code LP">@context.TaxCodeLP.Name</MudTd>
         </DetailContextTd>
-    </ManyToManyComponent>
+    </ManyToManyComponentOriginal>
 
 
 

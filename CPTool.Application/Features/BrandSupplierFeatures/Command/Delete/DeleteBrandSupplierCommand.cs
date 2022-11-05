@@ -1,6 +1,6 @@
 ﻿
 
-using CPTool.Application.Features.Base.DeleteCommand;
+using CPTool.Application.Features.Base.Delete;
 
 namespace CPTool.Application.Features.BrandSupplierFeatures
 {

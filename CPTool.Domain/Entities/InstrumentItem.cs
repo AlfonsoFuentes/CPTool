@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class InstrumentItem  : BaseDomainModel
+    public class InstrumentItem : BaseDomainModel
     {
         [ForeignKey("InstrumentItemId")]
         public ICollection<MWOItem>? MWOItems { get; set; } = null!;
@@ -11,7 +11,7 @@
 
         [ForeignKey("InstrumentItemId")]
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
-    
+
         public int? iGasketId { get; set; }
         public Gasket? iGasket { get; set; } = null!;
         public int? iInnerMaterialId { get; set; }
@@ -40,6 +40,5 @@
         public string? Reference { get; set; }
         public string? SerialNumber { get; set; }
     }
-
 
 }

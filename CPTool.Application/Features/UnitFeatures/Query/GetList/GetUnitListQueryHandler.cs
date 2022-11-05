@@ -1,4 +1,6 @@
 ﻿
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
+using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
 using CPTool.Application.Features.UnitFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.UnitFeatures.Query.GetList
@@ -10,23 +12,12 @@ namespace CPTool.Application.Features.UnitFeatures.Query.GetList
 
 
     }
-    public class GetUnitListQueryHandler : IRequestHandler<GetUnitListQuery, List<EditUnit>>
+    public class GetUnitListQueryHandler :
+         GetListQueryHandler<EditUnit, CPTool.Domain.Entities.Unit, GetUnitListQuery>,
+        IRequestHandler<GetUnitListQuery, List<EditUnit>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetUnitListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetUnitListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditUnit>> Handle(GetUnitListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository< CPTool.Domain.Entities.Unit >().GetAllAsync();
-
-            return _mapper.Map<List<EditUnit>>(list);
-
         }
     }
 }

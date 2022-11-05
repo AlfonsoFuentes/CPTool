@@ -1,6 +1,7 @@
 ﻿namespace CPTool.Application.Contracts.Persistence
 {
-    public interface IRepositoryBrand : IRepository<Brand> { 
-    
+    public interface IRepositoryBrand : IRepository<Brand>
+    {
+
     }
 }

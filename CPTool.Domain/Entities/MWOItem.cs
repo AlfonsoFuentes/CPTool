@@ -11,7 +11,8 @@
         public ICollection<PipingItem>? FisnishPipingItems { get; set; }
         public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
         public ICollection<MWOItemCurrencyValue>? MWOItemCurrencyValues { get; set; }
-
+        [ForeignKey("MWOItemId")]
+        public ICollection<Signal>? Signals { get; set; } = null!;
         [ForeignKey("MWOItemId")]
         public ICollection<Taks> Taks { get; set; } = null!;
         public int? ChapterId { get; set; }
@@ -51,7 +52,7 @@
         public ContingencyItem? ContingencyItem { get; set; }
         public int Order { get; set; }
         public string? Nomenclatore { get; set; }
-        public decimal BudgetPrize { get; set; }
+        public double BudgetPrize { get; set; }
        
       
     }

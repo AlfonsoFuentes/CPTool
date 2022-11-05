@@ -16,8 +16,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         protected MWOItemDialog DialogParent { get; set; }
         protected EditEquipmentItem Model => DialogParent.Model.EquipmentItem;
        
-        [Inject]
-        public IMediator mediator { get; set; }
+      
        
 
         private string ValidateEquipmentType(string arg)
@@ -64,11 +63,11 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             if (Model.eEquipmentType.Id != 0)
             {
                 GetEquipmentTypeListQuery queryListEq = new();
-                GlobalTables.EquipmentTypes = await mediator.Send(queryListEq);
+                GlobalTables.EquipmentTypes = await Mediator.Send(queryListEq);
                 GetEquipmentTypeSubListQuery queryList = new();
-                GlobalTables.EquipmentTypeSubs = await mediator.Send(queryList);
+                GlobalTables.EquipmentTypeSubs = await Mediator.Send(queryList);
                 GetByIdEquipmentTypeQuery query = new() { Id= Model.eEquipmentType.Id };
-                Model.eEquipmentType = await mediator.Send(query);
+                Model.eEquipmentType = await Mediator.Send(query);
                
                StateHasChanged();
             }

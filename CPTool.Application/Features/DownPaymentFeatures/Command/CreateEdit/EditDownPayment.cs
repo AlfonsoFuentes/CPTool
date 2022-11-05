@@ -28,7 +28,7 @@ namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
         public string? Incotherm { get; set; } = "";
         public DateTime? ApprovedDate { get; set; }
        
-        public string? DownpaymentName { get; set; } = "";
+        public string DownpaymentName { get; set; } = "";
 
         public List<EditTaks>? Taks { get; set; }
 

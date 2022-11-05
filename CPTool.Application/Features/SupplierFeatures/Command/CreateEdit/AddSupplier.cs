@@ -20,7 +20,7 @@ namespace CPTool.Application.Features.SupplierFeatures.CreateEdit
 
       
         public int? TaxCodeLPId { get; set; }
-        public int? VendorCodeId { get; set; }
+        public string? VendorCode { get; set; } = "";
         public int? TaxCodeLDId { get; set; }
 
     }

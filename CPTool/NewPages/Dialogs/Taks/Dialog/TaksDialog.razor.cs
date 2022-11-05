@@ -11,9 +11,6 @@ namespace CPTool.NewPages.Dialogs.Taks.Dialog
 
 
 
-        [Inject]
-        public IMediator mediator { get; set; }
-
         [Parameter]
         public MudForm form { get; set; } = null!;
 
@@ -41,7 +38,7 @@ namespace CPTool.NewPages.Dialogs.Taks.Dialog
                     }
                 }
 
-                await mediator.Send(Model);
+                await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

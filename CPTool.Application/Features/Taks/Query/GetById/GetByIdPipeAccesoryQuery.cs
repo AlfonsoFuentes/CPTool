@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.TaksFeatures.CreateEdit;
+﻿using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+using CPTool.Application.Features.PipeAccesoryFeatures.Query.GetById;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.TaksFeatures.Query.GetById
 {
@@ -8,24 +10,14 @@ namespace CPTool.Application.Features.TaksFeatures.Query.GetById
         public GetByIdTaksQuery() { }
 
     }
-    public class GetByIdPipeAccesoryQueryHandler : IRequestHandler<GetByIdTaksQuery, EditTaks>
+    public class GetByIdPipeAccesoryQueryHandler :
+         GetByIdQueryHandler<EditTaks, Taks, GetByIdTaksQuery>, 
+        IRequestHandler<GetByIdTaksQuery, EditTaks>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetByIdPipeAccesoryQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditTaks> Handle(GetByIdTaksQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<Taks>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditTaks>(table);
-
-        }
+            IMapper mapper):base(unitofwork, mapper) { }
     }
 
 }

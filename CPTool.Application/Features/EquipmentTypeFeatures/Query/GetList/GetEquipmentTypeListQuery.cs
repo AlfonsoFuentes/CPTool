@@ -1,5 +1,8 @@
 ﻿
 
+using CPTool.Application.Features.ElectricalBoxFeatures.Query.GetList;
+using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
+
 namespace CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList
 {
    
@@ -12,22 +15,15 @@ namespace CPTool.Application.Features.EquipmentTypeFeatures.Query.GetList
       
 
     }
-    public class GetEquipmentTypeListQueryHandler : IRequestHandler<GetEquipmentTypeListQuery, List<EditEquipmentType>>
+    public class GetEquipmentTypeListQueryHandler :
+         GetListQueryHandler<EditEquipmentType, EquipmentType, GetEquipmentTypeListQuery>, 
+        IRequestHandler<GetEquipmentTypeListQuery, List<EditEquipmentType>>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetEquipmentTypeListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+            IMapper mapper):base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditEquipmentType>> Handle(GetEquipmentTypeListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<EquipmentType>().GetAllAsync();
-
-            return _mapper.Map<List<EditEquipmentType>>(list);
 
         }
     }

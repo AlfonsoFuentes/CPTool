@@ -1,4 +1,6 @@
-﻿using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
+﻿using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
+using CPTool.Application.Features.PipingItemFeatures.Query.GetById;
+using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ProcessConditionFeatures.Query.GetById
 {
@@ -8,24 +10,14 @@ namespace CPTool.Application.Features.ProcessConditionFeatures.Query.GetById
         public GetByIdProcessConditionQuery() { }
         
     }
-    public class GetByIdProcessConditionQueryHandler : IRequestHandler<GetByIdProcessConditionQuery, EditProcessCondition>
+    public class GetByIdProcessConditionQueryHandler : 
+        GetByIdQueryHandler<EditProcessCondition, ProcessCondition, GetByIdProcessConditionQuery>,
+        IRequestHandler<GetByIdProcessConditionQuery, EditProcessCondition>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetByIdProcessConditionQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditProcessCondition> Handle(GetByIdProcessConditionQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<ProcessCondition>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditProcessCondition>(table);
-
-        }
+            IMapper mapper):base(unitofwork, mapper) { }
     }
     
 }

@@ -9,8 +9,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         [Parameter]
         public EditPurchaseOrder Model { get; set; } = null!;
 
-        [Inject]
-        public IMediator mediator { get; set; }
+       
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -47,7 +46,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
                 }
                 Model.PurchaseOrderStatus = Model.PurchaseOrderStatus == PurchaseOrderStatus.Ordering ? PurchaseOrderStatus.Created :
 Model.PurchaseOrderStatus == PurchaseOrderStatus.Created ? PurchaseOrderStatus.Received : PurchaseOrderStatus.Installed;
-                await mediator.Send(Model);
+                await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }

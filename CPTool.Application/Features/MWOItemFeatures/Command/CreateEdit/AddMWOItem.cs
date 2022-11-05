@@ -23,10 +23,10 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
         public int? UnitaryBasePrizeId { get; set; }
         public int Order { get; set; }
         public string? Nomenclatore { get; set; }
-        public decimal BudgetPrize { get; set; }
-        public decimal RealPrize { get; set; }
-        public decimal UnitaryPrize { get; set; }
-        public decimal Quantity { get; set; }
+        public double BudgetPrize { get; set; }
+        public double RealPrize { get; set; }
+        public double UnitaryPrize { get; set; }
+        public double Quantity { get; set; }
         public string? TagId { get; set; }
         public int? ChapterId { get; set; }
         public AddAlterationItem? AlterationItem { get; set; }

@@ -10,23 +10,12 @@ namespace CPTool.Application.Features.MeasuredVariableModifierFeatures.Query.Get
 
 
     }
-    public class GetMeasuredVariableModifierListQueryHandler : IRequestHandler<GetMeasuredVariableModifierListQuery, List<EditMeasuredVariableModifier>>
+    public class GetMeasuredVariableModifierListQueryHandler :
+         GetListQueryHandler<EditMeasuredVariableModifier, MeasuredVariableModifier, GetMeasuredVariableModifierListQuery>,
+        IRequestHandler<GetMeasuredVariableModifierListQuery, List<EditMeasuredVariableModifier>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetMeasuredVariableModifierListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetMeasuredVariableModifierListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditMeasuredVariableModifier>> Handle(GetMeasuredVariableModifierListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<MeasuredVariableModifier>().GetAllAsync();
-
-            return _mapper.Map<List<EditMeasuredVariableModifier>>(list);
-
         }
     }
 }

@@ -8,7 +8,10 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.Mapping
     {
         public BrandSupplierMapping()
         {
-            CreateMap<BrandSupplier,EditBrandSupplier>();
+            CreateMap<BrandSupplier, EditBrandSupplier>()
+                .ForMember(dest => dest.SupplierOriginalId, act => act.MapFrom(src => src.SupplierId))
+                .ForMember(dest => dest.BrandOriginalId, act => act.MapFrom(src => src.BrandId)); ;
+               
             CreateMap<EditBrandSupplier, BrandSupplier>();
             CreateMap<AddBrandSupplier, BrandSupplier>();
             CreateMap<EditBrandSupplier, AddBrandSupplier>();

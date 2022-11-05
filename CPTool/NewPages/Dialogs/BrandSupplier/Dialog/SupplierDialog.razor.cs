@@ -1,18 +1,6 @@
 ﻿
-using CPTool.Application.Features.BrandFeatures.CreateEdit;
-using CPTool.Application.Features.BrandFeatures.Query.GetList;
-using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
-using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList;
-using CPTool.Application.Features.SupplierFeatures.CreateEdit;
-using CPTool.Application.Features.SupplierFeatures.Query.GetList;
-using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
-using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList;
-using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
-using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList;
-using CPTool.Application.Features.VendorCodeFeatures.CreateEdit;
-using CPTool.Application.Features.VendorCodeFeatures.Query.GetList;
-using CPTool.NewPages.Dialogs.BrandSupplier.List;
-using static MudBlazor.Icons.Custom;
+
+
 
 namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
 {
@@ -21,9 +9,7 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditBrandSupplier Model { get; set; } = null!;
-        [Inject]
-        public IMediator mediator { get; set; }
-
+       
         [Parameter]
         public MudForm form { get; set; } = null!;
 
@@ -37,15 +23,12 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
             if (form.IsValid)
             {
                
-                var resultsupplier = await mediator.Send(Model.Supplier);
+                var resultsupplier = await Mediator.Send(Model.Supplier);
                 if (resultsupplier.Succeeded)
                 {
 
-                    var result = await mediator.Send(Model);
-                    if (result.Succeeded)
-                    {
-                        GlobalTables.BrandSuppliers = await mediator.Send(brandsuplierlist);
-                    }
+                    var result = await Mediator.Send(Model);
+                    
                 }
               
 
@@ -86,23 +69,20 @@ namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
         {
             if (arg == null || arg == "")
                 return "Must submit Vendor Code";
-            if (!GlobalTables.VendorCodes.Any(x => x.Name == arg))
-            {
-                return $"Vendor Code: {arg} is not in the list";
-            }
+           
             if (Model.Supplier.Id == 0)
             {
-                if (GlobalTables.Suppliers.Any(x => x.VendorCode.Name == arg))
+                if (GlobalTables.Suppliers.Any(x => x.VendorCode == arg))
                 {
-                    var vendor = (GlobalTables.Suppliers.First(x => x.VendorCode.Name == arg));
+                    var vendor = (GlobalTables.Suppliers.First(x => x.VendorCode == arg));
                     return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
                 }
             }
             else
             {
-                if (GlobalTables.Suppliers.Where(x => x.Id != Model.Supplier.Id).Any(x => x.VendorCode.Name == arg))
+                if (GlobalTables.Suppliers.Where(x => x.Id != Model.Supplier.Id).Any(x => x.VendorCode == arg))
                 {
-                    var vendor = (GlobalTables.Suppliers.First(x => x.VendorCode.Name == arg));
+                    var vendor = (GlobalTables.Suppliers.First(x => x.VendorCode == arg));
                     return $"Vendor Code: {arg} is assigned to Vendor: {vendor.Name}";
                 }
             }

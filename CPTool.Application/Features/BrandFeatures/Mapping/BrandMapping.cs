@@ -8,7 +8,9 @@ namespace CPTool.Application.Features.BrandFeatures.Mapping
     {
         public BrandMapping()
         {
-            CreateMap<Brand, EditBrand>();
+            CreateMap<Brand, EditBrand>()
+                 .ForMember(dest => dest.BrandOriginalId, act => act.MapFrom(src => src.Id));
+               
 
             CreateMap<AddBrand, Brand>();
             CreateMap<EditBrand, Brand>();

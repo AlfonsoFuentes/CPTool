@@ -19,7 +19,7 @@ global using Unit = MediatR.Unit;
 global using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
 global using  CPtool.ExtensionMethods;
 global using CPTool.Application.Features.MMOTypeFeatures.CreateEdit; 
-global using CPTool.Application.Features.Base.DeleteCommand;
+global using CPTool.Application.Features.Base.Delete;
 
 
 

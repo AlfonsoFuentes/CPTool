@@ -17,23 +17,21 @@ namespace CPTool.Infrastructure.Repositories
         public async Task<MWO> GetMWO_ItemsIdAsync(int id)
         {
             var result = await dbcontext!.MWOs!
-                 .Include(x => x.MWOType)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.Chapter).ThenInclude(x => x!.MWOItems)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.MWOItemCurrencyValues)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.UnitaryBasePrize)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.AlterationItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.FoundationItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.StructuralItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.ElectricalItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.PaintingItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.EHSItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.TaxesItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.TestingItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.ContingencyItem)
+                 .Include(x => x.MWOItems).ThenInclude(x => x.EngineeringCostItem)
                  .Include(x => x.MWOItems).ThenInclude(x => x.EquipmentItem)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.EquipmentItem).ThenInclude(y => y!.eEquipmentType)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.EquipmentItem).ThenInclude(y => y!.eEquipmentTypeSub)
-
                  .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem).ThenInclude(y => y!.DeviceFunction)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem).ThenInclude(y => y!.DeviceFunctionModifier)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem).ThenInclude(y => y!.Readout)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem).ThenInclude(y => y!.MeasuredVariable)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem).ThenInclude(y => y!.MeasuredVariable)
-
                  .Include(x => x.MWOItems).ThenInclude(x => x.PipingItem)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.PipingItem).ThenInclude(y => y!.pDiameter)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.PipingItem).ThenInclude(y => y!.pProcessFluid)
-                 .Include(x => x.MWOItems).ThenInclude(x => x.PipingItem).ThenInclude(y => y!.pMaterial)
 
                  .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -44,13 +42,35 @@ namespace CPTool.Infrastructure.Repositories
         {
             var result = await dbcontext!.MWOs!
                  .Include(x => x.MWOType)
-                //.Include(x => x.MWOItems).ThenInclude(x => x.PurchaseOrderMWOItems)
+                 //.Include(x => x.MWOItems).ThenInclude(x => x.PurchaseOrderMWOItems)
 
                  .FirstOrDefaultAsync(x => x.Id == id);
 
             return result!;
 
         }
+        public override async Task<IReadOnlyList<MWO>> GetAllAsync()
+        {
+            var result = await dbcontext!.MWOs!
+                .Include(x => x.MWOItems).ThenInclude(x => x.MWOItemCurrencyValues)
+                .Include(x => x.MWOItems).ThenInclude(x => x.UnitaryBasePrize)
+                .Include(x => x.MWOItems).ThenInclude(x => x.AlterationItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.FoundationItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.StructuralItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.ElectricalItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.PaintingItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.EHSItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.TaxesItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.TestingItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.ContingencyItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.EngineeringCostItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.EquipmentItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem)
+                .Include(x => x.MWOItems).ThenInclude(x => x.PipingItem)
 
+                .ToListAsync();
+
+            return result!;
+        }
     }
 }

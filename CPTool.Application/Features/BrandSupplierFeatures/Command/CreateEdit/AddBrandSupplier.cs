@@ -16,11 +16,11 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
     {
 
         public InletBy InletBy { get; set; } = InletBy.None;
-        public int? BrandId { get; set; }
-        public int? SupplierId { get; set; }
-  
+        public int BrandId { get; set; }
+        public int SupplierId { get; set; }
 
        
+
     }
 
 }

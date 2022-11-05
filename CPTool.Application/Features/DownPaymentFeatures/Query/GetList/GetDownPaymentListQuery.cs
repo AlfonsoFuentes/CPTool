@@ -12,7 +12,7 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Query.GetList
         public override bool FilterFunc(EditCommand element1, string searchString)
         {
             var element = element1 as EditDownPayment;
-            var retorno = element!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+            var retorno = element!.DownpaymentName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
             element.PurchaseOrder!.PONumber.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
             element.PurchaseOrder!.pSupplier!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
             element.PurchaseOrder!.MWO!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
@@ -24,23 +24,13 @@ namespace CPTool.Application.Features.DownPaymentFeatures.Query.GetList
         }
 
     }
-    public class GetUnitaryBasePrizeListQueryHandler : IRequestHandler<GetDownPaymentListQuery, List<EditDownPayment>>
+    public class GetUnitaryBasePrizeListQueryHandler :
+          GetListQueryHandler<EditDownPayment, DownPayment, GetDownPaymentListQuery>, 
+        IRequestHandler<GetDownPaymentListQuery, List<EditDownPayment>>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+
         public GetUnitaryBasePrizeListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<List<EditDownPayment>> Handle(GetDownPaymentListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<DownPayment>().GetAllAsync();
-
-            return _mapper.Map<List<EditDownPayment>>(list);
-
-        }
+            IMapper mapper) : base(unitofwork, mapper) { }
     }
 }

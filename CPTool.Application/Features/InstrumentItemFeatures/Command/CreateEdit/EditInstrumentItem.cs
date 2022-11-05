@@ -50,10 +50,10 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.CreateEdit
         public EditSupplier? iSupplier { get; set; } = new();
         public string TagId => SetTagId();
         public string? TagLetter => SetTagLetter();
-        public string? TagNumber { get; set; }
-        public string? Model { get; set; }
-        public string? Reference { get; set; }
-        public string? SerialNumber { get; set; }
+        public string? TagNumber { get; set; } = "";
+        public string? Model { get; set; } = "";
+        public string? Reference { get; set; } = "";
+        public string? SerialNumber { get; set; } = "";
         public override T AddDetailtoMaster<T>()
         {
             if (typeof(T) == typeof(EditNozzle))

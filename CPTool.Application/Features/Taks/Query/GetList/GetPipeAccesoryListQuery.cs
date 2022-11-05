@@ -1,4 +1,6 @@
 ﻿
+using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+using CPTool.Application.Features.PipeAccesoryFeatures.Query.GetList;
 using CPTool.Application.Features.TaksFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.TaksFeatures.Query.GetList
@@ -10,21 +12,18 @@ namespace CPTool.Application.Features.TaksFeatures.Query.GetList
 
 
     }
-    public class GetTaksListQueryHandler : IRequestHandler<GetTaksListQuery, List<EditTaks>>
+    public class GetTaksListQueryHandler :
+        GetListQueryHandler<EditTaks, Taks, GetTaksListQuery>, 
+        IRequestHandler<GetTaksListQuery, List<EditTaks>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetTaksListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetTaksListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
         }
-        public async Task<List<EditTaks>> Handle(GetTaksListQuery request, CancellationToken cancellationToken)
+
+        public override async Task<List<EditTaks>> Handle(GetTaksListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.Repository<Taks>().GetAllAsync();
-            list = list.OrderBy(x => x.TaksStatus).ToList();
+            list = list.Where(x => x.TaksStatus==TaksStatus.Pending).OrderBy(x=>x.CreatedDate).ToList();
             return _mapper.Map<List<EditTaks>>(list);
 
         }

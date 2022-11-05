@@ -1,6 +1,6 @@
 ﻿
 
-using CPTool.Application.Features.Base.DeleteCommand;
+using CPTool.Application.Features.Base.Delete;
 
 namespace CPTool.NewPages.Components
 {
@@ -12,13 +12,12 @@ namespace CPTool.NewPages.Components
 
         [Parameter]
         public string Message { get; set; } = null!;
-        [Inject]
-        public IMediator mediator { get; set; }
+        
 
         public async  Task Submit()
         {
             
-            var result = await mediator.Send(Model);
+            var result = await Mediator.Send(Model);
 
             MudDialog.Close(DialogResult.Ok(true));
         }

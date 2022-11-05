@@ -1,4 +1,6 @@
 ﻿using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.CreateEdit;
+using CPTool.Application.Features.TaksFeatures.Query.GetById;
 
 namespace CPTool.Application.Features.PipeClassFeatures.Query.GetById
 {
@@ -8,24 +10,13 @@ namespace CPTool.Application.Features.PipeClassFeatures.Query.GetById
         public GetByIdPipeClassQuery() { }
        
     }
-    public class GetByIdPipeClassQueryHandler : IRequestHandler<GetByIdPipeClassQuery, EditPipeClass>
+    public class GetByIdPipeClassQueryHandler : GetByIdQueryHandler<EditPipeClass, PipeClass, GetByIdPipeClassQuery>, 
+        IRequestHandler<GetByIdPipeClassQuery, EditPipeClass>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
+      
         public GetByIdPipeClassQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditPipeClass> Handle(GetByIdPipeClassQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<PipeClass>().GetByIdAsync(request.Id);
-
-            return _mapper.Map<EditPipeClass>(table);
-
-        }
+            IMapper mapper):base(unitofwork, mapper) { }
     }
     
 }

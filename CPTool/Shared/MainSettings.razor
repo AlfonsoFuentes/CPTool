@@ -1,0 +1,129 @@
+﻿@page "/mainsettings/{TableId:int}"
+
+
+
+
+@switch (TableId)
+{
+    case 1:
+        {
+            <EquipmentTypeList></EquipmentTypeList>
+        }
+        break;
+    case 2:
+        {
+            <BrandSupplierList></BrandSupplierList>
+        }
+        break;
+    case 3:
+        {
+            <MWOTypeList></MWOTypeList>
+        }
+        break;
+    case 4:
+        {
+            <UnitaryBasePrizeList></UnitaryBasePrizeList>
+        }
+        break;
+    case 5:
+        {
+            <GasketsList></GasketsList>
+        }
+        break;
+    case 6:
+        {
+            <MaterialList></MaterialList>
+        }
+        break;
+    case 7:
+        {
+            <TaxCodeLDList></TaxCodeLDList>
+
+
+        }
+        break;
+    case 8:
+        {
+            <TaxCodeLPList></TaxCodeLPList>
+        }
+        break;
+   @* case 9:
+        {
+            <VendorCodeList></VendorCodeList>
+
+
+        }
+        break;*@
+
+    case 10:
+        {
+            <ConnectionTypeList></ConnectionTypeList>
+
+
+        }
+        break;
+    case 11:
+        {
+            <PipingClassList></PipingClassList>
+        }
+        break;
+    case 12:
+        {
+
+            <ProcessFluidList></ProcessFluidList>
+
+
+        }
+        break;
+        case 13:
+
+        {
+            <PurchaseOrderList></PurchaseOrderList>
+        }break;
+    case 14:
+
+        {
+            <DownpaymentList></DownpaymentList>
+        }
+        break;
+        case 15:
+        {
+            <TaksList></TaksList>
+
+        }break;
+    case 16:
+        {
+            <UserRequirementTypeList></UserRequirementTypeList>
+
+        }
+        break;
+          case 17:
+        {
+            <SignalTypeList></SignalTypeList>
+
+        }
+        break;
+          case 18:
+        {
+            <FieldLocationList></FieldLocationList>
+
+        }
+        break;
+          case 19:
+        {
+            <WireList></WireList>
+
+        }
+        break;
+    case 20:
+        {
+            <ElectricalBoxList></ElectricalBoxList>
+
+        }
+        break;
+}
+@code {
+    [Parameter]
+    public int TableId { get; set; } = 0;
+
+}

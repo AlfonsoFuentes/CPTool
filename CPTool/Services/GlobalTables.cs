@@ -1,61 +1,12 @@
-﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
-using CPTool.Application.Features.BrandFeatures.Query.GetList;
-using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
-using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList;
-using CPTool.Application.Features.ChapterFeatures.CreateEdit;
-using CPTool.Application.Features.ChapterFeatures.Query.GetList;
-using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit;
-using CPTool.Application.Features.ConnectionTypeFeatures.Query.GetList;
-using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit;
-using CPTool.Application.Features.DeviceFunctionFeatures.Query.GetList;
-using CPTool.Application.Features.DeviceFunctionModifierFeatures.CreateEdit;
-using CPTool.Application.Features.DeviceFunctionModifierFeatures.Query.GetList;
-using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
-using CPTool.Application.Features.DownPaymentFeatures.Query.GetList;
-using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList;
-using CPTool.Application.Features.GasketFeatures.Query.GetList;
-using CPTool.Application.Features.GasketsFeatures.CreateEdit;
-using CPTool.Application.Features.MaterialFeatures.CreateEdit;
-using CPTool.Application.Features.MaterialFeatures.Query.GetList;
-using CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit;
-using CPTool.Application.Features.MeasuredVariableFeatures.Query.GetList;
-using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
-using CPTool.Application.Features.MeasuredVariableModifierFeatures.Query.GetList;
-using CPTool.Application.Features.MWOFeatures.CreateEdit;
-using CPTool.Application.Features.MWOFeatures.Query.GetList;
-using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
-using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
-using CPTool.Application.Features.PipeClassFeatures.Query.GetList;
-using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
-using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
-using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
-using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
-using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList;
-using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
-using CPTool.Application.Features.ReadoutFeatures.Query.GetList;
-using CPTool.Application.Features.SupplierFeatures.CreateEdit;
-using CPTool.Application.Features.SupplierFeatures.Query.GetList;
-using CPTool.Application.Features.TaksFeatures.CreateEdit;
-using CPTool.Application.Features.TaksFeatures.Query.GetList;
-using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
-using CPTool.Application.Features.TaxCodeLDFeatures.Query.GetList;
-using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
-using CPTool.Application.Features.TaxCodeLPFeatures.Query.GetList;
-using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
-using CPTool.Application.Features.UnitaryBasePrizeFeatures.Query.GetList;
-using CPTool.Application.Features.VendorCodeFeatures.CreateEdit;
-using CPTool.Application.Features.VendorCodeFeatures.Query.GetList;
+﻿
 
-using CPTool.Domain.Entities;
+
+
+
 
 namespace CPTool.Services
 {
-   
+
     public static class GlobalTables
     {
         public static List<EditMWOType> MWOTypes { get; set; } = new();
@@ -71,7 +22,7 @@ namespace CPTool.Services
         public static List<EditMaterial> Materials { get; set; } = new();
         public static List<EditTaxCodeLD> TaxCodeLDs { get; set; } = new();
         public static List<EditTaxCodeLP> TaxCodeLPs { get; set; } = new();
-        public static List<EditVendorCode> VendorCodes { get; set; } = new();
+        //public static List<EditVendorCode> VendorCodes { get; set; } = new();
 
         public static List<EditPipeDiameter> PipeDiameters { get; set; } = new();
         public static List<EditPurchaseOrder> PurchaseOrders { get; set; } = new();
@@ -89,7 +40,16 @@ namespace CPTool.Services
         public static List<EditDeviceFunctionModifier> DeviceFunctionModifiers { get; set; } = new();
 
         public static List<EditTaks> Takss { get; set; } = new();
-        public static async Task InitializeTables(IMediator mediator)
+        public static List<EditUserRequirementType> UserRequirementTypes { get; set; } = new();
+        public static List<EditUserRequirement> UserRequirements { get; set; } = new();
+        public static List<EditUser> Users { get; set; } = new();
+        public static List<EditSignal> Signals { get; set; } = new();
+        public static List<EditElectricalBox> ElectricalBoxs { get; set; } = new();
+        public static List<EditFieldLocation> FieldLocations { get; set; } = new();
+        public static List<EditWire> Wires { get; set; } = new();
+        public static List<EditSignalType> SignalTypes { get; set; } = new();
+
+        public static async Task InitializeTables(IMediator Mediator)
         {
 
             GetChapterListQuery ChapterList = new();
@@ -109,7 +69,7 @@ namespace CPTool.Services
 
             GetTaxCodeLDListQuery TaxCodeLDlist = new();
             GetTaxCodeLPListQuery TaxCodeLPlist = new();
-            GetVendorCodeListQuery VendorCodelist = new();
+            //GetVendorCodeListQuery VendorCodelist = new();
             GetProcessFluidListQuery ProcessFluidlist = new();
             GetPropertyPackageListQuery propertyPackageListQuery = new();
             GetBrandSupplierListQuery brandSupplierListQuery = new();
@@ -122,39 +82,57 @@ namespace CPTool.Services
             GetPurchaseOrderMWOItemListQuery getPurchaseOrderMWOItemListQuery = new();
             GetDownPaymentListQuery getDownPaymentListQuery = new();
             GetTaksListQuery getTaksListQuery = new();
-            MWOTypes = await mediator.Send(MWOTypeList);
-            Chapters = await mediator.Send(ChapterList);
-            MWOs = await mediator.Send(MWOList);
-            MWOItems = await mediator.Send(MWOItemList);
+            GetUserRequirementTypeListQuery getUserRequirementType = new();
+            GetUserRequirementListQuery getUserRequirementListQuery = new();
+            GetUserListQuery getRequestedByListQuery = new();
+            GetSignalListQuery getSignalsListQuery = new();
+            GetElectricalBoxListQuery getElectricalBoxsListQuery = new();
+            GetFieldLocationListQuery getFieldLocationListQuery = new();
+            GetWireListQuery getWireListQuery = new();
+            GetSignalTypeListQuery getSignalTypeListQuery = new();
+            MWOTypes = await Mediator.Send(MWOTypeList);
+            Chapters = await Mediator.Send(ChapterList);
+            MWOs = await Mediator.Send(MWOList);
+            MWOItems = await Mediator.Send(MWOItemList);
 
-            UnitaryBasePrizes = await mediator.Send(unitarybaseprie);
-            EquipmentTypes = await mediator.Send(EquipmenTypeList);
-            EquipmentTypeSubs = await mediator.Send(EquipmenTypeSubList);
-            Brands = await mediator.Send(brandlist);
-            Suppliers = await mediator.Send(supplierlist);
-            Materials = await mediator.Send(materiallist);
-            Gaskets = await mediator.Send(gasketlist);
-            PipeClasses = await mediator.Send(pipeclaslist);
-            PipeDiameters = await mediator.Send(pipediamterlist);
+            UnitaryBasePrizes = await Mediator.Send(unitarybaseprie);
+            EquipmentTypes = await Mediator.Send(EquipmenTypeList);
+            EquipmentTypeSubs = await Mediator.Send(EquipmenTypeSubList);
+            Brands = await Mediator.Send(brandlist);
+            Suppliers = await Mediator.Send(supplierlist);
+            BrandSuppliers = await Mediator.Send(brandSupplierListQuery);
+            Materials = await Mediator.Send(materiallist);
+            Gaskets = await Mediator.Send(gasketlist);
+            PipeClasses = await Mediator.Send(pipeclaslist);
+            PipeDiameters = await Mediator.Send(pipediamterlist);
 
-            ConnectionTypes = await mediator.Send(connectiontypelist);
-            TaxCodeLDs = await mediator.Send(TaxCodeLDlist);
-            TaxCodeLPs = await mediator.Send(TaxCodeLPlist);
-            VendorCodes = await mediator.Send(VendorCodelist);
+            ConnectionTypes = await Mediator.Send(connectiontypelist);
+            TaxCodeLDs = await Mediator.Send(TaxCodeLDlist);
+            TaxCodeLPs = await Mediator.Send(TaxCodeLPlist);
+            //VendorCodes = await Mediator.Send(VendorCodelist);
 
-            ProcessFluids = await mediator.Send(ProcessFluidlist);
+            ProcessFluids = await Mediator.Send(ProcessFluidlist);
 
-            BrandSuppliers = await mediator.Send(brandSupplierListQuery);
-            MeasuredVariables = await mediator.Send(getMeasuredVariableListQuery);
-            MeasuredVariableModifiers = await mediator.Send(getMeasuredVariableModifierListQuery);
-            Readouts = await mediator.Send(getReadoutListQuery);
-            DeviceFunctions = await mediator.Send(getDeviceFunctionListQuery);
-            DeviceFunctionModifiers = await mediator.Send(getDeviceFunctionModifierListQuery);
-            PropertyPackages = await mediator.Send(propertyPackageListQuery);
-            PurchaseOrders = await mediator.Send(getPurchaseOrderListQuery);
-            PurchaseOrderMWOItems = await mediator.Send(getPurchaseOrderMWOItemListQuery);
-            DownPayments = await mediator.Send(getDownPaymentListQuery);
-            Takss = await mediator.Send(getTaksListQuery);
+           
+            MeasuredVariables = await Mediator.Send(getMeasuredVariableListQuery);
+            MeasuredVariableModifiers = await Mediator.Send(getMeasuredVariableModifierListQuery);
+            Readouts = await Mediator.Send(getReadoutListQuery);
+            DeviceFunctions = await Mediator.Send(getDeviceFunctionListQuery);
+            DeviceFunctionModifiers = await Mediator.Send(getDeviceFunctionModifierListQuery);
+            PropertyPackages = await Mediator.Send(propertyPackageListQuery);
+            PurchaseOrders = await Mediator.Send(getPurchaseOrderListQuery);
+            PurchaseOrderMWOItems = await Mediator.Send(getPurchaseOrderMWOItemListQuery);
+            DownPayments = await Mediator.Send(getDownPaymentListQuery);
+            Takss = await Mediator.Send(getTaksListQuery);
+            UserRequirementTypes = await Mediator.Send(getUserRequirementType);
+            UserRequirements = await Mediator.Send(getUserRequirementListQuery);
+            Users = await Mediator.Send(getRequestedByListQuery);
+           
+            Signals = await Mediator.Send(getSignalsListQuery);
+            ElectricalBoxs = await Mediator.Send(getElectricalBoxsListQuery);
+            FieldLocations = await Mediator.Send(getFieldLocationListQuery);
+            Wires = await Mediator.Send(getWireListQuery);
+            SignalTypes = await Mediator.Send(getSignalTypeListQuery);
         }
         public static string ValidateGasket(string arg)
         {

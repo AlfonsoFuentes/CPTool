@@ -9,8 +9,7 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditMWO Model { get; set; } = null!;
-        [Inject]
-        public IMediator mediator { get; set; }
+       
         public GetMWOListQuery MWOList = new();
         public GetMWOTypeListQuery MWOTypeList = new();
 
@@ -21,8 +20,8 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
 
         protected override async Task OnInitializedAsync()
         {
-            MWOs = await mediator.Send(MWOList);
-            MWOTypes = await mediator.Send(MWOTypeList);
+            MWOs = await Mediator.Send(MWOList);
+            MWOTypes = await Mediator.Send(MWOTypeList);
         }
 
         public async virtual Task Submit()
@@ -31,7 +30,7 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
             if (form.IsValid)
             {
 
-                var result = await mediator.Send(Model);
+                var result = await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }
@@ -66,14 +65,7 @@ namespace CPTool.NewPages.Dialogs.MWO.Dialog
 
         string AnyNumber(int number)
         {
-            if (Model.Id == 0)
-            {
-                if (MWOs.Any(x => x.Number == number)) return "Number already existing";
-            }
-            else
-            {
-                if (MWOs.Where(x => x.Id != Model.Id).Any(x => x.Number == number)) return "Number already existing";
-            }
+            
 
             Regex extractNumberRegex = new Regex("\\d{5}$");
 

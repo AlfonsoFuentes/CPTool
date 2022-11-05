@@ -1,4 +1,6 @@
 ﻿
+using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
 using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList
@@ -10,23 +12,14 @@ namespace CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList
 
 
     }
-    public class GetPurchaseOrderMWOItemListQueryHandler : IRequestHandler<GetPurchaseOrderMWOItemListQuery, List<EditPurchaseOrderMWOItem>>
+    public class GetPurchaseOrderMWOItemListQueryHandler :
+         GetListQueryHandler<EditPurchaseOrderMWOItem, PurchaseOrderMWOItem, GetPurchaseOrderMWOItemListQuery>, 
+        IRequestHandler<GetPurchaseOrderMWOItemListQuery, List<EditPurchaseOrderMWOItem>>
     {
-
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetPurchaseOrderMWOItemListQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
+        public GetPurchaseOrderMWOItemListQueryHandler(IUnitOfWork unitofwork, IMapper mapper) : base(unitofwork, mapper)
         {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
         }
-        public async Task<List<EditPurchaseOrderMWOItem>> Handle(GetPurchaseOrderMWOItemListQuery request, CancellationToken cancellationToken)
-        {
-            var list = await _unitofwork.Repository<PurchaseOrderMWOItem>().GetAllAsync();
 
-            return _mapper.Map<List<EditPurchaseOrderMWOItem>>(list);
-
-        }
+       
     }
 }

@@ -12,7 +12,7 @@
     <MudGrid>
 
         <MudItem xs="12" sm="@Mastersm">
-            <TableComponent T="TMaster" Elements="@ElementsMasters" OnAdd="AddMaster" OnDelete="DeleteMaster"
+            <TableComponent T="TMaster" Elements="@ElementsMastersSelected" OnAdd="AddMaster" OnDelete="DeleteMaster"
                         OnRowClicked="RowClickedMaster"
                         ShowAddButton=@ShowAddButtonMaster ShowDeleteButton=@ShowDeleteButtonMaster
                         DisableAddButton=@DisableAddButtonMaster DisableEditButton=@DisableEditButtonMaster
@@ -40,7 +40,7 @@
         {
 
             <MudItem xs="12" sm="@Detailsm">
-                <TableComponent T="TDetail" Elements="@ElementsDetails"
+                <TableComponent T="TDetail" Elements="@ElementsDetailsSelected"
                         ShowAddButton=@ShowAddButtonDetails ShowDeleteButton=@ShowDeleteButtonDetails
                         DisableAddButton=@DisableAddButtonDetails DisableEditButton=@DisableEditButtonDetails
                         OnRowClicked="RowClickedDetails"

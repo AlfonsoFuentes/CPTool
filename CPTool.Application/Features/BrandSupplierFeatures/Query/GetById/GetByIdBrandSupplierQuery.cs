@@ -1,30 +1,35 @@
 ﻿using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
+using CPTool.Application.Features.MMOTypeFeatures.Query.GetById;
 
 namespace CPTool.Application.Features.BrandSupplierFeatures.Query.GetById
 {
     public class GetByIdBrandSupplierQuery : GetByIdQuery, IRequest<EditBrandSupplier>
     {
+        public int BrandId { get; set; }
+        public int SupplierId { get; set; }
         public GetByIdBrandSupplierQuery() { }
-        
+
     }
-    public class GetByIdBrandSupplierQueryHandler : IRequestHandler<GetByIdBrandSupplierQuery, EditBrandSupplier>
+    public class GetByIdBrandSupplierQueryHandler : GetByIdQueryHandler<EditBrandSupplier, BrandSupplier, GetByIdBrandSupplierQuery>,
+        IRequestHandler<GetByIdBrandSupplierQuery, EditBrandSupplier>
     {
 
-        private readonly IMapper _mapper;
-        private IUnitOfWork _unitofwork;
-        public GetByIdBrandSupplierQueryHandler(IUnitOfWork unitofwork,
-            IMapper mapper)
-        {
-            _unitofwork = unitofwork;
-            _mapper = mapper;
-        }
-        public async Task<EditBrandSupplier> Handle(GetByIdBrandSupplierQuery request, CancellationToken cancellationToken)
-        {
-            var table = await _unitofwork.Repository<BrandSupplier>().GetByIdAsync(request.Id);
 
-            return _mapper.Map<EditBrandSupplier>(table);
+        public GetByIdBrandSupplierQueryHandler(IUnitOfWork unitofwork,
+            IMapper mapper) : base(unitofwork, mapper) { }
+
+        public override async Task<EditBrandSupplier> Handle(GetByIdBrandSupplierQuery request, CancellationToken cancellationToken)
+        {
+            EditBrandSupplier retorno = new();
+            if (request.BrandId != 0 && request.SupplierId != 0)
+            {
+                var table = await _unitofwork.RepositoryBrandSupplier.FirstOrDefaultAsync(x => x.BrandId == request.BrandId && x.SupplierId == request.SupplierId);
+                retorno = _mapper.Map<EditBrandSupplier>(table);
+            }
+
+            return retorno;
 
         }
     }
-    
+
 }

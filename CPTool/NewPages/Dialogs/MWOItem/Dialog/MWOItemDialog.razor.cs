@@ -19,8 +19,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditMWOItem Model { get; set; } = null!;
-        [Inject]
-        public IMediator mediator { get; set; }
+        
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,19 +35,19 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
                 case 4:
                     {
                         GetByIdEquipmentItemQuery getbyid = new() { Id = Model.EquipmentItemId.Value };
-                        Model.EquipmentItem = await mediator.Send(getbyid);
+                        Model.EquipmentItem = await Mediator.Send(getbyid);
                     }
                     break;
                 case 6:
                     {
                         GetByIdPipingItemQuery getbyid = new() { Id = Model.PipingItemId.Value };
-                        Model.PipingItem = await mediator.Send(getbyid);
+                        Model.PipingItem = await Mediator.Send(getbyid);
                     }
                     break;
                 case 7:
                     {
                         GetByIdInstrumentItemQuery getbyid = new() { Id = Model.InstrumentItemId.Value };
-                        Model.InstrumentItem = await mediator.Send(getbyid);
+                        Model.InstrumentItem = await Mediator.Send(getbyid);
                     }
                     break;
             }
@@ -59,7 +58,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
             if (form.IsValid)
             {
 
-                var result = await mediator.Send(Model);
+                var result = await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }
@@ -93,7 +92,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         {
             GetByIdMWOItemQuery getbyid = new() { Id = Model.Id };
 
-            Model = await mediator.Send(getbyid);
+            Model = await Mediator.Send(getbyid);
         }
     }
 }

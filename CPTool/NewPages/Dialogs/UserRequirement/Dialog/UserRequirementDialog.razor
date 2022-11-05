@@ -1,0 +1,54 @@
+﻿
+
+
+@if (debug)
+{
+    <MudDialog DisableSidePadding="true">
+        <DialogContent>
+            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                    <CascadingValue Value="this">
+
+
+                        <MudForm Model="Model" @ref="form">
+                             
+                            <TextComponent @bind-Model="@Model"
+                                       Label="Name"
+                                       Required=true
+                                       Lines="2"
+                                       Validation="@(new Func<string, string>(ValidateUserRequirementName))"
+                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+
+                          
+                            <AutoCompleteComponent TEdit="EditUser"
+                                               TList="GetUserListQuery"
+                                               TGedById="GetByIdUserByQuery"
+                                               PropertyName="@nameof(Model.RequestedBy.Name)"
+                                               Label="Requested By:"
+                                               TableName="RequestedBy"
+                                               ValidateForm="ValidateForm"
+                                               @bind-Elements="@GlobalTables.Users"
+                                               ShowDialogOverrided="ToolDialogService.ShowRequestedByDialog"
+                                               Validation="@(new Func<string, string>(ValidateRequestedBy))"
+                                               @bind-Model=@Model.RequestedBy></AutoCompleteComponent>
+
+
+
+                        </MudForm>
+                    </CascadingValue>
+
+                </MudPaper>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+@code {
+    bool debug = true;
+}
+
