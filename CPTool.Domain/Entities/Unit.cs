@@ -48,6 +48,18 @@
         public ICollection<PipeAccesory>? OverallDropPressurePipeAccesorys { get; set; } = null!;
         [ForeignKey("ElevationChangeId")]
         public ICollection<PipeAccesory>? ElevationChangePipeAccesorys { get; set; } = null!;
+
+       
+        [ForeignKey("ProcessVariableMinId")]
+        public ICollection<ControlLoop>? ProcessVariableMins { get; set; } = null!;
+        [ForeignKey("ProcessVariableMaxId")]
+        public ICollection<ControlLoop>? ProcessVariableMaxs { get; set; } = null!;
+        [ForeignKey("ProcessVariableValueId")]
+        public ICollection<ControlLoop>? ProcessVariableValues { get; set; } = null!;
+  
+        public ICollection<ControlLoop>? SPs { get; set; } = null!;
+  
+
     }
 
 }

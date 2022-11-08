@@ -26,19 +26,18 @@
                                                Label="Purchase Order Name"
                                                Required=true
                                                Validation="@(new Func<string, string>(ValidatePurchaseOrderName))"
-                                               PropertyName="@nameof(Model.PurchaseOrder.Name)"></TextComponent>
+                                               PropertyName="Name"></TextComponent>
                                     <TextComponent @bind-Model="@Model.PurchaseOrder"
                                                Label="Purchase requistion Name"
                                                Required=true
                                                Validation="@(new Func<string, string>(ValidatePurchaseRequisition))"
-                                               PropertyName="@nameof(Model.PurchaseOrder.PurchaseRequisition)"></TextComponent>
+                                               PropertyName="PurchaseRequisition"></TextComponent>
                                     <SelectComponent T="EditBrand"
                                                  Elements=@GlobalTables.Brands
                                                  Label="Brand or Service"
                                                  SelectionChanged="BrandChanged"
                                                  Validation="@(new Func<int, string>(ValidateBrand))"
                                                  Required=true
-                                                
                                                  @bind-Value="@Model.PurchaseOrder.pBrand">
 
 
@@ -49,43 +48,55 @@
                                                  Label="Supplier"
                                                  Required=true
                                                  Validation="@(new Func<int, string>(ValidateSupplier))"
-                                                
                                                  Disable=@(Model.PurchaseOrder.pBrand?.Id==0?true:false)
                                                  @bind-Value="@Model.PurchaseOrder.pSupplier">
 
 
                                     </SelectComponent>
+
                                 </MudItem>
                                 <MudItem xs="12" sm="6" Class="pa-4">
                                     <FieldComponent Label="Vendor Code" Value="Model.PurchaseOrder.VendorCode"></FieldComponent>
                                     <FieldComponent Label="Tax Code" Value="Model.PurchaseOrder.TaxCode"></FieldComponent>
                                     <FieldComponent Label="SPL" Value="Model.PurchaseOrder.SPL"></FieldComponent>
-                                    <FieldComponent Label="Cost Center" Value="Model.PurchaseOrder.CostCenter"></FieldComponent>
-                                    
-                                    
+                                    @if (Model.FirstMWOItem.ChapterId == 1)
+                                    {
+                                        <FieldComponent Label="Cost Center" Value="Model.PurchaseOrder.CostCenter"></FieldComponent>
+
+                                    }
+
+
                                 </MudItem>
                                 <MudItem xs="12" sm="12" Class="pa-1">
                                     @if (Model.PurchaseOrder.pSupplier.Id != 0)
                                     {
-                                        <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Identifier == dropzone)"
-                                                  ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
-                                            <ChildContent>
-                                                <MudPaper MinHeight="500px" Class="d-flex flex-1">
+                                        <MudContainer Style="max-height: 350px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                                            <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Identifier == dropzone)"
+                                                      ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
+                                                <ChildContent>
+
                                                     <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
                                                         <MudListSubheader>MWO items in Purchase Order</MudListSubheader>
-                                                        <MudDropZone T="DropItem" Identifier="Drop Zone 1" Class="flex-grow-1" AllowReorder="true" />
+                                                        <MudDropZone T="DropItem" Identifier="Drop Zone 1" AllowReorder="false" Class="flex-grow-1 border border-solid pa-1" />
                                                     </MudList>
                                                     <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
                                                         <MudListSubheader>MWO items in MWO</MudListSubheader>
-                                                        <MudDropZone T="DropItem" Identifier="Drop Zone 2" Class="flex-grow-1" AllowReorder="true" />
+                                                        <MudDropZone T="DropItem" Identifier="Drop Zone 2" AllowReorder="false" Class="flex-grow-1 border border-solid pa-1" />
                                                     </MudList>
-                                                </MudPaper>
-                                            </ChildContent>
-                                            <ItemRenderer>
-                                                <MudListItem Text="@context.Name" />
 
-                                            </ItemRenderer>
-                                        </MudDropContainer>
+
+
+
+
+
+                                                </ChildContent>
+                                                <ItemRenderer>
+                                                    <MudListItem Text="@context.Name" />
+
+                                                </ItemRenderer>
+
+                                            </MudDropContainer>
+                                        </MudContainer>
                                     }
 
                                 </MudItem>

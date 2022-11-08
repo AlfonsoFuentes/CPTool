@@ -1,4 +1,11 @@
-﻿@if (debug)
+﻿@using CPTool.Application.Features.ElectricalBoxFeatures.Query.GetById
+@using CPTool.Application.Features.FieldLocationFeatures.Query.GetById
+@using CPTool.Application.Features.SignalModifierFeatures.Query.GetById
+@using CPTool.Application.Features.SignalModifierFeatures.Query.GetList
+@using CPTool.Application.Features.SignalModifiersFeatures.CreateEdit
+@using CPTool.Application.Features.SignalTypeFeatures.Query.GetById
+@using CPTool.Application.Features.WireFeatures.Query.GetById
+@if (debug)
 {
     <MudDialog DisableSidePadding="true">
         <DialogContent>
@@ -8,14 +15,100 @@
 
 
                         <MudForm Model="Model" @ref="form">
+                            <MudGrid>
+                                <MudItem xs=12 sm=6>
+                                    <FieldComponent Label="Signal Name" Value="@Model.Name"></FieldComponent>
+                                    <FieldComponent Label="MWO Item" Value="@(Model.MWOItem==null?"":Model.MWOItem.TagId)"></FieldComponent>
+                                    <AutoCompleteComponent TEdit="EditSignalModifier"
+                                                       TList="GetSignalModifierListQuery"
+                                                       TGedById="GetByIdSignalModifierQuery"
+                                                       PropertyName="Name"
+                                                       TableName="Signal Modifier"
+                                                       Label="Signal Modifier"
+                                                       ValidateForm="Validateform"
+                                                       Required=true
+                                                       @bind-Elements="@GlobalTables.SignalModifiers"
+                                                       Validation="@(new Func<string, string>(GlobalTables.ValidateSignalModifier))"
+                                                       @bind-Model=@Model.SignalModifier></AutoCompleteComponent>
 
-                            <TextComponent @bind-Model="@Model"
-                                       Label="Name"
-                                       Required=true
-                                       Lines="2"
-                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                                    <AutoCompleteComponent TEdit="EditSignalType"
+                                                       TList="GetSignalTypeListQuery"
+                                                       TGedById="GetByIdSignalTypeQuery"
+                                                       PropertyName="Name"
+                                                       TableName="Signal Type"
+                                                       Label="Signal Type"
+                                                       ValidateForm="Validateform"
+                                                       Required=true
+                                                       @bind-Elements="@GlobalTables.SignalTypes"
+                                                       Validation="@(new Func<string, string>(GlobalTables.ValidateSignalType))"
+                                                       @bind-Model=@Model.SignalType></AutoCompleteComponent>
 
+                                    <MudSelect Dense="true"
+                                           Margin="Margin.Dense"
+                                           T="IOType"
+                                           Label="Select  In/Out Type"
+                                           AnchorOrigin="Origin.BottomCenter"
+                                           Required=true
+                                           @bind-Value=@Model.IOType
+                                           Validation="@(new Func<IOType, string>(ValidateIOType))"
+                                           Variant="Variant.Outlined">
+                                        @foreach (var item in Enum.GetValues<IOType>())
+                                        {
+                                            <MudSelectItem Value="item">@item</MudSelectItem>
+                                        }
 
+                                    </MudSelect>
+                                    <MudSwitch @bind-Checked="@Model.IsWired" Color="Color.Primary" Label="IsWired?" LabelPosition="LabelPosition.End" />
+
+                                    <AutoCompleteComponent TEdit="EditWire"
+                                                       TList="GetWireListQuery"
+                                                       TGedById="GetByIdWireQuery"
+                                                       PropertyName="Name"
+                                                       TableName="Wire"
+                                                       Label="Wire"
+                                                       Disable=@(!Model.IsWired)
+                                                       Required=@Model.IsWired
+                                                       ValidateForm="Validateform"
+                                                       @bind-Elements="@GlobalTables.Wires"
+                                                       @bind-Model=@Model.Wire></AutoCompleteComponent>
+                                    <AutoCompleteComponent TEdit="EditFieldLocation"
+                                                       TList="GetFieldLocationListQuery"
+                                                       TGedById="GetByIdFieldLocationQuery"
+                                                       PropertyName="Name"
+                                                       TableName="Field Location"
+                                                       Label="Field Location"
+                                                       ValidateForm="Validateform"
+                                                       @bind-Elements="@GlobalTables.FieldLocations"
+                                                       @bind-Model=@Model.FieldLocation></AutoCompleteComponent>
+                                    <AutoCompleteComponent TEdit="EditElectricalBox"
+                                                       TList="GetElectricalBoxListQuery"
+                                                       TGedById="GetByIdElectricalBoxQuery"
+                                                       PropertyName="Name"
+                                                       TableName="Electrical Box"
+                                                       Label="Electrical Box"
+                                                       ValidateForm="Validateform"
+                                                       @bind-Elements="@GlobalTables.ElectricalBoxs"
+                                                       @bind-Model=@Model.ElectricalBox></AutoCompleteComponent>
+                                    <MudSwitch @bind-Checked="@Model.Disconect" Color="Color.Primary" Label="Disconect?" LabelPosition="LabelPosition.End" />
+                                    <MudSwitch @bind-Checked="@Model.InstrumentAir" Color="Color.Primary" Label="Instrument Air?" LabelPosition="LabelPosition.End" />
+                                    <MudSwitch @bind-Checked="@Model.FrequencyInverter" Color="Color.Primary" Label="Frequency Inverter?" LabelPosition="LabelPosition.End" />
+                                </MudItem>
+                                <MudItem xs=0 sm=2></MudItem>
+                                <MudItem xs=0 sm=4 class="d-none d-sm-flex ">
+                                    <MudContainer Style="max-height: 450px; overflow-y: scroll;border-solid border-1 mud-border-primary pa-1" Fixed="true" 
+                                    MaxWidth="MaxWidth.Medium" >
+                                        <MudListSubheader>MWO items</MudListSubheader>
+                                        <MudList Clickable="true" Dense=true @bind-SelectedItem="selectedItem">
+                                            @foreach (var row in MWOItems)
+                                            {
+                                                <MudListItem Text="@row.TagId" OnClick=@(()=>Model.MWOItem=row) Value="@row.Id" Dense="true" />
+
+                                            }
+
+                                        </MudList>
+                                    </MudContainer>
+                                </MudItem>
+                            </MudGrid>
 
 
                         </MudForm>
@@ -33,5 +126,7 @@
     </MudDialog>
 }
 @code {
+    MudListItem selectedItem;
+    object selectedValue = 1;
     bool debug = true;
 }

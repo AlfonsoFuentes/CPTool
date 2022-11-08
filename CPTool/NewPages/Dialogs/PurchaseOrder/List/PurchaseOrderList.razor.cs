@@ -1,30 +1,93 @@
 ﻿
+using CPTool.Application.Features.MWOFeatures.Query.GetById;
+
 namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
 {
     public partial class PurchaseOrderList
     {
-      
+
+        [Parameter]
+        public int MWOId { get; set; }
 
         EditPurchaseOrder SelectedPurchaseOrder { get; set; } = new();
         EditMWOItem SelectedMWOItem { get; set; } = new();
 
-        List<EditPurchaseOrder> PurchaseOrders => GlobalTables.PurchaseOrders;
-        List<EditMWOItem> MWOItems = new();
-        GetPurchaseOrderListQuery purchaseorderList = new();
-       
+        List<EditPurchaseOrder> PurchaseOrders => GetPurchaseOrder();
+        List<EditMWOItem> MWOItems => SelectedPurchaseOrder.Id == 0 ? new() :
+            GlobalTables.PurchaseOrderMWOItems.Where(x => x.PurchaseOrderId == SelectedPurchaseOrder.Id).Select(x => x.MWOItem).ToList();
 
-
-        async Task RowClickedMaster(EditPurchaseOrder row)
+        List<EditPurchaseOrder> GetPurchaseOrder()
         {
 
-            await AsignPurchaseOrder(row);
-
+            return SelectedMWOItem.Id != 0 ?
+                GlobalTables.PurchaseOrderMWOItems.Where(x => x.MWOItemId == SelectedMWOItem.Id).Select(x => x.PurchaseOrder).ToList()
+                 : MWOId != 0 ? 
+                 GlobalTables.PurchaseOrders.Where(x => x.MWOId == MWOId).ToList() :
+                 GlobalTables.PurchaseOrders;
 
         }
-        async Task RowClickedDetails(EditMWOItem row)
+        EditMWO MWO { get; set; } = new();
+        protected override async Task OnInitializedAsync()
+        {
+            GetByIdMWOQuery getByIdMWO = new() { Id = MWOId };
+            MWO = await Mediator.Send(getByIdMWO);
+            if (MWOId == 0) ShowTableDetails = false;
+        }
+
+        async Task AddPurchaseOrder()
+        {
+            CreateEditPurchaseOrder CreatePurchaseOrder = new CreateEditPurchaseOrder();
+            CreatePurchaseOrder.PurchaseOrder.MWO = MWO;
+
+
+            var result = await ToolDialogService.ShowAddPurchaseOrderDialog(CreatePurchaseOrder);
+
+            if (!result.Cancelled)
+            {
+                var resultdata = result.Data as CreateEditPurchaseOrder;
+                await UpdateMaster(resultdata.PurchaseOrder);
+
+            }
+
+        }
+        async Task EditPurchaseOrder()
+        {
+            var result = await ToolDialogService.ShowEditPurchaseOrderDialog(SelectedPurchaseOrder);
+            if (!result.Cancelled)
+            {
+                await UpdateMaster(result.Data as EditPurchaseOrder);
+
+            }
+        }
+        async Task UpdateTables()
+        {
+            GetMWOListQuery getMWOList = new();
+            GlobalTables.MWOs = await Mediator.Send(getMWOList);
+
+            GetPurchaseOrderMWOItemListQuery getPurchaseOrderMWOItemListQuery = new();
+            GlobalTables.PurchaseOrderMWOItems = await Mediator.Send(getPurchaseOrderMWOItemListQuery);
+
+            GetMWOItemListQuery getMWOItemListQuery = new();
+            GlobalTables.MWOItems = await Mediator.Send(getMWOItemListQuery);
+
+            GetPurchaseOrderListQuery getPurchaseOrderListQuery = new();
+            GlobalTables.PurchaseOrders = await Mediator.Send(getPurchaseOrderListQuery);
+
+            GetTaksListQuery getTaksListQuery = new();
+            GlobalTables.Takss = await Mediator.Send(getTaksListQuery);
+        }
+        async Task UpdateMaster(EditPurchaseOrder data)
         {
 
-            await AsignMWOItem(row);
+            await UpdateTables();
+            GetByIdPurchaseOrderQuery getById = new();
+            getById.Id = data.Id;
+            SelectedPurchaseOrder = await Mediator.Send(getById);
+
+
+            GetByIdMWOItemQuery getByIdMWOItem = new() { Id = SelectedMWOItem.Id };
+
+            SelectedMWOItem = await Mediator.Send(getByIdMWOItem);
 
 
         }
@@ -32,7 +95,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
         {
             EditDownPayment model = new();
             model.PurchaseOrder = SelectedPurchaseOrder;
-            var result = await   ToolDialogService.ShowDownpaymentDialog(model);
+            var result = await ToolDialogService.ShowDownpaymentDialog(model);
 
             if (!result.Cancelled)
             {
@@ -44,51 +107,28 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.List
             }
 
         }
-        async Task<DialogResult> ShowPurchaseOrder(EditPurchaseOrderMWOItem pomwo)
+
+        async Task EditMWOItem()
         {
 
-            var result = await ToolDialogService.ShowEditPurchaseOrderDialog(SelectedPurchaseOrder);
+            var result = await ToolDialogService.ShowMWOItem(SelectedMWOItem);
             if (!result.Cancelled)
             {
-                GlobalTables.PurchaseOrders = await Mediator.Send(purchaseorderList);
-                GetTaksListQuery getTaksListQuery = new();
-                GlobalTables.Takss = await Mediator.Send(getTaksListQuery);
+                await UpdateDetail(result.Data as EditMWOItem);
+
             }
-            return result;
         }
-        async Task AsignPurchaseOrder(EditPurchaseOrder PO)
+        async Task UpdateDetail(EditMWOItem data)
         {
-            if (PO != null && PO.Id != 0)
-            {
-                GetByIdPurchaseOrderQuery query = new() { Id = PO.Id };
+            await UpdateTables();
 
-                SelectedPurchaseOrder = await Mediator.Send(query);
+            GetByIdMWOItemQuery getByIdMWOItem = new() { Id = data.Id };
 
-                MWOItems = GlobalTables.PurchaseOrderMWOItems.Where(x => x.PurchaseOrderId == SelectedPurchaseOrder.Id).Select(x => x.MWOItem).ToList();// SelectedBrand.BrandSuppliers.Select(x => x.Supplier).ToList();
+            SelectedMWOItem = await Mediator.Send(getByIdMWOItem);
 
-            }
-            else
-            {
-                SelectedPurchaseOrder = new();
+            GetByIdPurchaseOrderQuery getByIdPurchaseOrderQuery = new GetByIdPurchaseOrderQuery() { Id = SelectedPurchaseOrder.Id };
+            SelectedPurchaseOrder = await Mediator.Send(getByIdPurchaseOrderQuery);
 
-            }
-
-        }
-        async Task AsignMWOItem(EditMWOItem mwoitem)
-        {
-            if (mwoitem.Id != 0)
-            {
-                GetByIdMWOItemQuery query = new() { Id = mwoitem.Id };
-
-                SelectedMWOItem = await Mediator.Send(query);
-
-
-
-            }
-            else
-            {
-                SelectedMWOItem = new();
-            }
         }
     }
 }

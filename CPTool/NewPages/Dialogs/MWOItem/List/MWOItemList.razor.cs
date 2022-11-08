@@ -6,7 +6,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.List
 {
     public partial class MWOItemList
     {
-        [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
+       
        
         [Parameter]
         public int MWOId { get; set; }

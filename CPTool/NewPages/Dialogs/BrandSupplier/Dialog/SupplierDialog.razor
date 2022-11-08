@@ -20,28 +20,29 @@
                         </SelectComponent>
                         <TextComponent @bind-Model="@Model.Supplier" Label="Supplier Name"
                                        Validation="@(new Func<string, string>(ValidateSupplieName))"
-                                       PropertyName="@nameof(Model.Supplier.Name)" Required=true></TextComponent>
+                                       PropertyName="Name" Required=true></TextComponent>
 
                         <TextComponent @bind-Model="@Model.Supplier" Label="Contact person"
-                                       PropertyName="@nameof(Model.Supplier.ContactPerson)" Required=true></TextComponent>
+                                       PropertyName="ContactPerson" Required=true></TextComponent>
                         <TextComponent @bind-Model="@Model.Supplier" Label="email"
                                        InputType="InputType.Email"
-                                       PropertyName="@nameof(Model.Supplier.Email)" Required=true></TextComponent>
+                                       PropertyName="Email" Required=true></TextComponent>
 
                         <TextComponent @bind-Model="@Model.Supplier" Label="Phone"
                                        InputType="InputType.Telephone"
-                                       PropertyName="@nameof(Model.Supplier.Phone)" Required=true></TextComponent>
+                                       PropertyName="Phone" Required=true></TextComponent>
                         <TextComponent @bind-Model="@Model.Supplier" Label="Address"
-                                       PropertyName="@nameof(Model.Supplier.Address)" Required=true></TextComponent>
+                                       PropertyName="Address" Required=true></TextComponent>
 
                         <TextComponent @bind-Model="@Model.Supplier" Label="Vendor Code"
-                                       PropertyName="@nameof(Model.Supplier.VendorCode)" Required=true></TextComponent>
+                         Validation="@(new Func<string, string>(ReviewVendorCode))"
+                                       PropertyName="VendorCode" Required=true></TextComponent>
 
                      
                         <AutoCompleteComponent TEdit="EditTaxCodeLD"
                                                TList="GetTaxCodeLDListQuery"
                                                TGedById="GetByIdTaxCodeLDQuery"
-                                               PropertyName="@nameof(Model.Supplier.TaxCodeLD.Name)"
+                                               PropertyName="Name"
                                                TableName="Tax Codel LD"
                                                Required=true
                                                Label="Tax Codel LD"
@@ -52,7 +53,7 @@
                         <AutoCompleteComponent TEdit="EditTaxCodeLP"
                                                TList="GetTaxCodeLPListQuery"
                                                TGedById="GetByIdTaxCodeLPQuery" 
-                                               PropertyName="@nameof(Model.Supplier.TaxCodeLP.Name)"
+                                               PropertyName="Name"
                                                TableName="Tax Code LP"
                                                Label="Tax Code LP"
                                                ValidateForm="Validateform"

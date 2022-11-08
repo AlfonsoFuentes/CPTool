@@ -8,7 +8,7 @@ namespace CPTool.Application.Features.Base
       
      
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public virtual string Name { get; set; } = string.Empty;
         public virtual T AddDetailtoMaster<T>() where T : EditCommand, new()
         {
             return null!;

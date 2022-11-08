@@ -56,5 +56,15 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
                 return "Item Value must be greater than zero";
             return null;
         }
+        private string ValidatePOValue(double arg)
+        {
+            if (arg <= 0)
+                return "Item Value must be greater than zero";
+            if(Model.MWOItem.MWOItemCurrencyValue.PrizeCurrency <= 0)
+                return "Item Value must be greater than zero";
+            if (Model.MWOItem.MWOItemCurrencyValue.PrizeUSD <= 0)
+                return "Item Value in $USD must be greater than zero";
+            return null;
+        }
     }
 }

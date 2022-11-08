@@ -1,4 +1,7 @@
-﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
+﻿using CPTool.Application.Features.BrandFeatures;
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
+using CPTool.Application.Features.BrandFeatures.Query.GetById;
+using CPTool.Application.Features.BrandFeatures.Query.GetList;
 using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;

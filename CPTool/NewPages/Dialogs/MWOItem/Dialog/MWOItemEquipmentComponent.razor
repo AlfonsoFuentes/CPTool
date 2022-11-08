@@ -11,7 +11,7 @@
             <AutoCompleteComponent TEdit="EditEquipmentType"
                                TList="GetEquipmentTypeListQuery"
                                TGedById="GetByIdEquipmentTypeQuery"
-                               PropertyName="@nameof(Model.eEquipmentType.Name)"
+                               PropertyName="Name"
                                TableName="Equipment Type"
                                Label="Equipment Type"
                                SelectionChanged="EquipmentTypeChanged"
@@ -23,7 +23,7 @@
             <AutoCompleteComponent TEdit="EditEquipmentTypeSub"
                                TList="GetEquipmentTypeSubListQuery"
                                TGedById="GetByIdEquipmentTypeSubQuery"
-                               PropertyName="@nameof(Model.eEquipmentTypeSub.Name)"
+                               PropertyName="Name"
                                TableName="Sub Equipment Type"
                                Label="Sub Equipment Type"
                                Parent=@EquipmentParent
@@ -37,7 +37,7 @@
 
             <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem" Label="Tag Number"
                        RequiredError="Must have Tag Number"
-                       PropertyName="@nameof(Model.TagNumber)" Required=true></TextComponent>
+                       PropertyName="TagNumber" Required=true></TextComponent>
             <FieldComponent Label="Tag Id" Value=@Model.TagId></FieldComponent>
 
 
@@ -69,20 +69,20 @@
         <MudItem xs="12" sm="6">
             <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
                        Label="Equipment Model"
-                       PropertyName="@nameof(Model.Model)"></TextComponent>
+                       PropertyName="Model"></TextComponent>
             <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
                        Label="Reference"
-                       PropertyName="@nameof(Model.Reference)"></TextComponent>
+                       PropertyName="Reference"></TextComponent>
             <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
                        Label="Serial Number"
-                       PropertyName="@nameof(Model.SerialNumber)"></TextComponent>
+                       PropertyName="SerialNumber"></TextComponent>
 
         </MudItem>
         <MudItem xs="12" sm="6">
             <AutoCompleteComponent TEdit="EditGasket"
                                TList="GetGasketListQuery"
                                TGedById="GetByIdGasketQuery"
-                               PropertyName="@nameof(Model.eGasket.Name)"
+                               PropertyName="Name"
                                TableName="Gasket"
                                Label="Gasket"
                                ValidateForm="DialogParent.Validateform"
@@ -93,7 +93,7 @@
             <AutoCompleteComponent TEdit="EditMaterial"
                                TList="GetMaterialListQuery"
                                TGedById="GetByIdMaterialQuery"
-                               PropertyName="@nameof(Model.eOuterMaterial.Name)"
+                               PropertyName="Name"
                                Label="Outer Material"
                                TableName="Material"
                                ValidateForm="DialogParent.Validateform"
@@ -105,7 +105,7 @@
             <AutoCompleteComponent TEdit="EditMaterial"
                                TList="GetMaterialListQuery"
                                TGedById="GetByIdMaterialQuery"
-                               PropertyName="@nameof(Model.eInnerMaterial.Name)"
+                               PropertyName="Name"
                                Label="Inner Material"
                                TableName="Material"
                                ValidateForm="DialogParent.Validateform"

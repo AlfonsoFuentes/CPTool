@@ -14,19 +14,22 @@
                                                Required=true
                                                Disable=@(Model.PurchaseOrderStatus== PurchaseOrderStatus.Ordering?false:true)
                                                Validation="@(new Func<string, string>(ValidatePONumber))"
-                                               PropertyName="@nameof(Model.PONumber)"></TextComponent>
+                                               PropertyName="PONumber"></TextComponent>
 
-                                   
-                                    <MudDatePicker Label="Estimated receive date"
-                                               ShowWeekNumbers="true"
-                                               Validation="@(new Func<DateTime, string>(ValidateDate))"
-                                               Disabled=@(Model.PurchaseOrderStatus== PurchaseOrderStatus.Ordering?false:true)
-                                               Required=true
-                                               Margin="Margin.Dense"
-                                               Variant="Variant.Outlined"
-                                               RequiredError="Must define estimated receive date"
-                                               @bind-Date="Model.POEstimatedDate" Culture="@_en"></MudDatePicker>
+                                    <MudDatePicker Margin="Margin.Dense"
+                                               Variant="Variant.Outlined" Label="Estimated receive date" @bind-Date="@Model.POEstimatedDate"
+                                               Disabled=@(Model.PurchaseOrderStatus== PurchaseOrderStatus.Ordering?false:true) />
 
+                                    <MudContainer Style="max-height: 450px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Large" >
+                                        <MudList Clickable="false" Dense=true @bind-SelectedItem="selectedItem">
+                                            @foreach (var row in Model.PurchaseOrderMWOItems.Select(x=>x.MWOItem))
+                                            {
+                                                <MudListItem Text="@(row.TagId==""?row.Name:$"{row.TagId}_{row.Name}")" Dense="true" Class="border border-solid pa-1" />
+
+                                            }
+
+                                        </MudList>
+                                    </MudContainer>
                                 </MudItem>
                                 <MudItem xs="12" sm="6" Class="pa-4">
                                     <FieldComponent Label="MWO CEC" Value=@Model.MWO.CECName></FieldComponent>
@@ -59,4 +62,5 @@
 @code {
     bool debug = true;
     public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+    MudListItem selectedItem;
 }

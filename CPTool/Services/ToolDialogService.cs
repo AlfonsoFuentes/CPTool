@@ -3,6 +3,9 @@
 
 
 
+using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
+using CPTool.NewPages.Components.Dialogs;
+using CPTool.NewPages.Dialogs.ControlLoop.Dialog;
 using CPTool.NewPages.Dialogs.ProcessFluid.Dialog;
 using CPTool.NewPages.Dialogs.RequestedBy.Dialog;
 using CPTool.NewPages.Dialogs.Taks.Dialog;
@@ -29,6 +32,22 @@ namespace CPTool.Services
             modeldialog.parameters.Add("Model", model);
 
             var dialog = DialogService.Show<EquipmenTypeDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+
+            return await dialog.Result;
+
+
+        }
+        public async Task<DialogResult> ShowControlLoopDialog(EditControlLoop model)
+        {
+
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Control Loop" : $"Edit {model.Name} ";
+            modeldialog.parameters.Add("Model", model);
+
+            var dialog = DialogService.Show<ControlLoopDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
 
             return await dialog.Result;
 
@@ -201,7 +220,7 @@ namespace CPTool.Services
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Material" : $"Edit {model.Name} ";
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Item" : $"Edit {model.Name} ";
             modeldialog.parameters.Add("Model", model);
 
             var dialog = DialogService.Show<MWOItemDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
@@ -213,7 +232,7 @@ namespace CPTool.Services
        
 
 
-        public async Task<DialogResult> ShowPurchaseOrderDialog(CreateEditPurchaseOrder Model)
+        public async Task<DialogResult> ShowAddPurchaseOrderDialog(CreateEditPurchaseOrder Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };

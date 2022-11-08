@@ -16,8 +16,8 @@
             <MudTooltip Text="Items for MWO">
                 <MudIconButton Icon="@Icons.Filled.Agriculture" OnClick="GoToMWOItemList" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
             </MudTooltip>
-            <MudTooltip Text="Create Purchase Order">
-                <MudIconButton Icon="@Icons.Filled.CurrencyExchange" OnClick="AddPurchaseOrder" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
+            <MudTooltip Text="Purchase Orders">
+                <MudIconButton Icon="@Icons.Filled.CurrencyExchange" OnClick="GoToPurchaseOrderList" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
             </MudTooltip>
             <MudTooltip Text="Create Task">
                 <MudIconButton Icon="@Icons.Filled.AddTask" OnClick="CreateTaskMWO" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
@@ -28,15 +28,18 @@
             <MudTooltip Text="Signals">
                 <MudIconButton Icon="@Icons.Filled.ElectricalServices" OnClick="GoToUserSignalList" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
             </MudTooltip>
+             <MudTooltip Text="Control Loops">
+                <MudIconButton Icon="@Icons.Filled.Loop" OnClick="GoToControlLoopList" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
+            </MudTooltip>
         </MasterOtherButtons>
 
         <MasterContextTh>
-            <MudTh Style="width:40px">#</MudTh>
-            <MudTh Style="width:40px">Name</MudTh>
-            <MudTh Style="width:40px">CEC#</MudTh>
-            <MudTh Style="width:40px">Budget, USD</MudTh>
-            <MudTh Style="width:40px">Expenses, USD</MudTh>
-            <MudTh Style="width:40px">Assigned, USD</MudTh>
+            <MudTh >#</MudTh>
+            <MudTh >Name</MudTh>
+            <MudTh >CEC#</MudTh>
+            <MudTh >Budget, USD</MudTh>
+            <MudTh >Expenses, USD</MudTh>
+            <MudTh >Assigned, USD</MudTh>
         </MasterContextTh>
         <MasterContextTd>
             <MudTd DataLabel="#">@context.Id</MudTd>

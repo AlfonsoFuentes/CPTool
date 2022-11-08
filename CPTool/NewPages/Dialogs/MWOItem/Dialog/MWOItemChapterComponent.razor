@@ -15,9 +15,7 @@
             </SelectComponent>
 
             <FieldComponent Label="Nomenclatore" Value="@Model.Nomenclatore"></FieldComponent>
-            <TextComponent @bind-Model="@Model" Label="Item Name" Disable=false PropertyName="@nameof(Model.Name)"
-                       Validation="@(new Func<string,string>(DialogParent.AnyName))"
-                       Required=true></TextComponent>
+            
 
 
            

@@ -1,0 +1,65 @@
+﻿@typeparam TMaster
+
+@typeparam TDetail
+
+@typeparam TMasterList
+@typeparam TDetailList
+@typeparam TDeleteMaster
+@typeparam TDeleteDetail
+@typeparam TMasterGedById
+@typeparam TDetailGedById
+
+
+@if (ShowAddButton)
+{
+    <MudGrid>
+
+        <MudItem xs="12" sm="@mastersm">
+            <TableComponent T="TMaster" Elements="@ElementsMastersSelected" OnAdd="Add" OnDelete="Delete"
+                        OnRowClicked="RowClickedMaster" DisableEditButton=@(SelectedMaster.Id==0?true:false)
+                        OnEdit="Edit" SearchFunc=MasterList.FilterFunc @bind-SelectedItem="@SelectedMaster">
+                <OtherButtons>@MasterOtherButtons</OtherButtons>
+
+                <ContextTh>
+                    @MasterContextTh
+                </ContextTh>
+                <ContextTd>
+                    @MasterContextTd!(context)
+                </ContextTd>
+                <FooterContent>
+                    @FooterContentMaster
+                </FooterContent>
+            </TableComponent>
+        </MudItem>
+
+
+        <MudItem xs="12" sm="@detailsm">
+            <TableComponent T="TDetail" Elements="@ElementsDetailsSelected" DisableAddButton=@(SelectedMaster.Id==0?true:false)
+                        OnRowClicked="RowClickedDetail" DisableEditButton=@(SelectedDetail.Id==0?true:false)
+                        OnAdd="AddDetail" OnDelete="DeleteDetail" OnEdit="EditDetail" SearchFunc=DetailList.FilterFunc @bind-SelectedItem="@SelectedDetail">
+                <OtherButtons>@DetailsOtherButtons</OtherButtons>
+
+
+                <ContextTh>
+                    @DetailContextTh
+
+                </ContextTh>
+                <ContextTd>
+                    @DetailContextTd!(context)
+                </ContextTd>
+                <FooterContent>
+                    @FooterContentDetails
+                </FooterContent>
+            </TableComponent>
+        </MudItem>
+
+    </MudGrid>
+}
+
+@code {
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}

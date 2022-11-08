@@ -1,0 +1,93 @@
+﻿@typeparam TMasterDetail
+@typeparam TMaster
+@typeparam TDetail
+@typeparam TManagerMasterDetail
+@typeparam TManagerMaster
+@typeparam TManagerDetail
+
+@if (debug)
+{
+    <MudGrid>
+
+        <MudItem xs="12" sm="@Mastersm">
+            <TableComponent T="TMaster" Elements="@ElementsMastersSelected" OnAdd="AddMaster" OnDelete="DeleteMaster"
+                        OnRowClicked="RowClickedMaster"
+                        ShowAddButton=@ShowAddButtonMaster ShowDeleteButton=@ShowDeleteButtonMaster
+                        DisableAddButton=@DisableAddButtonMaster DisableEditButton=@DisableEditButtonMaster
+                        OnEdit="EditMaster" SearchFunc=MasterManager.GetListQuery.FilterFunc @bind-SelectedItem="@SelectedMaster">
+                <OtherButtons>
+                    @OtherButtonsMaster
+                </OtherButtons>
+             <FooterContent>
+        @FooterContentMaster
+    </FooterContent>
+                <ContextTh>
+                    @MasterContextTh
+                </ContextTh>
+                <ContextTd>
+                    @MasterContextTd!(context)
+                </ContextTd>
+            </TableComponent>
+        </MudItem>
+        @if (ShowTableDetails)
+        {
+
+            <MudItem xs="12" sm="@Detailsm">
+                <TableComponent T="TDetail" Elements="@ElementsDetailsSelected"
+                        ShowAddButton=@ShowAddButtonDetails ShowDeleteButton=@ShowDeleteButtonDetails
+                        DisableAddButton=@DisableAddButtonDetails DisableEditButton=@DisableEditButtonDetails
+                        OnRowClicked="RowClickedDetails"
+                        OnAdd="AddDetail" OnDelete="DeleteDetails" OnEdit="EditDetails" SearchFunc=DetailManager.GetListQuery.FilterFunc @bind-SelectedItem="@SelectedDetail">
+                    <OtherButtons>
+                        @OtherButtonsDetails
+                    </OtherButtons>
+                   
+                    <ContextTh>
+                        @DetailContextTh
+                    </ContextTh>
+                    <ContextTd>
+                        @DetailContextTd!(context)
+                    </ContextTd>
+                    <FooterContent>
+                        @FooterContentDetails
+                    </FooterContent>
+                </TableComponent>
+            </MudItem>
+        }
+
+    </MudGrid>
+}
+@code {
+    bool debug = true;
+    [Parameter]
+
+    public bool ShowAddButtonMaster { get; set; } = true;
+    [Parameter]
+
+    public bool DisableAddButtonMaster { get; set; } = false;
+    [Parameter]
+
+    public bool DisableEditButtonMaster { get; set; } = false;
+    [Parameter]
+
+    public bool ShowDeleteButtonMaster { get; set; } = true;
+
+    [Parameter]
+
+    public bool ShowAddButtonDetails { get; set; } = true;
+    [Parameter]
+
+    public bool DisableAddButtonDetails { get; set; } = false;
+    [Parameter]
+
+    public bool DisableEditButtonDetails { get; set; } = false;
+    [Parameter]
+
+    public bool ShowDeleteButtonDetails { get; set; } = true;
+    [Parameter]
+
+    public bool ShowTableDetails { get; set; } = true;
+    [Parameter]
+    public int Mastersm { get; set; } = 6;
+    int Detailsm => 12 - Mastersm;
+}

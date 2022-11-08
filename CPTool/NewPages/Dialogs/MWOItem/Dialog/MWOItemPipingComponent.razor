@@ -51,14 +51,10 @@
             <TextComponent @bind-Model="@DialogParent.Model.PipingItem" Label="Tag Number"
                        RequiredError="Must have Tag Number"
                       Required=true
-                       PropertyName="@nameof(DialogParent.Model.PipingItem.TagNumber)"></TextComponent>
+                       PropertyName="TagNumber"></TextComponent>
 
-
-            <TextComponent @bind-Model="@DialogParent.Model.PipingItem" Label="Tag"
-                       
-                       Disable="true"
-                       PropertyName="@nameof(DialogParent.Model.TagId)"></TextComponent>
-
+            <FieldComponent Label="Tag" Value="@DialogParent.Model.PipingItem.TagId"></FieldComponent>
+          
            
 
 

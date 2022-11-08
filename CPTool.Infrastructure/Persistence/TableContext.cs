@@ -25,11 +25,14 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<MWO>().HasMany(c => c.MWOItems).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<MWO>().HasMany(c => c.UserRequirements).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<MWO>().HasMany(c => c.Signals).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWO>().HasMany(c => c.ControlLoops).WithOne(t => t.MWO).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Chapter>().HasMany(c => c.MWOItems).WithOne(t => t.Chapter).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.UnitaryBasePrize).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<MWOItem>().HasMany(c => c.MWOItemCurrencyValues).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasMany(c => c.Signals).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MWOItem>().HasMany(c => c.Taks).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<MWOItem>().HasOne(c => c.AlterationItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.FoundationItem).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.Cascade);
@@ -175,9 +178,17 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<Signal>().HasOne(c => c.Wire).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Signal>().HasOne(c => c.FieldLocation).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Signal>().HasOne(c => c.ElectricalBox).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Signal>().HasOne(c => c.MWOItem).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Signal>().HasOne(c => c.SignalModifier).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<ControlLoop>().HasOne(c => c.ControlledVariable).WithMany(t => t.ControlledVariables).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariable).WithMany(t => t.ProcessVariables).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ControlLoop>().HasOne(c => c.SP).WithMany(t => t.SPs).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariableMin).WithMany(t => t.ProcessVariableMins).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariableMax).WithMany(t => t.ProcessVariableMaxs).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariableValue).WithMany(t => t.ProcessVariableValues).OnDelete(DeleteBehavior.NoAction);
+           
 
 
         }
@@ -245,7 +256,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<FieldLocation>? FieldLocations { get; set; }
         public DbSet<ElectricalBox>? ElectricalBoxs { get; set; }
         public DbSet<Signal>? Signals { get; set; }
-
+        public DbSet<ControlLoop>? ControlLoops { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
             var entittes = ChangeTracker.Entries<BaseDomainModel>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).ToList();

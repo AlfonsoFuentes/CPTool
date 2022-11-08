@@ -1,5 +1,5 @@
 ﻿using CPTool.Application.Features.SignalsFeatures.CreateEdit;
-
+using CPTool.Domain.Entities;
 
 namespace CPTool.NewPages.Dialogs.Signal.Dialog
 {
@@ -9,8 +9,8 @@ namespace CPTool.NewPages.Dialogs.Signal.Dialog
         [Parameter]
         public EditSignal Model { get; set; } = null!;
 
-
-
+        List<EditMWOItem> MWOItems  => GetMWOItems();
+       
         [Parameter]
         public MudForm form { get; set; } = null!;
 
@@ -18,7 +18,20 @@ namespace CPTool.NewPages.Dialogs.Signal.Dialog
         {
             await form.Validate();
         }
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
+        List<EditMWOItem> GetMWOItems()
+        {
+            var result = GlobalTables.MWOItems.Where(x => x.MWOId == Model.MWOId && x.TagId != "" && x.ChapterId != 6).ToList();
+            return result;
 
+        }
+        async Task Validateform()
+        {
+            await form.Validate();
+        }
         public async virtual Task Submit()
         {
             await ValidateForm();
@@ -33,6 +46,13 @@ namespace CPTool.NewPages.Dialogs.Signal.Dialog
 
         void Cancel() => MudDialog.Cancel();
 
-       
+        private string ValidateIOType(IOType arg)
+        {
+            if (arg == IOType.None)
+                return "Must submit In/Out Type";
+
+
+            return null;
+        }
     }
 }

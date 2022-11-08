@@ -1,0 +1,60 @@
+﻿@page "/ControlLoopList/{MWOId:int}"
+@using CPTool.Application.Features.ControlLoopFeatures
+@using CPTool.Application.Features.ControlLoopFeatures.CreateEdit
+@using CPTool.Application.Features.ControlLoopFeatures.Query.GetById
+@using CPTool.Application.Features.ControlLoopFeatures.Query.GetList
+
+@if (ShowAddButton)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="12">
+            <MudPaper Height="32px" Width="100%" Square="true">
+
+                <MudText Align="Align.Center" Typo="Typo.h5">Control Loops for <b>@MWO.Name</b> </MudText>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="12">
+
+            <SimpleListComponent TMaster="EditControlLoop"
+                             TDeleteMaster="DeleteControlLoop"
+                             OnAdd="AddControlLoop"
+                             OnEdit="EditControlLoop"
+                             TMasterList="GetControlLoopListQuery" TGedById="GetByIdControlLoopQuery"
+                             ElementsMasters="@ControlLoops"
+                             @bind-SelectedMaster="@SelectedControlLoop"
+                             OnShowDialogMaster="ToolDialogService.ShowControlLoopDialog">
+
+                <MasterContextTh>
+                    <MudTh>#</MudTh>
+
+                    <MudTh>Name</MudTh>
+
+                </MasterContextTh>
+                <MasterContextTd>
+                    <MudTd DataLabel="#">@context.Id</MudTd>
+
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+
+                </MasterContextTd>
+
+
+
+            </SimpleListComponent>
+
+        </MudItem>
+    </MudGrid>
+
+}
+
+@code {
+
+
+
+
+    public bool ShowAddButton { get; set; } = true;
+
+
+    int mastersm => 6;
+    int detailsm => 6;
+}
+@*   SearchFuncMaster="FilterFuncEqu" SearchFuncDetails="FilterFuncEquSub"*@

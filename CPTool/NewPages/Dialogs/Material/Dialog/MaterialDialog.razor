@@ -8,11 +8,11 @@
                     <MudForm Model="Model" @ref="form">
                         <TextComponent @bind-Model="@Model" Label="Name"
                                        Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialName))"
-                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                                       PropertyName="Name"></TextComponent>
                         <TextComponent @bind-Model="@Model" Label="Letter"
                                        Required=true
                                        Validation="@(new Func<string,string>(GlobalTables.ValidateMaterialAbbName))"
-                                       PropertyName="@nameof(Model.Abbreviation)"></TextComponent>
+                                       PropertyName="Abbreviation"></TextComponent>
 
                     </MudForm>
                 </CascadingValue>

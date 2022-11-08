@@ -22,7 +22,11 @@
                                 <MudItem xs="12" sm="6">
                                     <MWOItemExpensesComponent></MWOItemExpensesComponent>
                                 </MudItem>
-
+                                <MudItem xs="12" sm="12">
+                                    <TextComponent @bind-Model="@Model" Label="Item Name" Disable=false PropertyName="Name"
+                                                   Validation="@(new Func<string,string>(AnyName))" Lines="2"
+                                                   Required=true></TextComponent>
+                                </MudItem>
                             </MudGrid>
                         </MudTabPanel>
                         <MudTabPanel Text="Specs">
@@ -32,7 +36,7 @@
                                 {
                                     case 4:
                                         <MWOItemEquipmentComponent></MWOItemEquipmentComponent>
-                                        
+
                                         break;
                                     case 7:
                                         <MWOItemInstrumentComponent></MWOItemInstrumentComponent>
@@ -46,7 +50,7 @@
                             }
 
                         </MudTabPanel>
-                      
+
                         <MudTabPanel Text="Nozzles">
                             @if (Model.Id != 0 && Model.Chapter != null)
                             {
@@ -90,7 +94,7 @@
                                                       @bind-ProcessFluid=@Model.PipingItem.pProcessFluid></MWOItemProcessConditions>
 
                                         break;
-                                   
+
                                 }
                             }
                         </MudTabPanel>

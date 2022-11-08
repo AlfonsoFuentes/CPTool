@@ -1,11 +1,12 @@
 ﻿@using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList
 @if (ShowAddButton)
 {
-    <ManyToManyComponentOriginal TMasterDetail="EditBrandSupplier"
+    <ManyToManyComponent TMasterDetail="EditBrandSupplier"
                      TMaster="EditBrand" TDetail="EditSupplier"
                      TManagerMasterDetail="ManagerBrandSupplier"
                      TManagerMaster="ManagerBrand"
                      TManagerDetail="ManagerSupplier"
+                     Mastersm="4"
                      @bind-SelectedDetail="@SelectedSupplier"
                      @bind-SelectedMaster="@SelectedBrand"
                      @bind-ElementsMastersDetails=@GlobalTables.BrandSuppliers
@@ -14,8 +15,7 @@
                      ElementsMastersSelected="@(SelectedSupplier.Id==0?GlobalTables.Brands:SelectedSupplier.BrandSuppliers.Select(y=>y.Brand).ToList())"
                      ElementsDetailsSelected="@(SelectedBrand.Id==0?GlobalTables.Suppliers:SelectedBrand.BrandSuppliers.Select(y=>y.Supplier).ToList())"
                      OnShowDialogMaster="ToolDialogService.ShowBrandDialog"
-                     OnShowDialogDetails="ToolDialogService.ShowSupplierDialog"
-                     >
+                     OnShowDialogDetails="ToolDialogService.ShowSupplierDialog">
         <OtherButtonsMaster>
             <MudTooltip Text="Restore Page">
                 <MudIconButton Icon="@Icons.Material.Outlined.RestorePage" OnClick="@(()=>{SelectedSupplier=new();})" Size="Size.Small" />
@@ -26,25 +26,27 @@
                 <MudIconButton Icon="@Icons.Material.Outlined.RestorePage" OnClick="@(()=>{SelectedBrand=new();})" Size="Size.Small" />
             </MudTooltip>
         </OtherButtonsDetails>
+       
         <MasterContextTh>
-            <MudTh Style="width:20px">#</MudTh>
+            <MudTh>#</MudTh>
 
-            <MudTh Style="width:50px">Name</MudTh>
-            <MudTh Style="width:50px">Type</MudTh>
+            <MudTh>Name</MudTh>
+            <MudTh>Type</MudTh>
         </MasterContextTh>
         <MasterContextTd>
             <MudTd DataLabel="Id">@context.Id</MudTd>
 
             <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="BrandType">@context.BrandType.ToString()</MudTd>
+            <MudTd DataLabel="Brand Type">@context.BrandType.ToString()</MudTd>
         </MasterContextTd>
+       
         <DetailContextTh>
-            <MudTh Style="width:20px">#</MudTh>
+            <MudTh>#</MudTh>
 
-            <MudTh Style="width:50px">Name</MudTh>
-            <MudTh Style="width:50px">Vendor Code</MudTh>
-            <MudTh Style="width:50px">Tax Code LD</MudTh>
-            <MudTh Style="width:50px">Tax Code Lp</MudTh>
+            <MudTh>Name</MudTh>
+            <MudTh>Vendor Code</MudTh>
+            <MudTh>Tax Code LD</MudTh>
+            <MudTh>Tax Code Lp</MudTh>
         </DetailContextTh>
         <DetailContextTd>
             <MudTd DataLabel="Id">@context.Id</MudTd>
@@ -54,7 +56,7 @@
             <MudTd DataLabel="Tax Code LD">@context.TaxCodeLD.Name</MudTd>
             <MudTd DataLabel="Tax Code LP">@context.TaxCodeLP.Name</MudTd>
         </DetailContextTd>
-    </ManyToManyComponentOriginal>
+    </ManyToManyComponent>
 
 
 

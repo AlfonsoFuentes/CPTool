@@ -22,21 +22,27 @@
                 </MudTooltip>
             </MasterOtherButtons>
             <MasterContextTh>
-                <MudTh Style="width:40px">#</MudTh>
-                <MudTh Style="width:40px">Tag</MudTh>
-                <MudTh Style="width:40px">Name</MudTh>
-                <MudTh Style="width:40px">Budget, USD</MudTh>
-                <MudTh Style="width:40px">Assigned, USD</MudTh>
+                <MudTh>#</MudTh>
+                <MudTh>Tag</MudTh>
+                <MudTh>Name</MudTh>
+                <MudTh>Budget, USD</MudTh>
+                <MudTh>Assigned, USD</MudTh>
             </MasterContextTh>
             <MasterContextTd>
                 <MudTd DataLabel="#">@context.Nomenclatore</MudTd>
                 <MudTd DataLabel="Tag">@context.TagId</MudTd>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd DataLabel="Budget, USD">@context.BudgetPrize.ToString("C1")</MudTd>
-                <MudTd DataLabel="Budget, USD">@context.Assigned.ToString("C1")</MudTd>
+                <MudTd DataLabel="Assigned, USD">@context.Assigned.ToString("C1")</MudTd>
             </MasterContextTd>
 
-
+            <FooterContent >
+                <MudTd></MudTd>
+                <MudTd></MudTd>
+                <MudTd></MudTd>
+                <MudTd style="bold-text">@MWOItems.Sum(x=>x.BudgetPrize).ToString("C1")</MudTd>
+                <MudTd style="bold-text">@MWOItems.Sum(x=>x.Assigned).ToString("C1")</MudTd>
+            </FooterContent>
 
         </SimpleListComponent>
 

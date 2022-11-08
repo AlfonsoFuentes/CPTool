@@ -234,6 +234,118 @@ namespace CPTool.Infrastructure.Migrations
                     b.ToTable("ContingencyItems");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.ControlLoop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AlarmText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ControlLoopType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ControlledVariableId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ControlledVariableMax")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ControlledVariableMin")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ControlledVariableValue")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("DTerm")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("DirectActing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FailClose")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("ITerm")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("MWOId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ManualOverride")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PTerm")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PVRange")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ProcessVariableId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcessVariableMaxId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcessVariableMinId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcessVariableValueId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SPId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("WindupGuard")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ControlledVariableId");
+
+                    b.HasIndex("MWOId");
+
+                    b.HasIndex("ProcessVariableId");
+
+                    b.HasIndex("ProcessVariableMaxId");
+
+                    b.HasIndex("ProcessVariableMinId");
+
+                    b.HasIndex("ProcessVariableValueId");
+
+                    b.HasIndex("SPId");
+
+                    b.ToTable("ControlLoops");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.DeviceFunction", b =>
                 {
                     b.Property<int>("Id")
@@ -2067,7 +2179,7 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("ElectricalBoxId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FieldLocationId")
+                    b.Property<int?>("FieldLocationId")
                         .HasColumnType("int");
 
                     b.Property<bool>("FrequencyInverter")
@@ -2077,6 +2189,9 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("InstrumentAir")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsWired")
                         .HasColumnType("bit");
 
                     b.Property<int?>("MWOId")
@@ -2089,7 +2204,10 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SignalTypeId")
+                    b.Property<int?>("SignalModifierId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SignalTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdateBy")
@@ -2111,11 +2229,46 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("MWOItemId");
 
+                    b.HasIndex("SignalModifierId");
+
                     b.HasIndex("SignalTypeId");
 
                     b.HasIndex("WireId");
 
                     b.ToTable("Signals");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.SignalModifier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SignalModifier");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.SignalType", b =>
@@ -2698,6 +2851,58 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.ControlLoop", b =>
+                {
+                    b.HasOne("CPTool.Domain.Entities.Signal", "ControlledVariable")
+                        .WithMany("ControlledVariables")
+                        .HasForeignKey("ControlledVariableId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.MWO", "MWO")
+                        .WithMany("ControlLoops")
+                        .HasForeignKey("MWOId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CPTool.Domain.Entities.Signal", "ProcessVariable")
+                        .WithMany("ProcessVariables")
+                        .HasForeignKey("ProcessVariableId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Unit", "ProcessVariableMax")
+                        .WithMany("ProcessVariableMaxs")
+                        .HasForeignKey("ProcessVariableMaxId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Unit", "ProcessVariableMin")
+                        .WithMany("ProcessVariableMins")
+                        .HasForeignKey("ProcessVariableMinId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Unit", "ProcessVariableValue")
+                        .WithMany("ProcessVariableValues")
+                        .HasForeignKey("ProcessVariableValueId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Unit", "SP")
+                        .WithMany("SPs")
+                        .HasForeignKey("SPId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ControlledVariable");
+
+                    b.Navigation("MWO");
+
+                    b.Navigation("ProcessVariable");
+
+                    b.Navigation("ProcessVariableMax");
+
+                    b.Navigation("ProcessVariableMin");
+
+                    b.Navigation("ProcessVariableValue");
+
+                    b.Navigation("SP");
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.DownPayment", b =>
@@ -3391,8 +3596,7 @@ namespace CPTool.Infrastructure.Migrations
                     b.HasOne("CPTool.Domain.Entities.FieldLocation", "FieldLocation")
                         .WithMany("Signals")
                         .HasForeignKey("FieldLocationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.MWO", "MWO")
                         .WithMany("Signals")
@@ -3404,11 +3608,15 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("MWOItemId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("CPTool.Domain.Entities.SignalModifier", "SignalModifier")
+                        .WithMany("Signals")
+                        .HasForeignKey("SignalModifierId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("CPTool.Domain.Entities.SignalType", "SignalType")
                         .WithMany("Signals")
                         .HasForeignKey("SignalTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.Wire", "Wire")
                         .WithMany("Signals")
@@ -3422,6 +3630,8 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("MWO");
 
                     b.Navigation("MWOItem");
+
+                    b.Navigation("SignalModifier");
 
                     b.Navigation("SignalType");
 
@@ -3644,6 +3854,8 @@ namespace CPTool.Infrastructure.Migrations
 
             modelBuilder.Entity("CPTool.Domain.Entities.MWO", b =>
                 {
+                    b.Navigation("ControlLoops");
+
                     b.Navigation("MWOItems");
 
                     b.Navigation("PurchaseOrders");
@@ -3760,6 +3972,18 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("InstrumentItems");
                 });
 
+            modelBuilder.Entity("CPTool.Domain.Entities.Signal", b =>
+                {
+                    b.Navigation("ControlledVariables");
+
+                    b.Navigation("ProcessVariables");
+                });
+
+            modelBuilder.Entity("CPTool.Domain.Entities.SignalModifier", b =>
+                {
+                    b.Navigation("Signals");
+                });
+
             modelBuilder.Entity("CPTool.Domain.Entities.SignalType", b =>
                 {
                     b.Navigation("Signals");
@@ -3827,7 +4051,15 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Navigation("Pressures");
 
+                    b.Navigation("ProcessVariableMaxs");
+
+                    b.Navigation("ProcessVariableMins");
+
+                    b.Navigation("ProcessVariableValues");
+
                     b.Navigation("ReynoldPipeAccesorys");
+
+                    b.Navigation("SPs");
 
                     b.Navigation("SpecificCps");
 

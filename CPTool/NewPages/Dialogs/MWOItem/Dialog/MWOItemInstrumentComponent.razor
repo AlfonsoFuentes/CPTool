@@ -52,7 +52,7 @@
             <TextComponent @bind-Model="@DialogParent.Model.InstrumentItem" Label="Tag Number"
                        RequiredError="Must have Tag Number"
                        Required=true
-                       PropertyName="@nameof(Model.TagNumber)"></TextComponent>
+                       PropertyName="TagNumber"></TextComponent>
 
 
 
@@ -90,19 +90,19 @@
         <MudItem xs="12" sm="6">
             <TextComponent @bind-Model="@DialogParent.Model.InstrumentItem"
                        Label="Equipment Model"
-                       PropertyName="@nameof(Model.Model)"></TextComponent>
+                       PropertyName="Model"></TextComponent>
             <TextComponent @bind-Model="@DialogParent.Model.InstrumentItem"
                        Label="Reference"
-                       PropertyName="@nameof(Model.Reference)"></TextComponent>
+                       PropertyName="Reference"></TextComponent>
             <TextComponent @bind-Model="@DialogParent.Model.InstrumentItem"
                        Label="Serial Number"
-                       PropertyName="@nameof(Model.SerialNumber)"></TextComponent>
+                       PropertyName="SerialNumber"></TextComponent>
         </MudItem>
         <MudItem xs="12" sm="6">
             <AutoCompleteComponent TEdit="EditGasket"
                                TList="GetGasketListQuery"
                                TGedById="GetByIdGasketQuery"
-                               PropertyName="@nameof(Model.iGasket.Name)"
+                               PropertyName="Name"
                                TableName="Gasket"
                                Label="Gasket"
                                ValidateForm="DialogParent.Validateform"
@@ -113,7 +113,7 @@
             <AutoCompleteComponent TEdit="EditMaterial"
                                TList="GetMaterialListQuery"
                                TGedById="GetByIdMaterialQuery"
-                               PropertyName="@nameof(Model.iOuterMaterial.Name)"
+                               PropertyName="Name"
                                Label="Outer Material"
                                TableName="Material"
                                ValidateForm="DialogParent.Validateform"
@@ -125,7 +125,7 @@
             <AutoCompleteComponent TEdit="EditMaterial"
                                TList="GetMaterialListQuery"
                                TGedById="GetByIdMaterialQuery"
-                               PropertyName="@nameof(Model.iInnerMaterial.Name)"
+                               PropertyName="Name"
                                Label="Inner Material"
                                TableName="Material"
                                ValidateForm="DialogParent.Validateform"

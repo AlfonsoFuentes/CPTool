@@ -14,13 +14,17 @@
 
 
         <MudTable @ref="mudTable"
+                  T="EditSignal"
                   Filter="new Func<EditSignal,bool>(FilterFunc1)"
                   Hover="true" Breakpoint="Breakpoint.Sm" Height="500px" FixedHeader="true"
                   Items="@MWOSignals"
                   GroupBy="@_groupDefinition"
+                  OnRowClick="RowClicked"
+                 
                   GroupHeaderStyle="background-color:var(--mud-palette-background-grey)"
                   GroupFooterClass="mb-4"
                   Dense="_dense"
+                   SelectedItem="@SignalSelected"
                   MultiSelection="_multiSelect">
             <ToolBarContent>
                 <ToolBarComponent ShowAddButton=true
@@ -28,10 +32,13 @@
                                   DisableAddButton=false
                                   ShowDeleteButton=true
                                   OnAdd="AddSignal"
-                                  OnDelete="DeleteSignal"
+                                  OnDelete="DeleteSignalFunction"
                                   OnEdit="EditSignal">
 
                 </ToolBarComponent>
+                @SignalSelected.Name
+
+                <MudSpacer />
                 <MudSpacer />
                 <MudTextField @bind-Value="searchString1"
                               Placeholder="Search"
@@ -43,23 +50,23 @@
                 </MudTextField>
             </ToolBarContent>
             <HeaderContent>
-                <MudTh>#</MudTh>
-                <MudTh>Name</MudTh>
-                <MudTh>Type</MudTh>
-                <MudTh>I/O</MudTh>
+               
+                <MudTh>Signal name</MudTh>
+                <MudTh>Signal type</MudTh>
+                <MudTh>I/O type</MudTh>
                 <MudTh>Location</MudTh>
-
+                <MudTh>Electrical Box</MudTh>
             </HeaderContent>
             <GroupHeaderTemplate>
                 <MudTh Class="mud-table-cell-custom-group" colspan="6">@($"{context.GroupName}: {context.Key}")</MudTh>
                 </GroupHeaderTemplate>
                 <RowTemplate>
-                    <MudTd DataLabel="#">@context.Id</MudTd>
-                    <MudTd DataLabel="Nr">@context.Name</MudTd>
-                    <MudTd DataLabel="Sign">@context.SignalType</MudTd>
-                    <MudTd DataLabel="I/O">@context.IOType.ToString()</MudTd>
-                    <MudTd DataLabel="Location">@context.FieldLocation.Name</MudTd>
-
+                   
+                    <MudTd DataLabel="Signal name">@context.Name</MudTd>
+                    <MudTd DataLabel="Signal type">@context.SignalType?.Name</MudTd>
+                    <MudTd DataLabel="I/O type">@context.IOType.ToString()</MudTd>
+                    <MudTd DataLabel="Location">@context.FieldLocation?.Name</MudTd>
+                    <MudTd DataLabel="Electrical Box">@context.ElectricalBox?.Name</MudTd>
 
                 </RowTemplate>
                 <GroupFooterTemplate>
@@ -68,28 +75,23 @@
             </MudTable>
 
 
-            @code {
+
+        </MudItem>
+    </MudGrid>
 
 
-
-
+    <style>
+        .mud-table-cell-custom-group {
+            font-weight: 500;
         }
-    </MudItem>
-</MudGrid>
 
+        .mud-table-cell-custom-group-footer {
+            padding-bottom: 50px;
+            text-align: right;
+        }
+    </style>
 
-<style>
-    .mud-table-cell-custom-group {
-        font-weight: 500;
-    }
-
-    .mud-table-cell-custom-group-footer {
-        padding-bottom: 50px;
-        text-align: right;
-    }
-</style>
-
-@code {
+    @code {
     private MudTable<EditSignal> mudTable;
     private bool _dense = true;
     private bool _multiSelect = false;
@@ -97,21 +99,24 @@
     private TableGroupDefinition<EditSignal> _groupDefinition = new TableGroupDefinition<EditSignal>()
         {
             GroupName = "Signal Type",
-            Indentation = false,
+            Indentation = true,
             Expandable = true,
-            Selector = (e) => e.SignalType,
+            Selector = (e) => e.SignalType.Name,
             InnerGroup = new TableGroupDefinition<EditSignal>()
             {
                 GroupName = "I/O Type",
+                Indentation = true,
                 Expandable = true,
                 Selector = (e) => e.IOType
             }
 
         };
+    GetSignalListQuery getSignalListQuery = new();
     private bool FilterFunc1(EditSignal element) => FilterFunc(element, searchString1);
     private bool FilterFunc(EditSignal element, string searchString)
     {
-        var retorno = SearchFunc.Invoke(element, searchString);///* SearchFunc == null ?*/ element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) /*: SearchFunc.Invoke(element, searchString)*/;
+
+        var retorno = getSignalListQuery.FilterFunc(element,searchString);// SearchFunc.Invoke(element, searchString);///* SearchFunc == null ?*/ element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) /*: SearchFunc.Invoke(element, searchString)*/;
         return retorno;
 
 

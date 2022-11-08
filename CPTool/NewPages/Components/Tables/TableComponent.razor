@@ -1,0 +1,80 @@
+﻿@typeparam T
+@if (debug)
+{
+    <MudTable T="T"
+          @ref="@mudTable"
+          Breakpoint="Breakpoint.Sm"
+          Items="@Elements"
+          Dense="@dense"
+          Hover="@hover"
+          Bordered="@bordered"
+          Striped="@striped"
+          OnRowClick="OnRowClicked"
+          Loading=@Loading
+          ReadOnly=true
+          RowsPerPage="15"
+          Filter="new Func<T,bool>(FilterFunc1)"
+          @bind-SelectedItem="@SelectedItem">
+        <ToolBarContent>
+
+            <ToolBarComponent ShowAddButton=@ShowAddButton
+                          DisableEditButton=@DisableEditButton
+                          DisableAddButton=@DisableAddButton
+                          ShowDeleteButton=@ShowDeleteButton
+                          OnAdd="OnAdd"
+                          OnDelete="OnDelete"
+                          OnEdit="OnEdit">
+                <OtherButtons>
+                    @OtherButtons
+                </OtherButtons>
+            </ToolBarComponent>
+            @SelectedItemName
+
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString1"
+                      Placeholder="Search"
+                      Adornment="Adornment.Start"
+                      Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0">
+            </MudTextField>
+        </ToolBarContent>
+        <ColGroup>
+            <col style="width: 1%;" />
+        </ColGroup>
+        <HeaderContent>
+            @ContextTh
+        </HeaderContent>
+        <RowTemplate>
+            @ContextTd!(context)
+        </RowTemplate>
+        <FooterContent>
+            @FooterContent
+        </FooterContent>
+       
+        <PagerContent>
+           <MudTablePager   PageSizeOptions="new int[]{25, 50, 100}" />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    bool debug = true;
+    private MudTable<T> mudTable;
+    
+    private bool hover = true;
+    private bool striped = true;
+    private bool bordered = true;
+    private string searchString1 = "";
+    private bool dense = true;
+    [Parameter]
+    public bool ShowAddButton { get; set; } = true;
+    [Parameter]
+    public bool DisableAddButton { get; set; } = false;
+    [Parameter]
+    public bool DisableEditButton { get; set; } = false;
+    [Parameter]
+    public bool ShowDeleteButton { get; set; } = true;
+
+}

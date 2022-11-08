@@ -8,24 +8,29 @@
                     <MudForm Model="Model" @ref="form">
                         <AutoCompleteComponent TEdit="EditMWOType"
                                                TList="GetMWOTypeListQuery" TGedById="GetByIdMWOTypeQuery"
-                                               PropertyName="@nameof(ProcessFluid.Name)"
+                                               PropertyName="Name"
                                                TableName="MWO Type"
                                                Label="MWO Type"
-                                              
                                                ValidateForm="Validateform"
                                                @bind-Elements="@GlobalTables.MWOTypes"
                                                Validation="@(new Func<string, string>(ReviewMWOType))"
                                                @bind-Model=@Model.MWOType></AutoCompleteComponent>
 
-                        <TextComponent @bind-Model="@Model" Label="MWO Name" PropertyName="@nameof(Model.Name)"
-                         Validation="@(new Func<string, string>(ReviewMWOName))"
-                        ></TextComponent>
-                        <NumericComponent @bind-Model="@Model" Label="MWO number"
-                                          Validation="@(new Func<int, string>(AnyNumber))"
-                                          Mask="@mask1"
-                                          PropertyName="@nameof(Model.Number)"></NumericComponent>
+                        <TextComponent @bind-Model="@Model" Label="MWO Name" PropertyName="Name"
+                                       Validation="@(new Func<string, string>(ReviewMWOName))"></TextComponent>
+                        <MudNumericField T="int" @bind-Value="@Model.Number"
+                                         Immediate="true"
+                                         HideSpinButtons="true"
+                                         Margin="Margin.Dense"
+                                         Validation="@(new Func<int, string>(AnyNumber))"
+                                       
+                                         Required=true
+                                         Variant="Variant.Outlined"
+                                         Label="MWO number"></MudNumericField>
 
-                        
+
+
+
                         <FieldComponent Value="Model.CEBName"
                                         Label="CEB Name" />
                         <FieldComponent Value="Model.CECName"

@@ -44,14 +44,14 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         {
             if (arg == null || arg == "")
                 return "Must submit Purchase Order name";
-            
+
             return null;
         }
         private string ValidatePurchaseRequisition(string arg)
         {
             if (arg == null || arg == "")
                 return "Must submit Purchase Requistion Name";
-            if(GlobalTables.PurchaseOrders.Any(x => x.PurchaseRequisition == arg))
+            if (GlobalTables.PurchaseOrders.Any(x => x.PurchaseRequisition == arg))
             {
                 return "Existing Purchase Requistion ";
             }
@@ -64,9 +64,9 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         }
         private string ValidateBrand(int arg)
         {
-            if (arg == 0 )
+            if (arg == 0)
                 return "Must submit Brand";
-        
+
             return null;
 
         }
@@ -92,13 +92,14 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         }
         private async Task ItemUpdated(MudItemDropInfo<DropItem> dropItem)
         {
+            var dropZone = dropItem.Item.Identifier;
             dropItem.Item.Identifier = dropItem.DropzoneIdentifier;
             var MWOItem = dropItem.Item.MWOItem;
-          
+
             Model.PurchaseOrder.TaxCode = Model.PurchaseOrder.TaxCode == "" ?
-                MWOItem.ChapterId == 1 ? 
-                Model.PurchaseOrder.pSupplier!.TaxCodeLP!.Name : Model.PurchaseOrder.pSupplier!.TaxCodeLD!.Name: Model.PurchaseOrder.TaxCode;
-            Model.PurchaseOrder.SPL = Model.PurchaseOrder.SPL==""? MWOItem.ChapterId == 1 ? "0735015000" : "151605000" : Model.PurchaseOrder.SPL;
+                MWOItem.ChapterId == 1 ?
+                Model.PurchaseOrder.pSupplier!.TaxCodeLP!.Name : Model.PurchaseOrder.pSupplier!.TaxCodeLD!.Name : Model.PurchaseOrder.TaxCode;
+            Model.PurchaseOrder.SPL = Model.PurchaseOrder.SPL == "" ? MWOItem.ChapterId == 1 ? "0735015000" : "151605000" : Model.PurchaseOrder.SPL;
             Model.PurchaseOrder.CostCenter = MWOItem!.ChapterId! == 1 ? MWOItem!.AlterationItem!.CostCenter! : "";
             Model.PurchaseOrder.MWOItem = MWOItem;
             var result = await ToolDialogService.ShowAddDataToPurchaseOrderDialog(Model.PurchaseOrder);
@@ -107,6 +108,10 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
                 var retorno = result.Data as EditPurchaseOrder;
                 Model.MWOItems.Add(dropItem.Item.MWOItem);
 
+            }
+            else
+            {
+                dropItem.Item.Identifier = dropZone;
             }
 
 
@@ -118,7 +123,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
             {
                 _items.Add(new DropItem()
                 {
-                    Name = $"{row.TagId} {row.Name}",
+                    Name = row.TagId == "" ? row.Name : $"{row.TagId}_{row.Name}",
                     Identifier = "Drop Zone 2",
                     MWOItem = row
                 });

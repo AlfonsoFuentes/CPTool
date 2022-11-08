@@ -23,7 +23,7 @@ namespace CPTool.NewPages.Dialogs.MWO.List
             CreatePurchaseOrder.PurchaseOrder.MWO = SelectedMaster;
             
 
-            var result=await ToolDialogService.ShowPurchaseOrderDialog(CreatePurchaseOrder);
+            var result=await ToolDialogService.ShowAddPurchaseOrderDialog(CreatePurchaseOrder);
 
             if(!result.Cancelled)
             {
@@ -58,6 +58,10 @@ namespace CPTool.NewPages.Dialogs.MWO.List
         {
             Navigation.NavigateTo($"UserRequirementList/{SelectedMaster.Id}");
         }
+        void GoToPurchaseOrderList()
+        {
+            Navigation.NavigateTo($"PurchaseOrderList/{SelectedMaster.Id}");
+        }
         void GoToUserSignalList()
         {
             Navigation.NavigateTo($"SignaList/{SelectedMaster.Id}");
@@ -65,6 +69,10 @@ namespace CPTool.NewPages.Dialogs.MWO.List
         void GoToMWOItemList()
         {
             Navigation.NavigateTo($"MWOItemList/{SelectedMaster.Id}");
+        }
+        void GoToControlLoopList()
+        {
+            Navigation.NavigateTo($"ControlLoopList/{SelectedMaster.Id}");
         }
     }
 }

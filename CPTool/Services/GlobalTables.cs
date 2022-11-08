@@ -4,6 +4,11 @@
 
 
 
+using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
+using CPTool.Application.Features.ControlLoopFeatures.Query.GetList;
+using CPTool.Application.Features.SignalModifierFeatures.Query.GetList;
+using CPTool.Application.Features.SignalModifiersFeatures.CreateEdit;
+
 namespace CPTool.Services
 {
 
@@ -48,7 +53,8 @@ namespace CPTool.Services
         public static List<EditFieldLocation> FieldLocations { get; set; } = new();
         public static List<EditWire> Wires { get; set; } = new();
         public static List<EditSignalType> SignalTypes { get; set; } = new();
-
+        public static List<EditSignalModifier> SignalModifiers { get; set; } = new();
+        public static List<EditControlLoop> ControlLoops { get; set; } = new();
         public static async Task InitializeTables(IMediator Mediator)
         {
 
@@ -90,6 +96,8 @@ namespace CPTool.Services
             GetFieldLocationListQuery getFieldLocationListQuery = new();
             GetWireListQuery getWireListQuery = new();
             GetSignalTypeListQuery getSignalTypeListQuery = new();
+            GetSignalModifierListQuery getSignalMoOdifierListQuery = new();
+            GetControlLoopListQuery getControlLoopListQuery = new();
             MWOTypes = await Mediator.Send(MWOTypeList);
             Chapters = await Mediator.Send(ChapterList);
             MWOs = await Mediator.Send(MWOList);
@@ -133,6 +141,9 @@ namespace CPTool.Services
             FieldLocations = await Mediator.Send(getFieldLocationListQuery);
             Wires = await Mediator.Send(getWireListQuery);
             SignalTypes = await Mediator.Send(getSignalTypeListQuery);
+            SignalModifiers = await Mediator.Send(getSignalMoOdifierListQuery);
+            ControlLoops=await Mediator.Send(getControlLoopListQuery);
+
         }
         public static string ValidateGasket(string arg)
         {
@@ -213,6 +224,22 @@ namespace CPTool.Services
                 return "Must submit Tax Code LP";
             if (!TaxCodeLPs.Any(x => x.Name == arg))
                 return $"Tax Code LP: {arg} is not in the list";
+            return null;
+        }
+        public static string ValidateSignalType(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit Signal Type";
+            if (!SignalTypes.Any(x => x.Name == arg))
+                return $"Signal Type: {arg} is not in the list";
+            return null;
+        }
+        public static string ValidateSignalModifier(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit Signal Modifier";
+            if (!SignalModifiers.Any(x => x.Name == arg))
+                return $"Signal Modifier: {arg} is not in the list";
             return null;
         }
     }

@@ -66,7 +66,7 @@ namespace CPtool.ExtensionMethods
                         InitializeExpressionParser();
                     try
                     {
-                        var Expr = ExpContext.CompileGeneric<int>(str);
+                        var Expr = ExpContext!.CompileGeneric<int>(str);
                         var result = Expr.Evaluate();
                         return result;
                     }
@@ -96,7 +96,7 @@ namespace CPtool.ExtensionMethods
                         InitializeExpressionParser();
                     try
                     {
-                        var Expr = ExpContext.CompileGeneric<float>(str);
+                        var Expr = ExpContext!.CompileGeneric<float>(str);
                         var result = Expr.Evaluate();
                         return result;
                     }
@@ -126,7 +126,7 @@ namespace CPtool.ExtensionMethods
                         InitializeExpressionParser();
                     try
                     {
-                        var Expr = ExpContext.CompileGeneric<decimal>(str);
+                        var Expr = ExpContext!.CompileGeneric<decimal>(str);
                         var result = Expr.Evaluate();
                         return result;
                     }

@@ -8,26 +8,29 @@
                         TMasterList="GetEquipmentTypeListQuery" TDetailList="GetEquipmentTypeSubListQuery"
                         TMasterGedById="GetByIdEquipmentTypeQuery" TDetailGedById="GetByIdEquipmentTypeSubQuery"
                         @bind-ElementsMasters="@GlobalTables.EquipmentTypes"
-                     
-                        ElementsDetails="@SelectedEqu.EquipmentTypeSubs"
+                        @bind-ElementsDetails="@GlobalTables.EquipmentTypeSubs"
+                        ElementsMastersSelected="@GlobalTables.EquipmentTypes"
+                        ElementsDetailsSelected="@EquipmentSubs"
                         @bind-SelectedMaster="@SelectedEqu"
                         @bind-SelectedDetail="@SelectedEquSub"
                         OnShowDialogMaster="ToolDialogService.ShowEquipmentType"
                         OnShowDialogDetails="ToolDialogService.ShowEquipmentTypeSub">
+        
         <MasterContextTh>
-            <MudTh Style="width:40px">#</MudTh>
-            <MudTh Style="width:40px">Name</MudTh>
-            <MudTh Style="width:40px">Tag Letter</MudTh>
+            <MudTh >#</MudTh>
+            <MudTh >Name</MudTh>
+            <MudTh >Tag Letter</MudTh>
         </MasterContextTh>
         <MasterContextTd>
             <MudTd DataLabel="#">@context.Id</MudTd>
             <MudTd DataLabel="Name">@context.Name</MudTd>
             <MudTd DataLabel="TagLetter">@context.TagLetter</MudTd>
         </MasterContextTd>
+        
         <DetailContextTh>
-            <MudTh Style="width:40px">#</MudTh>
-            <MudTh Style="width:40px">Name</MudTh>
-            <MudTh Style="width:40px">Tag Letter</MudTh>
+            <MudTh >#</MudTh>
+            <MudTh >Name</MudTh>
+            <MudTh >Tag Letter</MudTh>
         </DetailContextTh>
         <DetailContextTd>
             <MudTd DataLabel="#">@context.Id</MudTd>

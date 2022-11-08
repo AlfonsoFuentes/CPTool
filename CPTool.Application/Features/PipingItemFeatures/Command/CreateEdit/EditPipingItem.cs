@@ -7,6 +7,7 @@ using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
 {
@@ -52,9 +53,16 @@ namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
         }
         string SetTagId()
         {
-            var tag =$"{pDiameter?.Name}-{pProcessFluid?.TagLetter}-{TagNumber}-{pMaterial?.Abbreviation}-{(Insulation ? 1 : 0)}";
+            if (pDiameter == null) return "";
+            if (pProcessFluid == null) return $"{pDiameter?.Name}";
+            if (pMaterial == null) return $"{pDiameter?.Name}-{pProcessFluid?.TagLetter}";
+            if (TagNumber == "") return $"{pDiameter?.Name}-{pProcessFluid?.TagLetter}-{pMaterial?.Abbreviation}";
+
+            var tag =$"{pDiameter?.Name}-{pProcessFluid?.TagLetter}-{pMaterial?.Abbreviation}-{TagNumber}-{(Insulation ? 1 : 0)}";
 
             return tag;
         }
+        
+
     }
 }

@@ -18,8 +18,10 @@
         [ForeignKey("MWOId")]
         public ICollection<Taks> Taks { get; set; } = null!;
         public ICollection<UserRequirement> UserRequirements { get; set; } = null!;
-
+        [ForeignKey("MWOId")]
         public ICollection<Signal> Signals { get; set; } = null!;
+        public ICollection<ControlLoop> ControlLoops { get; set; } = null!;
+        
     }
 
 

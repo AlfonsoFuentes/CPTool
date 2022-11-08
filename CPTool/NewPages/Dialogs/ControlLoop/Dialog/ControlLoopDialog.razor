@@ -1,0 +1,100 @@
+﻿@if (debug)
+{
+
+}
+<MudDialog DisableSidePadding="true">
+    <DialogContent>
+        <MudContainer Style="max-height: 650px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+            <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                <CascadingValue Value="this">
+
+
+                    <MudForm Model="Model" @ref="form">
+
+                        <MudGrid>
+                            <MudItem xs="12" sm="6">
+                                <MudSelect Dense="true"
+                                           Margin="Margin.Dense"
+                                           T="ControlLoopType"
+                                           Label="Select  Control Loop Type"
+                                           AnchorOrigin="Origin.BottomCenter"
+                                           Required=true
+                                           @bind-Value=@Model.ControlLoopType
+                                           Validation="@(new Func<ControlLoopType, string>(ValidateControlLoopType))"
+                                           Variant="Variant.Outlined">
+                                    @foreach (var item in Enum.GetValues<ControlLoopType>())
+                                    {
+                                        <MudSelectItem Value="item">@item</MudSelectItem>
+                                    }
+
+                                </MudSelect>
+                                <SelectComponent T="EditSignal"
+                                                 Elements=@signalsIn
+                                                 Label="Process Variable Signal"
+                                                 @bind-Value="@Model.ProcessVariable">
+
+
+                                </SelectComponent>
+                                <SelectComponent T="EditSignal"
+                                                 Elements=@signalsOut
+                                                 Label="Controlled Variable Signal"
+                                                 
+                                                 @bind-Value="@Model.ControlledVariable">
+
+
+                                </SelectComponent>
+                                <FieldComponent Label="Process Variable Signal" Value="@Model.ProcessVariable.Name"></FieldComponent>
+                                <FieldComponent Label="Controlled Variable Signal" Value="@Model.ControlledVariable.Name"></FieldComponent>
+                                @if (Model.ControlLoopType== ControlLoopType.PIDControl)
+                                {
+
+                                }
+
+                            </MudItem>
+                          
+                            @*<MudItem xs="0" sm="4">
+                                <MudContainer Style="max-height: 350px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Large">
+                                    <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
+                                        <MudListSubheader>Signals In</MudListSubheader>
+                                        @foreach (var row in signalsIn)
+                                        {
+                                            <MudListItem Text="@row.Name" OnClick=@(()=>Model.ProcessVariable=row)
+                                                     Dense="true" />
+
+                                        }
+                                    </MudList>
+                                </MudContainer>
+                            </MudItem>
+                            <MudItem xs="0" sm="4">
+                                <MudContainer Style="max-height: 350px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Large">
+                                    <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
+                                        <MudListSubheader>Signals Out</MudListSubheader>
+                                        @foreach (var row in signalsOut)
+                                        {
+                                            <MudListItem Text="@row.Name" OnClick=@(()=>Model.ControlledVariable=row)
+                                                     Dense="true" />
+                                        }
+                                    </MudList>
+                                </MudContainer>
+
+                            </MudItem>*@
+                        </MudGrid>
+
+
+
+                    </MudForm>
+                </CascadingValue>
+
+            </MudPaper>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    bool debug = true;
+}

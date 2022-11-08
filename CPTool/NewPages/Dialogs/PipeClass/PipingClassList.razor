@@ -14,26 +14,30 @@
                         TDeleteMaster="DeletePipeClass" TDeleteDetail="DeletePipeDiameter"
                         TMasterList="GetPipeClassListQuery" TDetailList="GetPipeDiameterListQuery"
                         TMasterGedById="GetByIdPipeClassQuery" TDetailGedById="GetByIdPipeDiameterQuery"
-                        @bind-ElementsMasters="GlobalTables.PipeClasses"
-                        ElementsDetails="@SelectedMaster.PipeDiameters"
+                        @bind-ElementsMasters="@GlobalTables.PipeClasses"
+                        @bind-ElementsDetails="@GlobalTables.PipeDiameters"
+                        ElementsMastersSelected="@GlobalTables.PipeClasses"
+                        ElementsDetailsSelected="@SelectedMaster.PipeDiameters"
+
+                       
                         @bind-SelectedMaster="@SelectedMaster"
                         @bind-SelectedDetail="@SelectedDetail"
                         OnShowDialogMaster="ToolDialogService.ShowNameDialog"
                         OnShowDialogDetails="ToolDialogService.ShowPipeDiameterDialog">
         <MasterContextTh>
-            <MudTh Style="width:40px">#</MudTh>
-            <MudTh Style="width:40px">Name</MudTh>
+            <MudTh >#</MudTh>
+            <MudTh >Name</MudTh>
         </MasterContextTh>
         <MasterContextTd>
             <MudTd DataLabel="#">@context.Id</MudTd>
             <MudTd DataLabel="Name">@context.Name</MudTd>
         </MasterContextTd>
         <DetailContextTh>
-            <MudTh Style="width:40px">#</MudTh>
-            <MudTh Style="width:40px">Name</MudTh>
-            <MudTh Style="width:40px">OD</MudTh>
-            <MudTh Style="width:40px">ID</MudTh>
-            <MudTh Style="width:40px">Thickness</MudTh>
+            <MudTh >#</MudTh>
+            <MudTh >Name</MudTh>
+            <MudTh >OD</MudTh>
+            <MudTh >ID</MudTh>
+            <MudTh >Thickness</MudTh>
         </DetailContextTh>
         <DetailContextTd>
             <MudTd DataLabel="#">@context.Id</MudTd>

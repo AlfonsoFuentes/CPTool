@@ -13,13 +13,13 @@
                                        Label="Name"
                                        Required=true
                                        Validation="@(new Func<string, string>(ValidateRequestedByName))"
-                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                                       PropertyName="Name"></TextComponent>
 
                             
 
                            <TextComponent @bind-Model="@Model" Label="User email" Disable=@(Model.Id == 0?false:true)
                                                Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"
-                                       PropertyName="@nameof(Model.Email)" Required=true></TextComponent>
+                                       PropertyName="Email" Required=true></TextComponent>
 
 
                         </MudForm>

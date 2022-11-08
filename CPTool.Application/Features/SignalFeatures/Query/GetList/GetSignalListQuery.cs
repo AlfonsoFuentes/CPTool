@@ -9,7 +9,7 @@ namespace CPTool.Application.Features.SignalFeatures.Query.GetList
     public class GetSignalListQuery : GetListQuery, IRequest<List<EditSignal>>
     {
 
-
+        
 
     }
     public class GetSignalListQueryHandler :

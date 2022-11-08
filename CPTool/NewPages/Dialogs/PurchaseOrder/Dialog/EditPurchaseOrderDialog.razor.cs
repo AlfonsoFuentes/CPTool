@@ -9,7 +9,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         [Parameter]
         public EditPurchaseOrder Model { get; set; } = null!;
 
-       
+
 
         [Parameter]
         public MudForm form { get; set; } = null!;
@@ -63,8 +63,14 @@ Model.PurchaseOrderStatus == PurchaseOrderStatus.Created ? PurchaseOrderStatus.R
                 return "PO number must start with 850";
             if (arg.Length != 10)
                 return "PO number must have ten numbers";
-            if (Model.PurchaseOrderStatus==PurchaseOrderStatus.Ordering&& GlobalTables.PurchaseOrders.Any(x => x.PONumber == arg))
-                return "PO number existing";
+            if (Model.PurchaseOrderStatus == PurchaseOrderStatus.Ordering)
+            {
+                if (GlobalTables.PurchaseOrders.Any(x => x.Id != Model.Id && x.PONumber == arg))
+                {
+                    return "PO number existing";
+                }
+            }
+
             return null;
 
         }

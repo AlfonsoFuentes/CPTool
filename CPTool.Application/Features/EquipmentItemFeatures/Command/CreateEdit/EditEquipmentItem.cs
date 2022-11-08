@@ -38,13 +38,27 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.CreateEdit
         public int? eSupplierId => eSupplier?.Id == 0 ? null : eSupplier?.Id;
         public EditSupplier? eSupplier { get; set; } = new();
         public string TagNumber { get; set; } = "";
-        public string TagLetter { get; set; } = "";
-        public string TagId => $"{eEquipmentType?.TagLetter}{eEquipmentTypeSub?.TagLetter}-{TagNumber}";
+        public string TagLetter => SetTagLetter();
+        public string TagId => GetTagId();
         public string Model { get; set; } = "";
         public string Reference { get; set; } = "";
         public string SerialNumber { get; set; } = "";
 
+        public string GetTagId()
+        {
+            if (TagLetter == "") return "";
+            if (TagNumber == "") return $"{TagLetter}";
+            return $"{TagLetter}_{TagNumber}";
 
+          
+        }
+        string SetTagLetter()
+        {
+            if (eEquipmentType == null) return "";
+
+            string tag = $"{eEquipmentType?.TagLetter}{eEquipmentTypeSub?.TagLetter}";
+            return tag;
+        }
 
         public override T AddDetailtoMaster<T>()
         {

@@ -14,7 +14,8 @@ namespace CPTool.Application.Features.SignalsFeatures.CreateEdit
 {
     public class AddSignal : AddCommand
     {
-
+        public bool IsWired { get; set; }
+        public int? SignalModifierId { get; set; }
         public int? SignalTypeId { get; set; }
         public IOType IOType { get; set; }
 

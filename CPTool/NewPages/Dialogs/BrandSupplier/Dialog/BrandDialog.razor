@@ -35,7 +35,7 @@
                         {
                             <TextComponent @bind-Model="@Model.Brand" Label=@Model.Brand.BrandType.ToString()
                                        Validation="@(new Func<string, string>(ValidateBrandName))"
-                                       PropertyName="@nameof(Model.Brand.Name)" Required=true></TextComponent>
+                                       PropertyName="Name" Required=true></TextComponent>
 
                         }
                     </MudForm>

@@ -11,16 +11,11 @@
                             <TextComponent @bind-Model="@Model"
                                        Label="Name"
                                        Lines="2"
-                                       PropertyName="@nameof(Model.Name)"></TextComponent>
-                            <MudDatePicker Label="Estimated Task Date"
-                                       Editable=true
-                                       Required=true
-                                       Margin="Margin.Dense"
-                                       DisableToolbar="false"
-                                       Variant="Variant.Outlined"
-                                       ShowWeekNumbers=true
-                                       RequiredError="Must define estimated Downpayment due date"
-                                       @bind-Date="Model.ExpectedDate" Culture="@_en"></MudDatePicker>
+                                       PropertyName="Name"></TextComponent>
+                            <MudDatePicker Margin="Margin.Dense"
+                                       Variant="Variant.Outlined" Label="Estimated Task Date" @bind-Date="Model.ExpectedDate"></MudDatePicker>
+
+
 
                             @if (Model.MWO != null)
                             {

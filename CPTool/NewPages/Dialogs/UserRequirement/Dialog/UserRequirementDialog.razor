@@ -17,13 +17,13 @@
                                        Required=true
                                        Lines="2"
                                        Validation="@(new Func<string, string>(ValidateUserRequirementName))"
-                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                                       PropertyName="Name"></TextComponent>
 
                           
                             <AutoCompleteComponent TEdit="EditUser"
                                                TList="GetUserListQuery"
                                                TGedById="GetByIdUserByQuery"
-                                               PropertyName="@nameof(Model.RequestedBy.Name)"
+                                               PropertyName="Name"
                                                Label="Requested By:"
                                                TableName="RequestedBy"
                                                ValidateForm="ValidateForm"

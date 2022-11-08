@@ -25,13 +25,13 @@
                                        Label="Process Fluid Name"
                                        Required=true
                                        Validation="@(new Func<string, string>(ValidateProcessFluidName))"
-                                       PropertyName="@nameof(Model.Name)"></TextComponent>
+                                       PropertyName="Name"></TextComponent>
 
                             <TextComponent @bind-Model="@Model"
                                        Label="Abreviation"
                                        Required=true
                                        Validation="@(new Func<string, string>(ValidateProcessFluidName))"
-                                       PropertyName="@nameof(Model.TagLetter)"></TextComponent>
+                                       PropertyName="TagLetter"></TextComponent>
 
                             <SelectComponent T="EditPropertyPackage"
                                          Elements=@GlobalTables.PropertyPackages

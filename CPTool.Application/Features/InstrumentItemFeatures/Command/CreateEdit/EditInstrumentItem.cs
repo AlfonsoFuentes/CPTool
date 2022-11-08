@@ -17,6 +17,7 @@ using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Application.Features.InstrumentItemFeatures.CreateEdit
 {
@@ -72,15 +73,19 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.CreateEdit
         }
         string SetTagLetter()
         {
+            if (MeasuredVariable == null) return "";
+          
             string tag = $"{MeasuredVariable?.TagLetter}{MeasuredVariableModifier?.TagLetter}{Readout?.TagLetter}{DeviceFunction?.TagLetter}{DeviceFunctionModifier?.TagLetter}";
 
             return tag;
         }
         string SetTagId()
         {
-            var tag = $"{TagLetter}_{TagNumber}";
+            if (TagLetter == "") return "";
+            if (TagNumber == "") return $"{TagLetter}";
+            return $"{TagLetter}_{TagNumber}";
 
-            return tag;
+           
         }
     }
 

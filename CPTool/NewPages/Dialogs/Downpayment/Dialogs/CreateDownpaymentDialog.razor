@@ -23,54 +23,54 @@
                                 <FieldComponent Label="@($"PO Value ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrency.ToString("C2")></FieldComponent>
                                 <FieldComponent Label="@($"PO Tax ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrencyTax.ToString("C2")></FieldComponent>
                                 <FieldComponent Label="@($"PO Total ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.TotalPrizeCurrency.ToString("C2")></FieldComponent>
-                               
-                                
 
-                               
+
+
+
                             </MudItem>
                             <MudItem xs="12" sm="6" Class="pa-1">
-                                <MudDatePicker Label="Downpayment due date"
-                                               
-                                               Required=true
-                                               Disabled=@(Model.Id == 0?false:true)
-                                               Margin="Margin.Dense"
-                                              
-                                               Variant="Variant.Outlined"
-                                               ShowWeekNumbers=true
-                                               RequiredError="Must define estimated Downpayment due date"
-                                               @bind-Date="Model.DownPaymentDueDate" Culture="@_en"></MudDatePicker>
+                                <MudDatePicker Margin="Margin.Dense"
+                                               Variant="Variant.Outlined" Label="Downpayment due date" @bind-Date="@Model.DownPaymentDueDate"
+                                               Disabled=@(Model.Id == 0?false:true) />
+
                                 <TextComponent @bind-Model="@Model" Label="Downpayment Name" Disable=@(Model.Id == 0?false:true)
                                                Validation="@(new Func<string,string>(ValidateDownpaymentName))"
-                                               PropertyName="@nameof(Model.DownpaymentName)" Required=true></TextComponent>
+                                               PropertyName="DownpaymentName" Required=true></TextComponent>
                                 <TextComponent @bind-Model="@Model" Label="Manager email" Disable=@(Model.Id == 0?false:true)
                                                Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"
-                                               PropertyName="@nameof(Model.ManagerEmail)" Required=true></TextComponent>
+                                               PropertyName="ManagerEmail" Required=true></TextComponent>
                                 <TextComponent @bind-Model="@Model" Label="Proforma Invoice #" Disable=@(Model.Id == 0?false:true)
-                                               PropertyName="@nameof(Model.ProformaInvoice)" Required=true></TextComponent>
+                                               PropertyName="ProformaInvoice" Required=true></TextComponent>
 
                                 <TextComponent @bind-Model="@Model" Label="Pay terms" Disable=@(Model.Id == 0?false:true)
-                                               PropertyName="@nameof(Model.Payterms)" Required=true Lines="3"></TextComponent>
+                                               PropertyName="Payterms" Required=true Lines="3"></TextComponent>
                                 <TextComponent @bind-Model="@Model" Label="Incotherm" Disable=@(Model.Id == 0?false:true)
-                                               PropertyName="@nameof(Model.Incotherm)" Required=true></TextComponent>
-                                <NumericComponent @bind-Model="@Model" Label="Percentage" Disable=@(Model.Id == 0?false:true)
-                                                  PropertyName="@nameof(Model.Percentage)" Required=true></NumericComponent>
+                                               PropertyName="Incotherm" Required=true></TextComponent>
+                                <MudNumericField T="double" @bind-Value="@Model.Percentage"
+                                                 Immediate="true"
+                                                 HideSpinButtons="true"
+                                                 Margin="Margin.Dense"
+                                                 Disabled=@(Model.Id == 0?false:true)
+                                                 Culture="@_en"
+                                                 Format="C2"
+                                                 Required=true
+                                                 Variant="Variant.Outlined"
+                                                 Label="Percentage"></MudNumericField>
+
+
                                 <FieldComponent Label="Downpayment Value" Value=@Model.DownPaymentAmount.ToString("C2")></FieldComponent>
-                                
+
                                 <TextComponent @bind-Model="@Model" Label="CBS Request Text" Disable=@(Model.Id == 0?false:true)
-                                               PropertyName="@nameof(Model.CBSRequesText)" Required=true></TextComponent>
+                                               PropertyName="CBSRequesText" Required=true></TextComponent>
                                 <TextComponent @bind-Model="@Model" Label="CBS Request #" Disable=@(Model.Id == 0?false:true)
                                                Validation="@(new Func<string,string>(ValidateCBSRequestNo))"
-                                               PropertyName="@nameof(Model.CBSRequesNo)" Required=true></TextComponent>
-                                <MudDatePicker Label="Delivery due date"
-                                              
-                                               
-                                               Required=true
-                                               Disabled=@(Model.Id == 0?false:true)
-                                               Margin="Margin.Dense"
-                                               Variant="Variant.Outlined"
-                                               ShowWeekNumbers=true
-                                               RequiredError="Must define estimated Delivery due due date"
-                                               @bind-Date="Model.DeliveryDueDate" Culture="@_en"></MudDatePicker>
+                                               PropertyName="CBSRequesNo" Required=true></TextComponent>
+
+                                <MudDatePicker Margin="Margin.Dense"
+                                               Variant="Variant.Outlined" Label="Delivery due date" @bind-Date="@Model.DeliveryDueDate"
+                                               Disabled=@(Model.Id == 0?false:true) />
+
+
                             </MudItem>
                         </MudGrid>
 
