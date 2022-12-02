@@ -3,6 +3,7 @@
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.SignalsFeatures.CreateEdit;
 using CPTool.Application.Features.UnitFeatures.CreateEdit;
+using CPTool.UnitsSystem;
 
 namespace CPTool.Application.Features.ControlLoopFeatures.CreateEdit
 {
@@ -22,7 +23,7 @@ namespace CPTool.Application.Features.ControlLoopFeatures.CreateEdit
             set
             {
                 _ProcessVariable = value;
-
+                CreateAmount();
             }
 
         }
@@ -37,7 +38,7 @@ namespace CPTool.Application.Features.ControlLoopFeatures.CreateEdit
         public int? ProcessVariableMaxId => ProcessVariableMax?.Id == 0 ? null : ProcessVariableMax?.Id;
         public EditUnit? ProcessVariableMax { get; set; } = new();
         public int? SPId => SP?.Id == 0 ? null : SP?.Id;
-        public EditUnit? SP { get; set; }
+        public EditUnit? SP { get; set; } = new();
 
         public int? ProcessVariableValueId => ProcessVariableValue?.Id == 0 ? null : ProcessVariableValue?.Id;
         public EditUnit? ProcessVariableValue { get; set; } = new();
@@ -53,13 +54,80 @@ namespace CPTool.Application.Features.ControlLoopFeatures.CreateEdit
         public double PVRange { get; set; }
         public double WindupGuard { get; set; }
         public bool ManualOverride { get; set; }
-        public bool DirectActing { get; set; }
-        public bool FailClose { get; set; }
+        public ActionType ActionType { get; set; }
+        public FailType FailType { get; set; }
+
 
         public string TagNumber { get; set; } = string.Empty;
         public string AlarmText { get; set; } = string.Empty;
 
 
+        void CreateAmount()
+        {
+            if (ProcessVariable?.MWOItem?.ChapterId == 7 && ProcessVariable?.MWOItem?.InstrumentItem != null)
+            {
+                var instrument = ProcessVariable?.MWOItem.InstrumentItem;
+               
+                switch (instrument?.MeasuredVariable?.TagLetter)
+                {
+                    case "F":
+                        {
+                            SP = new(MassFlowUnits.Kg_hr);
+                            ProcessVariableValue = new(MassFlowUnits.Kg_hr);
+                            ProcessVariableMax = new(MassFlowUnits.Kg_hr);
+                            ProcessVariableMin = new(MassFlowUnits.Kg_hr);
+                        }
+                        break;
+                    case "L":
+                        {
+                            SP = new(PercentageUnits.Percentage);
+                            ProcessVariableValue = new(PercentageUnits.Percentage);
+                            ProcessVariableMax = new(PercentageUnits.Percentage);
+                            ProcessVariableMin = new(PercentageUnits.Percentage);
+                        }
+                        break;
+                    case "P":
+                        {
+                            SP = new(PressureUnits.Bar);
+                            ProcessVariableValue = new(PressureUnits.Bar);
+                            ProcessVariableMax = new(PressureUnits.Bar);
+                            ProcessVariableMin = new(PressureUnits.Bar);
+                        }
+                        break;
+                    //case "S":
+                    //    {
+                    //        ProcessVariableValue = new.Bar);
+                    //    }
+                    //    break;
+
+                    case "T":
+                        {
+                            SP = new(TemperatureUnits.DegreeCelcius);
+                            ProcessVariableValue = new(TemperatureUnits.DegreeCelcius);
+                            ProcessVariableMax = new(TemperatureUnits.DegreeCelcius);
+                            ProcessVariableMin = new(TemperatureUnits.DegreeCelcius);
+                        }
+                        break;
+                    case "W":
+                        {
+                            SP = new(MassUnits.KiloGram);
+                            ProcessVariableValue = new(MassUnits.KiloGram);
+                            ProcessVariableMax = new(MassUnits.KiloGram);
+                            ProcessVariableMin = new(MassUnits.KiloGram);
+                        }
+                        break;
+
+
+                }
+                ProcessVariableValue!.Name = ProcessVariable!.Name;
+                SP!.Name = $"{instrument!.TagId}.SP";
+                ProcessVariableMax!.Name = $"{instrument!.TagId}.Max";
+                ProcessVariableMin!.Name = $"{instrument!.TagId}.Min";
+            }
+        }
 
     }
 }
+
+
+

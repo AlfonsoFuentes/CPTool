@@ -22,38 +22,26 @@
                         <MudForm Model="Model" @ref="form">
                             <MudGrid>
                                 <MudItem xs="12" sm="6" Class="pa-4">
-                                    <FieldComponent Label="MWO Code" Value=@Model.MWO.CECName></FieldComponent>
-                                    <FieldComponent Label="Item Name" Value=@Model.MWOItem.Name></FieldComponent>
-                                    <FieldComponent Label="Brand" Value=@Model.pBrand.Name></FieldComponent>
-                                    <FieldComponent Label="Supplier" Value=@Model.pSupplier.Name></FieldComponent>
-                                    <FieldComponent Label="Tax Code" Value=@Model.TaxCode></FieldComponent>
-                                    <FieldComponent Label="SPL" Value=@Model.SPL></FieldComponent>
+                                    <FieldComponent Label="MWO Code" Value=@Model.PurchaseOrder.MWO.CECName></FieldComponent>
+                                    <FieldComponent Label="Item Name" Value=@Model.PurchaseOrder.MWOItem.Name></FieldComponent>
+                                    <FieldComponent Label="Brand" Value=@Model.PurchaseOrder.pBrand.Name></FieldComponent>
+                                    <FieldComponent Label="Supplier" Value=@Model.PurchaseOrder.pSupplier.Name></FieldComponent>
+                                    <FieldComponent Label="Tax Code" Value=@Model.PurchaseOrder.TaxCode></FieldComponent>
+                                    <FieldComponent Label="SPL" Value=@Model.PurchaseOrder.SPL></FieldComponent>
 
                                     @if (Model.MWOItem.ChapterId == 1)
                                     {
-                                        <FieldComponent Label="Cost Center" Value=@Model.CostCenter></FieldComponent>
+                                        <FieldComponent Label="Cost Center" Value=@Model.PurchaseOrder.CostCenter></FieldComponent>
 
                                     }
 
                                 </MudItem>
                                 <MudItem xs="12" sm="6" Class="pa-4">
 
-                                    <MudSelect Dense="true"
-                                           Margin="Margin.Dense"
-                                           T="Currency"
-                                           Label="Select Type of Currency"
-                                           AnchorOrigin="Origin.BottomCenter"
-                                           @bind-Value=@Model.MWOItem.MWOItemCurrencyValue.Currency
-                                           Validation="@(new Func<Currency, string>(ValidateCurrency))"
-                                           Variant="Variant.Outlined">
-                                        @foreach (var item in Enum.GetValues<Currency>())
-                                        {
-                                            <MudSelectItem Value="item">@item</MudSelectItem>
-                                        }
-                                    </MudSelect>
+                                   
 
 
-                                    <MudNumericField T="double" @bind-Value="@Model.MWOItem.MWOItemCurrencyValue.PrizeCurrency"
+                                    <MudNumericField T="double" @bind-Value="@Model.PrizeCurrency"
                                                  Immediate="true"
                                                  HideSpinButtons="true"
                                                  Margin="Margin.Dense"
@@ -63,11 +51,11 @@
                                                  Validation="@(new Func<double, string>(ValidatePOValue))"
                                                  Format="C2"
                                                  Variant="Variant.Outlined"
-                                                 Label=@($"Item Value, {Model.MWOItem.MWOItemCurrencyValue.Currency}")></MudNumericField>
+                                                 Label=@($"Item Value, {Model.PurchaseOrder.Currency}")></MudNumericField>
 
-                                    @if (Model.MWOItem.MWOItemCurrencyValue.Currency == Currency.EUR)
+                                    @if (Model.Currency == Currency.EUR)
                                     {
-                                        <MudNumericField T="double" @bind-Value="@Model.MWOItem.MWOItemCurrencyValue.USDEUR"
+                                        <MudNumericField T="double" @bind-Value="@Model.PurchaseOrder.USDEUR"
                                                  Immediate="true"
                                                  HideSpinButtons="true"
                                                  Margin="Margin.Dense"
@@ -76,14 +64,14 @@
                                                  Format="C2"
                                                  Variant="Variant.Outlined"
                                                  Label="Exchange Rate, EUR to USD"></MudNumericField>
-                                        <FieldComponent Label="Value, $USD" Value=@Model.MWOItem.MWOItemCurrencyValue.PrizeUSD.ToString("C2")>
+                                        <FieldComponent Label="Value, $USD" Value=@Model.PrizeUSD.ToString("C2")>
 
                                         </FieldComponent>
 
                                     }
-                                    else if (Model.MWOItem.MWOItemCurrencyValue.Currency == Currency.COP)
+                                    else if (Model.Currency == Currency.COP)
                                     {
-                                        <MudNumericField T="double" @bind-Value="@Model.MWOItem.MWOItemCurrencyValue.USDCOP"
+                                        <MudNumericField T="double" @bind-Value="@Model.PurchaseOrder.USDCOP"
                                                  Immediate="true"
                                                  HideSpinButtons="true"
                                                  Margin="Margin.Dense"
@@ -92,7 +80,7 @@
                                                  Format="C2"
                                                  Variant="Variant.Outlined"
                                                  Label="Exchange Rate, COP to USD"></MudNumericField>
-                                        <FieldComponent Label="Value, $USD" Value=@Model.MWOItem.MWOItemCurrencyValue.PrizeUSD.ToString("C2")>
+                                        <FieldComponent Label="Value, $USD" Value=@Model.PrizeUSD.ToString("C2")>
 
                                         </FieldComponent>
                                     }

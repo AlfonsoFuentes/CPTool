@@ -1,0 +1,21 @@
+﻿@page "/user-requirement-types"
+@using CPTool.Application.Features.UserRequirementTypeFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditUserRequirementType>
+<TableTemplate T="EditUserRequirementType"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.UserRequirementTypes">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditUserRequirementType" Property="@nameof(EditUserRequirementType.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

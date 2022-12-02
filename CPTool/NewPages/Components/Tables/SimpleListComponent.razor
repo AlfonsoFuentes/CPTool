@@ -9,8 +9,14 @@
     <MudGrid>
 
         <MudItem xs="12" sm="12">
-            <TableComponent T="TMaster" Elements="@ElementsMasters" OnAdd="Add" OnDelete="Delete"
+            <TableComponent T="TMaster" Elements="@ElementsMastersSelected" OnAdd="Add" OnDelete="Delete"
                         OnRowClicked="RowClickedMaster"
+                        ShowFinderText=@ShowFinderText
+                        ShowReportButtons=@ShowReportButtons
+                        OnPrint="OnPrint"
+                        OnPDF="OnPDF"
+                        OnExcel="OnExcel"
+                        ShowEditButton=@ShowEditButtonMaster
                         ShowAddButton=@ShowAddButtonMaster ShowDeleteButton=@ShowDeleteButtonMaster
                         DisableAddButton=@DisableAddButtonMaster DisableEditButton=@DisableEditButtonMaster
                         OnEdit="Edit" SearchFunc=MasterList.FilterFunc @bind-SelectedItem="@SelectedMaster">
@@ -34,15 +40,17 @@
 @code {
     bool Show = true;
     [Parameter]
-
     public bool ShowAddButtonMaster { get; set; } = true;
     [Parameter]
-
+    public bool ShowEditButtonMaster { get; set; } = true;
+    [Parameter]
     public bool DisableAddButtonMaster { get; set; } = false;
     [Parameter]
-
     public bool DisableEditButtonMaster { get; set; } = false;
     [Parameter]
-
     public bool ShowDeleteButtonMaster { get; set; } = true;
+    [Parameter]
+    public bool ShowReportButtons { get; set; } = true;
+    [Parameter]
+    public bool ShowFinderText { get; set; } = true;
 }

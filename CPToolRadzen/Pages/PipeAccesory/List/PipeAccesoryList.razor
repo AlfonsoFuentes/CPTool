@@ -1,0 +1,21 @@
+﻿@page "/pipe-accesorys"
+@using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditPipeAccesory>
+<TableTemplate T="EditPipeAccesory"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.PipeAccesorys">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditPipeAccesory" Property="@nameof(EditPipeAccesory.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

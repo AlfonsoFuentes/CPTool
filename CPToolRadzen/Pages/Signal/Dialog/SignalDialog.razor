@@ -1,0 +1,112 @@
+﻿@using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
+@using CPTool.Application.Features.FieldLocationsFeatures.CreateEdit;
+@using CPTool.Application.Features.SignalModifiersFeatures.CreateEdit;
+@using CPTool.Application.Features.SignalTypesFeatures.CreateEdit;
+@using CPTool.Application.Features.SignalsFeatures.CreateEdit;
+@using CPTool.Application.Features.WireFeatures.CreateEdit;
+
+@inherits DialogTemplate<EditSignal>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-8">
+                <RadzenCard Class="m-3">
+                    <FieldTemplate Label="MWO Item" Value="@(Model.MWOItem==null?"":Model.MWOItem.TagId)"></FieldTemplate>
+                    <FieldTemplate Label="Signal Name" Value="@Model.Name"></FieldTemplate>
+                    
+                    <SelectTemplate T="EditSignalModifier" Elements=@RadzenTables.SignalModifiers
+                                    Label="Signal Modifier"
+                                    @bind-Model=@Model.SignalModifier
+                                    Required=true
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+                    <SelectTemplate T="EditSignalType" Elements=@RadzenTables.SignalTypes
+                                    Label="Signal Type"
+                                    @bind-Model=@Model.SignalType
+                                    Required=true
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+
+                    <SelectEnumTemplate T="IOType" Elements=@(Enum.GetValues<IOType>()) Label="Select  In/Out Type"
+                                        @bind-Model=@Model.IOType Required=true>
+
+                    </SelectEnumTemplate>
+                    <SwitchTemplate @bind-Value="@Model.IsWired" Label="IsWired?">
+
+                    </SwitchTemplate>
+
+                    <SelectTemplate T="EditWire" Elements=@RadzenTables.Wires
+                                    Label="Wire"
+                                    @bind-Model=@Model.Wire
+                                    Disabled=@(!Model.IsWired)
+                                    Required=@Model.IsWired
+                                
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+                    <SelectTemplate T="EditFieldLocation" Elements=@RadzenTables.FieldLocations
+                                    Label="Field Location"
+                                    @bind-Model=@Model.FieldLocation
+                                  
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+                    <SelectTemplate T="EditElectricalBox" Elements=@RadzenTables.ElectricalBoxs
+                                    Label="Electrical Box"
+                                    @bind-Model=@Model.ElectricalBox
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+                
+                   <SwitchTemplate @bind-Value="@Model.Disconect"  Label="Disconect?" >
+
+                   </SwitchTemplate>
+                    <SwitchTemplate @bind-Value="@Model.InstrumentAir" Label="Instrument Air?">
+
+                    </SwitchTemplate>
+                   
+                    <SwitchTemplate @bind-Value="@Model.FrequencyInverter" Label="Frequency Inverter?">
+
+                    </SwitchTemplate>
+                    
+                   
+                </RadzenCard>
+            </div>
+            <div class="col-md-4">
+                <RadzenCard>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Search Tag Id</RadzenText>
+                    <RadzenListBox TValue="EditMWOItem" AllowFiltering="true" style="width:100%; height:550px"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+                        @bind-Value=@Model.MWOItem Data=@MWOItems TextProperty="TagId" 
+                                   Change=@(args => OnChange(args, "ListBox with filtering"))  />
+                </RadzenCard>
+            </div>
+        </div>
+
+       
+
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+    void OnChange(int index)
+    {
+
+    }
+   
+    void OnChange(object value, string name)
+    {
+        var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+
+        
+    }
+}

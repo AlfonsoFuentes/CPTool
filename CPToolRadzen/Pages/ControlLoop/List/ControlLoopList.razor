@@ -1,0 +1,21 @@
+﻿@page "/control-loops"
+@using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditControlLoop>
+<TableTemplate T="EditControlLoop"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.ControlLoops">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

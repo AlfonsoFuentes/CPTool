@@ -1,0 +1,21 @@
+﻿@page "/signal-types"
+@using CPTool.Application.Features.SignalTypesFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditSignalType>
+<TableTemplate T="EditSignalType"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.SignalTypes">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditSignalType" Property="@nameof(EditSignalType.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

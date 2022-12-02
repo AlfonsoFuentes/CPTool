@@ -4,8 +4,11 @@
 
 
 using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
+using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 using CPTool.NewPages.Components.Dialogs;
 using CPTool.NewPages.Dialogs.ControlLoop.Dialog;
+using CPTool.NewPages.Dialogs.PipeAccesory.Dialog;
 using CPTool.NewPages.Dialogs.ProcessFluid.Dialog;
 using CPTool.NewPages.Dialogs.RequestedBy.Dialog;
 using CPTool.NewPages.Dialogs.Taks.Dialog;
@@ -41,7 +44,7 @@ namespace CPTool.Services
         {
 
             ParameterDialogModel modeldialog = new();
-            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
             modeldialog.DialogTitle = model.Id == 0 ? $"Add new Control Loop" : $"Edit {model.Name} ";
@@ -84,21 +87,36 @@ namespace CPTool.Services
 
         public async Task<DialogResult> ShowTaksDialog(EditTaks model)
         {
-            if(model.TaksType== Domain.Entities.TaksType.Manual)
-            {
-                ParameterDialogModel modeldialog = new();
-                modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true };
-                modeldialog.parameters = new DialogParameters();
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
 
-                modeldialog.DialogTitle = model.Id == 0 ? $"Add new Task" : $"Edit {model.Name} ";
-                modeldialog.parameters.Add("Model", model);
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Task" : $"Edit {model.Name} ";
+            modeldialog.parameters.Add("Model", model);
 
-                var dialog = DialogService.Show<TaksDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
-                var result = await dialog.Result;
+            var dialog = DialogService.Show<TaksDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
 
-                return result;
-            }
-            return await ShowMessageDialogYesNo($"Automatic Task!!! ");
+            return result;
+           
+
+        }
+        public async Task<DialogResult> ShowChangePurchaseOrderMWOItem(EditPurchaseOrderItem model)
+        {
+
+
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = $"Change MWO Item in Purchase order item ";
+            modeldialog.parameters.Add("Model", model);
+
+            var dialog = DialogService.Show<ChangePurchaserItemMWOItemDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+            var result = await dialog.Result;
+
+            return result;
+
 
         }
         public async Task<DialogResult> ShowProcessFluidDialog(EditProcessFluid model)
@@ -204,38 +222,48 @@ namespace CPTool.Services
 
 
         }
-        public async Task<DialogResult> ShowPurchaseOrderMWOItem(EditPurchaseOrderMWOItem model)
-        {
-
-
-
-            return await ShowMWOItem(model.MWOItem);
-
-
-        }
+       
         public async Task<DialogResult> ShowMWOItem(EditMWOItem model)
         {
 
             ParameterDialogModel modeldialog = new();
-            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
             modeldialog.DialogTitle = model.Id == 0 ? $"Add new Item" : $"Edit {model.Name} ";
             modeldialog.parameters.Add("Model", model);
 
+          
             var dialog = DialogService.Show<MWOItemDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
 
             return await dialog.Result;
 
 
         }
-       
+
+        public async Task<DialogResult> ShowPipeAccesory(EditPipeAccesory model)
+        {
+
+            ParameterDialogModel modeldialog = new();
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            modeldialog.parameters = new DialogParameters();
+
+            modeldialog.DialogTitle = model.Id == 0 ? $"Add new Item" : $"Edit {model.Name} ";
+            modeldialog.parameters.Add("Model", model);
 
 
-        public async Task<DialogResult> ShowAddPurchaseOrderDialog(CreateEditPurchaseOrder Model)
+            var dialog = DialogService.Show<PipeAccesoryDialog>(modeldialog.DialogTitle, modeldialog.parameters, modeldialog.options);
+
+            return await dialog.Result;
+
+
+        }
+
+
+        public async Task<DialogResult> ShowAddPurchaseOrderDialog(EditPurchaseOrder Model)
         {
             ParameterDialogModel modeldialog = new();
-            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
             modeldialog.DialogTitle = Model.Id == 0 ? $"Add new Purchase Order " : $"Edit {Model.Name}";
@@ -253,7 +281,7 @@ namespace CPTool.Services
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Id == 0 ? $"Add new Purchase Order " : $"Edit {Model.Name}";
+            modeldialog.DialogTitle = Model.Id == 0 ? $"Add new Purchase Order " : $"Edit {Model.PONumber}";
 
 
             modeldialog.parameters.Add("Model", Model);
@@ -261,13 +289,13 @@ namespace CPTool.Services
             var result = await dialog.Result;
             return result;
         }
-        public async Task<DialogResult> ShowAddDataToPurchaseOrderDialog(EditPurchaseOrder Model)
+        public async Task<DialogResult> ShowAddDataToPurchaseOrderDialog(EditPurchaseOrderItem Model)
         {
             ParameterDialogModel modeldialog = new();
             modeldialog.options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
             modeldialog.parameters = new DialogParameters();
 
-            modeldialog.DialogTitle = Model.Id == 0 ? $"Add Data to MWO Item " : $"Edit {Model.Name}";
+            modeldialog.DialogTitle = Model.Id == 0 ? $"Add Data to Purchase Item " : $"Edit {Model.Name}";
 
 
             modeldialog.parameters.Add("Model", Model);

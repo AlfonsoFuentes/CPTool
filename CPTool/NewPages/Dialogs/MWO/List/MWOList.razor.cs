@@ -4,10 +4,11 @@ using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.Query.GetList;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList;
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList;
+using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 using CPTool.Application.Features.TaksFeatures.CreateEdit;
 using CPTool.Application.Features.TaksFeatures.Query.GetList;
+
+using static MudBlazor.CategoryTypes;
 
 namespace CPTool.NewPages.Dialogs.MWO.List
 {
@@ -15,31 +16,9 @@ namespace CPTool.NewPages.Dialogs.MWO.List
     {
       
         EditMWO SelectedMaster { get; set; } = new();
-        EditMWOItem SelectedDetail { get; set; } = new();
+     
        
-        async Task AddPurchaseOrder()
-        {
-            CreateEditPurchaseOrder CreatePurchaseOrder = new CreateEditPurchaseOrder();
-            CreatePurchaseOrder.PurchaseOrder.MWO = SelectedMaster;
-            
-
-            var result=await ToolDialogService.ShowAddPurchaseOrderDialog(CreatePurchaseOrder);
-
-            if(!result.Cancelled)
-            {
-                GetPurchaseOrderListQuery getPurchaseOrderListQuery = new();
-                GlobalTables.PurchaseOrders = await Mediator.Send(getPurchaseOrderListQuery);
-
-                GetPurchaseOrderMWOItemListQuery getPurchaseOrderMWOItemListQuery = new();
-                GlobalTables.PurchaseOrderMWOItems = await Mediator.Send(getPurchaseOrderMWOItemListQuery);
-
-                GetMWOItemListQuery getMWOItemListQuery = new();
-                GlobalTables.MWOItems = await Mediator.Send(getMWOItemListQuery);
-                GetTaksListQuery getTaksListQuery = new();
-                GlobalTables.Takss = await Mediator.Send(getTaksListQuery);
-            }
-            
-        }
+      
         async Task CreateTaskMWO()
         {
             EditTaks editTaks = new EditTaks();
@@ -56,23 +35,40 @@ namespace CPTool.NewPages.Dialogs.MWO.List
 
         void GoToUserRequirmentPage()
         {
-            Navigation.NavigateTo($"UserRequirementList/{SelectedMaster.Id}");
+            NavigationManager.NavigateTo($"UserRequirementList/{SelectedMaster.Id}");
         }
         void GoToPurchaseOrderList()
         {
-            Navigation.NavigateTo($"PurchaseOrderList/{SelectedMaster.Id}");
+            NavigationManager.NavigateTo($"PurchaseOrderList/{SelectedMaster.Id}");
         }
         void GoToUserSignalList()
         {
-            Navigation.NavigateTo($"SignaList/{SelectedMaster.Id}");
+            NavigationManager.NavigateTo($"SignaList/{SelectedMaster.Id}");
         }
         void GoToMWOItemList()
         {
-            Navigation.NavigateTo($"MWOItemList/{SelectedMaster.Id}");
+            NavigationManager.NavigateTo($"MWOItemList/{SelectedMaster.Id}");
         }
         void GoToControlLoopList()
         {
-            Navigation.NavigateTo($"ControlLoopList/{SelectedMaster.Id}");
+            NavigationManager.NavigateTo($"ControlLoopList/{SelectedMaster.Id}");
+        }
+       
+        //const string SPREADSHEET_ID = "1nh3CjxLeytSi9EBr6gy3-kHu5zCNAMdwAAndDo6Aj6A";
+        //SpreadsheetsResource.ValuesResource _googleSheetValues;
+        //const string SHEET_NAME = "Test";
+        void OnExcel()
+        {
+            //var file = googleSheetsHelper.CreateSheet("Mwolist");
+            //_googleSheetValues = googleSheetsHelper.Service.Spreadsheets.Values;
+            //var range = $"{SHEET_NAME}!A:D";
+            //var valueRange = new ValueRange
+            //{
+            //    Values = ItemsMapper.MapToRangeData(SelectedMaster)
+            //};
+            //var appendRequest = _googleSheetValues.Append(valueRange, SPREADSHEET_ID, range);
+            //appendRequest.ValueInputOption = AppendRequest.ValueInputOptionEnum.USERENTERED;
+            //appendRequest.Execute();
         }
     }
 }

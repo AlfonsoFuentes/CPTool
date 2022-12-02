@@ -17,6 +17,7 @@ namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
 {
     public class AddPipingItem : AddCommand
     {
+        public List<AddPipeAccesory>? PipeAccesorys { get; set; }
         public AddProcessCondition? pProcessCondition { get; set; }
         public int? pMaterialId { get; set; }
         public int? pProcessFluidId { get; set; }

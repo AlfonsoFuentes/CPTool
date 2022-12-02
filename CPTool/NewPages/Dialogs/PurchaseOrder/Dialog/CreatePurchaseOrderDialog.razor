@@ -11,23 +11,25 @@
 @using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById
 @using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList
 @using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
+@using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 @if (debug)
 {
     <MudDialog DisableSidePadding="true">
         <DialogContent>
-            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+            <MudContainer Style="max-height: 650px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
                 <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
                     <CascadingValue Value="this">
 
                         <MudForm Model="Model" @ref="form">
                             <MudGrid>
                                 <MudItem xs="12" sm="6" Class="pa-4">
-                                    <TextComponent @bind-Model="@Model.PurchaseOrder"
+                                    <TextComponent @bind-Model="@Model"
                                                Label="Purchase Order Name"
                                                Required=true
+                                               Lines="3"
                                                Validation="@(new Func<string, string>(ValidatePurchaseOrderName))"
                                                PropertyName="Name"></TextComponent>
-                                    <TextComponent @bind-Model="@Model.PurchaseOrder"
+                                    <TextComponent @bind-Model="@Model"
                                                Label="Purchase requistion Name"
                                                Required=true
                                                Validation="@(new Func<string, string>(ValidatePurchaseRequisition))"
@@ -38,68 +40,158 @@
                                                  SelectionChanged="BrandChanged"
                                                  Validation="@(new Func<int, string>(ValidateBrand))"
                                                  Required=true
-                                                 @bind-Value="@Model.PurchaseOrder.pBrand">
+                                                 @bind-Value="@Model.pBrand">
 
 
                                     </SelectComponent>
                                     <SelectComponent T="EditSupplier"
-                                                 Elements=@((Model.PurchaseOrder.pBrand==null||Model.PurchaseOrder.pBrand?.Id==0)?new():
-                                                 GlobalTables.BrandSuppliers.Where(x=>x.BrandId==Model.PurchaseOrder.pBrand?.Id).Select(x=>x.Supplier).ToList())
+                                                 Elements=@((Model.pBrand==null||Model.pBrand?.Id==0)?new():
+                                                 GlobalTables.BrandSuppliers.Where(x=>x.BrandId==Model.pBrand?.Id).Select(x=>x.Supplier).ToList())
                                                  Label="Supplier"
                                                  Required=true
                                                  Validation="@(new Func<int, string>(ValidateSupplier))"
-                                                 Disable=@(Model.PurchaseOrder.pBrand?.Id==0?true:false)
-                                                 @bind-Value="@Model.PurchaseOrder.pSupplier">
+                                                 Disable=@(Model.pBrand?.Id==0?true:false)
+                                                 @bind-Value="@Model.pSupplier">
 
 
                                     </SelectComponent>
 
                                 </MudItem>
                                 <MudItem xs="12" sm="6" Class="pa-4">
-                                    <FieldComponent Label="Vendor Code" Value="Model.PurchaseOrder.VendorCode"></FieldComponent>
-                                    <FieldComponent Label="Tax Code" Value="Model.PurchaseOrder.TaxCode"></FieldComponent>
-                                    <FieldComponent Label="SPL" Value="Model.PurchaseOrder.SPL"></FieldComponent>
-                                    @if (Model.FirstMWOItem.ChapterId == 1)
+                                    <FieldComponent Label="Vendor Code" Value="Model.VendorCode"></FieldComponent>
+                                    <FieldComponent Label="Tax Code" Value="Model.TaxCode"></FieldComponent>
+                                    <FieldComponent Label="SPL" Value="Model.SPL"></FieldComponent>
+                                    @if (Model.PurchaseOrderItems.FirstOrDefault() !=null&&
+                                    Model.PurchaseOrderItems.FirstOrDefault().MWOItem.ChapterId == 1)
                                     {
-                                        <FieldComponent Label="Cost Center" Value="Model.PurchaseOrder.CostCenter"></FieldComponent>
+                                        <FieldComponent Label="Cost Center" Value="Model.CostCenter"></FieldComponent>
 
                                     }
-
-
-                                </MudItem>
-                                <MudItem xs="12" sm="12" Class="pa-1">
-                                    @if (Model.PurchaseOrder.pSupplier.Id != 0)
+                                    <MudSelect Dense="true"
+                                           Margin="Margin.Dense"
+                                           T="Currency"
+                                           Label="Select Type of Currency"
+                                           AnchorOrigin="Origin.BottomCenter"
+                                           @bind-Value=@Model.Currency
+                                           Validation="@(new Func<Currency, string>(ValidateCurrency))"
+                                           Variant="Variant.Outlined">
+                                        @foreach (var item in Enum.GetValues<Currency>())
+                                        {
+                                            <MudSelectItem Value="item">@item</MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                    @if (Model.Currency == Currency.EUR)
                                     {
-                                        <MudContainer Style="max-height: 350px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
-                                            <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Identifier == dropzone)"
-                                                      ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
-                                                <ChildContent>
+                                        <MudNumericField T="double" @bind-Value="@Model.USDEUR"
+                                                 Immediate="true"
+                                                 HideSpinButtons="true"
+                                                 Margin="Margin.Dense"
+                                                 Disabled=false
+                                                 Culture="@_en"
+                                                 Format="C2"
+                                                 Variant="Variant.Outlined"
+                                                 Label="Exchange Rate, EUR to USD"></MudNumericField>
+                                       
 
-                                                    <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
-                                                        <MudListSubheader>MWO items in Purchase Order</MudListSubheader>
-                                                        <MudDropZone T="DropItem" Identifier="Drop Zone 1" AllowReorder="false" Class="flex-grow-1 border border-solid pa-1" />
-                                                    </MudList>
-                                                    <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
-                                                        <MudListSubheader>MWO items in MWO</MudListSubheader>
-                                                        <MudDropZone T="DropItem" Identifier="Drop Zone 2" AllowReorder="false" Class="flex-grow-1 border border-solid pa-1" />
-                                                    </MudList>
-
-
-
-
-
-
-                                                </ChildContent>
-                                                <ItemRenderer>
-                                                    <MudListItem Text="@context.Name" />
-
-                                                </ItemRenderer>
-
-                                            </MudDropContainer>
-                                        </MudContainer>
                                     }
-
+                                    else if (Model.Currency == Currency.COP)
+                                    {
+                                        <MudNumericField T="double" @bind-Value="@Model.USDCOP"
+                                                 Immediate="true"
+                                                 HideSpinButtons="true"
+                                                 Margin="Margin.Dense"
+                                                 Disabled=false
+                                                 Culture="@_en"
+                                                 Format="C2"
+                                                 Variant="Variant.Outlined"
+                                                 Label="Exchange Rate, COP to USD"></MudNumericField>
+                                        
+                                    }
                                 </MudItem>
+
+                                <MudItem xs="12" sm="6" Class="pa-1">
+                                    <SimpleListComponent TMaster="EditPurchaseOrderItem"
+                                                     TDeleteMaster="DeletePurchaseOrderItem"
+                                                     ShowAddButtonMaster=false
+                                                     ShowFinderText=false
+                                                     ShowReportButtons=false
+                                                     ShowDeleteButtonMaster=false
+                                                     TMasterList="GetMWOItemListQuery" TGedById="GetByIdMWOItemQuery"
+                                                     ElementsMastersSelected="@Model.PurchaseOrderItems"
+                                                     
+                                                     @bind-SelectedMaster="@SelectedItemAdded"
+                                                     OnShowDialogMaster="@((arg)=>ToolDialogService.ShowMWOItem(SelectedItemAdded.MWOItem))">
+                                        <MasterOtherButtons>
+                                            <MudTooltip Text="Remove from selected Items">
+                                                <MudIconButton Icon="@Icons.Filled.ArrowForward" OnClick="RemoveItem" Size="Size.Small" Disabled=@(SelectedItemAdded.Id==0?true:false) />
+                                            </MudTooltip>
+                                        </MasterOtherButtons>
+                                        <MasterContextTh>
+                                            <MudTh>#</MudTh>
+                                            <MudTh>Tag</MudTh>
+                                            <MudTh>Name</MudTh>
+                                            <MudTh>Prize currency</MudTh>
+                                            <MudTh>Prize, USD</MudTh>
+                                        </MasterContextTh>
+                                        <MasterContextTd>
+                                            <MudTd DataLabel="#">@context.MWOItem.Nomenclatore</MudTd>
+                                            <MudTd DataLabel="Tag">@context.MWOItem.TagId</MudTd>
+                                            <MudTd DataLabel="Name">@context.MWOItem.Name</MudTd>
+                                            <MudTd DataLabel="Prize currency">@context.PrizeCurrency.ToString("C1")</MudTd>
+                                            <MudTd DataLabel="Prize, USD">@context.PrizeUSD.ToString("C1")</MudTd>
+                                        </MasterContextTd>
+
+                                        <FooterContent>
+                                            <MudTd></MudTd>
+                                            <MudTd></MudTd>
+                                            <MudTd></MudTd>
+
+                                            <MudTd DataLabel="Prize currency" style="bold-text">@Model.PurchaseOrderItems.Sum(x=>x.PrizeCurrency).ToString("C1")</MudTd>
+                                            <MudTd DataLabel="Prize, USD" style="bold-text">@Model.PurchaseOrderItems.Sum(x=>x.PrizeUSD).ToString("C1")</MudTd>
+                                        </FooterContent>
+
+                                    </SimpleListComponent>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" Class="pa-1">
+                                    <SimpleListComponent TMaster="EditMWOItem"
+                                                     TDeleteMaster="DeleteMWOItem"
+                                                     ShowAddButtonMaster=false
+                                                     ShowReportButtons=false
+                                                     ShowEditButtonMaster=false
+                                                     ShowDeleteButtonMaster=false
+                                                     TMasterList="GetMWOItemListQuery" TGedById="GetByIdMWOItemQuery"
+                                                     ElementsMastersSelected="@EditMWOItemsOriginal"
+                                                     @bind-ElementsMasters="@GlobalTables.MWOItems"
+                                                     @bind-SelectedMaster="@SelectedItemToAdd"
+                                                     OnShowDialogMaster="ToolDialogService.ShowMWOItem">
+                                        <MasterOtherButtons>
+                                            <MudTooltip Text="Add selected Item">
+                                                <MudIconButton Icon="@Icons.Filled.ArrowBack" OnClick="AddItem" Size="Size.Small"
+                                                           Disabled=@((Model.pSupplier.Id!=0&&SelectedItemToAdd.Id!=0
+                                                           &&Model.Currency!=Currency.None)?false:true) />
+                                            </MudTooltip>
+                                        </MasterOtherButtons>
+                                        <MasterContextTh>
+                                            <MudTh>#</MudTh>
+                                            <MudTh>Tag</MudTh>
+                                            <MudTh>Name</MudTh>
+
+                                        </MasterContextTh>
+                                        <MasterContextTd>
+                                            <MudTd DataLabel="#">@context.Nomenclatore</MudTd>
+                                            <MudTd DataLabel="Tag">@context.TagId</MudTd>
+                                            <MudTd DataLabel="Name">@context.Name</MudTd>
+
+                                        </MasterContextTd>
+
+
+
+                                    </SimpleListComponent>
+                                </MudItem>
+
+
+
+
                             </MudGrid>
 
                         </MudForm>
@@ -112,7 +204,7 @@
         </DialogContent>
         <DialogActions>
 
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" Disabled=@DisableButton OnClick="Submit">Save</MudButton>
 
             <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
         </DialogActions>
@@ -120,4 +212,5 @@
 }
 @code {
     bool debug = true;
+    public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
 }

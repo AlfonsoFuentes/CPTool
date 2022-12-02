@@ -19,20 +19,26 @@ using CPTool.Application.Features.StructuralItemFeatures.CreateEdit;
 using CPTool.Application.Features.TaxesItemFeatures.CreateEdit;
 using CPTool.Application.Features.TestingItemFeatures.CreateEdit;
 using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
+using CPTool.Application.Features.SignalsFeatures.CreateEdit;
+
+using System.Security.Cryptography.X509Certificates;
+using System;
+using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 
 namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
 {
     public class EditMWOItem : EditCommand, IRequest<Result<int>>
     {
-        public double prueba = 2.0;
+        public List<EditSignal> Signals { get; set; } = new();
+       
         public int? UnitaryBasePrizeId => UnitaryBasePrize?.Id == 0 ? null : UnitaryBasePrize?.Id;
         public EditUnitaryBasePrize? UnitaryBasePrize { get; set; } = new();
         public int Order { get; set; }
         public string? Nomenclatore => $"{Chapter?.Letter}{Order}";
         public double BudgetPrize { get; set; }
-        public double Assigned => MWOItemCurrencyValues.Count==0?0: MWOItemCurrencyValues.Sum(x => x.PrizeUSD);
-        public EditMWOItemCurrencyValue MWOItemCurrencyValue { get; set; } = new();
-        public List<EditMWOItemCurrencyValue> MWOItemCurrencyValues { get; set; } = new();
+      
+      
+        public List<EditPurchaseOrderItem> PurchaseOrderItems { get; set; } = new();
         public string TagId => GetTagId();
 
         public int? ChapterId => Chapter?.Id == 0 ? null : Chapter?.Id;
@@ -67,6 +73,13 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
         public EditContingencyItem? ContingencyItem { get; set; }
         public int? MWOId => MWO?.Id == 0 ? null : MWO?.Id;
 
+        public bool Existing { get; set; }
+        public double Actual => PurchaseOrderItems.Where(x => x.PurchaseOrder?.PurchaseOrderStatus == PurchaseOrderStatus.Closed).Sum(y => y.PrizeUSD);
+        public double Assigned => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(x => x.PrizeUSD);
+
+        public double Commitment => PurchaseOrderItems.Where(x => x.PurchaseOrder?.PurchaseOrderStatus != PurchaseOrderStatus.Closed).Sum(y => y.PrizeUSD);
+
+        public double Pending => BudgetPrize - Assigned;
         public EditMWO? MWO { get; set; } = new();
         string GetTagId()
         {

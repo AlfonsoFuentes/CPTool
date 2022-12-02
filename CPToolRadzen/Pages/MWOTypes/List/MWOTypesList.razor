@@ -1,0 +1,24 @@
+﻿@page "/mwo-types"
+@using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
+@inherits BaseTableTemplate<EditMWOType>
+@if (debug)
+{
+
+}
+
+<TableTemplate T="EditMWOType"
+               TableName="MWO Types List"
+               Elements="@Elements"
+               SelectedItem="@MWOTypeSelected"
+               ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.MWOTypes">
+               
+    <Columns>
+        <RadzenDataGridColumn TItem="EditMWOType" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

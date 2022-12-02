@@ -23,7 +23,7 @@ namespace CPTool.Application.Features.NozzleFeatures.CreateEdit
         public int Order { get; set; }
         public int? ConnectedToId => ConnectedTo?.Id == 0 ? null : ConnectedTo?.Id;
         public EditMWOItem? ConnectedTo { get; set; } = new();
-
+        public string ConnectedToName => ConnectedTo==null?"": ConnectedTo!.Name;
         public int? EquipmentItemId => EquipmentItem?.Id == 0  ? null : EquipmentItem?.Id;
         public EditEquipmentItem? EquipmentItem { get; set; } = new();
         public int? InstrumentItemId => InstrumentItem?.Id == 0  ? null : InstrumentItem?.Id;
@@ -34,18 +34,20 @@ namespace CPTool.Application.Features.NozzleFeatures.CreateEdit
 
         public int? PipeDiameterId => PipeDiameter?.Id == 0  ? null : PipeDiameter?.Id;
         public EditPipeDiameter? PipeDiameter { get; set; } = new();
+        public string PipeDiameterName => PipeDiameter == null ? "" : PipeDiameter!.Name;
         public int? ConnectionTypeId => ConnectionType?.Id == 0  ? null : ConnectionType?.Id;
         public EditConnectionType? ConnectionType { get; set; } = new();
+        public string ConnectionTypeName => ConnectionType == null ? "" : ConnectionType!.Name;
         public int? nGasketId => nGasket?.Id == 0  ? null : nGasket?.Id;
         public EditGasket? nGasket { get; set; } = new();
         public int? nMaterialId => nMaterial?.Id == 0  ? null : nMaterial?.Id;
         public EditMaterial? nMaterial { get; set; } = new();
-
+        public string nMaterialName => nMaterial == null ? "" : nMaterial!.Name;
         public StreamType StreamType { get; set; }
         public int? nPipeClassId => nPipeClass?.Id == 0  ? null : nPipeClass?.Id;
         public EditPipeClass? nPipeClass { get; set; } = new();
+        public string nPipeClassName => nPipeClass == null ? "" : nPipeClass!.Name;
 
-      
 
     }
 }

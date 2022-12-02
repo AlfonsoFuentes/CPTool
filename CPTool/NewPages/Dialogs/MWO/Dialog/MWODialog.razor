@@ -16,7 +16,7 @@
                                                Validation="@(new Func<string, string>(ReviewMWOType))"
                                                @bind-Model=@Model.MWOType></AutoCompleteComponent>
 
-                        <TextComponent @bind-Model="@Model" Label="MWO Name" PropertyName="Name"
+                        <TextComponent T="EditMWO" @bind-Model="@Model" Label="MWO Name" PropertyName="Name"
                                        Validation="@(new Func<string, string>(ReviewMWOName))"></TextComponent>
                         <MudNumericField T="int" @bind-Value="@Model.Number"
                                          Immediate="true"

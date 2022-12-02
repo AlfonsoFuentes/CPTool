@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CPTool.Application\CPTool.Application.csproj" />
+    <ProjectReference Include="..\CPTool.Domain\CPTool.Domain.csproj" />
+    <ProjectReference Include="..\CPtool.ExtensionMethods\CPtool.ExtensionMethods.csproj" />
+    <ProjectReference Include="..\CPTool.Presistence\CPTool.Persistence.csproj" />
+    <ProjectReference Include="..\CPTool.UnitsSystem\CPTool.UnitsSystem.csproj" />
+    <ProjectReference Include="..\EquipmentCalculation\EquipmentCalculation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="A0other\" />
+  </ItemGroup>
+
+</Project>

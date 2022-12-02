@@ -1,0 +1,58 @@
+﻿@using CPTool.Application.Features.ChapterFeatures.CreateEdit;
+@using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
+@using CPToolRadzen.Pages.UnitaryBasePrize.Dialog;
+<Panel>
+    <Left>
+        <SelectTemplate T="EditChapter"
+                        Elements=@RadzenTables.Chapters
+                        Label="Chapter"
+                        Disabled=@(Model.Chapter?.Id!=0)
+                        @bind-Model=@Model.Chapter
+                        Required=true
+                        Change="@Model.AssignInternalItem"
+                        PropertyName="Name">
+        </SelectTemplate>
+
+
+        <FieldTemplate Label="Nomenclatore" Value="@Model.Nomenclatore"></FieldTemplate>
+
+        <SwitchTemplate Label="Existing?" @bind-Value=@Model.Existing></SwitchTemplate>
+        <TextBoxTemplate @bind-Value="@Model.Name" Label="Name" Rows=3
+                         Required=true StringsToCompare=@(DialogParent.FilteredList.Select(x => x.Name).ToList())></TextBoxTemplate>
+
+        <SelectTemplate T="EditUnitaryBasePrize"
+                        Elements=@RadzenTables.UnitaryBasePrizes
+                        Label="Unitary prize unit"
+                       
+                        @bind-Model=@Model.UnitaryBasePrize
+                     
+                      
+                        PropertyName="Name">
+        </SelectTemplate>
+
+        
+        <NumericTemplate TValue="double" Label="Budget Prize, USD" @bind-Value="@Model.BudgetPrize"></NumericTemplate>
+
+    </Left>
+    <Rigth>
+
+    </Rigth>
+</Panel>
+
+
+
+
+@code {
+    [CascadingParameter]
+    protected MWOItemDialog DialogParent { get; set; }
+    protected EditMWOItem Model => DialogParent.Model;
+    public async Task<bool> ShowUnitaryBaseDialog(EditUnitaryBasePrize model)
+    {
+
+        var result = await DialogService.OpenAsync<UnitaryBasePrizeDialog>(model.Id == 0 ? $"Add new Unitary Prize" : $"Edit {model.Name}",
+              new Dictionary<string, object> { { "Model", model } });
+        if (result == null) return false;
+        return (bool)result;
+
+    }
+}

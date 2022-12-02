@@ -10,19 +10,14 @@ namespace CPTool.NewPages.Dialogs.MWOItem.List
        
         [Parameter]
         public int MWOId { get; set; }
-        EditMWO MWO = new();
+        EditMWO MWO =>GlobalTables.MWOs.FirstOrDefault(x=>x.Id== MWOId);
         GetMWOItemListQuery getMWOItemList = new();
+        GetMWOListQuery getMWOList = new();
         List<EditMWOItem> MWOItems => MWO.Id == 0 ? new() :
             GlobalTables.MWOItems.Where(x => x.MWOId == MWO.Id).ToList();
 
         EditMWOItem MWOItemSelected = new();
-        protected override async Task OnInitializedAsync()
-        {
-            GetByIdMWOQuery getByIdMWOQuery = new() { Id = MWOId };
-            MWO = await Mediator.Send(getByIdMWOQuery);
-           
-
-        }
+        
         async Task AddMWOItem()
         {
             EditMWOItem model = new();
@@ -31,7 +26,9 @@ namespace CPTool.NewPages.Dialogs.MWOItem.List
             var result = await ToolDialogService.ShowMWOItem(model);
             if (!result.Cancelled)
             {
-               
+                GlobalTables.MWOs = await Mediator.Send(getMWOList);
+
+
                 GlobalTables.MWOItems = await Mediator.Send(getMWOItemList);
             }
         }
@@ -40,6 +37,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.List
             var result = await ToolDialogService.ShowMWOItem(MWOItemSelected);
             if (!result.Cancelled)
             {
+                GlobalTables.MWOs = await Mediator.Send(getMWOList);
                 GlobalTables.MWOItems = await Mediator.Send(getMWOItemList);
             }
         }

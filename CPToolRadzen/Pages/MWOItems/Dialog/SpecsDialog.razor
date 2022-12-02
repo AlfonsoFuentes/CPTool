@@ -1,0 +1,17 @@
+﻿@switch (DialogParent.Model.Chapter.Id)
+{
+    case 4:
+        <EquipmentDialog></EquipmentDialog>
+        break;
+    case 6:
+        <PipingDialog></PipingDialog>
+        break;
+    case 7:
+        <InstrumentDialog></InstrumentDialog>
+        break;
+}
+
+@code {
+    [CascadingParameter]
+    protected MWOItemDialog DialogParent { get; set; }
+}

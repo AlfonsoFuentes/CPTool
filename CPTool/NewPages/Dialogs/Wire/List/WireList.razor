@@ -6,7 +6,8 @@
 <SimpleListComponent TMaster="EditWire"
                      TDeleteMaster="DeleteWire"
                      TMasterList="GetWireListQuery" TGedById="GetByIdWireQuery"
-                     @bind-ElementsMasters="GlobalTables.Wires"
+                     @bind-ElementsMasters="@GlobalTables.Wires"
+                     ElementsMastersSelected="@GlobalTables.Wires"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">
     <MasterContextTh>
         <MudTh >#</MudTh>

@@ -9,15 +9,14 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="FluentValidation" Version="11.2.2" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CPTool.Domain\CPTool.Domain.csproj" />
     <ProjectReference Include="..\CPtool.ExtensionMethods\CPtool.ExtensionMethods.csproj" />
+    <ProjectReference Include="..\CPTool.Presistence\CPTool.Persistence.csproj" />
     <ProjectReference Include="..\CPTool.UnitsSystem\CPTool.UnitsSystem.csproj" />
     <ProjectReference Include="..\EquipmentCalculation\EquipmentCalculation.csproj" />
   </ItemGroup>

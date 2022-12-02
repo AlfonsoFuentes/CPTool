@@ -8,37 +8,55 @@
           Dense="@dense"
           Hover="@hover"
           Bordered="@bordered"
+          FixedHeader="true"
+          FixedFooter="true"
           Striped="@striped"
           OnRowClick="OnRowClicked"
           Loading=@Loading
           ReadOnly=true
-          RowsPerPage="15"
           Filter="new Func<T,bool>(FilterFunc1)"
           @bind-SelectedItem="@SelectedItem">
-        <ToolBarContent>
 
+          
+        <ToolBarContent>
+           
+
+          
             <ToolBarComponent ShowAddButton=@ShowAddButton
+                          ShowReportButtons=@ShowReportButtons
                           DisableEditButton=@DisableEditButton
                           DisableAddButton=@DisableAddButton
                           ShowDeleteButton=@ShowDeleteButton
+                          ShowEditButton=@ShowEditButton
                           OnAdd="OnAdd"
                           OnDelete="OnDelete"
-                          OnEdit="OnEdit">
+                          OnEdit="OnEdit"
+                          OnPrint="OnPrint"
+                          OnPDF="OnPDF"
+                          SelectedItemName="@SelectedItemName"
+                          OnExcel="OnExcel">
                 <OtherButtons>
                     @OtherButtons
                 </OtherButtons>
-            </ToolBarComponent>
-            @SelectedItemName
 
+           
+
+            </ToolBarComponent>
+
+         
             <MudSpacer />
-            <MudTextField @bind-Value="searchString1"
+            @if (ShowFinderText)
+            {
+                <MudTextField @bind-Value="searchString1"
                       Placeholder="Search"
                       Adornment="Adornment.Start"
                       Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium"
                       Class="mt-0">
-            </MudTextField>
+                </MudTextField>
+            }
+
         </ToolBarContent>
         <ColGroup>
             <col style="width: 1%;" />
@@ -52,9 +70,9 @@
         <FooterContent>
             @FooterContent
         </FooterContent>
-       
+
         <PagerContent>
-           <MudTablePager   PageSizeOptions="new int[]{25, 50, 100}" />
+            <MudTablePager PageSizeOptions="new int[]{25, 50, 100}" />
         </PagerContent>
     </MudTable>
 }
@@ -62,7 +80,7 @@
 @code {
     bool debug = true;
     private MudTable<T> mudTable;
-    
+
     private bool hover = true;
     private bool striped = true;
     private bool bordered = true;
@@ -76,5 +94,10 @@
     public bool DisableEditButton { get; set; } = false;
     [Parameter]
     public bool ShowDeleteButton { get; set; } = true;
-
+    [Parameter]
+    public bool ShowReportButtons { get; set; } = true;
+    [Parameter]
+    public bool ShowFinderText { get; set; } = true;
+    [Parameter]
+    public bool ShowEditButton { get; set; } = true;
 }

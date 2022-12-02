@@ -1,0 +1,102 @@
+﻿@using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+@using CPTool.Application.Features.PipeAccesoryFeatures;
+@using CPTool.Application.Features.PipeAccesoryFeatures.Query.GetById;
+@using CPTool.Application.Features.PipeAccesoryFeatures.Query.GetList;
+<MudGrid>
+    <MudItem xs="12" sm="6" Class="pa-2">
+        <SimpleListComponent TMaster="EditPipeAccesory"
+                             TDeleteMaster="DeletePipeAccesory"
+                             ShowAddButtonMaster=false
+                             ShowFinderText=false
+                             ShowReportButtons=false
+                             ShowDeleteButtonMaster=true
+                             TMasterList="GetPipeAccesoryListQuery" TGedById="GetByIdPipeAccesoryQuery"
+                             ElementsMastersSelected=@Model.PipeAccesorys
+                             @bind-ElementsMasters="@GlobalTables.PipeAccesorys"
+                             @bind-SelectedMaster="@SelectedItemAdded"
+                             OnShowDialogMaster="ToolDialogService.ShowPipeAccesory">
+            <MasterOtherButtons>
+                <MudTooltip Text="Remove from selected Items">
+                    <MudIconButton Icon="@Icons.Filled.ArrowForward" OnClick="RemoveItem" Size="Size.Small" Disabled=@(SelectedItemAdded.Id==0?true:false) />
+                </MudTooltip>
+            </MasterOtherButtons>
+            <MasterContextTh>
+                <MudTh>#</MudTh>
+                <MudTh>Name</MudTh>
+                <MudTh>Type</MudTh>
+            </MasterContextTh>
+            <MasterContextTd>
+                <MudTd DataLabel="#">@context.Id</MudTd>
+                <MudTd DataLabel="Tag">@context.Name</MudTd>
+                <MudTd DataLabel="Name">@context.SectionType.ToString()</MudTd>
+
+            </MasterContextTd>
+
+
+
+        </SimpleListComponent>
+    </MudItem>
+    <MudItem xs="12" sm="6" Class="pa-4">
+        <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+            <SelectComponent T="EditPipeClass"
+                             Elements=@GlobalTables.PipeClasses
+                             Label="Pipe Class"
+                             @bind-Value="@PipeClassSelected">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditPipeDiameter"
+                             Elements=@(PipeClassSelected.Id==0?new():GlobalTables.PipeDiameters.Where(x=>x.dPipeClassId==PipeClassSelected.Id).ToList())
+                             Label="Pipe Diameter"
+                             @bind-Value="@PipeDiameterSelected">
+
+
+            </SelectComponent>
+            <SelectComponent T="EditMaterial"
+                             Elements=@GlobalTables.Materials
+                             Label="Pipe Material"
+                             Disable=true
+                             @bind-Value="@PipeMaterialSelected">
+
+
+            </SelectComponent>
+
+            <SimpleListComponent TMaster="EditPipeAccesory"
+                                 TDeleteMaster="DeletePipeAccesory"
+                                 ShowAddButtonMaster=true
+                                 ShowFinderText=false
+                                 ShowReportButtons=false
+                                 ShowDeleteButtonMaster=false
+                                 OnAdd="AddNewAccesory"
+                                 TMasterList="GetPipeAccesoryListQuery" TGedById="GetByIdPipeAccesoryQuery"
+                                 @bind-ElementsMasters="@GlobalTables.PipeAccesorys"
+                                 ElementsMastersSelected="@FilteredList"
+                                 @bind-SelectedMaster="@SelectedItemToAdd"
+                                 OnShowDialogMaster="ToolDialogService.ShowPipeAccesory">
+                <MasterOtherButtons>
+                    <MudTooltip Text="Add selected Item">
+                        <MudIconButton Icon="@Icons.Filled.ArrowBack" OnClick="@(()=>AddItem(SelectedItemToAdd))" Size="Size.Small" />
+                    </MudTooltip>
+                </MasterOtherButtons>
+                <MasterContextTh>
+                    <MudTh>#</MudTh>
+                    <MudTh>Name</MudTh>
+                    <MudTh>Type</MudTh>
+
+                </MasterContextTh>
+                <MasterContextTd>
+                    <MudTd DataLabel="#">@context.Id</MudTd>
+                    <MudTd DataLabel="Tag">@context.Name</MudTd>
+                    <MudTd DataLabel="Name">@context.SectionType.ToString()</MudTd>
+
+                </MasterContextTd>
+
+
+
+            </SimpleListComponent>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+@code {
+
+}

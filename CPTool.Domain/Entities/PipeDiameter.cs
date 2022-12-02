@@ -2,6 +2,9 @@
 {
     public class PipeDiameter : BaseDomainModel
     {
+        [ForeignKey("paDiameterId")]
+        public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
+
         public int? dPipeClassId { get; set; }
         public PipeClass? dPipeClass { get; set; }
 
@@ -18,7 +21,8 @@
         public Unit? Thickness { get; set; }
 
 
-
+       
+      
 
     }
 

@@ -17,14 +17,8 @@ namespace CPTool.NewPages.Dialogs.ControlLoop.List
 
         [Parameter]
         public int MWOId { get; set; }
-        EditMWO MWO = new();
-        protected override async Task OnInitializedAsync()
-        {
-            GetByIdMWOQuery getByIdMWOQuery = new() { Id = MWOId };
-            MWO = await Mediator.Send(getByIdMWOQuery);
-
-
-        }
+        EditMWO MWO => GlobalTables.MWOs.FirstOrDefault(x => x.Id == MWOId);
+       
         GetControlLoopListQuery GetControlLoopListQuery = new();
         async Task AddControlLoop()
         {

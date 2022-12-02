@@ -1,0 +1,22 @@
+﻿@page "/field-locations"
+
+@using CPTool.Application.Features.FieldLocationsFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditFieldLocation>
+<TableTemplate T="EditFieldLocation"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.FieldLocations">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditFieldLocation" Property="@nameof(EditFieldLocation.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

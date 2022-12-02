@@ -1,4 +1,6 @@
 ﻿
+
+
 namespace CPTool.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork
@@ -6,6 +8,7 @@ namespace CPTool.Infrastructure.Repositories
         private Hashtable _repository = null!;
         private readonly TableContext _context;
 
+        public IRepositoryPipeAccesory RepositoryPipeAccesory => _repositorypipeaccesory ??= new RepositoryPipeAccesory(_context);
         public IRepositoryMWO RepositoryMWO => _repositorymwo ??= new RepositoryMWO(_context);
         public IRepositoryMWOItem RepositoryMWOItem => _repositorymwoitem ??= new RepositoryMWOItem(_context);
         public IRepositoryBrand RepositoryBrand => _repositorybrand ??= new RepositoryBrand(_context);
@@ -23,6 +26,7 @@ namespace CPTool.Infrastructure.Repositories
         private IRepositoryInstrumentItem _repositoryInstrumentItem = null!;
         private IRepositoryPipingItem _repositoryPipingItem = null!;
         private IRepositoryBrandSupplier _repositorybrandsupplier = null!;
+        private IRepositoryPipeAccesory _repositorypipeaccesory = null!;
         public UnitOfWork(TableContext context)
         {
 
@@ -58,6 +62,9 @@ namespace CPTool.Infrastructure.Repositories
             _context.Dispose();
         }
 
-       
+        public void Reset()
+        {
+           _context.ChangeTracker.Entries().Where(e => e.Entity != null).ToList().ForEach(e => e.State = EntityState.Detached);
+        }
     }
 }

@@ -7,11 +7,12 @@
 <SimpleListComponent TMaster="EditSignalType"
                      TDeleteMaster="DeleteSignalType"
                      TMasterList="GetSignalTypeListQuery" TGedById="GetByIdSignalTypeQuery"
-                     @bind-ElementsMasters="GlobalTables.SignalTypes"
+                     @bind-ElementsMasters="@GlobalTables.SignalTypes"
+                     ElementsMastersSelected="@GlobalTables.SignalTypes"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">
     <MasterContextTh>
-        <MudTh >#</MudTh>
-        <MudTh >Name</MudTh>
+        <MudTh>#</MudTh>
+        <MudTh>Name</MudTh>
     </MasterContextTh>
     <MasterContextTd>
         <MudTd DataLabel="#">@context.Id</MudTd>

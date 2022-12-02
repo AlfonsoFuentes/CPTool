@@ -1,0 +1,38 @@
+﻿@if (debug)
+{
+    <MudDialog DisableSidePadding="true">
+        <DialogContent>
+            <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+                <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                    <CascadingValue Value="this">
+
+                        <MudForm Model="Model" @ref="form">
+                            <FieldComponent Value="Model.Name" Label="Purchase Item Name"></FieldComponent>
+                            <FieldComponent Value="Model.MWOItem.Name" Label="Current MWO Item Name"></FieldComponent>
+                            <SelectComponent T="EditMWOItem"
+                                         Elements=@MWOItems
+                                         Label="New MOW Item"
+                                         @bind-Value="@NewMWOItem">
+
+
+                            </SelectComponent>
+                        </MudForm>
+                    </CascadingValue>
+
+
+
+                </MudPaper>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+
+@code {
+    bool debug = true;
+}

@@ -1,4 +1,5 @@
-﻿@if (debug)
+﻿@using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
+@if (debug)
 {
     <MudDialog DisableSidePadding="true">
         <DialogContent>
@@ -8,7 +9,7 @@
 
                         <MudForm Model="Model" @ref="form">
                             <MudGrid>
-                                <MudItem xs="12" sm="6" Class="pa-1">
+                                <MudItem xs="12" sm="6" Class="pa-2">
                                     <TextComponent @bind-Model="@Model"
                                                Label="Purchase Order number"
                                                Required=true
@@ -20,27 +21,61 @@
                                                Variant="Variant.Outlined" Label="Estimated receive date" @bind-Date="@Model.POEstimatedDate"
                                                Disabled=@(Model.PurchaseOrderStatus== PurchaseOrderStatus.Ordering?false:true) />
 
-                                    <MudContainer Style="max-height: 450px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Large" >
-                                        <MudList Clickable="false" Dense=true @bind-SelectedItem="selectedItem">
-                                            @foreach (var row in Model.PurchaseOrderMWOItems.Select(x=>x.MWOItem))
-                                            {
-                                                <MudListItem Text="@(row.TagId==""?row.Name:$"{row.TagId}_{row.Name}")" Dense="true" Class="border border-solid pa-1" />
-
-                                            }
-
-                                        </MudList>
-                                    </MudContainer>
-                                </MudItem>
-                                <MudItem xs="12" sm="6" Class="pa-4">
                                     <FieldComponent Label="MWO CEC" Value=@Model.MWO.CECName></FieldComponent>
                                     <FieldComponent Label="MWO Name" Value=@Model.MWO.Name></FieldComponent>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" Class="pa-2">
+
                                     <FieldComponent Label="Purchase Order Name" Value=@Model.Name></FieldComponent>
                                     <FieldComponent Label="Purchase requistion" Value=@Model.PurchaseRequisition></FieldComponent>
                                     <FieldComponent Label="@Model.pBrand.BrandType.ToString()" Value=@Model.pBrand.Name></FieldComponent>
                                     <FieldComponent Label="Supplier" Value=@Model.pSupplier.Name></FieldComponent>
-
                                 </MudItem>
 
+                                <MudItem xs="12" sm="12" Class="pa-1">
+                                    <SimpleListComponent TMaster="EditPurchaseOrderItem"
+                                                     TDeleteMaster="DeletePurchaseOrderItem"
+                                                     ShowAddButtonMaster=false
+                                                     ShowFinderText=false
+                                                     ShowReportButtons=false
+                                                     ShowDeleteButtonMaster=false
+                                                     TMasterList="GetMWOItemListQuery" TGedById="GetByIdMWOItemQuery"
+                                                     ElementsMastersSelected="@Model.PurchaseOrderItems"
+                                                     @bind-SelectedMaster="@SelectedItemAdded"
+                                                     OnShowDialogMaster="@((arg)=>ToolDialogService.ShowMWOItem(SelectedItemAdded.MWOItem))">
+                                        <MasterOtherButtons>
+                                            <MudTooltip Text="Change MWO Item">
+                                                <MudIconButton Icon="@Icons.Filled.TrackChanges" OnClick="ChangeMWOItem" Size="Size.Small"
+                                                           Disabled=@(SelectedItemAdded.Id==0?true:false) />
+                                            </MudTooltip>
+                                        </MasterOtherButtons>
+                                        <MasterContextTh>
+                                            <MudTh>#</MudTh>
+                                            <MudTh>Tag</MudTh>
+                                            <MudTh>Name</MudTh>
+                                            <MudTh>Prize currency</MudTh>
+                                            <MudTh>Prize, USD</MudTh>
+                                        </MasterContextTh>
+                                        <MasterContextTd>
+                                            <MudTd DataLabel="#">@context.MWOItem.Nomenclatore</MudTd>
+                                            <MudTd DataLabel="Tag">@context.MWOItem.TagId</MudTd>
+                                            <MudTd DataLabel="Name">@context.MWOItem.Name</MudTd>
+                                            <MudTd DataLabel="Prize currency">@context.PrizeCurrency.ToString("C1")</MudTd>
+                                            <MudTd DataLabel="Prize, USD">@context.PrizeUSD.ToString("C1")</MudTd>
+                                        </MasterContextTd>
+
+                                        <FooterContent>
+                                            <MudTd></MudTd>
+                                            <MudTd></MudTd>
+                                            <MudTd></MudTd>
+
+                                            <MudTd DataLabel="Prize currency" style="bold-text">@Model.PurchaseOrderItems.Sum(x=>x.PrizeCurrency).ToString("C1")</MudTd>
+                                            <MudTd DataLabel="Prize, USD" style="bold-text">@Model.PurchaseOrderItems.Sum(x=>x.PrizeUSD).ToString("C1")</MudTd>
+                                        </FooterContent>
+
+                                    </SimpleListComponent>
+                                   
+                                </MudItem>
                             </MudGrid>
 
                         </MudForm>
@@ -62,5 +97,5 @@
 @code {
     bool debug = true;
     public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
-    MudListItem selectedItem;
+    //MudListItem selectedItem;
 }

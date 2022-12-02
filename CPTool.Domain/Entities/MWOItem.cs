@@ -9,8 +9,10 @@
         public ICollection<PipingItem>? StartPipingItems { get; set; }
         [ForeignKey("FinishMWOItemId")]
         public ICollection<PipingItem>? FisnishPipingItems { get; set; }
-        public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
-        public ICollection<MWOItemCurrencyValue>? MWOItemCurrencyValues { get; set; }
+        //public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
+
+        [ForeignKey("MWOItemId")]
+        public ICollection<PurchaseOrderItem>? PurchaseOrderItems { get; set; }
         [ForeignKey("MWOItemId")]
         public ICollection<Signal>? Signals { get; set; } = null!;
         [ForeignKey("MWOItemId")]
@@ -53,8 +55,8 @@
         public int Order { get; set; }
         public string? Nomenclatore { get; set; }
         public double BudgetPrize { get; set; }
-       
-      
+        public bool Existing { get; set; }
+
     }
 
 

@@ -4,6 +4,9 @@
     {
         [ForeignKey("ConnectionTypeId")]
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
+
+       
+
     }
 
 }

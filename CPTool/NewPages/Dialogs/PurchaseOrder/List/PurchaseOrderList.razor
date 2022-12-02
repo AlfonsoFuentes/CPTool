@@ -1,155 +1,59 @@
-﻿@page "/PurchaseOrderList/{MWOId:int}"
-@page "/PurchaseOrderList"
+﻿@page "/PurchaseOrderList"
+@using CPTool.Application.Features.PurchaseOrderFeatures;
 @if (debug)
 {
     <MudGrid>
 
-        <MudItem xs="12" sm="12">
-            <MudPaper Height="32px" Width="100%" Square="true">
 
-                <MudText Align="Align.Center" Typo="Typo.h5">Purchase Orders <b>@(MWOId == 0 ? "" : $"{MWO.Name}")</b> </MudText>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12">
-            <ManyToManyComponent TMasterDetail="EditPurchaseOrderMWOItem"
-                                     TMaster="EditPurchaseOrder" TDetail="EditMWOItem"
-                                     TManagerMasterDetail="ManagerPurchaseOrderMWOItem"
-                                     TManagerMaster="ManagerPurchaseOrder"
-                                     TManagerDetail="ManagerMWOItem"
-                                     ShowAddButtonMaster=@(MWOId==0?false:true)
-                                     ShowDeleteButtonMaster=false
-                                     ShowAddButtonDetails=false
-                                     ShowDeleteButtonDetails=false
-                                     Mastersm="@mastersm"
-                                     ShowTableDetails=@ShowTableDetails
-                                     OnAddMaster="AddPurchaseOrder"
-                                     OnEditMaster="EditPurchaseOrder"
-                                     OnEditDetail="EditMWOItem"
-                                     @bind-SelectedDetail="@SelectedMWOItem"
-                                     @bind-SelectedMaster="@SelectedPurchaseOrder"
-                                     @bind-ElementsMastersDetails=@GlobalTables.PurchaseOrderMWOItems
-                                     @bind-ElementsMasters=@GlobalTables.PurchaseOrders
-                                     @bind-ElementsDetails=@GlobalTables.MWOItems
-                                     ElementsMastersSelected="@PurchaseOrders"
-                                     ElementsDetailsSelected="@MWOItems">
-                <OtherButtonsMaster>
-                    <MudTooltip Text="Downpayment">
-                        <MudIconButton Icon="@Icons.Filled.CurrencyExchange" Color="Color.Inherit"
-                                   Disabled=@(SelectedPurchaseOrder.PurchaseOrderStatus== PurchaseOrderStatus.Created?false:true) Size="Size.Small" OnClick="AddDownPayment" />
+        <MudItem xs="12" sm=12>
+            <SimpleListComponent TMaster="EditPurchaseOrder"
+                             TDeleteMaster="DeletePurchaseOrder"
+                             OnEdit="EditPurchaseOrder"
+                             ShowAddButtonMaster=false
+                             ShowDeleteButtonMaster=false
+                             TMasterList="GetPurchaseOrderListQuery" TGedById="GetByIdPurchaseOrderQuery"
+                             @bind-ElementsMasters="@GlobalTables.PurchaseOrders"
+                             @bind-SelectedMaster="@SelectedPurchaseOrder"
+                             ElementsMastersSelected="@PurchaseOrders">
+                <MasterOtherButtons>
+                    <MudTooltip Text="DownPayment">
+                        <MudIconButton Icon="@Icons.Filled.CurrencyExchange" OnClick="AddDownPayment" Size="Size.Small" Disabled=@(SelectedPurchaseOrder.Id==0?true:false) />
                     </MudTooltip>
-
-
-                    @if (MWOId != 0)
-                    {
-                        <MudTooltip Text="Restore Page">
-                            <MudIconButton Icon="@Icons.Material.Outlined.RestorePage" OnClick="@(()=>{SelectedMWOItem=new();})" Size="Size.Small" />
-                        </MudTooltip>
-                        <MudTooltip Text="@(ShowTableDetails==true?"Expand":"Contract")">
-                            <MudIconButton Icon="@Icons.Outlined.Assignment" Color="Color.Inherit" Size="Size.Small" OnClick=@(()=>ShowTableDetails=!ShowTableDetails) />
-                        </MudTooltip>
-                    }
-
-                </OtherButtonsMaster>
-                <OtherButtonsDetails>
-                    <MudTooltip Text="Restore Page">
-                        <MudIconButton Icon="@Icons.Material.Outlined.RestorePage" OnClick="@(()=>{SelectedPurchaseOrder=new();})" Size="Size.Small" />
-                    </MudTooltip>
-                </OtherButtonsDetails>
+                </MasterOtherButtons>
 
                 <MasterContextTh>
-                    <MudTh >#</MudTh>
-                    @if (MWOId == 0)
-                    {
-                        <MudTh >MWO</MudTh>
-                    }
-
-                    <MudTh >PR#</MudTh>
-                    <MudTh >PO#</MudTh>
-                    <MudTh >Supplier</MudTh>
-                    <MudTh >Status</MudTh>
-                    @if (!ShowTableDetails)
-                    {
-
-                        <MudTh >Dates</MudTh>
-                        <MudTh >Currency</MudTh>
-                        <MudTh >$Currency</MudTh>
-                        <MudTh >$USD</MudTh>
-                    }
-
-
-
+                    <MudTh>#</MudTh>
+                    <MudTh>MWO</MudTh>
+                    <MudTh>PR#</MudTh>
+                    <MudTh>PO#</MudTh>
+                    <MudTh>Supplier</MudTh>
+                    <MudTh>Name</MudTh>
+                    <MudTh>Status</MudTh>
+                    <MudTh>$Value Currency</MudTh>
+                    <MudTh>$USD</MudTh>
                 </MasterContextTh>
                 <MasterContextTd>
                     <MudTd DataLabel="Id">@context.Id</MudTd>
-                    @if (MWOId == 0)
-                    {
-                        <MudTd DataLabel="MWO">@context.MWO.CECName</MudTd>
-                    }
+                    <MudTd DataLabel="MWO">@context.MWO.CECName</MudTd>
                     <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
                     <MudTd DataLabel="PO">@context.PONumber</MudTd>
                     <MudTd DataLabel="Supplier">@context.pSupplier?.Name</MudTd>
-                    <MudTd DataLabel="PO">@context.PurchaseOrderStatus.ToString()</MudTd>
-                    @if (!ShowTableDetails)
-                    {
-
-
-                        <MudTd DataLabel="date">
-                            @(
-                                context.PurchaseOrderStatus == PurchaseOrderStatus.Ordering ? context.POCreatedDate.ToString("d", _en) :
-                                context.PurchaseOrderStatus == PurchaseOrderStatus.Created ? context.POEstimatedDate?.ToString("d", _en) :
-                                context.PurchaseOrderStatus == PurchaseOrderStatus.Received ? context.POReceivedDate.ToString("d", _en) :
-                                context.POInstalledDate.ToString("d", _en))
-                        </MudTd>
-                        <MudTd DataLabel="Value">@($"{context.Currency.ToString()}")</MudTd>
-                        <MudTd DataLabel="Value">@($"{context.Value.ToString("C0")}")</MudTd>
-                        <MudTd DataLabel="Value">@($"{context.ValueUSD.ToString("C0")}")</MudTd>
-                    }
-                </MasterContextTd>
-
-                <DetailContextTh>
-
-                    <MudTh >#</MudTh>
-
-                    <MudTh >Name</MudTh>
-                    <MudTh >Value</MudTh>
-                    <MudTh >Value, USD</MudTh>
-                </DetailContextTh>
-                <DetailContextTd>
-
-                    <MudTd DataLabel="Id">@context.Id</MudTd>
-
                     <MudTd DataLabel="Name">@context.Name</MudTd>
-                    <MudTd DataLabel="Value">
-
-                        @((SelectedPurchaseOrder == null || SelectedPurchaseOrder.Id == 0) ? "" :
-                            $"{context.MWOItemCurrencyValues.FirstOrDefault(x => x.PurchaseOrderId == SelectedPurchaseOrder.Id).Currency.ToString()} {context.MWOItemCurrencyValues.FirstOrDefault(x => x.PurchaseOrderId == SelectedPurchaseOrder.Id).PrizeCurrency.ToString("C0")}"
-                            )
-                    </MudTd>
-                    <MudTd DataLabel="Value, USD">
-
-                        @((SelectedPurchaseOrder == null || SelectedPurchaseOrder.Id == 0) ? "" :
-                            $"{context.MWOItemCurrencyValues.FirstOrDefault(x => x.PurchaseOrderId == SelectedPurchaseOrder.Id).PrizeUSD.ToString("C0")}"
-                            )
-                    </MudTd>
-                </DetailContextTd>
-
-            </ManyToManyComponent>
+                    <MudTd DataLabel="PO">@context.PurchaseOrderStatus.ToString()</MudTd>
+                    <MudTd DataLabel="$Value Currency">@($"{context.Currency.ToString()} {context.PrizeCurrency.ToString("C0")}")</MudTd>
+                        <MudTd DataLabel="$Value USD">@($"{context.PrizeUSD.ToString("C0")}")</MudTd>
+                    </MasterContextTd>
+                </SimpleListComponent>
 
 
-        </MudItem>
-    </MudGrid>
+            </MudItem>
+        </MudGrid>
 }
 
 @code {
     public bool debug { get; set; } = true;
 
     public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
-
-
-
-    bool ShowTableDetails = true;
-
-    int mastersm => ShowTableDetails == true ? 6 : 12;
 
 
 }

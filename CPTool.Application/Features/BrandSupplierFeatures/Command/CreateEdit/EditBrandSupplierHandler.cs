@@ -66,7 +66,7 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
                     return await Result<int>.SuccessAsync(table.Id, $"{table.Name} Added to {nameof(BrandSupplier)}");
                 }
             }
-
+            
 
             return await Result<int>.SuccessAsync(0, $"Updated in {nameof(BrandSupplier)}");
         }

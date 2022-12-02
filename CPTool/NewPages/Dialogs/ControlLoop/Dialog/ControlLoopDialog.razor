@@ -12,7 +12,7 @@
                     <MudForm Model="Model" @ref="form">
 
                         <MudGrid>
-                            <MudItem xs="12" sm="6">
+                            <MudItem xs="12" sm="12">
                                 <MudSelect Dense="true"
                                            Margin="Margin.Dense"
                                            T="ControlLoopType"
@@ -28,56 +28,29 @@
                                     }
 
                                 </MudSelect>
-                                <SelectComponent T="EditSignal"
-                                                 Elements=@signalsIn
-                                                 Label="Process Variable Signal"
-                                                 @bind-Value="@Model.ProcessVariable">
-
-
-                                </SelectComponent>
-                                <SelectComponent T="EditSignal"
-                                                 Elements=@signalsOut
-                                                 Label="Controlled Variable Signal"
-                                                 
-                                                 @bind-Value="@Model.ControlledVariable">
-
-
-                                </SelectComponent>
-                                <FieldComponent Label="Process Variable Signal" Value="@Model.ProcessVariable.Name"></FieldComponent>
-                                <FieldComponent Label="Controlled Variable Signal" Value="@Model.ControlledVariable.Name"></FieldComponent>
-                                @if (Model.ControlLoopType== ControlLoopType.PIDControl)
+                           
+                                @switch (Model.ControlLoopType)
                                 {
+                                    case ControlLoopType.PIDControl:
+                                        {
+                                            <ControlLoopPID></ControlLoopPID>
+                                        }
+                                        break;
+                                    case ControlLoopType.ON_OFF_Control:
+                                        <ControlLoopONOFF></ControlLoopONOFF>
+                                        break;
+                                    case ControlLoopType.Interlock:
+                                        <ControlLoopInterlock></ControlLoopInterlock>
+                                        break;
+                                    case ControlLoopType.Alarm:
+                                        <ControlLoopAlarm></ControlLoopAlarm>
+                                        break;
 
                                 }
 
                             </MudItem>
-                          
-                            @*<MudItem xs="0" sm="4">
-                                <MudContainer Style="max-height: 350px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Large">
-                                    <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
-                                        <MudListSubheader>Signals In</MudListSubheader>
-                                        @foreach (var row in signalsIn)
-                                        {
-                                            <MudListItem Text="@row.Name" OnClick=@(()=>Model.ProcessVariable=row)
-                                                     Dense="true" />
 
-                                        }
-                                    </MudList>
-                                </MudContainer>
-                            </MudItem>
-                            <MudItem xs="0" sm="4">
-                                <MudContainer Style="max-height: 350px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Large">
-                                    <MudList Dense="true" Clickable="true" Class="d-flex flex-column flex-grow-1 py-0">
-                                        <MudListSubheader>Signals Out</MudListSubheader>
-                                        @foreach (var row in signalsOut)
-                                        {
-                                            <MudListItem Text="@row.Name" OnClick=@(()=>Model.ControlledVariable=row)
-                                                     Dense="true" />
-                                        }
-                                    </MudList>
-                                </MudContainer>
 
-                            </MudItem>*@
                         </MudGrid>
 
 

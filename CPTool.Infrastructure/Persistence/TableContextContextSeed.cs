@@ -50,7 +50,7 @@ namespace CPTool.Infrastructure.Persistence
                 {
                     AddPropertyPackage(db);
                 }
-             
+
                 if (!db.UserRequirementTypes!.Any())
                 {
                     AddUserRequirmentType(db);
@@ -58,6 +58,10 @@ namespace CPTool.Infrastructure.Persistence
                 if (!db.SignalTypes!.Any())
                 {
                     AddSignalType(db);
+                }
+                if (!db.SignalModifiers!.Any())
+                {
+                    AddSignalModifier(db);
                 }
             }
         }
@@ -1021,7 +1025,7 @@ namespace CPTool.Infrastructure.Persistence
                      Key="URS 06"
 
                  },
-                 
+
                         new UserRequirementType()
                  {
                      Name="Utilities and media",
@@ -1118,17 +1122,17 @@ namespace CPTool.Infrastructure.Persistence
                  new SignalType()
                  {
                      Name="24 VDC",
-                   
+
                  },
                   new SignalType()
                  {
                      Name="110 VAC",
-                 
+
                  },
                    new SignalType()
                  {
                      Name="4-20 mA",
-                   
+
 
                  },
             new SignalType()
@@ -1146,5 +1150,58 @@ namespace CPTool.Infrastructure.Persistence
 
             context.SaveChanges();
         }
+        static void AddSignalModifier(TableContext context)
+        {
+            SignalModifier[] variables = new[]
+            {
+                
+                 new SignalModifier()
+                 {
+                     Name="Feedback",
+
+                 },
+                  new SignalModifier()
+                 {
+                     Name="Target",
+
+                 },
+                   new SignalModifier()
+                 {
+                     Name="Scaled",
+
+
+                 },
+                new SignalModifier()
+                 {
+                     Name="H",
+
+
+                 },
+                new SignalModifier()
+                 {
+                     Name="HH",
+
+
+                 },
+                new SignalModifier()
+                 {
+                     Name="L",
+
+
+                 },
+                 new SignalModifier()
+                 {
+                     Name="LL",
+
+
+                 },
+            };
+
+
+            context.SignalModifiers!.AddRange(variables);
+
+            context.SaveChanges();
+        }
+
     }
 }

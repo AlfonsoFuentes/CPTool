@@ -34,7 +34,8 @@
                                      OnAdd="AddUserRequirement"
                                      OnEdit="EditUserRequirement"
                                      TMasterList="GetUserRequirementListQuery" TGedById="GetByIdUserRequirementQuery"
-                                     ElementsMasters="@UserRequirements"
+                                     ElementsMastersSelected="@UserRequirements"
+                                     @bind-ElementsMasters="@GlobalTables.UserRequirements"
                                      @bind-SelectedMaster="@EditUserRequirementSelected"
                                      OnShowDialogMaster="ToolDialogService.ShowUserRequirementDialog">
                     <MasterContextTh>

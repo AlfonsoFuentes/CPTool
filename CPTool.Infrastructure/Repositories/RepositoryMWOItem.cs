@@ -12,9 +12,9 @@ namespace CPTool.Infrastructure.Repositories
         public async Task<MWOItem> GetMWOItemIdAsync(int id)
         {
             var result = await dbcontext!.MWOItems!
-                 //.Include(x => x.Chapter)
-                 //.Include(x => x.MWO)
-                 .Include(x => x.MWOItemCurrencyValues)
+                 .Include(x => x.PurchaseOrderItems!).ThenInclude(x => x.PurchaseOrder)
+                 .Include(x => x.Chapter)
+                 .Include(x => x.PurchaseOrderItems)
                  .Include(x => x.UnitaryBasePrize)
                  .Include(x => x.AlterationItem)
                  .Include(x => x.FoundationItem)
@@ -41,7 +41,7 @@ namespace CPTool.Infrastructure.Repositories
                  .Include(x => x.EquipmentItem).ThenInclude(x => x!.eProcessCondition).ThenInclude(x => x!.MassFlow)
                  .Include(x => x.EquipmentItem).ThenInclude(x => x!.eProcessCondition).ThenInclude(x => x!.Temperature)
                  .Include(x => x.EquipmentItem).ThenInclude(x => x!.eProcessCondition).ThenInclude(x => x!.Pressure)
-
+                 .Include(x => x.EquipmentItem).ThenInclude(x => x!.Nozzles)
                  .Include(x => x.InstrumentItem)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.iProcessCondition)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.iProcessFluid)
@@ -60,7 +60,7 @@ namespace CPTool.Infrastructure.Repositories
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.Readout)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.MeasuredVariable)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.MeasuredVariableModifier)
-
+                 .Include(x => x.InstrumentItem).ThenInclude(x => x!.Nozzles)
                  .Include(x => x.PipingItem)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.pProcessFluid)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.pProcessCondition).ThenInclude(x => x!.SpecificCp)
@@ -81,6 +81,7 @@ namespace CPTool.Infrastructure.Repositories
                 .Include(x => x.PipingItem).ThenInclude(x => x!.NozzleFinish)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.StartMWOItem)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.FinishMWOItem)
+                .Include(x => x.PipingItem).ThenInclude(x => x!.Nozzles)
                  .FirstOrDefaultAsync(x => x.Id == id);
 
             return result!;
@@ -88,9 +89,10 @@ namespace CPTool.Infrastructure.Repositories
         public override async Task<IReadOnlyList<MWOItem>> GetAllAsync()
         {
             var result = await dbcontext!.MWOItems!
-                 //.Include(x => x.Chapter)
-                 //.Include(x => x.MWO)
-                 .Include(x => x.MWOItemCurrencyValues)
+                 .Include(x => x.PurchaseOrderItems!).ThenInclude(x => x.PurchaseOrder)
+                  .Include(x => x.Chapter)
+
+                 .Include(x => x.PurchaseOrderItems)
                  .Include(x => x.UnitaryBasePrize)
                  .Include(x => x.AlterationItem)
                  .Include(x => x.FoundationItem)
@@ -117,7 +119,7 @@ namespace CPTool.Infrastructure.Repositories
                  .Include(x => x.EquipmentItem).ThenInclude(x => x!.eProcessCondition).ThenInclude(x => x!.MassFlow)
                  .Include(x => x.EquipmentItem).ThenInclude(x => x!.eProcessCondition).ThenInclude(x => x!.Temperature)
                  .Include(x => x.EquipmentItem).ThenInclude(x => x!.eProcessCondition).ThenInclude(x => x!.Pressure)
-
+                 .Include(x => x.EquipmentItem).ThenInclude(x => x!.Nozzles)
                  .Include(x => x.InstrumentItem)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.iProcessCondition)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.iProcessFluid)
@@ -136,7 +138,7 @@ namespace CPTool.Infrastructure.Repositories
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.Readout)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.MeasuredVariable)
                  .Include(x => x.InstrumentItem).ThenInclude(x => x!.MeasuredVariableModifier)
-
+                 .Include(x => x.InstrumentItem).ThenInclude(x => x!.Nozzles)
                  .Include(x => x.PipingItem)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.pProcessFluid)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.pProcessCondition).ThenInclude(x => x!.SpecificCp)
@@ -157,6 +159,7 @@ namespace CPTool.Infrastructure.Repositories
                 .Include(x => x.PipingItem).ThenInclude(x => x!.NozzleFinish)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.StartMWOItem)
                 .Include(x => x.PipingItem).ThenInclude(x => x!.FinishMWOItem)
+                .Include(x => x.PipingItem).ThenInclude(x => x!.Nozzles)
                 .ToListAsync();
 
             return result!;

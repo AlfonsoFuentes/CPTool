@@ -11,11 +11,13 @@
                             <TextComponent @bind-Model="@Model"
                                        Label="Name"
                                        Lines="2"
+                                       Validation="@(new Func<string, string>(ValidateTaskName))"
                                        PropertyName="Name"></TextComponent>
                             <MudDatePicker Margin="Margin.Dense"
+                                       Disabled=true
                                        Variant="Variant.Outlined" Label="Estimated Task Date" @bind-Date="Model.ExpectedDate"></MudDatePicker>
-
-
+                            <FieldComponent Label="Task Type" Value="@Model.TaksType.ToString()"></FieldComponent>
+                            <FieldComponent Label="Task Status" Value="@Model.TaksStatus.ToString()"></FieldComponent>
 
                             @if (Model.MWO != null)
                             {
@@ -31,7 +33,7 @@
                             }
                             @if (Model.PurchaseOrder != null)
                             {
-                                <FieldComponent Label="Status" Value="@Model.PurchaseOrder.PurchaseOrderStatus"></FieldComponent>
+                                <FieldComponent Label="PO Status" Value="@Model.PurchaseOrder.PurchaseOrderStatus"></FieldComponent>
 
                                 <FieldComponent Label="Purchase Requisition" Value="@Model.PurchaseOrder.PurchaseRequisition"></FieldComponent>
                                 <FieldComponent Label="Purchase Order No" Value="@Model.PurchaseOrder.PONumber"></FieldComponent>
@@ -53,7 +55,7 @@
         </DialogContent>
         <DialogActions>
 
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled=@ButtonSaveDisable Class="ml-auto" OnClick="Submit">@ButtonSaveName</MudButton>
 
             <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
         </DialogActions>

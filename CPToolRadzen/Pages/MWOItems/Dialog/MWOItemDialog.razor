@@ -1,0 +1,42 @@
+﻿@using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+@inherits DialogTemplate<EditMWOItem>
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <CascadingValue Value="this">
+
+            <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Class="width:100%" RenderMode="TabRenderMode.Client">
+                <Tabs>
+                    <RadzenTabsItem Text="Name">
+                        <ChapterDialog></ChapterDialog>
+                    </RadzenTabsItem>
+                 
+                    <RadzenTabsItem Text="Specs">
+                        <SpecsDialog></SpecsDialog>
+                    </RadzenTabsItem>
+                    @if(Model.Chapter.Id==6)
+                    {
+                        <RadzenTabsItem Text="Accesories">
+                            <AccesoriesDialog></AccesoriesDialog>
+                        </RadzenTabsItem>
+                    }
+                   
+                    <RadzenTabsItem Text="Nozzles">
+                        <MWOItemNozzlesDialog></MWOItemNozzlesDialog>
+                    </RadzenTabsItem>
+                    <RadzenTabsItem Text="Process Conditions">
+                        <ProcessConditionsDialog></ProcessConditionsDialog>
+                    </RadzenTabsItem>
+                    
+                </Tabs>
+            </RadzenTabs>
+        </CascadingValue>
+
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+    TabPosition tabPosition = TabPosition.Top;
+    void OnChange(int index)
+    {
+    }
+}

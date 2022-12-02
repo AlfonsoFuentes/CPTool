@@ -1,0 +1,21 @@
+﻿@page "/tax-codes-LP"
+@using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditTaxCodeLP>
+<TableTemplate T="EditTaxCodeLP"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.TaxCodeLPs">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditTaxCodeLP" Property="@nameof(EditTaxCodeLP.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

@@ -12,16 +12,15 @@ namespace CPTool.NewPages.Dialogs.UserRequirement.List
         
         [Parameter]
         public int MWOId { get; set; }
-        EditMWO MWO = new();
+        EditMWO MWO => GlobalTables.MWOs.FirstOrDefault(x => x.Id == MWOId);
         EditUserRequirementType URType = new();
         List<EditUserRequirement> UserRequirements => URType.Id == 0 ? new() :
             GlobalTables.UserRequirements.Where(x => x.UserRequirementTypeId == URType.Id).ToList();
 
         EditUserRequirement EditUserRequirementSelected = new();
-        protected override async Task OnInitializedAsync()
+        protected override void   OnInitialized()
         {
-            GetByIdMWOQuery getByIdMWOQuery = new() { Id = MWOId };
-            MWO = await Mediator.Send(getByIdMWOQuery);
+           
             URType = GlobalTables.UserRequirementTypes.Count == 0 ? new() : GlobalTables.UserRequirementTypes.FirstOrDefault();
 
         }

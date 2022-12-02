@@ -16,8 +16,11 @@ namespace CPTool.Infrastructure.Repositories
 
         public async Task<MWO> GetMWO_ItemsIdAsync(int id)
         {
-            var result = await dbcontext!.MWOs!
-                 .Include(x => x.MWOItems).ThenInclude(x => x.MWOItemCurrencyValues)
+            try
+            {
+                var result = await dbcontext!.MWOs!
+                .Include(x => x.PurchaseOrders).ThenInclude(y => y.PurchaseOrderItems!)
+                 
                  .Include(x => x.MWOItems).ThenInclude(x => x.UnitaryBasePrize)
                  .Include(x => x.MWOItems).ThenInclude(x => x.AlterationItem)
                  .Include(x => x.MWOItems).ThenInclude(x => x.FoundationItem)
@@ -35,7 +38,15 @@ namespace CPTool.Infrastructure.Repositories
 
                  .FirstOrDefaultAsync(x => x.Id == id);
 
-            return result!;
+                return result!;
+
+            }
+            catch(Exception ex)
+            {
+                string exm = ex.Message;
+            }
+
+            return null!;
 
         }
         public async Task<MWO> GetMWO_PurchaseOrderIdAsync(int id)
@@ -52,7 +63,8 @@ namespace CPTool.Infrastructure.Repositories
         public override async Task<IReadOnlyList<MWO>> GetAllAsync()
         {
             var result = await dbcontext!.MWOs!
-                .Include(x => x.MWOItems).ThenInclude(x => x.MWOItemCurrencyValues)
+                .Include(x => x.PurchaseOrders).ThenInclude(y=>y.PurchaseOrderItems!)
+               
                 .Include(x => x.MWOItems).ThenInclude(x => x.UnitaryBasePrize)
                 .Include(x => x.MWOItems).ThenInclude(x => x.AlterationItem)
                 .Include(x => x.MWOItems).ThenInclude(x => x.FoundationItem)
@@ -67,7 +79,7 @@ namespace CPTool.Infrastructure.Repositories
                 .Include(x => x.MWOItems).ThenInclude(x => x.EquipmentItem)
                 .Include(x => x.MWOItems).ThenInclude(x => x.InstrumentItem)
                 .Include(x => x.MWOItems).ThenInclude(x => x.PipingItem)
-
+              
                 .ToListAsync();
 
             return result!;

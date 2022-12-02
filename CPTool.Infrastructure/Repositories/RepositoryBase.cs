@@ -1,11 +1,7 @@
-﻿using CPTool.Application.Contracts.Persistence;
-using CPTool.Domain.Common;
-using CPTool.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using SendGrid.Helpers.Mail;
+﻿using CPtool.ExtensionMethods;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
+using System.Linq.Dynamic.Core;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -17,28 +13,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             this.dbcontext = dbcontext;
         }
-
-        public virtual async Task<IReadOnlyList<T>> GetAllAsync()
-        {
-            try
-            {
-                if (!(await dbcontext.Set<T>().AnyAsync()))
-                {
-
-                }
-                IQueryable<T> query = dbcontext.Set<T>();
-                //query = query.AsNoTracking();
-                query = Query(query);
-                var retorno = await query.ToListAsync();
-                return retorno;
-            }
-            catch (Exception ex)
-            {
-                string exm = ex.Message;
-            }
-            return null!;
-        }
-
+     
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await dbcontext.Set<T>().Where(predicate).ToListAsync();
@@ -52,6 +27,23 @@ namespace CPTool.Infrastructure.Repositories
             {
                 var state = entry.State;
             }
+        }
+        public virtual async Task<IReadOnlyList<T>> GetAllAsync()
+        {
+            try
+            {
+               
+                IQueryable<T> query = dbcontext.Set<T>();
+            
+                query = Query(query);
+                var retorno = await query.ToListAsync();
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                string exm = ex.Message;
+            }
+            return null!;
         }
         public async Task<IReadOnlyList<T>> GetAsync(
             Expression<Func<T, bool>> predicate = null!,
@@ -74,8 +66,9 @@ namespace CPTool.Infrastructure.Repositories
 
         public async virtual Task<T> GetByIdAsync(int id)
         {
+            
 
-            var result = await dbcontext.Set<T>().FindAsync(id);
+           var result = await dbcontext.Set<T>().FindAsync(id);
             return result!;
         }
 
@@ -152,3 +145,52 @@ namespace CPTool.Infrastructure.Repositories
         }
     }
 }
+//public async  Task<IQueryable<T>> GetFilteredList(QueryFilter query)
+//{
+//    var items = dbcontext.Set<T>().AsQueryable();
+
+//    if (query != null)
+//    {
+//        if (!string.IsNullOrEmpty(query.Expand))
+//        {
+//            var propertiesToExpand = query.Expand.Split(',');
+//            foreach (var p in propertiesToExpand)
+//            {
+//                items = items.Include(p.Trim());
+//            }
+//        }
+
+//        if (!string.IsNullOrEmpty(query.Filter))
+//        {
+//            if (query.FilterParameters != null)
+//            {
+//                items = items.Where(query.Filter, query.FilterParameters);
+//            }
+//            else
+//            {
+//                items = items.Where(query.Filter);
+//            }
+//        }
+
+//        if (!string.IsNullOrEmpty(query.OrderBy))
+//        {
+//            items = items.OrderBy(query.OrderBy);
+//        }
+
+//        if (query.Skip.HasValue)
+//        {
+//            items = items.Skip(query.Skip.Value);
+//        }
+
+//        if (query.Top.HasValue)
+//        {
+//            items = items.Take(query.Top.Value);
+//        }
+//    }
+
+
+
+//    return await Task.FromResult(items);
+//}
+
+

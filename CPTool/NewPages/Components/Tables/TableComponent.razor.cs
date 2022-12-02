@@ -13,8 +13,9 @@ namespace CPTool.NewPages.Components.Tables
         [Parameter]
         [Category("Footer")]
         public RenderFragment FooterContent { get; set; }
-     
 
+        int RowsPerPage => 15;
+        string Heigth => Elements.Count < 10 ? "350px" : "550px";
         bool Loading = true;
         protected override void OnAfterRender(bool firstRender)
         {
@@ -76,7 +77,12 @@ namespace CPTool.NewPages.Components.Tables
 
         [Parameter]
         public EventCallback OnDelete { get; set; }
-
+        [Parameter]
+        public EventCallback OnPrint { get; set; }
+        [Parameter]
+        public EventCallback OnExcel { get; set; }
+        [Parameter]
+        public EventCallback OnPDF { get; set; }
 
     }
 }

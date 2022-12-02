@@ -9,7 +9,9 @@
                      TMasterList="GetMWOListQuery"
                      TGedById="GetByIdMWOQuery"
                      @bind-ElementsMasters="@GlobalTables.MWOs"
+                     ElementsMastersSelected="@GlobalTables.MWOs"
                      @bind-SelectedMaster="@SelectedMaster"
+                     OnExcel="OnExcel"
                      OnShowDialogMaster="ToolDialogService.ShowMWO">
 
         <MasterOtherButtons>
@@ -28,18 +30,21 @@
             <MudTooltip Text="Signals">
                 <MudIconButton Icon="@Icons.Filled.ElectricalServices" OnClick="GoToUserSignalList" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
             </MudTooltip>
-             <MudTooltip Text="Control Loops">
+            <MudTooltip Text="Control Loops">
                 <MudIconButton Icon="@Icons.Filled.Loop" OnClick="GoToControlLoopList" Size="Size.Small" Disabled=@(SelectedMaster.Id==0?true:false) />
             </MudTooltip>
         </MasterOtherButtons>
 
         <MasterContextTh>
-            <MudTh >#</MudTh>
-            <MudTh >Name</MudTh>
-            <MudTh >CEC#</MudTh>
-            <MudTh >Budget, USD</MudTh>
-            <MudTh >Expenses, USD</MudTh>
-            <MudTh >Assigned, USD</MudTh>
+            <MudTh>#</MudTh>
+            <MudTh>Name</MudTh>
+            <MudTh>CEC#</MudTh>
+            <MudTh>Budget, USD</MudTh>
+            <MudTh>Expenses, USD</MudTh>
+            <MudTh>Assigned, USD</MudTh>
+            <MudTh>Actual, USD</MudTh>
+            <MudTh>Commitment, USD</MudTh>
+            <MudTh>Pending, USD</MudTh>
         </MasterContextTh>
         <MasterContextTd>
             <MudTd DataLabel="#">@context.Id</MudTd>
@@ -47,8 +52,11 @@
 
             <MudTd DataLabel="CEC">@context.CECName</MudTd>
             <MudTd DataLabel="Budget, USD">@context.Budget.ToString("C1")</MudTd>
-            <MudTd DataLabel="Budget, USD">@context.Expenses.ToString("C1")</MudTd>
-            <MudTd DataLabel="Budget, USD">@context.Assigned.ToString("C1")</MudTd>
+            <MudTd DataLabel="Expenses, USD">@context.Expenses.ToString("C1")</MudTd>
+            <MudTd DataLabel="Assigned, USD">@context.Assigned.ToString("C1")</MudTd>
+            <MudTd DataLabel="Actual, USD">@context.Actual.ToString("C1")</MudTd>
+            <MudTd DataLabel="Commitment, USD">@context.Commitment.ToString("C1")</MudTd>
+            <MudTd DataLabel="Pending, USD">@context.Pending.ToString("C1")</MudTd>
         </MasterContextTd>
 
 

@@ -1,0 +1,45 @@
+﻿@using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
+@using CPTool.Application.Features.MWOFeatures.CreateEdit;
+@inherits DialogTemplate<EditMWO>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        
+        <SelectTemplate T="EditMWOType" Elements=@RadzenTables.MWOTypes
+                        Label="MWO Type"
+                        @bind-Model=@Model.MWOType
+                        Required=true
+                        PropertyName="Name">
+
+        </SelectTemplate>
+
+        
+        <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+
+        </TextBoxTemplate>
+        
+        <NumericTemplate Label="MWO number" Required=true TValue="int"
+                         TargetValue=0
+                         RegexError="Enter a valid 5 digit"
+                         @bind-Value=@Model.Number Regex="\d{5}">
+
+        </NumericTemplate>
+        <FieldTemplate Label="CEC Name" Value="@Model.CECName">
+
+        </FieldTemplate>
+        <FieldTemplate Label="CEB Name" Value="@Model.CEBName">
+
+        </FieldTemplate>
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+   
+}
+

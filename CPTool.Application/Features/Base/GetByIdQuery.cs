@@ -5,6 +5,7 @@ using CPTool.Application.Features.ChapterFeatures.Query.GetById;
 
 namespace CPTool.Application.Features.Base
 {
+
     public class GetByIdQuery
     {
         public GetByIdQuery()
@@ -44,4 +45,7 @@ namespace CPTool.Application.Features.Base
 
         }
     }
+
+   
+
 }

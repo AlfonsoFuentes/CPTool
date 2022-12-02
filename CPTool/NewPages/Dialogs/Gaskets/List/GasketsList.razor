@@ -3,6 +3,7 @@
                      TDeleteMaster="DeleteGasket"
                      TMasterList="GetGasketListQuery" TGedById="GetByIdGasketQuery"
                      @bind-ElementsMasters="GlobalTables.Gaskets"
+                     ElementsMastersSelected="@GlobalTables.Gaskets"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">
     <MasterContextTh>
         <MudTh >#</MudTh>

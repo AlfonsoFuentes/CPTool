@@ -1,0 +1,73 @@
+﻿@page "/brand-suppliers"
+
+@using CPTool.Application.Features.BrandFeatures.CreateEdit;
+@using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+
+
+@if (debug)
+{
+
+}
+<div class="container">
+    <div class="row" style="margin-bottom: 1rem">
+        <div class="col" style="margin-bottom: 1rem">
+
+
+            <TableTemplate T="EditBrand"
+                           TableName="Brand/Services List"
+                           Elements="@SelectedBrandList"
+                           @bind-SelectedItem=@SelectedBrand
+                           OnAdd="OnAddBrand"
+                           OnEdit="OnEditBrand"
+                           @bind-GlobalElements="@RadzenTables.Brands">
+
+                <ToolBarButtons>
+                    <ButtonTemplate Icon="restore"
+                                    Click=@(()=>SelectedBrand=new())
+                                    ToolTip="Restore">
+
+                    </ButtonTemplate>
+                </ToolBarButtons>
+
+                <Columns>
+                    <RadzenDataGridColumn TItem="EditBrand" Property="@nameof(EditBrand.Name)" Title="Name" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="EditBrand" Property="@nameof(EditBrand.BrandType)" Title="Type" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+
+                </Columns>
+            </TableTemplate>
+        </div>
+        <div class="col" style="margin-bottom: 1rem">
+
+
+            <TableTemplate T="EditSupplier"
+                           TableName="Supplier List"
+                           Elements="@SelectedSupplierList"
+                           @bind-SelectedItem=@SelectedSupplier
+                           OnAdd="OnAddSupplier"
+                           OnEdit="OnEditSupplier"
+                           @bind-GlobalElements="@RadzenTables.Suppliers">
+
+                <ToolBarButtons>
+                    <ButtonTemplate Icon="restore"
+                                    Click=@(()=>SelectedSupplier=new())
+                                    ToolTip="Restore">
+
+                    </ButtonTemplate>
+                </ToolBarButtons>
+
+                <Columns>
+                    <RadzenDataGridColumn TItem="EditSupplier" Property="@nameof(EditSupplier.Name)" Title="Name" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="EditSupplier" Property="@nameof(EditSupplier.VendorCode)" Title="Vendor Code" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+
+                </Columns>
+            </TableTemplate>
+        </div>
+    </div>
+</div>
+@code {
+    bool debug = true;
+}

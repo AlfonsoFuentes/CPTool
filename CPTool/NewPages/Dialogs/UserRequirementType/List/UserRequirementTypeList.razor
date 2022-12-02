@@ -8,7 +8,8 @@
                    
                      TDeleteMaster="DeleteUserRequirementType"
                      TMasterList="GetUserRequirementTypeListQuery" TGedById="GetByIdUserRequirementTypeQuery"
-                     @bind-ElementsMasters="GlobalTables.UserRequirementTypes"
+                     @bind-ElementsMasters="@GlobalTables.UserRequirementTypes"
+                     ElementsMastersSelected="@GlobalTables.UserRequirementTypes"
                      OnAdd="AddUserRequirementType"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">
     <MasterContextTh>

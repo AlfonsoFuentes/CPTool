@@ -10,12 +10,12 @@
                                TGedById="GetByIdProcessFluidQuery" PropertyName="Name"
                                TableName="Process Fluid"
                                Label="Process Fluid"
-                               
+                               ModelChanged=ProcessFluidChanged
                                ValidateForm="DialogParent.Validateform"
                                @bind-Elements="@GlobalTables.ProcessFluids"
                                ShowDialogOverrided="ToolDialogService.ShowProcessFluidDialog"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateProcessFluid))"
-                               @bind-Model=@ProcessFluid>
+                               Model=@ProcessFluid>
 
             </AutoCompleteComponent>
         </MudItem>

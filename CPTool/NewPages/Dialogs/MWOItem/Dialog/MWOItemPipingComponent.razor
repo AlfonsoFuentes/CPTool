@@ -65,6 +65,7 @@
 
             <SelectComponent T="EditMWOItem"
                          Elements=@MWOItemsStarts
+                         PropertyName="@nameof(EditMWOItem.TagId)"
                          SelectionChanged="OnChangeEquipmentStart"
                          Label="Pipe Start in"
                          @bind-Value="@Model.StartMWOItem">
@@ -81,6 +82,7 @@
             </SelectComponent>
             <SelectComponent T="EditMWOItem"
                          Elements=@MWOItemsFinish
+                         PropertyName="@nameof(EditMWOItem.TagId)"
                          SelectionChanged="OnChangeEquipmentFinish"
                          Label="Pipe Finish in"
                          @bind-Value="@Model.FinishMWOItem">

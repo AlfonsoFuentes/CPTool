@@ -1,0 +1,25 @@
+﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
+@inherits DialogTemplate<EditEquipmentTypeSub>
+
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+
+        </TextBoxTemplate>
+        <TextBoxTemplate Label="Tag Letter" Required=false @bind-Value=@Model.TagLetter StringsToCompare=@(FilteredList.Select(x => x.TagLetter).ToList())>
+
+        </TextBoxTemplate>
+        
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+
+}

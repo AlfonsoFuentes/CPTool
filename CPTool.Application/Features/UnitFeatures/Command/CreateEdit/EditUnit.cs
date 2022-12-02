@@ -47,6 +47,6 @@ namespace CPTool.Application.Features.UnitFeatures.CreateEdit
         public List<CPTool.UnitsSystem.Unit> UnitsList => Amount!.UnitsList;
 
 
-        public string StringValue => $"{Value} {UnitName}";
+        public string StringValue => Amount!.ToString("NG");
     }
 }

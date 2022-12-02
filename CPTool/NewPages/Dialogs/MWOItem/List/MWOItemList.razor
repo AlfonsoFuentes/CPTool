@@ -13,7 +13,8 @@
                              OnAdd="AddMWOItem"
                              OnEdit="EditMWOItem"
                              TMasterList="GetMWOItemListQuery" TGedById="GetByIdMWOItemQuery"
-                             ElementsMasters="@MWOItems"
+                             ElementsMastersSelected="@MWOItems"
+                             @bind-ElementsMasters="@GlobalTables.MWOItems"
                              @bind-SelectedMaster="@MWOItemSelected"
                              OnShowDialogMaster="ToolDialogService.ShowMWOItem">
             <MasterOtherButtons>
@@ -27,6 +28,9 @@
                 <MudTh>Name</MudTh>
                 <MudTh>Budget, USD</MudTh>
                 <MudTh>Assigned, USD</MudTh>
+                <MudTh>Actual, USD</MudTh>
+                <MudTh>Commitment, USD</MudTh>
+                <MudTh>Pending, USD</MudTh>
             </MasterContextTh>
             <MasterContextTd>
                 <MudTd DataLabel="#">@context.Nomenclatore</MudTd>
@@ -34,6 +38,9 @@
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd DataLabel="Budget, USD">@context.BudgetPrize.ToString("C1")</MudTd>
                 <MudTd DataLabel="Assigned, USD">@context.Assigned.ToString("C1")</MudTd>
+                <MudTd DataLabel="Actual, USD">@context.Actual.ToString("C1")</MudTd>
+                <MudTd DataLabel="Commitment, USD">@context.Commitment.ToString("C1")</MudTd>
+                <MudTd DataLabel="Pending, USD">@context.Pending.ToString("C1")</MudTd>
             </MasterContextTd>
 
             <FooterContent >
@@ -42,6 +49,9 @@
                 <MudTd></MudTd>
                 <MudTd style="bold-text">@MWOItems.Sum(x=>x.BudgetPrize).ToString("C1")</MudTd>
                 <MudTd style="bold-text">@MWOItems.Sum(x=>x.Assigned).ToString("C1")</MudTd>
+                <MudTd style="bold-text">@MWOItems.Sum(x=>x.Actual).ToString("C1")</MudTd>
+                <MudTd style="bold-text">@MWOItems.Sum(x=>x.Commitment).ToString("C1")</MudTd>
+                <MudTd style="bold-text">@MWOItems.Sum(x=>x.Pending).ToString("C1")</MudTd>
             </FooterContent>
 
         </SimpleListComponent>

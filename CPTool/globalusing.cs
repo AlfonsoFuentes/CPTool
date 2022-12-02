@@ -20,7 +20,7 @@ global using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 global using CPTool.Application.Features.DownPaymentFeatures.Query.GetList;
 global using CPTool.Application.Features.MWOItemFeatures.Query.GetById;
 global using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetById;
-global using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
+
 global using CPTool.Application.Features.TaksFeatures.Query.GetList;
 global using CPTool.Application.Features.BrandFeatures.CreateEdit;
 global using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
@@ -57,7 +57,7 @@ global using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
 global using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 global using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
 global using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
-global using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList;
+global using CPTool.Persistence.BaseClass;
 global using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 global using CPTool.Application.Features.ReadoutFeatures.Query.GetList;
 global using CPTool.Application.Features.SignalFeatures.Query.GetList;

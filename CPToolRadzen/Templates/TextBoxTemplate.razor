@@ -1,0 +1,66 @@
+﻿<div style="margin-bottom: 1rem" class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+    </div>
+    <div class=@UISettings.ColClassValue>
+        @if (Rows == 1)
+        {
+            <RadzenTextBox Style=@StyleBoxWidth100 @bind-Value="@Value" Change=ValueChanged Disabled=@Disabled Name="TextBox" />
+        }
+        else
+        {
+            <RadzenTextArea @bind-Value="@Value" Change=OnChange Disabled=@Disabled Name="TextBox" Rows="@Rows" Style=@StyleBoxWidth100 />
+        }
+      
+        @if (Required && Value=="")
+        {
+            <RadzenRequiredValidator Component="TextBox" Text=@RequiredText Popup=true Style="position: absolute" />
+        }
+        @if (Any)
+        {
+            <TemplateListValidator Visible=@Any Component="TextBox" StringsToCompare="@StringsToCompare"
+                                Text=@ExistText Popup=true Style="position: absolute" />
+
+           
+        }
+       @* @if (ValidateEmail)
+        {
+            <RadzenEmailValidator Component="TextBox" Text="Provide a valid email address" Popup=true Style="position: absolute" />
+        }*@
+
+
+    </div>
+</div>
+
+@code {
+    async Task OnChange(string sr)
+    {
+        Value = sr;
+        await ValueChanged.InvokeAsync(Value);
+    }
+    [Parameter]
+    public string Label { get; set; }
+    [Parameter]
+    public string Value { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public List<string> StringsToCompare { get; set; } 
+
+    public bool Any => StringsToCompare == null ? false : true;
+    [Parameter]
+    public bool Required { get; set; } = false;
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    string RequiredText => $"{Label} is required";
+
+    string ExistText => $"{Value} is existing";
+    [Parameter]
+    public bool ValidateEmail { get; set; } = false;
+    [Parameter]
+    public int Rows { get; set; } = 1;
+    public  string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
+    public  string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+}

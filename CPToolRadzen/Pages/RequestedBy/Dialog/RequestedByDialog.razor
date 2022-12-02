@@ -1,0 +1,27 @@
+﻿@using CPTool.Application.Features.UserFeatures.CreateEdit;
+
+@inherits DialogTemplate<EditUser>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+
+        </TextBoxTemplate>
+        <TextBoxTemplate Label="Phone" Required=true @bind-Value=@Model.MobilPhone StringsToCompare=@(FilteredList.Select(x => x.MobilPhone).ToList())>
+
+        </TextBoxTemplate>
+        <TextBoxTemplate Label="Email" Required=true @bind-Value=@Model.Email ValidateEmail=true>
+
+        </TextBoxTemplate>
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+   
+}

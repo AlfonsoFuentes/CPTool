@@ -1,6 +1,6 @@
-﻿using CPTool.Application.Contracts.Persistence;
+﻿
 using CPTool.Application.Features.TaksFeatures.CreateEdit;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 {
@@ -25,7 +25,9 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
                     _unitOfWork.Repository<PurchaseOrder>().Add(table);
 
                     await _unitOfWork.Complete();
+
                     command.Id = table.Id;
+                    await CreateTask(command);
                     return await Result<int>.SuccessAsync(table.Id, $"{table.Name} Added to {nameof(PurchaseOrder)}");
                 }
                 else
@@ -59,21 +61,21 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
             {
                 var addcommand = _mapper.Map<AddTaks>(command.EditTaks!);
 
-                if (command.PurchaseOrderStatus== PurchaseOrderStatus.Created)
+                if (command.PurchaseOrderStatus == PurchaseOrderStatus.Created)
                 {
                     addcommand.Name = $"Receive PO {command.PONumber}";
                 }
-                else if(command.PurchaseOrderStatus == PurchaseOrderStatus.Received)
+                else if (command.PurchaseOrderStatus == PurchaseOrderStatus.Received)
                 {
                     addcommand.Name = $"Install PO {command.PONumber}";
                 }
-                else if(command.PurchaseOrderStatus == PurchaseOrderStatus.Installed)
+                else if (command.PurchaseOrderStatus == PurchaseOrderStatus.Installed)
                 {
                     addcommand.Name = $"Closed Task PO {command.PONumber}";
                     addcommand.TaksStatus = TaksStatus.Completed;
                     addcommand.CompletionDate = DateTime.Now;
                 }
-               
+
                 _mapper.Map(addcommand, table, typeof(AddTaks), typeof(PurchaseOrder));
 
                 _unitOfWork.Repository<Taks>().Update(table);
@@ -81,6 +83,21 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 
             }
         }
+        async Task CreateTask(EditPurchaseOrder purchaseOrder)
+        {
+            EditTaks editTaks = new();
+            editTaks.MWO = purchaseOrder.MWO;
+            editTaks.Name = $"Create PO from {purchaseOrder.PurchaseRequisition}";
+            editTaks.PurchaseOrder = purchaseOrder;
+            editTaks.TaksType = TaksType.Automatic;
+            editTaks.CreatedDate = DateTime.Now;
+            editTaks.TaksStatus = TaksStatus.Pending;
+            var addcommandTaks = _mapper.Map<AddTaks>(editTaks);
+            var table = _mapper.Map<Taks>(addcommandTaks);
 
+            _unitOfWork.Repository<Taks>().Add(table);
+
+            await _unitOfWork.Complete();
+        }
     }
 }

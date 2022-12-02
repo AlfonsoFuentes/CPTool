@@ -1,0 +1,22 @@
+﻿@page "/electrical-boxes"
+
+
+@using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
+
+@inherits BaseTableTemplate<EditElectricalBox>
+<TableTemplate T="EditElectricalBox"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.ElectricalBoxs">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditElectricalBox" Property="@nameof(EditElectricalBox.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

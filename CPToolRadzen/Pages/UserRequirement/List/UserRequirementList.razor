@@ -1,0 +1,39 @@
+﻿@page "/user-requirement/{ParentId:int}"
+@using CPTool.Application.Features.UserRequirementFeatures.CreateEdit;
+@using CPTool.Application.Features.UserRequirementTypeFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditUserRequirement>
+<div style="margin-bottom: 1rem" class="row">
+    <div class="col-md-3">
+        <RadzenCard>
+            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3"> Type: @URType.Name</RadzenText>
+            <RadzenListBox TValue="EditUserRequirementType" AllowFiltering="true" style="width:100%; height:650px"
+                           FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+                           @bind-Value=@URType Data=@RadzenTables.UserRequirementTypes TextProperty="Name"
+                          />
+        </RadzenCard>
+    </div>
+    <div class="col-md-9">
+        <TableTemplate T="EditUserRequirement"
+                       TableName=@($"{TableName} List")
+                       Elements="@Elements"
+                       @bind-SelectedItem=@Selected
+                       ShowDialog="ShowDialog"
+                       @bind-GlobalElements="@RadzenTables.UserRequirements">
+
+            <Columns>
+                <RadzenDataGridColumn TItem="EditUserRequirement" Property="@nameof(EditUserRequirement.Name)" Title="Name" TextAlign="TextAlign.Left">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="EditUserRequirement" Property="@nameof(EditUserRequirement.RequestedByName)" Title="Requested By:" TextAlign="TextAlign.Left">
+                   
+                </RadzenDataGridColumn>
+            </Columns>
+        </TableTemplate>
+    </div>
+</div>
+
+
+@code {
+
+}

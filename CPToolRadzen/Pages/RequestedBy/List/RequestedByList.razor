@@ -1,0 +1,22 @@
+﻿@page "/users"
+
+@using CPTool.Application.Features.UserFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditUser>
+<TableTemplate T="EditUser"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.Users">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditUser" Property="@nameof(EditUser.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

@@ -1,0 +1,85 @@
+﻿@using CPTool.Application.Features.BrandFeatures.CreateEdit;
+@using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
+@using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
+@using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
+
+
+@if (debug)
+{
+
+}
+<div class="row">
+    <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Item no longer available." Visible="@(!canEdit)" />
+    </div>
+    <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 20px" Text="Close" Visible="@(!canEdit)" Click="@CancelButtonClick" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Another user has made conflicting changes to one or more of the fields you have modified. Please reload." Visible="@hasChanges" />
+    </div>
+    <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="autorenew" style="margin-bottom: 20px" Text="Reload" Visible="@hasChanges" Click="@ReloadButtonClick" />
+    </div>
+</div>
+<div class="col-md-12">
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">Cannot save MwoType</RadzenAlert>
+    <RadzenTemplateForm TItem="EditBrandSupplier" Data="@Model" Visible="@(Model != null && canEdit)" Submit="@FormSubmit">
+        <CascadingValue Value=@this>
+
+            <SelectTemplate T="EditBrand" Elements=@RadzenTables.Brands
+                            Label="Brand"
+                            
+                            @bind-Model=@Model.Brand
+                            Required=false
+                            PropertyName="Name">
+
+            </SelectTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Supplier.Name" Label="Supplier"
+                             Required=true StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Supplier.ContactPerson" Label="Contact person"
+                                       Required=true></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Supplier.Email" Label="email"
+                             Required=true></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Supplier.Phone" Label="Phone"
+                             Required=true></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Supplier.Address" Label="Address"
+                             Required=true></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Supplier.VendorCode" Label="VendorCode"
+                             StringsToCompare=@(FilteredList.Select(x => x.VendorCode).ToList())
+                             Required=true></TextBoxTemplate>
+
+            <SelectTemplate T="EditTaxCodeLD" Elements=@RadzenTables.TaxCodeLDs
+                            Label="Tax Code LD"
+                            @bind-Model=@Model.Supplier.TaxCodeLD
+                            Required=true
+                            PropertyName="Name">
+
+            </SelectTemplate>
+            <SelectTemplate T="EditTaxCodeLP" Elements=@RadzenTables.TaxCodeLPs
+                            Label="Tax Code LP"
+                            @bind-Model=@Model.Supplier.TaxCodeLP
+                            Required=true
+                            PropertyName="Name">
+
+            </SelectTemplate>
+
+            
+        </CascadingValue>
+
+        <div class="row">
+            <div class="col d-flex justify-content-end" style="margin-top: 1rem">
+                <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" @onclick:stopPropagation="true" Icon="save" Text="Save" Style="margin-right: 0.5rem" Variant="Variant.Flat" />
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Variant="Variant.Flat" Click="@CancelButtonClick" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+</div>
+
+@code {
+
+    bool debug = true;
+   
+}

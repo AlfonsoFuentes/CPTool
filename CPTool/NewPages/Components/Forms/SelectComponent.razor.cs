@@ -18,6 +18,8 @@ namespace CPTool.NewPages.Components.Forms
         [Parameter]
         public string RequiredError { get; set; }
         [Parameter]
+        public string PropertyName { get; set; } = "";
+        [Parameter]
         public bool Required { get; set; }
         [Parameter]
         public string Label { get; set; }
@@ -30,7 +32,22 @@ namespace CPTool.NewPages.Components.Forms
         public List<T> Elements { get; set; } = new();
 
 
+        List<ItemName> elements => getElements();
+        List<ItemName> getElements()
+        {
+            List<ItemName> retorno = new();
+            if (PropertyName == "") PropertyName = "Name";
 
+            foreach (var item in Elements)
+            {
+                ItemName re = new();
+                re.Id=item.Id;
+                re.Name = item.GetType().GetProperty(PropertyName).GetValue(item).ToString();
+                retorno.Add(re);
+            }
+
+            return retorno;
+        }
         async Task InternaSelectChanged(int id)
         {
             if (id != 0) Value = Elements.FirstOrDefault(x => x.Id == id);
@@ -39,6 +56,10 @@ namespace CPTool.NewPages.Components.Forms
             await SelectionChanged.InvokeAsync(Value);
 
         }
-
+        class ItemName
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
     }
 }

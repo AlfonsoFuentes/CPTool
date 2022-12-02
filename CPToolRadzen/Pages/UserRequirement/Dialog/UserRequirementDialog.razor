@@ -1,0 +1,33 @@
+﻿@using CPTool.Application.Features.UserFeatures.CreateEdit;
+@using CPTool.Application.Features.UserRequirementFeatures.CreateEdit;
+
+@inherits DialogTemplate<EditUserRequirement>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <TextBoxTemplate @bind-Value="@Model.Name" Label="Name"
+                         Required=true StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())></TextBoxTemplate>
+        <AutoComponentTemplate @bind-Elements=@RadzenTables.Users PropertyName="Name"
+                               Label="Request By" @bind-Model=@Model.RequestedBy
+                               Required=true ShowDialog=@ShowUSerDialog></AutoComponentTemplate>
+        <SelectTemplate T="EditUser" Elements=@RadzenTables.Users
+                        Label="Requested By:"
+                        @bind-Model=@Model.RequestedBy
+                        Required=true
+                        PropertyName="Name">
+
+        </SelectTemplate>
+
+
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+
+}

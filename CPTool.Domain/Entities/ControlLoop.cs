@@ -20,7 +20,8 @@
         public Unit? ProcessVariableMin { get; set; }
         public int? ProcessVariableMaxId { get; set; }
         public Unit? ProcessVariableMax { get; set; }
-
+        public int? SPId { get; set; }
+        public Unit? SP { get; set; }
 
         public int? ProcessVariableValueId { get; set; }
         public Unit? ProcessVariableValue { get; set; }
@@ -28,16 +29,27 @@
         public double ControlledVariableMin { get; set; }
         public double ControlledVariableMax { get; set; }
         public double ControlledVariableValue { get; set; }
-        public int? SPId { get; set; }
-        public Unit? SP { get; set; }
+   
 
         public double PVRange { get; set; }
         public double WindupGuard { get; set; }
         public bool ManualOverride { get; set; }
-        public bool DirectActing { get; set; }
-        public bool FailClose { get; set; }
+        public ActionType ActionType { get; set; }
+        public FailType FailType { get; set; }
 
         public string TagNumber { get; set; } = string.Empty;
         public string AlarmText { get; set; } = string.Empty;
+    }
+    public enum FailType
+    {
+        None,
+        Open,
+        Close
+    }
+    public enum ActionType
+    {
+        None,
+        Direct,
+        Reverse
     }
 }

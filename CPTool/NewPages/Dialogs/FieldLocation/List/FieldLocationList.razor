@@ -9,6 +9,7 @@
                      TDeleteMaster="DeleteFieldLocation"
                      TMasterList="GetFieldLocationListQuery" TGedById="GetByIdFieldLocationQuery"
                      @bind-ElementsMasters="GlobalTables.FieldLocations"
+                     ElementsMastersSelected="@GlobalTables.FieldLocations"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">
     <MasterContextTh>
         <MudTh >#</MudTh>

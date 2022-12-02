@@ -1,0 +1,37 @@
+﻿@typeparam T
+@if (debug)
+{
+
+}
+<PageTitle>@TableName</PageTitle>
+<ToolBarTemplate ShowToolBar=@ShowToolBar OnAdd="@AddRow" OnDelete="@DeleteRow" 
+                 ShowAdd=@ShowAdd ShowDelete=@ShowDelete DisableAdd=@DisableAdd ShowEdit=@ShowEdit ShowReport=@ShowReport OnEdit=@EditRow OnPDF=@CreatePDF
+                 Search="@Search" DisableDelete=@DisableEditeButtons DisableEdit=@DisableEditeButtons
+                 DisableReport=@DisableEditeButtons TableName="@TableName" SelectedName="@SelectedItem.Name">
+    <OtherButtons>
+        @if (ToolBarButtons != null)
+        {
+            @ToolBarButtons
+        }
+    </OtherButtons>
+
+</ToolBarTemplate>
+<div class="row">
+    <div class="col-12 col-md-12">
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Responsive=true
+                        AllowColumnResize="true" ExpandMode="@ExpandMode" PageSize="15" CellDoubleClick=@EditRowDoubleClick
+                        Data="@Elements" TItem="T" RowDoubleClick="@EditRow" Density="Density.Compact" RowClick="@RowClick">
+
+            <Columns>
+                <RadzenDataGridColumn TItem="T" Property="Id" Title="#" Width="50px" TextAlign="TextAlign.Center" Sortable=false Filterable=false>
+                </RadzenDataGridColumn>
+                @Columns
+            </Columns>
+
+        </RadzenDataGrid>
+    </div>
+</div>
+@code {
+    bool debug = true;
+    
+}

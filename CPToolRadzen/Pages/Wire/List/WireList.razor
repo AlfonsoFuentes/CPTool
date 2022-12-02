@@ -1,0 +1,21 @@
+﻿@page "/wire-types"
+@using CPTool.Application.Features.WireFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditWire>
+<TableTemplate T="EditWire"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.Wires">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditWire" Property="@nameof(EditWire.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

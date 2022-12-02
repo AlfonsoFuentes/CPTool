@@ -15,9 +15,11 @@ namespace CPTool.Application.Features.UserRequirementFeatures.CreateEdit
 
         public int? MWOId =>MWO==null?null: MWO.Id;
         public EditMWO? MWO { get; set; } = null!;
+        public int? RequestedById => RequestedBy!.Id == 0 ? null : RequestedBy!.Id;
+        public int? RequestedByUserId => 0;
+        public EditUser? RequestedBy { get; set; } = new();
 
-        public int? RequestedById => RequestedBy == null ? null : RequestedBy.Id;
-        public EditUser RequestedBy { get; set; } = null!;
+        public string RequestedByName => RequestedBy!.Name;
     }
 
 }

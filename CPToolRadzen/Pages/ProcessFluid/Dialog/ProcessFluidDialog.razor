@@ -1,0 +1,31 @@
+﻿@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
+@using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
+
+@inherits DialogTemplate<EditProcessFluid>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <TextBoxTemplate Label="Process Fluid Name"
+                         Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+
+        </TextBoxTemplate>
+        <TextBoxTemplate Label="Abreviation" Required=true @bind-Value=@Model.TagLetter StringsToCompare=@(FilteredList.Select(x => x.TagLetter).ToList())>
+
+        </TextBoxTemplate>
+        <SelectTemplate T="EditPropertyPackage" Elements=@RadzenTables.PropertyPackages
+                        Label="Property Package"
+                        @bind-Model=@Model.PropertyPackage
+                        Required=false
+                        PropertyName="Name"></SelectTemplate>
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+
+}

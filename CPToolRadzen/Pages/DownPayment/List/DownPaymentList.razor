@@ -1,0 +1,21 @@
+﻿@page "/downpayments"
+
+@using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
+
+@inherits BaseTableTemplate<EditDownPayment>
+<TableTemplate T="EditDownPayment"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+               ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.DownPayments">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditDownPayment" Property="@nameof(EditDownPayment.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

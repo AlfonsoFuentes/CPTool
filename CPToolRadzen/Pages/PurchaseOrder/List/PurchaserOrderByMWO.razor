@@ -1,0 +1,62 @@
+﻿@page "/purchase-order/{ParentId:int}"
+@using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+@using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
+@inherits BaseTableTemplate<EditPurchaseOrder>
+
+<TableTemplate T="EditPurchaseOrder"
+               TableName=@($"Purchase Order By {Parent.Name}")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+               ShowDelete=false
+               ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.PurchaseOrders">
+    <ToolBarButtons>
+
+        <ButtonTemplate Icon="currency_exchange"
+                        Disabled=@DisableEdit
+                        Click=AddDownPayment
+                        ToolTip="DownPayment">
+
+        </ButtonTemplate>
+        <ButtonTemplate Icon="restore"
+                        Disabled=@DisableEdit
+                        Click=CreateTaskMWO
+                        ToolTip="Create Task">
+
+        </ButtonTemplate>
+
+
+    </ToolBarButtons>
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PONumber)" Title="PO#" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PurchaseRequisition)" Title="PR#" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PurchaseOrderStatus)" Title="Status" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @detail.PurchaseOrderStatus.ToString()
+
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.pSupplier.Name)" Title="Supplier" Filterable=false Sortable=false>
+          
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PrizeCurrency)" Title="PO Value" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.PrizeCurrency)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PrizeUSD)" Title="PO Value, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.PrizeUSD)
+            </Template>
+        </RadzenDataGridColumn>
+
+
+    </Columns>
+</TableTemplate>
+
+@code {
+
+}

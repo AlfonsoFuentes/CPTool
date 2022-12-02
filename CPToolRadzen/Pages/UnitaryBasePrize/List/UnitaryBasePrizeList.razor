@@ -1,0 +1,21 @@
+﻿@page "/unitary-prizes"
+@using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditUnitaryBasePrize>
+<TableTemplate T="EditUnitaryBasePrize"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.UnitaryBasePrizes">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditUnitaryBasePrize" Property="@nameof(EditUnitaryBasePrize.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

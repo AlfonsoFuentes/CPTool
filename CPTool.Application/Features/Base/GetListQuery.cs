@@ -2,22 +2,24 @@
 using CPTool.Application.Features.BrandFeatures.Query.GetList;
 using CPTool.Application.Features.ChapterFeatures.CreateEdit;
 using CPTool.Application.Features.ChapterFeatures.Query.GetList;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace CPTool.Application.Features.Base
 {
+
     public class GetListQuery
     {
         public virtual bool FilterFunc(EditCommand element, string searchString)
         {
 
-           
+
             var retorno = element!.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase);
             return retorno;
 
 
         }
-        
+
     }
     public class GetListQueryHandler<TEdit, TEntity, TGetList>
         where TEdit : EditCommand, new()
@@ -39,6 +41,9 @@ namespace CPTool.Application.Features.Base
 
             return _mapper.Map<List<TEdit>>(list);
 
+
         }
     }
+
+
 }

@@ -30,10 +30,12 @@ namespace CPTool.Application.Features.BrandFeatures.Query.GetList
         public override async Task<List<EditBrand>> Handle(GetBrandListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitofwork.RepositoryBrand.GetAllAsync();
-
+            list = list.OrderBy(x => x.BrandType).ToList();
             var reteorno= _mapper.Map<List<EditBrand>>(list);
             return reteorno;
 
         }
     }
+
+   
 }

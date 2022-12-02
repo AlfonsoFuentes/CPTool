@@ -15,10 +15,10 @@ namespace CPTool.NewPages.Components.Tables
         [Category("Footer")]
         public RenderFragment FooterContent { get; set; }
         TMasterList MasterList { get; set; } = new();
-        
+
         [Parameter]
         public RenderFragment MasterOtherButtons { get; set; }
-       
+
         [Parameter]
         public List<TMaster> ElementsMasters { get; set; } = new();
         [Parameter]
@@ -34,7 +34,6 @@ namespace CPTool.NewPages.Components.Tables
         [EditorRequired]
         public RenderFragment<TMaster> MasterContextTd { get; set; }
         [Parameter]
-        [EditorRequired]
         public Func<TMaster, Task<DialogResult>> OnShowDialogMaster { get; set; }
         [Parameter]
         public EventCallback OnAdd { get; set; }
@@ -42,10 +41,19 @@ namespace CPTool.NewPages.Components.Tables
         public EventCallback OnEdit { get; set; }
         [Parameter]
         public EventCallback OnDelete { get; set; }
+        [Parameter]
+        public EventCallback OnPrint { get; set; }
+        [Parameter]
+        public EventCallback OnExcel { get; set; }
+        [Parameter]
+        public EventCallback OnPDF { get; set; }
+        [Parameter]
+        [EditorRequired]
+        public List<TMaster> ElementsMastersSelected { get; set; } = new();
         async Task RowClickedMaster(TableRowClickEventArgs<TMaster> eq)
         {
-            if (eq.Item.Id == SelectedMaster.Id) return;
-           
+          
+
             SelectedMaster = eq.Item;
             await SelectedMasterChanged.InvokeAsync(SelectedMaster);
 
@@ -53,7 +61,7 @@ namespace CPTool.NewPages.Components.Tables
 
         async Task Add()
         {
-            if (OnAdd.HasDelegate)  await OnAdd.InvokeAsync();
+            if (OnAdd.HasDelegate) await OnAdd.InvokeAsync();
             else
             {
                 TMaster model = new();
@@ -66,7 +74,7 @@ namespace CPTool.NewPages.Components.Tables
 
                 }
             }
-            
+
         }
         async Task Edit()
         {
@@ -108,9 +116,10 @@ namespace CPTool.NewPages.Components.Tables
             if (SelectedMaster == null) return;
             TGedById gedById = new() { Id = SelectedMaster.Id };
             SelectedMaster = await Mediator.Send(gedById) as TMaster;
-            await SelectedMasterChanged.InvokeAsync(SelectedMaster);
+            if (SelectedMaster != null)
+                await SelectedMasterChanged.InvokeAsync(SelectedMaster);
 
-           
+
         }
 
     }

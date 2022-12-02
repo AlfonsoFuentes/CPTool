@@ -1,0 +1,108 @@
+﻿@using CPTool.Application.Features.BrandFeatures.CreateEdit;
+@using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit;
+@using CPTool.Application.Features.DeviceFunctionModifierFeatures.CreateEdit;
+@using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
+@using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit;
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
+@using CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit;
+@using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
+@using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
+@using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+@using CPToolRadzen.Pages.EquipmentType.Dialog;
+@if (debug)
+{
+
+}
+<Panel>
+    <Left>
+        <RadzenCard>
+
+            <SelectTemplate T="EditMeasuredVariable"
+                            Elements=@RadzenTables.MeasuredVariables
+                            Label="Measured Variable"
+                            PropertyName="Name"
+                            @bind-Model="@Model.MeasuredVariable">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditMeasuredVariableModifier"
+                            Elements=@RadzenTables.MeasuredVariableModifiers
+                            Label="Measured Variable Modifier"
+                            PropertyName="Name"
+                            @bind-Model="@Model.MeasuredVariableModifier">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditReadout"
+                            Elements=@RadzenTables.Readouts
+                            Label="Readout"
+                            PropertyName="Name"
+                            @bind-Model="@Model.Readout">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditDeviceFunction"
+                            Elements=@RadzenTables.DeviceFunctions
+                            Label="Device function"
+                            PropertyName="Name"
+                            @bind-Model="@Model.DeviceFunction">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditDeviceFunctionModifier"
+                            Elements=@RadzenTables.DeviceFunctionModifiers
+                            Label="Device function modifier"
+                            PropertyName="Name"
+                            @bind-Model="@Model.DeviceFunctionModifier">
+
+
+            </SelectTemplate>
+
+            <TextBoxTemplate Required=true @bind-Value=@Model.TagNumber Label="Tag Number">
+
+            </TextBoxTemplate>
+
+
+            <FieldTemplate Label="Tag Id" Value=@Model.TagId></FieldTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Model"
+                             Label="Equipment Model"
+                             Rows="2"></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Reference"
+                             Label="Reference"
+                             Rows="2"></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.SerialNumber"
+                             Label="Serial Number"></TextBoxTemplate>
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+            <SelectTemplate T="EditBrand" Elements="@RadzenTables.Brands" Label="Brand or Service" Change=@ChangeBrand
+                            PropertyName="Name" @bind-Model=@Model.iBrand>
+
+            </SelectTemplate>
+            <SelectTemplate T="EditSupplier"
+                            Elements="@((Model.iBrand==null||Model.iBrand.Id==0)?new():
+                            RadzenTables.BrandSuppliers.Where(x=>x.Brand.Id==Model.iBrand.Id).Select(y=>y.Supplier).ToList())" Label="Supplier"
+                            Disabled=@(Model.iBrand==null||Model.iBrand.Id==0)
+                            PropertyName="Name" @bind-Model=@Model.iSupplier>
+
+            </SelectTemplate>
+            <AutoComponentTemplate T="EditGasket" Label="Gasket" PropertyName="Name"
+                                   @bind-Elements=@RadzenTables.Gaskets @bind-Model=@Model.iGasket
+                                   ShowDialog=@ShowGasketDialog></AutoComponentTemplate>
+
+            <AutoComponentTemplate T="EditMaterial" Label="Outer Material" PropertyName="Name"
+                                   @bind-Elements=@RadzenTables.Materials @bind-Model=@Model.iOuterMaterial
+                                   ShowDialog=@ShowMaterialDialog></AutoComponentTemplate>
+            <AutoComponentTemplate T="EditMaterial" Label="Inner Material" PropertyName="Name"
+                                   @bind-Elements=@RadzenTables.Materials @bind-Model=@Model.iInnerMaterial
+                                   ShowDialog=@ShowMaterialDialog></AutoComponentTemplate>
+
+        </RadzenCard>
+    </Rigth>
+</Panel>
+
+@code {
+    bool debug = true;
+
+}

@@ -1,0 +1,31 @@
+﻿@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
+
+@inherits DialogTemplate<EditPipeDiameter>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+
+        <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+
+        </TextBoxTemplate>
+        <SelectUnitTemplate @bind-Model=@Model.OuterDiameter Label="OD">
+
+        </SelectUnitTemplate>
+        <SelectUnitTemplate @bind-Model=@Model.Thickness Label="Thickness">
+
+        </SelectUnitTemplate>
+        <SelectUnitTemplate @bind-Model=@Model.InternalDiameter Label="ID" Disable=true>
+
+        </SelectUnitTemplate>
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+   
+}

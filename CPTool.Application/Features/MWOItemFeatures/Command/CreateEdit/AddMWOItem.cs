@@ -43,5 +43,6 @@ namespace CPTool.Application.Features.MWOItemFeatures.CreateEdit
         public AddTestingItem? TestingItem { get; set; }
         public AddEngineeringCostItem? EngineeringCostItem { get; set; }
         public AddContingencyItem? ContingencyItem { get; set; }
+        public bool Existing { get; set; }
     }
 }

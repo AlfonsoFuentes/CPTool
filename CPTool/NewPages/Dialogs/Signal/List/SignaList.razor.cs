@@ -15,8 +15,7 @@ namespace CPTool.NewPages.Dialogs.Signal.List
 
         [Parameter]
         public int MWOId { get; set; }
-        EditMWO MWO = new();
-
+        EditMWO MWO => GlobalTables.MWOs.FirstOrDefault(x => x.Id == MWOId);
         List<EditSignal> MWOSignals => GlobalTables.Signals.Where(x => x.MWOId == MWOId).ToList();
 
         EditSignal SignalSelected = new();
@@ -28,13 +27,7 @@ namespace CPTool.NewPages.Dialogs.Signal.List
            
 
         }
-        protected override async Task OnInitializedAsync()
-        {
-            GetByIdMWOQuery getByIdMWOQuery = new() { Id = MWOId };
-            MWO = await Mediator.Send(getByIdMWOQuery);
-           
-
-        }
+       
         GetSignalListQuery getSignallist = new();
         async Task AddSignal()
         {

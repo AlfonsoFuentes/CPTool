@@ -1,0 +1,185 @@
+﻿<MudGrid>
+
+    <MudItem xs="12" sm="6">
+        <MudCard Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+
+                    <MudText Typo="Typo.h6">Define Process Variable</MudText>
+                </CardHeaderContent>
+
+            </MudCardHeader>
+            <MudCardContent>
+
+
+                <SelectComponent T="EditSignal"
+                                 Elements=@DialogParent.signalsIn
+                                 Label="Process Variable Signal"
+                                 @bind-Value="@Model.ProcessVariable">
+
+
+                </SelectComponent>
+                @if (Model.ProcessVariable.Id != 0)
+                {
+                    <SelectUnitComponent @bind-Model=@Model.SP UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+                    <SelectUnitComponent @bind-Model=@Model.ProcessVariableMax UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+                    <SelectUnitComponent @bind-Model=@Model.ProcessVariableMin UpdateParent=DialogParent.Validateform></SelectUnitComponent>
+                }
+            </MudCardContent>
+
+        </MudCard>
+
+
+    </MudItem>
+    <MudItem xs="12" sm="6">
+        <MudCard Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+
+                    <MudText Typo="Typo.h6">Define Controlled Variable</MudText>
+                </CardHeaderContent>
+
+            </MudCardHeader>
+            <MudCardContent>
+
+                <SelectComponent T="EditSignal"
+                                 Elements=@DialogParent.signalsOut
+                                 Label="Controlled Variable Signal"
+                                 @bind-Value="@Model.ControlledVariable">
+
+
+                </SelectComponent>
+                @if (Model.ControlledVariable.Id != 0)
+                {
+                    <MudNumericField T="double" @bind-Value="@Model.ControlledVariableMin"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Label="%Controlled Variable Min"></MudNumericField>
+                    <MudNumericField T="double" @bind-Value="@Model.ControlledVariableMax"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Label="%Controlled Variable Max"></MudNumericField>
+
+
+
+                }
+            </MudCardContent>
+
+        </MudCard>
+
+    </MudItem>
+
+    @if (Model.ProcessVariable.Id != 0 && Model.ControlledVariable.Id != 0)
+    {
+        <MudItem xs="12" sm="6">
+            <MudCard Outlined="true">
+                <MudCardHeader>
+                    <CardHeaderContent>
+
+                        <MudText Typo="Typo.h6">Define P, I, D constants</MudText>
+                    </CardHeaderContent>
+
+                </MudCardHeader>
+                <MudCardContent>
+
+
+                    <MudNumericField T="double" @bind-Value="@Model.PTerm"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Label="Proporcional Gain"></MudNumericField>
+                    <MudNumericField T="double" @bind-Value="@Model.ITerm"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Label="Integral Gain, 1/s"></MudNumericField>
+                    <MudNumericField T="double" @bind-Value="@Model.DTerm"
+                                 Immediate="true"
+                                 HideSpinButtons="true"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Label="Derivative Gain, s"></MudNumericField>
+
+                </MudCardContent>
+
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudCard Outlined="true">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Define Fail/Close Action and Action Type</MudText>
+                    </CardHeaderContent>
+
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudSelect Dense="true"
+                           Margin="Margin.Dense"
+                           T="FailType"
+                           Label="Select Open/Close fails"
+                           AnchorOrigin="Origin.BottomCenter"
+                           Required=true
+                           @bind-Value=@Model.FailType
+                           Variant="Variant.Outlined">
+                        @foreach (var item in Enum.GetValues<FailType>())
+                        {
+                            <MudSelectItem Value="item">@item</MudSelectItem>
+                        }
+
+
+
+
+                    </MudSelect>
+
+                    <MudSelect Dense="true"
+                           Margin="Margin.Dense"
+                           T="ActionType"
+                           Label="Select Direct/Reverse action"
+                           AnchorOrigin="Origin.BottomCenter"
+                           Required=true
+                           @bind-Value=@Model.ActionType
+                           Variant="Variant.Outlined">
+                        @foreach (var item in Enum.GetValues<ActionType>())
+                        {
+                            <MudSelectItem Value="item">@item</MudSelectItem>
+                        }
+
+
+
+
+                    </MudSelect>
+                    <FieldComponent Label="Fail note" Value="@(Model.FailType==FailType.None?"Must select fail type"
+    :Model.FailType==FailType.Open?
+    $"In case fail of pneumatic air or energy, the signal will be 0% (4 mA) and {Model.ControlledVariable!.MWOItem!.TagId} will open (run at 100%)":
+    $"In case fail of pneumatic air or energy, the signal will be 0% (4 mA) and {Model.ControlledVariable!.MWOItem!.TagId} will close (stop)"
+    )"> </FieldComponent>
+                    <FieldComponent Label="Action note" Value="@(Model.ActionType==ActionType.None?"Must select action type"
+                        :Model.FailType== FailType.Open?
+                        Model.ActionType==ActionType.Reverse?
+                        $"If {Model.ProcessVariable.Name} increase, the signal to {Model.ControlledVariable!.MWOItem!.TagId} must decrease":
+                        $"If {Model.ProcessVariable.Name} increase, the signal to {Model.ControlledVariable!.MWOItem!.TagId} must increase":
+                        Model.ActionType==ActionType.Reverse?
+                        $"If {Model.ProcessVariable.Name} increase, the signal to {Model.ControlledVariable!.MWOItem!.TagId} must decrease":
+                        $"If {Model.ProcessVariable.Name} increase, the signal to {Model.ControlledVariable!.MWOItem!.TagId} must increase"
+                        )">
+
+                    </FieldComponent>
+                </MudCardContent>
+
+            </MudCard>
+
+        </MudItem>
+    }
+
+</MudGrid>
+
+@code {
+
+    }

@@ -24,7 +24,7 @@
            RequiredError="@RequiredError"
            ValueChanged=InternaSelectChanged>
             <MudSelectItem Value=0>Must select @Label ...</MudSelectItem>
-            @foreach (var item in Elements)
+            @foreach (var item in elements)
             {
                 <MudSelectItem Value="item.Id">@item.Name</MudSelectItem>
             }

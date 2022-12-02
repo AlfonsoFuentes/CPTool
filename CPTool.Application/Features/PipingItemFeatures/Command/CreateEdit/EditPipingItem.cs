@@ -13,6 +13,7 @@ namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
 {
     public class EditPipingItem : EditCommand, IRequest<Result<int>>
     {
+        public List<EditPipeAccesory> PipeAccesorys { get; set; } = new();
         public List<EditNozzle>? Nozzles { get; set; } = new();
         public int? pProcessConditionId => pProcessCondition?.Id == 0 ? null : pProcessCondition?.Id;
         public EditProcessCondition? pProcessCondition { get; set; } = new();

@@ -1,0 +1,51 @@
+﻿@page "/equipment-types"
+@using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit;
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditEquipmentType>
+<div class="container">
+    <div class="row" style="margin-bottom: 1rem">
+        <div class="col" style="margin-bottom: 1rem">
+
+
+            <TableTemplate T="EditEquipmentType"
+                           TableName=@($"{TableName} List")
+                           Elements="@Elements"
+                           @bind-SelectedItem=@Selected
+                           ShowDialog="ShowDialog"
+                           @bind-GlobalElements="@RadzenTables.EquipmentTypes">
+
+                <Columns>
+                    <RadzenDataGridColumn TItem="EditEquipmentType" Property="@nameof(EditEquipmentType.Name)" Title="Name" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="EditEquipmentType" Property="@nameof(EditEquipmentType.TagLetter)" Title="Tag Letter" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+                </Columns>
+            </TableTemplate>
+        </div>
+        <div class="col" style="margin-bottom: 1rem">
+
+
+            <TableTemplate T="EditEquipmentTypeSub"
+                
+                           TableName=@($"{TableNameDetails} List")
+                           Elements="@ElementsDetails"
+                           @bind-SelectedItem=@SelectedDetail
+                           ShowDialog="ShowDialogDetail"
+                           @bind-GlobalElements="@RadzenTables.EquipmentTypeSubs">
+
+                <Columns>
+                    <RadzenDataGridColumn TItem="EditEquipmentTypeSub" Property="@nameof(EditEquipmentTypeSub.Name)" Title="Name" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="EditEquipmentTypeSub" Property="@nameof(EditEquipmentTypeSub.TagLetter)" Title="Tag Letter" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+                </Columns>
+            </TableTemplate>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

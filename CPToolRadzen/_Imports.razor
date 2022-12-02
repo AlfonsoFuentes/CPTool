@@ -1,0 +1,34 @@
+﻿@using System.Net.Http
+@using CPToolRadzen.Services;
+@using CPToolRadzen.Services.Tables;
+@using MediatR;
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+@using CPToolRadzen
+@using CPToolRadzen.Shared
+@using Radzen 
+@using Radzen.Blazor
+@using static CPToolRadzen.App
+@using CPTool.Application.Features.GasketsFeatures.CreateEdit;
+@using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+@using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+@using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
+@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
+@using CPTool.Domain.Entities;
+
+@using CPToolRadzen.Templates
+@using CPToolRadzen.Pages.MWO.List
+@inject IMediator Mediator
+@inject NavigationManager NavigationManager
+@inject RadzenTables RadzenTables
+@inject IJSRuntime JSRuntime 
+@inject DialogService DialogService 
+@inject TooltipService TooltipService 
+@inject ContextMenuService ContextMenuService 
+@inject NotificationService NotificationService 
+

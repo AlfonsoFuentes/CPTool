@@ -23,7 +23,7 @@ namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
         public DateTime? DeliveryDueDate { get; set; }
         public DateTime? RealDate { get; set; }
         public double Percentage { get; set; }
-        public double DownPaymentAmount => Percentage * PurchaseOrder!.Value/100;
+        public double DownPaymentAmount => Percentage * PurchaseOrder!.PrizeCurrency/100;
         public string? DownpaymentDescrption { get; set; } = "";
         public string? Incotherm { get; set; } = "";
         public DateTime? ApprovedDate { get; set; }

@@ -56,7 +56,7 @@
         public ICollection<ControlLoop>? ProcessVariableMaxs { get; set; } = null!;
         [ForeignKey("ProcessVariableValueId")]
         public ICollection<ControlLoop>? ProcessVariableValues { get; set; } = null!;
-  
+        [ForeignKey("SPId")]
         public ICollection<ControlLoop>? SPs { get; set; } = null!;
   
 

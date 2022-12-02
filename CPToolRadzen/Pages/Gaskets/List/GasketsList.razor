@@ -1,0 +1,21 @@
+﻿@page "/gaskets"
+@using CPTool.Application.Features.GasketsFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditGasket>
+<TableTemplate T="EditGasket"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.Gaskets">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditGasket" Property="@nameof(EditGasket.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

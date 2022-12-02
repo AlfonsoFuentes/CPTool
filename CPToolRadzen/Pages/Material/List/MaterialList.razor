@@ -1,0 +1,23 @@
+﻿@page "/materials"
+@using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditMaterial>
+<TableTemplate T="EditMaterial"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.Materials">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditMaterial" Property="@nameof(EditMaterial.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditMaterial" Property="@nameof(EditMaterial.Abbreviation)" Title="Abbreviation" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

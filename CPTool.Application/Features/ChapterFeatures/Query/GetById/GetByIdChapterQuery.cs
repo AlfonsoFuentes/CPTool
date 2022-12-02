@@ -1,4 +1,4 @@
-﻿using CPTool.Application.Contracts.Persistence;
+﻿
 using CPTool.Application.Features.Base;
 using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
 using CPTool.Application.Features.ChapterFeatures.CreateEdit;

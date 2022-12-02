@@ -9,8 +9,11 @@
         [ForeignKey("dPipeClassId")]
         public ICollection<PipeDiameter>? PipeDiameters { get; set; } = null!;
 
-
+        [ForeignKey("paPipeClassId")]
+        public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
         //Actualizar el DTO las 3 clases arriba
+
+
     }
 
 }

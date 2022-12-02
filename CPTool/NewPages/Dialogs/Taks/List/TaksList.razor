@@ -7,15 +7,16 @@
 <SimpleListComponent TMaster="EditTaks"
                      TDeleteMaster="DeleteTaks"
                      TMasterList="GetTaksListQuery" TGedById="GetByIdTaksQuery"
-                     @bind-ElementsMasters="GlobalTables.Takss"
+                     @bind-ElementsMasters="@GlobalTables.Takss"
+                     ElementsMastersSelected="@GlobalTables.Takss"
                      OnShowDialogMaster="ToolDialogService.ShowTaksDialog">
     <MasterContextTh>
         <MudTh >#</MudTh>
         <MudTh >MWO CEC</MudTh>
         <MudTh >MWO Name</MudTh>
         <MudTh >Name</MudTh>
-        <MudTh >Status</MudTh>
-
+      
+        <MudTh>Status</MudTh>
         <MudTh >Created On?</MudTh>
         <MudTh >Completed On?</MudTh>
 
@@ -26,8 +27,8 @@
         <MudTd DataLabel="MWO CEC">@context.MWO.CECName</MudTd>
         <MudTd DataLabel="MWO Name">@context.MWO.Name</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
-
-        <MudTd DataLabel="Status">@context.TaksStatus</MudTd>
+    
+        <MudTd DataLabel="Status">@context.TaksStatus.ToString()</MudTd>
         <MudTd DataLabel="Created On?">@context.CreatedDate.ToShortDateString()</MudTd>
         <MudTd DataLabel="Completed On?">@(context.TaksStatus ==TaksStatus.Completed? context.CompletionDate.ToShortDateString():"")</MudTd>
 

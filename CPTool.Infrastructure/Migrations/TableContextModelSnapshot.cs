@@ -17,7 +17,7 @@ namespace CPTool.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -55,7 +55,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AlterationItems");
+                    b.ToTable("AlterationItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Brand", b =>
@@ -91,7 +91,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.BrandSupplier", b =>
@@ -129,7 +129,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("BrandSuppliers");
+                    b.ToTable("BrandSuppliers", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Chapter", b =>
@@ -165,7 +165,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chapters");
+                    b.ToTable("Chapters", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ConnectionType", b =>
@@ -198,7 +198,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConnectionTypes");
+                    b.ToTable("ConnectionTypes", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ContingencyItem", b =>
@@ -231,7 +231,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContingencyItems");
+                    b.ToTable("ContingencyItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ControlLoop", b =>
@@ -241,6 +241,9 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ActionType")
+                        .HasColumnType("int");
 
                     b.Property<string>("AlarmText")
                         .IsRequired()
@@ -274,11 +277,8 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("DirectActing")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FailClose")
-                        .HasColumnType("bit");
+                    b.Property<int>("FailType")
+                        .HasColumnType("int");
 
                     b.Property<double>("ITerm")
                         .HasColumnType("float");
@@ -343,7 +343,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("SPId");
 
-                    b.ToTable("ControlLoops");
+                    b.ToTable("ControlLoops", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.DeviceFunction", b =>
@@ -379,7 +379,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeviceFunctions");
+                    b.ToTable("DeviceFunctions", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.DeviceFunctionModifier", b =>
@@ -415,7 +415,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeviceFunctionModifiers");
+                    b.ToTable("DeviceFunctionModifiers", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.DownPayment", b =>
@@ -501,7 +501,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("DownPayments");
+                    b.ToTable("DownPayments", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.EHSItem", b =>
@@ -534,7 +534,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EHSItems");
+                    b.ToTable("EHSItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ElectricalBox", b =>
@@ -567,7 +567,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ElectricalBoxs");
+                    b.ToTable("ElectricalBoxs", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ElectricalItem", b =>
@@ -600,7 +600,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ElectricalItems");
+                    b.ToTable("ElectricalItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.EngineeringCostItem", b =>
@@ -633,7 +633,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EngineeringCostItems");
+                    b.ToTable("EngineeringCostItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.EquipmentItem", b =>
@@ -735,7 +735,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("eSupplierId");
 
-                    b.ToTable("EquipmentItems");
+                    b.ToTable("EquipmentItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.EquipmentType", b =>
@@ -771,7 +771,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EquipmentTypes");
+                    b.ToTable("EquipmentTypes", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.EquipmentTypeSub", b =>
@@ -812,7 +812,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("EquipmentTypeId");
 
-                    b.ToTable("EquipmentTypeSubs");
+                    b.ToTable("EquipmentTypeSubs", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.FieldLocation", b =>
@@ -845,7 +845,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FieldLocations");
+                    b.ToTable("FieldLocations", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.FoundationItem", b =>
@@ -878,7 +878,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FoundationItems");
+                    b.ToTable("FoundationItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Gasket", b =>
@@ -911,7 +911,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gaskets");
+                    b.ToTable("Gaskets", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.InstrumentItem", b =>
@@ -1023,7 +1023,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("iSupplierId");
 
-                    b.ToTable("InstrumentItems");
+                    b.ToTable("InstrumentItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.InsulationItem", b =>
@@ -1056,7 +1056,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InsulationItems");
+                    b.ToTable("InsulationItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Material", b =>
@@ -1092,7 +1092,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.MeasuredVariable", b =>
@@ -1128,7 +1128,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MeasuredVariables");
+                    b.ToTable("MeasuredVariables", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.MeasuredVariableModifier", b =>
@@ -1164,7 +1164,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MeasuredVariableModifiers");
+                    b.ToTable("MeasuredVariableModifiers", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.MWO", b =>
@@ -1223,7 +1223,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("MWOTypeId");
 
-                    b.ToTable("MWOs");
+                    b.ToTable("MWOs", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.MWOItem", b =>
@@ -1267,6 +1267,9 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Property<int?>("EquipmentItemId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Existing")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("FoundationItemId")
                         .HasColumnType("int");
@@ -1350,72 +1353,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("UnitaryBasePrizeId");
 
-                    b.ToTable("MWOItems");
-                });
-
-            modelBuilder.Entity("CPTool.Domain.Entities.MWOItemCurrencyValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Currency")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CurrencyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MWOItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PrizeCurrency")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PrizeCurrencyTax")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PrizeUSD")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("PurchaseOrderId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Tax")
-                        .HasColumnType("float");
-
-                    b.Property<double>("USDCOP")
-                        .HasColumnType("float");
-
-                    b.Property<double>("USDEUR")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MWOItemId");
-
-                    b.ToTable("MWOItemCurrencyValues");
+                    b.ToTable("MWOItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.MWOType", b =>
@@ -1448,7 +1386,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MWOTypes");
+                    b.ToTable("MWOTypes", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Nozzle", b =>
@@ -1537,7 +1475,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("nPipeClassId");
 
-                    b.ToTable("Nozzles");
+                    b.ToTable("Nozzles", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PaintingItem", b =>
@@ -1570,7 +1508,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaintingItems");
+                    b.ToTable("PaintingItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipeAccesory", b =>
@@ -1634,6 +1572,15 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<int?>("pProcessConditionId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("paDiameterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("paMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("paPipeClassId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("paProcessFluidId")
                         .HasColumnType("int");
 
@@ -1657,9 +1604,15 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("pProcessConditionId");
 
+                    b.HasIndex("paDiameterId");
+
+                    b.HasIndex("paMaterialId");
+
+                    b.HasIndex("paPipeClassId");
+
                     b.HasIndex("paProcessFluidId");
 
-                    b.ToTable("PipeAccesorys");
+                    b.ToTable("PipeAccesorys", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipeClass", b =>
@@ -1692,7 +1645,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PipeClasss");
+                    b.ToTable("PipeClasss", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipeDiameter", b =>
@@ -1745,7 +1698,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("dPipeClassId");
 
-                    b.ToTable("PipeDiameters");
+                    b.ToTable("PipeDiameters", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PipingItem", b =>
@@ -1834,7 +1787,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("pProcessFluidId");
 
-                    b.ToTable("PipingItems");
+                    b.ToTable("PipingItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ProcessCondition", b =>
@@ -1917,7 +1870,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("VolumetricFlowId");
 
-                    b.ToTable("ProcessConditions");
+                    b.ToTable("ProcessConditions", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.ProcessFluid", b =>
@@ -1959,7 +1912,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("PropertyPackageId");
 
-                    b.ToTable("ProcessFluids");
+                    b.ToTable("ProcessFluids", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PropertyPackage", b =>
@@ -1992,7 +1945,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PropertyPackages");
+                    b.ToTable("PropertyPackages", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrder", b =>
@@ -2011,6 +1964,12 @@ namespace CPTool.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Currency")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CurrencyDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -2058,6 +2017,12 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("USDCOP")
+                        .HasColumnType("float");
+
+                    b.Property<double>("USDEUR")
+                        .HasColumnType("float");
+
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -2078,16 +2043,16 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("pSupplierId");
 
-                    b.ToTable("PurchaseOrders");
+                    b.ToTable("PurchaseOrders", (string)null);
                 });
 
-            modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrderMWOItem", b =>
+            modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrderItem", b =>
                 {
-                    b.Property<int?>("PurchaseOrderId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("MWOItemId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -2099,12 +2064,27 @@ namespace CPTool.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
+                    b.Property<int?>("MWOItemId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PrizeCurrency")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PrizeCurrencyTax")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PrizeUSD")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Tax")
+                        .HasColumnType("float");
 
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
@@ -2112,11 +2092,13 @@ namespace CPTool.Infrastructure.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("PurchaseOrderId", "MWOItemId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MWOItemId");
 
-                    b.ToTable("PurchaseOrderMWOItems");
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("PurchaseOrderItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Readout", b =>
@@ -2152,7 +2134,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Readouts");
+                    b.ToTable("Readouts", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Signal", b =>
@@ -2235,7 +2217,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("WireId");
 
-                    b.ToTable("Signals");
+                    b.ToTable("Signals", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.SignalModifier", b =>
@@ -2268,7 +2250,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SignalModifier");
+                    b.ToTable("SignalModifiers", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.SignalType", b =>
@@ -2301,7 +2283,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SignalTypes");
+                    b.ToTable("SignalTypes", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.StructuralItem", b =>
@@ -2334,7 +2316,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StructuralItems");
+                    b.ToTable("StructuralItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Supplier", b =>
@@ -2396,7 +2378,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("TaxCodeLPId");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Taks", b =>
@@ -2461,7 +2443,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseOrderId");
 
-                    b.ToTable("Takss");
+                    b.ToTable("Takss", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.TaxCodeLD", b =>
@@ -2494,7 +2476,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TaxCodeLDs");
+                    b.ToTable("TaxCodeLDs", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.TaxCodeLP", b =>
@@ -2527,7 +2509,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TaxCodeLPs");
+                    b.ToTable("TaxCodeLPs", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.TaxesItem", b =>
@@ -2560,7 +2542,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TaxesItems");
+                    b.ToTable("TaxesItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.TestingItem", b =>
@@ -2593,7 +2575,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TestingItems");
+                    b.ToTable("TestingItems", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Unit", b =>
@@ -2632,7 +2614,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Units");
+                    b.ToTable("Units", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.UnitaryBasePrize", b =>
@@ -2665,7 +2647,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UnitaryBasePrizes");
+                    b.ToTable("UnitaryBasePrizes", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.User", b =>
@@ -2710,7 +2692,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.UserRequirement", b =>
@@ -2761,7 +2743,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasIndex("UserRequirementTypeId");
 
-                    b.ToTable("UserRequirements");
+                    b.ToTable("UserRequirements", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.UserRequirementType", b =>
@@ -2798,7 +2780,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserRequirementTypes");
+                    b.ToTable("UserRequirementTypes", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.Wire", b =>
@@ -2831,7 +2813,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Wires");
+                    b.ToTable("Wires", (string)null);
                 });
 
             modelBuilder.Entity("CPTool.Domain.Entities.BrandSupplier", b =>
@@ -3210,16 +3192,6 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("UnitaryBasePrize");
                 });
 
-            modelBuilder.Entity("CPTool.Domain.Entities.MWOItemCurrencyValue", b =>
-                {
-                    b.HasOne("CPTool.Domain.Entities.MWOItem", "MWOItem")
-                        .WithMany("MWOItemCurrencyValues")
-                        .HasForeignKey("MWOItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("MWOItem");
-                });
-
             modelBuilder.Entity("CPTool.Domain.Entities.Nozzle", b =>
                 {
                     b.HasOne("CPTool.Domain.Entities.MWOItem", "ConnectedTo")
@@ -3340,6 +3312,21 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("pProcessConditionId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("CPTool.Domain.Entities.PipeDiameter", "paDiameter")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("paDiameterId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.Material", "paMaterial")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("paMaterialId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("CPTool.Domain.Entities.PipeClass", "paPipeClass")
+                        .WithMany("PipeAccesorys")
+                        .HasForeignKey("paPipeClassId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("CPTool.Domain.Entities.ProcessFluid", "paProcessFluid")
                         .WithMany("PipeAccesorys")
                         .HasForeignKey("paProcessFluidId")
@@ -3362,6 +3349,12 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("pPipingItem");
 
                     b.Navigation("pProcessCondition");
+
+                    b.Navigation("paDiameter");
+
+                    b.Navigation("paMaterial");
+
+                    b.Navigation("paPipeClass");
 
                     b.Navigation("paProcessFluid");
                 });
@@ -3567,19 +3560,17 @@ namespace CPTool.Infrastructure.Migrations
                     b.Navigation("pSupplier");
                 });
 
-            modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrderMWOItem", b =>
+            modelBuilder.Entity("CPTool.Domain.Entities.PurchaseOrderItem", b =>
                 {
                     b.HasOne("CPTool.Domain.Entities.MWOItem", "MWOItem")
-                        .WithMany("PurchaseOrderMWOItems")
+                        .WithMany("PurchaseOrderItems")
                         .HasForeignKey("MWOItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CPTool.Domain.Entities.PurchaseOrder", "PurchaseOrder")
-                        .WithMany("PurchaseOrderMWOItems")
+                        .WithMany("PurchaseOrderItems")
                         .HasForeignKey("PurchaseOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("MWOItem");
 
@@ -3693,7 +3684,7 @@ namespace CPTool.Infrastructure.Migrations
                         .HasForeignKey("MWOId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CPTool.Domain.Entities.User", "RequestedByUser")
+                    b.HasOne("CPTool.Domain.Entities.User", "RequestedBy")
                         .WithMany("UserRequirements")
                         .HasForeignKey("RequestedById")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -3706,7 +3697,7 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Navigation("MWO");
 
-                    b.Navigation("RequestedByUser");
+                    b.Navigation("RequestedBy");
 
                     b.Navigation("UserRequirementType");
                 });
@@ -3839,6 +3830,8 @@ namespace CPTool.Infrastructure.Migrations
 
                     b.Navigation("Nozzles");
 
+                    b.Navigation("PipeAccesorys");
+
                     b.Navigation("PipingItems");
                 });
 
@@ -3871,11 +3864,9 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.Navigation("FisnishPipingItems");
 
-                    b.Navigation("MWOItemCurrencyValues");
-
                     b.Navigation("NozzlesConnecteds");
 
-                    b.Navigation("PurchaseOrderMWOItems");
+                    b.Navigation("PurchaseOrderItems");
 
                     b.Navigation("Signals");
 
@@ -3910,6 +3901,8 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.Navigation("Nozzles");
 
+                    b.Navigation("PipeAccesorys");
+
                     b.Navigation("PipeDiameters");
 
                     b.Navigation("PipingItems");
@@ -3918,6 +3911,8 @@ namespace CPTool.Infrastructure.Migrations
             modelBuilder.Entity("CPTool.Domain.Entities.PipeDiameter", b =>
                 {
                     b.Navigation("Nozzles");
+
+                    b.Navigation("PipeAccesorys");
 
                     b.Navigation("PipingItems");
                 });
@@ -3962,7 +3957,7 @@ namespace CPTool.Infrastructure.Migrations
                 {
                     b.Navigation("DownPayments");
 
-                    b.Navigation("PurchaseOrderMWOItems");
+                    b.Navigation("PurchaseOrderItems");
 
                     b.Navigation("Taks");
                 });

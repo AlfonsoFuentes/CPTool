@@ -31,6 +31,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         void OnChangeTemperaturePressure()
         {
             if (ProcessFluid == null) return;
+            if (ProcessFluid.PropertyPackage == null) return;
             ProcessFluid.PropertyPackage.PropertyPackageCalculator.Pressure = ProcessCondition.Pressure.Amount;
             ProcessFluid.PropertyPackage.PropertyPackageCalculator.Temperature = ProcessCondition.Temperature.Amount;
             ProcessFluid.PropertyPackage.PropertyPackageCalculator.CalculateProperties();
@@ -63,6 +64,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         void OnChangeMassFlow()
         {
             if (ProcessFluid == null) return;
+            if (ProcessFluid.PropertyPackage == null) return;
             ProcessFluid.PropertyPackage.PropertyPackageCalculator.MassFlow.SetValue(ProcessCondition.MassFlow.Amount.Value,
                 ProcessCondition.MassFlow.Amount.Unit);
             ProcessFluid.PropertyPackage.PropertyPackageCalculator.CalculateVolumetricFlow();
@@ -80,6 +82,7 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         void OnChangeVolumetricFlow()
         {
             if (ProcessFluid == null) return;
+            if (ProcessFluid.PropertyPackage == null) return;
             ProcessFluid.PropertyPackage.PropertyPackageCalculator.VolumetricFlow.SetValue(ProcessCondition.VolumetricFlow.Amount.Value,
                 ProcessCondition.VolumetricFlow.Amount.Unit);
             ProcessFluid.PropertyPackage.PropertyPackageCalculator.CalculateMassFlow();

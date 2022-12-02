@@ -3,7 +3,8 @@
                      TDeleteMaster="DeleteUnitaryBasePrize"
                      TMasterList="GetUnitaryBasePrizeListQuery"
                      TGedById="GetByIdUnitaryBasePrizeQuery"
-                     @bind-ElementsMasters="GlobalTables.UnitaryBasePrizes"
+                     @bind-ElementsMasters="@GlobalTables.UnitaryBasePrizes"
+                     ElementsMastersSelected="@GlobalTables.UnitaryBasePrizes"
                      OnShowDialogMaster="ToolDialogService.ShowNameDialog">
     <MasterContextTh>
         <MudTh >#</MudTh>

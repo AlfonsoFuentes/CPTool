@@ -1,6 +1,4 @@
 ﻿
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList;
 using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.ReadoutFeatures.Query.GetList

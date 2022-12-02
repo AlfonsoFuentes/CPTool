@@ -18,7 +18,10 @@ namespace CPTool.NewPages.Dialogs.Taks.Dialog
         {
             await form.Validate();
         }
-
+        bool ButtonSaveDisable => Model.TaksType == Domain.Entities.TaksType.Automatic ? true :
+            Model.TaksStatus == Domain.Entities.TaksStatus.Completed ? true : false;
+        string ButtonSaveName => Model.TaksType == Domain.Entities.TaksType.Manual ?
+            Model.TaksStatus == Domain.Entities.TaksStatus.Draft ? "Create" : "Close" : "Automatic";
         public async virtual Task Submit()
         {
             await ValidateForm();
@@ -45,5 +48,14 @@ namespace CPTool.NewPages.Dialogs.Taks.Dialog
         }
 
         void Cancel() => MudDialog.Cancel();
+        private string ValidateTaskName(string arg)
+        {
+            if (arg == null || arg == "")
+                return "Must submit Task name";
+
+
+
+            return null;
+        }
     }
 }

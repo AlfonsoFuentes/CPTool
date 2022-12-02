@@ -1,0 +1,83 @@
+﻿@using CPTool.Application.Features.NozzleFeatures;
+@using CPTool.Application.Features.NozzleFeatures.Query.GetById;
+@using CPTool.Application.Features.NozzleFeatures.Query.GetList;
+@using CPTool.Application.Features.PipeClassFeatures.Query.GetById;
+@using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById;
+<MudDialog DisableSidePadding="true">
+    <DialogContent>
+        <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+            <MudPaper Class="pa-2 ma-2" Outlined="true" Elevation="0">
+                <CascadingValue Value="this">
+
+
+                    <MudForm Model="Model" @ref="form">
+
+                        <MudSelect Dense="true"
+                                   Margin="Margin.Dense"
+                                   T="PipeAccesorySectionType"
+                                   Label="Select Accesory Type"
+                                   AnchorOrigin="Origin.BottomCenter"
+                                   @bind-Value=@Model.SectionType
+                                   Validation="@(new Func<PipeAccesorySectionType, string>(ValidateAccesoryType))"
+                                   Variant="Variant.Outlined">
+                            @foreach (var item in Enum.GetValues<PipeAccesorySectionType>())
+                            {
+                                <MudSelectItem Value="item">@item</MudSelectItem>
+                            }
+
+                        </MudSelect>
+
+
+
+
+
+                        <SimpleListComponent TMaster="EditNozzle"
+                                             TDeleteMaster="DeleteNozzle"
+                                             ShowAddButtonMaster=false
+                                             ShowFinderText=false
+                                             ShowReportButtons=false
+                                             ShowDeleteButtonMaster=false
+                                             TMasterList="GetNozzleListQuery" TGedById="GetByIdNozzleQuery"
+                                             ElementsMastersSelected=@Model.Nozzles
+                                             @bind-ElementsMasters="@GlobalTables.Nozzles"
+                                             @bind-SelectedMaster="@SelectedNozzle"
+                                             OnShowDialogMaster="ToolDialogService.ShowNozzleDialog">
+
+                            <MasterContextTh>
+                                <MudTh>#</MudTh>
+                                <MudTh>Name</MudTh>
+                                <MudTh>Class</MudTh>
+                                <MudTh>Diameter</MudTh>
+                                <MudTh>In/Out Type</MudTh>
+                                <MudTh>Connection Type</MudTh>
+                            </MasterContextTh>
+                            <MasterContextTd>
+                                <MudTd DataLabel="#">@context.Id</MudTd>
+                                <MudTd DataLabel="Tag">@context.Name</MudTd>
+                                <MudTd DataLabel="Class">@context.nPipeClass.Name</MudTd>
+                                <MudTd DataLabel="Diameter">@context.PipeDiameter.Name</MudTd>
+                                <MudTd DataLabel="Type">@context.StreamType.ToString()</MudTd>
+                                <MudTd DataLabel="Connection Type">@context.ConnectionType.Name</MudTd>
+
+                            </MasterContextTd>
+
+
+
+                        </SimpleListComponent>
+                    </MudForm>
+                </CascadingValue>
+
+            </MudPaper>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="Submit">Save</MudButton>
+
+        <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+}

@@ -4,19 +4,23 @@ using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 using CPTool.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 
 namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
 {
     public partial class AddDataToPuchaseOrderDialog
     {
-       
+
+        [Inject]
+        public ICurrencyApi _CurrencyService { get; set; }
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public EditPurchaseOrder Model { get; set; } = null!;
+        public EditPurchaseOrderItem Model { get; set; } = null!;
 
-       
+
         [Parameter]
         public MudForm form { get; set; } = null!;
 
@@ -30,26 +34,20 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
             await ValidateForm();
             if (form.IsValid)
             {
-               
+
 
                 MudDialog.Close(DialogResult.Ok(Model));
             }
         }
+        void Cancel() => MudDialog.Cancel();
         protected override void OnInitialized()
         {
-            Model.MWOItem.MWOItemCurrencyValue.USDCOP = 4900;// Math.Round(_CurrencyService.RateList["COP"], 2);
-            Model.MWOItem.MWOItemCurrencyValue.USDEUR = 1;// Math.Round(_CurrencyService.RateList["EUR"], 2);
+            Model.PurchaseOrder.USDCOP = _CurrencyService.RateList == null ? 4900 : Math.Round(_CurrencyService.RateList["COP"], 2);
+            Model.PurchaseOrder.USDEUR = _CurrencyService.RateList == null ? 1 : Math.Round(_CurrencyService.RateList["EUR"], 2);
         }
-        void Cancel() => MudDialog.Cancel();
+       
 
-        private string ValidateCurrency(Currency arg)
-        {
-            if (arg == Currency.None)
-                return "Must submit Currency";
-
-
-            return null;
-        }
+      
         private string ValidatePOAmount(double arg)
         {
             if (arg <= 0)
@@ -60,10 +58,13 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         {
             if (arg <= 0)
                 return "Item Value must be greater than zero";
-            if(Model.MWOItem.MWOItemCurrencyValue.PrizeCurrency <= 0)
-                return "Item Value must be greater than zero";
-            if (Model.MWOItem.MWOItemCurrencyValue.PrizeUSD <= 0)
-                return "Item Value in $USD must be greater than zero";
+            foreach (var row in Model.PurchaseOrder.PurchaseOrderItems)
+            {
+                if (row.PrizeCurrency <= 0) return $"Item {row.MWOItem.Name} Value must be greater than zero";
+            }
+
+
+
             return null;
         }
     }

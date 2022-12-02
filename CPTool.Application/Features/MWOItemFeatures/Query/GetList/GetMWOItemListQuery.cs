@@ -23,7 +23,9 @@ namespace CPTool.Application.Features.MWOItemFeatures.Query.GetList
         {
             var list = await _unitofwork.RepositoryMWOItem.GetAllAsync();
             list=list.OrderBy(x=>x.ChapterId).ToList();
-            return _mapper.Map<List<EditMWOItem>>(list);
+
+            var retorno = _mapper.Map<List<EditMWOItem>>(list);
+            return retorno;
 
         }
     }

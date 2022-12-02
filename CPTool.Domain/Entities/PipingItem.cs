@@ -11,12 +11,10 @@
 
         public int? pProcessConditionId { get; set; }
         public ProcessCondition? pProcessCondition { get; set; }
-        public int? pMaterialId { get; set; }
-        public Material? pMaterial { get; set; }
+       
         public int? pProcessFluidId { get; set; }
         public ProcessFluid? pProcessFluid { get; set; }
-        public int? pDiameterId { get; set; }
-        public PipeDiameter? pDiameter { get; set; }
+       
         public int? NozzleStartId { get; set; }
         public Nozzle? NozzleStart { get; set; }
         public int? NozzleFinishId { get; set; }
@@ -25,6 +23,11 @@
         public MWOItem? StartMWOItem { get; set; }
         public int? FinishMWOItemId { get; set; }
         public MWOItem? FinishMWOItem { get; set; }
+
+        public int? pMaterialId { get; set; }
+        public Material? pMaterial { get; set; }
+        public int? pDiameterId { get; set; }
+        public PipeDiameter? pDiameter { get; set; }
         public int? pPipeClassId { get; set; }
         public PipeClass? pPipeClass { get; set; }
         public string TagId { get; set; } = String.Empty;

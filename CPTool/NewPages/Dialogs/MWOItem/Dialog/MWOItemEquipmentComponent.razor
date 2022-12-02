@@ -62,23 +62,6 @@
 
             </SelectComponent>
 
-
-
-
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
-                       Label="Equipment Model"
-                       PropertyName="Model"></TextComponent>
-            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
-                       Label="Reference"
-                       PropertyName="Reference"></TextComponent>
-            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
-                       Label="Serial Number"
-                       PropertyName="SerialNumber"></TextComponent>
-
-        </MudItem>
-        <MudItem xs="12" sm="6">
             <AutoCompleteComponent TEdit="EditGasket"
                                TList="GetGasketListQuery"
                                TGedById="GetByIdGasketQuery"
@@ -113,7 +96,24 @@
                                ShowDialogOverrided="ToolDialogService.ShowMaterial"
                                Validation="@(new Func<string, string>(GlobalTables.ValidateMaterial))"
                                @bind-Model=@Model.eInnerMaterial></AutoCompleteComponent>
+
+
         </MudItem>
+        <MudItem xs="12" sm="12">
+            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
+                       Label="Equipment Model"
+                       Lines="2"
+                       PropertyName="Model"></TextComponent>
+            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
+                       Label="Reference"
+                       Lines="2"
+                       PropertyName="Reference"></TextComponent>
+            <TextComponent @bind-Model="@DialogParent.Model.EquipmentItem"
+                       Label="Serial Number"
+                       PropertyName="SerialNumber"></TextComponent>
+
+        </MudItem>
+    
 
     </MudGrid>
 }

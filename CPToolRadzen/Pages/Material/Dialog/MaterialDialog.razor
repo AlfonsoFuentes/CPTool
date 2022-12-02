@@ -1,0 +1,26 @@
+﻿@using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+
+
+@inherits DialogTemplate<EditMaterial>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+
+        </TextBoxTemplate>
+        <TextBoxTemplate Label="Abbreviation" Required=true @bind-Value=@Model.Abbreviation StringsToCompare=@(FilteredList.Select(x => x.Abbreviation).ToList())>
+
+        </TextBoxTemplate>
+      
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+   
+}

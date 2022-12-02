@@ -1,0 +1,55 @@
+﻿@using CPTool.Application.Features.TaksFeatures.CreateEdit;
+
+@inherits DialogTemplate<EditTaks>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model" DisableButtonSave=@ButtonSaveDisable SaveButtonName="@ButtonSaveName" Save=@Submit>
+    <ChildContent>
+        <TextBoxTemplate Label="Name" Disabled=@(Model.Id!=0) Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+
+        </TextBoxTemplate>
+        <DatePickerTamplate Disabled=false Label="Estimated Task Date" @bind-Value="@Model.ExpectedDate"></DatePickerTamplate>
+        <FieldTemplate Label="Task Type" Value="@Model.TaksType.ToString()"></FieldTemplate>
+        <FieldTemplate Label="Task Status" Value="@Model.TaksStatus.ToString()"></FieldTemplate>
+
+        @if (Model.MWO != null)
+        {
+            <FieldTemplate Label="MWO CEC" Value="@Model.MWO.CECName"></FieldTemplate>
+            <FieldTemplate Label="MWO Name" Value="@Model.MWO.Name"></FieldTemplate>
+
+
+        }
+        @if (Model.MWOItem != null)
+        {
+
+            <FieldTemplate Label="MWO Item" Value="@Model.MWOItem.Name"></FieldTemplate>
+            <FieldTemplate Label="MWO Item Tag" Value="@Model.MWOItem.TagId"></FieldTemplate>
+
+        }
+        @if (Model.PurchaseOrder != null)
+        {
+            <FieldTemplate Label="PO Status" Value="@Model.PurchaseOrder.PurchaseOrderStatus.ToString()"></FieldTemplate>
+
+            <FieldTemplate Label="Purchase Requisition" Value="@Model.PurchaseOrder.PurchaseRequisition"></FieldTemplate>
+            <FieldTemplate Label="Purchase Order No" Value="@Model.PurchaseOrder.PONumber"></FieldTemplate>
+            <FieldTemplate Label="Supplier" Value="@Model.PurchaseOrder.pSupplier.Name"></FieldTemplate>
+        }
+        @if (Model.DownPayment != null)
+        {
+            <FieldTemplate Label="Status" Value="@Model.DownPayment.DownpaymentStatus.ToString()"></FieldTemplate>
+
+            <FieldTemplate Label="CBS No" Value="@Model.DownPayment.CBSRequesNo"></FieldTemplate>
+
+
+        }
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+
+}

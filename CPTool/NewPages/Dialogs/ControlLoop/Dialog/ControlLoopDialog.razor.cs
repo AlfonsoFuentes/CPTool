@@ -11,15 +11,50 @@ namespace CPTool.NewPages.Dialogs.ControlLoop.Dialog
         [Parameter]
         public EditControlLoop Model { get; set; } = null!;
 
-        List<EditSignal> signalsIn => GlobalTables.Signals.Where(x => x.MWOId == Model.MWOId && x.IOType == IOType.In).ToList();
-        List<EditSignal> signalsOut => GlobalTables.Signals.Where(x => x.MWOId == Model.MWOId && x.IOType == IOType.Out).ToList();
-        [Parameter]
+        public List<EditSignal> signalsIn => GetSignalsIn();
+        public List<EditSignal> signalsOut => GetSignalsOut();
         public MudForm form { get; set; } = null!;
+        List<EditSignal> GetSignalsIn()
+        {
+            List<EditSignal> signalsin = GlobalTables.Signals.Where(x =>
+                            x.MWOId == Model.MWOId && x.IOType == IOType.In && x.SignalModifier != null && x.SignalModifier?.Name == "Scaled").ToList();
+
+            if (Model.Id == 0 && Model.ControlLoopType == ControlLoopType.PIDControl || Model.ControlLoopType == ControlLoopType.ON_OFF_Control)
+            {
+                signalsin = signalsin.Where(x => x.ProcessVariables.Count == 0).ToList();
+            }
 
 
-        public async virtual Task Submit()
+            return signalsin;
+
+        }
+        List<EditSignal> GetSignalsOut()
+        {
+            List<EditSignal> signalsout = GlobalTables.Signals.Where(x =>
+                            x.MWOId == Model.MWOId && x.IOType == IOType.Out
+        && x.SignalModifier != null && x.SignalModifier?.Name == "Target").ToList();
+
+            if (Model.Id == 0 && Model.ControlLoopType == ControlLoopType.PIDControl || Model.ControlLoopType == ControlLoopType.ON_OFF_Control)
+            {
+                signalsout = signalsout.Where(x => x.ControlledVariables.Count == 0).ToList();
+            }
+
+          
+
+            return signalsout;
+
+        }
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
+        public async Task Validateform()
         {
             await form.Validate();
+        }
+        public async virtual Task Submit()
+        {
+            await Validateform();
             if (form.IsValid)
             {
 

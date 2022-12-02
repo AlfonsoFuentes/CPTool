@@ -1,0 +1,58 @@
+﻿@page "/signals/{ParentId:int}"
+
+@using CPTool.Application.Features.SignalsFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditSignal>
+<TableTemplate T="EditSignal"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+               ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.Signals">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditSignal" Property="@nameof(EditSignal.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal"  Title="Type" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true Width="100%">
+            <Template>
+                @context.SignalType?.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal" Property="@nameof(EditSignal.IOType)" Title="I/O " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal" Property="@nameof(EditSignal.IsWired)" Title="Wired? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.IsWired></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal"  Title="Location " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                @context.FieldLocation?.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal"  Title="Electrical Box " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                @context.ElectricalBox?.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal" Property="@nameof(EditSignal.Disconect)" Title="Has Disconnect? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.Disconect></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal" Property="@nameof(EditSignal.FrequencyInverter)" Title="Has frequency inverter? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.FrequencyInverter ></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditSignal" Property="@nameof(EditSignal.InstrumentAir)" Title="Has Air? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.InstrumentAir></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+@code {
+
+}

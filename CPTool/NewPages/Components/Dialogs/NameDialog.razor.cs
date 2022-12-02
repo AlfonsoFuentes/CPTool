@@ -1,6 +1,8 @@
 ﻿
 
 
+
+
 namespace CPTool.NewPages.Components.Dialogs
 {
     public partial class NameDialog

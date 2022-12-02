@@ -1,0 +1,37 @@
+﻿@typeparam T
+@if (debug)
+{
+
+}
+<div style="margin-bottom: 1rem" class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+    </div>
+    <div class=@UISettings.ColClassValue>
+        <RadzenDropDown AllowClear="true" TValue="T" Style=@StyleBoxWidth100 Disabled=@Disabled
+                        Data=@Elements  @bind-Value=@Model Name="Select"
+                        Change=OnChange />
+
+
+        @if (Required &&enumname!="None")
+        {
+            <RadzenRequiredValidator Component="Select" Text=@RequiredText Popup=true Style="position: absolute" />
+        }
+
+
+
+
+    </div>
+</div>
+@code {
+    bool debug = true;
+    async Task OnChange()
+    {
+        //Model = value;
+
+        await ModelChanged.InvokeAsync(Model);
+
+    }
+    public string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
+    public string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+}

@@ -1,0 +1,104 @@
+﻿@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
+@if (debug)
+{
+
+}
+<Panel>
+    <Left>
+        <RadzenCard>
+
+           
+            <SelectTemplate T="EditPipeClass"
+                            Elements=@RadzenTables.PipeClasses
+                            Change="OnChangePipeClass"
+                            PropertyName="Name"
+                            Label="Pipe Class"
+                            @bind-Model="@Model.pPipeClass">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditPipeDiameter"
+                            PropertyName="Name"
+                            Disabled=@(Model.pPipeClass==null?true:false)
+                            Elements=@(Model.pPipeClass==null?new():Model.pPipeClass.PipeDiameters)
+                            Label="Diameter"
+                            @bind-Model="@Model.pDiameter">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditProcessFluid"
+                            PropertyName="Name"
+                            Elements=@RadzenTables.ProcessFluids
+                            Label="Process Fluid"
+                            @bind-Model="@Model.pProcessFluid">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditMaterial"
+                            PropertyName="Name"
+                            Elements=@RadzenTables.Materials
+                            Label="Pipe Material"
+                            @bind-Model="@Model.pMaterial">
+
+
+            </SelectTemplate>
+            <SwitchTemplate Label="Insulation" @bind-Value="@Model.Insulation">
+
+            </SwitchTemplate>
+           
+            <TextBoxTemplate @bind-Value="@Model.TagNumber" Label="Tag Number"
+                         
+                           Required=true></TextBoxTemplate>
+
+            <FieldTemplate Label="Tag" Value="@DialogParent.Model.PipingItem.TagId"></FieldTemplate>
+
+            
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+            <SelectTemplate T="EditMWOItem"
+                         Elements=@MWOItemsStarts
+                         PropertyName="@nameof(EditMWOItem.TagId)"
+                         Change="OnChangeEquipmentStart"
+                         Label="Pipe Start in"
+                         @bind-Model="@Model.StartMWOItem">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditNozzle"
+                         Elements=@NozzlesStart
+                            PropertyName="Name"
+                         Label="Nozzle Start"
+                         Change="OnChangeNozzleStart"
+                         @bind-Model="@Model.NozzleStart">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditMWOItem"
+                         Elements=@MWOItemsFinish
+                         PropertyName="@nameof(EditMWOItem.TagId)"
+                            Change="OnChangeEquipmentFinish"
+                         Label="Pipe Finish in"
+                         @bind-Model="@Model.FinishMWOItem">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="EditNozzle"
+                         Elements=@NozzlesFinish
+                            PropertyName="Name"
+                         Change="OnChangeNozzleFinish"
+                         Label="Nozzle Finish"
+                         @bind-Model="@Model.NozzleFinish">
+
+
+            </SelectTemplate>
+           
+        </RadzenCard>
+    </Rigth>
+</Panel>
+
+@code {
+    bool debug = true;
+
+}

@@ -4,25 +4,47 @@ using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 using CPTool.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
 {
     public partial class CreatePurchaseOrderDialog
     {
-        List<EditMWOItem> EditMWOItemsOriginal => Model.PurchaseOrder.MWO.MWOItems;
+        [Inject]
+        public ICurrencyApi _CurrencyService { get; set; }
+        List<EditMWOItem> EditMWOItemsOriginal = new();
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
-        public CreateEditPurchaseOrder Model { get; set; } = null!;
-
-
+        public EditPurchaseOrder Model { get; set; } = null!;
+       
+        protected override void OnInitialized()
+        {
+            Model.USDCOP = _CurrencyService.RateList == null ? 4900 : Math.Round(_CurrencyService.RateList["COP"], 2);
+            Model.USDEUR = _CurrencyService.RateList == null ? 1 : Math.Round(_CurrencyService.RateList["EUR"], 2);
+            EditMWOItemsOriginal = GlobalTables.MWOItems.Where(x => x.MWOId == Model.MWOId).ToList(); ;
+        }
         [Parameter]
         public MudForm form { get; set; } = null!;
+        private string ValidateCurrency(Currency arg)
+        {
+            if (arg == Currency.None)
+                return "Must submit Currency";
 
+
+            return null;
+        }
         async Task ValidateForm()
         {
             await form.Validate();
+        }
+        bool DisableButton => OnDisableButton();
+        bool OnDisableButton()
+        {
+            if (Model.PurchaseOrderItems.Count == 0) return true;
+            return false;
         }
 
         public async virtual Task Submit()
@@ -30,8 +52,9 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
             await ValidateForm();
             if (form.IsValid)
             {
-                Model.PurchaseOrder.POOrderingdDate = DateTime.UtcNow;
-                Model.PurchaseOrder.PurchaseOrderStatus = Domain.Entities.PurchaseOrderStatus.Ordering;
+                Model.POOrderingdDate = DateTime.UtcNow;
+                Model.PurchaseOrderStatus = Domain.Entities.PurchaseOrderStatus.Ordering;
+                Model.CurrencyDate = DateTime.UtcNow;
                 await Mediator.Send(Model);
 
                 MudDialog.Close(DialogResult.Ok(Model));
@@ -70,6 +93,7 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
             return null;
 
         }
+
         private string ValidateSupplier(int arg)
         {
             if (arg == 0)
@@ -81,53 +105,54 @@ namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
         void BrandChanged(EditBrand brand)
         {
 
-            Model.PurchaseOrder.pSupplier = new();
+            Model.pSupplier = new();
             StateHasChanged();
         }
-        public class DropItem
+        EditMWOItem SelectedItemToAdd = new();
+        EditPurchaseOrderItem SelectedItemAdded = new();
+        private async Task AddItem()
         {
-            public EditMWOItem MWOItem { get; set; }
-            public string Name { get; init; }
-            public string Identifier { get; set; }
-        }
-        private async Task ItemUpdated(MudItemDropInfo<DropItem> dropItem)
-        {
-            var dropZone = dropItem.Item.Identifier;
-            dropItem.Item.Identifier = dropItem.DropzoneIdentifier;
-            var MWOItem = dropItem.Item.MWOItem;
 
-            Model.PurchaseOrder.TaxCode = Model.PurchaseOrder.TaxCode == "" ?
+
+            var MWOItem = SelectedItemToAdd;
+
+            Model.TaxCode = Model.TaxCode == "" ?
                 MWOItem.ChapterId == 1 ?
-                Model.PurchaseOrder.pSupplier!.TaxCodeLP!.Name : Model.PurchaseOrder.pSupplier!.TaxCodeLD!.Name : Model.PurchaseOrder.TaxCode;
-            Model.PurchaseOrder.SPL = Model.PurchaseOrder.SPL == "" ? MWOItem.ChapterId == 1 ? "0735015000" : "151605000" : Model.PurchaseOrder.SPL;
-            Model.PurchaseOrder.CostCenter = MWOItem!.ChapterId! == 1 ? MWOItem!.AlterationItem!.CostCenter! : "";
-            Model.PurchaseOrder.MWOItem = MWOItem;
-            var result = await ToolDialogService.ShowAddDataToPurchaseOrderDialog(Model.PurchaseOrder);
+                Model.pSupplier!.TaxCodeLP!.Name : Model.pSupplier!.TaxCodeLD!.Name : Model.TaxCode;
+            Model.SPL = Model.SPL == "" ? MWOItem.ChapterId == 1 ? "0735015000" : "151605000" : Model.  SPL;
+            Model.CostCenter = MWOItem!.ChapterId! == 1 ? MWOItem!.AlterationItem!.CostCenter! : "";
+            EditPurchaseOrderItem purchaseOrderItem = new();
+            purchaseOrderItem.MWOItem = MWOItem;
+            purchaseOrderItem.PurchaseOrder = Model;
+
+            Model.MWOItem = MWOItem;
+            var result = await ToolDialogService.ShowAddDataToPurchaseOrderDialog(purchaseOrderItem);
             if (!result.Cancelled)
             {
-                var retorno = result.Data as EditPurchaseOrder;
-                Model.MWOItems.Add(dropItem.Item.MWOItem);
+                var retorno = result.Data as EditPurchaseOrderItem;
 
-            }
-            else
-            {
-                dropItem.Item.Identifier = dropZone;
+                Model.PurchaseOrderItems.Add(purchaseOrderItem);
+                EditMWOItemsOriginal.Remove(SelectedItemToAdd);
+                Model.PurchaseOrderItems = Model.PurchaseOrderItems.OrderBy(x => x.MWOItem!.Nomenclatore).ToList();
+                EditMWOItemsOriginal = EditMWOItemsOriginal.OrderBy(x => x.Nomenclatore).ToList();
+                SelectedItemToAdd = new();
+                SelectedItemAdded = new();
             }
 
 
         }
-        List<DropItem> _items = new();
-        protected override void OnInitialized()
+        private void RemoveItem()
         {
-            foreach (var row in Model.PurchaseOrder.MWO.MWOItems)
-            {
-                _items.Add(new DropItem()
-                {
-                    Name = row.TagId == "" ? row.Name : $"{row.TagId}_{row.Name}",
-                    Identifier = "Drop Zone 2",
-                    MWOItem = row
-                });
-            }
+
+            var selected = Model.PurchaseOrderItems.FirstOrDefault(x => x.MWOItemId == SelectedItemAdded.Id);
+            Model.PurchaseOrderItems.Remove(selected);
+            EditMWOItemsOriginal.Add(SelectedItemAdded.MWOItem);
+            Model.PurchaseOrderItems = Model.PurchaseOrderItems.OrderBy(x => x.MWOItem!.Nomenclatore).ToList();
+
+            EditMWOItemsOriginal = EditMWOItemsOriginal.OrderBy(x => x.Nomenclatore).ToList();
+            SelectedItemToAdd = new();
+            SelectedItemAdded = new();
         }
+
     }
 }

@@ -9,14 +9,10 @@
         Tube,
         Elbow90,
         Elbow45,
-        BallValve,
-        Butterfly,
-        ProportionalValve,
-        CheckValve,
-        POU,
         Reducer,
-        Expansion,
-        FlowMeter
+        Expansion,       
+        TEE,
+        CrossTEE,
 
     }
 

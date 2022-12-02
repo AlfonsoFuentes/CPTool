@@ -1,15 +1,17 @@
-﻿
-<MudToolBar>
+﻿<MudToolBar>
     @if (ShowAddButton)
     {
         <MudTooltip Text="Add">
             <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="OnAdd" Size="Size.Small" Disabled=@DisableAddButton />
         </MudTooltip>
     }
+    @if (ShowEditButton)
+    {
+        <MudTooltip Text="Edit">
+            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled="@DisableEditButton" OnClick="OnEdit" Size="Size.Small" />
+        </MudTooltip>
+    }
 
-    <MudTooltip Text="Edit">
-        <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled="@DisableEditButton" OnClick="OnEdit" Size="Size.Small" />
-    </MudTooltip>
     @if (ShowDeleteButton)
     {
         <MudTooltip Text="Delete">
@@ -17,18 +19,21 @@
         </MudTooltip>
     }
     @OtherButtons
-    <MudTooltip Text="Print">
-        <MudIconButton Icon="@Icons.Material.Outlined.Print" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnPrint" />
-    </MudTooltip>
-    <MudTooltip Text="Excel">
-        <MudIconButton Icon="@Icons.Custom.FileFormats.FileExcel" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnExcel" />
-    </MudTooltip>
-    <MudTooltip Text="PDF">
-        <MudIconButton Icon="@Icons.Custom.FileFormats.FilePdf" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnPDF" />
-    </MudTooltip>
+    @if (ShowReportButtons)
+    {
+        <MudTooltip Text="Print">
+            <MudIconButton Icon="@Icons.Material.Outlined.Print" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnPrint" />
+        </MudTooltip>
+        <MudTooltip Text="Excel">
+            <MudIconButton Icon="@Icons.Custom.FileFormats.FileExcel" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnExcel" />
+        </MudTooltip>
+        <MudTooltip Text="PDF">
+            <MudIconButton Icon="@Icons.Custom.FileFormats.FilePdf" Color="Color.Inherit" Disabled="@DisableEditButton" Size="Size.Small" OnClick="OnPDF" />
+        </MudTooltip>
+    }
+
 
 </MudToolBar>
-
 @code {
     [Parameter]
     [EditorRequired]
@@ -42,5 +47,11 @@
     [Parameter]
     [EditorRequired]
     public bool ShowDeleteButton { get; set; } = true;
+    [Parameter]
+    public bool ShowReportButtons { get; set; } = true;
+    [Parameter]
+    public bool ShowEditButton { get; set; } = true;
+    [Parameter]
+    public string SelectedItemName { get; set; } = "";
 
 }

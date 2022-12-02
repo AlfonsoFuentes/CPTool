@@ -9,10 +9,10 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
         public int SupplierOriginalId { get; set; }
         public int BrandOriginalId { get; set; }
         public int BrandId => Brand == null ? 0 : Brand!.Id;
-        public EditBrand? Brand { get; set; }
+        public EditBrand? Brand { get; set; } = new();
 
         public int SupplierId => Supplier == null ? 0 : Supplier!.Id;
-        public EditSupplier? Supplier { get; set; }
+        public EditSupplier? Supplier { get; set; } = new();
 
         public override void CreateMasterRelations<T1, T2>(T1 Master1, T2 Master2)
         {
@@ -40,6 +40,13 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
             BrandOriginalId = Brand!.Id;
             SupplierOriginalId = Supplier.Id;
 
+        }
+        public void SetOriginalId(EditBrand brand, EditSupplier supplier)
+        {
+            Supplier = supplier;
+            Brand = brand;
+            BrandOriginalId = Brand.Id;
+            SupplierOriginalId = Supplier.Id;
         }
     }
 

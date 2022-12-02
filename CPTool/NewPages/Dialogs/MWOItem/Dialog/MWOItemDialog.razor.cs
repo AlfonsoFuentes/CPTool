@@ -19,8 +19,9 @@ namespace CPTool.NewPages.Dialogs.MWOItem.Dialog
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditMWOItem Model { get; set; } = null!;
-        
 
+        [Parameter]
+        public int MWOItemId { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await GetDetails();

@@ -1,0 +1,64 @@
+﻿@page "/mwo-items/{ParentId:int}"
+@using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+@inherits BaseTableTemplate<EditMWOItem>
+
+
+<TableTemplate T="EditMWOItem"
+               TableName=@($"Items in {Parent.Name}")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+               ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.MWOItems">
+   
+    <Columns>
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.TagId)" Title="Tag Id" TextAlign="TextAlign.Left" Width="10%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.Name)" Title="Name" TextAlign="TextAlign.Left" Width="40%">
+        </RadzenDataGridColumn>
+        
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.BudgetPrize)" Title="Budget, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.BudgetPrize)
+            </Template>
+            <FooterTemplate>
+                <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", Elements.Sum(o => o.BudgetPrize))</b>
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+       
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.Assigned)" Title="Assigned, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Assigned)
+            </Template>
+            <FooterTemplate>
+                <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", Elements.Sum(o => o.Assigned))</b>
+            </FooterTemplate>
+        </RadzenDataGridColumn> 
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.Actual)" Title="Actual, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Actual)
+            </Template>
+            <FooterTemplate>
+                <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", Elements.Sum(o => o.Actual))</b>
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.Commitment)" Title="Commitment, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Commitment)
+            </Template>
+            <FooterTemplate>
+                <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", Elements.Sum(o => o.Commitment))</b>
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.Pending)" Title="Pending, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Pending)
+            </Template>
+            <FooterTemplate>
+                <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", Elements.Sum(o => o.Pending))</b>
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+@code {
+
+}

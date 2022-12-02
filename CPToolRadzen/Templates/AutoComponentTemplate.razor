@@ -1,0 +1,29 @@
+﻿@typeparam T
+<div style="margin-bottom: 0.2rem" class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+    </div>
+    <div class=@UISettings.ColClassValue>
+        <RadzenAutoComplete Data=@Elements Name="AutoComplete" TextProperty="@PropertyName" Change="@OnChange" @onkeydown=@OnKeyDow @bind-Value=@Value
+                            Style=@StyleBoxWidth100 Placeholder="@($"Start typing to Select {Label}")" />
+        @if (Required)
+        {
+            <RadzenRequiredValidator Component="AutoComplete" Text=@RequiredText Popup=true Style="position: absolute" />
+        }
+        @if (Any)
+        {
+            <TemplateListValidator Component="AutoComplete" StringsToCompare="@StringsToCompare"
+                               Text=@ExistText Popup=true Style="position: absolute" />
+
+        }
+
+
+
+    </div>
+</div>
+
+
+@code {
+    public string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
+    public string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+}

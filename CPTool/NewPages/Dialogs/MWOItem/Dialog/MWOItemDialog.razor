@@ -5,105 +5,126 @@
 @using CPTool.NewPages.Dialogs.Nozzle.List
 <MudDialog DisableSidePadding="true">
     <DialogContent>
-        <MudContainer Style="max-height: 550px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Medium">
+        <MudContainer Style="max-height: 850px; overflow-y: scroll" Fixed="true" MaxWidth="MaxWidth.Large">
 
             <CascadingValue Value="this">
 
 
                 <MudForm Model="Model" @ref="form">
+                    <MudGrid>
+                        <MudItem xs="12" sm="2">
+                            <MudList Clickable="true" Dense=true @bind-SelectedItem="selectedItem" @bind-SelectedValue="selectedValue" Color="_color">
 
-                    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
-                        <MudTabPanel Text="Name">
-                            <MudGrid>
+                                <MudListItem Text="Name" Value="0" />
+                                <MudListItem Text="Specs" Value="1" />
+                                @if (Model.Chapter != null && Model.Chapter?.Id == 6)
+                                {
+                                    <MudListItem Text="Accesories" Value="4" />
+                                }
+                                <MudListItem Text="Nozzles" Value="2" />
+                                <MudListItem Text="Process Conditions" Value="3" />
+                            </MudList>
+                        </MudItem>
+                        <MudItem xs="12" sm="10">
 
-                                <MudItem xs="12" sm="6">
-                                    <MWOItemChapterComponent></MWOItemChapterComponent>
-                                </MudItem>
-                                <MudItem xs="12" sm="6">
-                                    <MWOItemExpensesComponent></MWOItemExpensesComponent>
-                                </MudItem>
-                                <MudItem xs="12" sm="12">
-                                    <TextComponent @bind-Model="@Model" Label="Item Name" Disable=false PropertyName="Name"
+                            @switch (selectedValue.ToString())
+                            {
+                                case "0":
+                                    <MudGrid>
+
+                                        <MudItem xs="12" sm="6">
+                                            <MWOItemChapterComponent></MWOItemChapterComponent>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6">
+                                            <MWOItemExpensesComponent></MWOItemExpensesComponent>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12">
+                                            <TextComponent @bind-Model="@Model" T="EditMWOItem" Label="Item Name" Disable=false PropertyName="Name"
                                                    Validation="@(new Func<string,string>(AnyName))" Lines="2"
                                                    Required=true></TextComponent>
-                                </MudItem>
-                            </MudGrid>
-                        </MudTabPanel>
-                        <MudTabPanel Text="Specs">
-                            @if (Model.Chapter != null)
-                            {
-                                switch (Model.Chapter?.Id)
-                                {
-                                    case 4:
-                                        <MWOItemEquipmentComponent></MWOItemEquipmentComponent>
+                                        </MudItem>
+                                    </MudGrid>
+                                    break;
+                                case "1":
+                                    @if (Model.Chapter != null)
+                                    {
+                                        switch (Model.Chapter?.Id)
+                                        {
+                                            case 4:
+                                                <MWOItemEquipmentComponent></MWOItemEquipmentComponent>
 
-                                        break;
-                                    case 7:
-                                        <MWOItemInstrumentComponent></MWOItemInstrumentComponent>
+                                                break;
+                                            case 7:
+                                                <MWOItemInstrumentComponent></MWOItemInstrumentComponent>
 
-                                        break;
-                                    case 6:
-                                        <MWOItemPipingComponent></MWOItemPipingComponent>
+                                                break;
+                                            case 6:
+                                                <MWOItemPipingComponent></MWOItemPipingComponent>
 
-                                        break;
-                                }
-                            }
-
-                        </MudTabPanel>
-
-                        <MudTabPanel Text="Nozzles">
-                            @if (Model.Id != 0 && Model.Chapter != null)
-                            {
-                                switch (Model.Chapter?.Id)
-                                {
-                                    case 4:
-                                        <NozzleList @bind-Nozzles="@Model.EquipmentItem.Nozzles"
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case "2":
+                                    @if (Model.Id != 0 && Model.Chapter != null)
+                                    {
+                                        switch (Model.Chapter?.Id)
+                                        {
+                                            case 4:
+                                                <NozzleList @bind-Nozzles="@Model.EquipmentItem.Nozzles"
                                         UpdateParentList="UpdateFormFromChild" Master="@Model.EquipmentItem"></NozzleList>
 
-                                        break;
-                                    case 7:
-                                        <NozzleList @bind-Nozzles="@Model.InstrumentItem.Nozzles"
+                                                break;
+                                            case 7:
+                                                <NozzleList @bind-Nozzles="@Model.InstrumentItem.Nozzles"
                                         UpdateParentList="UpdateFormFromChild" Master="@Model.InstrumentItem"></NozzleList>
 
-                                        break;
-                                    case 6:
-                                        <NozzleList @bind-Nozzles="@Model.PipingItem.Nozzles"
+                                                break;
+                                            case 6:
+                                                <NozzleList @bind-Nozzles="@Model.PipingItem.Nozzles"
                                         UpdateParentList="UpdateFormFromChild" Master="@Model.PipingItem"></NozzleList>
 
-                                        break;
-                                }
-                            }
-                        </MudTabPanel>
-                        <MudTabPanel Text="Process Conditions">
-                            @if (Model.Id != 0 && Model.Chapter != null)
-                            {
-                                switch (Model.Chapter?.Id)
-                                {
-                                    case 4:
-                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.EquipmentItem.eProcessCondition"
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case "3":
+                                    @if (Model.Id != 0 && Model.Chapter != null)
+                                    {
+                                        switch (Model.Chapter?.Id)
+                                        {
+                                            case 4:
+                                                <MWOItemProcessConditions @bind-ProcessCondition="@Model.EquipmentItem.eProcessCondition"
                                                       @bind-ProcessFluid=@Model.EquipmentItem.eProcessFluid></MWOItemProcessConditions>
 
-                                        break;
-                                    case 7:
-                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.InstrumentItem.iProcessCondition"
+                                                break;
+                                            case 7:
+                                                <MWOItemProcessConditions @bind-ProcessCondition="@Model.InstrumentItem.iProcessCondition"
                                                       @bind-ProcessFluid=@Model.InstrumentItem.iProcessFluid></MWOItemProcessConditions>
 
-                                        break;
-                                    case 6:
-                                        <MWOItemProcessConditions @bind-ProcessCondition="@Model.PipingItem.pProcessCondition"
+                                                break;
+                                            case 6:
+                                                <MWOItemProcessConditions @bind-ProcessCondition="@Model.PipingItem.pProcessCondition"
                                                       @bind-ProcessFluid=@Model.PipingItem.pProcessFluid></MWOItemProcessConditions>
 
-                                        break;
+                                                break;
 
-                                }
+                                        }
+                                    }
+                                    break;
+                                case "4":
+                                    {
+                                        
+                                            <MWOItemPipingAccesories></MWOItemPipingAccesories>
+                                        
+                                    }
+
+                                    break;
                             }
-                        </MudTabPanel>
-                    </MudTabs>
-                    <MudGrid>
-
-
-
+                        </MudItem>
                     </MudGrid>
+
+
 
                 </MudForm>
             </CascadingValue>
@@ -119,5 +140,7 @@
     </DialogActions>
 </MudDialog>
 @code {
-
+    MudListItem selectedItem;
+    object selectedValue = 0;
+    Color _color = Color.Primary;
 }

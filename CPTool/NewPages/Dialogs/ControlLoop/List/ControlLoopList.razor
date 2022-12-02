@@ -20,21 +20,28 @@
                              OnAdd="AddControlLoop"
                              OnEdit="EditControlLoop"
                              TMasterList="GetControlLoopListQuery" TGedById="GetByIdControlLoopQuery"
-                             ElementsMasters="@ControlLoops"
+                             @bind-ElementsMasters="@GlobalTables.ControlLoops"
+                             OnDelete="DeleteSignalFunction"
                              @bind-SelectedMaster="@SelectedControlLoop"
+                             ElementsMastersSelected="@ControlLoops"
                              OnShowDialogMaster="ToolDialogService.ShowControlLoopDialog">
 
                 <MasterContextTh>
                     <MudTh>#</MudTh>
 
-                    <MudTh>Name</MudTh>
+                    <MudTh>Tag</MudTh>
+                    <MudTh>Control Loop Type</MudTh>
+                    <MudTh>Process Variable</MudTh>
+                    <MudTh>Controlled Variable</MudTh>
 
                 </MasterContextTh>
                 <MasterContextTd>
                     <MudTd DataLabel="#">@context.Id</MudTd>
 
-                    <MudTd DataLabel="Name">@context.Name</MudTd>
-
+                    <MudTd DataLabel="Name">@context.ProcessVariable!.MWOItem!.TagId</MudTd>
+                    <MudTd DataLabel="Control Loop Type">@context.ControlLoopType.ToString()</MudTd>
+                    <MudTd DataLabel="Process Variable">@context.ProcessVariable!.Name</MudTd>
+                    <MudTd DataLabel="Controlled Variable">@context.ControlledVariable!.Name</MudTd>
                 </MasterContextTd>
 
 

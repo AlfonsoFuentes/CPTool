@@ -1,0 +1,21 @@
+﻿@page "/process-fluids"
+@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditProcessFluid>
+<TableTemplate T="EditProcessFluid"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.ProcessFluids">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditProcessFluid" Property="@nameof(EditProcessFluid.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+@code {
+
+}

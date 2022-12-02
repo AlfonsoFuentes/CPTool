@@ -1,0 +1,29 @@
+﻿<div style="margin-bottom: 0.1rem" class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+    </div>
+    <div class="col-md-1">
+        <RadzenSwitch @bind-Value=@Value Change=@(args => OnChange(args, "Switch")) Style=@StyleBoxWidth100 />
+
+       
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public string Label { get; set; }
+    [Parameter]
+    public bool Value { get; set; }
+    [Parameter]
+    public EventCallback<bool> ValueChanged{ get; set; }
+
+    async Task OnChange(bool? value, string name)
+    {
+        Value=value.Value;
+        await ValueChanged.InvokeAsync(Value);
+    }
+    public string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
+    public string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+}

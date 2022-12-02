@@ -2,6 +2,8 @@
 
 
 
+using Microsoft.AspNetCore.Identity;
+
 namespace CPTool.Identity.Services
 {
     public class AuthService : IAuthService

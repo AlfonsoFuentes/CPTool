@@ -1,0 +1,38 @@
+﻿@using CPToolRadzen.Pages.PipeAccesory.List
+<Panel ColLeft="8">
+    <Left>
+        <PipeAccesoryList ElmentsDetail="@Model.PipeAccesorys" TableName=@($"Accesories for {Model.TagId}")></PipeAccesoryList>
+    </Left>
+    <Rigth>
+
+        <SelectTemplate T="EditPipeClass"
+                        PropertyName="Name"
+                        Elements=@RadzenTables.PipeClasses
+                        Label="Class"
+                        @bind-Value="@PipeClassSelected">
+
+
+        </SelectTemplate>
+        <SelectTemplate T="EditPipeDiameter"
+                        PropertyName="Name"
+                        Elements=@(PipeClassSelected.Id==0?new():RadzenTables.PipeDiameters.Where(x=>x.dPipeClassId==PipeClassSelected.Id).ToList())
+                        Label="Size"
+                        @bind-Value="@PipeDiameterSelected">
+
+
+        </SelectTemplate>
+        <SelectTemplate T="EditMaterial"
+                        Elements=@RadzenTables.Materials
+                        Label="Material"
+                        PropertyName="Name"
+                        @bind-Value="@PipeMaterialSelected">
+
+
+        </SelectTemplate>
+    </Rigth>
+</Panel>
+
+@code {
+
+
+}

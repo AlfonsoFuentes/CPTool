@@ -7,7 +7,7 @@ using CPTool.Application;
 using CPTool.Identity;
 using CPTool.Infrastructure;
 using CPTool.Infrastructure.Persistence;
-using CPTool.MiddleWare;
+
 using CPTool.UnitsSystem;
 using MudBlazor.Services;
 using System.Reflection;
@@ -19,13 +19,8 @@ builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddApplicationServices();
 
 builder.Services.ConfigureIdentityServices(builder.Configuration);
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin()
-//    .AllowAnyMethod()
-//    .AllowAnyHeader()
-//    );
-//});
+builder.Services.CurrencyService();
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();

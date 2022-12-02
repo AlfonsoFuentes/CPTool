@@ -1,6 +1,6 @@
 ﻿
 
-using CPTool.Application.Features.ChapterFeatures.CreateEdit;
+global using CPTool.Persistence.Persistence;
 
 namespace CPTool.Application.Features.Base
 {

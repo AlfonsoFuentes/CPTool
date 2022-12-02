@@ -1,0 +1,79 @@
+﻿@using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
+@using CPTool.Application.Features.MWOFeatures.CreateEdit;
+@inherits DialogTemplate<EditDownPayment>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-6">
+                <RadzenCard Class="m-3">
+                  
+
+                        <FieldTemplate Label="Request date" Value=@Model.RequestDate.ToShortDateString()></FieldTemplate>
+
+                        <FieldTemplate Label="MWO Name" Value=@Model.PurchaseOrder.MWO.Name></FieldTemplate>
+                        <FieldTemplate Label="Supplier" Value=@Model.PurchaseOrder.pSupplier.Name></FieldTemplate>
+                        <FieldTemplate Label="Vendor No" Value=@Model.PurchaseOrder.pSupplier.VendorCode></FieldTemplate>
+                        <FieldTemplate Label="PO No" Value=@Model.PurchaseOrder.PONumber></FieldTemplate>
+                        <FieldTemplate Label="Currency" Value=@Model.PurchaseOrder.Currency.ToString()></FieldTemplate>
+                       
+                        <FieldTemplate Label="@($"PO Value ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrency.ToString("C2")></FieldTemplate>
+                        <FieldTemplate Label="@($"PO Tax ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrencyTax.ToString("C2")></FieldTemplate>
+                        <FieldTemplate Label="@($"PO Total ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.TotalPrizeCurrency.ToString("C2")></FieldTemplate>
+
+                   
+                </RadzenCard>
+               
+            </div>
+            <div class="col-md-6">
+                <RadzenCard Class="m-3">
+
+                    <DatePickerTamplate Label="Due date" @bind-Value=@Model.DownPaymentDueDate Disabled=@(Model.Id == 0?false:true) Required=true>
+
+                    </DatePickerTamplate>
+
+                    <TextBoxTemplate @bind-Value="@Model.DownpaymentName" Label="Name" Required=true
+                                     Disabled=@(Model.Id!=0)
+                                     StringsToCompare=@(FilteredList.Select(x => x.DownpaymentName).ToList())></TextBoxTemplate>
+
+                    <TextBoxTemplate @bind-Value="@Model.ManagerEmail" Label="Manager email" Required=true
+                                     ValidateEmail=true
+                                     Disabled=@(Model.Id!=0)></TextBoxTemplate>
+                    <TextBoxTemplate @bind-Value="@Model.ProformaInvoice" Label="Proforma Invoice #" Required=true
+                                     Disabled=@(Model.Id!=0)></TextBoxTemplate>
+
+                    <TextBoxTemplate @bind-Value="@Model.Payterms" Label="Pay terms" Required=true
+                                    Disabled=@(Model.Id!=0)></TextBoxTemplate>
+                    <TextBoxTemplate @bind-Value="@Model.Incotherm" Label="Incotherm" Required=true
+                                     Disabled=@(Model.Id!=0)></TextBoxTemplate>
+
+                    <NumericTemplate TValue="double" @bind-Value="@Model.Percentage"
+                                     Disabled=@(Model.Id!=0) Required=true Label="Percentage"></NumericTemplate>
+
+
+                    <FieldTemplate Label="Value" Value=@Model.DownPaymentAmount.ToString("C2")></FieldTemplate>
+                    <TextBoxTemplate @bind-Value="@Model.CBSRequesText" Label="CBS Request Text" Required=true
+                                     Disabled=@(Model.Id!=0)></TextBoxTemplate>
+                    <TextBoxTemplate @bind-Value="@Model.CBSRequesNo" Label="CBS Request #" Required=true
+                                     Disabled=@(Model.Id!=0)></TextBoxTemplate>
+
+                    <DatePickerTamplate Label="Delivery due date" @bind-Value=@Model.DeliveryDueDate Disabled=@(Model.Id!=0) Required=true>
+
+                    </DatePickerTamplate>
+
+
+                </RadzenCard>
+            </div>
+        </div>
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+
+}

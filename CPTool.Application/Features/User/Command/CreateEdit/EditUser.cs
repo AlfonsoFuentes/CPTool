@@ -4,6 +4,6 @@
     {
         public string Password { get; set; } = "";
         public string Email { get; set; } = "";
-        public string MobilPhone { get; set; } = null!;
+        public string MobilPhone { get; set; } = "";
     }
 }

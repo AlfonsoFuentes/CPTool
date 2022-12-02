@@ -1,0 +1,45 @@
+﻿@page "/taks"
+@using CPTool.Application.Features.TaksFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditTaks>
+<TableTemplate T="EditTaks"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.Takss">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditTaks" Property="@nameof(EditTaks.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditTaks" Title="CEC" TextAlign="TextAlign.Left">
+            <Template>
+                @context.MWO.CECName
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditTaks" Title="MWO" TextAlign="TextAlign.Left">
+            <Template>
+                @context.MWO.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditTaks" Title="Status" TextAlign="TextAlign.Left">
+            <Template>
+                @context.TaksStatus.ToString()
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditTaks" Title="Created On:" TextAlign="TextAlign.Left">
+            <Template>
+                @context.CreatedDate.ToShortDateString()
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditTaks" Title="Completed On:" TextAlign="TextAlign.Left">
+            <Template>
+                @(context.TaksStatus ==TaksStatus.Pending ? "" : context.CompletionDate.ToShortDateString())
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+@code {
+
+}

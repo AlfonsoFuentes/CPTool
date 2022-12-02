@@ -10,6 +10,8 @@ namespace CPTool.Domain.Entities
     {
 
 
+        [ForeignKey("paMaterialId")]
+        public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
         public string? Abbreviation { get; set; }
 
         [ForeignKey("iInnerMaterialId")]

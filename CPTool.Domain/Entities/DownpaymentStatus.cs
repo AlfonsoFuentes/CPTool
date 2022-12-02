@@ -7,7 +7,7 @@
         Approved = 2,
         Paid = 3,
         Rejected = 4,
-        Cancelled = 5,
-        Closed = 6
+       
+        Closed = 5
     }
 }

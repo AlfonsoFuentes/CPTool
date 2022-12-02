@@ -7,6 +7,7 @@
         public int? pProcessConditionId { get; set; }
         public ProcessCondition? pProcessCondition { get; set; }
 
+
         public int? paProcessFluidId { get; set; }
         public ProcessFluid? paProcessFluid { get; set; }
         public int? FrictionId { get; }
@@ -28,6 +29,14 @@
         public PipeAccesorySectionType SectionType { get; set; }
         [ForeignKey("PipeAccesoryId")]
         public ICollection<Nozzle>? Nozzles { get; set; }
+
+        public int? paMaterialId { get; set; }
+        public Material? paMaterial { get; set; }
+        public int? paDiameterId { get; set; }
+        public PipeDiameter? paDiameter { get; set; }
+        public int? paPipeClassId { get; set; }
+        public PipeClass? paPipeClass { get; set; }
+
     }
 
 }

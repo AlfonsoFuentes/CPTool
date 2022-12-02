@@ -1,0 +1,111 @@
+﻿@page "/PurchaseOrderList/{MWOId:int}"
+
+@using CPTool.Application.Features.PurchaseOrderFeatures;
+@using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
+@using CPTool.Application.Features.PurchaseOrderItemFeatures.Query.GetById;
+@using CPTool.Application.Features.PurchaseOrderItemFeatures.Query.GetList;
+@if (debug)
+{
+    <MudGrid>
+
+        <MudItem xs="12" sm="12">
+            <MudPaper Height="32px" Width="100%" Square="true">
+
+                <MudText Align="Align.Center" Typo="Typo.h5">Purchase Orders <b>@MWO.Name</b> </MudText>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm=6>
+            <SimpleListComponent TMaster="EditPurchaseOrder"
+                             TDeleteMaster="DeletePurchaseOrder"
+                             OnAdd="AddPurchaseOrder"
+                             OnEdit="EditPurchaseOrder"
+                             ShowAddButtonMaster=@(MWOId==0?false:true)
+                             ShowDeleteButtonMaster=false
+                             TMasterList="GetPurchaseOrderListQuery" TGedById="GetByIdPurchaseOrderQuery"
+                             @bind-ElementsMasters="@GlobalTables.PurchaseOrders"
+                             @bind-SelectedMaster="@SelectedPurchaseOrder"
+                             ElementsMastersSelected="@PurchaseOrders">
+                <MasterOtherButtons>
+                    <MudTooltip Text="DownPayment">
+                        <MudIconButton Icon="@Icons.Filled.CurrencyExchange" OnClick="AddDownPayment" Size="Size.Small" Disabled=@(SelectedPurchaseOrder.Id==0?true:false) />
+                    </MudTooltip>
+                    <MudTooltip Text="Restore">
+                        <MudIconButton Icon="@Icons.Filled.Restore" OnClick="@(()=>SelectedPurchaseOrder=new())" Size="Size.Small"  />
+                    </MudTooltip>
+                </MasterOtherButtons>
+                <MasterContextTh>
+                    <MudTh>#</MudTh>
+
+
+                    <MudTh>PR#</MudTh>
+                    <MudTh>PO#</MudTh>
+                    <MudTh>Supplier</MudTh>
+
+                    <MudTh>Status</MudTh>
+                    <MudTh>$Value Currency</MudTh>
+                    <MudTh>$Value USD</MudTh>
+
+                </MasterContextTh>
+                <MasterContextTd>
+                    <MudTd DataLabel="Id">@context.Id</MudTd>
+
+                    <MudTd DataLabel="PR">@context.PurchaseRequisition</MudTd>
+                    <MudTd DataLabel="PO">@context.PONumber</MudTd>
+                    <MudTd DataLabel="Supplier">@context.pSupplier?.Name</MudTd>
+
+                    <MudTd DataLabel="PO">@context.PurchaseOrderStatus.ToString()</MudTd>
+                    <MudTd DataLabel="$Value Currency">@($"{context.Currency.ToString()} {context.PrizeCurrency.ToString("C0")}")</MudTd>
+                        <MudTd DataLabel="$Value USD">@($"{context.PrizeUSD.ToString("C0")}")</MudTd>
+                    </MasterContextTd>
+                </SimpleListComponent>
+
+
+            </MudItem>
+            <MudItem xs="12" sm=6>
+                <SimpleListComponent TMaster="EditPurchaseOrderItem"
+                             TDeleteMaster="DeletePurchaseOrderItem"
+                             ShowEditButtonMaster=false
+                             ShowAddButtonMaster=false
+                             ShowDeleteButtonMaster=false
+                             TMasterList="GetPurchaseOrderItemListQuery" TGedById="GetByIdPurchaseOrderItemQuery"
+                             @bind-ElementsMasters="@GlobalTables.PurchaseOrderItems"
+                             @bind-SelectedMaster="@SelectedPurchaseOrderItem"
+                             ElementsMastersSelected="@PurchaseOrderItems">
+                    <MasterOtherButtons>
+
+                        <MudTooltip Text="Restore">
+                            <MudIconButton Icon="@Icons.Filled.Restore" OnClick="@(()=>SelectedPurchaseOrderItem=new())" Size="Size.Small"  />
+                        </MudTooltip>
+                    </MasterOtherButtons>
+                    <MasterContextTh>
+                        <MudTh>#</MudTh>
+
+
+                        <MudTh>Name</MudTh>
+                        <MudTh>$Value Currency</MudTh>
+                        <MudTh>$Value, USD</MudTh>
+
+
+                    </MasterContextTh>
+                    <MasterContextTd>
+                        <MudTd DataLabel="Id">@context.Id</MudTd>
+
+                        <MudTd DataLabel="Name">@context.MWOItem.Name</MudTd>
+                        <MudTd DataLabel="$Value Currency">@($"{SelectedPurchaseOrder.Currency.ToString()} {context.PrizeCurrency.ToString("C0")}")</MudTd>
+                        <MudTd DataLabel="$Value, USD">@context.PrizeUSD.ToString("C0")</MudTd>
+
+                    </MasterContextTd>
+                </SimpleListComponent>
+
+
+            </MudItem>
+        </MudGrid>
+}
+
+@code {
+    public bool debug { get; set; } = true;
+
+    public CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+
+
+}

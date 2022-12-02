@@ -1,0 +1,34 @@
+﻿@page "/nozzles"
+@using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+
+
+@inherits BaseTableTemplate<EditNozzle>
+<TableTemplate T="EditNozzle"
+               TableName=@($"{TableName} List")
+               Elements="@Elements"
+               @bind-SelectedItem=@Selected
+              ShowDialog="ShowDialog"
+               @bind-GlobalElements="@RadzenTables.Nozzles">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.StreamType)" Title="Type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.ConnectedToName)" Title="Connected to" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.PipeDiameterName)" Title="Size" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.nPipeClassName)" Title="Class" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.nMaterialName)" Title="Material" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.ConnectionTypeName)" Title="End Type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+@code {
+      
+   
+      
+}

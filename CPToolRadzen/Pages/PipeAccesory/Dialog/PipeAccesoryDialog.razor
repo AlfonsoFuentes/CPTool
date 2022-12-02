@@ -1,0 +1,24 @@
+﻿@using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+@using CPTool.Domain.Entities;
+
+@inherits DialogTemplate<EditPipeAccesory>
+@if (debug)
+{
+
+}
+
+<DialogTemplate Model="@Model">
+    <ChildContent>
+
+        <SelectEnumTemplate T="PipeAccesorySectionType" Elements=@(Enum.GetValues<PipeAccesorySectionType>()) Label="Select Accesory Type" 
+            @bind-Model=@Model.SectionType Required=true>
+
+        </SelectEnumTemplate>
+    </ChildContent>
+
+</DialogTemplate>
+@code {
+
+    bool debug = true;
+   
+}

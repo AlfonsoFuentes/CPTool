@@ -30,7 +30,7 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<Chapter>().HasMany(c => c.MWOItems).WithOne(t => t.Chapter).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.UnitaryBasePrize).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<MWOItem>().HasMany(c => c.MWOItemCurrencyValues).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MWOItem>().HasMany(c => c.PurchaseOrderItems).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasMany(c => c.Signals).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasMany(c => c.Taks).WithOne(t => t.MWOItem).OnDelete(DeleteBehavior.Cascade);
 
@@ -117,6 +117,10 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.pProcessCondition).WithMany(t => t.PipeAccesorys).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeAccesory>().HasOne(c => c.paProcessFluid).WithMany(t => t.PipeAccesorys).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PipeAccesory>().HasMany(c => c.Nozzles).WithOne(t => t.PipeAccesory).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeAccesory>().HasOne(c => c.paDiameter).WithMany(t => t.PipeAccesorys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeAccesory>().HasOne(c => c.paPipeClass).WithMany(t => t.PipeAccesorys).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PipeAccesory>().HasOne(c => c.paMaterial).WithMany(t => t.PipeAccesorys).OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<Supplier>().HasOne(c => c.TaxCodeLD).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Supplier>().HasOne(c => c.TaxCodeLP).WithMany(t => t.Suppliers).OnDelete(DeleteBehavior.NoAction);
@@ -141,7 +145,9 @@ namespace CPTool.Infrastructure.Persistence
             modelBuilder.Entity<Taks>().HasOne(c => c.DownPayment).WithMany(t => t.Taks).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserRequirement>().HasOne(c => c.UserRequirementType).WithMany(t => t.UserRequirements).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<UserRequirement>().HasOne(c => c.RequestedByUser).WithMany(t => t.UserRequirements).OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<UserRequirement>().HasOne(c => c.RequestedByUser).WithMany(t => t.UserRequirementUsers).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<UserRequirement>().HasOne(c => c.RequestedBy).WithMany(t => t.UserRequirements).OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<BrandSupplier>()
              .HasKey(t => new { t.BrandId, t.SupplierId });
@@ -156,23 +162,12 @@ namespace CPTool.Infrastructure.Persistence
                 .WithMany(t => t.BrandSuppliers)
                 .HasForeignKey(pt => pt.SupplierId);
 
-            modelBuilder.Entity<PurchaseOrderMWOItem>()
-           .HasKey(t => new { t.PurchaseOrderId, t.MWOItemId });
-
-            modelBuilder.Entity<PurchaseOrderMWOItem>()
-                .HasOne(pt => pt.PurchaseOrder)
-                .WithMany(p => p.PurchaseOrderMWOItems)
-                .HasForeignKey(pt => pt.PurchaseOrderId);
-
-            modelBuilder.Entity<PurchaseOrderMWOItem>()
-                .HasOne(pt => pt.MWOItem)
-                .WithMany(t => t.PurchaseOrderMWOItems)
-                .HasForeignKey(pt => pt.MWOItemId);
-
-            //Relation Many to Many Purchase Order  MWOItem
+          
 
             modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pSupplier).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<PurchaseOrder>().HasOne(c => c.pBrand).WithMany(t => t.PurchaseOrders).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<PurchaseOrder>().HasMany(c => c.PurchaseOrderItems).WithOne(t => t.PurchaseOrder).OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<Signal>().HasOne(c => c.SignalType).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Signal>().HasOne(c => c.Wire).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
@@ -200,9 +195,9 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<MWOType>? MWOTypes { get; set; }
         public DbSet<MWO>? MWOs { get; set; }
         public DbSet<MWOItem>? MWOItems { get; set; }
-        public DbSet<MWOItemCurrencyValue>? MWOItemCurrencyValues { get; set; }
+        public DbSet<PurchaseOrderItem>? PurchaseOrderItems { get; set; }
         public DbSet<PurchaseOrder>? PurchaseOrders { get; set; }
-        public DbSet<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
+
         public DbSet<AlterationItem>? AlterationItems { get; set; }
         public DbSet<FoundationItem>? FoundationItems { get; set; }
         public DbSet<StructuralItem>? StructuralItems { get; set; }
@@ -256,6 +251,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<FieldLocation>? FieldLocations { get; set; }
         public DbSet<ElectricalBox>? ElectricalBoxs { get; set; }
         public DbSet<Signal>? Signals { get; set; }
+        public DbSet<SignalModifier>? SignalModifiers { get; set; }
         public DbSet<ControlLoop>? ControlLoops { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {

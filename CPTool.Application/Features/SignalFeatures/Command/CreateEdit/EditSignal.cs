@@ -1,4 +1,5 @@
-﻿using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
+﻿using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
+using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
 using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetById;
 using CPTool.Application.Features.EquipmentTypeSubFeatures.Query.GetList;
 using CPTool.Application.Features.FieldLocationsFeatures.CreateEdit;
@@ -37,7 +38,8 @@ namespace CPTool.Application.Features.SignalsFeatures.CreateEdit
         public bool Disconect { get; set; }
         public bool InstrumentAir { get; set; }
         public bool FrequencyInverter { get; set; }
-
+        public List<EditControlLoop>? ProcessVariables { get; set; } = new();
+        public List<EditControlLoop>? ControlledVariables { get; set; } = new();
         public override string Name { get => GetName(); set => base.Name = value; }
         string GetName()
         {

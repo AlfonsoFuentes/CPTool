@@ -17,7 +17,7 @@
                         @bind-ElementsMasters="@GlobalTables.PipeClasses"
                         @bind-ElementsDetails="@GlobalTables.PipeDiameters"
                         ElementsMastersSelected="@GlobalTables.PipeClasses"
-                        ElementsDetailsSelected="@SelectedMaster.PipeDiameters"
+                        ElementsDetailsSelected="@(SelectedMaster==null?new():GlobalTables.PipeDiameters.Where(x=>x.dPipeClassId==SelectedMaster.Id).ToList())"
 
                        
                         @bind-SelectedMaster="@SelectedMaster"

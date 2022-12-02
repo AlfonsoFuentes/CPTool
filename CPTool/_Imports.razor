@@ -1,5 +1,6 @@
 ﻿@using System.Net.Http
 @using AutoMapper
+
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -19,6 +20,7 @@
 @using CPTool.NewPages.Components.Dialogs
 @using static CPTool.App
 @using System.Globalization
+@using CPTool.Persistence.BaseClass;
 @using CPTool.Application.Features.Base
 @using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit
 @using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit
@@ -50,8 +52,7 @@
 @using CPTool.Application.Features.SupplierFeatures.CreateEdit
 @using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 @using CPTool.Application.Features.PurchaseOrderFeatures.Query.GetList
-@using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.CreateEdit
-@using CPTool.Application.Features.PurchaseOrderMWOItemFeatures.Query.GetList
+
 @using CPTool.Application.Features.UserRequirementFeatures.CreateEdit
 @using CPTool.Application.Features.UserRequirementFeatures.Query.GetById
 @using CPTool.Application.Features.UserRequirementFeatures.Query.GetList
@@ -131,4 +132,6 @@
 @inject ToolDialogService ToolDialogService
 @inject IMapper _mapper
 @*@inject ICurrencyApi _CurrencyService *@
-@inject NavigationManager Navigation
+
+@*@inject GoogleSheetsHelper googleSheetsHelper 
+@inject GoogleDriveHelper googleDriveHelper *@
