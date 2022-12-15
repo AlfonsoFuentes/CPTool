@@ -2,6 +2,8 @@
 
 
 
+using CPTool.Domain.Enums;
+
 namespace CPTool.Application.Features.BrandFeatures.CreateEdit
 {
 

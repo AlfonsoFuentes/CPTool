@@ -7,19 +7,18 @@ using CPToolRadzen.Pages.Wire.Dialog;
 
 namespace CPToolRadzen.Pages.Wire.List
 {
-    public partial class WireList : BaseTableTemplate<EditWire>
+    public partial class WireList : TableTemplate<EditWire>
     {
 
-        public override List<EditWire> Elements => RadzenTables.Wires;
 
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.Wires = await CommandQuery.GetAll();
             TableName = "Wire";
           
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditWire model)
+        public async Task<bool> ShowTableDialog(EditWire model)
         {
 
             var result = await DialogService.OpenAsync<WireDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

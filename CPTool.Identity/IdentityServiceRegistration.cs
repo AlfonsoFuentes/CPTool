@@ -21,7 +21,7 @@ namespace CPTool.Identity
                     b => b.MigrationsAssembly(typeof(TableContextIdentity).Assembly.FullName)));
 
 
-                services.AddIdentity<ApplicationUser, IdentityRole>()
+                services.AddIdentity<ApplicationUser, IdentiyRole>()
                     .AddEntityFrameworkStores<TableContextIdentity>().AddDefaultTokenProviders();
 
 

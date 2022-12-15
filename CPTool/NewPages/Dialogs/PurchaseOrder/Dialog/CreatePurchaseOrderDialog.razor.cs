@@ -5,7 +5,7 @@ using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
-using CPTool.Domain.Entities;
+using CPTool.Domain.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 

@@ -1,0 +1,51 @@
+﻿@using CPTool.Application.Features.SignalsFeatures.CreateEdit;
+<Panel>
+    <Left>
+        <RadzenCard>
+
+
+            <SelectTemplate T="EditSignal"
+                            PropertyName="Name"
+                            Elements=@DialogParent.signalsIn
+                            Label="PV"
+                            @bind-Model="@Model.ProcessVariable">
+
+            </SelectTemplate>
+            @if (Model.ProcessVariable.Id != 0)
+            {
+                
+                <SelectUnitTemplate @bind-Model=@Model.ProcessVariableMax Label="Max"></SelectUnitTemplate>
+                <SelectUnitTemplate @bind-Model=@Model.ProcessVariableMin Label="Min"></SelectUnitTemplate>
+                <SelectEnumTemplate T="FailType" Elements=@(Enum.GetValues<FailType>()) Label="Type" @bind-Value=@Model.FailType Required=true></SelectEnumTemplate>
+                <SelectEnumTemplate T="ActionType" Elements=@(Enum.GetValues<ActionType>()) Label="Type" @bind-Value=@Model.ActionType Required=true></SelectEnumTemplate>
+
+            }
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <SelectTemplate T="EditSignal"
+                        PropertyName="Name"
+                        Elements=@DialogParent.signalsOut
+                        Label="CV"
+                        @bind-Model="@Model.ControlledVariable">
+
+        </SelectTemplate>
+        @if (Model.ControlledVariable.Id != 0)
+        {
+            <NumericTemplate TValue="double" @bind-Value="@Model.ControlledVariableMax"
+                         Label="%CV at Max PV"></NumericTemplate>
+            <NumericTemplate TValue="double" @bind-Value="@Model.ControlledVariableMin"
+                         Label="%CV at Min PV"></NumericTemplate>
+           
+
+
+
+        }
+    </Rigth>
+</Panel>
+
+
+
+@code {
+
+}

@@ -4,23 +4,27 @@
 
 }
 <PageTitle>@TableName</PageTitle>
-<ToolBarTemplate ShowToolBar=@ShowToolBar OnAdd="@AddRow" OnDelete="@DeleteRow" 
-                 ShowAdd=@ShowAdd ShowDelete=@ShowDelete DisableAdd=@DisableAdd ShowEdit=@ShowEdit ShowReport=@ShowReport OnEdit=@EditRow OnPDF=@CreatePDF
-                 Search="@Search" DisableDelete=@DisableEditeButtons DisableEdit=@DisableEditeButtons
-                 DisableReport=@DisableEditeButtons TableName="@TableName" SelectedName="@SelectedItem.Name">
-    <OtherButtons>
-        @if (ToolBarButtons != null)
-        {
-            @ToolBarButtons
-        }
-    </OtherButtons>
-
-</ToolBarTemplate>
 <div class="row">
     <div class="col-12 col-md-12">
+        <ToolBarTemplate ShowToolBar=@ShowToolBar OnAdd="@AddRow" OnDelete="@DeleteRow" @bind-Search=@search
+                         ShowAdd=@ShowAdd ShowDelete=@ShowDelete DisableAdd=@DisableAdd ShowEdit=@ShowEdit ShowReport=@ShowReport OnEdit=@EditRow OnPDF=@CreatePDF
+                         DisableDelete=@DisableEditeButtons DisableEdit=@DisableEditeButtons OnExportClick=@ExportClick
+                         DisableReport=@DisableEditeButtons TableName="@TableName" SelectedName="@SelectedItem.Name">
+            <OtherButtons>
+                @if (ToolBarButtons != null)
+                {
+                    @ToolBarButtons
+                }
+            </OtherButtons>
+
+        </ToolBarTemplate>
+    </div>
+    <div class="col-12 col-md-12">
+     
         <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Responsive=true
-                        AllowColumnResize="true" ExpandMode="@ExpandMode" PageSize="15" CellDoubleClick=@EditRowDoubleClick
-                        Data="@Elements" TItem="T" RowDoubleClick="@EditRow" Density="Density.Compact" RowClick="@RowClick">
+                        AllowColumnResize="true"  PageSize="15" SelectionMode=DataGridSelectionMode.Single
+                        Data="@Elements" TItem="T" Density="Density.Compact" @bind-Value=@SelectedItems 
+                        CellClick="@OnCellClick" CellDoubleClick="OnCellDoubleClick" CellRender="OnCellRender">
 
             <Columns>
                 <RadzenDataGridColumn TItem="T" Property="Id" Title="#" Width="50px" TextAlign="TextAlign.Center" Sortable=false Filterable=false>
@@ -29,9 +33,63 @@
             </Columns>
 
         </RadzenDataGrid>
+
     </div>
 </div>
+@*//RowClick="@RowClick"*@
 @code {
     bool debug = true;
-    
+    IList<T> SelectedItems;
+    bool multiple = true;
+
+    IList<Tuple<T, RadzenDataGridColumn<T>>> selectedCellData = new List<Tuple<T, RadzenDataGridColumn<T>>>();
+
+    async Task Select(DataGridCellMouseEventArgs<T> args)
+    {
+        if (!multiple)
+        {
+            selectedCellData.Clear();
+        }
+
+        var cellData = selectedCellData.FirstOrDefault(i => i.Item1 == args.Data && i.Item2 == args.Column);
+        if (cellData != null)
+        {
+            selectedCellData.Remove(cellData);
+        }
+        else
+        {
+            selectedCellData.Add(new Tuple<T, RadzenDataGridColumn<T>>(args.Data, args.Column));
+        }
+        await grid0.EditRow(args.Data);
+    }
+
+    async Task OnCellClick(DataGridCellMouseEventArgs<T> args)
+    {
+        if (InlineEdit)
+        {
+            await Select(args);
+
+        }
+        SelectedItem = args.Data;
+        await SelectedItemChanged.InvokeAsync(SelectedItem);
+    }
+
+    async Task OnCellDoubleClick(DataGridCellMouseEventArgs<T> args)
+    {
+        if (InlineEdit)
+        {
+          await  Select(args);
+            
+        }
+
+
+    }
+
+    void OnCellRender(DataGridCellRenderEventArgs<T> args)
+    {
+        if (selectedCellData.Any(i => i.Item1 == args.Data && i.Item2 == args.Column))
+        {
+            args.Attributes.Add("style", $"background-color: var(--rz-secondary-lighter);");
+        }
+    }
 }

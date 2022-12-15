@@ -9,7 +9,7 @@
                         PropertyName="Name"
                         Elements=@RadzenTables.PipeClasses
                         Label="Class"
-                        @bind-Value="@PipeClassSelected">
+                        @bind-Model="@PipeClassSelected">
 
 
         </SelectTemplate>
@@ -17,7 +17,7 @@
                         PropertyName="Name"
                         Elements=@(PipeClassSelected.Id==0?new():RadzenTables.PipeDiameters.Where(x=>x.dPipeClassId==PipeClassSelected.Id).ToList())
                         Label="Size"
-                        @bind-Value="@PipeDiameterSelected">
+                        @bind-Model="@PipeDiameterSelected">
 
 
         </SelectTemplate>
@@ -25,7 +25,7 @@
                         Elements=@RadzenTables.Materials
                         Label="Material"
                         PropertyName="Name"
-                        @bind-Value="@PipeMaterialSelected">
+                        @bind-Model="@PipeMaterialSelected">
 
 
         </SelectTemplate>

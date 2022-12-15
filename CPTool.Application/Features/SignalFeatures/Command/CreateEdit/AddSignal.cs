@@ -9,6 +9,7 @@ using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.SignalTypesFeatures.CreateEdit;
 using CPTool.Application.Features.WireFeatures.CreateEdit;
+using CPTool.Domain.Enums;
 
 namespace CPTool.Application.Features.SignalsFeatures.CreateEdit
 {

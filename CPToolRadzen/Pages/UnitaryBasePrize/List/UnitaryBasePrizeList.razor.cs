@@ -7,19 +7,18 @@ using CPToolRadzen.Pages.UnitaryBasePrize.Dialog;
 
 namespace CPToolRadzen.Pages.UnitaryBasePrize.List
 {
-    public partial class UnitaryBasePrizeList : BaseTableTemplate<EditUnitaryBasePrize>
+    public partial class UnitaryBasePrizeList : TableTemplate<EditUnitaryBasePrize>
     {
 
 
-        public override List<EditUnitaryBasePrize> Elements => RadzenTables.UnitaryBasePrizes;
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.UnitaryBasePrizes = await CommandQuery.GetAll();
             TableName = "Unitary prize name";
           
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditUnitaryBasePrize model)
+        public async Task<bool> ShowTableDialog(EditUnitaryBasePrize model)
         {
 
             var result = await DialogService.OpenAsync<UnitaryBasePrizeDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

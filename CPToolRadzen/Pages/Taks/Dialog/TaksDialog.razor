@@ -8,7 +8,7 @@
 
 <DialogTemplate Model="@Model" DisableButtonSave=@ButtonSaveDisable SaveButtonName="@ButtonSaveName" Save=@Submit>
     <ChildContent>
-        <TextBoxTemplate Label="Name" Disabled=@(Model.Id!=0) Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
+        <TextBoxTemplate Label="Name" Rows=3 Disabled=@(Model.Id!=0) Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
 
         </TextBoxTemplate>
         <DatePickerTamplate Disabled=false Label="Estimated Task Date" @bind-Value="@Model.ExpectedDate"></DatePickerTamplate>

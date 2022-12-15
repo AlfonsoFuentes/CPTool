@@ -1,6 +1,9 @@
 ﻿@using CPToolRadzen.Pages.Nozzle.List
-<NozzleList ElementDetails="@Nozzles" TableName="@TableName" SaveDialog=false></NozzleList>
-
+<NozzleList OnAdd=@AddNozzle ElementDetails="@Nozzles" TableName="@TableName" SaveDialog=@(Model.Id!=0)></NozzleList>
+@if(debug)
+{
+    
+}
 @code {
-
+    bool debug = true;
 }

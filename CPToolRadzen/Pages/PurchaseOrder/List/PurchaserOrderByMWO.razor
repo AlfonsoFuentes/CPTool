@@ -1,14 +1,14 @@
 ﻿@page "/purchase-order/{ParentId:int}"
 @using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
-@using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
-@inherits BaseTableTemplate<EditPurchaseOrder>
+
+@inherits TableTemplate<EditPurchaseOrder>
 
 <TableTemplate T="EditPurchaseOrder"
                TableName=@($"Purchase Order By {Parent.Name}")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
+               Filter="@(x => x.MWOId == ParentId)"
+               @bind-SelectedItem=@SelectedItem
                ShowDelete=false
-               ShowDialog="ShowDialog"
+               ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.PurchaseOrders">
     <ToolBarButtons>
 
@@ -29,30 +29,24 @@
     </ToolBarButtons>
 
     <Columns>
-        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PONumber)" Title="PO#" TextAlign="TextAlign.Left">
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.Name)" Title="Name" TextAlign="TextAlign.Left" Width="300px" Filterable=true Sortable=true>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PurchaseRequisition)" Title="PR#" TextAlign="TextAlign.Left">
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PurchaseRequisition)" Title="PR#" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PurchaseOrderStatus)" Title="Status" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @detail.PurchaseOrderStatus.ToString()
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PONumber)" Title="PO#" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PurchaseOrderApprovalStatusName)" Title="Status" Filterable=true Sortable=true>
 
-            </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.pSupplier.Name)" Title="Supplier" Filterable=false Sortable=false>
-          
-        </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PrizeCurrency)" Title="PO Value" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.PrizeCurrency)
-            </Template>
-        </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PrizeUSD)" Title="PO Value, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.PrizeUSD)
-            </Template>
-        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.SupplierName)" Title="Supplier" Filterable=true Sortable=true>
 
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PrizeCurrencyValue)" Title="PO Value" Filterable=false Sortable=false>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrder" Property="@nameof(EditPurchaseOrder.PrizeUSDValue)" Title="PO Value, USD" Filterable=false Sortable=false>
+
+        </RadzenDataGridColumn>
 
     </Columns>
 </TableTemplate>

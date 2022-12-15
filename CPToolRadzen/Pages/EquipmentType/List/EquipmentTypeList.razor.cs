@@ -10,19 +10,19 @@ using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace CPToolRadzen.Pages.EquipmentType.List
 {
-    public partial class EquipmentTypeList : BaseTableTemplate<EditEquipmentType>
+    public partial class EquipmentTypeList : TableTemplate<EditEquipmentType>
     {
-        EditEquipmentTypeSub SelectedDetail = new();
-        public override List<EditEquipmentType> Elements => RadzenTables.EquipmentTypes;
-
-        List<EditEquipmentTypeSub> ElementsDetails=> Selected.Id==0?new(): RadzenTables.EquipmentTypeSubs.Where(x=>x.EquipmentTypeId==Selected.Id).ToList();    
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.EquipmentTypes = await QueryEquipmentType.GetAll();
+            RadzenTables.EquipmentTypeSubs = await QueryEquipmentTypeSub.GetAll();
+
+
             TableName = "Equipment Type";
-            base.OnInitialized();
+           
         }
-        string TableNameDetails = "Equipment Type Sub";
-        public async Task<bool> ShowDialog(EditEquipmentType model)
+       
+        public async Task<bool> ShowTableDialog(EditEquipmentType model)
         {
 
             var result = await DialogService.OpenAsync<EquipmentTypeDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",
@@ -31,20 +31,7 @@ namespace CPToolRadzen.Pages.EquipmentType.List
             return (bool)result;
 
         }
-        public async Task<bool> ShowDialogDetail(EditEquipmentTypeSub model)
-        {
-            if (model.Id == 0)
-            {
-                model.EquipmentType = Selected;
-
-               
-            }
-            var result = await DialogService.OpenAsync<EquipmentTypeSubDialog>(model.Id == 0 ? $"Add new {TableNameDetails}" : $"Edit {model.Name}",
-                  new Dictionary<string, object> { { "Model", model } });
-            if (result == null) return false;
-            return (bool)result;
-
-        }
+        
       
     }
 }

@@ -8,20 +8,18 @@ using CPToolRadzen.Templates;
 
 namespace CPToolRadzen.Pages.ElectricalBox.List
 {
-    public partial class ElectricalBoxList : BaseTableTemplate<EditElectricalBox>
+    public partial class ElectricalBoxList : TableTemplate<EditElectricalBox>
     {
 
-        public override List<EditElectricalBox> Elements => RadzenTables.ElectricalBoxs;
-
-
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.ElectricalBoxs = await CommandQuery.GetAll();
+
             TableName = "Electrical Box";
        
-            base.OnInitialized();
+          
         }
-        public async Task<bool> ShowDialog(EditElectricalBox model)
+        public async Task<bool> ShowTableDialog(EditElectricalBox model)
         {
 
             var result = await DialogService.OpenAsync<ElectricalBoxDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

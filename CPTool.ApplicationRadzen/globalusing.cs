@@ -12,8 +12,8 @@ global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
 global using static System.Net.Mime.MediaTypeNames;
-global using CPTool.ApplicationRadzen.FeaturesGeneric;
-
+global using CPTool.Application.Generic;
+global using CPTool.Application.Services;
 
 
 

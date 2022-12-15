@@ -1,14 +1,16 @@
 ﻿
 using CPTool.Application.Features.TaksFeatures.CreateEdit;
-using CPTool.Domain.Entities;
+using CPTool.Domain.Enums;
 
 namespace CPToolRadzen.Pages.Taks.Dialog
 {
     public partial class TaksDialog : DialogTemplate<EditTaks>
     {
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            FilteredList = Model.Id == 0 ? RadzenTables.Takss : RadzenTables.Takss.Where(x => x.Id != Model.Id).ToList();
+            Model = await CommandQuery.GetById(Model.Id);
+            FilteredList = await CommandQuery.GetAll();
+            FilteredList = Model.Id == 0 ? FilteredList : FilteredList.Where(x => x.Id != Model.Id).ToList();
         }
         bool ButtonSaveDisable => Model.TaksType == TaksType.Automatic ? true :
           Model.TaksStatus == TaksStatus.Completed ? true : false;

@@ -9,6 +9,7 @@ namespace CPTool.Infrastructure.Repositories
     {
         protected readonly TableContext dbcontext;
 
+        protected DbSet<T> tableSet => dbcontext.Set<T>();
         public RepositoryBase(TableContext dbcontext)
         {
             this.dbcontext = dbcontext;
@@ -33,7 +34,7 @@ namespace CPTool.Infrastructure.Repositories
             try
             {
                
-                IQueryable<T> query = dbcontext.Set<T>();
+                IQueryable<T> query = dbcontext.Set<T>().AsNoTrackingWithIdentityResolution();
             
                 query = Query(query);
                 var retorno = await query.ToListAsync();
@@ -68,7 +69,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             
 
-           var result = await dbcontext.Set<T>().FindAsync(id);
+           var result = await tableSet.FindAsync(id);
             return result!;
         }
 
@@ -145,52 +146,6 @@ namespace CPTool.Infrastructure.Repositories
         }
     }
 }
-//public async  Task<IQueryable<T>> GetFilteredList(QueryFilter query)
-//{
-//    var items = dbcontext.Set<T>().AsQueryable();
 
-//    if (query != null)
-//    {
-//        if (!string.IsNullOrEmpty(query.Expand))
-//        {
-//            var propertiesToExpand = query.Expand.Split(',');
-//            foreach (var p in propertiesToExpand)
-//            {
-//                items = items.Include(p.Trim());
-//            }
-//        }
-
-//        if (!string.IsNullOrEmpty(query.Filter))
-//        {
-//            if (query.FilterParameters != null)
-//            {
-//                items = items.Where(query.Filter, query.FilterParameters);
-//            }
-//            else
-//            {
-//                items = items.Where(query.Filter);
-//            }
-//        }
-
-//        if (!string.IsNullOrEmpty(query.OrderBy))
-//        {
-//            items = items.OrderBy(query.OrderBy);
-//        }
-
-//        if (query.Skip.HasValue)
-//        {
-//            items = items.Skip(query.Skip.Value);
-//        }
-
-//        if (query.Top.HasValue)
-//        {
-//            items = items.Take(query.Top.Value);
-//        }
-//    }
-
-
-
-//    return await Task.FromResult(items);
-//}
 
 

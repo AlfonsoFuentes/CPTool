@@ -1,19 +1,27 @@
-﻿@page "/control-loops"
+﻿@page "/control-loops/{ParentId:int}"
 @using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditControlLoop>
+@inherits TableTemplate<EditControlLoop>
 <TableTemplate T="EditControlLoop"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               Filter="@Filter"
+               ShowDialog="@ShowTableDialog"
+               @bind-SelectedItem=@SelectedItem
                @bind-GlobalElements="@RadzenTables.ControlLoops">
 
     <Columns>
-        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.Name)" Title="Name" TextAlign="TextAlign.Left">
+        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.ProcessVariableName)" Title="PV" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
-
+        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.ControlledVariableName)" Title="CV" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.ControlLoopTypeName)" Title="Type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.SPName)" Title="SP" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.FailTypeName)" Title="Fail type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditControlLoop" Property="@nameof(EditControlLoop.ActionTypeName)" Title="Action type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
     </Columns>
 </TableTemplate>
 @code {

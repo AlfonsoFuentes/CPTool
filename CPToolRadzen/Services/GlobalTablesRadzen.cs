@@ -38,7 +38,7 @@ using CPTool.Application.Features.UserFeatures.CreateEdit;
 using CPTool.Application.Features.UserRequirementFeatures.CreateEdit;
 using CPTool.Application.Features.UserRequirementTypeFeatures.CreateEdit;
 using CPTool.Application.Features.WireFeatures.CreateEdit;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
+using CPTool.Application.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

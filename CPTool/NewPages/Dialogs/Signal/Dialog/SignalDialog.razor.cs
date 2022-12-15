@@ -1,5 +1,5 @@
 ﻿using CPTool.Application.Features.SignalsFeatures.CreateEdit;
-using CPTool.Domain.Entities;
+using CPTool.Domain.Enums;
 
 namespace CPTool.NewPages.Dialogs.Signal.Dialog
 {

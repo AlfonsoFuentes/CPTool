@@ -1,4 +1,6 @@
-﻿<PageTitle>CP Tool</PageTitle>
+﻿
+
+<PageTitle>CP Tool</PageTitle>
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(LayoutRadzen)" />
@@ -13,15 +15,12 @@
 </Router>
 @code
 {
-   
-    //RadezenApp
-    protected override async Task OnInitializedAsync()
-    {
 
-        await RadzenTables.Initialize();
-        //await GlobalTables.InitializeTables(Mediator);
-      
-    }
+   
+}
+
+
+
 
 
 }

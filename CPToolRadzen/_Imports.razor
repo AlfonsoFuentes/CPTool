@@ -1,4 +1,37 @@
 ﻿@using System.Net.Http
+@using CPTool.Application.Features.BrandFeatures.CreateEdit;
+@using CPTool.Application.Features.ChapterFeatures.CreateEdit;
+@using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
+@using CPTool.Application.Features.EquipmentTypeFeatures.CreateEdit;
+@using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
+@using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
+@using CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit;
+@using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
+@using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
+@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
+@using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
+@using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+@using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
+@using CPTool.Application.Features.ReadoutFeatures.CreateEdit;
+@using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+@using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
+@using CPTool.Application.Features.TaxCodeLPFeatures.CreateEdit;
+@using CPTool.Application.Features.UnitaryBasePrizeFeatures.CreateEdit;
+@using CPTool.Application.Features.DeviceFunctionFeatures.CreateEdit;
+@using CPTool.Application.Features.DeviceFunctionModifierFeatures.CreateEdit;
+@using CPTool.Application.Features.TaksFeatures.CreateEdit;
+@using CPTool.Application.Features.UserRequirementTypeFeatures.CreateEdit;
+@using CPTool.Application.Features.UserRequirementFeatures.CreateEdit;
+@using CPTool.Application.Features.UserFeatures.CreateEdit;
+@using CPTool.Application.Features.SignalsFeatures.CreateEdit;
+@using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
+@using CPTool.Application.Features.FieldLocationsFeatures.CreateEdit;
+@using CPTool.Application.Features.WireFeatures.CreateEdit;
+@using CPTool.Application.Features.SignalTypesFeatures.CreateEdit;
+@using CPTool.Application.Features.SignalModifiersFeatures.CreateEdit;
+@using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
+@using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
+@using CPTool.Application.Generic;
 @using CPToolRadzen.Services;
 @using CPToolRadzen.Services.Tables;
 @using MediatR;
@@ -20,7 +53,7 @@
 @using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 @using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 @using CPTool.Domain.Entities;
-
+@using CPTool.Domain.Enums;
 @using CPToolRadzen.Templates
 @using CPToolRadzen.Pages.MWO.List
 @inject IMediator Mediator
@@ -31,4 +64,44 @@
 @inject TooltipService TooltipService 
 @inject ContextMenuService ContextMenuService 
 @inject NotificationService NotificationService 
+@inject ICommandQuery<EditMWOType> QueryMWOType
+@inject ICommandQuery<EditMWO> QueryMWO
+@inject ICommandQuery<EditMWOItem> QueryMWOItem
+@inject ICommandQuery<EditPipeAccesory> QueryPipeAccesory
+@inject ICommandQuery<EditChapter> QueryChapter
+@inject ICommandQuery<EditUnitaryBasePrize> QueryUnitaryBasePrize
+@inject ICommandQuery<EditEquipmentType> QueryEquipmentType
+@inject ICommandQuery<EditEquipmentTypeSub> QueryEquipmentTypeSub
+@inject ICommandQuery<EditBrand> QueryBrand
+@inject ICommandQuery<EditSupplier> QuerySupplier
+@inject ICommandQuery<EditGasket> QueryGasket
+@inject ICommandQuery<EditMaterial> QueryMaterial
+@inject ICommandQuery<EditTaxCodeLD> QueryTaxCodeLD
+@inject ICommandQuery<EditTaxCodeLP> QueryTaxCodeLP
+@inject ICommandQuery<EditPipeDiameter> QueryPipeDiameter
+@inject ICommandQuery<EditPurchaseOrder> QueryPurchaseOrder
+@inject ICommandQuery<EditPurchaseOrderItem> QueryPurchaseOrderItem
+@inject ICommandQuery<EditDownPayment> QueryDownPayment
+@inject ICommandQuery<EditPipeClass> QueryPipeClass
+@inject ICommandQuery<EditConnectionType> QueryConnectionType
+@inject ICommandQuery<EditProcessFluid> QueryProcessFluid
+@inject ICommandQuery<EditPropertyPackage> QueryPropertyPackage
+@inject ICommandQuery<EditMeasuredVariable> QueryMeasuredVariable
+@inject ICommandQuery<EditMeasuredVariableModifier> QueryMeasuredVariableModifier
+@inject ICommandQuery<EditReadout> QueryReadout
+@inject ICommandQuery<EditDeviceFunction> QueryDeviceFunction
+@inject ICommandQuery<EditDeviceFunctionModifier> QueryDeviceFunctionModifier
+@inject ICommandQuery<EditTaks> QueryTaks
+@inject ICommandQuery<EditUserRequirementType> QueryUserRequirementType
 
+@inject ICommandQuery<EditUserRequirement> QueryUserRequirement
+@inject ICommandQuery<EditUser> QueryUser
+@inject ICommandQuery<EditSignal> QuerySignal
+@inject ICommandQuery<EditElectricalBox> QueryElectricalBox
+@inject ICommandQuery<EditFieldLocation> QueryFieldLocation
+@inject ICommandQuery<EditWire> QueryWire
+@inject ICommandQuery<EditNozzle> QueryNozzle
+@inject ICommandQuery<EditSignalType> QuerySignalType
+@inject ICommandQuery<EditSignalModifier> QuerySignalModifier
+@inject ICommandQuery<EditControlLoop> QueryControlLoop
+@inject ICommandQuery<EditBrandSupplier> QueryBrandSupplier

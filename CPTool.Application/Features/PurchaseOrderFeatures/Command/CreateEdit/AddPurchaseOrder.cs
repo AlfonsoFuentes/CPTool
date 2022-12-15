@@ -5,6 +5,7 @@ using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 using CPTool.Application.Features.TaksFeatures.CreateEdit;
+using CPTool.Domain.Enums;
 
 namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
 {
@@ -25,14 +26,12 @@ namespace CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit
         public string SPL { get; set; } = "";
         public string TaxCode { get; set; } = "";
 
-        public PurchaseOrderStatus PurchaseOrderStatus { get; set; }
+        public PurchaseOrderApprovalStatus PurchaseOrderStatus { get; set; }
         public Currency Currency { get; set; } = Currency.COP;
         public DateTime CurrencyDate { get; set; }
         public double USDCOP { get; set; }
         public double USDEUR { get; set; }
-        public List<AddPurchaseOrderItem> PurchaseOrderItems { get; set; } = new();
-        public List<AddDownPayment>? DownPayments { get; set; }
-        public List<AddTaks>? Taks { get; set; }
+      
     }
 
 }

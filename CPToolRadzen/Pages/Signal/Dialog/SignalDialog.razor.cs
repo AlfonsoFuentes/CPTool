@@ -6,9 +6,18 @@ namespace CPToolRadzen.Pages.Signal.Dialog
 {
     public partial class SignalDialog : DialogTemplate<EditSignal>
     {
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            FilteredList = Model.Id == 0 ? RadzenTables.Signals : RadzenTables.Signals.Where(x => x.Id != Model.Id).ToList();
+            Model = await CommandQuery.GetById(Model.Id);
+            FilteredList = await CommandQuery.GetAll();
+            FilteredList = Model.Id == 0 ? FilteredList : FilteredList.Where(x => x.Id != Model.Id).ToList();
+            RadzenTables.MWOItems = await QueryMWOItem.GetAll();
+            RadzenTables.SignalModifiers=await QuerySignalModifier.GetAll();
+            RadzenTables.SignalTypes=await QuerySignalType.GetAll();
+            RadzenTables.Wires=await QueryWire.GetAll();
+            RadzenTables.FieldLocations=await QueryFieldLocation.GetAll();
+            RadzenTables.ElectricalBoxs=await QueryElectricalBox.GetAll();
+            
         }
         List<EditMWOItem> MWOItems => GetMWOItems();
         List<EditMWOItem> GetMWOItems()

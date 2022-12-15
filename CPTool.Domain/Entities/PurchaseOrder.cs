@@ -1,5 +1,7 @@
 ﻿
 
+using CPTool.Domain.Enums;
+
 namespace CPTool.Domain.Entities
 {
     public class PurchaseOrder : BaseDomainModel
@@ -12,10 +14,10 @@ namespace CPTool.Domain.Entities
         public ICollection<DownPayment>? DownPayments { get; set; }
         [ForeignKey("PurchaseOrderId")]
         public ICollection<Taks> Taks { get; set; } = null!;
-        //public ICollection<PurchaseOrderMWOItem>? PurchaseOrderMWOItems { get; set; }
+
         public ICollection<PurchaseOrderItem>? PurchaseOrderItems { get; set; }
         public Currency Currency { get; set; }
-        public PurchaseOrderStatus PurchaseOrderStatus { get; set; }
+        public PurchaseOrderApprovalStatus PurchaseOrderStatus { get; set; }
         public int? pBrandId { get; set; }
         public Brand? pBrand { get; set; }
         public int? pSupplierId { get; set; }

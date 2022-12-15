@@ -7,14 +7,34 @@
 }
 
 <DialogTemplate Model="@Model">
-    <ChildContent>
+    <CascadingValue Value="this">
+        <ChildContent>
+            <RadzenCard Class="m-3">
+                <SelectEnumTemplate T="ControlLoopType" Elements="Enum.GetValues<ControlLoopType>()" Label="Select  Control Loop Type"
+                                    @bind-Value=@Model.ControlLoopType>
 
-      
-    </ChildContent>
-
+                </SelectEnumTemplate>
+                @switch (Model.ControlLoopType)
+                {
+                    case ControlLoopType.PIDControl:
+                        <ControlLoopPIDDialog></ControlLoopPIDDialog>
+                        break;
+                    case ControlLoopType.ON_OFF_Control:
+                        <ControlLoopONOFFDialog></ControlLoopONOFFDialog>
+                        break;
+                    case ControlLoopType.Interlock:
+                        <ControlLoopInterlockDialog></ControlLoopInterlockDialog>
+                        break;
+                    case ControlLoopType.Alarm:
+                        <ControlLoopAlarmDialog></ControlLoopAlarmDialog>
+                        break;
+                }
+            </RadzenCard>
+        </ChildContent>
+    </CascadingValue>
 </DialogTemplate>
 @code {
 
     bool debug = true;
-   
+
 }

@@ -1,32 +1,39 @@
 ﻿@using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+@using CPToolRadzen.Pages.PurchaseOrder.Dialog
 @inherits DialogTemplate<EditMWOItem>
 <DialogTemplate Model="@Model">
     <ChildContent>
         <CascadingValue Value="this">
 
-            <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Class="width:100%" RenderMode="TabRenderMode.Client">
+            <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Style="width:100%" RenderMode="TabRenderMode.Client">
                 <Tabs>
                     <RadzenTabsItem Text="Name">
                         <ChapterDialog></ChapterDialog>
                     </RadzenTabsItem>
-                 
+
                     <RadzenTabsItem Text="Specs">
                         <SpecsDialog></SpecsDialog>
                     </RadzenTabsItem>
-                    @if(Model.Chapter.Id==6)
+                    @if (Model.Chapter.Id == 6)
                     {
                         <RadzenTabsItem Text="Accesories">
                             <AccesoriesDialog></AccesoriesDialog>
                         </RadzenTabsItem>
                     }
-                   
-                    <RadzenTabsItem Text="Nozzles">
-                        <MWOItemNozzlesDialog></MWOItemNozzlesDialog>
-                    </RadzenTabsItem>
-                    <RadzenTabsItem Text="Process Conditions">
-                        <ProcessConditionsDialog></ProcessConditionsDialog>
-                    </RadzenTabsItem>
-                    
+                    @if (Model.Chapter.Id == 6 || Model.Chapter.Id == 4 || Model.Chapter.Id == 7)
+                    {
+                        <RadzenTabsItem Text="Nozzles" >
+                            <MWOItemNozzlesDialog></MWOItemNozzlesDialog>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Process Conditions" >
+                            <ProcessConditionsDialog></ProcessConditionsDialog>
+                        </RadzenTabsItem>
+                    }
+                     <RadzenTabsItem Text="PurchaseOrder" >
+                            <PurchaseOrderMWOItemDialog></PurchaseOrderMWOItemDialog>
+                        </RadzenTabsItem>
+
+
                 </Tabs>
             </RadzenTabs>
         </CascadingValue>
@@ -38,5 +45,7 @@
     TabPosition tabPosition = TabPosition.Top;
     void OnChange(int index)
     {
+        StateHasChanged();
     }
+
 }

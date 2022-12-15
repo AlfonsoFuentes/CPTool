@@ -2,12 +2,10 @@
 @using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditProcessFluid>
+@inherits TableTemplate<EditProcessFluid>
 <TableTemplate T="EditProcessFluid"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+              ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.ProcessFluids">
 
     <Columns>

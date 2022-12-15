@@ -44,9 +44,9 @@ namespace CPTool.Application.Features.EquipmentItemFeatures.CreateEdit
         public string Reference { get; set; } = "";
         public string SerialNumber { get; set; } = "";
 
-      
 
-        
+        public List<AddNozzle>? Nozzles { get; set; }
+
     }
 
 }

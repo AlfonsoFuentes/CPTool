@@ -1,19 +1,14 @@
 ﻿<div style=@UISettings.RowRem class="row">
     <div class=@UISettings.ColClassLabel>
-        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
     </div>
     <div class=@UISettings.ColClassValue>
-        <RadzenDatePicker @bind-Value=@Value DateFormat="d" Change=@OnChange Style=@StyleBoxWidth100 Disabled=@Disabled />
+        <RadzenDatePicker @bind-Value=@Value DateFormat="d" Change=@OnChange Style=@UISettings.StyleBoxWidth100 Disabled=@Disabled class=@UISettings.ClassBox />
        
-        @if (Required)
-        {
-            <RadzenRequiredValidator Component="TextBox" Text=@RequiredText Popup=true Style="position: absolute" />
-        }
         
     </div>
 </div>
 
 @code {
-    public string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
-    public string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+   
 }

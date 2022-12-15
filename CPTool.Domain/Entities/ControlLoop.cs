@@ -1,4 +1,6 @@
-﻿namespace CPTool.Domain.Entities
+﻿using CPTool.Domain.Enums;
+
+namespace CPTool.Domain.Entities
 {
     public class ControlLoop : BaseDomainModel
     {
@@ -17,14 +19,14 @@
 
 
         public int? ProcessVariableMinId { get; set; }
-        public Unit? ProcessVariableMin { get; set; }
+        public EntityUnit? ProcessVariableMin { get; set; }
         public int? ProcessVariableMaxId { get; set; }
-        public Unit? ProcessVariableMax { get; set; }
+        public EntityUnit? ProcessVariableMax { get; set; }
         public int? SPId { get; set; }
-        public Unit? SP { get; set; }
+        public EntityUnit? SP { get; set; }
 
         public int? ProcessVariableValueId { get; set; }
-        public Unit? ProcessVariableValue { get; set; }
+        public EntityUnit? ProcessVariableValue { get; set; }
 
         public double ControlledVariableMin { get; set; }
         public double ControlledVariableMax { get; set; }

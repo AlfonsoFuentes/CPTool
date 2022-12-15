@@ -14,7 +14,7 @@
         <TextBoxTemplate Label="Phone" Required=true @bind-Value=@Model.MobilPhone StringsToCompare=@(FilteredList.Select(x => x.MobilPhone).ToList())>
 
         </TextBoxTemplate>
-        <TextBoxTemplate Label="Email" Required=true @bind-Value=@Model.Email ValidateEmail=true>
+        <TextBoxTemplate Label="Email" Required=true @bind-Value=@Model.Email>
 
         </TextBoxTemplate>
     </ChildContent>

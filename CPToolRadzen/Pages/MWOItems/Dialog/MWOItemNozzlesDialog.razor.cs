@@ -1,5 +1,6 @@
 ﻿using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.CreateEdit;
+using CPToolRadzen.Pages.Nozzle.Dialog;
 using Microsoft.AspNetCore.Components;
 
 namespace CPToolRadzen.Pages.MWOItems.Dialog
@@ -9,26 +10,30 @@ namespace CPToolRadzen.Pages.MWOItems.Dialog
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
         protected EditMWOItem Model => DialogParent.Model;
-        List<EditNozzle> Nozzles => GetNozzles(Model.Chapter.Id);
-        public List<EditNozzle> GetNozzles(int chapterid) =>
-    chapterid switch
-    {
-        4 => Model.EquipmentItem.Nozzles,
-        6 => Model.PipingItem.Nozzles,
-        7 => Model.InstrumentItem.Nozzles,
+        List<EditNozzle> Nozzles => Model.Nozzles;
+       
+        string TableName => $"{Model.TagId} Nozzles";
+   
+        async Task<bool> AddNozzle(EditNozzle nozzle)
+        {
+            Model.AddNozzle(nozzle);
+            var retorno = await ShowTableDialog(nozzle);
+            if(!retorno)
+            {
+                Model.RemoveNozzle(nozzle); 
+            }
+            return retorno;
+        }
+        public async Task<bool> ShowTableDialog(EditNozzle model)
+        {
 
-        _ => new(),
-    };
-        string TableName => GetTableName(Model.Chapter.Id);
-        public string GetTableName(int chapterid) =>
-   chapterid switch
-   {
-       4 => "Equipment Nozzles",
-       6 => "Piping Nozzles",
-       7 => "Instrument Nozzles",
+            var result = await DialogService.OpenAsync<NozzleDialog>($"Add new Nozzle to {Model.TagId}",
+                  new Dictionary<string, object> { { "Model", model }, { "SaveDialog", Model.Id==0?false:true } });
+            if (result == null) return false;
+           
+            return (bool)result;
 
-       _ => "",
-   };
+        }
 
     }
 }

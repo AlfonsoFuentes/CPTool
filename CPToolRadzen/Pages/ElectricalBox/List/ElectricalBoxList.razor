@@ -3,12 +3,10 @@
 
 @using CPTool.Application.Features.ElectricalBoxsFeatures.CreateEdit;
 
-@inherits BaseTableTemplate<EditElectricalBox>
+@inherits TableTemplate<EditElectricalBox>
 <TableTemplate T="EditElectricalBox"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.ElectricalBoxs">
 
     <Columns>

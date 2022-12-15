@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -11,7 +11,7 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="11.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +24,48 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="A0other\" />
+    <Folder Include="Features\BrandSuppliers\" />
+    <Folder Include="Features\Brands\" />
+    <Folder Include="Features\Chapters\" />
+    <Folder Include="Features\ConnectionTypes\" />
+    <Folder Include="Features\ControlLoops\" />
+    <Folder Include="Features\DeviceFunctionModifiers\" />
+    <Folder Include="Features\DeviceFunctions\" />
+    <Folder Include="Features\DownPayments\" />
+    <Folder Include="Features\ElectricalBoxs\" />
+    <Folder Include="Features\EquipmentTypeSubs\" />
+    <Folder Include="Features\EquipmentTypes\" />
+    <Folder Include="Features\FieldLocations\" />
+    <Folder Include="Features\Gaskets\" />
+    <Folder Include="Features\Materials\" />
+    <Folder Include="Features\MeasuredVariableModifiers\" />
+    <Folder Include="Features\MeasuredVariables\" />
+    <Folder Include="Features\MWOItems\" />
+    <Folder Include="Features\MWOs\" />
+    <Folder Include="Features\MWOTypes\" />
+    <Folder Include="Features\Nozzles\" />
+    <Folder Include="Features\PipeAccesorys\" />
+    <Folder Include="Features\PipeClasss\" />
+    <Folder Include="Features\PipeDiameters\" />
+    <Folder Include="Features\ProcessConditions\" />
+    <Folder Include="Features\ProcessFluids\" />
+    <Folder Include="Features\PropertyPackages\" />
+    <Folder Include="Features\PurchaseOrderItems\" />
+    <Folder Include="Features\PurchaseOrders\" />
+    <Folder Include="Features\Readouts\" />
+    <Folder Include="Features\SignalModifiers\" />
+    <Folder Include="Features\Signals\" />
+    <Folder Include="Features\SignalTypes\" />
+    <Folder Include="Features\Suppliers\" />
+    <Folder Include="Features\Takss\" />
+    <Folder Include="Features\TaxCodeLDs\" />
+    <Folder Include="Features\TaxCodeLPs\" />
+    <Folder Include="Features\UnitaryBasePrizes\" />
+    <Folder Include="Features\Units\" />
+    <Folder Include="Features\UserRequirements\" />
+    <Folder Include="Features\UserRequirementTypes\" />
+    <Folder Include="Features\Users\" />
+    <Folder Include="Features\Wires\" />
   </ItemGroup>
 
 </Project>

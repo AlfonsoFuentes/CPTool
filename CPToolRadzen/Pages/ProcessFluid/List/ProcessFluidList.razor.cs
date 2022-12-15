@@ -7,19 +7,17 @@ using CPToolRadzen.Pages.ProcessFluid.Dialog;
 
 namespace CPToolRadzen.Pages.ProcessFluid.List
 {
-    public partial class ProcessFluidList : BaseTableTemplate<EditProcessFluid>
+    public partial class ProcessFluidList : TableTemplate<EditProcessFluid>
     {
 
-        public override List<EditProcessFluid> Elements => RadzenTables.ProcessFluids;
-
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.ProcessFluids = await CommandQuery.GetAll();
             TableName = "Process Fluid";
      
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditProcessFluid model)
+        public async Task<bool> ShowTableDialog(EditProcessFluid model)
         {
 
             var result = await DialogService.OpenAsync<ProcessFluidDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

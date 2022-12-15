@@ -1,4 +1,4 @@
-﻿using CPTool.ApplicationRadzen.FeaturesGeneric;
+﻿using CPTool.Application.Generic;
 using CPTool.Persistence.BaseClass;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;

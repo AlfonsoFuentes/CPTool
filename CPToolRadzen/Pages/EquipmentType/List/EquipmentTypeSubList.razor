@@ -1,0 +1,20 @@
+﻿@using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
+
+@inherits TableTemplate<EditEquipmentTypeSub>
+<TableTemplate T="EditEquipmentTypeSub"
+               Filter="@(x=>x.EquipmentTypeId==ParentId)"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowDialogDetail"
+               @bind-GlobalElements="@GlobalElements">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="EditEquipmentTypeSub" Property="@nameof(EditEquipmentTypeSub.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditEquipmentTypeSub" Property="@nameof(EditEquipmentTypeSub.TagLetter)" Title="Tag Letter" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+
+}

@@ -7,20 +7,29 @@ using System.Xml.Linq;
 
 namespace CPToolRadzen.Pages.DownPayment.List
 {
-    public partial class DownPaymentList : BaseTableTemplate<EditDownPayment>
+    public partial class DownPaymentList : TableTemplate<EditDownPayment>
     {
 
-        public override List<EditDownPayment> Elements => RadzenTables.DownPayments;
-
-        EditPurchaseOrder Parent => RadzenTables.PurchaseOrders.FirstOrDefault(x => x.Id == ParentId);
+        protected override async Task OnInitializedAsync()
+        {
+            RadzenTables.DownPayments = await CommandQuery.GetAll();
+            Parent = await QueryPurchaseOrder.GetById(ParentId);
+           
+            TableName = "Downpayment";
+        }
+        EditPurchaseOrder Parent = new();
         protected override void OnInitialized()
         {
             TableName = "Downpayment";
      
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditDownPayment model)
+        public async Task<bool> ShowTableDialog(EditDownPayment model)
         {
+            if(model.Id==0)
+            {
+                model.PurchaseOrder = Parent;
+            }
 
             var result = await DialogService.OpenAsync<DownPaymentDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",
                   new Dictionary<string, object> { { "Model", model } });

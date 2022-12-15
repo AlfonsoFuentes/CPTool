@@ -15,13 +15,13 @@ namespace CPToolRadzen.Templates
         [EditorRequired]
         public T[] Elements { get; set; }
         [Parameter]
-        public T Model { get; set; }
+        public T Value { get; set; }
         [Parameter]
-        public EventCallback<T> ModelChanged { get; set; }
+        public EventCallback<T> ValueChanged { get; set; }
 
         [Parameter]
         public bool Required { get; set; } = false;
-        string enumname => Model.ToString();
+        string enumname => Value.ToString();
         string RequiredText => $"{Label} is required";
         [Parameter]
         [EditorRequired]

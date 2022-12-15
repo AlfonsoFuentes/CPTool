@@ -1,20 +1,18 @@
-﻿
-@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
+﻿@using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditPipeDiameter>
+@inherits TableTemplate<EditPipeDiameter>
 <TableTemplate T="EditPipeDiameter"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               DisableAdd=@(ParentId==0)
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
-               @bind-GlobalElements="@RadzenTables.PipeDiameters">
+                Filter="@(x => x.dPipeClassId == ParentId)"
+                DisableAdd=@(ParentId==0)
+                @bind-SelectedItem=@SelectedItem
+                ShowDialog="ShowTableDialog"
+                @bind-GlobalElements="@GlobalElements">
 
     <Columns>
         <RadzenDataGridColumn TItem="EditPipeDiameter" Property="@nameof(EditPipeDiameter.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditPipeDiameter"  Title="OD" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+        <RadzenDataGridColumn TItem="EditPipeDiameter" Title="OD" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
             <Template>
                 @context.OuterDiameter.StringValue
             </Template>

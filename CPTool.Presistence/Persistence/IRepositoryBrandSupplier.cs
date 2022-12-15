@@ -4,4 +4,8 @@
     {
 
     }
+    public interface IRepositoryWire : IRepository<Wire>
+    {
+
+    }
 }

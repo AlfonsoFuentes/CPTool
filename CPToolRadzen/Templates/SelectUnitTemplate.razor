@@ -3,34 +3,30 @@
 
 <div style="margin-bottom: 0.2rem" class="row">
     <div class="col-md-4">
-        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
     </div>
-    <div class="col-md-4">
-        <RadzenNumeric ShowUpDown="false" Name="Numeric"
+    <div class="col-md-4" >
+        <RadzenNumeric ShowUpDown="false" Name="Numeric" class=@UISettings.ClassBox Style=@UISettings.StyleBoxWidth100
                        TValue=double @bind-Value=@Model.Value Format=@Format
-                       Change="OnValueChanged" Style=@StyleBoxWidth100 />
+                       Change="OnValueChanged" />
 
-        @if (Required)
-        {
-            <RadzenCompareValidator Value=@TargetValue Component="Numeric" Text=@RequiredText Popup=true Style="position: absolute" Operator=@compareOperator />
-
-        }
-        @if (IsRegexValidator)
-        {
-            <RadzenRegexValidator Component="Numeric" Text="@RegexError" Pattern="@Regex" Popup=true Style="position: absolute" />
-
-        }
+       
 
     </div>
     <div class="col-md-4">
-        <RadzenDropDown AllowClear="false" TValue="CPTool.UnitsSystem.Unit" Style=@StyleBoxWidth100
+        <RadzenDropDown AllowClear="false" TValue="CPTool.UnitsSystem.Unit"
+                        Style=@UISettings.StyleBoxWidth100
+                        class=@UISettings.ClassBox
                         Data=@Model.UnitsList TextProperty="Symbol" @bind-Value=@Model.Amount.Unit Name="Select"
                         Change=UnitChanged />
     </div>
 </div>
 
+@if (debug)
+{
+
+}
 @code {
-    CompareOperator compareOperator = CompareOperator.NotEqual;
-    public string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
-    public string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+    bool debug = true;
+
 }

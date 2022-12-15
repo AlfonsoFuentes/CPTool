@@ -8,7 +8,7 @@ using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
 using CPTool.Application.Features.BrandSupplierFeatures.Query.GetList;
 using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 using CPTool.Application.Features.SupplierFeatures.Query.GetList;
-using CPTool.Domain.Entities;
+using CPTool.Domain.Enums;
 
 namespace CPTool.NewPages.Dialogs.BrandSupplier.Dialog
 {

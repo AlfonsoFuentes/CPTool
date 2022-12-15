@@ -13,13 +13,18 @@
         <RadzenCard>
             <SelectTemplate T="EditEquipmentType" Elements="@RadzenTables.EquipmentTypes"
                             Label="Type" Change=@ChangeEquipmentType
+                            Clearable=true
                             PropertyName="Name" @bind-Model=@Model.eEquipmentType>
 
             </SelectTemplate>
-            <SelectTemplate T="EditEquipmentTypeSub" Elements="@RadzenTables.EquipmentTypeSubs"
-                            Label="Type"
-                            Filter=@(x => x.EquipmentTypeId == Model.eEquipmentType.Id)
-                            PropertyName="Name" Disabled=@(Model.eEquipmentType.Id==0)
+            <SelectTemplate T="EditEquipmentTypeSub"
+                            Clearable=true
+                            Label="Sub Type"
+                            Elements="@((Model.eEquipmentType==null||Model.eEquipmentType.Id==0)?new():
+RadzenTables.EquipmentTypeSubs.Where(x=>x.EquipmentTypeId==Model.eEquipmentType.Id).ToList())"
+                           
+                            PropertyName="Name" 
+                            Disabled=@((Model.eEquipmentType==null||Model.eEquipmentType.Id==0))
                             @bind-Model=@Model.eEquipmentTypeSub>
 
             </SelectTemplate>
@@ -30,6 +35,40 @@
 
 
             <FieldTemplate Label="Tag Id" Value=@Model.TagId></FieldTemplate>
+            
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+            <SelectTemplate T="EditBrand" Elements="@RadzenTables.Brands" Label="Brand or Service" Change=@ChangeBrand
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eBrand>
+
+            </SelectTemplate>
+            <SelectTemplate T="EditSupplier"
+                            Clearable=true
+                            Elements="@((Model.eBrand==null||Model.eBrand.Id==0)?new():
+RadzenTables.BrandSuppliers.Where(x=>x.Brand.Id==Model.eBrand.Id).Select(y=>y.Supplier).ToList())" Label="Supplier"
+                            Disabled=@(Model.eBrand==null||Model.eBrand.Id==0)
+                            PropertyName="Name" @bind-Model=@Model.eSupplier>
+
+            </SelectTemplate>
+            <SelectTemplate T="EditGasket" Elements="@RadzenTables.Gaskets" Label="Gasket"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eGasket>
+
+            </SelectTemplate>
+            <SelectTemplate T="EditMaterial" Elements="@RadzenTables.Materials" Label="Outer Material"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eOuterMaterial>
+
+            </SelectTemplate>
+            <SelectTemplate T="EditMaterial" Elements="@RadzenTables.Materials" Label="Inner Material"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eInnerMaterial>
+
+            </SelectTemplate>
+
             <TextBoxTemplate @bind-Value="@Model.Model"
                              Label="Equipment Model"
                              Rows="3"></TextBoxTemplate>
@@ -38,35 +77,6 @@
                              Rows="3"></TextBoxTemplate>
             <TextBoxTemplate @bind-Value="@Model.SerialNumber"
                              Label="Serial Number"></TextBoxTemplate>
-        </RadzenCard>
-    </Left>
-    <Rigth>
-        <RadzenCard>
-            <SelectTemplate T="EditBrand" Elements="@RadzenTables.Brands" Label="Brand or Service" Change=@ChangeBrand
-                            PropertyName="Name" @bind-Model=@Model.eBrand>
-
-            </SelectTemplate>
-            <SelectTemplate T="EditSupplier"
-                            Elements="@((Model.eBrand==null||Model.eBrand.Id==0)?new():
-RadzenTables.BrandSuppliers.Where(x=>x.Brand.Id==Model.eBrand.Id).Select(y=>y.Supplier).ToList())" Label="Supplier"
-                            Disabled=@(Model.eBrand==null||Model.eBrand.Id==0)
-                            PropertyName="Name" @bind-Model=@Model.eSupplier>
-
-            </SelectTemplate>
-            <SelectTemplate T="EditGasket" Elements="@RadzenTables.Gaskets" Label="Gasket" 
-                            PropertyName="Name" @bind-Model=@Model.eGasket>
-
-            </SelectTemplate>
-            <SelectTemplate T="EditMaterial" Elements="@RadzenTables.Materials" Label="Outer Material"
-                            PropertyName="Name" @bind-Model=@Model.eOuterMaterial>
-
-            </SelectTemplate>
-            <SelectTemplate T="EditMaterial" Elements="@RadzenTables.Materials" Label="Inner Material"
-                            PropertyName="Name" @bind-Model=@Model.eInnerMaterial>
-
-            </SelectTemplate>
-          
-           
 
         </RadzenCard>
     </Rigth>
@@ -74,5 +84,5 @@ RadzenTables.BrandSuppliers.Where(x=>x.Brand.Id==Model.eBrand.Id).Select(y=>y.Su
 
 @code {
     bool debug = true;
-    public Func<EditEquipmentTypeSub, bool> FilterEquipmentTypeSub => x => x.EquipmentTypeId == Model.eEquipmentType.Id;
+   
 }

@@ -1,25 +1,18 @@
 ﻿using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
-using CPToolRadzen.Services;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using Radzen.Blazor;
-using Radzen;
-using CPTool.Application.Features.MMOTypeFeatures.Query.GetList;
 
-using CPTool.Application.Features.MMOTypeFeatures;
 using CPToolRadzen.Pages.MWOTypes.Dialog;
-using CPtool.ExtensionMethods;
+
 
 namespace CPToolRadzen.Pages.MWOTypes.List
 {
-    public partial class MWOTypesList : BaseTableTemplate<EditMWOType>
+    public partial class MWOTypesList : TableTemplate<EditMWOType>
     {
-        EditMWOType MWOTypeSelected = new();
 
-        public override List<EditMWOType> Elements => RadzenTables.MWOTypes;
-
-        public async Task<bool> ShowDialog(EditMWOType model)
+        protected override async Task OnInitializedAsync()
+        {
+            RadzenTables.MWOTypes = await CommandQuery.GetAll();
+        }
+            public async Task<bool> ShowTableDialog(EditMWOType model)
         {
 
             var result = await DialogService.OpenAsync<AddEditMWOTypeDialog>(model.Id == 0 ? $"Add new MWO Type" : $"Edit {model.Name}",

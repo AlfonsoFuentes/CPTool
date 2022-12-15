@@ -2,6 +2,7 @@
 @using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
 @using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 @using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+@using CPTool.Domain.Enums;
 
 @inherits DialogTemplate<EditPurchaseOrder>
 @if (debug)
@@ -9,7 +10,7 @@
 
 }
 
-<DialogTemplate Model="@Model" SaveButtonName="@ButtonName" DisableButtonSave=@DisableSave Save=SavePurchaseOrder >
+<DialogTemplate Model="@Model" SaveButtonName="@ButtonName" DisableButtonSave=@DisableSave Save=SavePurchaseOrder>
     <ChildContent>
         <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Class="width:100%" RenderMode="TabRenderMode.Client">
             <Tabs>
@@ -17,13 +18,13 @@
                     <div style="margin-bottom: 1rem" class="row">
                         <div class="col-md-6">
                             <RadzenCard Class="m-3">
-                                @if(Model.Id!=0)
+                                @if (Model.Id != 0)
                                 {
-                                    <TextBoxTemplate Label="PO#"  Required=true Disabled=@(Model.PurchaseOrderStatus==PurchaseOrderStatus.Ordering?false:true)
+                                    <TextBoxTemplate Label="PO#" Required=true Disabled=@(Model.PurchaseOrderStatus==PurchaseOrderApprovalStatus.Ordering?false:true)
                                                  @bind-Value=@Model.PONumber StringsToCompare=@(FilteredList.Select(x => x.PONumber).ToList())>
 
                                     </TextBoxTemplate>
-                                    <DatePickerTamplate Label="Receive date" @bind-Value=@Model.POEstimatedDate  Disabled=@(Model.PurchaseOrderStatus==PurchaseOrderStatus.Ordering?false:true)>
+                                    <DatePickerTamplate Label="Receive date" @bind-Value=@Model.POEstimatedDate Disabled=@(Model.PurchaseOrderStatus==PurchaseOrderApprovalStatus.Ordering?false:true)>
 
                                     </DatePickerTamplate>
                                 }
@@ -47,7 +48,6 @@
                                                 Label="Supplier"
                                                 @bind-Model=@Model.pSupplier
                                                 Required=@(Model.Id==0)
-                                                Disabled=@(Model.pBrand.Id==0||Model.Id!=0)
                                                 PropertyName="Name">
 
                                 </SelectTemplate>
@@ -66,13 +66,13 @@ Model.PurchaseOrderItems.FirstOrDefault()==null?"N/A":
                                 Model.PurchaseOrderItems.FirstOrDefault().MWOItem.ChapterId==1?
                                 Model.CostCenter:"N/A")"></FieldTemplate>
 
-                                <SelectEnumTemplate T="Currency" Elements=@(Enum.GetValues<Currency>()) Disabled=@(Model.Id!=0) Label="Currency" @bind-Model=@Model.Currency Required=true>
+                                <SelectEnumTemplate T="Currency" Elements=@(Enum.GetValues<Currency>()) Disabled=@(Model.Id!=0) Label="Currency" @bind-Value=@Model.Currency Required=true>
 
                                 </SelectEnumTemplate>
                                 @if (Model.Currency == Currency.EUR)
                                 {
                                     <NumericTemplate TValue="double" @bind-Value="@Model.USDEUR" Disabled=@(Model.Id!=0)
-                                                 Label="$EUR to USD"></NumericTemplate>
+                                                  Label="$EUR to USD"></NumericTemplate>
 
                                     <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=true>
 
@@ -81,13 +81,13 @@ Model.PurchaseOrderItems.FirstOrDefault()==null?"N/A":
                                 else if (Model.Currency == Currency.COP)
                                 {
                                     <NumericTemplate TValue="double" @bind-Value="@Model.USDCOP" Disabled=@(Model.Id!=0)
-                                                 Label="$COP to USD"></NumericTemplate>
+                                                  Label="$COP to USD"></NumericTemplate>
 
-                                    <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate  Disabled=true>
+                                    <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=true>
 
                                     </DatePickerTamplate>
                                 }
-                               
+
                             </RadzenCard>
 
                         </div>
@@ -95,111 +95,25 @@ Model.PurchaseOrderItems.FirstOrDefault()==null?"N/A":
                 </RadzenTabsItem>
                 <RadzenTabsItem Text="Purchase Order Items">
                     <div style="margin-bottom: 1rem" class="row">
-                        @if (Model.Id == 0)
-                        {
+                        <CascadingValue Value="this">
                             <div class="col-md-6">
-                                <TableTemplate T="EditMWOItem"
-                                           ShowToolBar=true
-                                           ShowAdd=false
-                                           ShowDelete=false
-                                           ShowEdit=false
-                                           ShowReport=false
-                                           TableName="@($"{Model.MWO.Name} Items List")"
-                                           Elements="@EditMWOItemsOriginal"
-                                           @bind-SelectedItem=@SelectedItemToAdd
-                                          
-                                           @bind-GlobalElements="@RadzenTables.MWOItems">
-                                    <ToolBarButtons>
-                                        <ButtonTemplate Icon="arrow_forward"
-                                                    Disabled=@DisableAddRemoveMWOItem
-                                                    Click=AddItem
-                                                    ToolTip="Add selected Item">
+                                <PurchaseOrderMWOItemTable @bind-MWOItems="@MWOItemsOriginal"></PurchaseOrderMWOItemTable>
 
-                                        </ButtonTemplate>
-
-
-                                    </ToolBarButtons>
-                                    <Columns>
-                                        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.Nomenclatore)" Title="No#" TextAlign="TextAlign.Left" Filterable=false Sortable=false Width="50px">
-                                        </RadzenDataGridColumn>
-                                        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.TagId)" Title="Tag" TextAlign="TextAlign.Left" Filterable=true Sortable=true Width="100px">
-                                        </RadzenDataGridColumn>
-                                        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWO.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
-
-                                        </RadzenDataGridColumn>
-
-                                    </Columns>
-                                </TableTemplate>
                             </div>
-                            
-                        }
-                        
-                        <div class=@classpurchaseorderitem>
-                            <TableTemplate T="EditPurchaseOrderItem"
-                                           @ref=purchaseorderitemtable
-                                           ShowToolBar=true
-                                           ShowAdd=false
-                                           ShowDelete=false
-                                           ShowEdit=false
-                                           ShowReport=false
-                                           InlineEdit=@InlineEdit
-                                           TableName="@($"Purchase order items List")"
-                                           Elements="@Model.PurchaseOrderItems"
-                                           @bind-SelectedItem=@SelectedItemAdded
-                                           @bind-GlobalElements="@RadzenTables.PurchaseOrderItems">
-                                <ToolBarButtons>
-                                    <ButtonTemplate Icon="arrow_back"
-                                                    Disabled=@(Model.Id!=0?true:SelectedItemAdded.Id==0?false:true)
-                                                    Click=RemoveItem
-                                                    ToolTip="Remove selected Item">
-
-                                    </ButtonTemplate>
 
 
-                                </ToolBarButtons>
-                                <Columns>
-                                    <RadzenDataGridColumn TItem="EditPurchaseOrderItem" Title="Tag" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
-                                        <Template>
-                                            @context.MWOItem.TagId
-                                        </Template>
-                                    </RadzenDataGridColumn>
-                                    <RadzenDataGridColumn TItem="EditPurchaseOrderItem" Title="Name" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
-                                        <Template>
-                                            @context.MWOItem.Name
-                                        </Template>
-                                    </RadzenDataGridColumn>
-                                    <RadzenDataGridColumn TItem="EditPurchaseOrderItem" Title="Prize" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
-                                        <Template>
-                                            @context.PrizeCurrency.ToString("C0")
-                                        </Template>
-                                        <EditTemplate Context="order">
-                                            <RadzenNumeric @bind-Value="@order.PrizeCurrency" TValue="double" Change="@((arg)=>ChangeCurrency(order,arg))" ShowUpDown=false Style="width:100%; display: block" Name="PrizeCurrency" />
+                            <div class="col-md-6">
+                                <PurchaseOrderItemTable></PurchaseOrderItemTable>
 
-                                        </EditTemplate>
-                                        <FooterTemplate>
-                                            @Model.PurchaseOrderItems.Sum(x=>x.PrizeCurrency).ToString("C0")
-                                        </FooterTemplate>
-                                    </RadzenDataGridColumn>
-                                    <RadzenDataGridColumn TItem="EditPurchaseOrderItem" Title="Prize, USD" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
-                                        <Template>
-                                            @context.PrizeUSD.ToString("C0")
-                                        </Template>
-                                        <FooterTemplate>
-                                            @Model.PurchaseOrderItems.Sum(x=>x.PrizeUSD).ToString("C0")
-                                        </FooterTemplate>
-                                    </RadzenDataGridColumn>
 
-                                </Columns>
-                            </TableTemplate>
-
-                        </div>
-
+                            </div>
+                        </CascadingValue>
                     </div>
                 </RadzenTabsItem>
-            
+
             </Tabs>
         </RadzenTabs>
-      
+
 
     </ChildContent>
 
@@ -213,12 +127,12 @@ Model.PurchaseOrderItems.FirstOrDefault()==null?"N/A":
     }
     TabPosition tabPosition = TabPosition.Top;
     TableTemplate<EditPurchaseOrderItem> purchaseorderitemtable = new();
-    async Task ChangeCurrency(EditPurchaseOrderItem order, double d)
+    public async Task ChangeCurrency(EditPurchaseOrderItem order, double d)
     {
         order.PrizeCurrency = d;
         await purchaseorderitemtable.SaveRow(order);
-        await purchaseorderitemtable.grid0.Reload();
+
     }
-    string classpurchaseorderitem => Model.Id == 0 ? "col-md-6" : "col-md-12";
+ 
 }
 

@@ -6,19 +6,16 @@ using CPToolRadzen.Templates;
 
 namespace CPToolRadzen.Pages.Material.List
 {
-    public partial class MaterialList : BaseTableTemplate<EditMaterial>
+    public partial class MaterialList : TableTemplate<EditMaterial>
     {
 
-        public override List<EditMaterial> Elements => RadzenTables.Materials;
-
-
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.Materials = await CommandQuery.GetAll();
             TableName = "Material";
-            base.OnInitialized();
+          
         }
-        public async Task<bool> ShowDialog(EditMaterial model)
+        public async Task<bool> ShowTableDialog(EditMaterial model)
         {
 
             var result = await DialogService.OpenAsync<MaterialDialog>(model.Id == 0 ? $"Add new Material" : $"Edit {model.Name}",

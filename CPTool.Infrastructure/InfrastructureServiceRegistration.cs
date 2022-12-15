@@ -1,5 +1,5 @@
-﻿
-
+﻿using CPTool.Application.Services;
+using CPTool.Infrastructure.Services.ExcelService;
 
 namespace CPTool.Infrastructure
 {
@@ -8,8 +8,7 @@ namespace CPTool.Infrastructure
         public static IServiceCollection AddInfrastructureService(this IServiceCollection services, IConfiguration config)
         {
 
-            var section = config.GetSection("EmailSettings");
-            services.Configure<EMailSettings>(c => config.GetSection("EmailSettings"));
+         
 
 
             var defaultconnection = config.GetConnectionString("DefaultConnection");
@@ -18,10 +17,7 @@ namespace CPTool.Infrastructure
             .EnableSensitiveDataLogging(true));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
-
-
-            services.AddTransient<IEmailService, EmailService>();
-
+            services.AddScoped<IExcelService, ExcelService>();
 
 
             return services;

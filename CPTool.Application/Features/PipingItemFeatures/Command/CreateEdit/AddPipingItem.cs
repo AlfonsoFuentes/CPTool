@@ -29,7 +29,7 @@ namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
         public int? pPipeClassId { get; set; }
         public string TagId { get; set; } = String.Empty;
         public bool Insulation { get; set; }
-
+        public List<AddNozzle>? Nozzles { get; set; }
         public string TagNumber { get; set; } = "";
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.ProcessConditionFeatures.CreateEdit;
 
 
@@ -26,8 +27,8 @@ namespace CPTool.Application.Features.InstrumentItemFeatures.CreateEdit
         public string? Model { get; set; }
         public string? Reference { get; set; }
         public string? SerialNumber { get; set; }
+        public List<AddNozzle>? Nozzles { get; set; }
 
-       
     }
 
 }

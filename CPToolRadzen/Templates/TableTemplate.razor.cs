@@ -1,51 +1,71 @@
-﻿using CPTool.Application.Features.Base.Delete;
-using CPTool.Application.Features.Base;
+﻿
 using Microsoft.AspNetCore.Components;
-using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
+
 using Radzen.Blazor;
-using CPTool.Application.Features.MMOTypeFeatures.Query.GetList;
-using CPTool.Domain.Entities;
-using CPTool.Services;
-using CPToolRadzen.Pages.MWOTypes.Dialog;
-using Microsoft.AspNetCore.Components.Web;
-using Radzen;
-using CPTool.Application.Features.MMOTypeFeatures;
-using CPtool.ExtensionMethods;
-using CPToolRadzen.Services;
-using System.Xml.Linq;
+
+
 using CPTool.Persistence.BaseClass;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
-using System.Linq.Expressions;
-using DocumentFormat.OpenXml.Drawing.Charts;
+
+using BlazorDownloadFile;
+using CPTool.Application.Generic;
 
 namespace CPToolRadzen.Templates
 {
     public partial class TableTemplate<T> where T : EditCommand, new()
 
     {
-
+        [Inject]
+        private IBlazorDownloadFileService _blazorDownloadFileService { get; set; } = null!;
         [Inject]
         public ICommandQuery<T> CommandQuery { get; set; }
         [Parameter]
-        public List<T> GlobalElements { get; set; } = new();
+        public List<T> GlobalElements { get; set; }
         [Parameter]
         public EventCallback<List<T>> GlobalElementsChanged { get; set; }
-
+        [Parameter]
+        public int ParentId { get; set; }
         [Parameter]
         public string TableName { get; set; }
         [Parameter]
-        public List<T> Elements { get; set; } = new();
+        public Func<T, bool> Filter { get; set; }
+        [Parameter]
+        public Func<List<T>> FilterFunc { get; set; }
+        public List<T> Elements => FilterList();
+
+        List<T> FilterList()
+        {
+            List<T> result = GlobalElements;
+            if (Filter != null)
+            {
+                result = result.Where(Filter).ToList();
+
+
+            }
+            if (FilterFunc != null)
+            {
+                result = FilterFunc.Invoke();
+            }
+            if (search != "")
+            {
+                return CommandQuery.Search(search, result);
+            }
+
+
+            return result;
+
+
+        }
         [Parameter]
         public RenderFragment Columns { get; set; }
 
         [Parameter]
         public RenderFragment ToolBarButtons { get; set; }
-        int SelectedItemId = 0;
+
         [Parameter]
         public T SelectedItem { get; set; } = new();
         [Parameter]
         public EventCallback<T> SelectedItemChanged { get; set; }
-        bool DisableEditeButtons => SelectedItem.Id == 0 ? true : false;
+        bool DisableEditeButtons =>(SelectedItem==null|| SelectedItem.Id == 0) ? true : false;
 
         [Parameter]
         public bool ShowToolBar { get; set; } = true;
@@ -59,10 +79,10 @@ namespace CPToolRadzen.Templates
 
         [Parameter]
         public Func<Task<bool>> OnExcel { get; set; }
-        [Parameter]
+
         public Func<Task<bool>> OnPDF { get; set; }
         [Parameter]
-        public Func<T, Task<bool>> ShowDialog { get; set; }
+        public virtual Func<T, Task<bool>> ShowDialog { get; set; }
 
         public RadzenDataGrid<T> grid0;
         [Parameter]
@@ -93,41 +113,38 @@ namespace CPToolRadzen.Templates
         [Parameter]
 
         public bool InlineEdit { get; set; } = false;
-        async Task EditRowDoubleClick(DataGridCellMouseEventArgs<T> args)
-        {
-            if (InlineEdit)
-                await grid0.EditRow(args.Data);
-        }
+
         public async Task SaveRow(T order)
         {
             if (InlineEdit)
                 await grid0.UpdateRow(order);
         }
-       
+
         async Task ReloadGrid()
         {
 
 
             GlobalElements = await CommandQuery.GetAll();
+
             await GlobalElementsChanged.InvokeAsync(GlobalElements);
-            await grid0.Reload();
             if (SelectedItemId == 0)
             {
+                SelectedItem = new();
                 await grid0.Reload();
                 return;
             }
 
-            SelectedItem = await CommandQuery.GetById(SelectedItemId);
+            SelectedItem = await CommandQuery.GetById(SelectedItem.Id);
             await SelectedItemChanged.InvokeAsync(SelectedItem);
             await grid0.Reload();
 
         }
-
+        int SelectedItemId = 0;
 
         protected async Task RowClick(DataGridRowMouseEventArgs<T> args)
         {
             SelectedItem = args.Data;
-            SelectedItemId = SelectedItem.Id;
+            SelectedItemId = args.Data.Id;
             await SelectedItemChanged.InvokeAsync(SelectedItem);
         }
         protected async Task CreatePDF()
@@ -155,16 +172,17 @@ namespace CPToolRadzen.Templates
         protected async Task AddRow()
         {
             bool result = false;
+            SelectedItem = new();
             if (OnAdd != null)
             {
-                result = await OnAdd.Invoke(new());
+                result = await OnAdd.Invoke(SelectedItem);
 
             }
             else
             {
                 if (ShowDialog != null)
                 {
-                    result = await ShowDialog.Invoke(new());
+                    result = await ShowDialog.Invoke(SelectedItem);
 
                 }
             }
@@ -176,11 +194,12 @@ namespace CPToolRadzen.Templates
             {
                 if (await DialogService.Confirm("Are you sure you want to delete this record?") == true)
                 {
-                    // DeleteMWOType delete = new() { Id = SelectedItem.Id };
+
                     var deleteResult = await CommandQuery.Delete(SelectedItem.Id);// await Mediator.Send(delete);// PMToolService.DeleteMwoType(mwoType.Id);
 
                     if (deleteResult.Succeeded)
                     {
+                        
                         SelectedItemId = 0;
                         await ReloadGrid();
                     }
@@ -197,43 +216,21 @@ namespace CPToolRadzen.Templates
             }
         }
         protected string search = "";
-        protected Func<T, bool> predicate = null!;
-        protected Expression<Func<T, bool>> Expresion = null!;
-        protected async Task Search(ChangeEventArgs args)
+
+        protected async Task ExportClick(RadzenSplitButtonItem args)
         {
-            search = $"{args.Value}";
-
-            await grid0.GoToPage(0);
-
-            var QueryFilter = new QueryFilter { Filter = $@"i => i.Name.Contains(@0)", FilterParameters = new object[] { search } };
 
 
+            var result = await CommandQuery.ExportToExcel(Elements);
+            if (result.Succeeded)
+            {
+                var downloadresult = await _blazorDownloadFileService.DownloadFile($"{CommandQuery.FileName}.xlsx", result.Data.Result, contentType: "application/octet-stream");
 
-            Elements = await CommandQuery.GetAll();
+            }
 
-            Elements = predicate == null ? Elements : Elements.Where(predicate).ToList();
+
+
+
         }
-
-        //protected async Task ExportClick(RadzenSplitButtonItem args)
-        //{
-        //    var query = new QueryFilter
-        //    {
-        //        Filter = $@"{(string.IsNullOrEmpty(grid0.Query.Filter) ? "true" : grid0.Query.Filter)}",
-        //        OrderBy = $"{grid0.Query.OrderBy}",
-        //        Expand = "",
-        //        Select = string.Join(",", grid0.ColumnsCollection.Where(c => c.GetVisible()).Select(c => c.Property))
-        //    };
-        //    if (args?.Value == "csv")
-        //    {
-        //        await CommandQuery.ExportToCSV(query, "report");
-        //    }
-        //    else if (args?.Value == "xlsx")
-        //    {
-        //        await CommandQuery.ExportToExcel(query, "report");
-        //    }
-
-
-
-        //}
     }
 }

@@ -5,19 +5,18 @@ using CPToolRadzen.Pages.SignalType.Dialog;
 
 namespace CPToolRadzen.Pages.SignalType.List
 {
-    public partial class SignalTypeList : BaseTableTemplate<EditSignalType>
+    public partial class SignalTypeList : TableTemplate<EditSignalType>
     {
 
-        public override List<EditSignalType> Elements => RadzenTables.SignalTypes;
 
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.SignalTypes = await CommandQuery.GetAll();
             TableName = "Signal Type";
          
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditSignalType model)
+        public async Task<bool> ShowTableDialog(EditSignalType model)
         {
 
             var result = await DialogService.OpenAsync<SignalTypeDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

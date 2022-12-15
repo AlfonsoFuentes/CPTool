@@ -3,7 +3,7 @@ using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
-using CPTool.Domain.Entities;
+using CPTool.Domain.Enums;
 using CPToolRadzen.Pages.Gaskets.Dialog;
 using CPToolRadzen.Pages.Material.Dialog;
 using Microsoft.AspNetCore.Components;

@@ -10,8 +10,8 @@
 <DialogTemplate Model="@Model">
     <ChildContent>
 
-        <SelectEnumTemplate T="PipeAccesorySectionType" Elements=@(Enum.GetValues<PipeAccesorySectionType>()) Label="Select Accesory Type" 
-            @bind-Model=@Model.SectionType Required=true>
+        <SelectEnumTemplate T="PipeAccesorySectionType" Elements=@(Enum.GetValues<PipeAccesorySectionType>()) Label="Select Accesory Type"
+                            @bind-Value=@Model.SectionType Required=true>
 
         </SelectEnumTemplate>
     </ChildContent>

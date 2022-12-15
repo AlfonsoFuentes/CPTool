@@ -1,6 +1,7 @@
 ﻿
 
 using CPTool.Application.Features.UnitFeatures.CreateEdit;
+using CPTool.Domain.Enums;
 
 namespace CPTool.Application.Features.ControlLoopFeatures.CreateEdit
 {

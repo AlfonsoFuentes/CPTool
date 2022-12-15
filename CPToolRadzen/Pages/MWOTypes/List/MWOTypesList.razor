@@ -1,6 +1,6 @@
 ﻿@page "/mwo-types"
 @using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
-@inherits BaseTableTemplate<EditMWOType>
+@inherits TableTemplate<EditMWOType>
 @if (debug)
 {
 
@@ -8,9 +8,8 @@
 
 <TableTemplate T="EditMWOType"
                TableName="MWO Types List"
-               Elements="@Elements"
-               SelectedItem="@MWOTypeSelected"
-               ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.MWOTypes">
                
     <Columns>

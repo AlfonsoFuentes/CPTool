@@ -1,42 +1,37 @@
 ﻿using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
-using CPTool.Application.Features.DownPaymentFeatures.Query.GetList;
-using CPTool.Application.Features.EquipmentTypeSubFeatures.CreateEdit;
-using CPTool.Application.Features.MWOFeatures.CreateEdit;
-using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
+
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
-using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
+
 using CPTool.Application.Features.TaksFeatures.CreateEdit;
-using CPTool.Application.Features.TaksFeatures.Query.GetList;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
-using CPTool.Services;
+using CPTool.Application.Generic;
 using CPToolRadzen.Pages.DownPayment.Dialog;
-using CPToolRadzen.Pages.EquipmentType.Dialog;
+
 using CPToolRadzen.Pages.PurchaseOrder.Dialog;
-using CPToolRadzen.Services;
-using CPToolRadzen.Templates;
+
 using Microsoft.AspNetCore.Components;
 
 namespace CPToolRadzen.Pages.PurchaseOrder.List
 {
-    public partial class PurchaserOrderByMWO : BaseTableTemplate<EditPurchaseOrder>
+    public partial class PurchaserOrderByMWO : TableTemplate<EditPurchaseOrder>
     {
 
         [Inject]
         public ICommandQuery<EditDownPayment> DownpaymentQuery { get; set; }
         [Inject]
         public ICommandQuery<EditTaks> TaksQuery { get; set; }
-        public override List<EditPurchaseOrder> Elements => RadzenTables.PurchaseOrders.Where(x => x.MWOId == ParentId).ToList();
 
-        EditMWO Parent => RadzenTables.MWOs.FirstOrDefault(x => x.Id == ParentId);
+        EditMWO Parent = new();
 
-    
-     
-        protected override void OnInitialized()
+
+
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.PurchaseOrders = await CommandQuery.GetAll();
+            Parent = await QueryMWO.GetById(ParentId);
 
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditPurchaseOrder model)
+        public async Task<bool> ShowTableDialog(EditPurchaseOrder model)
         {
             if (model.Id == 0)
             {
@@ -64,7 +59,7 @@ namespace CPToolRadzen.Pages.PurchaseOrder.List
         async Task AddDownPayment()
         {
             EditDownPayment model = new();
-            model.PurchaseOrder = Selected;
+            model.PurchaseOrder = SelectedItem;
             var result = await ShowDownPaymentDialog(model);
             if(result)
             {

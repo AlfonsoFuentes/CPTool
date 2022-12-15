@@ -4,17 +4,19 @@ using CPToolRadzen.Pages.ConnectionTypes.Dialog;
 
 namespace CPToolRadzen.Pages.ConnectionTypes.List
 {
-    public partial class ConnectionTypesList : BaseTableTemplate<EditConnectionType>
+    public partial class ConnectionTypesList : TableTemplate<EditConnectionType>
     {
 
-       public override List<EditConnectionType> Elements => RadzenTables.ConnectionTypes;
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            TableName = "Connection Type";
+            RadzenTables.ConnectionTypes = await CommandQuery.GetAll();
+          
+
+             TableName = "Connection Type";
            
-            base.OnInitialized();
+           
         }
-        public async Task<bool> ShowDialog(EditConnectionType model)
+        public async Task<bool> ShowTableDialog(EditConnectionType model)
         {
 
             var result = await DialogService.OpenAsync<ConnectionTypesDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

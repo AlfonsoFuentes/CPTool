@@ -7,17 +7,17 @@ using CPToolRadzen.Pages.FieldLocation.Dialog;
 
 namespace CPToolRadzen.Pages.FieldLocation.List
 {
-    public partial class FieldLocationList : BaseTableTemplate<EditFieldLocation>
+    public partial class FieldLocationList : TableTemplate<EditFieldLocation>
     {
-        public override List<EditFieldLocation> Elements => RadzenTables.FieldLocations;
-
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.FieldLocations = await QueryFieldLocation.GetAll();
+
+           
             TableName = "Field Location";
-            base.OnInitialized();
+          
         }
-        public async Task<bool> ShowDialog(EditFieldLocation model)
+        public async Task<bool> ShowTableDialog(EditFieldLocation model)
         {
 
             var result = await DialogService.OpenAsync<FieldLocationDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

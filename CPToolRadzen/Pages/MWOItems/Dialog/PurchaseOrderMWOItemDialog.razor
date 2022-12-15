@@ -1,0 +1,80 @@
+﻿@using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
+<TableTemplate T="EditPurchaseOrderItem"
+       
+               ShowToolBar=false
+               ShowAdd=false
+               ShowDelete=false
+               ShowEdit=false
+               ShowReport=false
+               InlineEdit=false
+               TableName="@($"Purchase order items List")"
+              
+               @bind-GlobalElements="@Dialog.Model.PurchaseOrderItems">
+    <ToolBarButtons>
+      
+
+
+    </ToolBarButtons>
+    <Columns>
+        <RadzenDataGridColumn TItem="EditPurchaseOrderItem" Title="PO#" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+            <Template>
+                @context.PurchaseOrder.PONumber
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrderItem" Title="PR#" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+            <Template>
+                @context.PurchaseOrder.PurchaseRequisition
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrderItem"  Title="Name" TextAlign="TextAlign.Left" Width="200px" Filterable=true Sortable=true>
+            <Template>
+                @context.PurchaseOrder.Name
+            </Template>
+        </RadzenDataGridColumn>
+      
+       
+        <RadzenDataGridColumn TItem="EditPurchaseOrderItem"  Title="Status" Filterable=true Sortable=true>
+            <Template>
+                @context.PurchaseOrder.PurchaseOrderApprovalStatusName
+            </Template>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrderItem"  Title="Supplier" Filterable=true Sortable=true>
+            <Template>
+                @context.PurchaseOrder.SupplierName
+            </Template>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrderItem"  Title="PO Value" Filterable=false Sortable=false>
+            <Template>
+                @context.PrizeCurrency.ToString("C0")
+            </Template>
+
+            <FooterTemplate>
+                @Dialog.Model.PurchaseOrderItems.Sum(x=>x.PrizeCurrency).ToString("C0")
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditPurchaseOrderItem"  Title="PO Value, USD" Filterable=false Sortable=false>
+            <Template>
+                @context.PrizeUSD.ToString("C0")
+            </Template>
+            <FooterTemplate>
+                @Dialog.Model.PurchaseOrderItems.Sum(x=>x.PrizeUSD).ToString("C0")
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+       
+
+    </Columns>
+</TableTemplate>
+
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+
+
+    [CascadingParameter]
+    public MWOItemDialog Dialog { get; set; }
+}

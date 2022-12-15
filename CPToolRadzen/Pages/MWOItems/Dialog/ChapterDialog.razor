@@ -9,7 +9,7 @@
                         Disabled=@(Model.Chapter?.Id!=0)
                         @bind-Model=@Model.Chapter
                         Required=true
-                        Change="@Model.AssignInternalItem"
+                        Change="@OnChangeChapter"
                         PropertyName="Name">
         </SelectTemplate>
 
@@ -23,14 +23,11 @@
         <SelectTemplate T="EditUnitaryBasePrize"
                         Elements=@RadzenTables.UnitaryBasePrizes
                         Label="Unitary prize unit"
-                       
                         @bind-Model=@Model.UnitaryBasePrize
-                     
-                      
                         PropertyName="Name">
         </SelectTemplate>
 
-        
+
         <NumericTemplate TValue="double" Label="Budget Prize, USD" @bind-Value="@Model.BudgetPrize"></NumericTemplate>
 
     </Left>
@@ -40,9 +37,13 @@
 </Panel>
 
 
-
+@if(debug)
+{
+    
+}
 
 @code {
+    bool debug = true;
     [CascadingParameter]
     protected MWOItemDialog DialogParent { get; set; }
     protected EditMWOItem Model => DialogParent.Model;
@@ -54,5 +55,10 @@
         if (result == null) return false;
         return (bool)result;
 
+    }
+   void OnChangeChapter()
+    {
+        Model.AssignInternalItem();
+        StateHasChanged();
     }
 }

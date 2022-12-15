@@ -1,63 +1,61 @@
-﻿
-
-@inherits DialogTemplate<EditNozzle>
+﻿@inherits DialogTemplate<EditNozzle>
 @if (debug)
 {
 
 }
 
-<DialogTemplate Model="@Model">
+<DialogTemplate Model="@Model" SaveDialog=@SaveDialog>
     <ChildContent>
-        <RadzenCard Class="m-3" >
-           
-                <FieldTemplate Label="Name"  Value=@Model.Name >
+        <RadzenCard Class="m-3">
 
-                </FieldTemplate>
-                <SelectEnumTemplate T="StreamType" Elements=@(Enum.GetValues<StreamType>()) Label="In/Out type" @bind-Model=@Model.StreamType Required=false>
+            <FieldTemplate Label="Name" Value=@Model.Name>
 
-                </SelectEnumTemplate>
-                <SelectTemplate T="EditPipeClass" Elements=@RadzenTables.PipeClasses
-                                Label="Class"
-                                @bind-Model=@Model.nPipeClass
-                                Required=false
-                                PropertyName="Name">
+            </FieldTemplate>
+            <TextBoxTemplate Label="Description" @bind-Value=@Model.Description></TextBoxTemplate>
+            <SelectEnumTemplate T="StreamType" Elements=@(Enum.GetValues<StreamType>()) Label="In/Out type" @bind-Value=@Model.StreamType Required=false>
 
-                </SelectTemplate>
-                <SelectTemplate T="EditPipeDiameter"
-                                Elements=@((RadzenTables.PipeDiameters.Where(x=>x.dPipeClassId==Model.nPipeClass.Id).ToList()))
-                                Label="Class"
-                                Disabled=@(Model.nPipeClass.Id==0)
-                                @bind-Model=@Model.PipeDiameter
-                                Required=false
-                                PropertyName="Name">
+            </SelectEnumTemplate>
+            <SelectTemplate T="EditPipeClass" Elements=@RadzenTables.PipeClasses
+                            Label="Class"
+                            @bind-Model=@Model.nPipeClass
+                            Required=false
+                            PropertyName="Name">
 
-                </SelectTemplate>
-                <SelectTemplate T="EditConnectionType"
-                                Elements=@((RadzenTables.ConnectionTypes))
-                                Label="Connection Type"
-                              
-                                @bind-Model=@Model.ConnectionType
-                                Required=false
-                                PropertyName="Name">
+            </SelectTemplate>
+            <SelectTemplate T="EditPipeDiameter"
+                            Elements=@((RadzenTables.PipeDiameters.Where(x=>x.dPipeClassId==Model.nPipeClass.Id).ToList()))
+                            Label="Diameter"
+                            Disabled=@(Model.nPipeClass.Id==0)
+                            @bind-Model=@Model.PipeDiameter
+                            Required=false
+                            PropertyName="Name">
 
-                </SelectTemplate>
-                <SelectTemplate T="EditMaterial"
-                                Elements=@((RadzenTables.Materials))
-                                Label="Nozzle Material"
-                                @bind-Model=@Model.nMaterial
-                                Required=false
-                                PropertyName="Name">
+            </SelectTemplate>
+            <SelectTemplate T="EditConnectionType"
+                            Elements=@((RadzenTables.ConnectionTypes))
+                            Label="Connection Type"
+                            @bind-Model=@Model.ConnectionType
+                            Required=false
+                            PropertyName="Name">
 
-                </SelectTemplate>
-                <SelectTemplate T="EditGasket"
-                                Elements=@((RadzenTables.Gaskets))
-                                Label="Nozzle Gasket"
-                                @bind-Model=@Model.nGasket
-                                Required=false
-                                PropertyName="Name">
+            </SelectTemplate>
+            <SelectTemplate T="EditMaterial"
+                            Elements=@((RadzenTables.Materials))
+                            Label="Nozzle Material"
+                            @bind-Model=@Model.nMaterial
+                            Required=false
+                            PropertyName="Name">
 
-                </SelectTemplate>
-           
+            </SelectTemplate>
+            <SelectTemplate T="EditGasket"
+                            Elements=@((RadzenTables.Gaskets))
+                            Label="Nozzle Gasket"
+                            @bind-Model=@Model.nGasket
+                            Required=false
+                            PropertyName="Name">
+
+            </SelectTemplate>
+
         </RadzenCard>
     </ChildContent>
 

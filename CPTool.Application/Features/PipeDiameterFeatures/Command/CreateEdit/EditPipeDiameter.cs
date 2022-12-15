@@ -1,10 +1,7 @@
 ﻿using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
 using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
-using CPTool.Application.Features.PipeClassFeatures.Query.GetById;
-using CPTool.Application.Features.PipeClassFeatures.Query.GetList;
-using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById;
-using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
+
 using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
 using CPTool.Application.Features.UnitFeatures.CreateEdit;
 using CPTool.UnitsSystem;

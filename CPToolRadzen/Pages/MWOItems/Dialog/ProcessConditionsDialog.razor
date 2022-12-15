@@ -1,16 +1,23 @@
 ﻿@using CPTool.Application.Features.ProcessFluidFeatures.CreateEdit;
+<div class="row  container-fluid">
+    <div class="col-md-6 mb-2">
+         <RadzenCard>
+        <SelectTemplate T="EditProcessFluid"
+                        Elements=@RadzenTables.ProcessFluids
+                        Label="Process Fluid"
+                        Clearable=true
+                        PropertyName="Name"
+                        Model="@ProcessFluid">
+
+
+        </SelectTemplate>
+        </RadzenCard>
+    </div>
+
 <Panel>
     <Left>
+
         <RadzenCard>
-            <SelectTemplate T="EditProcessFluid"
-                            Elements=@RadzenTables.ProcessFluids
-                            Label="Process Fluid"
-                            PropertyName="Name"
-                            Model="@ProcessFluid">
-
-
-            </SelectTemplate>
-
             <SelectUnitTemplate Label="Temperature" @bind-Model=@ProcessCondition.Temperature Change="OnChangeTemperaturePressure"></SelectUnitTemplate>
             <SelectUnitTemplate Label="Pressure" @bind-Model=@ProcessCondition.Pressure Change="OnChangeTemperaturePressure"></SelectUnitTemplate>
             <SelectUnitTemplate Label="Mass Flow" @bind-Model=@ProcessCondition.MassFlow
@@ -19,17 +26,27 @@
                                 Change="OnChangeVolumetricFlow"></SelectUnitTemplate>
             <SelectUnitTemplate Label="Density" @bind-Model=@ProcessCondition.Density Disable="true"></SelectUnitTemplate>
 
+
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
             <SelectUnitTemplate Label="Specific Cp" @bind-Model=@ProcessCondition.SpecificCp Disable="true"></SelectUnitTemplate>
             <SelectUnitTemplate Label="Specific Enthalpy" @bind-Model=@ProcessCondition.SpecificEnthalpy Disable="true"></SelectUnitTemplate>
             <SelectUnitTemplate Label="Enthalpy Flow" @bind-Model=@ProcessCondition.EnthalpyFlow Disable="true"></SelectUnitTemplate>
             <SelectUnitTemplate Label="Viscosity" @bind-Model=@ProcessCondition.Viscosity Disable="true"></SelectUnitTemplate>
             <SelectUnitTemplate Label="Thermal Conductivity" @bind-Model=@ProcessCondition.ThermalConductivity Disable="true"></SelectUnitTemplate>
-
         </RadzenCard>
-    </Left>
+    </Rigth>
 </Panel>
+</div>
 
+@if (debug)
+{
+
+}
 
 @code {
+    bool debug = true;
 
 }

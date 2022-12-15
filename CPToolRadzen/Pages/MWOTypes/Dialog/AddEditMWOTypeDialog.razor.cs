@@ -1,20 +1,17 @@
-﻿using CPToolRadzen.Services;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using Radzen;
+﻿
 using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
-using CPTool.Application.Features.MMOTypeFeatures.Query.GetById;
-using CPTool.Services;
-using CPTool.Application.Features.MMOTypeFeatures.Query.GetList;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
-using CPToolRadzen.Templates;
+
 
 namespace CPToolRadzen.Pages.MWOTypes.Dialog
 {
     public partial class AddEditMWOTypeDialog:DialogTemplate<EditMWOType>
     {
-
+        protected override async Task OnInitializedAsync()
+        {
+            Model = await CommandQuery.GetById(Model.Id);
+            FilteredList = await CommandQuery.GetAll();
+            FilteredList = Model.Id == 0 ? FilteredList : FilteredList.Where(x => x.Id != Model.Id).ToList();
+        }
 
     }
 }

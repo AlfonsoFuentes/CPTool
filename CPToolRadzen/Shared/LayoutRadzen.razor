@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+
 <RadzenDialog />
 <RadzenNotification />
 <RadzenContextMenu />
@@ -11,13 +12,13 @@
         </div>
     </RadzenHeader>
     <RadzenSidebar @bind-Expanded="@sidebar1Expanded">
-        <RadzenPanelMenu  >
+        <RadzenPanelMenu>
             <RadzenPanelMenuItem Text="MWOs" Icon="home" Path="mwos" />
-            <RadzenPanelMenuItem Text="General" >
+            <RadzenPanelMenuItem Text="General">
                 <RadzenPanelMenuItem Text="Purchase Orders" Path="purchase-orders"></RadzenPanelMenuItem>
                 <RadzenPanelMenuItem Text="Downpayments" Path="downpayments"></RadzenPanelMenuItem>
                 <RadzenPanelMenuItem Text="Tasks" Path="taks"></RadzenPanelMenuItem>
-               
+
             </RadzenPanelMenuItem>
             <RadzenPanelMenuItem Text="Settings">
                 <RadzenPanelMenuItem Text="MWO Types" Path="mwo-types"></RadzenPanelMenuItem>
@@ -47,10 +48,10 @@
                 </RadzenPanelMenuItem>
             </RadzenPanelMenuItem>
         </RadzenPanelMenu>
-      
+
     </RadzenSidebar>
     <RadzenBody>
-        <div class="p-1">
+        <div class="h-50">
             @Body
         </div>
     </RadzenBody>
@@ -61,4 +62,5 @@
 
 @code {
     bool sidebar1Expanded = false;
+
 }

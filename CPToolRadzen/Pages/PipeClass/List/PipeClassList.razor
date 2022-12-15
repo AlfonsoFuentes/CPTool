@@ -3,28 +3,25 @@
 @using CPToolRadzen.Pages.PipeDiameter.List
 
 
-@inherits BaseTableTemplate<EditPipeClass>
+@inherits TableTemplate<EditPipeClass>
 <div class="container">
     <div class="row" style="margin-bottom: 1rem">
-        <div class="col" style="margin-bottom: 1rem">
-<TableTemplate T="EditPipeClass"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
-               @bind-GlobalElements="@RadzenTables.PipeClasses">
+        <div class="col" style="margin: 1rem">
+            <TableTemplate T="EditPipeClass"
+                           @bind-SelectedItem=@SelectedItem
+                           ShowDialog="ShowTableDialog"
+                           @bind-GlobalElements="@RadzenTables.PipeClasses">
 
-    <Columns>
-        <RadzenDataGridColumn TItem="EditPipeClass" Property="@nameof(EditPipeClass.Name)" Title="Name" TextAlign="TextAlign.Left">
-        </RadzenDataGridColumn>
+                <Columns>
+                    <RadzenDataGridColumn TItem="EditPipeClass" Property="@nameof(EditPipeClass.Name)" Title="Name" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
 
-    </Columns>
-</TableTemplate>
-  </div>
-        <div class="col" style="margin-bottom: 1rem">
-            <PipeDiameterList ParentId=@Selected.Id 
-            TableName="@($"Pipe diameter in {Selected.Name}")"    
-            >
+                </Columns>
+            </TableTemplate>
+        </div>
+        <div class="col" style="margin: 1rem">
+            <PipeDiameterList ParentId=@SelectedItem.Id @bind-GlobalElements=@RadzenTables.PipeDiameters 
+                              TableName="@($"Pipe diameter in {SelectedItem.Name}")">
 
             </PipeDiameterList>
         </div>

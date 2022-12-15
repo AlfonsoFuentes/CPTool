@@ -2,12 +2,11 @@
 @using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditPipeAccesory>
+@inherits TableTemplate<EditPipeAccesory>
 <TableTemplate T="EditPipeAccesory"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               FilterFunc="@(()=>ElmentsDetail)"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.PipeAccesorys">
 
     <Columns>

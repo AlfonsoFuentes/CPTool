@@ -7,18 +7,17 @@ using CPToolRadzen.Pages.RequestedBy.Dialog;
 
 namespace CPToolRadzen.Pages.RequestedBy.List
 {
-    public partial class RequestedByList : BaseTableTemplate<EditUser>
+    public partial class RequestedByList : TableTemplate<EditUser>
     {
 
-
-        public override List<EditUser> Elements => RadzenTables.Users;
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.Users = await CommandQuery.GetAll();
             TableName = "User";
   
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditUser model)
+        public async Task<bool> ShowTableDialog(EditUser model)
         {
 
             var result = await DialogService.OpenAsync<RequestedByDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

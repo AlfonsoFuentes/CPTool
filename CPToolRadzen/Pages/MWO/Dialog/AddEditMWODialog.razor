@@ -8,7 +8,7 @@
 
 <DialogTemplate Model="@Model">
     <ChildContent>
-        
+
         <SelectTemplate T="EditMWOType" Elements=@RadzenTables.MWOTypes
                         Label="MWO Type"
                         @bind-Model=@Model.MWOType
@@ -17,15 +17,15 @@
 
         </SelectTemplate>
 
-        
+
         <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
 
         </TextBoxTemplate>
-        
-        <NumericTemplate Label="MWO number" Required=true TValue="int"
-                         TargetValue=0
-                         RegexError="Enter a valid 5 digit"
-                         @bind-Value=@Model.Number Regex="\d{5}">
+
+        <NumericTemplate Label="MWO number"
+                          Regex="\d{5}"
+                          RegexError="Must supply 5 digits number"
+                          @bind-Value=@Model.Number>
 
         </NumericTemplate>
         <FieldTemplate Label="CEC Name" Value="@Model.CECName">
@@ -40,6 +40,6 @@
 @code {
 
     bool debug = true;
-   
+
 }
 

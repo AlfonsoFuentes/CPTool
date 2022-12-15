@@ -1,13 +1,13 @@
 ﻿using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 using CPTool.Application.Features.PipeAccesoryFeatures.CreateEdit;
-using CPTool.Application.Features.PipeAccesoryFeatures.Query.GetList;
+
 using CPTool.Application.Features.PipeClassFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
-using CPTool.Services;
+
 using CPToolRadzen.Pages.PipeAccesory.Dialog;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace CPToolRadzen.Pages.MWOItems.Dialog
 {
@@ -22,7 +22,7 @@ namespace CPToolRadzen.Pages.MWOItems.Dialog
         EditMaterial PipeMaterialSelected = new();
         List<EditPipeAccesory> GetFilteredList()
         {
-            var retorno = GlobalTables.PipeAccesorys.Where(x => x.pPipingItem == null).ToList();
+            var retorno = RadzenTables.PipeAccesorys.Where(x => x.pPipingItem == null&& x.pPipingItemId == Model.Id).ToList();
             if (PipeClassSelected.Id != 0)
             {
                 retorno = retorno.Where(x => x.Nozzles.Any(y => y.nPipeClassId == PipeClassSelected.Id)).ToList();

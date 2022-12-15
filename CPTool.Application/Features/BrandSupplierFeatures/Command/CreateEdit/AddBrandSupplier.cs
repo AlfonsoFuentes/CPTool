@@ -6,12 +6,7 @@ using CPTool.Application.Features.SupplierFeatures.CreateEdit;
 
 namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
 {
-    public enum InletBy
-    {
-        None,
-        Brand,
-        Supplier
-    }
+    
     public class AddBrandSupplier : AddCommand
     {
 

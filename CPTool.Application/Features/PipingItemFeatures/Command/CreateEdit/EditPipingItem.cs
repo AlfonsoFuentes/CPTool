@@ -11,7 +11,7 @@ using CPTool.Domain.Entities;
 
 namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
 {
-    public class EditPipingItem : EditCommand, IRequest<Result<int>>
+    public class EditPipingItem : EditCommand
     {
         public List<EditPipeAccesory> PipeAccesorys { get; set; } = new();
         public List<EditNozzle>? Nozzles { get; set; } = new();
@@ -36,30 +36,15 @@ namespace CPTool.Application.Features.PipingItemFeatures.CreateEdit
         public string TagId => SetTagId();
         public bool Insulation { get; set; }
         public string TagNumber { get; set; } = "";
-        public override T AddDetailtoMaster<T>()
-        {
-            if (typeof(T) == typeof(EditNozzle))
-            {
-                EditNozzle detail = new();
-
-                detail.Order = Nozzles!.Count == 0 ? 1 : this.Nozzles.OrderBy(x => x.Order).Last().Order + 1;
-                detail.Name = $"N{detail.Order}";
-                detail.PipingItem = this;
-                Nozzles.Add(detail);
-
-
-                return (detail as T)!;
-            }
-            return null!;
-        }
+        
         string SetTagId()
         {
             if (pDiameter == null) return "";
-            if (pProcessFluid == null) return $"{pDiameter?.Name}";
-            if (pMaterial == null) return $"{pDiameter?.Name}-{pProcessFluid?.TagLetter}";
-            if (TagNumber == "") return $"{pDiameter?.Name}-{pProcessFluid?.TagLetter}-{pMaterial?.Abbreviation}";
+            if (pMaterial == null) return $"{pDiameter?.Name}";
+            if (pProcessFluid == null) return $"{pDiameter?.Name}-{pMaterial?.Abbreviation}";
+            if (TagNumber == "") return $"{pDiameter?.Name}-{pMaterial?.Abbreviation}-{pProcessFluid?.TagLetter}";
 
-            var tag =$"{pDiameter?.Name}-{pProcessFluid?.TagLetter}-{pMaterial?.Abbreviation}-{TagNumber}-{(Insulation ? 1 : 0)}";
+            var tag =$"{pDiameter?.Name}-{pMaterial?.Abbreviation}-{pProcessFluid?.TagLetter}-{TagNumber}-{(Insulation ? 1 : 0)}";
 
             return tag;
         }

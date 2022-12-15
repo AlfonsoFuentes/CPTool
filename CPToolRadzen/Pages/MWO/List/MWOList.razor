@@ -1,17 +1,17 @@
 ﻿@page "/mwos"
 
 @using CPTool.Application.Features.MWOFeatures.CreateEdit;
-@inherits BaseTableTemplate<EditMWO>
+@inherits TableTemplate<EditMWO>
 @if (debug)
 {
 
 }
 <TableTemplate T="EditMWO"
                TableName="MWOs List"
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
+               @bind-SelectedItem=@SelectedItem
+                @bind-GlobalElements="@RadzenTables.MWOs"
                ShowDialog="ShowMWODialog"
-               @bind-GlobalElements="@RadzenTables.MWOs">
+             >
     <ToolBarButtons>
         <ButtonTemplate Icon="agriculture"
                         Disabled=@DisableEdit
@@ -52,13 +52,13 @@
 
     </ToolBarButtons>
     <Columns>
-        <RadzenDataGridColumn TItem="EditMWO" Property="@nameof(EditMWO.Name)"  Title="Name" TextAlign="TextAlign.Left">
+        <RadzenDataGridColumn TItem="EditMWO" Property="@nameof(EditMWO.Name)" Title="Name" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="EditMWO" Property="@nameof(EditMWO.CECName)" Title="CEC Name" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="EditMWO" Property="@nameof(EditMWO.Budget)" Title="Budget, USD" Filterable=false Sortable=false>
             <Template Context="detail">
-              
+
                 @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Budget)
             </Template>
         </RadzenDataGridColumn>

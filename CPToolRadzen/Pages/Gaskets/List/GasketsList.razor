@@ -2,12 +2,10 @@
 @using CPTool.Application.Features.GasketsFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditGasket>
+@inherits TableTemplate<EditGasket>
 <TableTemplate T="EditGasket"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+              ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.Gaskets">
 
     <Columns>

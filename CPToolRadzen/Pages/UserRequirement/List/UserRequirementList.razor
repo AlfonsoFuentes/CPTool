@@ -3,7 +3,7 @@
 @using CPTool.Application.Features.UserRequirementTypeFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditUserRequirement>
+@inherits TableTemplate<EditUserRequirement>
 <div style="margin-bottom: 1rem" class="row">
     <div class="col-md-3">
         <RadzenCard>
@@ -16,10 +16,10 @@
     </div>
     <div class="col-md-9">
         <TableTemplate T="EditUserRequirement"
-                       TableName=@($"{TableName} List")
-                       Elements="@Elements"
-                       @bind-SelectedItem=@Selected
-                       ShowDialog="ShowDialog"
+                       
+                       Filter="@(x => x.UserRequirementTypeId == URType.Id&&x.MWOId==ParentId)"
+                       @bind-SelectedItem=@SelectedItem
+                       ShowDialog="ShowTableDialog"
                        @bind-GlobalElements="@RadzenTables.UserRequirements">
 
             <Columns>

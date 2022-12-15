@@ -13,7 +13,7 @@ namespace CPTool.Application.Features.UnitFeatures.CreateEdit
             Amount = new(unit);
 
         }
-
+  
         public string? UnitName
         {
             get
@@ -32,6 +32,7 @@ namespace CPTool.Application.Features.UnitFeatures.CreateEdit
                 }
             }
         }
+
         public double Value
         {
             get
@@ -46,7 +47,7 @@ namespace CPTool.Application.Features.UnitFeatures.CreateEdit
         public Amount? Amount { get; set; }
         public List<CPTool.UnitsSystem.Unit> UnitsList => Amount!.UnitsList;
 
-
+        [Report]
         public string StringValue => Amount!.ToString("NG");
     }
 }

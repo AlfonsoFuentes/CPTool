@@ -5,6 +5,7 @@
               Disabled=Disabled
               Icon=@Icon
               Text="@Text"
+              Visible=@Visible
               MouseEnter="@(args => ShowTooltip(args) )"
               Click=@Click
               Size="ButtonSize.ExtraSmall" />
@@ -27,5 +28,7 @@
         if (ToolTip != "")
             tooltipService.Open(elementReference, ToolTip, options);
     }
-
+    [Parameter]
+    public bool Visible { get; set; } = true;
+    
 }

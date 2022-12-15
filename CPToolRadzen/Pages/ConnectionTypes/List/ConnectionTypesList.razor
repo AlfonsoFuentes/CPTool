@@ -1,18 +1,16 @@
 ﻿@page "/connection-types"
 @using CPTool.Application.Features.ConnectionTypeFeatures.CreateEdit;
 
-@inherits BaseTableTemplate<EditConnectionType>
+@inherits TableTemplate<EditConnectionType>
 <TableTemplate T="EditConnectionType"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-               ShowDialog="ShowDialog"
+               ShowDialog="ShowTableDialog"
+               @bind-SelectedItem=@SelectedItem
                @bind-GlobalElements="@RadzenTables.ConnectionTypes">
- 
+
     <Columns>
         <RadzenDataGridColumn TItem="EditConnectionType" Property="@nameof(EditConnectionType.Name)" Title="Name" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
-        
+
     </Columns>
 </TableTemplate>
 @code {

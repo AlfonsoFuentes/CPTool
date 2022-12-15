@@ -4,9 +4,14 @@ namespace CPToolRadzen.Pages.EquipmentType.Dialog
 {
     public partial class EquipmentTypeSubDialog:DialogTemplate<EditEquipmentTypeSub>
     {
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            FilteredList = Model.Id == 0 ? RadzenTables.EquipmentTypeSubs : RadzenTables.EquipmentTypeSubs.Where(x => x.Id != Model.Id).ToList();
+            Model = await CommandQuery.GetById(Model.Id);
+
+            FilteredList = await CommandQuery.GetAll();
+      
+            FilteredList = Model.Id == 0 ? FilteredList.Where(x=>x.EquipmentTypeId==Model.EquipmentTypeId).ToList() : 
+                FilteredList.Where(x => x.Id != Model.Id&& x.EquipmentTypeId == Model.EquipmentTypeId).ToList();
         }
     }
 }

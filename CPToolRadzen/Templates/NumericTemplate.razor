@@ -1,34 +1,31 @@
-﻿@typeparam TValue
+﻿@using Radzen
 
-<div style="margin-bottom: 0.1rem" class="row">
+@using Microsoft.AspNetCore.Components.Forms
+@typeparam TValue
+@inherits FormComponent<TValue>
+<div style=@UISettings.RowRem class="row">
     <div class=@UISettings.ColClassLabel>
-        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
     </div>
+    
     <div class=@UISettings.ColClassValue>
-        <RadzenNumeric ShowUpDown="false" Name="Numeric" Disabled=@Disabled
+
+        <RadzenNumeric ShowUpDown="false"  Disabled=@Disabled
                        TValue=TValue @bind-Value=@Value Format="@Format"
-                       Placeholder="Enter or clear value" Change="OnChange" Style=@StyleBoxWidth100 />
+                       @oninput=@OnChange 
+                       class=@UISettings.ClassBox
+                       Placeholder="Enter or clear value" Style=@UISettings.StyleBoxWidth100 />
 
-
-        @if (Required)
-        {
-            <RadzenCompareValidator Value=@TargetValue Component="Numeric" Text=@RequiredText Popup=true Style="position: absolute" Operator=@compareOperator />
-      
-        }
-        @if (IsRegexValidator)
-        {
-            <RadzenRegexValidator Component="Numeric" Text="@RegexError" Pattern="@Regex" Popup=true Style="position: absolute" />
-
-        }
-
-
+        
 
     </div>
 </div>
-
 @code {
+    [Parameter]
+    public string Regex { get; set; } = "";
 
-    CompareOperator compareOperator = CompareOperator.NotEqual; 
-    public string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
-    public string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+    [Parameter]
+    public string RegexError { get; set; } = "";
+   
 }

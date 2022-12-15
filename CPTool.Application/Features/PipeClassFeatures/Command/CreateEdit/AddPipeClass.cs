@@ -12,7 +12,7 @@ using CPTool.Domain.Entities;
 
 namespace CPTool.Application.Features.PipeClassFeatures.CreateEdit
 {
-    public class AddPipeClass : AddCommand, IRequest<Result<int>>
+    public class AddPipeClass : AddCommand, IRequest<IResult>
     {
        
 

@@ -2,12 +2,10 @@
 @using CPTool.Application.Features.TaksFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditTaks>
+@inherits TableTemplate<EditTaks>
 <TableTemplate T="EditTaks"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+              ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.Takss">
 
     <Columns>

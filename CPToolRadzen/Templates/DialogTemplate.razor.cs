@@ -1,8 +1,8 @@
 ﻿using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
 using CPTool.Persistence.BaseClass;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components;
+using CPTool.Application.Generic;
 
 namespace CPToolRadzen.Templates
 {
@@ -21,8 +21,7 @@ namespace CPToolRadzen.Templates
 
       
         protected bool errorVisible;
-
-       
+      
         [Parameter]
         public bool SaveDialog { get; set; } = true;
         [Parameter]
@@ -31,6 +30,7 @@ namespace CPToolRadzen.Templates
         public  bool DisableButtonSave { get; set; } = false;
         [Parameter]
         public EventCallback Save { get; set; }
+        
         protected virtual async  Task FormSubmit()
         {
             try

@@ -8,19 +8,19 @@ using CPToolRadzen.Templates;
 
 namespace CPToolRadzen.Pages.PipeClass.List
 {
-    public partial class PipeClassList : BaseTableTemplate<EditPipeClass>
+    public partial class PipeClassList : TableTemplate<EditPipeClass>
     {
 
-       
-        public override List<EditPipeClass> Elements => RadzenTables.PipeClasses;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.PipeClasses = await CommandQuery.GetAll();
+            RadzenTables.PipeDiameters=await QueryPipeDiameter.GetAll();
             TableName = "Pipe Class";
        
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditPipeClass model)
+        public async Task<bool> ShowTableDialog(EditPipeClass model)
         {
 
             var result = await DialogService.OpenAsync<PipeClassDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

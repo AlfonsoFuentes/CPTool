@@ -2,12 +2,10 @@
 @using CPTool.Application.Features.UserRequirementTypeFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditUserRequirementType>
+@inherits TableTemplate<EditUserRequirementType>
 <TableTemplate T="EditUserRequirementType"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+              ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.UserRequirementTypes">
 
     <Columns>

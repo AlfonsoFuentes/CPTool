@@ -1,7 +1,7 @@
 ﻿
 
 using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
-using CPTool.Domain.Entities;
+using CPTool.Domain.Enums;
 
 namespace CPTool.NewPages.Dialogs.ControlLoop.Dialog
 {
@@ -10,10 +10,10 @@ namespace CPTool.NewPages.Dialogs.ControlLoop.Dialog
         [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = null!;
         [Parameter]
         public EditControlLoop Model { get; set; } = null!;
-
+        public MudForm form { get; set; } = null!;
         public List<EditSignal> signalsIn => GetSignalsIn();
         public List<EditSignal> signalsOut => GetSignalsOut();
-        public MudForm form { get; set; } = null!;
+       
         List<EditSignal> GetSignalsIn()
         {
             List<EditSignal> signalsin = GlobalTables.Signals.Where(x =>

@@ -3,13 +3,14 @@
 {
 
 }
-<div style="margin-bottom: 1rem" class="row">
+<div style="margin-bottom: 0.2rem" class="row">
     <div class=@UISettings.ColClassLabel>
-        <RadzenLabel Text="@Label" Style=@StyleBoxWidth100 />
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
     </div>
     <div class=@UISettings.ColClassValue>
-        <RadzenDropDown AllowClear="true" TValue="T" Style=@StyleBoxWidth100 Disabled=@Disabled
-                        Data=@Elements  @bind-Value=@Model Name="Select"
+        <RadzenDropDown AllowClear="true" TValue="T" Style=@UISettings.StyleBoxWidth100 Disabled=@Disabled
+                        class=@UISettings.ClassBox
+                        Data=@Elements @bind-Value=@Value Name="Select"
                         Change=OnChange />
 
 
@@ -29,7 +30,7 @@
     {
         //Model = value;
 
-        await ModelChanged.InvokeAsync(Model);
+        await ValueChanged.InvokeAsync(Value);
 
     }
     public string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";

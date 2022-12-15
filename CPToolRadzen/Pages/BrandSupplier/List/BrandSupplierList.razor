@@ -14,12 +14,12 @@
 
 
             <TableTemplate T="EditBrand"
-                           TableName="Brand/Services List"
-                           Elements="@SelectedBrandList"
-                           @bind-SelectedItem=@SelectedBrand
-                           OnAdd="OnAddBrand"
-                           OnEdit="OnEditBrand"
-                           @bind-GlobalElements="@RadzenTables.Brands">
+                            FilterFunc="@GetBrands"
+                            TableName="Brand/Services List"
+                            @bind-SelectedItem=@SelectedBrand
+                            OnAdd="OnAddBrand"
+                            OnEdit="OnEditBrand"
+                            @bind-GlobalElements="@RadzenTables.Brands">
 
                 <ToolBarButtons>
                     <ButtonTemplate Icon="restore"
@@ -32,7 +32,7 @@
                 <Columns>
                     <RadzenDataGridColumn TItem="EditBrand" Property="@nameof(EditBrand.Name)" Title="Name" TextAlign="TextAlign.Left">
                     </RadzenDataGridColumn>
-                    <RadzenDataGridColumn TItem="EditBrand" Property="@nameof(EditBrand.BrandType)" Title="Type" TextAlign="TextAlign.Left">
+                    <RadzenDataGridColumn TItem="EditBrand" Property="@nameof(EditBrand.BrandTypeName)" Title="Type" TextAlign="TextAlign.Left">
                     </RadzenDataGridColumn>
 
                 </Columns>
@@ -43,7 +43,7 @@
 
             <TableTemplate T="EditSupplier"
                            TableName="Supplier List"
-                           Elements="@SelectedSupplierList"
+                           FilterFunc="@GetSupplier"
                            @bind-SelectedItem=@SelectedSupplier
                            OnAdd="OnAddSupplier"
                            OnEdit="OnEditSupplier"
@@ -62,7 +62,10 @@
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="EditSupplier" Property="@nameof(EditSupplier.VendorCode)" Title="Vendor Code" TextAlign="TextAlign.Left">
                     </RadzenDataGridColumn>
-
+                    <RadzenDataGridColumn TItem="EditSupplier" Property="@nameof(EditSupplier.TaxCodeLDName)" Title="Tax Code LD" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="EditSupplier" Property="@nameof(EditSupplier.TaxCodeLPName)" Title="Tax Code LP" TextAlign="TextAlign.Left">
+                    </RadzenDataGridColumn>
                 </Columns>
             </TableTemplate>
         </div>

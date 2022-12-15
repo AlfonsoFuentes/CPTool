@@ -2,45 +2,40 @@
 using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
 using CPTool.Application.Features.ControlLoopFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
+using CPTool.Application.Generic;
 using CPToolRadzen.Templates;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace CPToolRadzen.Pages.BrandSupplier.Dialog
 {
-    public partial class BrandDialog
+    public partial class BrandDialog : DialogTemplate<EditBrandSupplier>
     {
-        [Inject]
-        public ICommandQuery<EditBrand> CommandBrand { get; set; }
-
-        [Inject]
-        public ICommandQuery<EditBrandSupplier> CommandQuery { get; set; }
-
-        protected List<EditBrand> FilteredList => ( Model.Brand.Id == 0) ? RadzenTables.Brands : RadzenTables.Brands.Where(x => x.Id != Model.Brand.Id).ToList();
-        [Parameter]
-        public EditBrandSupplier Model { get; set; } = new();
 
        
-        protected bool errorVisible;
+        protected override async Task OnInitializedAsync()
+        {
+           
+            FilteredList = await CommandQuery.GetAll();
+            Model.Brand = await QueryBrand.GetById(Model.Brand.Id);
+            RadzenTables.Brands = await QueryBrand.GetAll();
+            RadzenTables.Brands=Model.Brand.Id==0? RadzenTables.Brands: RadzenTables.Brands.Where(x=>x.Id!=Model.Brand.Id).ToList();    
+            RadzenTables.Suppliers = await QuerySupplier.GetAll();
+
+        }
 
 
-        [Parameter]
-        public bool SaveDialog { get; set; } = true;
 
 
-        protected async virtual Task FormSubmit()
+        async Task SaveBrand()
         {
             try
             {
                 if (SaveDialog)
                 {
-                    await CommandBrand.AddUpdate(Model.Brand);
-                    var result = await CommandQuery.AddUpdate(Model);
-                    if (result.Succeeded)
-                    {
-                        RadzenTables.BrandSuppliers = await CommandQuery.GetAll();
-                    }
+                    await QueryBrand.AddUpdate(Model.Brand);
+                    var result = await QueryBrandSupplier.AddUpdate(Model);
+
                     DialogService.Close(result.Succeeded);
                 }
                 else
@@ -56,24 +51,6 @@ namespace CPToolRadzen.Pages.BrandSupplier.Dialog
             }
         }
 
-        protected void CancelButtonClick(MouseEventArgs args)
-        {
-            DialogService.Close(false);
-        }
 
-
-        protected bool hasChanges = false;
-        protected bool canEdit = true;
-
-
-        protected async Task ReloadButtonClick(MouseEventArgs args)
-        {
-            CommandQuery.Reset();
-            hasChanges = false;
-            canEdit = true;
-
-
-            Model = await CommandQuery.GetById(Model.Id);
-        }
     }
 }

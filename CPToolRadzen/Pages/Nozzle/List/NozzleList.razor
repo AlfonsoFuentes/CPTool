@@ -2,16 +2,18 @@
 @using CPTool.Application.Features.NozzleFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditNozzle>
+@inherits TableTemplate<EditNozzle>
 <TableTemplate T="EditNozzle"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               OnAdd="@OnAdd"
+               FilterFunc="@(()=>ElementDetails)"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.Nozzles">
 
     <Columns>
         <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.Description)" Title="Description" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.StreamType)" Title="Type" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
@@ -19,16 +21,16 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.PipeDiameterName)" Title="Size" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.nPipeClassName)" Title="Class" TextAlign="TextAlign.Left">
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.PipeClassName)" Title="Class" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.nMaterialName)" Title="Material" TextAlign="TextAlign.Left">
+        <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.MaterialName)" Title="Material" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="EditNozzle" Property="@nameof(EditNozzle.ConnectionTypeName)" Title="End Type" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
     </Columns>
 </TableTemplate>
 @code {
-      
-   
-      
+
+
+
 }

@@ -1,0 +1,48 @@
+﻿@using CPTool.Application.Features.SignalsFeatures.CreateEdit;
+<Panel>
+    <Left>
+        <RadzenCard>
+
+
+            <SelectTemplate T="EditSignal"
+                            PropertyName="Name"
+                            Elements=@DialogParent.signalsIn
+                            Label="PV"
+                            @bind-Model="@Model.ProcessVariable">
+
+            </SelectTemplate>
+            @if (Model.ProcessVariable.Id != 0)
+            {
+                
+                <SelectUnitTemplate @bind-Model=@Model.ProcessVariableValue Label="PV Value"></SelectUnitTemplate>
+               
+
+            }
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <SelectTemplate T="EditSignal"
+                        PropertyName="Name"
+                        Elements=@DialogParent.signalsOut
+                        Label="CV"
+                        @bind-Model="@Model.ControlledVariable">
+
+        </SelectTemplate>
+        @if (Model.ControlledVariable.Id != 0)
+        {
+            <NumericTemplate TValue="double" @bind-Value="@Model.ControlledVariableValue"
+                         Label="%CV PV"></NumericTemplate>
+         
+           
+
+
+
+        }
+    </Rigth>
+</Panel>
+
+
+
+@code {
+
+}

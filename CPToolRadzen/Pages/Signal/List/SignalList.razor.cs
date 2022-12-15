@@ -6,19 +6,21 @@ using CPToolRadzen.Pages.Signal.Dialog;
 
 namespace CPToolRadzen.Pages.Signal.List
 {
-    public partial class SignalList : BaseTableTemplate<EditSignal>
+    public partial class SignalList : TableTemplate<EditSignal>
     {
 
-        EditMWO Parent => RadzenTables.MWOs.FirstOrDefault(x => x.Id == ParentId);
-        public override List<EditSignal> Elements => RadzenTables.Signals.Where(x => x.MWOId == ParentId).ToList();
+        EditMWO Parent = new();
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            Parent = await QueryMWO.GetById(ParentId);
+            RadzenTables.Signals = await CommandQuery.GetAll();
+           
             TableName = "Signal";
 
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditSignal model)
+        public async Task<bool> ShowTableDialog(EditSignal model)
         {
             if (model.Id == 0)
             {

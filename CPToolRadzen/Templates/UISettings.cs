@@ -14,6 +14,9 @@
         public static string ColClassUnitValue { get; set; } = $"col-md-{UnitValueColumn}";
         public static string ColClassUnit { get; set; } = $"col-md-{UnitColumn}";
 
-       
+        public static string StyleBoxWidth100 { get; set; } = "width: 100%; padding-top:2px; padding-bottom:2px";
+        public static string StyleBox { get; set; } = "padding-top:2px; padding-bottom:2px";
+
+        public static string ClassBox { get; set; } = "d-inline-block";
     }
 }

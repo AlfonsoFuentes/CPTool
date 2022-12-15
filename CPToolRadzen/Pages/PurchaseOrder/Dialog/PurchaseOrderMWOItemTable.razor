@@ -1,0 +1,48 @@
+﻿<TableTemplate T="EditMWOItem"
+               ShowToolBar=true
+               ShowAdd=false
+               ShowDelete=false
+               ShowEdit=false
+               ShowReport=false
+               TableName="@($"{Dialog.Model.MWO.Name} Items List")"
+               @bind-SelectedItem=@Dialog.SelectedItemToAdd
+               @bind-GlobalElements="@MWOItems">
+    <ToolBarButtons>
+        <ButtonTemplate Icon="arrow_forward"
+                        Disabled=@Dialog.DisableAddRemoveMWOItem
+                        Click=AddItem
+                        ToolTip="Add selected Item">
+
+        </ButtonTemplate>
+       
+
+    </ToolBarButtons>
+    <Columns>
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.Nomenclatore)" Title="No#" TextAlign="TextAlign.Left" Filterable=false Sortable=false Width="50px">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWOItem.TagId)" Title="Tag" TextAlign="TextAlign.Left" Filterable=true Sortable=true Width="100px">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EditMWOItem" Property="@nameof(EditMWO.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+
+@code {
+    [CascadingParameter]
+    public PurchaseOrderDialog Dialog { get; set; }
+
+    [Parameter]
+    public List<EditMWOItem> MWOItems { get; set; }
+    [Parameter]
+    public EventCallback<List<EditMWOItem>> MWOItemsChanged { get; set; }
+    async Task AddItem()
+    {
+        await Dialog.AddItem();
+
+        StateHasChanged();
+    }
+
+
+}

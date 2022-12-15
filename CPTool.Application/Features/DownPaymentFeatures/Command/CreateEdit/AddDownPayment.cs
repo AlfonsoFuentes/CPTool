@@ -6,6 +6,7 @@
 
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
+using CPTool.Domain.Enums;
 
 namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
 {

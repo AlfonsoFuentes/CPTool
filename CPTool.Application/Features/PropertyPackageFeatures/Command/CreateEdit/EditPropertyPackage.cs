@@ -1,7 +1,4 @@
 ﻿
-
-using CPTool.Application.Features.ProcessFluidFeatures.Query.GetById;
-using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
 using EquipmentCalculation;
 
 namespace CPTool.Application.Features.PropertyPackageFeatures.CreateEdit

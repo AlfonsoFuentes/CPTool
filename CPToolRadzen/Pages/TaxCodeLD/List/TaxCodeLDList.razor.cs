@@ -7,18 +7,17 @@ using CPToolRadzen.Pages.TaxCodeLD.Dialog;
 
 namespace CPToolRadzen.Pages.TaxCodeLD.List
 {
-    public partial class TaxCodeLDList : BaseTableTemplate<EditTaxCodeLD>
+    public partial class TaxCodeLDList : TableTemplate<EditTaxCodeLD>
     {
 
-        public override List<EditTaxCodeLD> Elements => RadzenTables.TaxCodeLDs;
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.TaxCodeLDs = await CommandQuery.GetAll();
             TableName = "Tax Code LD";
           
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditTaxCodeLD model)
+        public async Task<bool> ShowTableDialog(EditTaxCodeLD model)
         {
 
             var result = await DialogService.OpenAsync<TaxCodeLDDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

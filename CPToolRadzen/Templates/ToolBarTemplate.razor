@@ -36,7 +36,7 @@
                     {
                         <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Click="@OnExportClick" Size=ButtonSize.ExtraSmall
                                    Variant="Variant.Flat" Shade="Shade.Lighter">
-                            <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
+                            <RadzenSplitButtonItem Text="Excel" Value="xlsx"  />
                             <RadzenSplitButtonItem Text="CSV" Value="csv" />
                             <RadzenSplitButtonItem Text="pdf" Value="pdf" />
                         </RadzenSplitButton>
@@ -45,7 +45,7 @@
                     }
                 </div>
                 <div class="col-12 col-md-6">
-                    <RadzenTextBox Placeholder="Search ..." style="display: block; width: 100%" @oninput="@Search" />
+                    <RadzenTextBox Placeholder="Search ..." style="display: block; width: 100%" @bind-Value=@Search @oninput="@OnSearch" />
                 </div>
             </div>
 
@@ -68,8 +68,7 @@
     public EventCallback OnDelete { get; set; }
     [Parameter]
     public EventCallback<RadzenSplitButtonItem> OnExportClick { get; set; }
-    [Parameter]
-    public EventCallback<ChangeEventArgs> Search { get; set; }
+
     [Parameter]
     public EventCallback OnPDF { get; set; }
     [Parameter]
@@ -101,4 +100,14 @@
     [Parameter]
 
     public bool DisableReport { get; set; } = false;
+    [Parameter]
+    public string Search { get; set; } = "";
+    [Parameter]
+    public EventCallback<string> SearchChanged { get; set; } 
+
+    async Task OnSearch(ChangeEventArgs arg)
+    {
+        Search = arg.Value.ToString();
+        await SearchChanged.InvokeAsync(Search);
+    }
 }

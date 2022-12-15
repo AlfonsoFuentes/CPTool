@@ -1,5 +1,5 @@
 ﻿using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
+using CPTool.Application.Generic;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.ApplicationRadzen
 {
-     public static class ApplicationRadzenServiceRegistration
+    public static class ApplicationRadzenServiceRegistration
     {
         public static IServiceCollection AddApplicationRadzenServices(
             this IServiceCollection services)
@@ -22,7 +22,7 @@ namespace CPTool.ApplicationRadzen
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddTransient(typeof(ICommandQuery<>), typeof(CommandQuery<>));
-            services.AddTransient(typeof(ICommandQuery<EditBrandSupplier>),typeof( CommandQueryBrandSupplier));
+    
   
             return services;
         }

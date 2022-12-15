@@ -9,9 +9,6 @@
 <DialogTemplate Model="@Model">
     <ChildContent>
 
-    
-
-
         <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name StringsToCompare=@(FilteredList.Select(x => x.Name).ToList())>
 
         </TextBoxTemplate>

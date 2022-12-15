@@ -1,4 +1,6 @@
-﻿namespace CPTool.Domain.Entities
+﻿using CPTool.Domain.Enums;
+
+namespace CPTool.Domain.Entities
 {
     public class Nozzle  : BaseDomainModel
     {
@@ -35,6 +37,7 @@
         public int? PipingItemId { get; set; }
         public PipingItem? PipingItem { get; set; }
         public int Order { get; set; }
+   
     }
 
 }

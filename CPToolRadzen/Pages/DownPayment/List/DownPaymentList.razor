@@ -2,12 +2,10 @@
 
 @using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
 
-@inherits BaseTableTemplate<EditDownPayment>
+@inherits TableTemplate<EditDownPayment>
 <TableTemplate T="EditDownPayment"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-               ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.DownPayments">
 
     <Columns>

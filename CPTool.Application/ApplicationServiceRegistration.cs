@@ -1,6 +1,8 @@
 ﻿
 
 
+using CPTool.Application.Generic;
+
 namespace CPTool.Application
 {
     public static class ApplicationServiceRegistration
@@ -12,10 +14,10 @@ namespace CPTool.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
            
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            //services.AddTransient(typeof(IRequestHandler<,>), typeof(QueryListHandler<,>));
-     
-         
-           
+
+
+            services.AddTransient(typeof(ICommandQuery<>), typeof(CommandQuery<>));
+
             return services;
         }
         

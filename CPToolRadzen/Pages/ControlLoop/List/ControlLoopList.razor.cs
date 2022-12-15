@@ -7,23 +7,29 @@ using CPToolRadzen.Templates;
 
 namespace CPToolRadzen.Pages.ControlLoop.List
 {
-    public partial class ControlLoopList : BaseTableTemplate<EditControlLoop>
+    public partial class ControlLoopList : TableTemplate<EditControlLoop>
     {
-
-        EditMWO Parent => RadzenTables.MWOs.FirstOrDefault(x => x.Id == ParentId);
-        public override List<EditControlLoop> Elements => RadzenTables.ControlLoops.Where(x => x.MWOId == ParentId).ToList();
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            TableName = "Control Loop";
-      
+            RadzenTables.ControlLoops = await CommandQuery.GetAll();
+            Parent = await QueryMWO.GetById(ParentId);
           
-            base.OnInitialized();
-        }
-        public async Task<bool> ShowDialog(EditControlLoop model)
-        {
 
+            TableName = "Control Loop";
+            Filter = x => x.MWOId == ParentId;
+
+        }
+        EditMWO Parent = new();
+        
+        public async Task<bool> ShowTableDialog(EditControlLoop model)
+        {
+            if (model.Id == 0)
+            {
+                model.MWO = Parent;
+            }
             var result = await DialogService.OpenAsync<ControlLoopDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",
-                  new Dictionary<string, object> { { "Model", model } });
+                  new Dictionary<string, object> { { "Model", model } },
+                  new DialogOptions() { Width = "1200px", Height = "750px", Resizable = true, Draggable = true });
             if (result == null) return false;
             return (bool)result;
 

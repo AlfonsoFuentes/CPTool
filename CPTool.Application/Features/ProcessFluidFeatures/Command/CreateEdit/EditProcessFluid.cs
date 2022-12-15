@@ -1,11 +1,4 @@
-﻿using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
-using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
-using CPTool.Application.Features.PipeDiameterFeatures.Query.GetById;
-using CPTool.Application.Features.PipeDiameterFeatures.Query.GetList;
-using CPTool.Application.Features.PipingItemFeatures.CreateEdit;
-using CPTool.Application.Features.ProcessFluidFeatures.Query.GetById;
-using CPTool.Application.Features.ProcessFluidFeatures.Query.GetList;
-using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
+﻿using CPTool.Application.Features.PropertyPackageFeatures.CreateEdit;
 using EquipmentCalculation;
 
 namespace CPTool.Application.Features.ProcessFluidFeatures.CreateEdit

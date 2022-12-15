@@ -2,12 +2,11 @@
 @using CPTool.Application.Features.TaxCodeLDFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditTaxCodeLD>
+@inherits TableTemplate<EditTaxCodeLD>
 <TableTemplate T="EditTaxCodeLD"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-               ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+            
+               ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.TaxCodeLDs">
 
     <Columns>

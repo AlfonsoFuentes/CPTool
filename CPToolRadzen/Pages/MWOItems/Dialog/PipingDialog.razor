@@ -9,6 +9,7 @@
 
            
             <SelectTemplate T="EditPipeClass"
+                  Clearable=true
                             Elements=@RadzenTables.PipeClasses
                             Change="OnChangePipeClass"
                             PropertyName="Name"
@@ -18,6 +19,7 @@
 
             </SelectTemplate>
             <SelectTemplate T="EditPipeDiameter"
+                            Clearable=true
                             PropertyName="Name"
                             Disabled=@(Model.pPipeClass==null?true:false)
                             Elements=@(Model.pPipeClass==null?new():Model.pPipeClass.PipeDiameters)
@@ -26,15 +28,8 @@
 
 
             </SelectTemplate>
-            <SelectTemplate T="EditProcessFluid"
-                            PropertyName="Name"
-                            Elements=@RadzenTables.ProcessFluids
-                            Label="Process Fluid"
-                            @bind-Model="@Model.pProcessFluid">
-
-
-            </SelectTemplate>
             <SelectTemplate T="EditMaterial"
+                            Clearable=true
                             PropertyName="Name"
                             Elements=@RadzenTables.Materials
                             Label="Pipe Material"
@@ -42,6 +37,16 @@
 
 
             </SelectTemplate>
+            <SelectTemplate T="EditProcessFluid"
+                            Clearable=true
+                            PropertyName="Name"
+                            Elements=@RadzenTables.ProcessFluids
+                            Label="Process Fluid"
+                            @bind-Model="@Model.pProcessFluid">
+
+
+            </SelectTemplate>
+           
             <SwitchTemplate Label="Insulation" @bind-Value="@Model.Insulation">
 
             </SwitchTemplate>

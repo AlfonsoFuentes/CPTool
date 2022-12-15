@@ -9,9 +9,12 @@ namespace CPToolRadzen.Pages.UserRequirement.Dialog
 {
     public partial class UserRequirementDialog : DialogTemplate<EditUserRequirement>
     {
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            FilteredList = Model.Id == 0 ? RadzenTables.UserRequirements : RadzenTables.UserRequirements.Where(x => x.Id != Model.Id).ToList();
+            Model = await CommandQuery.GetById(Model.Id);
+            FilteredList = await CommandQuery.GetAll();
+            FilteredList = Model.Id == 0 ? FilteredList : FilteredList.Where(x => x.Id != Model.Id).ToList();
+            RadzenTables.Users = await QueryUser.GetAll();
         }
         async Task<bool> ShowUSerDialog(EditUser model)
         {

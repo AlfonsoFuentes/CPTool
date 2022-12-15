@@ -1,11 +1,7 @@
-﻿using CPTool.Application.Features.BrandFeatures.Query.GetById;
-using CPTool.Application.Features.BrandFeatures.Query.GetList;
+﻿
 using CPTool.Application.Features.BrandSupplierFeatures.CreateEdit;
-using CPTool.Application.Features.EquipmentItemFeatures.CreateEdit;
-using CPTool.Application.Features.InstrumentItemFeatures.CreateEdit;
 
-using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;
-using CPTool.Application.Features.SupplierFeatures.CreateEdit;
+using CPTool.Domain.Enums;
 
 namespace CPTool.Application.Features.BrandFeatures.CreateEdit
 {
@@ -13,6 +9,8 @@ namespace CPTool.Application.Features.BrandFeatures.CreateEdit
     {
 
         public List<EditBrandSupplier>? BrandSuppliers { get; set; } = new();
+        [Report(Order = 3)]
+        public string BrandTypeName=> BrandType.ToString();
         public BrandType BrandType { get; set; }
 
        

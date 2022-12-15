@@ -41,7 +41,7 @@
                                      StringsToCompare=@(FilteredList.Select(x => x.DownpaymentName).ToList())></TextBoxTemplate>
 
                     <TextBoxTemplate @bind-Value="@Model.ManagerEmail" Label="Manager email" Required=true
-                                     ValidateEmail=true
+                                   
                                      Disabled=@(Model.Id!=0)></TextBoxTemplate>
                     <TextBoxTemplate @bind-Value="@Model.ProformaInvoice" Label="Proforma Invoice #" Required=true
                                      Disabled=@(Model.Id!=0)></TextBoxTemplate>

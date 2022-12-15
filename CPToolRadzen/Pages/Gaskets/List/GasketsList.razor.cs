@@ -8,19 +8,15 @@ using CPToolRadzen.Templates;
 
 namespace CPToolRadzen.Pages.Gaskets.List
 {
-    public partial class GasketsList : BaseTableTemplate<EditGasket>
+    public partial class GasketsList : TableTemplate<EditGasket>
     {
-
-        public override List<EditGasket> Elements => RadzenTables.Gaskets;
-
-
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            RadzenTables.Gaskets = await CommandQuery.GetAll();
             TableName = "Gasket";
-            base.OnInitialized();
+   
         }
-        public async Task<bool> ShowDialog(EditGasket model)
+        public async Task<bool> ShowTableDialog(EditGasket model)
         {
 
             var result = await DialogService.OpenAsync<GasketsDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

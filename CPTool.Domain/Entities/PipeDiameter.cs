@@ -13,12 +13,12 @@
         [ForeignKey("PipeDiameterId")]
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
         public int? OuterDiameterId { get; set; }
-        public Unit? OuterDiameter { get; set; }
+        public EntityUnit? OuterDiameter { get; set; }
         public int? InternalDiameterId { get; set; }
-        public Unit? InternalDiameter { get; set; }
+        public EntityUnit? InternalDiameter { get; set; }
 
         public int? ThicknessId { get; set; }
-        public Unit? Thickness { get; set; }
+        public EntityUnit? Thickness { get; set; }
 
 
        

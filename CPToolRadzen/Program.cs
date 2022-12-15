@@ -1,7 +1,8 @@
 using Autofac.Features.Variance;
+using BlazorDownloadFile;
 using CPTool.Application;
-using CPTool.ApplicationRadzen;
-using CPTool.Identity;
+
+
 using CPTool.Infrastructure;
 using CPTool.Infrastructure.Persistence;
 using CPTool.Services;
@@ -19,11 +20,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddBlazorDownloadFile();
 
-//builder.Services.AddScoped<PMToolService>();
-builder.Services.ConfigureIdentityServices(builder.Configuration);
 builder.Services.CurrencyService();
-builder.Services.AddApplicationRadzenServices();
+
 
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();

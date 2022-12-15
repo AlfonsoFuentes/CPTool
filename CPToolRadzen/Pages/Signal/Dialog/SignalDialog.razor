@@ -4,6 +4,7 @@
 @using CPTool.Application.Features.SignalTypesFeatures.CreateEdit;
 @using CPTool.Application.Features.SignalsFeatures.CreateEdit;
 @using CPTool.Application.Features.WireFeatures.CreateEdit;
+    using CPTool.Domain.Enums;
 
 @inherits DialogTemplate<EditSignal>
 @if (debug)
@@ -35,7 +36,7 @@
                     </SelectTemplate>
 
                     <SelectEnumTemplate T="IOType" Elements=@(Enum.GetValues<IOType>()) Label="Select  In/Out Type"
-                                        @bind-Model=@Model.IOType Required=true>
+                                        @bind-Value=@Model.IOType Required=true>
 
                     </SelectEnumTemplate>
                     <SwitchTemplate @bind-Value="@Model.IsWired" Label="IsWired?">

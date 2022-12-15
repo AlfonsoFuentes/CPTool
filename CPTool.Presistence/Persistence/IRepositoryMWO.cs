@@ -8,8 +8,8 @@ namespace CPTool.Persistence.Persistence
 {
     public interface IRepositoryMWO : IRepository<MWO>
     {
-        Task<MWO> GetMWO_ItemsIdAsync(int id);
-        Task<MWO> GetMWO_PurchaseOrderIdAsync(int id);
+       
+       
 
     }
 }

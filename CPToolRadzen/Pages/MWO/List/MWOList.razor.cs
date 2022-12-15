@@ -1,51 +1,47 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using Radzen.Blazor;
-using Radzen;
-using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
-using CPTool.Services;
-using CPTool.Application.Features.MMOTypeFeatures;
-using CPToolRadzen.Services;
-using CPTool.Application.Features.MWOFeatures.CreateEdit;
+
 using CPTool.Application.Features.TaksFeatures.CreateEdit;
-using CPTool.Application.Features.TaksFeatures.Query.GetList;
-using CPTool.ApplicationRadzen.FeaturesGeneric;
-using CPTool.Domain.Entities;
 using CPToolRadzen.Pages.Taks.Dialog;
-using CPTool.Application.Features.MaterialFeatures.CreateEdit;
+
 using CPToolRadzen.Pages.MWO.Dialog;
+using CPTool.Domain.Enums;
+using CPTool.Application.Generic;
 
 namespace CPToolRadzen.Pages.MWO.List
 {
-    public partial class MWOList : BaseTableTemplate<EditMWO>
+    public partial class MWOList : TableTemplate<EditMWO>
     {
-        public override List<EditMWO> Elements => RadzenTables.MWOs;
 
+        protected override async Task OnInitializedAsync()
+        {
+            RadzenTables.MWOs = await CommandQuery.GetAll();
+         
+        }
         void GoToUserRequirmentPage()
         {
-            NavigationManager.NavigateTo($"user-requirement/{Selected.Id}");
+            NavigationManager.NavigateTo($"user-requirement/{SelectedItem.Id}");
         }
         void GoToPurchaseOrderList()
         {
-            NavigationManager.NavigateTo($"purchase-order/{Selected.Id}");
+            NavigationManager.NavigateTo($"purchase-order/{SelectedItem.Id}");
         }
         void GoToUserSignalList()
         {
-            NavigationManager.NavigateTo($"signals/{Selected.Id}");
+            NavigationManager.NavigateTo($"signals/{SelectedItem.Id}");
         }
         void GoToMWOItemList()
         {
-            NavigationManager.NavigateTo($"mwo-items/{Selected.Id}");
+            NavigationManager.NavigateTo($"mwo-items/{SelectedItem.Id}");
         }
         void GoToControlLoopList()
         {
-            NavigationManager.NavigateTo($"control-loops/{Selected.Id}");
+            NavigationManager.NavigateTo($"control-loops/{SelectedItem.Id}");
         }
         async Task CreateTaskMWO()
         {
             EditTaks editTaks = new EditTaks();
-            editTaks.MWO = Selected;
+            editTaks.MWO = SelectedItem;
             editTaks.TaksType = TaksType.Manual;
             var result = await ShowTaksDialog(editTaks);
            

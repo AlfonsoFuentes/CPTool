@@ -9,22 +9,20 @@ using Microsoft.AspNetCore.Components;
 
 namespace CPToolRadzen.Pages.PipeAccesory.List
 {
-    public partial class PipeAccesoryList : BaseTableTemplate<EditPipeAccesory>
+    public partial class PipeAccesoryList : TableTemplate<EditPipeAccesory>
     {
 
         [Parameter]
         public  List<EditPipeAccesory> ElmentsDetail { get; set; }
-        public override List<EditPipeAccesory> Elements => ElmentsDetail==null? RadzenTables.PipeAccesorys: ElmentsDetail;
-
-
+      
 
         protected override void OnInitialized()
         {
             TableName = "Pipe Accesorys";
-       
+            FilterFunc = () => ElmentsDetail;
             base.OnInitialized();
         }
-        public async Task<bool> ShowDialog(EditPipeAccesory model)
+        public async Task<bool> ShowTableDialog(EditPipeAccesory model)
         {
 
             var result = await DialogService.OpenAsync<PipeAccesoryDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",

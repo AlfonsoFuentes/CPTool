@@ -10,10 +10,10 @@ namespace CPTool.Application.Features.UnitFeatures.Mapping
     {
         public UnitMapping()
         {
-            CreateMap<CPTool.Domain.Entities.Unit, EditUnit>();
+            CreateMap<CPTool.Domain.Entities.EntityUnit, EditUnit>();
             CreateMap<EditUnit, AddUnit>();
-            CreateMap<EditUnit, CPTool.Domain.Entities.Unit>();
-            CreateMap<AddUnit, CPTool.Domain.Entities.Unit>();
+            CreateMap<EditUnit, CPTool.Domain.Entities.EntityUnit>();
+            CreateMap<AddUnit, CPTool.Domain.Entities.EntityUnit>();
         }
     }
 }

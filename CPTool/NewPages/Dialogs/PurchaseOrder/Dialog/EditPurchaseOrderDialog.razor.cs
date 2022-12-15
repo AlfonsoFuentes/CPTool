@@ -3,6 +3,7 @@ using CPTool.Application.Features.PurchaseOrderItemFeature.Command.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderItemFeatures.Query.GetById;
 using CPTool.Application.Features.PurchaseOrderItemFeatures.Query.GetList;
 using CPTool.Domain.Entities;
+using CPTool.Domain.Enums;
 
 namespace CPTool.NewPages.Dialogs.PurchaseOrder.Dialog
 {

@@ -3,12 +3,10 @@
 @using CPTool.Application.Features.FieldLocationsFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditFieldLocation>
+@inherits TableTemplate<EditFieldLocation>
 <TableTemplate T="EditFieldLocation"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+              ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.FieldLocations">
 
     <Columns>

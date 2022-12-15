@@ -2,12 +2,10 @@
 @using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 
 
-@inherits BaseTableTemplate<EditMaterial>
+@inherits TableTemplate<EditMaterial>
 <TableTemplate T="EditMaterial"
-               TableName=@($"{TableName} List")
-               Elements="@Elements"
-               @bind-SelectedItem=@Selected
-              ShowDialog="ShowDialog"
+               @bind-SelectedItem=@SelectedItem
+              ShowDialog="ShowTableDialog"
                @bind-GlobalElements="@RadzenTables.Materials">
 
     <Columns>

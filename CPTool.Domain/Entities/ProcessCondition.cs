@@ -12,25 +12,25 @@
         [ForeignKey("pProcessConditionId")]
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;
         public int? PressureId { get; set; }
-        public Unit? Pressure { get; set; }
+        public EntityUnit? Pressure { get; set; }
         public int? TemperatureId { get; set; }
-        public Unit? Temperature { get; set; }
+        public EntityUnit? Temperature { get; set; }
         public int? MassFlowId { get; set; }
-        public Unit? MassFlow { get; set; }
+        public EntityUnit? MassFlow { get; set; }
         public int? VolumetricFlowId { get; set; }
-        public Unit? VolumetricFlow { get; set; }
+        public EntityUnit? VolumetricFlow { get; set; }
         public int? DensityId { get; set; }
-        public Unit? Density { get; set; }
+        public EntityUnit? Density { get; set; }
         public int? ViscosityId { get; set; }
-        public Unit? Viscosity { get; set; }
+        public EntityUnit? Viscosity { get; set; }
         public int? EnthalpyFlowId { get; set; }
-        public Unit? EnthalpyFlow { get; set; }
+        public EntityUnit? EnthalpyFlow { get; set; }
         public int? SpecificEnthalpyId { get; set; }
-        public Unit? SpecificEnthalpy { get; set; }
+        public EntityUnit? SpecificEnthalpy { get; set; }
         public int? ThermalConductivityId { get; set; }
-        public Unit? ThermalConductivity { get; set; }
+        public EntityUnit? ThermalConductivity { get; set; }
         public int? SpecificCpId { get; set; }
-        public Unit? SpecificCp { get; set; }
+        public EntityUnit? SpecificCp { get; set; }
 
     }
 
