@@ -1,0 +1,26 @@
+﻿@if(DialogParent.Model.Chapter!=null)
+{
+    @switch (DialogParent.Model.Chapter.Id)
+    {
+        case 4:
+                    <EquipmentDialog></EquipmentDialog>
+            break;
+        case 6:
+                    <PipingDialog></PipingDialog>
+            break;
+        case 7:
+                    <InstrumentDialog></InstrumentDialog>
+            break;
+    }
+}
+
+@if (debug)
+{
+
+}
+
+@code {
+    bool debug = true;
+    [CascadingParameter]
+    protected MWOItemDialog DialogParent { get; set; }
+}

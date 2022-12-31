@@ -4,7 +4,7 @@ using CPTool.Domain.Enums;
 
 namespace CPTool.Domain.Entities
 {
-    public class PurchaseOrder : BaseDomainModel
+    public class PurchaseOrder : AuditableEntity
     {
 
         public int? MWOId { get; set; }

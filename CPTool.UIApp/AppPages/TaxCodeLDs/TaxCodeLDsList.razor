@@ -1,0 +1,40 @@
+﻿@page "/tax-codes-LD"
+@using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.TaxCodeLDs.Commands.CreateUpdate;
+
+
+
+@if (debug)
+{
+
+}
+
+<TableTemplateHierarchy TableName="Connection Type List"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+    <Template Context="order">
+        <TableTemplate TableName=@($"Suppliers in Tax Code LD: {order.Name}")
+                       ShowToolBar=false
+                       Elements="@order.Suppliers">
+
+            <Columns>
+
+                <RadzenDataGridColumn TItem="CommandSupplier" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="CommandSupplier" Property="@(nameof(CommandSupplier.VendorCode))" Title="Vendor Code" TextAlign="TextAlign.Left">
+                </RadzenDataGridColumn>
+            </Columns>
+        </TableTemplate>
+    </Template>
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandTaxCodeLD" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplateHierarchy>
+
+@code {
+    bool debug = true;
+}

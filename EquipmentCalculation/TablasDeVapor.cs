@@ -3051,12 +3051,12 @@ namespace EquipmentCalculation
             entropiaMolar = entropiaMasica * WM;
             CpMolar = CpMasico * WM;
             CvMolar = CvMasico * WM;
-            densidadMasica = 1.0 / volumenEspecificoMasico;
+            densidadMasica = volumenEspecificoMasico == 0 ? 0 : 1.0 / volumenEspecificoMasico;
             densidadMolar = densidadMasica * WM;
             viscosidad = ViscosidadDinamicaDeDensidad(pp, TT, densidadMasica);
             conductividadTermica = thermalConductivity(densidadMasica, TT);
             tensionSuperficial = SurfaceTension(TT);
-            viscosidadCinematica = viscosidad / densidadMasica;
+            viscosidadCinematica = densidadMasica == 0 ? 0: viscosidad / densidadMasica;
         }
         public override void CalculateProperties()
         {

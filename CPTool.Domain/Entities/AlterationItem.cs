@@ -1,10 +1,9 @@
-﻿using CPTool.Domain.Common;
-using System.Linq.Expressions;
+﻿
 
 namespace CPTool.Domain.Entities
 {
 
-    public class AlterationItem : BaseDomainModel
+    public class AlterationItem : AuditableEntity
     {
 
         [ForeignKey("AlterationItemId")]

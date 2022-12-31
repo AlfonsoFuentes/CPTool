@@ -1,0 +1,33 @@
+﻿
+
+
+<div style="margin-bottom: 0.2rem" class="row">
+    <div class="col-md-4">
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
+    </div>
+    <div class="col-md-4" >
+        <RadzenNumeric ShowUpDown="false" Name="Numeric" class=@UISettings.ClassBox Style=@UISettings.StyleBoxWidth100
+                       TValue=double @bind-Value=@LocalModel.Value Format=@Format
+                       Change=@OnValueChanged  />
+
+       
+
+    </div>
+    <div class="col-md-4">
+        <RadzenDropDown AllowClear="false" TValue="CPTool.UnitsSystem.Unit"
+                        Style=@UISettings.StyleBoxWidth100
+                        class=@UISettings.ClassBox
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true"
+                        Data=@LocalModel.UnitsList TextProperty="Symbol" @bind-Value=@LocalModel.Amount.Unit Name="Select"
+                        Change=UnitChanged />
+    </div>
+</div>
+
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+
+}

@@ -64,5 +64,6 @@ namespace CPToolRadzen.Pages.MWO.List
             return (bool)result;
 
         }
+        bool DisableEdit => SelectedItem.Id == 0;
     }
 }

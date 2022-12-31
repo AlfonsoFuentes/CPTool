@@ -1,0 +1,31 @@
+﻿@using Radzen
+
+@using Microsoft.AspNetCore.Components.Forms
+@typeparam TValue
+@inherits FormComponent<TValue>
+<div style=@UISettings.RowRem class="row">
+    <div class=@UISettings.ColClassLabel>
+
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
+    </div>
+    
+    <div class=@UISettings.ColClassValue>
+
+        <RadzenNumeric ShowUpDown="false"  Disabled=@Disabled
+                       TValue=TValue @bind-Value=@Value Format="@Format"
+                       @oninput=@OnChange 
+                       class=@UISettings.ClassBox
+                       Placeholder="Enter or clear value" Style=@UISettings.StyleBoxWidth100 />
+
+        
+
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string Regex { get; set; } = "";
+
+    [Parameter]
+    public string RegexError { get; set; } = "";
+   
+}

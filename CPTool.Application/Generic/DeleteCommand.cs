@@ -8,7 +8,7 @@
     }
     public class DeleteCommandHandler<T, TEntity> : IRequestHandler<DeleteCommand<T>, IResult>
        where T : EditCommand
-       where TEntity : BaseDomainModel
+       where TEntity : AuditableEntity
     {
         protected IUnitOfWork _unitOfWork;
 

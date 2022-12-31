@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class UserRequirement : BaseDomainModel
+    public class UserRequirement : AuditableEntity
     {
         public int? UserRequirementTypeId { get; set; }
         public UserRequirementType? UserRequirementType { get; set; } = null!;

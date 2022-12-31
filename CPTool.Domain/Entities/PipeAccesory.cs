@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class PipeAccesory  : BaseDomainModel
+    public class PipeAccesory  : AuditableEntity
     {
         public int? pPipingItemId { get; set; }
         public PipingItem? pPipingItem { get; set; }

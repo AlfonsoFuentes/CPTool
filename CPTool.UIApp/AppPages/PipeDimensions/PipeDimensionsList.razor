@@ -1,0 +1,58 @@
+﻿@page "/pipe-classes"
+
+@using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
+<Panel>
+    <Left>
+        <TableTemplate 
+                       TableName="Pipe classList"
+                       @bind-SelectedItem=@SelectedItem
+                       ShowDialog="ShowPipeClassDialog"
+                       OnDelete="@DeletePipeClass"
+                       Elements="@Elements" Export="@ExportPipeClass">
+
+            <Columns>
+
+                <RadzenDataGridColumn TItem="CommandPipeClass" Property="@nameof(CommandPipeClass.Name)" Title="Name" TextAlign="TextAlign.Left">
+                </RadzenDataGridColumn>
+            </Columns>
+        </TableTemplate>
+    </Left>
+    <Rigth>
+        <TableTemplate TableName=@($"Diameter in {SelectedItem.Name}")
+                       @bind-SelectedItem=@SelectedItemSub
+                       ShowDialog="ShowPipeDiameterDialog"
+                       OnDelete="@DeletePipeDiameter"
+                       Elements="@SelectedItem.PipeDiameters"
+                       Export="@ExportPipeDiameter">
+
+            <Columns>
+
+              <RadzenDataGridColumn TItem="CommandPipeDiameter" Property="@nameof(CommandPipeDiameter.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPipeDiameter" Title="OD" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+            <Template>
+                @context.OuterDiameter.StringValue
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPipeDiameter" Title="ID" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+            <Template>
+                @context.InternalDiameter.StringValue
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPipeDiameter" Title="Thicknes" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+            <Template>
+                @context.Thickness.StringValue
+            </Template>
+        </RadzenDataGridColumn>
+            </Columns>
+        </TableTemplate>
+    </Rigth>
+</Panel>
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+}

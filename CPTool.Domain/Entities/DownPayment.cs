@@ -2,7 +2,7 @@
 
 namespace CPTool.Domain.Entities
 {
-    public class DownPayment  : BaseDomainModel
+    public class DownPayment  : AuditableEntity
     {
         [ForeignKey("DownpaymentId")]
         public ICollection<Taks> Taks { get; set; } = null!;

@@ -368,7 +368,7 @@ namespace CPTool.Infrastructure.Persistence
         public DbSet<ControlLoop>? ControlLoops { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
-            var entittes = ChangeTracker.Entries<BaseDomainModel>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).ToList();
+            var entittes = ChangeTracker.Entries<AuditableEntity>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified).ToList();
             foreach (var entry in entittes)
             {
                 switch (entry.State)

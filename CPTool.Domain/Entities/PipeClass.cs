@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class PipeClass  : BaseDomainModel
+    public class PipeClass  : AuditableEntity
     {
         [ForeignKey("pPipeClassId")]
         public ICollection<PipingItem>? PipingItems { get; set; } = null!;

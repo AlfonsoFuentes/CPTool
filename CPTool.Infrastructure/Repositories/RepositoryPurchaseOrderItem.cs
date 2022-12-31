@@ -1,4 +1,5 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Contracts;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -9,7 +10,7 @@ namespace CPTool.Infrastructure.Repositories
         }
         public override async Task<IReadOnlyList<PurchaseOrderItem>> GetAllAsync()
         {
-            var result = await tableSet.AsNoTrackingWithIdentityResolution()
+             var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                 .Include(x => x.PurchaseOrder)
                 .Include(x => x.PurchaseOrder).ThenInclude(x => x!.pBrand)
                  .Include(x => x.PurchaseOrder).ThenInclude(x => x!.pSupplier)
@@ -22,7 +23,7 @@ namespace CPTool.Infrastructure.Repositories
 
 
 
-            var result = await tableSet.AsNoTrackingWithIdentityResolution()
+             var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                 .Include(x => x.PurchaseOrder)
                  .Include(x => x.PurchaseOrder).ThenInclude(x => x!.pBrand)
                  .Include(x => x.PurchaseOrder).ThenInclude(x => x!.pSupplier)

@@ -1,0 +1,22 @@
+﻿<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <TextBoxTemplate Label="Name" Required=true @bind-Value=@Model.Name >
+
+        </TextBoxTemplate>
+        <SelectUnitTemplate @bind-Model=@Model.OuterDiameter Label="OD">
+
+        </SelectUnitTemplate>
+        <SelectUnitTemplate @bind-Model=@Model.Thickness Label="Thickness">
+
+        </SelectUnitTemplate>
+        <SelectUnitTemplate @bind-Model=@Model.InternalDiameter Label="ID" Disable=true>
+
+        </SelectUnitTemplate>
+
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.Domain.Entities
 {
-    public class Gasket : BaseDomainModel
+    public class Gasket : AuditableEntity
     {
         [ForeignKey("nGasketId")]
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;

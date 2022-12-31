@@ -1,0 +1,36 @@
+﻿@using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
+<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <SelectTemplate T="CommandMWOType" Elements=@DialogData.MWOTypes
+                        Label="MWO Type"
+                        @bind-Model=@Model.MWOType
+                       
+                        PropertyName="Name">
+
+        </SelectTemplate>
+
+
+        <TextBoxTemplate Label="Name" @bind-Value=@Model.Name >
+
+        </TextBoxTemplate>
+
+        <NumericTemplate Label="MWO number"
+                          Regex="\d{5}"
+                          RegexError="Must supply 5 digits number"
+                          @bind-Value=@Model.Number>
+
+        </NumericTemplate>
+        <FieldTemplate Label="CEC Name" Value="@Model.CECName">
+
+        </FieldTemplate>
+        <FieldTemplate Label="CEB Name" Value="@Model.CEBName">
+
+        </FieldTemplate>
+
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

@@ -1,0 +1,31 @@
+﻿@page "/process-fluids"
+
+@using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
+
+
+
+@if (debug)
+{
+
+}
+
+<TableTemplate TableName="Process Fluid List"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandProcessFluid" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandProcessFluid" Property="@nameof(CommandProcessFluid.TagLetter)" Title="Abbreviation" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandProcessFluid" Property="@nameof(CommandProcessFluid.PropertyPackageName)" Title="Property Package" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

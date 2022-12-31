@@ -1,0 +1,46 @@
+﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <CascadingValue Value="this">
+
+            <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Style="width:100%" RenderMode="TabRenderMode.Client">
+                <Tabs>
+                    <RadzenTabsItem Text="Name">
+                        <ChapterDialog></ChapterDialog>
+                    </RadzenTabsItem>
+
+                   <RadzenTabsItem Text="Specs">
+                        <SpecsDialog></SpecsDialog>
+                    </RadzenTabsItem>
+                @*      <RadzenTabsItem Text="Accesories" Visible=@VisibleAccesories>*@
+                    @*<AccesoriesDialog></AccesoriesDialog>
+                    </RadzenTabsItem>*@
+                    <RadzenTabsItem Text="Nozzles" Visible=@VisibleNozzle>
+                        <MWOItemNozzlesDialog></MWOItemNozzlesDialog>
+                    </RadzenTabsItem>
+                    <RadzenTabsItem Text="Process Conditions" Visible=@VisibleNozzle>
+                        <ProcessConditionsDialog></ProcessConditionsDialog>
+                    </RadzenTabsItem>
+                    <RadzenTabsItem Text="PurchaseOrder">
+                        <PurchaseOrderMWOItemDialog></PurchaseOrderMWOItemDialog>
+                    </RadzenTabsItem>  @* *@
+
+
+                </Tabs>
+            </RadzenTabs>
+        </CascadingValue>
+
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+    TabPosition tabPosition = TabPosition.Top;
+    void OnChange(int index)
+    {
+        StateHasChanged();
+    }
+
+    bool VisibleNozzle => Model.Chapter.Id == 6 || Model.Chapter.Id == 4 || Model.Chapter.Id == 7;
+    bool VisibleAccesories => Model.Chapter.Id == 7;
+}

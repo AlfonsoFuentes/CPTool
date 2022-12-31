@@ -1,0 +1,27 @@
+﻿@page "/gaskets"
+@using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
+
+
+
+@if (debug)
+{
+
+}
+
+<TableTemplate T="CommandGasket"
+               TableName="Gasket List"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandGasket" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class PurchaseOrderItem : BaseDomainModel
+    public class PurchaseOrderItem : AuditableEntity
     {
         public int? PurchaseOrderId { get; set; }
         public PurchaseOrder? PurchaseOrder { get; set; }

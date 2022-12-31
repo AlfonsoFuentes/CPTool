@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class Supplier  : BaseDomainModel
+    public class Supplier  : AuditableEntity
     {
         [ForeignKey("eSupplierId")]
         public ICollection<EquipmentItem> EquipmentItems { get; set; } = null!;

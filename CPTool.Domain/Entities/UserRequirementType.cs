@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class UserRequirementType : BaseDomainModel
+    public class UserRequirementType : AuditableEntity
     {
         [ForeignKey("UserRequirementTypeId")]
         public ICollection<UserRequirement> UserRequirements { get; set; } = null!;

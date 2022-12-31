@@ -1,0 +1,14 @@
+﻿<div style=@UISettings.RowRem class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
+    </div>
+    <div class=@UISettings.ColClassValue>
+        <RadzenDatePicker @bind-Value=@Value DateFormat="d" Change=@OnChange Style=@UISettings.StyleBoxWidth100 Disabled=@Disabled class=@UISettings.ClassBox />
+       
+        
+    </div>
+</div>
+
+@code {
+   
+}

@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class EntityUnit  : BaseDomainModel
+    public class EntityUnit  : AuditableEntity
     {
         public string? UnitName { get; set; }
         public double Value { get; set; }

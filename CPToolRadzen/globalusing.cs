@@ -4,3 +4,4 @@ global using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 global using CPToolRadzen.Services.Tables;
 global using CPToolRadzen.Templates;
 global using Radzen;
+global using CPTool.Application.Features.MOTypeFeatures.CreateEdit;

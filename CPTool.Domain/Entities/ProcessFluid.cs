@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class ProcessFluid : BaseDomainModel
+    public class ProcessFluid : AuditableEntity
     {
 
         [ForeignKey("eProcessFluidId")]

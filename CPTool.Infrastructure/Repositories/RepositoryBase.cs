@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Linq.Dynamic.Core;
+using CPTool.Application.Contracts;
 
 namespace CPTool.Infrastructure.Repositories
 {
-    public class RepositoryBase<T> : IRepository<T> where T : BaseDomainModel
+    public class RepositoryBase<T> : IAsyncRepository<T> where T : AuditableEntity
     {
         protected readonly TableContext dbcontext;
 
@@ -14,7 +15,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             this.dbcontext = dbcontext;
         }
-     
+
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await dbcontext.Set<T>().Where(predicate).ToListAsync();
@@ -24,7 +25,7 @@ namespace CPTool.Infrastructure.Repositories
         {
             //dbcontext.ChangeTracker.DetectChanges();
             var traked = dbcontext.ChangeTracker.DebugView.LongView;
-            foreach (var entry in dbcontext.ChangeTracker.Entries<BaseDomainModel>())
+            foreach (var entry in dbcontext.ChangeTracker.Entries<AuditableEntity>())
             {
                 var state = entry.State;
             }
@@ -33,10 +34,10 @@ namespace CPTool.Infrastructure.Repositories
         {
             try
             {
-               
-                IQueryable<T> query = dbcontext.Set<T>().AsNoTrackingWithIdentityResolution();
-            
-                query = Query(query);
+
+                IQueryable<T> query = dbcontext.Set<T>().AsQueryable().AsNoTracking();//.AsNoTrackingWithIdentityResolution().AsQueryable();
+
+                //query = Query(query);
                 var retorno = await query.ToListAsync();
                 return retorno;
             }
@@ -67,9 +68,9 @@ namespace CPTool.Infrastructure.Repositories
 
         public async virtual Task<T> GetByIdAsync(int id)
         {
-            
 
-           var result = await tableSet.FindAsync(id);
+
+            var result = await tableSet.FindAsync(id);
             return result!;
         }
 
@@ -125,6 +126,7 @@ namespace CPTool.Infrastructure.Repositories
         IQueryable<T> Query(IQueryable<T> table)
         {
             var query = table!.AsQueryable();
+            query = query.AsNoTracking();
             var navigations = dbcontext.Model.FindEntityType(typeof(T))!
                      .GetDerivedTypesInclusive()
                      .SelectMany(type => type.GetNavigations())
@@ -144,8 +146,18 @@ namespace CPTool.Infrastructure.Repositories
         {
             return (await dbcontext.Set<T>().FirstOrDefaultAsync(predicate))!;
         }
+
+       
+        public Task<IReadOnlyList<T>> GetPagedReponseAsync(int page, int size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> IsNameUnique(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
-
 
 

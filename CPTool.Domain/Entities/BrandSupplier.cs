@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class BrandSupplier  : BaseDomainModel
+    public class BrandSupplier  : AuditableEntity
     {
         public int BrandId { get; set; }
         public Brand Brand { get; set; } = null!;

@@ -3,7 +3,7 @@ global using MediatR;
 
 global using CPTool.Domain.Common;
 global using CPTool.Application.Services;
-global using CPTool.Persistence.Persistence;
+
 
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Reflection;

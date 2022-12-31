@@ -1,0 +1,27 @@
+﻿@page "/connection-types"
+@using CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate;
+
+
+
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+               TableName="Connection Type List"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandConnectionType" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

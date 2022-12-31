@@ -1,0 +1,32 @@
+﻿@typeparam T
+@if (debug)
+{
+
+}
+<div style=@UISettings.RowRem class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
+    </div>
+    <div class=@UISettings.ColClassValue>
+        <RadzenDropDown AllowClear="true" TValue="T" Style=@UISettings.StyleBoxWidth100 Disabled=@Disabled
+                        class=@UISettings.ClassBox
+                        Data=@Elements @bind-Value=@Value Name="Select"
+                        Change=OnChange />
+
+
+
+
+
+    </div>
+</div>
+@code {
+    bool debug = true;
+    async Task OnChange()
+    {
+       
+
+        await ValueChanged.InvokeAsync(Value);
+
+    }
+   
+}

@@ -1,5 +1,7 @@
 ﻿
 
+global using CPTool.Application.Features.MOTypeFeatures.CreateEdit;
+
 namespace CPTool.Application.Features.MWOTypeFeatures
 {
     internal class AddEditMWOTypeHandler : CommandHandler<EditMWOType, AddMWOType, MWOType>, IRequestHandler<EditMWOType, Result<int>>

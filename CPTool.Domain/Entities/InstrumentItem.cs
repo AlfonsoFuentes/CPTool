@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class InstrumentItem : BaseDomainModel
+    public class InstrumentItem : AuditableEntity
     {
         [ForeignKey("InstrumentItemId")]
         public ICollection<MWOItem>? MWOItems { get; set; } = null!;

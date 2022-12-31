@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class PipeDiameter : BaseDomainModel
+    public class PipeDiameter : AuditableEntity
     {
         [ForeignKey("paDiameterId")]
         public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;

@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class Chapter  : BaseDomainModel
+    public class Chapter  : AuditableEntity
     {
         [ForeignKey("ChapterId")]
         public ICollection<MWOItem> MWOItems { get; set; } = null!;

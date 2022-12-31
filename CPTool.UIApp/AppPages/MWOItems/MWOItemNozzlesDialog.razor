@@ -1,0 +1,47 @@
+﻿@using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
+
+<TableTemplate T="CommandNozzle"
+               @ref="table"
+               ShowToolBar=true
+               ShowAdd=true
+               ShowDelete=true
+               ShowEdit=true
+               ShowReport=true
+               OnAdd="@AddNozzle"
+               OnDelete="@Delete"
+               ShowDialog="@ShowTableDialog"
+               Elements="@Model.Nozzles"
+               @bind-SelectedItem=@SelectedNozzles
+               TableName="@TableName">
+   
+    <Columns>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.Description)" Title="Description" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.StreamType)" Title="Type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.ConnectedToName)" Title="Connected to" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.PipeDiameterName)" Title="Size" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.PipeClassName)" Title="Class" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.MaterialName)" Title="Material" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.ConnectionTypeName)" Title="End Type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+
+
+    </Columns>
+</TableTemplate>
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+
+    TableTemplate<CommandNozzle> table;
+
+}

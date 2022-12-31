@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class MeasuredVariable  : BaseDomainModel
+    public class MeasuredVariable  : AuditableEntity
     {
         [ForeignKey("MeasuredVariableId")]
         public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;

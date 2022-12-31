@@ -6,7 +6,7 @@
     }
     public class QueryIdHandler<T, TEntity> : IRequestHandler<QueryId<T>, T>
     where T : EditCommand, new()
-   where TEntity : BaseDomainModel
+   where TEntity : AuditableEntity
     {
         protected readonly IMapper _mapper;
         protected IUnitOfWork _unitofwork;

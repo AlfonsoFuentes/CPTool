@@ -10,9 +10,9 @@ namespace CPToolRadzen.Pages.MWOItems.List
     {
 
 
-       
-        EditMWO Parent = new();
 
+        EditMWO Parent = new();
+        List<EditMWOItem> MWOItems = new();
         double SumBudget => RadzenTables.MWOItems.Count == 0 ? 0 : RadzenTables.MWOItems.Where(x => x.MWOId == ParentId).Sum(y => y.BudgetPrize);
         double SumAssigned => RadzenTables.MWOItems.Count == 0 ? 0 : RadzenTables.MWOItems.Where(x => x.MWOId == ParentId).Sum(y => y.Assigned);
         double SumActual => RadzenTables.MWOItems.Count == 0 ? 0 : RadzenTables.MWOItems.Where(x => x.MWOId == ParentId).Sum(y => y.Actual);
@@ -21,11 +21,11 @@ namespace CPToolRadzen.Pages.MWOItems.List
         protected override async Task OnInitializedAsync()
         {
             Parent = await QueryMWO.GetById(ParentId);
-            RadzenTables.MWOItems = await CommandQuery.GetAll();
-           
-      
+           RadzenTables.MWOItems = await CommandQuery.GetAll();
+
+
         }
-        
+
         public async Task<bool> ShowTableDialog(EditMWOItem model)
         {
             if (model.Id == 0)

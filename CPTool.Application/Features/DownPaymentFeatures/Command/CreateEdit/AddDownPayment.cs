@@ -13,8 +13,6 @@ namespace CPTool.Application.Features.DownPaymentFeatures.CreateEdit
     public class AddDownPayment : AddCommand
     {
         public int? PurchaseOrderId { get; set; }
-
-
         public DateTime? RequestDate { get; set; }
         public string? ManagerEmail { get; set; }
         public string? CBSRequesText { get; set; }

@@ -1,0 +1,48 @@
+﻿
+@using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.TaxCodeLDs.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate;
+<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <SelectTemplate T="CommandBrand" Elements=@DataDialog.Brands
+                        Label="Brand"
+                        @bind-Model=@Model.Brand
+                        Clearable=true
+                        PropertyName="Name">
+
+        </SelectTemplate>
+        <TextBoxTemplate @bind-Value="@Model.Supplier.Name" Label="Supplier"></TextBoxTemplate>
+        <TextBoxTemplate @bind-Value="@Model.Supplier.ContactPerson" Label="Contact person"
+                         ></TextBoxTemplate>
+        <TextBoxTemplate @bind-Value="@Model.Supplier.Email" Label="email"
+                         ></TextBoxTemplate>
+        <TextBoxTemplate @bind-Value="@Model.Supplier.Phone" Label="Phone"
+                         ></TextBoxTemplate>
+        <TextBoxTemplate @bind-Value="@Model.Supplier.Address" Label="Address"
+                         ></TextBoxTemplate>
+        <TextBoxTemplate @bind-Value="@Model.Supplier.VendorCode" Label="VendorCode"
+                         
+                         ></TextBoxTemplate>
+
+        <SelectTemplate T="CommandTaxCodeLD" Elements=@DataDialog.TaxCodeLDs
+                        Label="Tax Code LD"
+                        @bind-Model=@Model.Supplier.TaxCodeLD
+                        
+                        PropertyName="Name">
+
+        </SelectTemplate>
+        <SelectTemplate T="CommandTaxCodeLP" Elements=@DataDialog.TaxCodeLPs
+                        Label="Tax Code LP"
+                        @bind-Model=@Model.Supplier.TaxCodeLP
+                        
+                        PropertyName="Name">
+
+        </SelectTemplate>
+
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

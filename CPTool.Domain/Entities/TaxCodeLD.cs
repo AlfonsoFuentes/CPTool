@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class TaxCodeLD  : BaseDomainModel
+    public class TaxCodeLD  : AuditableEntity
     {
         [ForeignKey("TaxCodeLDId")]
         public ICollection<Supplier> Suppliers { get; set; } = null!;

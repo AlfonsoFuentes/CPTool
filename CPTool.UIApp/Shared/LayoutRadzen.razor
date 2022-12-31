@@ -1,0 +1,64 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenContextMenu />
+<RadzenTooltip />
+<RadzenLayout class="rz-shadow-3" Style="height: 800px; grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body'">
+    <RadzenHeader>
+        <div class="d-flex align-items-center">
+            <RadzenSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
+            <RadzenLabel Text="Header" />
+        </div>
+    </RadzenHeader>
+    <RadzenSidebar @bind-Expanded="@sidebar1Expanded">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="MWOs" Icon="home" Path="mwos" />
+            <RadzenPanelMenuItem Text="General">
+                <RadzenPanelMenuItem Text="Purchase Orders" Path="purchase-orders"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Downpayments" Path="downpayments"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Tasks" Path="taks"></RadzenPanelMenuItem>
+
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Settings">
+                <RadzenPanelMenuItem Text="MWO Types" Path="mwo-types"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Equipment Types" Path="equipment-types"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Piping Settings">
+                    <RadzenPanelMenuItem Text="Gaskets" Path="gaskets"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Materials" Path="materials"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Connection Types" Path="connection-types"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Pipe Dimensions" Path="pipe-classes"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Process Fluids" Path="process-fluids"></RadzenPanelMenuItem>
+                </RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Brand, Services Settings">
+                    <RadzenPanelMenuItem Text="Brands/Suppliers" Path="brand-suppliers"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Unitary prizes" Path="unitary-prizes"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Tax Code LD" Path="tax-codes-LD"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Tax Code LP" Path="tax-codes-LP"></RadzenPanelMenuItem>
+                </RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Electrical Settings">
+                    <RadzenPanelMenuItem Text="Signal Type" Path="signal-types"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Field Locations" Path="field-locations"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Wire Types" Path="wire-types"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Electrical boxes" Path="electrical-boxes"></RadzenPanelMenuItem>
+                </RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Other Settings">
+                    <RadzenPanelMenuItem Text="User requirment Type" Path="user-requirement-types"></RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Text="Users" Path="users"></RadzenPanelMenuItem>
+                </RadzenPanelMenuItem>
+            </RadzenPanelMenuItem>
+        </RadzenPanelMenu>
+       
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="p-2">
+            @Body
+        </div>
+    </RadzenBody>
+</RadzenLayout>
+
+
+@code {
+    bool sidebar1Expanded = false;
+
+}

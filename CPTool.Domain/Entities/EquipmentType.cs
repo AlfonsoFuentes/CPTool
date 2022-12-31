@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class EquipmentType : BaseDomainModel
+    public class EquipmentType : AuditableEntity
     {
         public string? TagLetter { get; set; } = "";
         [ForeignKey("EquipmentTypeId")]

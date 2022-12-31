@@ -1,4 +1,5 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Contracts;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -9,7 +10,7 @@ namespace CPTool.Infrastructure.Repositories
         }
         public override async Task<IReadOnlyList<PipeDiameter>> GetAllAsync()
         {
-            var result = await tableSet.AsNoTrackingWithIdentityResolution()
+             var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                 .Include(x => x.dPipeClass)
                 .Include(x => x.OuterDiameter)
                 .Include(x => x.InternalDiameter)
@@ -17,18 +18,18 @@ namespace CPTool.Infrastructure.Repositories
                 .ToListAsync();
             return result;
         }
-        //public override async Task<PipeDiameter> GetByIdAsync(int id)
-        //{
+        public override async Task<PipeDiameter> GetByIdAsync(int id)
+        {
 
 
 
-        //    var result = await tableSet.AsNoTrackingWithIdentityResolution()
-        //        .Include(x => x.dPipeClass)
-        //        .Include(x => x.OuterDiameter)
-        //        .Include(x => x.InternalDiameter)
-        //        .Include(x => x.Thickness)
-        //       .FirstOrDefaultAsync(x => x.Id == id);
-        //    return result!;
-        //}
+            var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
+               .Include(x => x.dPipeClass)
+               .Include(x => x.OuterDiameter)
+               .Include(x => x.InternalDiameter)
+               .Include(x => x.Thickness)
+              .FirstOrDefaultAsync(x => x.Id == id);
+            return result!;
+        }
     }
 }

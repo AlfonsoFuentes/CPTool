@@ -15,7 +15,7 @@ namespace CPTool.Application.Generic
 
     public class QueryListHandler<T, TEntity> : IRequestHandler<QueryList<T>, List<T>>
       where T : EditCommand
-     where TEntity : BaseDomainModel
+     where TEntity : AuditableEntity
 
     {
 

@@ -1,0 +1,67 @@
+﻿@using CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpdate;
+<TableTemplate T="CommandPurchaseOrderItem"
+               @ref=purchaseorderitemtable
+               ShowToolBar=true
+               ShowAdd=false
+               ShowDelete=false
+               ShowEdit=false
+               ShowReport=false
+               InlineEdit=@DialogData.InlineEdit
+               TableName="@($"Purchase order items List")"
+               @bind-SelectedItem=@Dialog.SelectedItemAdded
+               Elements="@Dialog.Model.PurchaseOrderItems">
+    <ToolBarButtons>
+        <ButtonTemplate Icon="arrow_back"
+                        Disabled=@Dialog.DisableAddRemoveMWOItem
+                        Click=Dialog.RemoveItem
+                        ToolTip="Remove selected Item">
+
+        </ButtonTemplate>
+
+
+    </ToolBarButtons>
+    <Columns>
+        <RadzenDataGridColumn TItem="CommandPurchaseOrderItem" Title="Tag" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+            <Template>
+                @context.MWOItem.TagId
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPurchaseOrderItem" Title="Name" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+            <Template>
+                @context.MWOItem.Name
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPurchaseOrderItem" Title="Prize" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+            <Template>
+                @context.PrizeCurrency.ToString("C0")
+            </Template>
+            <EditTemplate Context="order">
+                <RadzenNumeric @bind-Value="@order.PrizeCurrency" TValue="double" Change="@((arg)=>Dialog.ChangeCurrency(order,arg))" ShowUpDown=false Style="width:100%; display: block" Name="PrizeCurrency" />
+
+            </EditTemplate>
+            <FooterTemplate>
+                @Dialog.Model.PurchaseOrderItems.Sum(x=>x.PrizeCurrency).ToString("C0")
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPurchaseOrderItem" Title="Prize, USD" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+            <Template>
+                @context.PrizeUSD.ToString("C0")
+            </Template>
+            <FooterTemplate>
+                @Dialog.Model.PurchaseOrderItems.Sum(x=>x.PrizeUSD).ToString("C0")
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+    TableTemplate<CommandPurchaseOrderItem> purchaseorderitemtable = new();
+
+   
+}

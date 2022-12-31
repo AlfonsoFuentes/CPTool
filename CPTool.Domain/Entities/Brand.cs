@@ -2,7 +2,7 @@
 
 namespace CPTool.Domain.Entities
 {
-    public class Brand : BaseDomainModel
+    public class Brand : AuditableEntity
     {
 
        

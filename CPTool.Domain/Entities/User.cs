@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class User:BaseDomainModel
+    public class User:AuditableEntity
     {
         
         public string Email { get; set; } = "";

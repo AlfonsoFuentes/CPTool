@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class EquipmentTypeSub  : BaseDomainModel
+    public class EquipmentTypeSub  : AuditableEntity
     {
 
         public int? EquipmentTypeId { get; set; }

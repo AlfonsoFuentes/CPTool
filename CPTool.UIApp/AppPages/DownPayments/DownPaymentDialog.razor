@@ -1,0 +1,61 @@
+﻿
+<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <Panel>
+            <Left>
+                <FieldTemplate Label="Request date" Value=@Model.RequestDate.ToShortDateString()></FieldTemplate>
+
+                <FieldTemplate Label="MWO Name" Value=@Model.PurchaseOrder.MWO.Name></FieldTemplate>
+                <FieldTemplate Label="Supplier" Value=@Model.PurchaseOrder.pSupplier.Name></FieldTemplate>
+                <FieldTemplate Label="Vendor No" Value=@Model.PurchaseOrder.pSupplier.VendorCode></FieldTemplate>
+                <FieldTemplate Label="PO No" Value=@Model.PurchaseOrder.PONumber></FieldTemplate>
+                <FieldTemplate Label="Currency" Value=@Model.PurchaseOrder.Currency.ToString()></FieldTemplate>
+
+                <FieldTemplate Label="@($"PO Value ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrency.ToString("C2")></FieldTemplate>
+                <FieldTemplate Label="@($"PO Tax ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.PrizeCurrencyTax.ToString("C2")></FieldTemplate>
+                <FieldTemplate Label="@($"PO Total ${Model.PurchaseOrder.Currency}")" Value=@Model.PurchaseOrder.TotalPrizeCurrency.ToString("C2")></FieldTemplate>
+
+
+            </Left>
+            <Rigth>
+                <DatePickerTamplate Label="Due date" @bind-Value=@Model.DownPaymentDueDate Disabled=@(Model.Id == 0?false:true)>
+
+                </DatePickerTamplate>
+
+                <TextBoxTemplate @bind-Value="@Model.DownpaymentName" Label="Name" 
+                                 Disabled=@(Model.Id!=0)></TextBoxTemplate>
+
+                <TextBoxTemplate @bind-Value="@Model.ManagerEmail" Label="Manager email" 
+                                 Disabled=@(Model.Id!=0)></TextBoxTemplate>
+                <TextBoxTemplate @bind-Value="@Model.ProformaInvoice" Label="Proforma Invoice #" 
+                                 Disabled=@(Model.Id!=0)></TextBoxTemplate>
+
+                <TextBoxTemplate @bind-Value="@Model.Payterms" Label="Pay terms" 
+                Rows="2"
+                                 Disabled=@(Model.Id!=0)></TextBoxTemplate>
+                <TextBoxTemplate @bind-Value="@Model.Incotherm" Label="Incotherm" 
+                                 Disabled=@(Model.Id!=0)></TextBoxTemplate>
+
+                <NumericTemplate TValue="double" @bind-Value="@Model.Percentage"
+                                 Disabled=@(Model.Id!=0)  Label="Percentage"></NumericTemplate>
+
+
+                <FieldTemplate Label="Value" Value=@Model.DownPaymentAmount.ToString("C2")></FieldTemplate>
+                <TextBoxTemplate @bind-Value="@Model.CBSRequesText" Label="CBS Request Text" 
+                                 Disabled=@(Model.Id!=0)></TextBoxTemplate>
+                <TextBoxTemplate @bind-Value="@Model.CBSRequesNo" Label="CBS Request #" 
+                                 Disabled=@(Model.Id!=0)></TextBoxTemplate>
+
+                <DatePickerTamplate Label="Delivery due date" @bind-Value=@Model.DeliveryDueDate Disabled=@(Model.Id!=0) >
+
+                </DatePickerTamplate>
+            </Rigth>
+        </Panel>
+       
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

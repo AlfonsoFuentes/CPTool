@@ -10,7 +10,7 @@ namespace CPTool.Application.Features.BrandSupplierFeatures.CreateEdit
     public class AddBrandSupplier : AddCommand
     {
 
-        public InletBy InletBy { get; set; } = InletBy.None;
+      
         public int BrandId { get; set; }
         public int SupplierId { get; set; }
 

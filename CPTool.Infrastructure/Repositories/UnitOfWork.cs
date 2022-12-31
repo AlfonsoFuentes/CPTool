@@ -1,7 +1,7 @@
 ﻿
 
 
-using CPTool.Persistence.Persistence;
+using CPTool.Application.Contracts;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -66,7 +66,7 @@ namespace CPTool.Infrastructure.Repositories
             _context = context;
         }
        
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel
+        public IAsyncRepository<TEntity> Repository<TEntity>() where TEntity : AuditableEntity
         {
             if (_repository == null)
             {
@@ -80,7 +80,7 @@ namespace CPTool.Infrastructure.Repositories
                     repositorytype.MakeGenericType(typeof(TEntity)), _context);
                 _repository.Add(type, repositoryInstance);
             }
-            var response = (IRepository<TEntity>)_repository[type]!;
+            var response = (IAsyncRepository<TEntity>)_repository[type]!;
             return response;
         }
 
@@ -167,5 +167,33 @@ namespace CPTool.Infrastructure.Repositories
         public IRepositoryUserRequirementType RepositoryUserRequirementType => _RepositoryUserRequirementType ??= new RepositoryUserRequirementType(_context);
 
         public IRepositoryWire RepositoryWire => _RepositoryWire ??= new RepositoryWire(_context);
+
+        public IRepositoryAlterationItem RepositoryAlterationItem => throw new NotImplementedException();
+
+        public IRepositoryFoundationItem RepositoryFoundationItem => throw new NotImplementedException();
+
+        public IRepositoryStructuralItem RepositoryStructuralItem => throw new NotImplementedException();
+
+        public IRepositoryEquipmentItem RepositoryEquipmentItem => throw new NotImplementedException();
+
+        public IRepositoryElectricalItem RepositoryElectricalItem => throw new NotImplementedException();
+
+        public IRepositoryPipingItem RepositoryPipingItem => throw new NotImplementedException();
+
+        public IRepositoryInstrumentItem RepositoryInstrumentItem => throw new NotImplementedException();
+
+        public IRepositoryInsulationItem RepositoryInsulationItem => throw new NotImplementedException();
+
+        public IRepositoryPaintingItem RepositoryPaintingItem => throw new NotImplementedException();
+
+        public IRepositoryEHSItem RepositoryEHSItem => throw new NotImplementedException();
+
+        public IRepositoryTaxesItem RepositoryTaxesItem => throw new NotImplementedException();
+
+        public IRepositoryTestingItem RepositoryTestingItem => throw new NotImplementedException();
+
+        public IRepositoryEngineeringCostItem RepositoryEngineeringCostItem => throw new NotImplementedException();
+
+        public IRepositoryContingencyItem RepositoryContingencyItem => throw new NotImplementedException();
     }
 }

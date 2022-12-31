@@ -1,0 +1,53 @@
+﻿@typeparam T
+@if (debug)
+{
+
+}
+<PageTitle>@TableName</PageTitle>
+<div class="row">
+    <div class="col-12 col-md-12">
+        <ToolBarTemplate ShowToolBar=@ShowToolBar OnAdd="@AddRow" OnDelete="@DeleteRow" @bind-Search=@search
+                         ShowAdd=@ShowAdd ShowDelete=@ShowDelete DisableAdd=@DisableAdd ShowEdit=@ShowEdit ShowReport=@ShowReport OnEdit=@EditRow OnPDF=@CreatePDF
+                         DisableDelete=@DisableEditeButtons DisableEdit=@DisableEditeButtons OnExportClick=@ExportClick
+                         DisableReport=@DisableEditeButtons TableName="@TableName" SelectedName="@SelectedItem.Name">
+            <OtherButtons>
+                @if (ToolBarButtons != null)
+                {
+                    @ToolBarButtons
+                }
+            </OtherButtons>
+
+        </ToolBarTemplate>
+    </div>
+    <div class="col-12 col-md-12">
+
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Responsive=true
+                        AllowColumnResize="true" PageSize="@PageSize" SelectionMode=DataGridSelectionMode.Single ExpandMode="DataGridExpandMode.Single"
+                        Data="@Elements" TItem="T" Density="Density.Compact" @bind-Value=@SelectedItems AllowVirtualization="true" 
+                        PagerHorizontalAlign="HorizontalAlign.Center" RowClick="@RowClick"
+                       FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        PageSizeOptions="@pageSizeOptions" ShowPagingSummary="@showPagerSummary" PagingSummaryFormat="@pagingSummaryFormat"
+                        CellClick="@OnCellClick" CellDoubleClick="OnCellDoubleClick" CellRender="OnCellRender" Page="@OnPage">
+
+
+            <Columns>
+                <RadzenDataGridColumn TItem="T" Property="Id" Title="#" Width="50px" TextAlign="TextAlign.Center" Sortable=false Filterable=false>
+                </RadzenDataGridColumn>
+                @Columns
+            </Columns>
+
+            
+
+
+
+
+        </RadzenDataGrid>
+
+    </div>
+</div>
+@*//RowClick="@RowClick"*@
+@code {
+    string pagingSummaryFormat = "page {0} of {1} (total {2})";
+    IEnumerable<int> pageSizeOptions = new int[] { 10,15, 20, 30 };
+    bool showPagerSummary = true;
+}

@@ -1,0 +1,18 @@
+﻿<div style="margin-bottom: 1rem" class="row container-fluid">
+    <div class=@classleft>@Left</div>
+    <div class=@classrigth>@Rigth</div>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment Left { get; set; }
+    [Parameter]
+    public RenderFragment Rigth { get; set; }
+    [Parameter]
+    public int ColLeft { get; set; } = 6;
+
+    int ColRigth => 12 - ColLeft;
+
+    string classleft => $"col-md-{ColLeft}";
+    string classrigth => $"col-md-{ColRigth}";
+}

@@ -1,0 +1,41 @@
+﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+@using CPTool.UIApp.Services;
+<TableTemplate T="CommandMWOItem"
+               ShowToolBar=true
+               ShowAdd=false
+               ShowDelete=false
+               ShowEdit=false
+               ShowReport=false
+               TableName="@($"{Dialog.Model.MWO.Name} Items List")"
+               @bind-SelectedItem=@Dialog.SelectedItemToAdd
+               Elements="@DialogData.MWOItemsOriginal">
+    <ToolBarButtons>
+        <ButtonTemplate Icon="arrow_forward"
+                        Disabled=@Dialog.DisableAddRemoveMWOItem
+                        Click=AddItem
+                        ToolTip="Add selected Item">
+
+        </ButtonTemplate>
+
+
+    </ToolBarButtons>
+    <Columns>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Nomenclatore)" Title="No#" TextAlign="TextAlign.Left" Filterable=false Sortable=false Width="50px">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.TagId)" Title="Tag" TextAlign="TextAlign.Left" Filterable=true Sortable=true Width="100px">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+
+@if(debug)
+{
+    
+}
+@code {
+    bool debug = true;
+   
+}

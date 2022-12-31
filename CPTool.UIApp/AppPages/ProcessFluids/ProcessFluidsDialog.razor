@@ -1,0 +1,20 @@
+﻿<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <TextBoxTemplate Label="Name" @bind-Value=@Model.Name>
+
+        </TextBoxTemplate>
+        <TextBoxTemplate Label="Abbreviation"  @bind-Value=@Model.TagLetter>
+
+        </TextBoxTemplate>
+        <SelectTemplate Elements=@DataDialog.PropertyPackages
+                        Label="Property Package"
+                        @bind-Model=@Model.PropertyPackage
+                        
+                        PropertyName="Name"></SelectTemplate>
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

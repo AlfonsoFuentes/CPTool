@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.Domain.Entities
 {
-    public class UnitaryBasePrize : BaseDomainModel
+    public class UnitaryBasePrize : AuditableEntity
     {
         [ForeignKey("UnitaryBasePrizeId")]
         public ICollection<MWOItem> MWOItems { get; set; } = null!;

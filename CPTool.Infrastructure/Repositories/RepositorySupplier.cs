@@ -1,4 +1,5 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Contracts;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -9,7 +10,7 @@ namespace CPTool.Infrastructure.Repositories
         }
         public override async Task<IReadOnlyList<Supplier>> GetAllAsync()
         {
-            var result = await tableSet.AsNoTrackingWithIdentityResolution()
+             var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                .Include(x => x.BrandSuppliers).ThenInclude(x => x.Brand)
                .Include(x => x.TaxCodeLD)
                .Include(x => x.TaxCodeLP)
@@ -17,11 +18,16 @@ namespace CPTool.Infrastructure.Repositories
                .ToListAsync();
             return result;
         }
-        //public override async Task<Supplier> GetByIdAsync(int id)
-        //{
-        //    var result = await tableSet.AsNoTrackingWithIdentityResolution().FindAsync(id);
+        public override async Task<Supplier> GetByIdAsync(int id)
+        {
+            var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
+                  .Include(x => x.BrandSuppliers).ThenInclude(x => x.Brand)
+               .Include(x => x.TaxCodeLD)
+               .Include(x => x.TaxCodeLP)
+               //.Include(x => x.PurchaseOrders).ThenInclude(x => x.MWO)
+               .FirstOrDefaultAsync(x=>x.Id==id);
 
-        //    return result!;
-        //}
+            return result!;
+        }
     }
 }

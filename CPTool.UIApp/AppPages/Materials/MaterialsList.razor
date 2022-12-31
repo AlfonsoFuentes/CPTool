@@ -1,0 +1,28 @@
+﻿@page "/materials"
+
+@using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+
+
+
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+               TableName="Material List"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandMaterial" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

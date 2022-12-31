@@ -5,9 +5,10 @@
 
 <TableTemplate T="EditMWOItem"
                TableName=@($"Items in {Parent.Name}")
+              
                Filter="@(x => x.MWOId == ParentId)"
                @bind-SelectedItem=@SelectedItem
-                @bind-GlobalElements="@RadzenTables.MWOItems"
+               @bind-GlobalElements="@RadzenTables.MWOItems"
                ShowDialog="ShowTableDialog"
               >
 

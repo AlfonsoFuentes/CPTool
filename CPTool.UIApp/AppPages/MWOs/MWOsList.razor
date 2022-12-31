@@ -1,0 +1,98 @@
+﻿@page "/mwos"
+@using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
+
+
+
+@if (debug)
+{
+
+}
+
+<TableTemplate T="CommandMWO"
+               TableName="MWO Types List"
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+    <ToolBarButtons>
+        <ButtonTemplate Icon="agriculture"
+                        Disabled=@DisableEdit
+                        Click=GoToMWOItemList
+                        ToolTip="Items for MWO">
+
+        </ButtonTemplate>
+        <ButtonTemplate Icon="currency_exchange"
+                        Disabled=@DisableEdit
+                        Click=GoToPurchaseOrderList
+                        ToolTip="Purchase Orders">
+
+        </ButtonTemplate>
+        <ButtonTemplate Icon="add_task"
+                        Disabled=@DisableEdit
+                        Click=CreateTaskMWO
+                        ToolTip="Create Task">
+
+        </ButtonTemplate>
+        <ButtonTemplate Icon="follow_the_signs"
+                        Disabled=@DisableEdit
+                        Click=GoToUserRequirmentPage
+                        ToolTip="User Requirements">
+
+        </ButtonTemplate>
+        <ButtonTemplate Icon="electrical_services"
+                        Disabled=@DisableEdit
+                        Click=GoToUserSignalList
+                        ToolTip="Signals">
+
+        </ButtonTemplate>
+        <ButtonTemplate Icon="loop"
+                        Disabled=@DisableEdit
+                        Click=GoToControlLoopList
+                        ToolTip="Control Loops">
+
+        </ButtonTemplate>
+
+    </ToolBarButtons>
+    <Columns>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.CECName)" Title="CEC Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Budget)" Title="Budget, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Budget)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Expenses)" Title="Expenses, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Expenses)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Assigned)" Title="Assigned, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Assigned)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Actual)" Title="Actual, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Actual)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Commitment)" Title="Commitment, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Commitment)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Pending)" Title="Pending, USD" Filterable=false Sortable=false>
+            <Template Context="detail">
+                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Pending)
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+    
+}

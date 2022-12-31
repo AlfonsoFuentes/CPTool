@@ -7,6 +7,7 @@ using CPTool.Infrastructure;
 using CPTool.Infrastructure.Persistence;
 using CPTool.Services;
 using CPTool.UnitsSystem;
+using CPToolRadzen;
 using CPToolRadzen.Services;
 using CPToolRadzen.Services.Tables;
 using Microsoft.AspNetCore.Components;
@@ -32,7 +33,7 @@ builder.Services.AddScoped<ContextMenuService>();
 builder.Services.AddScoped<RadzenTables>();
 UnitManager.RegisterByAssembly(typeof(SIUnitTypes).Assembly);
 var app = builder.Build();
-app.Services.InitializeDatabase();
+//app.Services.InitializeDatabase();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

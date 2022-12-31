@@ -11,7 +11,7 @@ namespace CPTool.Application.Features.PipeDiameterFeatures.CreateEdit
 {
     public class EditPipeDiameter : EditCommand, IRequest<Result<int>>, IDisposable
     {
-         public EditPipeDiameter()
+        public EditPipeDiameter()
         {
             OuterDiameter.Name = "Outer diameter";
             InternalDiameter.Name = "Inner diameter";

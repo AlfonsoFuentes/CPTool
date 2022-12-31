@@ -1,0 +1,64 @@
+﻿@page "/brand-suppliers"
+@using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
+
+<Panel>
+    <Left>
+        <TableTemplate T="CommandBrand"
+                       TableName="Brand List"
+                       @bind-SelectedItem=@SelectedItemBrand
+                       ShowDialog="ShowBrandDialog"
+                       OnDelete="@DeleteBrand"
+                       Elements="@ElementsBrand" Export="@ExportBrand">
+            <ToolBarButtons>
+                <ButtonTemplate Icon="restore"
+                                Click=@(()=>SelectedItemBrand=new())
+                                ToolTip="Restore">
+
+                </ButtonTemplate>
+            </ToolBarButtons>
+            <Columns>
+
+                <RadzenDataGridColumn TItem="CommandBrand" Property="Name" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="CommandBrand" Property="BrandTypeName" Title="Type" TextAlign="TextAlign.Left" Sortable=true>
+                </RadzenDataGridColumn>
+            </Columns>
+        </TableTemplate>
+    </Left>
+    <Rigth>
+        <TableTemplate T="CommandSupplier"
+                       TableName="Supplier  List"
+                       @bind-SelectedItem=@SelectedItemSupplier
+                       ShowDialog="ShowSupplier"
+                       OnDelete="@DeleteSupplier"
+                       Elements="@ElementsSupplier"
+                       Export="@ExportSupplier">
+            <ToolBarButtons>
+                <ButtonTemplate Icon="restore"
+                                Click=@(()=>SelectedItemSupplier=new())
+                                ToolTip="Restore">
+
+                </ButtonTemplate>
+            </ToolBarButtons>
+            <Columns>
+
+                <RadzenDataGridColumn TItem="CommandSupplier" Property="Name" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="CommandSupplier" Property="@(nameof(CommandSupplier.VendorCode))" Title="Vendor Code" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="CommandSupplier" Property="@(nameof(CommandSupplier.TaxCodeLDName))" Title="Tax Code LD" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="CommandSupplier" Property="@(nameof(CommandSupplier.TaxCodeLPName))" Title="Tax Code LP" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+                </RadzenDataGridColumn>
+            </Columns>
+        </TableTemplate>
+    </Rigth>
+</Panel>
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+}

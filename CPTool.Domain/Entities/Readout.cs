@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class Readout  : BaseDomainModel
+    public class Readout  : AuditableEntity
     {
         [ForeignKey("ReadoutId")]
         public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;

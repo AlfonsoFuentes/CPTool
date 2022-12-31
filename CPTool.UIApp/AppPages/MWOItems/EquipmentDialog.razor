@@ -1,0 +1,88 @@
+﻿@using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
+
+
+@if (debug)
+{
+
+}
+<Panel>
+    <Left>
+        <RadzenCard>
+            <SelectTemplate T="CommandEquipmentType" Elements="@DialogData.EquipmentTypes"
+                            Label="Type" Change=@(()=>ChangeEquipmentType(Model.eEquipmentType.Id))
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eEquipmentType>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandEquipmentTypeSub"
+                            Clearable=true
+                            Label="Sub Type"
+                            Elements="@DialogData.EquipmentTypeSubs"
+                           
+                            PropertyName="Name" 
+                            Disabled=@((Model.eEquipmentType==null||Model.eEquipmentType.Id==0))
+                            @bind-Model=@Model.eEquipmentTypeSub>
+
+            </SelectTemplate>
+
+          <TextBoxTemplate  @bind-Value=@Model.TagNumber Label="Tag Number">
+
+            </TextBoxTemplate>
+
+
+            <FieldTemplate Label="Tag Id" Value=@Model.TagId></FieldTemplate>
+            
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+            <SelectTemplate T="CommandBrand" Elements="@DialogData.Brands" Label="Brand or Service" Change=@(()=>ChangeBrand(Model.eBrand.Id))
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eBrand>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandSupplier"
+                            Clearable=true
+                            Elements="@DialogData.Suppliers" Label="Supplier"
+                            Disabled=@(Model.eBrand==null||Model.eBrand.Id==0)
+                            PropertyName="Name" @bind-Model=@Model.eSupplier>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandGasket" Elements="@DialogData.Gaskets" Label="Gasket"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eGasket>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Outer Material"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eOuterMaterial>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Inner Material"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.eInnerMaterial>
+
+            </SelectTemplate>
+
+            <TextBoxTemplate @bind-Value="@Model.Model"
+                             Label="Equipment Model"
+                             Rows="3"></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Reference"
+                             Label="Reference"
+                             Rows="3"></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.SerialNumber"
+                             Label="Serial Number"></TextBoxTemplate>
+
+        </RadzenCard>
+    </Rigth>
+</Panel>
+
+@code {
+    bool debug = true;
+   
+}

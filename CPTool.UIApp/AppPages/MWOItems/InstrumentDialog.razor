@@ -1,0 +1,118 @@
+﻿@using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.DeviceFunctions.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.MeasuredVariableModifiers.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.MeasuredVariables.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Readouts.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
+
+@if (debug)
+{
+
+}
+<Panel>
+    <Left>
+        <RadzenCard>
+
+            <SelectTemplate T="CommandMeasuredVariable"
+                            Clearable=true
+                            Elements=@DialogData.MeasuredVariables
+                            Label="Measured Variable"
+                            PropertyName="Name"
+                            @bind-Model="@Model.MeasuredVariable">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandMeasuredVariableModifier"
+                            Clearable=true
+                            Elements=@DialogData.MeasuredVariableModifiers
+                            Label="Measured Variable Modifier"
+                            PropertyName="Name"
+                            @bind-Model="@Model.MeasuredVariableModifier">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandReadout"
+                            Clearable=true
+                            Elements=@DialogData.Readouts
+                            Label="Readout"
+                            PropertyName="Name"
+                            @bind-Model="@Model.Readout">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandDeviceFunction"
+                            Clearable=true
+                            Elements=@DialogData.DeviceFunctions
+                            Label="Device function"
+                            PropertyName="Name"
+                            @bind-Model="@Model.DeviceFunction">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandDeviceFunctionModifier"
+                            Clearable=true
+                            Elements=@DialogData.DeviceFunctionModifiers
+                            Label="Device function modifier"
+                            PropertyName="Name"
+                            @bind-Model="@Model.DeviceFunctionModifier">
+
+
+            </SelectTemplate>
+
+            <TextBoxTemplate  @bind-Value=@Model.TagNumber Label="Tag Number">
+
+            </TextBoxTemplate>
+
+
+            <FieldTemplate Label="Tag Id" Value=@Model.TagId></FieldTemplate>
+           
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+            <SelectTemplate T="CommandBrand" Elements="@DialogData.Brands" Label="Brand or Service" Change=@(()=>ChangeBrand(Model.iBrand.Id))
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.iBrand>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandSupplier"
+                            Clearable=true
+                            Elements="@DialogData.Suppliers" Label="Supplier"
+                            Disabled=@(Model.iBrand==null||Model.iBrand.Id==0)
+                            PropertyName="Name" @bind-Model=@Model.iSupplier>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandGasket" Elements="@DialogData.Gaskets" Label="Gasket"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.iGasket>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Outer Material"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.iOuterMaterial>
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Inner Material"
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.iInnerMaterial>
+
+            </SelectTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Model"
+                             Label="Equipment Model"
+                             Rows="3"></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.Reference"
+                             Label="Reference"
+                             Rows="3"></TextBoxTemplate>
+            <TextBoxTemplate @bind-Value="@Model.SerialNumber"
+                             Label="Serial Number"></TextBoxTemplate>
+        </RadzenCard>
+    </Rigth>
+</Panel>
+
+@code {
+    bool debug = true;
+
+}

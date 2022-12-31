@@ -1,0 +1,120 @@
+﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
+
+@if (debug)
+{
+
+}
+<Panel>
+    <Left>
+        <RadzenCard>
+
+
+            <SelectTemplate T="CommandPipeClass"
+                            Clearable=true
+                            Elements=@DialogData.PipeClasses
+                            Change="@(()=>OnChangePipeClass(Model.pPipeClass.Id))"
+                            PropertyName="Name"
+                            Label="Pipe Class"
+                            @bind-Model="@Model.pPipeClass">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandPipeDiameter"
+                            Clearable=true
+                            PropertyName="Name"
+                            Disabled=@(Model.pPipeClass==null?true:false)
+                            Elements=@DialogData.PipeDiameters
+                            Label="Diameter"
+                            @bind-Model="@Model.pDiameter">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandMaterial"
+                            Clearable=true
+                            PropertyName="Name"
+                            Elements=@DialogData.Materials
+                            Label="Pipe Material"
+                            @bind-Model="@Model.pMaterial">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandProcessFluid"
+                            Clearable=true
+                            PropertyName="Name"
+                            Elements=@DialogData.ProcessFluids
+                            Label="Process Fluid"
+                            @bind-Model="@Model.pProcessFluid">
+
+
+            </SelectTemplate>
+
+            <SwitchTemplate Label="Insulation" @bind-Value="@Model.Insulation">
+
+            </SwitchTemplate>
+
+            <TextBoxTemplate @bind-Value="@Model.TagNumber" Label="Tag Number"></TextBoxTemplate>
+
+            <FieldTemplate Label="Tag" Value="@DialogParent.Model.PipingItem.TagId"></FieldTemplate>
+
+
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+           <SelectTemplate T="CommandMWOItem"
+                            Elements=@DialogData.MWOItemsStarts
+                            Clearable=true
+                            PropertyName="@nameof(CommandMWOItem.TagId)"
+                            Change="OnChangeEquipmentStart"
+                            Label="Pipe Start in"
+                            @bind-Model="@Model.StartMWOItem">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandNozzle"
+                            @ref=selectnozzlestart
+                            Elements=@DialogData.NozzlesByMWOItemsStarts
+                            Clearable=true
+                            PropertyName="@nameof(CommandNozzle.NameDescription)"
+                            Label="Nozzle Start"
+                          
+                            @bind-Model="@Model.NozzleStart">
+
+
+            </SelectTemplate>
+             <SelectTemplate T="CommandMWOItem"
+                            Clearable=true
+                            Elements=@DialogData.MWOItemsFinish
+                            PropertyName="@nameof(CommandMWOItem.TagId)"
+                            Change="OnChangeEquipmentFinish"
+                            Label="Pipe Finish in"
+                            @bind-Model="@Model.FinishMWOItem">
+
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandNozzle"
+                            @ref=selectnozzlefinish
+                            Clearable=true
+                            Elements=@DialogData.NozzlesByMWOItemsFinish
+                            PropertyName="@nameof(CommandNozzle.NameDescription)"
+                           
+                            Label="Nozzle Finish"
+                            @bind-Model="@Model.NozzleFinish">
+
+
+            </SelectTemplate>@**@
+
+        </RadzenCard>
+    </Rigth>
+</Panel>
+
+@code {
+    bool debug = true;
+    SelectTemplate<CommandNozzle> selectnozzlestart;
+    SelectTemplate<CommandNozzle> selectnozzlefinish;
+}

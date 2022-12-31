@@ -1,0 +1,26 @@
+﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdate;
+@using CPTool.UIApp.Services;
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(LayoutRadzen)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(LayoutRadzen)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+@code{
+    [Inject]
+    public IMWOService MWOService{ get; set; }
+    [Inject]
+    public IMWOItemService MWOItemService { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+       
+    }
+   
+}

@@ -2,7 +2,7 @@
 
 namespace CPTool.Domain.Entities
 {
-    public class ControlLoop : BaseDomainModel
+    public class ControlLoop : AuditableEntity
     {
 
         public int? MWOId { get; set; }

@@ -1,6 +1,9 @@
-﻿using CPTool.Application.Features.BrandFeatures.CreateEdit;
+﻿using CPTool.Application.Contracts;
+using CPTool.Application.Features.BrandFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Generic;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace CPTool.Application.Features.BrandFeatures
 {
@@ -30,6 +33,7 @@ namespace CPTool.Application.Features.BrandFeatures
         { }
         public override async Task<List<EditBrand>> Handle(QueryList<EditBrand> request, CancellationToken cancellationToken)
         {
+            //List<Expression<Func<Brand, object>>> Includes = null!;// Include(x => x.BrandSuppliers).ThenInclude(x => x.Supplier);
             var list = await _unitofwork.RepositoryBrand.GetAllAsync();
 
             return _mapper.Map<List<EditBrand>>(list);

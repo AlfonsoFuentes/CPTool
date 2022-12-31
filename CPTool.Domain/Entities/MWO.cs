@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class MWO  : BaseDomainModel
+    public class MWO  : AuditableEntity
     {
         public int Number { get; set; }
         public string? ProjectLeader { get; set; }

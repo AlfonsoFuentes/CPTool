@@ -1,5 +1,7 @@
 ﻿
 
+global using CPTool.Application.Contracts;
+
 namespace CPTool.Application.Generic
 {
 
@@ -7,7 +9,7 @@ namespace CPTool.Application.Generic
     public class CommandHandler<TEdit, TAdd, TEntity> : IRequestHandler<TEdit, Result<int>>
         where TAdd : AddCommand
         where TEdit : EditCommand
-        where TEntity : BaseDomainModel
+        where TEntity : AuditableEntity
     {
 
         protected readonly IMapper _mapper;

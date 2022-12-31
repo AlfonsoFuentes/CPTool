@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class ProcessCondition  : BaseDomainModel
+    public class ProcessCondition  : AuditableEntity
     {
         [ForeignKey("pProcessConditionId")]
         public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;

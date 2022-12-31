@@ -1,4 +1,5 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Contracts;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -10,7 +11,7 @@ namespace CPTool.Infrastructure.Repositories
         public override async Task<IReadOnlyList<BrandSupplier>> GetAllAsync()
         {
 
-            var include = tableSet.AsNoTrackingWithIdentityResolution().AsNoTrackingWithIdentityResolution()
+            var include = tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                 .Include(x => x.Brand)
                 .Include(x => x.Supplier);
 

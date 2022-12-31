@@ -1,0 +1,32 @@
+﻿@using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
+@using CPTool.Domain.Enums;
+<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <SelectTemplate T="CommandSupplier" Elements=@Suppliers
+                        Label="Supplier"
+                        @bind-Model=@Model.Supplier
+                       Clearable=true
+                        PropertyName="Name">
+
+        </SelectTemplate>
+        <SelectEnumTemplate T="BrandType" Elements=@(Enum.GetValues<BrandType>()) Label="Type" @bind-Value=@Model.Brand.BrandType>
+
+        </SelectEnumTemplate>
+
+        @if (Model.Brand.BrandType != BrandType.None)
+        {
+            <TextBoxTemplate @bind-Value="@Model.Brand.Name" Label=@Model.Brand.BrandType.ToString()
+                      
+                         ></TextBoxTemplate>
+
+
+
+        }
+
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

@@ -1,0 +1,21 @@
+﻿@typeparam T
+
+<div style=@UISettings.RowRem class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
+    </div>
+    <div class=@UISettings.ColClassValue>
+        <RadzenDropDown @ref=RadzenDropDown AllowClear="@Clearable" TValue="T" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox
+                        Disabled=@Disabled FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.Contains" AllowFiltering="true"
+                        Data=@Elements TextProperty="@PropertyName" @bind-Value=@LocalModel Name="Select"
+                        Change=OnChange />
+   </div>
+</div>
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+    RadzenDropDown<T> RadzenDropDown;
+}

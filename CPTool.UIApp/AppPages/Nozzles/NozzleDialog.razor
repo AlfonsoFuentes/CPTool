@@ -1,0 +1,68 @@
+﻿@using CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
+@using CPTool.Domain.Enums;
+<DialogTemplate Model="@Model" Save="@Save" SaveDialog=@SaveDialog>
+    <ChildContent>
+        <RadzenCard Class="m-3">
+
+            <FieldTemplate Label="Name" Value=@Model.Name>
+
+            </FieldTemplate>
+           <TextBoxTemplate Label="Description" @bind-Value=@Model.Description></TextBoxTemplate>
+            <SelectEnumTemplate T="StreamType" Elements=@(Enum.GetValues<StreamType>()) Label="In/Out type" @bind-Value=@Model.StreamType>
+
+            </SelectEnumTemplate>
+             <SelectTemplate T="CommandPipeClass" Elements=@DialogData.PipeClasses
+                            Label="Class"
+                            @bind-Model=@Model.nPipeClass
+                            Change=@(()=>GetPipeDiameterByPipeClassId(Model.nPipeClass.Id))
+                            PropertyName="Name">
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandPipeDiameter"
+                            Elements=@(DialogData.PipeDiameters)
+                            Label="Diameter"
+                            Disabled=@(Model.nPipeClass==null||Model.nPipeClass.Id==0)
+                            @bind-Model=@Model.PipeDiameter
+                           
+                            PropertyName="Name">
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandConnectionType"
+                            Elements=@((DialogData.ConnectionTypes))
+                            Label="Connection Type"
+                            @bind-Model=@Model.ConnectionType
+                           
+                            PropertyName="Name">
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandMaterial"
+                            Elements=@((DialogData.Materials))
+                            Label="Nozzle Material"
+                            @bind-Model=@Model.nMaterial
+                           
+                            PropertyName="Name">
+
+            </SelectTemplate>
+            <SelectTemplate T="CommandGasket" 
+                            Elements=@((DialogData.Gaskets))
+                            Label="Nozzle Gasket"
+                            @bind-Model=@Model.nGasket
+                           
+                            PropertyName="Name">
+
+            </SelectTemplate>
+        </RadzenCard>
+    </ChildContent>
+
+</DialogTemplate>
+@if(debug)
+{
+    
+}
+@code {
+    bool debug = true;
+}

@@ -15,6 +15,7 @@ using CPTool.Application.Features.MaterialFeatures.CreateEdit;
 using CPTool.Application.Features.MeasuredVariableFeatures.CreateEdit;
 using CPTool.Application.Features.MeasuredVariableModifierFeatures.CreateEdit;
 using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
+using CPTool.Application.Features.MOTypeFeatures.CreateEdit;
 using CPTool.Application.Features.MWOFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.NozzleFeatures.CreateEdit;

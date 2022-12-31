@@ -1,4 +1,5 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Contracts;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -9,19 +10,19 @@ namespace CPTool.Infrastructure.Repositories
         }
         public override async Task<IReadOnlyList<SignalModifier>> GetAllAsync()
         {
-            var result = await tableSet.AsNoTrackingWithIdentityResolution()
+             var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                
                 .ToListAsync();
             return result;
         }
-        //public override async Task<SignalModifier> GetByIdAsync(int id)
-        //{
+        public override async Task<SignalModifier> GetByIdAsync(int id)
+        {
 
 
 
-        //    var result = await tableSet.AsNoTrackingWithIdentityResolution()
-        //       .FirstOrDefaultAsync(x => x.Id == id);
-        //    return result!;
-        //}
+            var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
+              .FirstOrDefaultAsync(x => x.Id == id);
+            return result!;
+        }
     }
 }

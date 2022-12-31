@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CPTool.Domain.Entities
 {
-    public class Material : BaseDomainModel
+    public class Material : AuditableEntity
     {
 
 

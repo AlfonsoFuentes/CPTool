@@ -1,6 +1,6 @@
 ﻿namespace CPTool.Domain.Entities
 {
-    public class MWOItem  : BaseDomainModel
+    public class MWOItem  : AuditableEntity
     {
         [ForeignKey("ConnectedToId")]
         public ICollection<Nozzle>? NozzlesConnecteds { get; set; }

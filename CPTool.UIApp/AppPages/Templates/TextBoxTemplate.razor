@@ -1,0 +1,25 @@
+﻿<div style=@UISettings.RowRem class="row">
+    <div class=@UISettings.ColClassLabel>
+        <RadzenLabel Text="@Label" Style=@UISettings.StyleBoxWidth100 class=@UISettings.ClassBox />
+    </div>
+    <div class=@UISettings.ColClassValue>
+        @if (Rows == 1)
+        {
+            <RadzenTextBox Style=@UISettings.StyleBoxWidth100 @bind-Value="@Value" Change=ValueChanged Disabled=@Disabled Name="TextBox"
+                       @oninput=@OnChange
+                       class=@UISettings.ClassBox />
+        }
+        else
+        {
+            <RadzenTextArea @bind-Value="@Value" Change=OnChange Disabled=@Disabled Name="TextBox" Rows="@Rows" Style=@UISettings.StyleBoxWidth100
+                        class=@UISettings.ClassBox />
+        }
+
+
+    </div>
+</div>
+
+@code {
+   
+
+}

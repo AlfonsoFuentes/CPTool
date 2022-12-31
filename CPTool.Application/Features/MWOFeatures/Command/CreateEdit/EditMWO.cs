@@ -1,5 +1,6 @@
 ﻿
 
+using CPTool.Application.Features.MOTypeFeatures.CreateEdit;
 using CPTool.Application.Features.MWOItemFeatures.CreateEdit;
 using CPTool.Application.Features.PipeDiameterFeatures.CreateEdit;
 using CPTool.Application.Features.PurchaseOrderFeatures.CreateEdit;

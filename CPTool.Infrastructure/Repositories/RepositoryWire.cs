@@ -1,4 +1,6 @@
-﻿using CPTool.Domain.Entities;
+﻿
+global using CPTool.Application.Contracts;
+global using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -9,18 +11,18 @@ namespace CPTool.Infrastructure.Repositories
         }
         public override async Task<IReadOnlyList<Wire>> GetAllAsync()
         {
-            var result = await tableSet.AsNoTrackingWithIdentityResolution()
+             var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
             return result;
         }
-        //public override async Task<Wire> GetByIdAsync(int id)
-        //{
+        public override async Task<Wire> GetByIdAsync(int id)
+        {
 
 
 
-        //    var result = await tableSet.AsNoTrackingWithIdentityResolution()
-        //       .FirstOrDefaultAsync(x => x.Id == id);
-        //    return result!;
-        //}
+            var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
+              .FirstOrDefaultAsync(x => x.Id == id);
+            return result!;
+        }
     }
 }

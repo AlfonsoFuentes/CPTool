@@ -2,7 +2,7 @@
 
 namespace CPTool.Domain.Entities
 {
-    public class Taks : BaseDomainModel
+    public class Taks : AuditableEntity
     {
         public int? MWOId { get; set; }
         public MWO? MWO { get; set; }

@@ -1,4 +1,5 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Contracts;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -9,7 +10,7 @@ namespace CPTool.Infrastructure.Repositories
         }
         public override async Task<IReadOnlyList<DeviceFunction>> GetAllAsync()
         {
-            var result = await tableSet.AsNoTrackingWithIdentityResolution().AsNoTrackingWithIdentityResolution()
+            var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
             return result;
         }
@@ -18,7 +19,7 @@ namespace CPTool.Infrastructure.Repositories
 
 
 
-            var result = await tableSet.AsNoTrackingWithIdentityResolution().AsNoTrackingWithIdentityResolution()
+            var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                .FirstOrDefaultAsync(x => x.Id == id);
             return result!;
         }

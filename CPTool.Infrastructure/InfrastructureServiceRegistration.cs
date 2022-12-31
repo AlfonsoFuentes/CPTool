@@ -16,7 +16,7 @@ namespace CPTool.Infrastructure
             options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
             .EnableSensitiveDataLogging(true));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IExcelService, ExcelService>();
 
 

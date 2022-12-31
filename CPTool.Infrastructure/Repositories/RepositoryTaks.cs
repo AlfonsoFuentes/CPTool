@@ -1,4 +1,5 @@
-﻿using CPTool.Domain.Entities;
+﻿using CPTool.Application.Contracts;
+using CPTool.Domain.Entities;
 
 namespace CPTool.Infrastructure.Repositories
 {
@@ -9,7 +10,7 @@ namespace CPTool.Infrastructure.Repositories
         }
         public override async Task<IReadOnlyList<Taks>> GetAllAsync()
         {
-            var result = await tableSet.AsNoTrackingWithIdentityResolution()
+             var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
                 .Include(x=>x.DownPayment)
                 .Include(x => x.PurchaseOrder)
                 .Include(x => x.MWOItem)
@@ -17,18 +18,18 @@ namespace CPTool.Infrastructure.Repositories
                 .ToListAsync();
             return result;
         }
-        //public override async Task<Taks> GetByIdAsync(int id)
-        //{
+        public override async Task<Taks> GetByIdAsync(int id)
+        {
 
 
 
-        //    var result = await tableSet.AsNoTrackingWithIdentityResolution()
-        //          .Include(x => x.DownPayment)
-        //        .Include(x => x.PurchaseOrder)
-        //        .Include(x => x.MWOItem)
-        //        .Include(x => x.MWO)
-        //       .FirstOrDefaultAsync(x => x.Id == id);
-        //    return result!;
-        //}
+            var result = await tableSet.AsQueryable().AsNoTrackingWithIdentityResolution()
+                 .Include(x => x.DownPayment)
+               .Include(x => x.PurchaseOrder)
+               .Include(x => x.MWOItem)
+               .Include(x => x.MWO)
+              .FirstOrDefaultAsync(x => x.Id == id);
+            return result!;
+        }
     }
 }

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CPTool.Domain\CPTool.Domain.csproj" />
+    <ProjectReference Include="..\EquipmentCalculation\EquipmentCalculation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+	  
+    <Folder Include="Otro\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="6.0.2" />
+  </ItemGroup>
+
+</Project>

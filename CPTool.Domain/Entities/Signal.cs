@@ -2,7 +2,7 @@
 
 namespace CPTool.Domain.Entities
 {
-    public class Signal : BaseDomainModel
+    public class Signal : AuditableEntity
     {
         public int? SignalTypeId { get; set; } 
         public SignalType? SignalType { get; set; }

@@ -1,0 +1,103 @@
+﻿@using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
+<div class="row  container-fluid">
+    <div class="col-md-6 mb-2">
+        <RadzenCard>
+            @if (Model.ProcessCondition != null)
+            {
+                <SelectTemplate T="CommandProcessFluid"
+                            Elements=@DialogData.ProcessFluids
+                            Label="Process Fluid"
+                            Clearable=true
+                            PropertyName="Name"
+                            Change="@ChangeProcessFluid"
+                            @bind-Model="@Model.ProcessFluid">
+
+
+                </SelectTemplate>
+            }
+        </RadzenCard>
+    </div>
+
+    <Panel>
+
+        <Left>
+            @if (Model.ProcessCondition != null)
+            {
+                <RadzenCard>
+                    @if (Model.ProcessCondition.Temperature != null)
+                    {
+                        <SelectUnitTemplate Label="Temperature" @bind-Model=@Model.ProcessCondition.Temperature Change="OnChangeTemperaturePressure" Disable=@(Model.ProcessFluid==null)></SelectUnitTemplate>
+
+                    }
+                    @if (Model.ProcessCondition.Pressure != null)
+                    {
+                        <SelectUnitTemplate Label="Pressure" @bind-Model=@Model.ProcessCondition.Pressure Change="OnChangeTemperaturePressure" Disable=@(Model.ProcessFluid==null)></SelectUnitTemplate>
+
+                    }  @if (Model.ProcessCondition.MassFlow != null)
+                    {
+                        <SelectUnitTemplate Label="Mass Flow" @bind-Model=@Model.ProcessCondition.MassFlow
+                                    Change="OnChangeMassFlow" Disable=@(Model.ProcessFluid==null)></SelectUnitTemplate>
+
+                    }
+                    @if (Model.ProcessCondition.VolumetricFlow != null)
+                    {
+                        <SelectUnitTemplate Label="Volumetric Flow" @bind-Model=@Model.ProcessCondition.VolumetricFlow
+                                    Change="OnChangeVolumetricFlow" Disable=@(Model.ProcessFluid==null)></SelectUnitTemplate>
+
+                    }
+                    @if (Model.ProcessCondition.Density != null)
+                    {
+                        <SelectUnitTemplate Label="Density" @bind-Model=@Model.ProcessCondition.Density Disable="true"></SelectUnitTemplate>
+
+                    }
+
+
+                </RadzenCard>
+            }
+        </Left>
+        <Rigth>
+            @if (Model.ProcessCondition != null)
+            {
+                <RadzenCard>
+                    @if (Model.ProcessCondition.SpecificCp != null)
+                    {
+                        <SelectUnitTemplate Label="Specific Cp" @bind-Model=@Model.ProcessCondition.SpecificCp Disable="true"></SelectUnitTemplate>
+
+                    }
+                    @if (Model.ProcessCondition.SpecificEnthalpy != null)
+                    {
+                        <SelectUnitTemplate Label="Specific Enthalpy" @bind-Model=@Model.ProcessCondition.SpecificEnthalpy Disable="true"></SelectUnitTemplate>
+
+                    }
+                    @if (Model.ProcessCondition.EnthalpyFlow != null)
+                    {
+                        <SelectUnitTemplate Label="Enthalpy Flow" @bind-Model=@Model.ProcessCondition.EnthalpyFlow Disable="true"></SelectUnitTemplate>
+
+                    }
+                    @if (Model.ProcessCondition.Viscosity != null)
+                    {
+                        <SelectUnitTemplate Label="Viscosity" @bind-Model=@Model.ProcessCondition.Viscosity Disable="true"></SelectUnitTemplate>
+
+                    }
+                    @if (Model.ProcessCondition.ThermalConductivity != null)
+                    {
+                        <SelectUnitTemplate Label="Thermal Conduc." @bind-Model=@Model.ProcessCondition.ThermalConductivity Disable="true"></SelectUnitTemplate>
+                    }
+
+                </RadzenCard>
+            }
+        </Rigth>
+
+
+    </Panel>
+</div>
+
+@if (debug)
+{
+
+}
+
+@code {
+    bool debug = true;
+
+}
