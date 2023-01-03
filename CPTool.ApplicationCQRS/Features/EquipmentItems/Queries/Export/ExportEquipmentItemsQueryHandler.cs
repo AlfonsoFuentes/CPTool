@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentItems.Queries.Export
 {
     public class ExportEquipmentItemsQueryHandler : IRequestHandler<ExportEquipmentItemsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportEquipmentItemsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportEquipmentItemsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentItems.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "EquipmentItem";
-            result.ExportFileName += $".{request.Type}";
-            var allEquipmentItem = (await _UnitOfWork.RepositoryEquipmentItem.GetAllAsync());
-            var allEquipmentItemDTO = _mapper.Map<List<CommandEquipmentItem>>(allEquipmentItem);
-            if (request.Filter != null)
-            {
-                allEquipmentItemDTO = allEquipmentItemDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allEquipmentItemDTO = allEquipmentItemDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allEquipmentItemDTO, request.Dictionary, "EquipmentItem");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "EquipmentItem");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allEquipmentItemDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allEquipmentItemDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

@@ -1,0 +1,30 @@
+﻿@using CPTool.ApplicationCQRS.Features.UserRequirementTypes.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Users.Commands.CreateUpdate;
+<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+        <SelectTemplate T="CommandUserRequirementType" Elements=@DialogData.UserRequirmentTypes
+                        Label="User Requirement Type:"
+                        @bind-Model=@Model.UserRequirementType
+                        PropertyName="Name">
+
+        </SelectTemplate>
+        <SelectTemplate T="CommandUser" Elements=@DialogData.Users
+                        Label="Requested By:"
+                        @bind-Model=@Model.RequestedBy
+                        PropertyName="Name">
+        </SelectTemplate>
+
+
+        <TextBoxTemplate @bind-Value="@Model.Name" Label="Description" Rows="4"></TextBoxTemplate>
+
+
+
+
+
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

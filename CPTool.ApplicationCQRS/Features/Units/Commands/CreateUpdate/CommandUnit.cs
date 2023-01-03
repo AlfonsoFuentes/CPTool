@@ -53,7 +53,7 @@ namespace CPTool.ApplicationCQRS.Features.Units.Commands.CreateUpdate
         public Amount? Amount { get; set; }
         public List<CPTool.UnitsSystem.Unit> UnitsList => Amount!.UnitsList;
 
-        [Report]
+      
         public string StringValue => Amount!.ToString("NG");
 
 

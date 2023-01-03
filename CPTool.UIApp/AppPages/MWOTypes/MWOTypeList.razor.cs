@@ -47,7 +47,7 @@ namespace CPTool.UIApp.AppPages.MWOTypes
         }
         async Task<ExportBaseResponse> Export(string type)
         {
-            return await Service.GetFiletoExport(type);
+            return await Service.GetFiletoExport(type, Elements);
         }
     }
 }

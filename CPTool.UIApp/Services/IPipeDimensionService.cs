@@ -1,4 +1,5 @@
 ﻿
+using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeClasss.Queries.Export;
 using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
@@ -24,8 +25,8 @@ namespace CPTool.UIApp.Services
         Task<CommandPipeDiameter> GetByIdPipeDiameter(int id);
         Task<List<CommandPipeClass>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExportPipeClass(string type);
-        Task<ExportBaseResponse> GetFiletoExportPipeDiameter(string type);
+        Task<ExportBaseResponse> GetFiletoExportPipeClass(string type, List<CommandPipeClass> List);
+        Task<ExportBaseResponse> GetFiletoExportPipeDiameter(string type, List<CommandPipeDiameter> List);
     }
     public class PipeDimensionService : IPipeDimensionService
     {
@@ -86,14 +87,15 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExportPipeClass(string type)
+        public async Task<ExportBaseResponse> GetFiletoExportPipeClass(string type, List<CommandPipeClass> List)
         {
             ExportPipeClasssQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExportPipeDiameter(string type)
+        public async Task<ExportBaseResponse> GetFiletoExportPipeDiameter(string type, List<CommandPipeDiameter> List)
         {
             ExportPipeDiametersQuery export = new();
             export.Type = type;

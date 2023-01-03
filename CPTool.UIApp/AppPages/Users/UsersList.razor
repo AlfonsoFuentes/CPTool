@@ -1,0 +1,27 @@
+﻿@page "/users"
+@using CPTool.ApplicationCQRS.Features.Users.Commands.CreateUpdate;
+
+
+<PageTitle>@($"Users ")</PageTitle>
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+              
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandUser" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

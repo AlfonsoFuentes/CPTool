@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.InsulationItems.Queries.Export
 {
     public class ExportInsulationItemsQueryHandler : IRequestHandler<ExportInsulationItemsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+        
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportInsulationItemsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportInsulationItemsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.InsulationItems.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "InsulationItem";
-            result.ExportFileName += $".{request.Type}";
-            var allInsulationItem = (await _UnitOfWork.RepositoryInsulationItem.GetAllAsync());
-            var allInsulationItemDTO = _mapper.Map<List<CommandInsulationItem>>(allInsulationItem);
-            if (request.Filter != null)
-            {
-                allInsulationItemDTO = allInsulationItemDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allInsulationItemDTO = allInsulationItemDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+            
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allInsulationItemDTO, request.Dictionary, "InsulationItem");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "InsulationItem");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allInsulationItemDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allInsulationItemDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

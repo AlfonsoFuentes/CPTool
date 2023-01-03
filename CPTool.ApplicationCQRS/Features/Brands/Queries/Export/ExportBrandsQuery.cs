@@ -14,15 +14,15 @@ namespace CPTool.ApplicationCQRS.Features.Brands.Queries.Export
 
     public class ExportBrandsQuery : IRequest<ExportBaseResponse>
     {
+        public List<CommandBrand> List = new List<CommandBrand>();
         public string Type { get; set; } = string.Empty;
-        public Func<CommandBrand, bool>? Filter { get; set; }
-        public Func<CommandBrand, bool>? OrderBy { get; set; }
+       
         public Dictionary<string, Func<CommandBrand, object?>> Dictionary = new Dictionary<string, Func<CommandBrand, object?>>()
                 {
-                  
-                    {"Id",item => item.Id},
-                    { "Name",item => item.Name}
 
+                    {"Id",item => item.Id},
+                    { "Name",item => item.Name},
+             { "Type",item => item.BrandTypeName}
                 };
     }
 }

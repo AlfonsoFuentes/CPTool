@@ -19,11 +19,12 @@ namespace CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate
                 .NotNull()
                 .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
 
+           
 
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                 .WithMessage($"Name already exists.");
 
         }
 

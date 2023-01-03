@@ -1,7 +1,7 @@
 ﻿@page "/mwos"
 @using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 
-
+<PageTitle>@($"Mechanical Work Orders")</PageTitle>
 
 @if (debug)
 {
@@ -9,7 +9,7 @@
 }
 
 <TableTemplate T="CommandMWO"
-               TableName="MWO Types List"
+            
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

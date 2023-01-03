@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.PipeClasss.Queries.Export
     public class ExportPipeClasssQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandPipeClass, bool>? Filter { get; set; }
-        public Func<CommandPipeClass, bool>? OrderBy { get; set; }
+        public List<CommandPipeClass> List { get; set; } = new();
         public Dictionary<string, Func<CommandPipeClass, object?>> Dictionary = new Dictionary<string, Func<CommandPipeClass, object?>>()
                 {
                   

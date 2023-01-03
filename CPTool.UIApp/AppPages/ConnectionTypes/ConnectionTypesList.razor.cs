@@ -46,7 +46,7 @@ namespace CPTool.UIApp.AppPages.ConnectionTypes
         }
         async Task<ExportBaseResponse> Export(string type)
         {
-            return await Service.GetFiletoExport(type);
+            return await Service.GetFiletoExport(type, Elements);
         }
     }
 }

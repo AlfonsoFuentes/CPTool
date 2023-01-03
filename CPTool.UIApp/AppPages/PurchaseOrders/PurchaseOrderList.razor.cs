@@ -73,7 +73,7 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
         }
         async Task<ExportBaseResponse> Export(string type)
         {
-            return await Service.GetFiletoExport(type);
+            return await Service.GetFiletoExport(type, Elements);
         }
         public async Task<bool> ShowDownPaymentDialog(CommandDownPayment model)
         {

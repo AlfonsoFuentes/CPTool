@@ -3,6 +3,7 @@ using CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Queries.Export;
 using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
@@ -41,7 +42,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandNozzle>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandNozzle> List);
         Task<NozzleDialogData> GetNozzleDataDialog(CommandNozzle command);
 
         Task<List<CommandPipeDiameter>> GetPipeDiameterByPipeClass(int pipeclassid);
@@ -83,10 +84,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandNozzle> List)
         {
             ExportNozzlesQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }

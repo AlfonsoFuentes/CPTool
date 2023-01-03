@@ -31,8 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.PipingItems.Commands.CreateUpdate
         {
             var Response = new PipingItemCommandResponse();
 
-            var validator = new PipingItemValidator(_unitofwork.RepositoryPipingItem);
-            var validationResult = await validator.ValidateAsync(request);
+            var validator = new PipingItemValidator(_unitofwork.RepositoryMWOItemWithPiping);
+            var validationResult = await validator.ValidateAsync(request.MWOItem);//MWOItem esta vacio se espera que no se utilice este handler
 
             if (validationResult.Errors.Count > 0)
             {

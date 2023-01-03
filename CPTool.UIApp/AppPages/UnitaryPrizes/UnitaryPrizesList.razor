@@ -1,7 +1,7 @@
 ﻿@page "/unitary-prizes"
 @using CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdate;
 
-
+<PageTitle>@($"Unitary Prizes ")</PageTitle>
 
 @if (debug)
 {
@@ -9,7 +9,7 @@
 }
 
 <TableTemplate 
-               TableName="Connection Type List"
+              
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

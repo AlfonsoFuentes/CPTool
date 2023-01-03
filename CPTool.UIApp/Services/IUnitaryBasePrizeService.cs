@@ -1,4 +1,5 @@
 ﻿
+using CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Queries.Export;
 using CPTool.ApplicationCQRS.Responses;
@@ -19,7 +20,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandUnitaryBasePrize>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandUnitaryBasePrize> List);
     }
     public class UnitaryBasePrizeService : IUnitaryBasePrizeService
     {
@@ -58,10 +59,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandUnitaryBasePrize> List)
         {
             ExportUnitaryBasePrizesQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }

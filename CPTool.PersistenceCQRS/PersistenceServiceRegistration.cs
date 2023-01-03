@@ -30,6 +30,9 @@ namespace CPTool.PersistenceCQRS
             services.AddScoped<IRepositoryMWOType, RepositoryMWOType>(); 
             services.AddScoped<IRepositoryMWO, RepositoryMWO>();
             services.AddScoped<IRepositoryMWOItem, RepositoryMWOItem>();
+            services.AddScoped<IRepositoryMWOItemWithEquipment, RepositoryMWOItemWithEquipment>();
+            services.AddScoped<IRepositoryMWOItemWithInstrument, RepositoryMWOItemWithInstrument>();
+            services.AddScoped<IRepositoryMWOItemWithPiping, RepositoryMWOItemWithPiping>();
             services.AddScoped<IRepositoryMWOItemWithNozzles, RepositoryMWOItemWithNozzles>();
             services.AddScoped<IRepositoryPurchaseOrderItem, RepositoryPurchaseOrderItem>();
             services.AddScoped<IRepositoryPurchaseOrder, RepositoryPurchaseOrder>();

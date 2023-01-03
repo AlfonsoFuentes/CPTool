@@ -14,16 +14,25 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
         {
             _PurchaseOrderRepository = PurchaseOrderRepository;
 
-            RuleFor(p => p.Name)
+            RuleFor(p => p.PONumber)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
 
+            RuleFor(p => p.PurchaseRequisition)
+               .NotEmpty().WithMessage("{PropertyName} is required.")
+               .NotNull()
+               .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
 
+            RuleFor(p => p.pSupplier!.Id)
+       .NotEqual(0).WithMessage("Supplier is required.");
+
+            RuleFor(p => p.pBrand!.Id)
+      .NotEqual(0).WithMessage("Brand or Service is required.");
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                 .WithMessage($"Name already exists.");
 
         }
 

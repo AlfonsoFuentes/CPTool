@@ -1,7 +1,7 @@
 ﻿@page "/gaskets"
 @using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 
-
+<PageTitle>@($"Gaskets")</PageTitle>
 
 @if (debug)
 {
@@ -9,7 +9,7 @@
 }
 
 <TableTemplate T="CommandGasket"
-               TableName="Gasket List"
+       
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

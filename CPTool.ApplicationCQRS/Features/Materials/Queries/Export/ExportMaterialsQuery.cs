@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.Materials.Queries.Export
     public class ExportMaterialsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandMaterial, bool>? Filter { get; set; }
-        public Func<CommandMaterial, bool>? OrderBy { get; set; }
+        public List<CommandMaterial> List { get; set; } = new();
         public Dictionary<string, Func<CommandMaterial, object?>> Dictionary = new Dictionary<string, Func<CommandMaterial, object?>>()
                 {
                   

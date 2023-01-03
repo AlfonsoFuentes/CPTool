@@ -12,7 +12,7 @@
                ShowDialog="@ShowTableDialog"
                Elements="@Model.Nozzles"
                @bind-SelectedItem=@SelectedNozzles
-               TableName="@TableName">
+               >
    
     <Columns>
         <RadzenDataGridColumn TItem="CommandNozzle" Property="@nameof(CommandNozzle.Name)" Title="Name" TextAlign="TextAlign.Left">

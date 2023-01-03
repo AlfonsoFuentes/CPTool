@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.ElectricalBoxs.Queries.Export
     public class ExportElectricalBoxsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandElectricalBox, bool>? Filter { get; set; }
-        public Func<CommandElectricalBox, bool>? OrderBy { get; set; }
+        public List<CommandElectricalBox> List { get; set; } = new();
         public Dictionary<string, Func<CommandElectricalBox, object?>> Dictionary = new Dictionary<string, Func<CommandElectricalBox, object?>>()
                 {
                   

@@ -18,7 +18,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandConnectionType>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandConnectionType> List);
     }
     public class ConnectionTypeService : IConnectionTypeService
     {
@@ -57,10 +57,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandConnectionType> List)
         {
             ExportConnectionTypesQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }

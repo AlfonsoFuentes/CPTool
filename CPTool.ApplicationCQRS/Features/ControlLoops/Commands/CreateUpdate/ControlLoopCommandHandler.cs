@@ -67,7 +67,7 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<ControlLoop>(table));
                             await _unitofwork.RepositoryControlLoop.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.ControlLoopObject = _mapper.Map<CommandControlLoop>(table);
+                            Response.ControlLoopObject = request;
                      
                         }
 

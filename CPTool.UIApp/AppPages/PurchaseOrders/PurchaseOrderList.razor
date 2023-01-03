@@ -1,7 +1,11 @@
 ﻿@page "/purchase-orders"
 @page "/purchase-orders/{MWOId:int}"
 @using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
-<TableTemplate TableName="Purchase Order"
+
+
+<PageTitle>@($"Purchase orders")</PageTitle>
+
+<TableTemplate 
                @bind-SelectedItem=@SelectedItem
                ShowAdd=@(MWOId!=0)
                ShowDialog="ShowTableDialog"

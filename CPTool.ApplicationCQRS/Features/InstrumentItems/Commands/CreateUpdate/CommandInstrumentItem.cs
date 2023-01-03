@@ -6,6 +6,7 @@ using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MeasuredVariableModifiers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MeasuredVariables.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
@@ -18,7 +19,7 @@ namespace CPTool.ApplicationCQRS.Features.InstrumentItems.Commands.CreateUpdate
 {
     public class CommandInstrumentItem : CommandBase, IRequest<InstrumentItemCommandResponse>
     {
-
+        public CommandMWOItem MWOItem { get; set; } = new();
         public List<CommandNozzle>? Nozzles { get; set; } = new();
         public int? iProcessConditionId => iProcessCondition?.Id == 0 ? null : iProcessCondition?.Id;
         public CommandProcessCondition? iProcessCondition { get; set; } = new();
@@ -139,7 +140,7 @@ namespace CPTool.ApplicationCQRS.Features.InstrumentItems.Commands.CreateUpdate
             set
             {
                 _TagNumber = value;
-               
+                _TagId = SetTagId();
             }
         }
 

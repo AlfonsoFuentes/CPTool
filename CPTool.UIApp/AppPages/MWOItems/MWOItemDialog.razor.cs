@@ -55,7 +55,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
                 DialogData = await Service.GetMWOItemDataDialogByModel(DialogData, Model);
                 var result = await Service.VerifyProcessCondition(Model);
             }
-
+            StateHasChanged();
         }
         public async Task ChangeChapter()
         {

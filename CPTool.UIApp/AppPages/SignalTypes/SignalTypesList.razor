@@ -1,0 +1,27 @@
+﻿@page "/signal-types"
+@using CPTool.ApplicationCQRS.Features.SignalTypes.Commands.CreateUpdate;
+
+<PageTitle>@($"Signals Type")</PageTitle>
+
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+              
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandSignalType" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

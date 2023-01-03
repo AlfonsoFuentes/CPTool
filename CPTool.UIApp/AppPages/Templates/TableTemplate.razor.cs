@@ -18,8 +18,8 @@ namespace CPTool.UIApp.AppPages.Templates
         public List<T> Elements { get; set; }
 
 
-        [Parameter]
-        public string TableName { get; set; }
+        //[Parameter]
+        //public string TableName { get; set; }
         [Parameter]
         public Func<T, bool> Filter { get; set; }
         [Parameter]

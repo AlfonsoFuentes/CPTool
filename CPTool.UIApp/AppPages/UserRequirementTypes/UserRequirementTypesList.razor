@@ -1,0 +1,27 @@
+﻿@page "/user-requirement-types"
+@using CPTool.ApplicationCQRS.Features.UserRequirementTypes.Commands.CreateUpdate;
+
+<PageTitle>@($"User Requirment Types")</PageTitle>
+
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+               
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandUserRequirementType" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

@@ -1,0 +1,80 @@
+﻿@using CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.FieldLocations.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.SignalModifiers.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.SignalTypes.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Wires.Commands.CreateUpdate;
+@using CPTool.Domain.Enums;
+<DialogTemplate Model="@Model" Save="@Save">
+    <ChildContent>
+       
+                <RadzenCard Class="m-3">
+                    <FieldTemplate Label="MWO Item" Value="@(Model.MWOItem==null?"":Model.MWOItem.TagId)"></FieldTemplate>
+                    <FieldTemplate Label="Signal Name" Value="@Model.Name"></FieldTemplate>
+
+                    <SelectTemplate T="CommandSignalModifier" Elements=@DialogData.SignalModifiers
+                                    Label="Signal Modifier"
+                                    @bind-Model=@Model.SignalModifier
+                                  
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+                    <SelectTemplate T="CommandSignalType" Elements=@DialogData.SignalTypes
+                                    Label="Signal Type"
+                                    @bind-Model=@Model.SignalType
+                                   
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+
+                    <SelectEnumTemplate T="IOType" Elements=@(Enum.GetValues<IOType>()) Label="Select  In/Out Type"
+                                        @bind-Value=@Model.IOType >
+
+                    </SelectEnumTemplate>
+                    <SwitchTemplate @bind-Value="@Model.IsWired" Label="IsWired?">
+
+                    </SwitchTemplate>
+
+                    <SelectTemplate T="CommandWire" Elements=@DialogData.Wires
+                                    Label="Wire"
+                                    @bind-Model=@Model.Wire
+                                    Disabled=@(!Model.IsWired)
+                                   
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+                    <SelectTemplate T="CommandFieldLocation" Elements=@DialogData.FieldLocations
+                                    Label="Field Location"
+                                    @bind-Model=@Model.FieldLocation
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+                    <SelectTemplate T="CommandElectricalBox" Elements=@DialogData.ElectricalBoxs
+                                    Label="Electrical Box"
+                                    @bind-Model=@Model.ElectricalBox
+                                    PropertyName="Name">
+
+                    </SelectTemplate>
+
+                    <SwitchTemplate @bind-Value="@Model.Disconect" Label="Disconect?">
+
+                    </SwitchTemplate>
+                    <SwitchTemplate @bind-Value="@Model.InstrumentAir" Label="Instrument Air?">
+
+                    </SwitchTemplate>
+
+                    <SwitchTemplate @bind-Value="@Model.FrequencyInverter" Label="Frequency Inverter?">
+
+                    </SwitchTemplate>
+
+
+                </RadzenCard>
+   
+
+    </ChildContent>
+
+</DialogTemplate>
+
+@code {
+
+}

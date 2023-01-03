@@ -10,6 +10,7 @@ using CPTool.ApplicationCQRS.Contracts.Persistence;
 using CPTool.Domain.Entities;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using CPTool.Domain.Common;
+using CPTool.Domain.Enums;
 
 namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
 {
@@ -37,7 +38,7 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
             if (validationResult.Errors.Count > 0)
             {
                 Response.Success = false;
-                
+
                 foreach (var error in validationResult.Errors)
                 {
                     Response.ValidationErrors.Add(error.ErrorMessage);
@@ -47,6 +48,7 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
             {
                 try
                 {
+                    ReviewDownPayment(request);
                     if (request.Id == 0)
                     {
                         var addcommand = _mapper.Map<AddDownPayment>(request);
@@ -55,7 +57,7 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
                         table = await _unitofwork.RepositoryDownPayment.AddAsync(table);
                         await _unitofwork.Complete();
                         Response.DownPaymentObject = _mapper.Map<CommandDownPayment>(table);
-                        
+
                     }
                     else
                     {
@@ -68,18 +70,18 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
                             await _unitofwork.RepositoryDownPayment.UpdateAsync(table);
                             await _unitofwork.Complete();
                             Response.DownPaymentObject = _mapper.Map<CommandDownPayment>(table);
-                     
+
                         }
 
 
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Response.Message = ex.Message;
                     Response.Success = false;
                 }
-                
+
             }
             var email = new Email() { To = "alfonsofuen@gmail.com", Body = $"A new Mwo Type was created: {request}", Subject = "A new Mwo Type was created" };
 
@@ -95,6 +97,25 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
 
 
             return Response;
+        }
+        void ReviewDownPayment(CommandDownPayment Model)
+        {
+            if (Model.DownpaymentStatus == DownpaymentStatus.Draft)
+            {
+
+                Model.DownpaymentStatus = DownpaymentStatus.Created;
+            }
+            else if (Model.DownpaymentStatus == DownpaymentStatus.Created)
+            {
+                Model.ApprovedDate = DateTime.Now;
+                Model.DownpaymentStatus = DownpaymentStatus.Approved;
+            }
+
+            else if (Model.DownpaymentStatus == DownpaymentStatus.Approved)
+            {
+                Model.RealDate = DateTime.Now;
+                Model.DownpaymentStatus = DownpaymentStatus.Paid;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentTypes.Queries.Export
     public class ExportEquipmentTypesQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandEquipmentType, bool>? Filter { get; set; }
-        public Func<CommandEquipmentType, bool>? OrderBy { get; set; }
+        public List<CommandEquipmentType> List { get; set; } = new();
         public Dictionary<string, Func<CommandEquipmentType, object?>> Dictionary = new Dictionary<string, Func<CommandEquipmentType, object?>>()
                 {
                   

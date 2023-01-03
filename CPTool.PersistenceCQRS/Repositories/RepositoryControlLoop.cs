@@ -9,22 +9,20 @@ namespace CPToolCQRS.Infrastructure.Repositories
            
             QueryList = QueryList
               .Include(x => x.SP)
-              .Include(x => x.ControlledVariable)
+              .Include(x => x.ControlledVariable).ThenInclude(y=>y!.MWOItem).ThenInclude(x=>x!.Chapter)
               .Include(x => x.ProcessVariableMin)
               .Include(x => x.ProcessVariableMax)
-              .Include(x => x.ControlledVariableMax)
-              .Include(x => x.ControlledVariableMin)
+             .Include(x => x.ProcessVariableValue)
               .Include(x => x.MWO)
-              .Include(x => x.ProcessVariable);
+              .Include(x => x.ProcessVariable).ThenInclude(y => y!.MWOItem).ThenInclude(x => x!.Chapter);
             QueryDialog = QueryDialog
                .Include(x => x.SP)
-              .Include(x => x.ControlledVariable)
+              .Include(x => x.ControlledVariable).ThenInclude(y => y!.MWOItem).ThenInclude(x => x!.Chapter)
               .Include(x => x.ProcessVariableMin)
               .Include(x => x.ProcessVariableMax)
-              .Include(x => x.ControlledVariableMax)
-              .Include(x => x.ControlledVariableMin)
+           .Include(x => x.ProcessVariableValue)
               .Include(x => x.MWO)
-              .Include(x => x.ProcessVariable);
+              .Include(x => x.ProcessVariable).ThenInclude(y => y!.MWOItem).ThenInclude(x => x!.Chapter);
         }
       
     }

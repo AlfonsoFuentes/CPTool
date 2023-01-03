@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.Users.Queries.Export
 {
     public class ExportUsersQueryHandler : IRequestHandler<ExportUsersQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportUsersQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportUsersQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.Users.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "User";
-            result.ExportFileName += $".{request.Type}";
-            var allUser = (await _UnitOfWork.RepositoryUser.GetAllAsync());
-            var allUserDTO = _mapper.Map<List<CommandUser>>(allUser);
-            if (request.Filter != null)
-            {
-                allUserDTO = allUserDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allUserDTO = allUserDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allUserDTO, request.Dictionary, "User");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "User");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allUserDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allUserDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

@@ -3,19 +3,19 @@
 @using CPTool.ApplicationCQRS.Features.TaxCodeLDs.Commands.CreateUpdate;
 
 
-
+<PageTitle>@($"Tax Code LD List")</PageTitle>
 @if (debug)
 {
 
 }
 
-<TableTemplateHierarchy TableName="Connection Type List"
+<TableTemplateHierarchy 
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"
                Elements="@Elements" Export="@Export">
     <Template Context="order">
-        <TableTemplate TableName=@($"Suppliers in Tax Code LD: {order.Name}")
+        <TableTemplate 
                        ShowToolBar=false
                        Elements="@order.Suppliers">
 

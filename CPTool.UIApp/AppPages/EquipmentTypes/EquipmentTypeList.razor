@@ -1,10 +1,11 @@
 ﻿@page "/equipment-types"
 @using CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdate;
 @using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
+<PageTitle>@($"Equipment Types  ")</PageTitle>
 <Panel>
     <Left>
         <TableTemplate T="CommandEquipmentType"
-                       TableName="Equipment Types List"
+                      
                        @bind-SelectedItem=@SelectedItem
                        ShowDialog="ShowEquipmentTypeDialog"
                        OnDelete="@DeleteEquipmentType"
@@ -22,7 +23,7 @@
     </Left>
     <Rigth>
         <TableTemplate T="CommandEquipmentTypeSub"
-                      TableName="Equipment Types Subs List"
+                   
                        @bind-SelectedItem=@SelectedItemSub
                        ShowDialog="ShowEquipmentTypeSubDialog"
                        OnDelete="@DeleteEquipmentTypeSub"

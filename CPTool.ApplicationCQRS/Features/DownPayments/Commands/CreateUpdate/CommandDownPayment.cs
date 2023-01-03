@@ -16,11 +16,13 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
         public string PurchaseOrderName => PurchaseOrder == null ? "" : PurchaseOrder!.Name;
        
         public string PurchaseOrderPO => PurchaseOrder == null ? "" : PurchaseOrder!.PONumber;
-   
+
+        public string PurchaseorderMWOName => PurchaseOrder!.MWO == null ? "" : PurchaseOrder.MWO.Name;
         public string PurchaseOrderSupplier => PurchaseOrder!.pSupplier == null ? "" : PurchaseOrder!.pSupplier!.Name;
  
         public string PurchaseOrderSupplierVendorCode => PurchaseOrder!.pSupplier == null ? "" : PurchaseOrder!.pSupplier!.VendorCode!;
-     
+        public string RequestDateText  => RequestDate.ToShortDateString();
+        public string RealDateText => RealDate==null?"": RealDate!.Value.ToShortDateString();
         public DateTime RequestDate { get; set; } = DateTime.Now;
      
         public string? ManagerEmail { get; set; } = "";

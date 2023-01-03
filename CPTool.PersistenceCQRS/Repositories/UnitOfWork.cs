@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using CPTool.PersistenceCQRS.Extensions;
+using CPTool.Persistence.Persistence;
 
 namespace CPTool.PersistenceCQRS.Repositories
 {
@@ -37,6 +38,9 @@ namespace CPTool.PersistenceCQRS.Repositories
         IRepositoryMWO _RepositoryMWO = null!;
         IRepositoryMWOType _RepositoryMWOType = null!;
         IRepositoryMWOItem _RepositoryMWOItem = null!;
+        IRepositoryMWOItemWithEquipment _RepositoryMWOItemWithEquipment = null!;
+        IRepositoryMWOItemWithInstrument _RepositoryMWOItemWithInstrument = null!;
+        IRepositoryMWOItemWithPiping _RepositoryMWOItemWithPiping = null!;
         IRepositoryMWOItemWithNozzles _RepositoryMWOItemWithNozzles = null!;
         IRepositoryNozzle _RepositoryNozzle = null!;
         IRepositoryPipeAccesory _RepositoryPipeAccesory = null!;
@@ -117,6 +121,9 @@ namespace CPTool.PersistenceCQRS.Repositories
         public IRepositoryMWO RepositoryMWO => _RepositoryMWO ??= new RepositoryMWO(_context);
         public IRepositoryMWOType RepositoryMWOType => _RepositoryMWOType ??= new RepositoryMWOType(_context);
         public IRepositoryMWOItem RepositoryMWOItem => _RepositoryMWOItem ??= new RepositoryMWOItem(_context);
+        public IRepositoryMWOItemWithEquipment RepositoryMWOItemWithEquipment => _RepositoryMWOItemWithEquipment ??= new RepositoryMWOItemWithEquipment(_context);
+        public IRepositoryMWOItemWithInstrument RepositoryMWOItemWithInstrument => _RepositoryMWOItemWithInstrument ??= new RepositoryMWOItemWithInstrument(_context);
+        public IRepositoryMWOItemWithPiping RepositoryMWOItemWithPiping => _RepositoryMWOItemWithPiping ??= new RepositoryMWOItemWithPiping(_context);
         public IRepositoryMWOItemWithNozzles RepositoryMWOItemWithNozzles => _RepositoryMWOItemWithNozzles ??= new RepositoryMWOItemWithNozzles(_context);
 
         public IRepositoryBrand RepositoryBrand => _RepositoryBrand ??= new RepositoryBrand(_context);

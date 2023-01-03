@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Queries.Export
 {
     public class ExportControlLoopsQueryHandler : IRequestHandler<ExportControlLoopsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportControlLoopsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportControlLoopsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "ControlLoop";
-            result.ExportFileName += $".{request.Type}";
-            var allControlLoop = (await _UnitOfWork.RepositoryControlLoop.GetAllAsync());
-            var allControlLoopDTO = _mapper.Map<List<CommandControlLoop>>(allControlLoop);
-            if (request.Filter != null)
-            {
-                allControlLoopDTO = allControlLoopDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allControlLoopDTO = allControlLoopDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allControlLoopDTO, request.Dictionary, "ControlLoop");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "ControlLoop");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allControlLoopDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allControlLoopDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

@@ -1,0 +1,45 @@
+﻿@page "/taks"
+
+@using CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate;
+
+
+<PageTitle>@($"Tasks")</PageTitle>
+@if (debug)
+{
+
+}
+
+<TableTemplate T="CommandTaks"
+              
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandTaks" Property="@nameof(CommandTaks.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandTaks" Property="@nameof(CommandTaks.CECName)" Title="CEC" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+           
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandTaks" Property="@nameof(CommandTaks.MWOName)" Title="MWO Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandTaks" Property="@nameof(CommandTaks.TaksStatusName)" Title="Status" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandTaks" Property="@nameof(CommandTaks.CreatedDateText)" Title="Created On:" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandTaks" Property="@nameof(CommandTaks.CompletionDateText)" Title="Completed On:" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+
+        </RadzenDataGridColumn>
+       
+       
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

@@ -1,9 +1,9 @@
 ﻿@if (ShowToolBar)
 {
     <div class="row" style="margin-bottom: 1rem">
-        <div class="col-12 col-md-12">
+        @*<div class="col-12 col-md-12">
             <RadzenText Text="@TableName" TextStyle="TextStyle.H5" TagName="TagName.H1" style="margin: 0" />
-        </div>
+        </div>*@
         <div class="row" style="margin-bottom: 1rem">
             <div class="col-12">
                 <RadzenText Text="@($"Selected: {SelectedName}")" TextStyle="TextStyle.Subtitle1" TagName="TagName.H1" style="margin: 0" />
@@ -55,8 +55,8 @@
 
 @code {
     void ShowTooltip(ElementReference elementReference, string tooltip, TooltipOptions options = null!) => TooltipService.Open(elementReference, tooltip, options);
-    [Parameter]
-    public string TableName { get; set; }
+    //[Parameter]
+    //public string TableName { get; set; }
     [Parameter]
     public string SelectedName { get; set; }
     [Parameter]

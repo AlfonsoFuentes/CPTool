@@ -19,11 +19,15 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
                 .NotNull()
                 .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
 
+            RuleFor(p => p.Chapter!.Id)
+            .NotEqual(0).WithMessage("Chapter is required.");
 
+            RuleFor(p => p.MWO!.Id)
+         .NotEqual(0).WithMessage("MWO Name is required.");
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                 .WithMessage($"Name already exists.");
 
         }
 
@@ -31,7 +35,7 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandMWOItem e, CancellationToken token)
         {
-            return !await _MWOItemRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            return !await _MWOItemRepository.IsPropertyUnique(e.Id, "Name", e.Name);
         }
     }
 }

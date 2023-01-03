@@ -5,33 +5,16 @@
 }
 
 
-<div class="row">
-    <div class="col-md-9">
-        <RadzenLabel style="font-weight: bold" Text="Item no longer available." Visible="@(!canEdit)" />
-    </div>
-    <div class="col-md-3">
-        <RadzenButton ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 20px" Text="Close" Visible="@(!canEdit)" Click="@CancelButtonClick" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-9">
-        <RadzenLabel style="font-weight: bold" Text="Another user has made conflicting changes to one or more of the fields you have modified. Please reload." Visible="@hasChanges" />
-    </div>
-    <div class="col-md-3">
-        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="autorenew" style="margin-bottom: 20px" Text="Reload" Visible="@hasChanges" Click="@ReloadButtonClick" />
-    </div>
-</div>
 <div class="col-md-12">
-    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
-        if(errors!=null)
-        {
-            @foreach (var row in errors)
-            {
-                @row
-            }
-        }
-       
-    </RadzenAlert>
+
+    @foreach (var row in errors)
+    {
+        <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
+            @row
+        </RadzenAlert>
+    }
+
+
     <RadzenTemplateForm TItem="T" Data="@Model" Visible="@(Model != null && canEdit)">
         <CascadingValue Value=@this>@ChildContent</CascadingValue>
 

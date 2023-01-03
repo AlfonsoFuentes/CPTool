@@ -1,4 +1,5 @@
 ﻿
+using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Materials.Queries.Export;
 using CPTool.ApplicationCQRS.Responses;
@@ -18,7 +19,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandMaterial>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMaterial> List);
     }
     public class MaterialsService : IMaterialsService
     {
@@ -57,10 +58,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMaterial> List)
         {
             ExportMaterialsQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }

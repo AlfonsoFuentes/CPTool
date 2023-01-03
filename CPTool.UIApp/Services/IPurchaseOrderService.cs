@@ -1,6 +1,7 @@
 ﻿using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PurchaseOrders.Queries.Export;
@@ -45,7 +46,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandPurchaseOrder>> GetAll(int MWOId);
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandPurchaseOrder> List);
         Task<PurchaseOrderDialogData> GetPurchaseOrderDataDialog(CommandPurchaseOrder Model);
         Task<List<CommandSupplier>> GetSupplierByBrand(int brandId);
         CommandPurchaseOrderItem GetDataForAddItem(CommandMWOItem MWOItem, CommandPurchaseOrder Model);
@@ -95,10 +96,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandPurchaseOrder> List)
         {
             ExportPurchaseOrdersQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }
@@ -110,7 +112,10 @@ namespace CPTool.UIApp.Services
             data.ButtonName = GetButtonName(Model);
             data.DisableButtonSave = DisableButtonSave(Model);
 
-
+            if(Model.PurchaseOrderStatus== PurchaseOrderApprovalStatus.Ordering)
+            {
+                Model.POEstimatedDate = DateTime.UtcNow;
+            }
 
             Model.USDCOP = Model.Id == 0 ? _CurrencyService.RateList == null ? 4900 : Math.Round(_CurrencyService.RateList["COP"], 2) : Model.USDCOP;
             Model.USDEUR = Model.Id == 0 ? _CurrencyService.RateList == null ? 1 : Math.Round(_CurrencyService.RateList["EUR"], 2) : Model.USDEUR;

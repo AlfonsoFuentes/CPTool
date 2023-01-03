@@ -14,16 +14,49 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
         {
             _DownPaymentRepository = DownPaymentRepository;
 
-            RuleFor(p => p.Name)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
+            RuleFor(p => p.DownpaymentName)
+                .NotEmpty().WithMessage("Name is required.")
+                .NotNull().WithMessage("Name is required.")
+                .MaximumLength(50).WithMessage("Name must not exceed 50 characters.");
 
+            RuleFor(p => p.CBSRequesText)
+              .NotEmpty().WithMessage("CBS Request Text is required.")
+              .NotNull().WithMessage("CBS Request Text is required.")
+              .MaximumLength(50).WithMessage("CBS Request Text must not exceed 50 characters.");
 
+            RuleFor(p => p.CBSRequesNo)
+              .NotEmpty().WithMessage("CBS Reques No. is required.")
+              .NotNull().WithMessage("CBS Reques No. is required.")
+              .MaximumLength(50).WithMessage("CBS Reques No. must not exceed 50 characters.");
+
+            RuleFor(p => p.ProformaInvoice)
+            .NotEmpty().WithMessage("Proforma Invoice No. is required.")
+            .NotNull().WithMessage("Proforma Invoice No. is required.")
+            .MaximumLength(50).WithMessage("Proforma Invoice No. must not exceed 50 characters.");
+
+            RuleFor(p => p.Payterms)
+           .NotEmpty().WithMessage("Pay terms is required.")
+           .NotNull().WithMessage("Pay terms is required.");
+
+            RuleFor(p => p.DownpaymentDescrption)
+            .NotEmpty().WithMessage("Description is required.")
+            .NotNull().WithMessage("Description is required.");
+
+            RuleFor(p => p.Incotherm)
+           .NotEmpty().WithMessage("Incotherm is required.")
+           .NotNull().WithMessage("Incotherm is required.");
+
+            RuleFor(p => p.Percentage)
+           .NotEqual(0).WithMessage("Percentage is required.")
+           .GreaterThanOrEqualTo(100).WithMessage("Percentage must be less than 100.");
+
+            RuleFor(customer => customer.ManagerEmail)
+                .EmailAddress()
+                .WithMessage("Eneter valida email adress.");
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                 .WithMessage($"Name already exists.");
 
         }
 
@@ -31,7 +64,7 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandDownPayment e, CancellationToken token)
         {
-            return !await _DownPaymentRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            return !await _DownPaymentRepository.IsPropertyUnique(e.Id, "DownpaymentName", e.Name);
         }
     }
 }

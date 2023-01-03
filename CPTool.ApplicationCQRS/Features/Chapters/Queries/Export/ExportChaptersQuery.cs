@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.Chapters.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Chapters.Commands.CreateUpdate;
 
 
 using CPTool.ApplicationCQRS.Responses;
@@ -16,8 +17,7 @@ namespace CPTool.ApplicationCQRS.Features.Chapterss.Queries.Export
     public class ExportChaptersQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandChapter, bool>? Filter { get; set; }
-        public Func<CommandChapter, bool>? OrderBy { get; set; }
+        public List<CommandChapter> List { get; set; } = new();
         public Dictionary<string, Func<CommandChapter, object?>> Dictionary = new Dictionary<string, Func<CommandChapter, object?>>()
                 {
                   

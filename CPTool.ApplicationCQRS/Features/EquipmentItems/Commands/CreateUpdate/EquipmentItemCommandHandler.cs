@@ -31,8 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentItems.Commands.CreateUpdate
         {
             var Response = new EquipmentItemCommandResponse();
 
-            var validator = new EquipmentItemValidator(_unitofwork.RepositoryEquipmentItem);
-            var validationResult = await validator.ValidateAsync(request);
+            var validator = new EquipmentItemValidator(_unitofwork.RepositoryMWOItemWithEquipment);
+            var validationResult = await validator.ValidateAsync(request.MWOItem);//MWOItem esta vacio se espera que no se utilice este handler
 
             if (validationResult.Errors.Count > 0)
             {

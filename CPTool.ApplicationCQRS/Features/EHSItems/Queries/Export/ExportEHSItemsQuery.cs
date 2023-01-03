@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.EHSItems.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.EHSItems.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.EHSItems.Queries.Export
     public class ExportEHSItemsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandEHSItem, bool>? Filter { get; set; }
-        public Func<CommandEHSItem, bool>? OrderBy { get; set; }
+        public List<CommandEHSItem> List { get; set; } = new();
         public Dictionary<string, Func<CommandEHSItem, object?>> Dictionary = new Dictionary<string, Func<CommandEHSItem, object?>>()
                 {
                   

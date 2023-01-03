@@ -1,0 +1,40 @@
+﻿@page "/downpayments"
+@using CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate;
+
+<PageTitle>@($"Downpayments ")</PageTitle>
+
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+               
+               ShowAdd=false
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandDownPayment" Property="@nameof(CommandDownPayment.DownpaymentName)" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandDownPayment" Property="@nameof(CommandDownPayment.DownpaymentStatus)" Title="Status" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandDownPayment" Property="@nameof(CommandDownPayment.PurchaseOrderPO)" Title="PO#" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandDownPayment" Property="@nameof(CommandDownPayment.PurchaseOrderSupplier)" Title="Supplier" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandDownPayment" Property="@nameof(CommandDownPayment.CBSRequesNo)" Title="CBS Request No." TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandDownPayment" Property="@nameof(CommandDownPayment.RequestDateText)" Title="Requested Date" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandDownPayment" Property="@nameof(CommandDownPayment.RealDateText)" Title="Paid Date" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

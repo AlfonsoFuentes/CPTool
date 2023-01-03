@@ -23,7 +23,7 @@ namespace CPTool.ApplicationCQRS.Features.PipeAccesorys.Commands.CreateUpdate
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                 .WithMessage($"Name already exists.");
 
         }
 

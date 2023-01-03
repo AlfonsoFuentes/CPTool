@@ -4,6 +4,7 @@ using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
@@ -16,7 +17,7 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentItems.Commands.CreateUpdate
     public class CommandEquipmentItem : CommandBase, IRequest<EquipmentItemCommandResponse>
     {
 
-
+        public CommandMWOItem MWOItem { get; set; } = new();
         public List<CommandNozzle>? Nozzles { get; set; } = new();
         public int? eProcessConditionId => eProcessCondition?.Id == 0 ? null : eProcessCondition?.Id;
 

@@ -11,18 +11,18 @@ namespace CPToolCQRS.Infrastructure.Persistence
 {
     public class TableContext : DbContext
     {
-        private readonly ILoggedInUserService? _loggedInUserService;
+        //private readonly ILoggedInUserService? _loggedInUserService;
         public TableContext(DbContextOptions<TableContext> options)
             : base(options)
         {
 
 
         }
-        public TableContext(DbContextOptions<TableContext> options, ILoggedInUserService loggedInUserService)
-           : base(options)
-        {
-            _loggedInUserService = loggedInUserService;
-        }
+        //public TableContext(DbContextOptions<TableContext> options, ILoggedInUserService loggedInUserService)
+        //   : base(options)
+        //{
+        //    _loggedInUserService = loggedInUserService;
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -231,27 +231,28 @@ namespace CPToolCQRS.Infrastructure.Persistence
                 .HasOne(pt => pt.Supplier)
                 .WithMany(t => t.BrandSuppliers)
                 .HasForeignKey(pt => pt.SupplierId);
-            //modelBuilder.Entity<BrandSupplier>().Navigation(e => e.Brand).AutoInclude();
-            //modelBuilder.Entity<BrandSupplier>().Navigation(e => e.Supplier).AutoInclude();
+            modelBuilder.Entity<BrandSupplier>().Navigation(e => e.Brand).AutoInclude();
+            modelBuilder.Entity<BrandSupplier>().Navigation(e => e.Supplier).AutoInclude();
 
             modelBuilder.Entity<Signal>().HasOne(c => c.SignalType).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Signal>().HasOne(c => c.Wire).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Signal>().HasOne(c => c.FieldLocation).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Signal>().HasOne(c => c.ElectricalBox).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Signal>().HasOne(c => c.SignalModifier).WithMany(t => t.Signals).OnDelete(DeleteBehavior.NoAction);
-
+           
 
 
             modelBuilder.Entity<ControlLoop>().HasOne(c => c.ControlledVariable).WithMany(t => t.ControlledVariables).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariable).WithMany(t => t.ProcessVariables).OnDelete(DeleteBehavior.NoAction);
+       
 
             modelBuilder.Entity<ControlLoop>().HasOne(c => c.SP).WithMany(t => t.SPs).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariableMin).WithMany(t => t.ProcessVariableMins).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariableMax).WithMany(t => t.ProcessVariableMaxs).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ControlLoop>().HasOne(c => c.ProcessVariableValue).WithMany(t => t.ProcessVariableValues).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ControlLoop>().HasOne(c => c.ControlledVariable).WithMany(t => t.ControlledVariables).OnDelete(DeleteBehavior.NoAction);
-
-
+      
+           
 
 
         }

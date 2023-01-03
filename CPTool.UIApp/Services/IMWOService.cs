@@ -1,5 +1,6 @@
 ﻿
 using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOs.Queries.Export;
 using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
@@ -28,8 +29,8 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandMWO>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
-        Task<MWODialogData> GetMWODataDialog();
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWO> List);
+        Task<MWODialogData> GetMWODataDialog(CommandMWO command);
     }
     public class MWOService : IMWOService
     {
@@ -69,21 +70,22 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWO> List)
         {
             ExportMWOsQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }
 
-        public async Task<MWODialogData> GetMWODataDialog()
+        public async Task<MWODialogData> GetMWODataDialog(CommandMWO command)
         {
             MWODialogData data = new();
 
             GetMWOTypesListQuery getlist = new();
             data.MWOTypes = await mediator.Send(getlist);
-
+            //command.MWOType = command.MWOType==null?new(): data.MWOTypes.FirstOrDefault(x => x.Id == command.MWOType.Id);
             return data;
         }
     }

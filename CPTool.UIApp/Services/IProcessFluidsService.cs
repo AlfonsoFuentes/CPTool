@@ -1,4 +1,5 @@
 ﻿
+using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessFluids.Queries.Export;
 using CPTool.ApplicationCQRS.Features.PropertyPackages.Commands.CreateUpdate;
@@ -24,7 +25,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandProcessFluid>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandProcessFluid> List);
         Task<ProcessFluidsDialogData> GetDataDialog();
     }
     public class ProcessFluidsService : IProcessFluidsService
@@ -64,10 +65,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandProcessFluid> List)
         {
             ExportProcessFluidsQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }

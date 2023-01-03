@@ -3,13 +3,13 @@
 {
 
 }
-<PageTitle>@TableName</PageTitle>
+
 <div class="row">
     <div class="col-12 col-md-12">
         <ToolBarTemplate ShowToolBar=@ShowToolBar OnAdd="@AddRow" OnDelete="@DeleteRow" @bind-Search=@search
                          ShowAdd=@ShowAdd ShowDelete=@ShowDelete DisableAdd=@DisableAdd ShowEdit=@ShowEdit ShowReport=@ShowReport OnEdit=@EditRow OnPDF=@CreatePDF
                          DisableDelete=@DisableEditeButtons DisableEdit=@DisableEditeButtons OnExportClick=@ExportClick
-                         DisableReport=@DisableEditeButtons TableName="@TableName" SelectedName="@SelectedItem.Name">
+                         DisableReport=@DisableEditeButtons  SelectedName="@SelectedItem.Name">
             <OtherButtons>
                 @if (ToolBarButtons != null)
                 {

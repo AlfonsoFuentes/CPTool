@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.ContingencyItems.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.ContingencyItems.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.ContingencyItems.Queries.Export
     public class ExportContingencyItemsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandContingencyItem, bool>? Filter { get; set; }
-        public Func<CommandContingencyItem, bool>? OrderBy { get; set; }
+        public List<CommandContingencyItem> List { get; set; } = new();
         public Dictionary<string, Func<CommandContingencyItem, object?>> Dictionary = new Dictionary<string, Func<CommandContingencyItem, object?>>()
                 {
                   

@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.Gaskets.Queries.Export
     public class ExportGasketsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandGasket, bool>? Filter { get; set; }
-        public Func<CommandGasket, bool>? OrderBy { get; set; }
+        public List<CommandGasket> List { get; set; } = new();
         public Dictionary<string, Func<CommandGasket, object?>> Dictionary = new Dictionary<string, Func<CommandGasket, object?>>()
                 {
                   

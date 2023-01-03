@@ -2,14 +2,14 @@
 
 @using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
 
-
+<PageTitle>@($"Process Fluids ")</PageTitle>
 
 @if (debug)
 {
 
 }
 
-<TableTemplate TableName="Process Fluid List"
+<TableTemplate 
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

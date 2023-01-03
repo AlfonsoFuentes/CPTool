@@ -52,7 +52,7 @@ namespace CPTool.UIApp.AppPages.EquipmentTypes
         }
         async Task<ExportBaseResponse> ExportEquipmentType(string type)
         {
-            return await Service.GetFiletoExportEquipment(type);
+            return await Service.GetFiletoExportEquipment(type, Elements);
         }
 
         async Task<bool> ShowEquipmentTypeSubDialog(CommandEquipmentTypeSub model)
@@ -82,13 +82,13 @@ namespace CPTool.UIApp.AppPages.EquipmentTypes
             {
                 Elements = await Service.GetAll();
                 SelectedItemSub = new();
-                StateHasChanged();
+               
             }
             return result.Success;
         }
         async Task<ExportBaseResponse> ExportEquipmentTypeSub(string type)
         {
-            return await Service.GetFiletoExportEquipmentSub(type);
+            return await Service.GetFiletoExportEquipmentSub(type, ElementsSub);
         }
         async Task OnChangeEquipmenType(int equipmentid)
         {

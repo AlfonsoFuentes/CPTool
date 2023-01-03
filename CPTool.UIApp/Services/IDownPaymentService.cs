@@ -1,4 +1,5 @@
 ﻿
+using CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.DownPayments.Queries.Export;
 using CPTool.ApplicationCQRS.Responses;
@@ -7,10 +8,16 @@ using CPTool.ApplicationCQRSFeatures.DownPayments.Commands.Delete;
 using CPTool.ApplicationCQRSFeatures.DownPayments.Queries.GetDetail;
 using CPTool.ApplicationCQRSFeatures.DownPayments.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.PropertyPackages.Queries.GetList;
+using CPTool.Domain.Enums;
 using MediatR;
 
 namespace CPTool.UIApp.Services
 {
+    public class DownPaymentDialogData
+    {
+        public string ButtonName { get; set; } = string.Empty;
+    }
+
     public interface IDownPaymentsService
     {
         Task<DeleteDownPaymentCommandResponse> Delete(int id);
@@ -20,8 +27,8 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandDownPayment>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
-        //Task<DownPaymentsDialogData> GetDataDialog();
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandDownPayment> List);
+        Task<DownPaymentDialogData> GetDataDialog(CommandDownPayment model);
     }
     public class DownPaymentsService : IDownPaymentsService
     {
@@ -60,12 +67,23 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandDownPayment> List)
         {
             ExportDownPaymentsQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
+        }
+
+        public Task<DownPaymentDialogData> GetDataDialog(CommandDownPayment Model)
+        {
+            DownPaymentDialogData dialogData = new();
+
+            dialogData.ButtonName = Model.DownpaymentStatus == DownpaymentStatus.Draft ? "Create Downpayment" :
+           Model.DownpaymentStatus == DownpaymentStatus.Created ? "Approve Downpayment" :
+           Model.DownpaymentStatus == DownpaymentStatus.Approved ? "Pay Downpayment" : "Close Downpayment";
+            return Task.FromResult(dialogData);
         }
 
         //public async Task<DownPaymentsDialogData> GetDataDialog()

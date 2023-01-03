@@ -16,7 +16,7 @@ namespace CPTool.UIApp.AppPages.MWOs
         MWODialogData DialogData=new MWODialogData();
         protected override async Task OnInitializedAsync()
         {
-            DialogData = await Service.GetMWODataDialog();
+            DialogData = await Service.GetMWODataDialog(Model);
         }
         async Task<BaseResponse> Save()
         {

@@ -3,13 +3,14 @@
 
 
 
+<PageTitle>@($"PipeAccesories ")</PageTitle>
 @if (debug)
 {
 
 }
 
 <TableTemplate T="CommandMWOType"
-               TableName="MWO Types List"
+           
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

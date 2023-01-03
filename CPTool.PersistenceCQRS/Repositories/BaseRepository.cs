@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -64,9 +65,21 @@ namespace CPTool.PersistenceCQRS.Repositories
             return t;
         }
 
-        public Task<bool> IsPropertyUnique(int id, string PropertyName, string Value)
+        public async Task<bool> IsPropertyUnique(int id, string PropertyName, string Value)
         {
-            return Task.FromResult(false) ;
+
+            var list = await _dbContext.Set<T>().ToListAsync();
+
+            foreach (var row in list)
+            {
+                var Identifier = row!.GetType()!.GetProperty("Id")!.GetValue(row)!.ToString();
+                var name = row!.GetType().GetProperty(PropertyName)!.GetValue(row)!.ToString();
+                if (name == Value && Identifier != id.ToString())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public virtual IQueryable<T> QueryList { get; set; }
@@ -91,7 +104,15 @@ namespace CPTool.PersistenceCQRS.Repositories
 
             return await query!.ToListAsync();
         }
+        public async Task<IReadOnlyList<T>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
+        {
+            var query = QueryList;
 
+            if (orderBy != null)
+                return await orderBy(query!).ToListAsync();
+
+            return await query!.ToListAsync();
+        }
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await QueryList!.ToListAsync();
@@ -101,7 +122,7 @@ namespace CPTool.PersistenceCQRS.Repositories
         {
             var query = QueryDialog;
             if (QueryDialog != null)
-                query = QueryDialog.Where(x=>x.Id==id);
+                query = QueryDialog.Where(x => x.Id == id);
 
             return await query!.FirstOrDefaultAsync();
         }

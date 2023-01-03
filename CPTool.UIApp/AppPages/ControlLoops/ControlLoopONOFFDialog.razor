@@ -1,0 +1,57 @@
+﻿@using CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate;
+@using CPTool.Domain.Entities;
+<Panel>
+    <Left>
+        <RadzenCard>
+            
+            <LegendTemplate Text="Process Variable Data"></LegendTemplate>
+
+            <SelectTemplate T="CommandSignal"
+                            PropertyName="Name"
+                            Elements=@DialogParent.DialogData.SignalsIn
+                            Label="PV"
+                            @bind-Model="@Model.ProcessVariable">
+
+            </SelectTemplate>
+            @if (Model.ProcessVariable.Id != 0)
+            {
+
+                <SelectUnitTemplate @bind-Model=@Model.ProcessVariableMax Label="Max"></SelectUnitTemplate>
+                <SelectUnitTemplate @bind-Model=@Model.ProcessVariableMin Label="Min"></SelectUnitTemplate>
+                <SelectEnumTemplate T="FailType" Elements=@(Enum.GetValues<FailType>()) Label="Fail Type" @bind-Value=@Model.FailType></SelectEnumTemplate>
+                <SelectEnumTemplate T="ActionType" Elements=@(Enum.GetValues<ActionType>()) Label="Action Type" @bind-Value=@Model.ActionType></SelectEnumTemplate>
+
+            }
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+             <LegendTemplate Text="Controlled Variable Data"></LegendTemplate>
+            <SelectTemplate T="CommandSignal"
+                            PropertyName="Name"
+                            Elements=@DialogParent.DialogData.SignalsOut
+                            Label="CV"
+                            @bind-Model="@Model.ControlledVariable">
+
+            </SelectTemplate>
+            @if (Model.ControlledVariable.Id != 0)
+            {
+                <NumericTemplate TValue="double" @bind-Value="@Model.ControlledVariableMax"
+                             Label="%CV at Max PV"></NumericTemplate>
+                <NumericTemplate TValue="double" @bind-Value="@Model.ControlledVariableMin"
+                             Label="%CV at Min PV"></NumericTemplate>
+
+
+
+
+            }
+        </RadzenCard>
+    </Rigth>
+</Panel>
+
+@code {
+    [CascadingParameter]
+    protected ControlLoopsDialog DialogParent { get; set; }
+    public CommandControlLoop Model => DialogParent.Model;
+}

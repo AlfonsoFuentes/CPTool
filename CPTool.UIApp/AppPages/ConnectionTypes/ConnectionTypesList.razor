@@ -2,14 +2,14 @@
 @using CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate;
 
 
-
+<PageTitle>Connection Type List</PageTitle>
 @if (debug)
 {
 
 }
 
 <TableTemplate 
-               TableName="Connection Type List"
+               
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

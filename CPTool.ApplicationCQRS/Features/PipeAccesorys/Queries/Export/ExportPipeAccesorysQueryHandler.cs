@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.PipeAccesorys.Queries.Export
 {
     public class ExportPipeAccesorysQueryHandler : IRequestHandler<ExportPipeAccesorysQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportPipeAccesorysQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportPipeAccesorysQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+          
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.PipeAccesorys.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "PipeAccesory";
-            result.ExportFileName += $".{request.Type}";
-            var allPipeAccesory = (await _UnitOfWork.RepositoryPipeAccesory.GetAllAsync());
-            var allPipeAccesoryDTO = _mapper.Map<List<CommandPipeAccesory>>(allPipeAccesory);
-            if (request.Filter != null)
-            {
-                allPipeAccesoryDTO = allPipeAccesoryDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allPipeAccesoryDTO = allPipeAccesoryDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allPipeAccesoryDTO, request.Dictionary, "PipeAccesory");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "PipeAccesory");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allPipeAccesoryDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allPipeAccesoryDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

@@ -47,7 +47,7 @@ namespace CPTool.UIApp.AppPages.PipeDimensions
         }
         async Task<ExportBaseResponse> ExportPipeClass(string type)
         {
-            return await Service.GetFiletoExportPipeClass(type);
+            return await Service.GetFiletoExportPipeClass(type, Elements);
         }
 
         async Task<bool> ShowPipeDiameterDialog(CommandPipeDiameter model)
@@ -84,7 +84,7 @@ namespace CPTool.UIApp.AppPages.PipeDimensions
         }
         async Task<ExportBaseResponse> ExportPipeDiameter(string type)
         {
-            return await Service.GetFiletoExportPipeDiameter(type);
+            return await Service.GetFiletoExportPipeDiameter(type, SelectedItem.PipeDiameters);
         }
     }
 }

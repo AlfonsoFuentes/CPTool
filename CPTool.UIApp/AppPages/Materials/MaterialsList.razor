@@ -2,7 +2,7 @@
 
 @using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
 
-
+<PageTitle>@($"Materials")</PageTitle>
 
 @if (debug)
 {
@@ -10,7 +10,7 @@
 }
 
 <TableTemplate 
-               TableName="Material List"
+              
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

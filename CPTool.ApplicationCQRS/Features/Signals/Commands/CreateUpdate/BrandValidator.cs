@@ -14,16 +14,27 @@ namespace CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate
         {
             _SignalRepository = SignalRepository;
 
-            RuleFor(p => p.Name)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
+            //RuleFor(p => p.Name)
+            //    .NotEmpty().WithMessage("{PropertyName} is required.")
+            //    .NotNull()
+            //    .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
 
+            RuleFor(p => p.SignalType!.Id)
+                .NotEqual(0).WithMessage("Signal Type is required.");
 
+            RuleFor(p => p.MWOItem!.Id)
+                .NotEqual(0).WithMessage("Item is required.");
+
+            RuleFor(p => p.SignalModifier!.Id)
+            .NotEqual(0).WithMessage("Modifier is required.");
+
+            RuleFor(p => p.IOType)
+               .NotEqual(Domain.Enums.IOType.None)
+               .WithMessage("I/O Type must be defined.");
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                 .WithMessage($"Name already exists.");
 
         }
 

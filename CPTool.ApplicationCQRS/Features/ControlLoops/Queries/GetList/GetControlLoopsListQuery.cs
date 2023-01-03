@@ -5,6 +5,6 @@ namespace CPTool.ApplicationCQRSFeatures.ControlLoops.Queries.GetList
 {
     public class GetControlLoopsListQuery : IRequest<List<CommandControlLoop>>
     {
-
+        public int MWOId { get; set; }
     }
 }

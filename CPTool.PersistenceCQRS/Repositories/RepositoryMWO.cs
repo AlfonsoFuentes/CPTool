@@ -15,6 +15,7 @@ namespace CPToolCQRS.Infrastructure.Repositories
         {
 
             QueryList = QueryList
+                 .Include(x => x.MWOType)
            .Include(x => x.MWOItems)
               .Include(x => x.PurchaseOrders).ThenInclude(y => y.pBrand)
               .Include(x => x!.PurchaseOrders!).ThenInclude(y => y!.PurchaseOrderItems!).ThenInclude(z => z!.MWOItem!);

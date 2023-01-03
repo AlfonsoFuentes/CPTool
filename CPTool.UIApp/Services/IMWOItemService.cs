@@ -109,7 +109,7 @@ namespace CPTool.UIApp.Services
         Task<bool> VerifyProcessCondition(CommandMWOItem command);
         Task<List<CommandMWOItem>> GetAll(int MWOId);
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWOItem> List);
         Task<MWOItemDialogData> GetMWOItemDataDialog();
         Task<MWOItemDialogData> GetMWOItemDataDialogByModel(MWOItemDialogData dialogdata, CommandMWOItem Model);
         Task<List<CommandSupplier>> GetSupliersByBrand(int BrandId);
@@ -171,10 +171,11 @@ namespace CPTool.UIApp.Services
 
 
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWOItem> List)
         {
             ExportMWOItemsQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }
@@ -372,14 +373,7 @@ namespace CPTool.UIApp.Services
                 {
                     dataResponse.Suppliers = await GetSupliersByBrand(Model.EquipmentItem.eBrandId.Value);
                 }
-                //foreach (var row in Model.EquipmentItem.Nozzles)
-                //{
-                //    if (row.ConnectedToId != null)
-                //    {
-                //        GetMWOItemDetailQuery query = new() { Id = row.ConnectedToId.Value };
-                //        row.ConnectedTo = await mediator.Send(query);
-                //    }
-                //}
+                
 
             }
 
@@ -398,14 +392,7 @@ namespace CPTool.UIApp.Services
                     dataResponse.Suppliers = await GetSupliersByBrand(Model.InstrumentItem.iBrandId.Value);
                 }
 
-                //foreach (var row in Model.InstrumentItem.Nozzles)
-                //{
-                //    if (row.ConnectedToId != null)
-                //    {
-                //        GetMWOItemDetailQuery query = new() { Id = row.ConnectedToId.Value };
-                //        row.ConnectedTo = await mediator.Send(query);
-                //    }
-                //}
+               
             }
             return dataResponse;
         }

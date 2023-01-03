@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.FoundationItems.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.FoundationItems.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.FoundationItems.Queries.Export
     public class ExportFoundationItemsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandFoundationItem, bool>? Filter { get; set; }
-        public Func<CommandFoundationItem, bool>? OrderBy { get; set; }
+        public List<CommandFoundationItem> List { get; set; } = new();
         public Dictionary<string, Func<CommandFoundationItem, object?>> Dictionary = new Dictionary<string, Func<CommandFoundationItem, object?>>()
                 {
                   

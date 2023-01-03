@@ -35,6 +35,9 @@ namespace CPTool.ApplicationCQRS.Contracts.Persistence
         IRepositoryMWO RepositoryMWO { get; }
         IRepositoryMWOType RepositoryMWOType { get; }
         IRepositoryMWOItem RepositoryMWOItem { get; }
+        IRepositoryMWOItemWithEquipment RepositoryMWOItemWithEquipment { get; }
+        IRepositoryMWOItemWithInstrument RepositoryMWOItemWithInstrument { get; }
+        IRepositoryMWOItemWithPiping RepositoryMWOItemWithPiping { get; }
         IRepositoryMWOItemWithNozzles RepositoryMWOItemWithNozzles { get; }
         IRepositoryNozzle RepositoryNozzle { get; }
         IRepositoryPipeAccesory RepositoryPipeAccesory { get; }

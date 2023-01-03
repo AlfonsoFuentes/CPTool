@@ -14,16 +14,23 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
         {
             _ControlLoopRepository = ControlLoopRepository;
 
-            RuleFor(p => p.Name)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
+            RuleFor(p => p.ProcessVariable!.Id)
+               .NotEqual(0).WithMessage("Process Variable is required.")
                 .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
-
-
-
-            RuleFor(e => e)
-                 .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                ;
+            RuleFor(p => p.ControlledVariable!.Id)
+              .NotEqual(0).WithMessage("Controlled Variable is required.")
+               .NotNull()
+               ;
+            RuleFor(p => p.FailType)
+               .NotEqual( FailType.None)
+               .WithMessage("Fail Type must be defined.");
+            RuleFor(p => p.ActionType)
+              .NotEqual(ActionType.None)
+              .WithMessage("Action Type must be defined.");
+            //RuleFor(e => e)
+            //     .MustAsync(NameUnique)
+            //     .WithMessage($"Name already exists.");
 
         }
 

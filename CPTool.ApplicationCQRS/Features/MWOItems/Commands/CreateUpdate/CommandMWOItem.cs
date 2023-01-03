@@ -83,7 +83,7 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
         public bool Existing { get; set; }
 
         public double Actual => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(y => y.ActualValue);
-        public double Budget => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(y => y.ActualValue);
+     
         public double Assigned => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(y => y.PrizeUSD);
 
 

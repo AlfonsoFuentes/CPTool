@@ -1,13 +1,17 @@
 ﻿
-<DialogTemplate Model="@Model" Save="@Save">
+<DialogTemplate Model="@Model" Save="@Save" SaveButtonName="@Dialogdata.ButtonName">
     <ChildContent>
         <Panel>
             <Left>
+                @if(debug)
+                {
+                    
+                }
                 <FieldTemplate Label="Request date" Value=@Model.RequestDate.ToShortDateString()></FieldTemplate>
 
-                <FieldTemplate Label="MWO Name" Value=@Model.PurchaseOrder.MWO.Name></FieldTemplate>
-                <FieldTemplate Label="Supplier" Value=@Model.PurchaseOrder.pSupplier.Name></FieldTemplate>
-                <FieldTemplate Label="Vendor No" Value=@Model.PurchaseOrder.pSupplier.VendorCode></FieldTemplate>
+                <FieldTemplate Label="MWO Name" Value=@Model.PurchaseorderMWOName></FieldTemplate>
+                <FieldTemplate Label="Supplier" Value=@Model.PurchaseOrderSupplier></FieldTemplate>
+                <FieldTemplate Label="Vendor No" Value=@Model.PurchaseOrderSupplierVendorCode></FieldTemplate>
                 <FieldTemplate Label="PO No" Value=@Model.PurchaseOrder.PONumber></FieldTemplate>
                 <FieldTemplate Label="Currency" Value=@Model.PurchaseOrder.Currency.ToString()></FieldTemplate>
 
@@ -55,7 +59,10 @@
     </ChildContent>
 
 </DialogTemplate>
-
+@if(debug)
+{
+    
+}
 @code {
-
+    bool debug = true;
 }

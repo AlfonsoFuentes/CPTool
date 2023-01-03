@@ -1,0 +1,53 @@
+﻿@using CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate;
+<Panel>
+    <Left>
+        <RadzenCard>
+
+            <LegendTemplate Text="Process Variable Data"></LegendTemplate>
+
+            <SelectTemplate T="CommandSignal"
+                            PropertyName="Name"
+                            Elements=@DialogParent.DialogData.SignalsIn
+                            Label="PV"
+                            @bind-Model="@Model.ProcessVariable">
+
+            </SelectTemplate>
+            @if (Model.ProcessVariable.Id != 0)
+            {
+
+                <SelectUnitTemplate @bind-Model=@Model.ProcessVariableValue Label="PV Value"></SelectUnitTemplate>
+
+
+            }
+        </RadzenCard>
+    </Left>
+    <Rigth>
+        <RadzenCard>
+            <LegendTemplate Text="Controlled Variable Data"></LegendTemplate>
+            <SelectTemplate T="CommandSignal"
+                            PropertyName="Name"
+                            Elements=@DialogParent.DialogData.SignalsOut
+                            Label="CV"
+                            @bind-Model="@Model.ControlledVariable">
+
+            </SelectTemplate>
+            @if (Model.ControlledVariable.Id != 0)
+            {
+                <NumericTemplate TValue="double" @bind-Value="@Model.ControlledVariableValue"
+                             Label="%CV PV"></NumericTemplate>
+
+
+
+
+
+            }
+        </RadzenCard>
+    </Rigth>
+</Panel>
+
+@code {
+    [CascadingParameter]
+    protected ControlLoopsDialog DialogParent { get; set; }
+    public CommandControlLoop Model => DialogParent.Model;
+}

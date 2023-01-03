@@ -14,9 +14,10 @@ namespace CPTool.ApplicationCQRS.Features.AlterationItems.Queries.Export
 
     public class ExportAlterationItemsQuery : IRequest<ExportBaseResponse>
     {
+
+        public List<CommandAlterationItem> List { get; set; } = new();
         public string Type { get; set; } = string.Empty;
-        public Func<CommandAlterationItem, bool>? Filter { get; set; }
-        public Func<CommandAlterationItem, bool>? OrderBy { get; set; }
+       
         public Dictionary<string, Func<CommandAlterationItem, object?>> Dictionary = new Dictionary<string, Func<CommandAlterationItem, object?>>()
                 {
                   

@@ -19,6 +19,7 @@ namespace CPTool.ApplicationCQRS.Contracts.Persistence
         IQueryable<T> QueryDialog { get; set; }
         Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
         Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);
+        Task<IReadOnlyList<T>> GetAllAsync( Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);
 
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);

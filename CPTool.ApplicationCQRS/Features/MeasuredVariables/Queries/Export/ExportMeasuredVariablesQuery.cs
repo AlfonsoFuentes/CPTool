@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.MeasuredVariables.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.MeasuredVariables.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.MeasuredVariables.Queries.Export
     public class ExportMeasuredVariablesQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandMeasuredVariable, bool>? Filter { get; set; }
-        public Func<CommandMeasuredVariable, bool>? OrderBy { get; set; }
+        public List<CommandMeasuredVariable> List { get; set; } = new();
         public Dictionary<string, Func<CommandMeasuredVariable, object?>> Dictionary = new Dictionary<string, Func<CommandMeasuredVariable, object?>>()
                 {
                   

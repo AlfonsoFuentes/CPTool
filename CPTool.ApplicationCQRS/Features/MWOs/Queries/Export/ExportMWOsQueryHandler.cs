@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.MWOs.Queries.Export
 {
     public class ExportMWOsQueryHandler : IRequestHandler<ExportMWOsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+        
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportMWOsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportMWOsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.MWOs.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "MWO";
-            result.ExportFileName += $".{request.Type}";
-            var allMWO = (await _UnitOfWork.RepositoryMWO.GetAllAsync());
-            var allMWODTO = _mapper.Map<List<CommandMWO>>(allMWO);
-            if (request.Filter != null)
-            {
-                allMWODTO = allMWODTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allMWODTO = allMWODTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allMWODTO, request.Dictionary, "MWO");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "MWO");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allMWODTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allMWODTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

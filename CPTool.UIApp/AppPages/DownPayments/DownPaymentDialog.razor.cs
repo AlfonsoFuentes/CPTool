@@ -12,11 +12,11 @@ namespace CPTool.UIApp.AppPages.DownPayments
         public IDownPaymentsService Service { get; set; }
         [Parameter]
         public CommandDownPayment Model { get; set; } = new();
+        DownPaymentDialogData Dialogdata = new();
 
-       
         protected override async Task OnInitializedAsync()
         {
-          
+            Dialogdata = await Service.GetDataDialog(Model);
         }
         async Task<BaseResponse> Save()
         {

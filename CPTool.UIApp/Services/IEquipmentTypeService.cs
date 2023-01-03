@@ -1,4 +1,5 @@
 ﻿
+using CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.EquipmentTypes.Queries.Export;
 using CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdate;
@@ -26,9 +27,9 @@ namespace CPTool.UIApp.Services
         Task<CommandEquipmentTypeSub> GetByIdEquipmentSub(int id);
         Task<List<CommandEquipmentTypeSub>> GetByEquipmentSubByEquipmenType(int equipmentypeid);
         Task<List<CommandEquipmentType>> GetAll();
-
-        Task<ExportBaseResponse> GetFiletoExportEquipment(string type);
-        Task<ExportBaseResponse> GetFiletoExportEquipmentSub(string type);
+ 
+        Task<ExportBaseResponse> GetFiletoExportEquipment(string type, List<CommandEquipmentType> List);
+        Task<ExportBaseResponse> GetFiletoExportEquipmentSub(string type, List<CommandEquipmentTypeSub> List);
     }
 
         public class EquipmentTypeService : IEquipmentTypeService
@@ -90,17 +91,19 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExportEquipment(string type)
+        public async Task<ExportBaseResponse> GetFiletoExportEquipment(string type, List<CommandEquipmentType> List)
         {
             ExportEquipmentTypesQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExportEquipmentSub(string type)
+        public async Task<ExportBaseResponse> GetFiletoExportEquipmentSub(string type, List<CommandEquipmentTypeSub> List)
         {
             ExportEquipmentTypeSubsQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
         }
 

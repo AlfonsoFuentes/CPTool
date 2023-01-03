@@ -30,6 +30,8 @@ using CPTool.ApplicationCQRS.Features.TestingItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.TaxesItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PaintingItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.InsulationItems.Commands.CreateUpdate;
+using FluentValidation.Results;
+using System.ComponentModel.DataAnnotations;
 
 namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 {
@@ -53,8 +55,8 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 
             var validator = new MWOItemValidator(_unitofwork.RepositoryMWOItem);
             var validationResult = await validator.ValidateAsync(request);
-
-            if (validationResult.Errors.Count > 0)
+            var validationResultInternal = await ValidateInternalItems(request);
+            if (validationResult.Errors.Count > 0|| validationResultInternal.Errors.Count>0)
             {
                 Response.Success = false;
 
@@ -62,7 +64,13 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
                 {
                     Response.ValidationErrors.Add(error.ErrorMessage);
                 }
+                foreach (var error in validationResultInternal.Errors)
+                {
+                    Response.ValidationErrors.Add(error.ErrorMessage);
+                }
             }
+            
+
             if (Response.Success)
             {
                 try
@@ -118,6 +126,86 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 
 
             return Response;
+        }
+
+       async Task<FluentValidation.Results.ValidationResult> ValidateInternalItems(CommandMWOItem request)
+        {
+            switch (request.Chapter!.Id)
+            {
+                case 1:
+                    { 
+                    var validator = new AlterationItemValidator(_unitofwork.RepositoryAlterationItem);
+                    return await validator.ValidateAsync(request.AlterationItem!);
+                    }
+                   
+                case 2:
+                    {
+                        var validator = new FoundationItemValidator(_unitofwork.RepositoryFoundationItem);
+                        return await validator.ValidateAsync(request.FoundationItem!);
+                    }
+                case 3:
+                    {
+                        var validator = new StructuralItemValidator(_unitofwork.RepositoryStructuralItem);
+                        return await validator.ValidateAsync(request.StructuralItem!);
+                    }
+                case 4:
+                    {
+                        var validator = new EquipmentItemValidator(_unitofwork.RepositoryMWOItemWithEquipment);
+                        return await validator.ValidateAsync(request);
+                    }
+                case 5:
+                    {
+                        var validator = new ElectricalItemValidator(_unitofwork.RepositoryElectricalItem);
+                        return await validator.ValidateAsync(request.ElectricalItem!);
+                    }
+                case 6:
+                    {
+                        var validator = new PipingItemValidator(_unitofwork.RepositoryMWOItemWithPiping);
+                        return await validator.ValidateAsync(request);
+                    }
+                case 7:
+                    {
+                        var validator = new InstrumentItemValidator(_unitofwork.RepositoryMWOItemWithInstrument);
+                        return await validator.ValidateAsync(request);
+                    }
+                case 8:
+                    {
+                        var validator = new InsulationItemValidator(_unitofwork.RepositoryInsulationItem);
+                        return await validator.ValidateAsync(request.InsulationItem!);
+                    }
+                case 9:
+                    {
+                        var validator = new EHSItemValidator(_unitofwork.RepositoryEHSItem);
+                        return await validator.ValidateAsync(request.EHSItem!);
+                    }
+                case 10:
+                    {
+                        var validator = new PaintingItemValidator(_unitofwork.RepositoryPaintingItem);
+                        return await validator.ValidateAsync(request.PaintingItem!);
+                    }
+                case 11:
+                    {
+                        var validator = new TaxesItemValidator(_unitofwork.RepositoryTaxesItem);
+                        return await validator.ValidateAsync(request.TaxesItem!);
+                    }
+                case 12:
+                    {
+                        var validator = new TestingItemValidator(_unitofwork.RepositoryTestingItem);
+                        return await validator.ValidateAsync(request.TestingItem!);
+                    }
+                case 13:
+                    {
+                        var validator = new EngineeringCostItemValidator(_unitofwork.RepositoryEngineeringCostItem);
+                        return await validator.ValidateAsync(request.EngineeringCostItem!);
+                    }
+                case 14:
+                    {
+                        var validator = new ContingencyItemValidator(_unitofwork.RepositoryContingencyItem);
+                        return await validator.ValidateAsync(request.ContingencyItem!);
+                    }
+
+            }
+            return new();
         }
 
         async Task SaveInternalItem(CommandMWOItem request)

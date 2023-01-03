@@ -1,0 +1,36 @@
+﻿@page "/user-requirement/{MWOId:int}"
+
+@using CPTool.ApplicationCQRS.Features.UserRequirements.Commands.CreateUpdate;
+
+<PageTitle>@($"User Requipment for {Parent.CECName} - {Parent.Name}")</PageTitle>
+
+@if (debug)
+{
+
+}
+
+<TableTemplate T="CommandUserRequirement"
+       
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+       
+        <RadzenDataGridColumn TItem="CommandUserRequirement" Property="@nameof(CommandUserRequirement.UserRequirementTypeName)" Width="150px" Title="Type" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+       
+
+        <RadzenDataGridColumn TItem="CommandUserRequirement" Property="@nameof(CommandUserRequirement.RequestedByName)" Title="Requested By:" Width="150px" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandUserRequirement" Property="@nameof(CommandUserRequirement.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=false Sortable=false>
+        </RadzenDataGridColumn>
+
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

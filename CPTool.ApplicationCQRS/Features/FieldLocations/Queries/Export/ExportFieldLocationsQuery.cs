@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.FieldLocations.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.FieldLocations.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.FieldLocations.Queries.Export
     public class ExportFieldLocationsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandFieldLocation, bool>? Filter { get; set; }
-        public Func<CommandFieldLocation, bool>? OrderBy { get; set; }
+        public List<CommandFieldLocation> List { get; set; } = new();
         public Dictionary<string, Func<CommandFieldLocation, object?>> Dictionary = new Dictionary<string, Func<CommandFieldLocation, object?>>()
                 {
                   

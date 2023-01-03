@@ -1,4 +1,5 @@
 ﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+@using CPTool.UIApp.AppPages.Signals
 <DialogTemplate Model="@Model" Save="@Save">
     <ChildContent>
         <CascadingValue Value="this">
@@ -17,6 +18,9 @@
                     </RadzenTabsItem>*@
                     <RadzenTabsItem Text="Nozzles" Visible=@VisibleNozzle>
                         <MWOItemNozzlesDialog></MWOItemNozzlesDialog>
+                    </RadzenTabsItem>
+                    <RadzenTabsItem Text="Signals" Visible=@VisibleSignals>
+                        <SignalListDialog></SignalListDialog>
                     </RadzenTabsItem>
                     <RadzenTabsItem Text="Process Conditions" Visible=@VisibleNozzle>
                         <ProcessConditionsDialog></ProcessConditionsDialog>
@@ -43,4 +47,5 @@
 
     bool VisibleNozzle => Model.Chapter.Id == 6 || Model.Chapter.Id == 4 || Model.Chapter.Id == 7;
     bool VisibleAccesories => Model.Chapter.Id == 7;
+    bool VisibleSignals => Model.Chapter.Id == 4 || Model.Chapter.Id == 7;
 }

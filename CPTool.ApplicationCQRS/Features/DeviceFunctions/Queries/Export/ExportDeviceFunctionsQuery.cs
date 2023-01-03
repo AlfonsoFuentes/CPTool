@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.DeviceFunctions.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.DeviceFunctions.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.DeviceFunctions.Queries.Export
     public class ExportDeviceFunctionsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandDeviceFunction, bool>? Filter { get; set; }
-        public Func<CommandDeviceFunction, bool>? OrderBy { get; set; }
+        public List<CommandDeviceFunction> List { get; set; } = new();
         public Dictionary<string, Func<CommandDeviceFunction, object?>> Dictionary = new Dictionary<string, Func<CommandDeviceFunction, object?>>()
                 {
                   

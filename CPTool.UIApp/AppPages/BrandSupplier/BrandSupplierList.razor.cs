@@ -106,11 +106,11 @@ namespace CPTool.UIApp.AppPages.BrandSupplier
         }
         async Task<ExportBaseResponse> ExportBrand(string type)
         {
-            return await Service.GetFiletoExportBrand(type);
+            return await Service.GetFiletoExportBrand(type, ElementsBrand);
         }
         async Task<ExportBaseResponse> ExportSupplier(string type)
         {
-            return await Service.GetFiletoExportSupplier(type);
+            return await Service.GetFiletoExportSupplier(type, ElementsSupplier);
         }
     }
 }

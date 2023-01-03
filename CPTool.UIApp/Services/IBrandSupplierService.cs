@@ -22,7 +22,7 @@ using CPTool.ApplicationCQRSFeatures.TaxCodeLPs.Queries.GetList;
 using CPTool.Domain.Entities;
 using MediatR;
 using System.Runtime.InteropServices;
-using static Org.BouncyCastle.Asn1.Cmp.Challenge;
+
 
 namespace CPTool.UIApp.Services
 {
@@ -44,8 +44,8 @@ namespace CPTool.UIApp.Services
         Task<List<CommandSupplier>> GetAllSupplier();
         Task<List<CommandBrandSupplier>> GetAllBrandSupplier();
         
-        Task<ExportBaseResponse> GetFiletoExportBrand(string type);
-        Task<ExportBaseResponse> GetFiletoExportSupplier(string type);
+        Task<ExportBaseResponse> GetFiletoExportBrand(string type, List<CommandBrand> toExport);
+        Task<ExportBaseResponse> GetFiletoExportSupplier(string type, List<CommandSupplier> toExport);
         Task<SupplierDialogData> GetSupplierDataDialog();
     }
     public class BrandSupplierService : IBrandSupplierService
@@ -114,16 +114,18 @@ namespace CPTool.UIApp.Services
           
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExportBrand(string type)
+        public async Task<ExportBaseResponse> GetFiletoExportBrand(string type, List<CommandBrand> toExport)
         {
             ExportBrandsQuery export = new();
+            export.List = toExport;
             export.Type = type;
             return await mediator.Send(export);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExportSupplier(string type)
+        public async Task<ExportBaseResponse> GetFiletoExportSupplier(string type, List<CommandSupplier> toExport)
         {
             ExportSuppliersQuery export = new();
+            export.List=toExport;
             export.Type = type;
             return await mediator.Send(export);
         }

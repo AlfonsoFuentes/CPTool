@@ -88,7 +88,6 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
         public FailType FailType { get; set; }
 
     
-        public string TagNumber { get; set; } = string.Empty;
      
         public string AlarmText { get; set; } = string.Empty;
 
@@ -110,6 +109,7 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
                         }
                         break;
                     case "L":
+                  
                         {
                             SP = new(PercentageUnits.Percentage);
                             ProcessVariableValue = new(PercentageUnits.Percentage);
@@ -145,6 +145,14 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
                             ProcessVariableValue = new(MassUnits.KiloGram);
                             ProcessVariableMax = new(MassUnits.KiloGram);
                             ProcessVariableMin = new(MassUnits.KiloGram);
+                        }
+                        break;
+                        default:
+                        {
+                            SP = new(PercentageUnits.Percentage);
+                            ProcessVariableValue = new(PercentageUnits.Percentage);
+                            ProcessVariableMax = new(PercentageUnits.Percentage);
+                            ProcessVariableMin = new(PercentageUnits.Percentage);
                         }
                         break;
 

@@ -51,7 +51,7 @@ namespace CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate
         public CommandMaterial? nMaterial { get; set; } = new();
    
         public string MaterialName => nMaterial == null ? "" : nMaterial!.Name;
-
+        public string StreamTypeName => StreamType.ToString();
         public StreamType StreamType { get; set; }
         public int? nPipeClassId => nPipeClass?.Id == 0 ? null : nPipeClass?.Id;
         public CommandPipeClass? nPipeClass { get; set; } = new();

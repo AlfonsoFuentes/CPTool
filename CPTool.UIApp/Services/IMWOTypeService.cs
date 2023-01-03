@@ -1,4 +1,5 @@
 ﻿
+using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOTypes.Queries.Export;
 using CPTool.ApplicationCQRS.Responses;
@@ -20,7 +21,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandMWOType>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWOType> List);
     }
     public class MWOTypeService : IMWOTypeService
     {
@@ -59,10 +60,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWOType> List)
         {
             ExportMWOTypesQuery  export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
             
         }

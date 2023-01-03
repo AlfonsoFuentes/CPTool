@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.AlterationItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.BrandSuppliers.Queries.Export
     public class ExportBrandSuppliersQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandBrandSupplier, bool>? Filter { get; set; }
-        public Func<CommandBrandSupplier, bool>? OrderBy { get; set; }
+        public List<CommandBrandSupplier> List { get; set; } = new();
         public Dictionary<string, Func<CommandBrandSupplier, object?>> Dictionary = new Dictionary<string, Func<CommandBrandSupplier, object?>>()
                 {
                   

@@ -1,0 +1,63 @@
+﻿@page "/signals/{MWOId:int}"
+
+@using CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate;
+
+
+<PageTitle>@($"Signals in {MWO.Name}")</PageTitle>
+@if (debug)
+{
+
+}
+
+<TableTemplate T="CommandSignal"
+             
+               ShowAdd=false
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.SignalTypeName)" Title="Type" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.IOType)" Title="I/O " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.IsWired)" Title="Wired? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.IsWired></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.FieldLocationName)" Title="Location " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.ElectricalBoxName)" Title="Electrical Box " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.Disconect)" Title="Has Disconnect? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.Disconect></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.FrequencyInverter)" Title="Has frequency inverter? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.FrequencyInverter></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandSignal" Property="@nameof(CommandSignal.InstrumentAir)" Title="Has Air? " TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+            <Template>
+                <RadzenSwitch Value=@context.InstrumentAir></RadzenSwitch>
+            </Template>
+        </RadzenDataGridColumn>
+      
+
+
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

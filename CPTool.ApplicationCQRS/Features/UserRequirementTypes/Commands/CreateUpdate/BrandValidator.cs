@@ -23,7 +23,7 @@ namespace CPTool.ApplicationCQRS.Features.UserRequirementTypes.Commands.CreateUp
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
-                 .WithMessage($"MWO Type with the same name already exists.");
+                 .WithMessage($"Name already exists.");
 
         }
 

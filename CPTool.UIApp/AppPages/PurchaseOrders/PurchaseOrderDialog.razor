@@ -40,7 +40,7 @@
                                                 Elements=@DialogData.Suppliers
                                                 Label="Supplier"
                                                 @bind-Model=@Model.pSupplier
-                                                Disabled=@(Model.pBrand.Id==0)
+                                                Disabled=@(Model.pBrand.Id==0||Model.Id!=0)
                                                 PropertyName="Name">
 
                                 </SelectTemplate>

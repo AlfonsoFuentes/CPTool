@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.PaintingItems.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.PaintingItems.Commands.CreateUpdate;
 
 using CPTool.ApplicationCQRS.Responses;
 using MediatR;
@@ -15,8 +16,7 @@ namespace CPTool.ApplicationCQRS.Features.PaintingItems.Queries.Export
     public class ExportPaintingItemsQuery : IRequest<ExportBaseResponse>
     {
         public string Type { get; set; } = string.Empty;
-        public Func<CommandPaintingItem, bool>? Filter { get; set; }
-        public Func<CommandPaintingItem, bool>? OrderBy { get; set; }
+        public List<CommandPaintingItem> List { get; set; } = new();
         public Dictionary<string, Func<CommandPaintingItem, object?>> Dictionary = new Dictionary<string, Func<CommandPaintingItem, object?>>()
                 {
                   

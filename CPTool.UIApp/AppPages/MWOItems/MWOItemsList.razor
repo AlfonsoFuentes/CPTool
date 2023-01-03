@@ -1,7 +1,7 @@
 ﻿@page "/mwo-items/{MWOId:int}"
 @using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 
-
+<PageTitle>@($"Items in {Parent.Name}")</PageTitle>
 
 @if (debug)
 {
@@ -9,7 +9,7 @@
 }
 
 <TableTemplate T="CommandMWOItem"
-               TableName="MWO Items List"
+              
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
               

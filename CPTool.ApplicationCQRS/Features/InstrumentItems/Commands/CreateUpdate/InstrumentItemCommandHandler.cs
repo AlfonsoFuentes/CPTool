@@ -10,6 +10,7 @@ using CPTool.ApplicationCQRS.Contracts.Persistence;
 using CPTool.Domain.Entities;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using CPTool.Domain.Common;
+using FluentValidation;
 
 namespace CPTool.ApplicationCQRS.Features.InstrumentItems.Commands.CreateUpdate
 {
@@ -31,8 +32,8 @@ namespace CPTool.ApplicationCQRS.Features.InstrumentItems.Commands.CreateUpdate
         {
             var Response = new InstrumentItemCommandResponse();
 
-            var validator = new InstrumentItemValidator(_unitofwork.RepositoryInstrumentItem);
-            var validationResult = await validator.ValidateAsync(request);
+            var validator = new InstrumentItemValidator(_unitofwork.RepositoryMWOItemWithInstrument);
+            var validationResult = await validator.ValidateAsync(request.MWOItem);//MWOItem esta vacio se espera que no se utilice este handler
 
             if (validationResult.Errors.Count > 0)
             {

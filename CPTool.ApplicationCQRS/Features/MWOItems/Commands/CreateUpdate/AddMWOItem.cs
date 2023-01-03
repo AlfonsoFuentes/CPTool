@@ -9,6 +9,7 @@ using CPTool.ApplicationCQRS.Features.InstrumentItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.InsulationItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PaintingItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipingItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.StructuralItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.TaxesItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.TestingItems.Commands.CreateUpdate;
@@ -18,7 +19,7 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
     public class AddMWOItem
     {
 
-       
+        public List<AddSignal> Signals { get; set; } = new();
         public string Name { get; set; } = string.Empty;
         public int? MWOId { get; set; }
         public int? UnitaryBasePrizeId { get; set; }

@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.Gaskets.Queries.Export
 {
     public class ExportGasketsQueryHandler : IRequestHandler<ExportGasketsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportGasketsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportGasketsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.Gaskets.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "Gasket";
-            result.ExportFileName += $".{request.Type}";
-            var allGasket = (await _UnitOfWork.RepositoryGasket.GetAllAsync());
-            var allGasketDTO = _mapper.Map<List<CommandGasket>>(allGasket);
-            if (request.Filter != null)
-            {
-                allGasketDTO = allGasketDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allGasketDTO = allGasketDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+            
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allGasketDTO, request.Dictionary, "Gasket");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "Gasket");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allGasketDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allGasketDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.ProcessConditions.Queries.Export
 {
     public class ExportProcessConditionsQueryHandler : IRequestHandler<ExportProcessConditionsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+      
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportProcessConditionsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportProcessConditionsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.ProcessConditions.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "ProcessCondition";
-            result.ExportFileName += $".{request.Type}";
-            var allProcessCondition = (await _UnitOfWork.RepositoryProcessCondition.GetAllAsync());
-            var allProcessConditionDTO = _mapper.Map<List<CommandProcessCondition>>(allProcessCondition);
-            if (request.Filter != null)
-            {
-                allProcessConditionDTO = allProcessConditionDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allProcessConditionDTO = allProcessConditionDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allProcessConditionDTO, request.Dictionary, "ProcessCondition");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "ProcessCondition");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allProcessConditionDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allProcessConditionDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

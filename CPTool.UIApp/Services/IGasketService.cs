@@ -1,4 +1,5 @@
-﻿using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.FieldLocations.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Gaskets.Queries.Export;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.ApplicationCQRSFeatures.Gaskets.Commands.Delete;
@@ -18,7 +19,7 @@ namespace CPTool.UIApp.Services
 
         Task<List<CommandGasket>> GetAll();
 
-        Task<ExportBaseResponse> GetFiletoExport(string type);
+        Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandGasket> List);
     }
     public class GasketService : IGasketService
     {
@@ -57,10 +58,11 @@ namespace CPTool.UIApp.Services
             return await mediator.Send(command);
         }
 
-        public async Task<ExportBaseResponse> GetFiletoExport(string type)
+        public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandGasket> List)
         {
             ExportGasketsQuery export = new();
             export.Type = type;
+            export.List = List;
             return await mediator.Send(export);
 
         }

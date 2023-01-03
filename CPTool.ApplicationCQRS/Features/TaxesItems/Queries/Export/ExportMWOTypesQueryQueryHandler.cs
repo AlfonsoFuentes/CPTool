@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.TaxesItems.Queries.Export
 {
     public class ExportTaxesItemsQueryHandler : IRequestHandler<ExportTaxesItemsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportTaxesItemsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportTaxesItemsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+          
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.TaxesItems.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "TaxesItem";
-            result.ExportFileName += $".{request.Type}";
-            var allTaxesItem = (await _UnitOfWork.RepositoryTaxesItem.GetAllAsync());
-            var allTaxesItemDTO = _mapper.Map<List<CommandTaxesItem>>(allTaxesItem);
-            if (request.Filter != null)
-            {
-                allTaxesItemDTO = allTaxesItemDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allTaxesItemDTO = allTaxesItemDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allTaxesItemDTO, request.Dictionary, "TaxesItem");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "TaxesItem");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allTaxesItemDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allTaxesItemDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

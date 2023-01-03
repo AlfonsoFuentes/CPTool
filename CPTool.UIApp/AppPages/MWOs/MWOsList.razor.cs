@@ -4,7 +4,7 @@ using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.Domain.Enums;
-
+using CPTool.UIApp.AppPages.Taks;
 using CPTool.UIApp.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -50,7 +50,7 @@ namespace CPTool.UIApp.AppPages.MWOs
         }
         async Task<ExportBaseResponse> Export(string type)
         {
-            return await Service.GetFiletoExport(type);
+            return await Service.GetFiletoExport(type, Elements);
         }
         void GoToUserRequirmentPage()
         {
@@ -83,12 +83,13 @@ namespace CPTool.UIApp.AppPages.MWOs
         public async Task<bool> ShowTaksDialog(CommandTaks model)
         {
 
-            //var result = await DialogService.OpenAsync<TaksDialog>(model.Id == 0 ? $"Add new {TableName}" : $"Edit {model.Name}",
-            //      new Dictionary<string, object> { { "Model", model } });
-            //if (result == null) return false;
-            //return (bool)result;
-            return true;
+            var result = await DialogService.OpenAsync<TaksDialog>(model.Id == 0 ? $"Add new Task to {SelectedItem.Name}" : $"Edit {model.Name}",
+                  new Dictionary<string, object> { { "Model", model } });
+            if (result == null) return false;
+            return (bool)result;
+           
         }
-        
+
+
     }
 }

@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Queries.Export
 {
     public class ExportDeviceFunctionModifiersQueryHandler : IRequestHandler<ExportDeviceFunctionModifiersQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportDeviceFunctionModifiersQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportDeviceFunctionModifiersQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+           
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "DeviceFunctionModifier";
-            result.ExportFileName += $".{request.Type}";
-            var allDeviceFunctionModifier = (await _UnitOfWork.RepositoryDeviceFunctionModifier.GetAllAsync());
-            var allDeviceFunctionModifierDTO = _mapper.Map<List<CommandDeviceFunctionModifier>>(allDeviceFunctionModifier);
-            if (request.Filter != null)
-            {
-                allDeviceFunctionModifierDTO = allDeviceFunctionModifierDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allDeviceFunctionModifierDTO = allDeviceFunctionModifierDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+            
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allDeviceFunctionModifierDTO, request.Dictionary, "DeviceFunctionModifier");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "DeviceFunctionModifier");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allDeviceFunctionModifierDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allDeviceFunctionModifierDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

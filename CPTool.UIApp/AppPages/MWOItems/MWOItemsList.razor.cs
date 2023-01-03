@@ -20,7 +20,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
         [Parameter]
         public int MWOId { get; set; }
         MWOItemDialogData DialogData = new();
-        CommandMWO Parent;
+        CommandMWO Parent = new();
         protected override async Task OnInitializedAsync()
         {
             Parent = await MWOService.GetById(MWOId);
@@ -67,7 +67,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
         }
         async Task<ExportBaseResponse> Export(string type)
         {
-            return await Service.GetFiletoExport(type);
+            return await Service.GetFiletoExport(type, Elements);
         }
 
     }

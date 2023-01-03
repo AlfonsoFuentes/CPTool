@@ -1,0 +1,37 @@
+﻿@page "/control-loops/{MWOId:int}"
+@using CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate;
+
+
+<PageTitle>@($"Control Loops in {MWO.Name}")</PageTitle>
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandControlLoop" Property="@nameof(CommandControlLoop.ProcessVariableName)" Title="PV" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandControlLoop" Property="@nameof(CommandControlLoop.ControlledVariableName)" Title="CV" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandControlLoop" Property="@nameof(CommandControlLoop.ControlLoopTypeName)" Title="Type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandControlLoop" Property="@nameof(CommandControlLoop.SPName)" Title="SP" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandControlLoop" Property="@nameof(CommandControlLoop.FailTypeName)" Title="Fail type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandControlLoop" Property="@nameof(CommandControlLoop.ActionTypeName)" Title="Action type" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

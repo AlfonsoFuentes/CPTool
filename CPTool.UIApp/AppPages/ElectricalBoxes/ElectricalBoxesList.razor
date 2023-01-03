@@ -1,0 +1,27 @@
+﻿@page "/electrical-boxes"
+@using CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate;
+
+
+<PageTitle>@($"Electrical Boxes ")</PageTitle>
+@if (debug)
+{
+
+}
+
+<TableTemplate 
+               
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandElectricalBox" Property="Name" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+}

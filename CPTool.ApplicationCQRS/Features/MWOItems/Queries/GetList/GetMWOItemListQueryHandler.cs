@@ -23,7 +23,9 @@ namespace CPTool.ApplicationCQRSFeatures.MWOItems.Queries.GetList
 
         public async Task<List<CommandMWOItem>> Handle(GetMWOItemsListQuery request, CancellationToken cancellationToken)
         {
-            var allMWOItem = (await _UnitOfWork.RepositoryMWOItem.GetAllAsync(x => x.MWOId == request.MWOId));
+            Func<IQueryable<MWOItem>, IOrderedQueryable<MWOItem>> orderBy = x => x.OrderBy(x => x.ChapterId);
+
+            var allMWOItem = (await _UnitOfWork.RepositoryMWOItem.GetAllAsync(x => x.MWOId == request.MWOId, orderBy));
 
 
             foreach (var row in allMWOItem)

@@ -1,0 +1,10 @@
+﻿<div style=@UISettings.RowRem class="row">
+    <div class="col-md-12">
+        <RadzenLabel Text="@Text" Style="width: 100%; padding-top:2px; padding-bottom:2px" class=@UISettings.ClassBox />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+}

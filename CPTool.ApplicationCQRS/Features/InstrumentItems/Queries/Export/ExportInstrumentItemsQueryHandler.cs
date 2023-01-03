@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.InstrumentItems.Queries.Export
 {
     public class ExportInstrumentItemsQueryHandler : IRequestHandler<ExportInstrumentItemsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+        
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportInstrumentItemsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportInstrumentItemsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+            
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,24 @@ namespace CPTool.ApplicationCQRS.Features.InstrumentItems.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "InstrumentItem";
-            result.ExportFileName += $".{request.Type}";
-            var allInstrumentItem = (await _UnitOfWork.RepositoryInstrumentItem.GetAllAsync());
-            var allInstrumentItemDTO = _mapper.Map<List<CommandInstrumentItem>>(allInstrumentItem);
-            if (request.Filter != null)
-            {
-                allInstrumentItemDTO = allInstrumentItemDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allInstrumentItemDTO = allInstrumentItemDTO!.OrderBy(request.OrderBy).ToList();
-            }
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+            
 
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allInstrumentItemDTO, request.Dictionary, "InstrumentItem");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "InstrumentItem");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allInstrumentItemDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allInstrumentItemDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

@@ -9,15 +9,13 @@ namespace CPTool.ApplicationCQRS.Features.ElectricalBoxs.Queries.Export
 {
     public class ExportElectricalBoxsQueryHandler : IRequestHandler<ExportElectricalBoxsQuery, ExportBaseResponse>
     {
-        private readonly IUnitOfWork _UnitOfWork;
-        private readonly IMapper _mapper;
+       
         private readonly ICsvExporter _csvExporter;
         private readonly IExcelService _excelService;
         private readonly IPDFService _pdfService;
-        public ExportElectricalBoxsQueryHandler(IMapper mapper, IUnitOfWork UnitOfWork, ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
+        public ExportElectricalBoxsQueryHandler( ICsvExporter csvExporter, IExcelService excelService, IPDFService pdfService)
         {
-            _mapper = mapper;
-            _UnitOfWork = UnitOfWork;
+          
             _csvExporter = csvExporter;
             _excelService = excelService;
             _pdfService=pdfService; 
@@ -27,33 +25,23 @@ namespace CPTool.ApplicationCQRS.Features.ElectricalBoxs.Queries.Export
         {
             ExportBaseResponse result = new();
             result.ExportFileName = "ElectricalBox";
-            result.ExportFileName += $".{request.Type}";
-            var allElectricalBox = (await _UnitOfWork.RepositoryElectricalBox.GetAllAsync());
-            var allElectricalBoxDTO = _mapper.Map<List<CommandElectricalBox>>(allElectricalBox);
-            if (request.Filter != null)
-            {
-                allElectricalBoxDTO = allElectricalBoxDTO!.Where(request.Filter).ToList();
-            }
-            if (request.OrderBy != null)
-            {
-                allElectricalBoxDTO = allElectricalBoxDTO!.OrderBy(request.OrderBy).ToList();
-            }
-
+             result.ExportFileName += $"_{DateTime.Now.ToString()}.{request.Type}";
+           
             if (request.Type == "xlsx")
             {
-                result.Data = await _excelService.ExportAsync(allElectricalBoxDTO, request.Dictionary, "ElectricalBox");
+                result.Data = await _excelService.ExportAsync(request.List, request.Dictionary, "ElectricalBox");
                 result.ContentType = ExportBaseResponse.ExcelContentType;
 
             }
             else if (request.Type == "csv")
             {
-                result.Data = _csvExporter.ExportToCsv(allElectricalBoxDTO);
+                result.Data = _csvExporter.ExportToCsv(request.List);
                 result.ContentType = ExportBaseResponse.CSVContentType;
 
             }
             else if (request.Type == "pdf")
             {
-                result.Data=await _pdfService.ExportToPDF(allElectricalBoxDTO, request.Dictionary);
+                result.Data=await _pdfService.ExportToPDF(request.List, request.Dictionary);
                 result.ContentType = ExportBaseResponse.pdfContentType;
             }
             return result;

@@ -2,14 +2,14 @@
 @using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
 
 
-
+<PageTitle>@($"MWO Types")</PageTitle>
 @if (debug)
 {
 
 }
 
 <TableTemplate T="CommandMWOType"
-               TableName="MWO Types List"
+       
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
                OnDelete="@Delete"

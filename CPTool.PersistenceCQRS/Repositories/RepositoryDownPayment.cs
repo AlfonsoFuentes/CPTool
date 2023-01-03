@@ -8,9 +8,15 @@ namespace CPToolCQRS.Infrastructure.Repositories
         {
            
             QueryList = QueryList
-              .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.MWO);
+              .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.MWO)
+              .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.pBrand)
+                 .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.pSupplier).ThenInclude(x => x!.TaxCodeLP)
+                .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.pSupplier).ThenInclude(x => x!.TaxCodeLD);
             QueryDialog = QueryDialog
-                .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.MWO);
+                .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.MWO)
+                .Include(x => x!.PurchaseOrder).ThenInclude(x=>x!.pBrand)
+                .Include(x => x!.PurchaseOrder).ThenInclude(x => x!.pSupplier).ThenInclude(x => x!.TaxCodeLP)
+                .Include(x => x!.PurchaseOrder).ThenInclude(x=>x!.pSupplier).ThenInclude(x=>x!.TaxCodeLD);
         }
        
     }

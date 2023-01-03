@@ -31,9 +31,17 @@ namespace CPTool.UIApp
             Services.AddScoped<INozzleService, NozzleService>();
             Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
             Services.AddScoped<IDownPaymentsService, DownPaymentsService>();
+            Services.AddScoped<ITaksService, TaksService>();
+            Services.AddScoped<IUserRequirementService, UserRequirementService>();
+            Services.AddScoped<ISignalService, SignalService>();
+            Services.AddScoped<IControlLoopService, ControlLoopService>();
+            Services.AddScoped<ISignalTypeService, SignalTypeService>();
+            Services.AddScoped<IWireService, WireService>();
+            Services.AddScoped<IFieldLocationService, FieldLocationService>();
+            Services.AddScoped<IElectricalBoxService, ElectricalBoxService>();
+            Services.AddScoped<IUserRequirementTypeService, UserRequirementTypeService>();
+            Services.AddScoped<IUserService, UserService>();
             
-
-
             return Services;
 
 
