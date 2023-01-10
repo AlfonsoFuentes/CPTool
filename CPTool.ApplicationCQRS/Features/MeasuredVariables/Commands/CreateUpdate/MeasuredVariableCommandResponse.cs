@@ -3,13 +3,12 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.MeasuredVariables.Commands.CreateUpdate
 {
-    public class MeasuredVariableCommandResponse : BaseResponse
+    public class MeasuredVariableCommandResponse : BaseResponse<CommandMeasuredVariable>
     {
         public MeasuredVariableCommandResponse() : base()
         {
 
         }
 
-        public CommandMeasuredVariable? MeasuredVariableObject { get; set; }
     }
 }

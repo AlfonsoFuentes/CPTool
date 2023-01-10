@@ -2,12 +2,14 @@
 
 namespace CPTool.Domain.Entities
 {
-    public class Nozzle  : AuditableEntity
+    public class Nozzle : AuditableEntity
     {
         [ForeignKey("NozzleStartId")]
-        public ICollection<PipingItem>? StartPipingItems { get; set; } = null!;
+        public ICollection<MWOItem>? StartMWOItems { get; set; } = null!;
         [ForeignKey("NozzleFinishId")]
-        public ICollection<PipingItem>? FinishPipingItems { get; set; } = null!;
+        public ICollection<MWOItem>? FinishMWOItems { get; set; } = null!;
+
+        
 
         public int? ConnectedToId { get; set; }
         public MWOItem? ConnectedTo { get; set; }
@@ -29,15 +31,18 @@ namespace CPTool.Domain.Entities
         public PipeAccesory? PipeAccesory { get; set; }
         public int? PipeAccesoryId { get; set; }
 
-        public int? EquipmentItemId { get; set; }
-        public EquipmentItem? EquipmentItem { get; set; }
-        public int? InstrumentItemId { get; set; }
-        public InstrumentItem? InstrumentItem { get; set; }
+        //public int? EquipmentItemId { get; set; }
+        //public EquipmentItem? EquipmentItem { get; set; }
+        //public int? InstrumentItemId { get; set; }
+        //public InstrumentItem? InstrumentItem { get; set; }
 
-        public int? PipingItemId { get; set; }
-        public PipingItem? PipingItem { get; set; }
+        //public int? PipingItemId { get; set; }
+        //public PipingItem? PipingItem { get; set; }
         public int Order { get; set; }
-   
+
+        public int? MWOItemId { get; set; }
+        public MWOItem? MWOItem { get; set; }
+
     }
 
 }

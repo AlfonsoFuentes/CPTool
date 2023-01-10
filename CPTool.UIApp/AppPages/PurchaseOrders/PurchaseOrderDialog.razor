@@ -2,7 +2,7 @@
 @using CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpdate;
 @using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
 @using CPTool.Domain.Enums;
-<DialogTemplate Model="@Model" Save="@Save" SaveButtonName="@DialogData.ButtonName" DisableButtonSave=@DisableButtonSave>
+<DialogTemplate Model="@Model" Save="@Save" SaveButtonName="@ButtonSaveName" DisableButtonSave=@DisableButtonSave>
     <ChildContent>
         <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Class="width:100%" RenderMode="TabRenderMode.Client">
            
@@ -23,6 +23,10 @@
                                 }
                                 <TextBoxTemplate Label="Name" Rows=3  Disabled=@(Model.Id!=0)
                                                  @bind-Value=@Model.Name >
+
+                                </TextBoxTemplate>
+                                <TextBoxTemplate Label="Quote No." Disabled=@(Model.Id!=0)
+                                                 @bind-Value=@Model.QuoteNo>
 
                                 </TextBoxTemplate>
                                 <TextBoxTemplate Label="PR Code"  Disabled=@(Model.Id!=0)
@@ -61,23 +65,26 @@
                                 </SelectEnumTemplate>
                                 @if (Model.Currency == Currency.EUR)
                                 {
-                                    <NumericTemplate TValue="double" @bind-Value="@Model.USDEUR" Disabled=@(Model.Id!=0)
+                                    <NumericTemplate TValue="double" @bind-Value="@Model.USDEUR" Disabled=@DisableButtonSave
                                                   Label="$EUR to USD"></NumericTemplate>
 
-                                    <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=true>
+                                    <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=@DisableButtonSave>
 
                                     </DatePickerTamplate>
+                                    <FieldTemplate Label="Total PO, $EUR" Value="@Model.PrizeCurrencyValue"></FieldTemplate>
                                 }
                                 else if (Model.Currency == Currency.COP)
                                 {
-                                    <NumericTemplate TValue="double" @bind-Value="@Model.USDCOP" Disabled=@(Model.Id!=0)
+                                    <NumericTemplate TValue="double" @bind-Value="@Model.USDCOP" Disabled=@DisableButtonSave
                                                   Label="$COP to USD"></NumericTemplate>
 
-                                    <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=true>
+                                    <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=@DisableButtonSave>
 
                                     </DatePickerTamplate>
+                                    <FieldTemplate Label="Total PO, $COP" Value="@Model.PrizeCurrencyValue"></FieldTemplate>
                                 }
-
+                               
+                                <FieldTemplate Label="Total PO, $USD" Value="@Model.PrizeUSDValue"></FieldTemplate>
                             </RadzenCard>
 
                         </div>

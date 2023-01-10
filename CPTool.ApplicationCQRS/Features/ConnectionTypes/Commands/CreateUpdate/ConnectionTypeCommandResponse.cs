@@ -3,13 +3,13 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate
 {
-    public class ConnectionTypeCommandResponse : BaseResponse
+    public class ConnectionTypeCommandResponse : BaseResponse<CommandConnectionType>
     {
         public ConnectionTypeCommandResponse() : base()
         {
 
         }
 
-        public CommandConnectionType? ConnectionTypeObject { get; set; }
+       
     }
 }

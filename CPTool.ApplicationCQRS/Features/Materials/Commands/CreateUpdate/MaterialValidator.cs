@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate
 {
     public class MaterialValidator : AbstractValidator<CommandMaterial>
     {
-        private readonly IRepositoryMaterial _MaterialRepository;
-        public MaterialValidator(IRepositoryMaterial MaterialRepository)
+        private readonly IRepositoryMaterial _Repository;
+        public MaterialValidator(IRepositoryMaterial Repository)
         {
-            _MaterialRepository = MaterialRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandMaterial e, CancellationToken token)
         {
-            return !await _MaterialRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

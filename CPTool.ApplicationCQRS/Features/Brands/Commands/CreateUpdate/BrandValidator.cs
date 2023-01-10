@@ -10,10 +10,10 @@ namespace CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate
 {
     public class BrandValidator : AbstractValidator<CommandBrand>
     {
-        private readonly IRepositoryBrand _BrandRepository;
-        public BrandValidator(IRepositoryBrand BrandRepository)
+        private readonly IRepositoryBrand _Repository;
+        public BrandValidator(IRepositoryBrand Repository)
         {
-            _BrandRepository = BrandRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -34,7 +34,8 @@ namespace CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandBrand e, CancellationToken token)
         {
-            return !await _BrandRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

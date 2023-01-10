@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdat
                         table.AddDomainEvent(new CreatedEvent<ProcessCondition>(table));
                         table = await _unitofwork.RepositoryProcessCondition.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.ProcessConditionObject = _mapper.Map<CommandProcessCondition>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdat
                             table.AddDomainEvent(new UpdatedEvent<ProcessCondition>(table));
                             await _unitofwork.RepositoryProcessCondition.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.ProcessConditionObject = _mapper.Map<CommandProcessCondition>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

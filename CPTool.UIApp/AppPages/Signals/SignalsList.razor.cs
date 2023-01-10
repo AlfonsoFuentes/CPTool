@@ -8,17 +8,18 @@ using Microsoft.AspNetCore.Components;
 using Radzen;
 using CPTool.UIApp.AppPages.MWOItems;
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+using Autofac.Core;
 
 namespace CPTool.UIApp.AppPages.Signals
 {
     public partial class SignalsList
     {
-        
+
         [Inject]
         public ISignalService Service { get; set; }
         [Inject]
         public IMWOService MWOService { get; set; }
-   
+
         List<CommandSignal> Elements = new();
         CommandSignal SelectedItem = new();
 
@@ -26,17 +27,16 @@ namespace CPTool.UIApp.AppPages.Signals
 
         [Parameter]
         public int MWOId { get; set; }
-        protected override async Task OnInitializedAsync()
+
+        public async Task UpdateTable()
         {
             MWO = await MWOService.GetById(MWOId);
             Elements = await Service.GetAll(MWOId);
-
-
+            StateHasChanged();
         }
-
         async Task<bool> ShowTableDialog(CommandSignal model)
         {
-           
+
 
             var result = await DialogService.OpenAsync<SignalsDialog>(model.Id == 0 ? $"Add new Signal to {model.MWOName}" : $"Edit {model.Name}",
                   new Dictionary<string, object> { { "Model", model } },
@@ -47,7 +47,7 @@ namespace CPTool.UIApp.AppPages.Signals
 
             if ((bool)result)
             {
-                 Elements = await Service.GetAll(MWOId);
+                Elements = await Service.GetAll(MWOId);
 
                 StateHasChanged();
             }
@@ -60,7 +60,7 @@ namespace CPTool.UIApp.AppPages.Signals
             var result = await Service.Delete(toDelete.Id);
             if (result.Success)
             {
-                 Elements = await Service.GetAll(MWOId);
+                Elements = await Service.GetAll(MWOId);
 
                 StateHasChanged();
             }

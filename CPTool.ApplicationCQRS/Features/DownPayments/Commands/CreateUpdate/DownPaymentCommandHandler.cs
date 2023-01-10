@@ -56,8 +56,8 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<DownPayment>(table));
                         table = await _unitofwork.RepositoryDownPayment.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.DownPaymentObject = _mapper.Map<CommandDownPayment>(table);
-
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -69,8 +69,8 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<DownPayment>(table));
                             await _unitofwork.RepositoryDownPayment.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.DownPaymentObject = _mapper.Map<CommandDownPayment>(table);
-
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

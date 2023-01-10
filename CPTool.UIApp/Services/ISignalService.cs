@@ -10,7 +10,7 @@ using CPTool.ApplicationCQRS.Features.SignalTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Wires.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.ApplicationCQRSFeatures.ElectricalBoxs.Queries.GetList;
-using CPTool.ApplicationCQRSFeatures.ElectricalItems.Queries.GetList;
+
 using CPTool.ApplicationCQRSFeatures.FieldLocations.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.MWOItems.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.SignalModifiers.Queries.GetList;

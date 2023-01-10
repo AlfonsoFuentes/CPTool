@@ -1,4 +1,4 @@
-﻿using CPTool.Persistence.BaseClass;
+﻿
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.Templates
@@ -8,7 +8,7 @@ namespace CPTool.UIApp.AppPages.Templates
         [Parameter]
         [EditorRequired]
         public string PropertyName { get; set; } = string.Empty;
-       
+        string classname => typeof(T).Name;
         [Parameter]
         public List<T> Elements { get; set; }
         [Parameter]

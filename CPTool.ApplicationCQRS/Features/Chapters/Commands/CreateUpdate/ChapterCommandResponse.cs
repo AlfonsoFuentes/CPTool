@@ -3,13 +3,13 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.Chapters.Commands.CreateUpdate
 {
-    public class ChapterCommandResponse : BaseResponse
+    public class ChapterCommandResponse : BaseResponse<CommandChapter>
     {
         public ChapterCommandResponse() : base()
         {
 
         }
 
-        public CommandChapter? ChapterObject { get; set; }
+       
     }
 }

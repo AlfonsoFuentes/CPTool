@@ -4,6 +4,7 @@ using CPToolCQRS.Infrastructure.Persistence;
 using CPTool.PersistenceCQRS.Repositories;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
+using CPTool.Domain.Entities;
 
 namespace CPToolCQRS.Infrastructure.Repositories
 {
@@ -13,7 +14,8 @@ namespace CPToolCQRS.Infrastructure.Repositories
         
         public RepositoryBrand(TableContext dbcontext) : base(dbcontext)
         {
-           
+            
+
             QueryDialog = QueryDialog
                .Include(x => x.BrandSuppliers)
                ;

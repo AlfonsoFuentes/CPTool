@@ -9,21 +9,30 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 {
     public class MWOItemValidator : AbstractValidator<CommandMWOItem>
     {
-        private readonly IRepositoryMWOItem _MWOItemRepository;
-        public MWOItemValidator(IRepositoryMWOItem MWOItemRepository)
+        private readonly IRepositoryMWOItem _Repository;
+        public MWOItemValidator(IRepositoryMWOItem Repository)
         {
-            _MWOItemRepository = MWOItemRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
+                .MaximumLength(100).WithMessage("{PropertyName} must not exceed 100 characters.");
 
             RuleFor(p => p.Chapter!.Id)
             .NotEqual(0).WithMessage("Chapter is required.");
 
             RuleFor(p => p.MWO!.Id)
          .NotEqual(0).WithMessage("MWO Name is required.");
+
+            RuleFor(p => p.UnitaryBasePrizeId)
+                .NotNull().WithMessage("Unitary Prize is required.")
+        .NotEqual(0).WithMessage("Unitary Prize is required.")
+        .When(p=>p.BudgetItem==true);
+
+            RuleFor(p => p.BudgetPrize)
+        .NotEqual(0).WithMessage("Budget in $USD is required.")
+        .When(p => p.BudgetItem == true);
 
             RuleFor(e => e)
                  .MustAsync(NameUnique)
@@ -35,7 +44,10 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandMWOItem e, CancellationToken token)
         {
-            return !await _MWOItemRepository.IsPropertyUnique(e.Id, "Name", e.Name);
+          
+            var result = await _Repository.Any(x => x.Id != e.Id && x.MWOId == e.MWOId && x.Name == e.Name);
+            return !result;
+           
         }
     }
 }

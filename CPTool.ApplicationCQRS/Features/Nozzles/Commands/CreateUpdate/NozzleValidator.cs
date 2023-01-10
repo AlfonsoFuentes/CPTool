@@ -9,25 +9,28 @@ namespace CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate
 {
     public class NozzleValidator : AbstractValidator<CommandNozzle>
     {
-        private readonly IRepositoryNozzle _NozzleRepository;
-        public NozzleValidator(IRepositoryNozzle NozzleRepository)
+        private readonly IRepositoryNozzle _Repository;
+        public NozzleValidator(IRepositoryNozzle Repository)
         {
-            _NozzleRepository = NozzleRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
 
-            RuleFor(p => p.PipeDiameter!.Id)
+            RuleFor(p => p.PipeDiameterId)
+                .NotNull().WithMessage("Size is required.")
          .NotEqual(0).WithMessage("Size is required.");
 
 
-            RuleFor(p => p.ConnectionType!.Id)
+            RuleFor(p => p.ConnectionTypeId)
+                .NotNull().WithMessage("Type is required.")
          .NotEqual(0).WithMessage("Type is required.");
 
 
-            RuleFor(p => p.nPipeClass!.Id)
+            RuleFor(p => p.nPipeClassId)
+                 .NotNull().WithMessage("Class is required.")
          .NotEqual(0).WithMessage("Class is required.");
 
             RuleFor(p => p.StreamType)
@@ -44,7 +47,8 @@ namespace CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandNozzle e, CancellationToken token)
         {
-            return !await _NozzleRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.MWOItemId == e.MWOItemId && x.Name == e.Name);
+            return !result;
         }
     }
 }

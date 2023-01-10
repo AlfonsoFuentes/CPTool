@@ -2,13 +2,15 @@
 {
     public class Supplier  : AuditableEntity
     {
-        [ForeignKey("eSupplierId")]
-        public ICollection<EquipmentItem> EquipmentItems { get; set; } = null!;
+        [ForeignKey("SupplierId")]
+        public ICollection<MWOItem> MWOItems { get; set; } = null!;
+        //[ForeignKey("eSupplierId")]
+        //public ICollection<EquipmentItem> EquipmentItems { get; set; } = null!;
         public ICollection<BrandSupplier> BrandSuppliers { get; set; } = null!;
         [ForeignKey("pSupplierId")]
         public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = null!;
-        [ForeignKey("iSupplierId")]
-        public ICollection<InstrumentItem> InstrumentItems { get; set; } = null!;
+        //[ForeignKey("iSupplierId")]
+        //public ICollection<InstrumentItem> InstrumentItems { get; set; } = null!;
         public string Address { get; set; } = "";
         public string Phone { get; set; } = "";
 

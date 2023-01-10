@@ -5,39 +5,41 @@
 
 <PageTitle>@($"Purchase orders")</PageTitle>
 
-<TableTemplate 
-               @bind-SelectedItem=@SelectedItem
+    <TableTemplate @bind-SelectedItem=@SelectedItem
                ShowAdd=@(MWOId!=0)
                ShowDialog="ShowTableDialog"
                ShowDelete=false
                OnDelete="@Delete"
+               ShowSearch=true
+               SearchChanged="@SearchChanged"
                Elements="@Elements" Export="@Export">
-    <ToolBarButtons>
+        <ToolBarButtons>
 
-        <ButtonTemplate Icon="currency_exchange"
+            <ButtonTemplate Icon="currency_exchange"
                         Disabled=@DisableDownpayment
                         Click=AddDownPayment
                         ToolTip="DownPayment">
 
-        </ButtonTemplate>
+            </ButtonTemplate>
 
 
 
-    </ToolBarButtons>
-    <Columns>
-        @if(MWOId==0)
+        </ToolBarButtons>
+        <Columns>
+            @if (MWOId == 0)
         {
             <RadzenDataGridColumn TItem="CommandPurchaseOrder" Property="@nameof(CommandPurchaseOrder.MWOCECName)" Title="MWO#" TextAlign="TextAlign.Left" Width="150px" Filterable=true Sortable=true>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="CommandPurchaseOrder" Property="@nameof(CommandPurchaseOrder.MWOName)" Title="MWO Name" TextAlign="TextAlign.Left" Width="150px" Filterable=true Sortable=true>
             </RadzenDataGridColumn>
         }
-        <RadzenDataGridColumn TItem="CommandPurchaseOrder" Property="@nameof(CommandPurchaseOrder.Name)" Title="Name" TextAlign="TextAlign.Left" Width="300px" Filterable=true Sortable=true>
-        </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="CommandPurchaseOrder" Property="@nameof(CommandPurchaseOrder.PurchaseRequisition)" Title="PR#" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="CommandPurchaseOrder" Property="@nameof(CommandPurchaseOrder.PONumber)" Title="PO#" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
         </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPurchaseOrder" Property="@nameof(CommandPurchaseOrder.Name)" Title="Name" TextAlign="TextAlign.Left" Width="300px" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+
         <RadzenDataGridColumn TItem="CommandPurchaseOrder" Property="@nameof(CommandPurchaseOrder.PurchaseOrderApprovalStatusName)" Title="Status" Filterable=true Sortable=true>
 
         </RadzenDataGridColumn>

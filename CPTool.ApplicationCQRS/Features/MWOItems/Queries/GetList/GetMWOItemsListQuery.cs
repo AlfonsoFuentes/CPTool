@@ -5,7 +5,8 @@ namespace CPTool.ApplicationCQRSFeatures.MWOItems.Queries.GetList
 {
     public class GetMWOItemsListQuery : IRequest<List<CommandMWOItem>>
     {
-        public int MWOId { get; set; } 
+        public int MWOId { get; set; }
+        public bool Budget { get; set; } = false;
        
     }
 }

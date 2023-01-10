@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
 {
     public class DownPaymentValidator : AbstractValidator<CommandDownPayment>
     {
-        private readonly IRepositoryDownPayment _DownPaymentRepository;
-        public DownPaymentValidator(IRepositoryDownPayment DownPaymentRepository)
+        private readonly IRepositoryDownPayment _Repository;
+        public DownPaymentValidator(IRepositoryDownPayment Repository)
         {
-            _DownPaymentRepository = DownPaymentRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.DownpaymentName)
                 .NotEmpty().WithMessage("Name is required.")
@@ -64,7 +64,9 @@ namespace CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandDownPayment e, CancellationToken token)
         {
-            return !await _DownPaymentRepository.IsPropertyUnique(e.Id, "DownpaymentName", e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.DownpaymentName == e.Name);
+            return !result;
+          
         }
     }
 }

@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Wires.Commands.CreateUpdate
 {
     public class WireValidator : AbstractValidator<CommandWire>
     {
-        private readonly IRepositoryWire _WireRepository;
-        public WireValidator(IRepositoryWire WireRepository)
+        private readonly IRepositoryWire _Repository;
+        public WireValidator(IRepositoryWire Repository)
         {
-            _WireRepository = WireRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.Wires.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandWire e, CancellationToken token)
         {
-            return !await _WireRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

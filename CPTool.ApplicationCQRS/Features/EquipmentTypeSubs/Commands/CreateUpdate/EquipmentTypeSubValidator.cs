@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdat
 {
     public class EquipmentTypeSubValidator : AbstractValidator<CommandEquipmentTypeSub>
     {
-        private readonly IRepositoryEquipmentTypeSub _EquipmentTypeSubRepository;
-        public EquipmentTypeSubValidator(IRepositoryEquipmentTypeSub EquipmentTypeSubRepository)
+        private readonly IRepositoryEquipmentTypeSub _Repository;
+        public EquipmentTypeSubValidator(IRepositoryEquipmentTypeSub Repository)
         {
-            _EquipmentTypeSubRepository = EquipmentTypeSubRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdat
 
         private async Task<bool> NameUnique(CommandEquipmentTypeSub e, CancellationToken token)
         {
-            return !await _EquipmentTypeSubRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<TaxCodeLP>(table));
                         table = await _unitofwork.RepositoryTaxCodeLP.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.TaxCodeLPObject = _mapper.Map<CommandTaxCodeLP>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<TaxCodeLP>(table));
                             await _unitofwork.RepositoryTaxCodeLP.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.TaxCodeLPObject = _mapper.Map<CommandTaxCodeLP>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

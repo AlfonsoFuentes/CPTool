@@ -2,7 +2,7 @@
 using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
-using CPTool.ApplicationCQRS.Features.PipingItems.Commands.CreateUpdate;
+
 using CPTool.Domain.Enums;
 using CPTool.UIApp.AppPages.MWOItems;
 using CPTool.UIApp.Services;
@@ -16,13 +16,13 @@ namespace CPTool.UIApp.AppPages.MWOItems
     {
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
-        protected CommandPipingItem Model => DialogParent.Model.PipingItem;
+        protected CommandMWOItem Model => DialogParent.Model;
         protected MWOItemDialogData DialogData => DialogParent.DialogData;
 
 
         async Task OnChangePipeClass(int pipeclasid)
         {
-            Model.pDiameter = new();
+            Model.Diameter = new();
             DialogData.PipeDiameters = await DialogParent.Service.GetPipeDiameterByPipeClass(pipeclasid);
         }
         void OnChangeEquipmentStart()

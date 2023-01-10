@@ -35,10 +35,10 @@ namespace CPTool.ApplicationCQRS.Contracts.Persistence
         IRepositoryMWO RepositoryMWO { get; }
         IRepositoryMWOType RepositoryMWOType { get; }
         IRepositoryMWOItem RepositoryMWOItem { get; }
-        IRepositoryMWOItemWithEquipment RepositoryMWOItemWithEquipment { get; }
-        IRepositoryMWOItemWithInstrument RepositoryMWOItemWithInstrument { get; }
-        IRepositoryMWOItemWithPiping RepositoryMWOItemWithPiping { get; }
         IRepositoryMWOItemWithNozzles RepositoryMWOItemWithNozzles { get; }
+        IRepositorySpecification RepositorySpecification { get; }
+        IRepositoryPropertySpecification RepositoryPropertySpecification { get; }   
+       
         IRepositoryNozzle RepositoryNozzle { get; }
         IRepositoryPipeAccesory RepositoryPipeAccesory { get; }
         IRepositoryPipeClass RepositoryPipeClass { get; }
@@ -63,22 +63,7 @@ namespace CPTool.ApplicationCQRS.Contracts.Persistence
         IRepositoryUserRequirementType RepositoryUserRequirementType { get; }
         IRepositoryWire RepositoryWire { get; }
 
-        IRepositoryAlterationItem RepositoryAlterationItem { get; }
-        IRepositoryFoundationItem RepositoryFoundationItem { get; }
-        IRepositoryStructuralItem RepositoryStructuralItem { get; }
-        IRepositoryEquipmentItem RepositoryEquipmentItem { get; }
-        IRepositoryElectricalItem RepositoryElectricalItem { get; }
-        IRepositoryPipingItem RepositoryPipingItem { get; }
-    
-        IRepositoryInstrumentItem RepositoryInstrumentItem { get; }
       
-        IRepositoryInsulationItem RepositoryInsulationItem { get; }
-        IRepositoryPaintingItem RepositoryPaintingItem { get; }
-        IRepositoryEHSItem RepositoryEHSItem { get; }
-        IRepositoryTaxesItem RepositoryTaxesItem { get; }
-        IRepositoryTestingItem RepositoryTestingItem { get; }
-        IRepositoryEngineeringCostItem RepositoryEngineeringCostItem { get; }
-        IRepositoryContingencyItem RepositoryContingencyItem { get; }
        
 
 

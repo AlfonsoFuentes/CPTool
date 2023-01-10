@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.Readouts.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<Readout>(table));
                         table = await _unitofwork.RepositoryReadout.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.ReadoutObject = _mapper.Map<CommandReadout>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.Readouts.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<Readout>(table));
                             await _unitofwork.RepositoryReadout.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.ReadoutObject = _mapper.Map<CommandReadout>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

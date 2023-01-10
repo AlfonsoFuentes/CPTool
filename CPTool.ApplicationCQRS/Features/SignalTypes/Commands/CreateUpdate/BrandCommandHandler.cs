@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.SignalTypes.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<SignalType>(table));
                         table = await _unitofwork.RepositorySignalType.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.SignalTypeObject = _mapper.Map<CommandSignalType>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.SignalTypes.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<SignalType>(table));
                             await _unitofwork.RepositorySignalType.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.SignalTypeObject = _mapper.Map<CommandSignalType>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

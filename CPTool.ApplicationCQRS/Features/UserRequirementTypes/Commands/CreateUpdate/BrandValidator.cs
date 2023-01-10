@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.UserRequirementTypes.Commands.CreateUp
 {
     public class UserRequirementTypeValidator : AbstractValidator<CommandUserRequirementType>
     {
-        private readonly IRepositoryUserRequirementType _UserRequirementTypeRepository;
-        public UserRequirementTypeValidator(IRepositoryUserRequirementType UserRequirementTypeRepository)
+        private readonly IRepositoryUserRequirementType _Repository;
+        public UserRequirementTypeValidator(IRepositoryUserRequirementType Repository)
         {
-            _UserRequirementTypeRepository = UserRequirementTypeRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.UserRequirementTypes.Commands.CreateUp
 
         private async Task<bool> NameUnique(CommandUserRequirementType e, CancellationToken token)
         {
-            return !await _UserRequirementTypeRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

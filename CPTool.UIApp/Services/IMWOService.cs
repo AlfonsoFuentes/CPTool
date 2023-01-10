@@ -6,11 +6,14 @@ using CPTool.ApplicationCQRS.Features.MWOs.Queries.Export;
 using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.TaxCodeLDs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Users.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.ApplicationCQRSFeatures.MWOs.Commands.Delete;
 using CPTool.ApplicationCQRSFeatures.MWOs.Queries.GetDetail;
 using CPTool.ApplicationCQRSFeatures.MWOs.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.MWOTypes.Queries.GetList;
+using CPTool.ApplicationCQRSFeatures.Users.Queries.GetList;
+using DocumentFormat.OpenXml.Spreadsheet;
 using MediatR;
 
 namespace CPTool.UIApp.Services
@@ -18,6 +21,7 @@ namespace CPTool.UIApp.Services
     public class MWODialogData
     {
         public List<CommandMWOType> MWOTypes { get; set; } = new();
+        public List<CommandUser> ProjectLeaders = new();
       
     }
     public interface IMWOService
@@ -85,7 +89,9 @@ namespace CPTool.UIApp.Services
 
             GetMWOTypesListQuery getlist = new();
             data.MWOTypes = await mediator.Send(getlist);
-            //command.MWOType = command.MWOType==null?new(): data.MWOTypes.FirstOrDefault(x => x.Id == command.MWOType.Id);
+
+            GetUsersListQuery getusers = new();
+            data.ProjectLeaders=await mediator.Send(getusers);  
             return data;
         }
     }

@@ -3,13 +3,13 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
 {
-    public class ControlLoopCommandResponse : BaseResponse
+    public class ControlLoopCommandResponse : BaseResponse<CommandControlLoop>
     {
         public ControlLoopCommandResponse() : base()
         {
 
         }
 
-        public CommandControlLoop? ControlLoopObject { get; set; }
+        
     }
 }

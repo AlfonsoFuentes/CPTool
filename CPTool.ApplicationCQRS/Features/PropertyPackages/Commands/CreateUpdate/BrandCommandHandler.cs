@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.PropertyPackages.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<PropertyPackage>(table));
                         table = await _unitofwork.RepositoryPropertyPackage.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.PropertyPackageObject = _mapper.Map<CommandPropertyPackage>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.PropertyPackages.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<PropertyPackage>(table));
                             await _unitofwork.RepositoryPropertyPackage.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.PropertyPackageObject = _mapper.Map<CommandPropertyPackage>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

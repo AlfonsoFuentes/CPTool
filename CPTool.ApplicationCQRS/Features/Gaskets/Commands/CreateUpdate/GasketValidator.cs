@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate
 {
     public class GasketValidator : AbstractValidator<CommandGasket>
     {
-        private readonly IRepositoryGasket _GasketRepository;
-        public GasketValidator(IRepositoryGasket GasketRepository)
+        private readonly IRepositoryGasket _Repository;
+        public GasketValidator(IRepositoryGasket Repository)
         {
-            _GasketRepository = GasketRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandGasket e, CancellationToken token)
         {
-            return !await _GasketRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

@@ -12,11 +12,14 @@
 {
 
 }
-<Panel>
-    <Left>
-        <RadzenCard>
+@if (Model.ChapterId == 7)
+{
+    <Panel>
+        <Left>
+            <RadzenCard>
 
-            <SelectTemplate T="CommandMeasuredVariable"
+                <SelectTemplate T="CommandMeasuredVariable"
+                            Change=@(()=>ChangeMeasuredVariable(Model.MeasuredVariable.Id))
                             Clearable=true
                             Elements=@DialogData.MeasuredVariables
                             Label="Measured Variable"
@@ -24,93 +27,97 @@
                             @bind-Model="@Model.MeasuredVariable">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandMeasuredVariableModifier"
+                </SelectTemplate>
+                <SelectTemplate T="CommandMeasuredVariableModifier"
                             Clearable=true
+                            Change=@(()=>ChangeMeasuredVariableModifier(Model.MeasuredVariableModifier.Id))
                             Elements=@DialogData.MeasuredVariableModifiers
                             Label="Measured Variable Modifier"
                             PropertyName="Name"
                             @bind-Model="@Model.MeasuredVariableModifier">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandReadout"
+                </SelectTemplate>
+                <SelectTemplate T="CommandReadout"
                             Clearable=true
+                            Change=@(()=>ChangeReadout(Model.Readout.Id))
                             Elements=@DialogData.Readouts
                             Label="Readout"
                             PropertyName="Name"
                             @bind-Model="@Model.Readout">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandDeviceFunction"
+                </SelectTemplate>
+                <SelectTemplate T="CommandDeviceFunction"
                             Clearable=true
+                            Change=@(()=>ChangeDeviceFunction(Model.DeviceFunction.Id))
                             Elements=@DialogData.DeviceFunctions
                             Label="Device function"
                             PropertyName="Name"
                             @bind-Model="@Model.DeviceFunction">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandDeviceFunctionModifier"
+                </SelectTemplate>
+                <SelectTemplate T="CommandDeviceFunctionModifier"
                             Clearable=true
+                            Change=@(()=>ChangeDeviceFunctionModifier(Model.DeviceFunctionModifier.Id))
                             Elements=@DialogData.DeviceFunctionModifiers
                             Label="Device function modifier"
                             PropertyName="Name"
                             @bind-Model="@Model.DeviceFunctionModifier">
 
 
-            </SelectTemplate>
+                </SelectTemplate>
 
-            <TextBoxTemplate  @bind-Value=@Model.TagNumber Label="Tag Number">
+                <TextBoxTemplate @bind-Value=@Model.TagNumber Label="Tag Number">
 
-            </TextBoxTemplate>
+                </TextBoxTemplate>
 
 
-            <FieldTemplate Label="Tag Id" Value=@Model.TagId></FieldTemplate>
-           
-        </RadzenCard>
-    </Left>
-    <Rigth>
-        <RadzenCard>
-            <SelectTemplate T="CommandBrand" Elements="@DialogData.Brands" Label="Brand or Service" Change=@(()=>ChangeBrand(Model.iBrand.Id))
+                <FieldTemplate Label="Tag Id" Value=@Model.TagId></FieldTemplate>
+
+            </RadzenCard>
+        </Left>
+        <Rigth>
+            <RadzenCard>
+                <SelectTemplate T="CommandBrand" Elements="@DialogData.Brands" Label="Brand or Service" Change=@(()=>ChangeBrand(Model.Brand.Id))
                             Clearable=true
-                            PropertyName="Name" @bind-Model=@Model.iBrand>
+                            PropertyName="Name" @bind-Model=@Model.Brand>
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandSupplier"
+                </SelectTemplate>
+                <SelectTemplate T="CommandSupplier"
                             Clearable=true
+                            Change=@(()=>ChangeSupplier(Model.Supplier.Id))
                             Elements="@DialogData.Suppliers" Label="Supplier"
-                            Disabled=@(Model.iBrand==null||Model.iBrand.Id==0)
-                            PropertyName="Name" @bind-Model=@Model.iSupplier>
+                            Disabled=@(Model.Brand==null||Model.Brand.Id==0)
+                            PropertyName="Name" @bind-Model=@Model.Supplier>
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandGasket" Elements="@DialogData.Gaskets" Label="Gasket"
+                </SelectTemplate>
+
+              @*  <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Outer Material"
+                            Change=@(()=>ChangeOuterMaterial(Model.OuterMaterial.Id))
                             Clearable=true
-                            PropertyName="Name" @bind-Model=@Model.iGasket>
+                            PropertyName="Name" @bind-Model=@Model.OuterMaterial>
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Outer Material"
+                </SelectTemplate>*@
+                <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Inner Material"
+                            Change=@(()=>ChangeOuterInnerMaterial(Model.InnerMaterial.Id))
                             Clearable=true
-                            PropertyName="Name" @bind-Model=@Model.iOuterMaterial>
+                            PropertyName="Name" @bind-Model=@Model.InnerMaterial>
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Inner Material"
-                            Clearable=true
-                            PropertyName="Name" @bind-Model=@Model.iInnerMaterial>
-
-            </SelectTemplate>
-            <TextBoxTemplate @bind-Value="@Model.Model"
+                </SelectTemplate>
+                <TextBoxTemplate @bind-Value="@Model.Model"
                              Label="Equipment Model"
                              Rows="3"></TextBoxTemplate>
-            <TextBoxTemplate @bind-Value="@Model.Reference"
+                <TextBoxTemplate @bind-Value="@Model.Reference"
                              Label="Reference"
                              Rows="3"></TextBoxTemplate>
-            <TextBoxTemplate @bind-Value="@Model.SerialNumber"
+                <TextBoxTemplate @bind-Value="@Model.SerialNumber"
                              Label="Serial Number"></TextBoxTemplate>
-        </RadzenCard>
-    </Rigth>
-</Panel>
+            </RadzenCard>
+        </Rigth>
+    </Panel>
+}
 
 @code {
     bool debug = true;

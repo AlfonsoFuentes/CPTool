@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate
 {
     public class SupplierValidator : AbstractValidator<CommandSupplier>
     {
-        private readonly IRepositorySupplier _SupplierRepository;
-        public SupplierValidator(IRepositorySupplier SupplierRepository)
+        private readonly IRepositorySupplier _Repository;
+        public SupplierValidator(IRepositorySupplier Repository)
         {
-            _SupplierRepository = SupplierRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -49,11 +49,14 @@ namespace CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandSupplier e, CancellationToken token)
         {
-            return !await _SupplierRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
         private async Task<bool> VendorCodeUnique(CommandSupplier e, CancellationToken token)
         {
-            return !await _SupplierRepository.IsPropertyUnique(e.Id, "VendorCode", e.VendorCode);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.VendorCode == e.VendorCode);
+            return !result;
+           
         }
     }
 }

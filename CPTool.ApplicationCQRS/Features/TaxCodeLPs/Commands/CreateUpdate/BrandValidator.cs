@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate
 {
     public class TaxCodeLPValidator : AbstractValidator<CommandTaxCodeLP>
     {
-        private readonly IRepositoryTaxCodeLP _TaxCodeLPRepository;
-        public TaxCodeLPValidator(IRepositoryTaxCodeLP TaxCodeLPRepository)
+        private readonly IRepositoryTaxCodeLP _Repository;
+        public TaxCodeLPValidator(IRepositoryTaxCodeLP Repository)
         {
-            _TaxCodeLPRepository = TaxCodeLPRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandTaxCodeLP e, CancellationToken token)
         {
-            return !await _TaxCodeLPRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

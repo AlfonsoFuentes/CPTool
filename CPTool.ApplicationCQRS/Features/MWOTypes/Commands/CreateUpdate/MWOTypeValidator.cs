@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate
 {
     public class MWOTypeValidator : AbstractValidator<CommandMWOType>
     {
-        private readonly IRepositoryMWOType _MWOTypeRepository;
-        public MWOTypeValidator(IRepositoryMWOType MWOTypeRepository)
+        private readonly IRepositoryMWOType _Repository;
+        public MWOTypeValidator(IRepositoryMWOType Repository)
         {
-            _MWOTypeRepository = MWOTypeRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,9 @@ namespace CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandMWOType e, CancellationToken token)
         {
-            return !await _MWOTypeRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
+           
         }
     }
 }

@@ -16,32 +16,32 @@ namespace CPTool.UIApp.AppPages.MWOItems
         protected MWOItemDialog DialogParent { get; set; }
 
         protected MWOItemDialogData DialogData => DialogParent.DialogData;
-        protected CommandMWOItem Model => DialogParent.Model;
+
+        CommandMWOItem Model => DialogParent.Model;
 
         CommandNozzle SelectedNozzles = new();
-        string TableName => $"{Model.TagId} Nozzles";
 
-        async Task<bool> AddNozzle(CommandNozzle nozzle)
+        List<CommandNozzle> Elements => Model.Nozzles;
+
+        public async Task<bool> ShowTableDialog(CommandNozzle nozzle)
         {
-            Model.AddNozzle(nozzle);
-            var retorno = await ShowTableDialog(nozzle);
-            if (!retorno)
+
+            if (nozzle.Id == 0)
             {
-                Model.RemoveNozzle(nozzle);
-            }
-            await table.RefresheTable();
-            return retorno;
-        }
-        public async Task<bool> ShowTableDialog(CommandNozzle model)
-        {
+                nozzle= Model.AddNewNozzle( nozzle);
 
-            var result = await DialogService.OpenAsync<NozzleDialog>($"Add new Nozzle to {Model.TagId}",
-                  new Dictionary<string, object> { { "Model", model }, { "SaveDialog", Model.Id == 0 ? false : true } });
+            }
+
+            var result = await DialogService.OpenAsync<NozzleDialog>($"Add new Nozzle ",
+                  new Dictionary<string, object> { { "Nozzle", nozzle }, { "SaveDialog", Model.Id != 0 } });
             if (result == null) return false;
             if ((bool)result == true)
             {
+                if (Model.Id == 0) Model.Nozzles.Add(nozzle);
+
+                await table.RefresheTable();
                 await DialogParent.UpdateModel();
-               
+
             }
             return (bool)result;
 
@@ -52,6 +52,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
             var result = await Mediator.Send(delete);
             if (result.Success)
             {
+                await table.RefresheTable();
                 await DialogParent.UpdateModel();
             }
             return result.Success;

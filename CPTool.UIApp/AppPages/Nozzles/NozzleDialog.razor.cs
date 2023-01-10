@@ -12,9 +12,9 @@ namespace CPTool.UIApp.AppPages.Nozzles
         [Inject]
         public INozzleService Service { get; set; }
         [Parameter]
-        public CommandNozzle Model { get; set; } = new();
+        public CommandNozzle Nozzle { get; set; } = new();
 
-       
+        public CommandNozzle Model => Nozzle;
 
         [Parameter]
         public bool SaveDialog { get; set; }

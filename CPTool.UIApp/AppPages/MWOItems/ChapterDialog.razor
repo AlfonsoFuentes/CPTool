@@ -15,21 +15,34 @@
                         PropertyName="Name">
         </SelectTemplate>
 
-
-        <FieldTemplate Label="Nomenclatore" Value="@Model.Nomenclatore"></FieldTemplate>
+        @if(Model.BudgetItem)
+        {
+            <FieldTemplate Label="Nomenclatore" Value="@Model.Nomenclatore"></FieldTemplate>
+        }
+        
 
         <SwitchTemplate Label="Existing?" @bind-Value=@Model.Existing></SwitchTemplate>
         <TextBoxTemplate @bind-Value="@Model.Name" Label="Name" Rows=3></TextBoxTemplate>
 
+
+
+        <SwitchTemplate @bind-Value=@Model.BudgetItem Label="Is Budget?" OnChange="@DialogParent.RefreshDialog"></SwitchTemplate>
         <SelectTemplate T="CommandUnitaryBasePrize"
                         Elements=@DialogData.UnitaryBasePrizes
                         Label="Unitary prize unit"
                         @bind-Model=@Model.UnitaryBasePrize
                         PropertyName="Name">
         </SelectTemplate>
+        @if(Model.BudgetItem)
+        {
+            <NumericTemplate TValue="double" Label="Budget Prize, USD" @bind-Value="@Model.BudgetPrize"></NumericTemplate>
+        }
+        else
+        {
+            <FieldTemplate Label="Assigned Prize, USD" Value="@Model.AssignedPrizeString"></FieldTemplate>
+        }
 
 
-        <NumericTemplate TValue="double" Label="Budget Prize, USD" @bind-Value="@Model.BudgetPrize"></NumericTemplate>
 
     </Left>
     <Rigth>

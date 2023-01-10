@@ -1,10 +1,10 @@
 ﻿namespace CPTool.Persistence.Persistence
 {
-    public interface IRepositoryInsulationItem : ICommandRepository<InsulationItem>
-    {
+    //public interface IRepositoryInsulationItem : ICommandRepository<InsulationItem>
+    //{
 
 
 
-    }
+    //}
    
 }

@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.Wires.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<Wire>(table));
                         table = await _unitofwork.RepositoryWire.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.WireObject = _mapper.Map<CommandWire>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,9 @@ namespace CPTool.ApplicationCQRS.Features.Wires.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<Wire>(table));
                             await _unitofwork.RepositoryWire.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.WireObject = _mapper.Map<CommandWire>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
+
                         }
 
 

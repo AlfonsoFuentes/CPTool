@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpda
                         table.AddDomainEvent(new CreatedEvent<PurchaseOrderItem>(table));
                         table = await _unitofwork.RepositoryPurchaseOrderItem.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.PurchaseOrderItemObject = _mapper.Map<CommandPurchaseOrderItem>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpda
                             table.AddDomainEvent(new UpdatedEvent<PurchaseOrderItem>(table));
                             await _unitofwork.RepositoryPurchaseOrderItem.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.PurchaseOrderItemObject = _mapper.Map<CommandPurchaseOrderItem>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

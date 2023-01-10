@@ -62,9 +62,10 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
                         table = await _unitofwork.RepositoryPurchaseOrder.AddAsync(table);
                         await _unitofwork.Complete();
                         request.Id = table.Id;
-                       
-                        Response.PurchaseOrderObject = request;
-                        
+
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
+
                     }
                     else
                     {
@@ -76,9 +77,10 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<PurchaseOrder>(table));
                             await _unitofwork.RepositoryPurchaseOrder.UpdateAsync(table);
                             await _unitofwork.Complete();
-                       
-                            Response.PurchaseOrderObject = request;
-                     
+
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
+
                         }
 
 

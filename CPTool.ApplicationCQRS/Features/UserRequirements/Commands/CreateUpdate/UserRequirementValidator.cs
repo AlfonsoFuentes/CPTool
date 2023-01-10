@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.UserRequirements.Commands.CreateUpdate
 {
     public class UserRequirementValidator : AbstractValidator<CommandUserRequirement>
     {
-        private readonly IRepositoryUserRequirement _UserRequirementRepository;
-        public UserRequirementValidator(IRepositoryUserRequirement UserRequirementRepository)
+        private readonly IRepositoryUserRequirement _Repository;
+        public UserRequirementValidator(IRepositoryUserRequirement Repository)
         {
-            _UserRequirementRepository = UserRequirementRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -36,7 +36,8 @@ namespace CPTool.ApplicationCQRS.Features.UserRequirements.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandUserRequirement e, CancellationToken token)
         {
-            return !await _UserRequirementRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

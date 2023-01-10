@@ -22,4 +22,8 @@
         public string Message { get; set; } = string.Empty;
         public List<string> ValidationErrors { get; set; } = new();
     }
+    public class BaseResponse<T> : BaseResponse
+    {
+        public T ResponseObject { get; set; } = default(T)!;
+    }
 }

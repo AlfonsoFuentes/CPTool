@@ -21,9 +21,7 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
         public string SPL { get; set; } = "";
         public string VendorCode => pSupplier == null ? "" : pSupplier!.VendorCode!;
         public string CostCenter { get; set; } = "";
-
-
-
+        public string QuoteNo { get; set; } = "";
 
         public string PurchaseRequisition { get; set; } = "";
 
@@ -79,15 +77,16 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
         public double CommitmentValueExpenses => (PurchaseOrderItems.Count == 0) ? 0 :
             StatusPurchaseOrder == StatusPurchaseOrder.Commitment ? PurchaseOrderItems.Where(x => x!.MWOItem!.ChapterId == 1).Sum(x => x.PrizeUSD) : 0;
         public StatusPurchaseOrder StatusPurchaseOrder => GetStatusPurchaseOrder();
+        public string PurchaseOrderStatusName => StatusPurchaseOrder.ToString();
         StatusPurchaseOrder GetStatusPurchaseOrder()
         {
-            if (pBrand != null && pBrand!.BrandType == BrandType.Brand &&
-                (PurchaseOrderStatus == PurchaseOrderApprovalStatus.Received || PurchaseOrderStatus == PurchaseOrderApprovalStatus.Closed))
+
+            var PurchaseOrderStatusint = (int)PurchaseOrderStatus;
+            if (pBrand != null && pBrand!.BrandType == BrandType.Brand && PurchaseOrderStatusint >= (int)PurchaseOrderApprovalStatus.Received)
             {
                 return StatusPurchaseOrder.Actual;
             }
-            else if (pBrand != null && pBrand!.BrandType == BrandType.Service &&
-                (PurchaseOrderStatus == PurchaseOrderApprovalStatus.Installed || PurchaseOrderStatus == PurchaseOrderApprovalStatus.Closed))
+            else if (pBrand != null && pBrand!.BrandType == BrandType.Service && PurchaseOrderStatusint >= (int)PurchaseOrderApprovalStatus.Installed )
             {
                 return StatusPurchaseOrder.Actual;
             }

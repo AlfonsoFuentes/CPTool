@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<ElectricalBox>(table));
                         table = await _unitofwork.RepositoryElectricalBox.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.ElectricalBoxObject = _mapper.Map<CommandElectricalBox>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<ElectricalBox>(table));
                             await _unitofwork.RepositoryElectricalBox.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.ElectricalBoxObject = _mapper.Map<CommandElectricalBox>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

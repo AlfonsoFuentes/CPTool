@@ -6,9 +6,11 @@
         public int? EquipmentTypeId { get; set; }
         public EquipmentType? EquipmentType { get; set; } = null!;
 
-        [ForeignKey("eEquipmentTypeSubId")]
-        public ICollection<EquipmentItem> EquipmentItems { get; set; } = null!;
+        [ForeignKey("EquipmentTypeSubId")]
+        public ICollection<Specification>? Specifications { get; set; }
         public string? TagLetter { get; set; }
 
+        [ForeignKey("EquipmentTypeSubId")]
+        public ICollection<MWOItem> MWOItems { get; set; } = null!;
     }
 }

@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Commands.Creat
 {
     public class DeviceFunctionModifierValidator : AbstractValidator<CommandDeviceFunctionModifier>
     {
-        private readonly IRepositoryDeviceFunctionModifier _DeviceFunctionModifierRepository;
-        public DeviceFunctionModifierValidator(IRepositoryDeviceFunctionModifier DeviceFunctionModifierRepository)
+        private readonly IRepositoryDeviceFunctionModifier _Repository;
+        public DeviceFunctionModifierValidator(IRepositoryDeviceFunctionModifier Repository)
         {
-            _DeviceFunctionModifierRepository = DeviceFunctionModifierRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,9 @@ namespace CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Commands.Creat
 
         private async Task<bool> NameUnique(CommandDeviceFunctionModifier e, CancellationToken token)
         {
-            return !await _DeviceFunctionModifierRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
+         
         }
     }
 }

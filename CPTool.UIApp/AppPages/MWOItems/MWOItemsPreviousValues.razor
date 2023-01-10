@@ -1,0 +1,54 @@
+﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+
+<PageTitle>@($"Previous Values")</PageTitle>
+
+    @if (debug)
+{
+
+}
+
+<TableTemplate T="CommandMWOItem"
+               @ref=table
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               ShowAdd=false
+               ShowReport=false
+               ShowDelete=false
+               Elements="@Elements">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.MWOCECName)" Title="CEC#" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+        @*  <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.MWOName)" Title="MWO Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>*@
+        
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Name)" Title="Name" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Model)" Title="Model" TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Reference)" Title="Reference"  TextAlign="TextAlign.Left" Filterable=true Sortable=true>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.BudgetPrizeString)" Title="Budget, USD" Filterable=false Sortable=true>
+
+
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.AssignedPrizeString)" Title="Real, USD" Filterable=false Sortable=true>
+          
+
+        </RadzenDataGridColumn>
+
+
+    </Columns>
+</TableTemplate>
+
+<div class="row">
+    <div class="col d-flex justify-content-end" style="margin-top: 1rem">
+        <RadzenButton ButtonStyle="ButtonStyle.Primary" Click=@CloseDialog Icon="save" Text="Send Data to MWOItem" Disabled=@(SelectedItem.Id==0) Style="margin-right: 0.5rem" Variant="Variant.Flat" />
+        <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Variant="Variant.Flat" Click="@CancelButtonClick" />
+    </div>
+</div>
+
+@code {
+    bool debug = true;
+    TableTemplate<CommandMWOItem> table;
+}

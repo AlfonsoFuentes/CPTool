@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<PipeDiameter>(table));
                         table = await _unitofwork.RepositoryPipeDiameter.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.PipeDiameterObject = _mapper.Map<CommandPipeDiameter>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<PipeDiameter>(table));
                             await _unitofwork.RepositoryPipeDiameter.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.PipeDiameterObject = _mapper.Map<CommandPipeDiameter>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Commands.Creat
                         table.AddDomainEvent(new CreatedEvent<DeviceFunctionModifier>(table));
                         table = await _unitofwork.RepositoryDeviceFunctionModifier.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.DeviceFunctionModifierObject = _mapper.Map<CommandDeviceFunctionModifier>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Commands.Creat
                             table.AddDomainEvent(new UpdatedEvent<DeviceFunctionModifier>(table));
                             await _unitofwork.RepositoryDeviceFunctionModifier.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.DeviceFunctionModifierObject = _mapper.Map<CommandDeviceFunctionModifier>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

@@ -21,14 +21,13 @@ namespace CPTool.UIApp.AppPages.UserRequirments
         public int MWOId { get; set; }
       
         CommandMWO Parent = new();
-        protected override async Task OnInitializedAsync()
+        
+        public async Task UpdateTable()
         {
             Parent = await MWOService.GetById(MWOId);
             Elements = await Service.GetAll(MWOId);
-           
-
+            StateHasChanged();
         }
-
         async Task<bool> ShowTableDialog(CommandUserRequirement model)
         {
             if (model.Id == 0)

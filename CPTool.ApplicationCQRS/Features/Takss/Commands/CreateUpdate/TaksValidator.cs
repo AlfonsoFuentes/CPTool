@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate
 {
     public class TaksValidator : AbstractValidator<CommandTaks>
     {
-        private readonly IRepositoryTaks _TaksRepository;
-        public TaksValidator(IRepositoryTaks TaksRepository)
+        private readonly IRepositoryTaks _Repository;
+        public TaksValidator(IRepositoryTaks Repository)
         {
-            _TaksRepository = TaksRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -35,7 +35,8 @@ namespace CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandTaks e, CancellationToken token)
         {
-            return !await _TaksRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

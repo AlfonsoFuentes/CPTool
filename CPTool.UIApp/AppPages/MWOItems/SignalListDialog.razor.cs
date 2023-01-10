@@ -45,7 +45,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
                 if (model.MWOItem.Id == 0)
                 {
 
-                    model.MWOItem.Signals.Add(model);
+                    Model.Signals.Add(model);
                 }
 
 

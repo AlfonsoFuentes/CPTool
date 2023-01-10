@@ -54,7 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.Chapters.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<Chapter>(table));
                         table = await _unitofwork.RepositoryChapter.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.ChapterObject = _mapper.Map<CommandChapter>(table);
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                         
                     }
                     else
@@ -67,8 +68,8 @@ namespace CPTool.ApplicationCQRS.Features.Chapters.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<Chapter>(table));
                             await _unitofwork.RepositoryChapter.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.ChapterObject = _mapper.Map<CommandChapter>(table);
-                     
+                            Response.ResponseObject = request;
+
                         }
 
 

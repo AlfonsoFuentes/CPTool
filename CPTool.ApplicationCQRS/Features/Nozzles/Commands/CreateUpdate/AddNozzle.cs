@@ -11,10 +11,10 @@ namespace CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate
         public int Order { get; set; }
 
         public int? ConnectedToId { get; set; }
-        public int? EquipmentItemId { get; set; }
-        public int? InstrumentItemId { get; set; }
+        //public int? EquipmentItemId { get; set; }
+        //public int? InstrumentItemId { get; set; }
 
-        public int? PipingItemId { get; set; }
+        public int? MWOItemId { get; set; }
 
         public int? PipeDiameterId { get; set; }
         public int? ConnectionTypeId { get; set; }

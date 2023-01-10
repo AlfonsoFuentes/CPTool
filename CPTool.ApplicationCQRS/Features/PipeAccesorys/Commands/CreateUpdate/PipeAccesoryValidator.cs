@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.PipeAccesorys.Commands.CreateUpdate
 {
     public class PipeAccesoryValidator : AbstractValidator<CommandPipeAccesory>
     {
-        private readonly IRepositoryPipeAccesory _PipeAccesoryRepository;
-        public PipeAccesoryValidator(IRepositoryPipeAccesory PipeAccesoryRepository)
+        private readonly IRepositoryPipeAccesory _Repository;
+        public PipeAccesoryValidator(IRepositoryPipeAccesory Repository)
         {
-            _PipeAccesoryRepository = PipeAccesoryRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.PipeAccesorys.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandPipeAccesory e, CancellationToken token)
         {
-            return !await _PipeAccesoryRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

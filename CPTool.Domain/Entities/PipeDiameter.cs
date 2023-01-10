@@ -8,8 +8,10 @@
         public int? dPipeClassId { get; set; }
         public PipeClass? dPipeClass { get; set; }
 
-        [ForeignKey("pDiameterId")]
-        public ICollection<PipingItem>? PipingItems { get; set; } = null!;
+        //[ForeignKey("pDiameterId")]
+        //public ICollection<PipingItem>? PipingItems { get; set; } = null!;
+        [ForeignKey("DiameterId")]
+        public ICollection<MWOItem>? MWOItems { get; set; } = null!;
         [ForeignKey("PipeDiameterId")]
         public ICollection<Nozzle>? Nozzles { get; set; } = null!;
         public int? OuterDiameterId { get; set; }

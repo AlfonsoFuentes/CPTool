@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdat
                         table.AddDomainEvent(new CreatedEvent<EquipmentTypeSub>(table));
                         table = await _unitofwork.RepositoryEquipmentTypeSub.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.EquipmentTypeSubObject = _mapper.Map<CommandEquipmentTypeSub>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdat
                             table.AddDomainEvent(new UpdatedEvent<EquipmentTypeSub>(table));
                             await _unitofwork.RepositoryEquipmentTypeSub.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.EquipmentTypeSubObject = _mapper.Map<CommandEquipmentTypeSub>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

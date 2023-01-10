@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.UserRequirements.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<UserRequirement>(table));
                         table = await _unitofwork.RepositoryUserRequirement.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.UserRequirementObject = _mapper.Map<CommandUserRequirement>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.UserRequirements.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<UserRequirement>(table));
                             await _unitofwork.RepositoryUserRequirement.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.UserRequirementObject = _mapper.Map<CommandUserRequirement>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

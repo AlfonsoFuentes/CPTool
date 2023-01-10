@@ -58,9 +58,10 @@ namespace CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate
                             table.AddDomainEvent(new CreatedEvent<BrandSupplier>(table));
                             await _unitofwork.RepositoryBrandSupplier.AddAsync(table);
                             await _unitofwork.Complete();
-                            Response.BrandSupplierObject = _mapper.Map<CommandBrandSupplier>(table);
+                           
+                            Response.ResponseObject = request;
 
-                            
+
                         }
 
                     }
@@ -75,8 +76,9 @@ namespace CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate
                             await _unitofwork.RepositoryBrandSupplier.DeleteAsync(table);
                            await _unitofwork.Complete();
 
+                        
+                            Response.ResponseObject = request;
 
-                           
                         }
                     }
                     else if (request.BrandOriginalId != 0 && request.SupplierId != 0)

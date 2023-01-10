@@ -2,13 +2,15 @@
 {
     public class ProcessFluid : AuditableEntity
     {
+        [ForeignKey("ProcessFluidId")]
+        public ICollection<MWOItem>? MWOItems { get; set; } = null!;
 
-        [ForeignKey("eProcessFluidId")]
-        public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
-        [ForeignKey("iProcessFluidId")]
-        public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
-        [ForeignKey("pProcessFluidId")]
-        public ICollection<PipingItem>? PipingItems { get; set; } = null!;
+        //[ForeignKey("eProcessFluidId")]
+        //public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
+        //[ForeignKey("iProcessFluidId")]
+        //public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
+        //[ForeignKey("pProcessFluidId")]
+        //public ICollection<PipingItem>? PipingItems { get; set; } = null!;
         [ForeignKey("paProcessFluidId")]
         public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
         public string TagLetter { get; set; } = "";

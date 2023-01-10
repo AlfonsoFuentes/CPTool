@@ -1,6 +1,5 @@
 ﻿using BlazorDownloadFile;
-using CPTool.Application.Generic;
-using CPTool.Persistence.BaseClass;
+
 using Microsoft.AspNetCore.Components;
 using Radzen.Blazor;
 using Radzen;
@@ -18,8 +17,10 @@ namespace CPTool.UIApp.AppPages.Templates
         public List<T> Elements { get; set; }
 
 
-        //[Parameter]
-        //public string TableName { get; set; }
+        public async Task UpdateTable()
+        {
+          await grid0.Reload();
+        }
         [Parameter]
         public Func<T, bool> Filter { get; set; }
         [Parameter]
@@ -44,11 +45,6 @@ namespace CPTool.UIApp.AppPages.Templates
         public bool ShowToolBar { get; set; } = true;
 
         [Parameter]
-        public Func<T, Task<bool>> OnAdd { get; set; }
-        [Parameter]
-        public Func<T, Task<bool>> OnEdit { get; set; }
-        [Parameter]
-
         public Func<T, Task<bool>> OnDelete { get; set; }
 
         [Parameter]
@@ -114,11 +110,7 @@ namespace CPTool.UIApp.AppPages.Templates
         protected async Task EditRow()
         {
             bool result = false;
-            if (OnEdit != null)
-            {
-                result = await OnEdit.Invoke(SelectedItem);
-            }
-            else
+           
             if (ShowDialog != null)
             {
                 result = await ShowDialog.Invoke(SelectedItem);
@@ -134,11 +126,8 @@ namespace CPTool.UIApp.AppPages.Templates
         {
             bool result = false;
             SelectedItem = new();
-            if (OnAdd != null)
-            {
-                result = await OnAdd.Invoke(SelectedItem);
-            }
-            else if (ShowDialog != null)
+           
+            if (ShowDialog != null)
             {
                 result = await ShowDialog.Invoke(SelectedItem);
 
@@ -260,6 +249,11 @@ namespace CPTool.UIApp.AppPages.Templates
                 args.Attributes.Add("style", $"background-color: var(--rz-secondary-lighter);");
             }
         }
+        [Parameter]
+        public EventCallback<string> SearchChanged { get; set; }
 
+        [Parameter]
+
+        public bool ShowSearch { get; set; } = false;
     }
 }

@@ -1,9 +1,7 @@
 ﻿@if (ShowToolBar)
 {
     <div class="row" style="margin-bottom: 1rem">
-        @*<div class="col-12 col-md-12">
-            <RadzenText Text="@TableName" TextStyle="TextStyle.H5" TagName="TagName.H1" style="margin: 0" />
-        </div>*@
+       
         <div class="row" style="margin-bottom: 1rem">
             <div class="col-12">
                 <RadzenText Text="@($"Selected: {SelectedName}")" TextStyle="TextStyle.Subtitle1" TagName="TagName.H1" style="margin: 0" />
@@ -44,9 +42,13 @@
 
                     }
                 </div>
-               @* <div class="col-12 col-md-6">
-                    <RadzenTextBox Placeholder="Search ..." style="display: block; width: 100%" @bind-Value=@Search @oninput="@OnSearch" />
-                </div>*@
+                @if (ShowSearch)
+                {
+                    <div class="col-12">
+                        <RadzenTextBox Placeholder="Search ..." style="display: block; width: 100%" @bind-Value=@Search @oninput="@OnSearch" />
+                    </div>
+                }
+               
             </div>
 
         </div>
@@ -104,6 +106,10 @@
     public string Search { get; set; } = "";
     [Parameter]
     public EventCallback<string> SearchChanged { get; set; } 
+
+    [Parameter]
+
+    public bool ShowSearch { get; set; } = false;
 
     async Task OnSearch(ChangeEventArgs arg)
     {

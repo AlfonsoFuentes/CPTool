@@ -10,6 +10,7 @@ using CPTool.ApplicationCQRS.Contracts.Persistence;
 using CPTool.Domain.Entities;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using CPTool.Domain.Common;
+using CPTool.ApplicationCQRS.Contracts;
 
 namespace CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate
 {
@@ -54,7 +55,8 @@ namespace CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<Brand>(table));
                         table = await _unitofwork.RepositoryBrand.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.BrandObject = _mapper.Map<CommandBrand>(table);
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                         
                     }
                     else
@@ -67,8 +69,9 @@ namespace CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<Brand>(table));
                             await _unitofwork.RepositoryBrand.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.BrandObject = _mapper.Map<CommandBrand>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
+
                         }
 
 

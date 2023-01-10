@@ -72,7 +72,7 @@ namespace CPTool.UIApp.Services
         public async Task<BrandCommandResponse> AddUpdateBrand(CommandBrandSupplier command)
         {
             var result = await mediator.Send(command.Brand);
-
+            command.Brand = result.ResponseObject;
             await mediator.Send(command);
             return result;
         }
@@ -80,6 +80,8 @@ namespace CPTool.UIApp.Services
         public async Task<SupplierCommandResponse> AddUpdateSupplier(CommandBrandSupplier command)
         {
             var result = await mediator.Send(command.Supplier);
+
+            command.Supplier = result.ResponseObject;
 
             await mediator.Send(command);
             return result;

@@ -1,5 +1,5 @@
 ﻿using Autofac.Core;
-using CPTool.ApplicationCQRS.Features.EquipmentItems.Commands.CreateUpdate;
+
 using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
 using CPTool.UIApp.AppPages.MWOs;

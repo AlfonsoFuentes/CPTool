@@ -16,7 +16,7 @@ using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
-using CPTool.ApplicationCQRS.Features.PipingItems.Commands.CreateUpdate;
+
 using CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
@@ -28,7 +28,7 @@ using CPTool.ApplicationCQRSFeatures.Brands.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.Chapters.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.DeviceFunctionModifiers.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.DeviceFunctions.Queries.GetList;
-using CPTool.ApplicationCQRSFeatures.EquipmentItems.Queries.GetList;
+
 using CPTool.ApplicationCQRSFeatures.EquipmentTypes.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.EquipmentTypeSubs.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.Gaskets.Queries.GetList;
@@ -52,6 +52,7 @@ using CPTool.ApplicationCQRSFeatures.UnitaryBasePrizes.Queries.GetList;
 using CPTool.Domain.Entities;
 using CPTool.Domain.Enums;
 using MediatR;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 
 namespace CPTool.UIApp.Services
@@ -106,8 +107,9 @@ namespace CPTool.UIApp.Services
         Task<MWOItemCommandResponse> AddUpdate(CommandMWOItem command);
 
         Task<CommandMWOItem> GetById(int id);
-        Task<bool> VerifyProcessCondition(CommandMWOItem command);
+
         Task<List<CommandMWOItem>> GetAll(int MWOId);
+        Task<List<CommandMWOItem>> GetAllBudget(int MWOId);
 
         Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWOItem> List);
         Task<MWOItemDialogData> GetMWOItemDataDialog();
@@ -124,13 +126,22 @@ namespace CPTool.UIApp.Services
         Task<List<CommandMWOItem>> GetMWOItemsFinishByModel(CommandMWOItem Model);
         Task<MWOItemDialogData> GetMWOItemsStartFinish(MWOItemDialogData dataResponse, CommandMWOItem Model);
         Task VerifyNozzlesClosing(MWOItemDialogData dataResponse, CommandMWOItem Model);
-        MWOItemDialogData OnChangeEquipmentFinish(MWOItemDialogData dataResponse, CommandPipingItem Model);
-        MWOItemDialogData OnChangeEquipmentStart(MWOItemDialogData dataResponse, CommandPipingItem Model);
+        MWOItemDialogData OnChangeEquipmentFinish(MWOItemDialogData dataResponse, CommandMWOItem Model);
+        MWOItemDialogData OnChangeEquipmentStart(MWOItemDialogData dataResponse, CommandMWOItem Model);
+        Func<CommandNozzle, Task<bool>> ShowDialog { get; set; }
+        Task<bool> OnShowDialog(CommandNozzle nozzle);
+        Task<List<CommandMWOItem>> GetAllWithSearch(int MWOId, string search);
     }
     public class MWOItemService : IMWOItemService
     {
         protected readonly IMediator mediator;
-
+        List<CommandMWOItem> MWOItemOriginal { get; set; } = new();
+        public Func<CommandNozzle, Task<bool>> ShowDialog { get; set; }
+        public async Task<bool> OnShowDialog(CommandNozzle nozzle)
+        {
+            if (ShowDialog != null) return await ShowDialog.Invoke(nozzle);
+            return false;
+        }
         public MWOItemService(IMediator mediator)
         {
             this.mediator = mediator;
@@ -165,11 +176,24 @@ namespace CPTool.UIApp.Services
                 MWOId = MWOId,
 
             };
-
-            return await mediator.Send(command);
+            MWOItemOriginal = await mediator.Send(command);
+            return MWOItemOriginal;
         }
 
-
+        public async Task<List<CommandMWOItem>> GetAllBudget(int MWOId)
+        {
+            GetMWOItemsListQuery command = new()
+            {
+                MWOId = MWOId,
+                Budget = true
+            };
+            MWOItemOriginal = await mediator.Send(command);
+            return MWOItemOriginal;
+        }
+        public Task<List<CommandMWOItem>> GetAllWithSearch(int MWOId, string search)
+        {
+            return Task.FromResult(SearchList(MWOItemOriginal, search));
+        }
 
         public async Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandMWOItem> List)
         {
@@ -362,20 +386,16 @@ namespace CPTool.UIApp.Services
         public async Task<MWOItemDialogData> GetDataByEquipmentByModel(MWOItemDialogData dataResponse, CommandMWOItem Model)
         {
 
-            if (Model.EquipmentItemId != 0)
+            if (Model.EquipmentTypeId != null)
             {
-                if (Model.EquipmentItem.eEquipmentTypeId != null)
-                {
-                    dataResponse.EquipmentTypeSubs = await GetEquipmentTypeSubByEquipmentType(Model.EquipmentItem.eEquipmentTypeId.Value);
-                }
-
-                if (Model.EquipmentItem.eBrandId != null)
-                {
-                    dataResponse.Suppliers = await GetSupliersByBrand(Model.EquipmentItem.eBrandId.Value);
-                }
-                
-
+                dataResponse.EquipmentTypeSubs = await GetEquipmentTypeSubByEquipmentType(Model.EquipmentTypeId.Value);
             }
+
+            if (Model.BrandId != null)
+            {
+                dataResponse.Suppliers = await GetSupliersByBrand(Model.BrandId.Value);
+            }
+
 
 
             return dataResponse;
@@ -384,15 +404,9 @@ namespace CPTool.UIApp.Services
         {
 
 
-            if (Model.InstrumentItemId != 0)
+            if (Model.BrandId != null)
             {
-
-                if (Model.InstrumentItem.iBrandId != null)
-                {
-                    dataResponse.Suppliers = await GetSupliersByBrand(Model.InstrumentItem.iBrandId.Value);
-                }
-
-               
+                dataResponse.Suppliers = await GetSupliersByBrand(Model.BrandId.Value);
             }
             return dataResponse;
         }
@@ -400,17 +414,11 @@ namespace CPTool.UIApp.Services
         {
 
             dataResponse = await GetMWOItemsStartFinish(dataResponse, Model);
-            if (Model.PipingItemId != 0)
+            if (Model.PipeClassId != null)
             {
-
-                if (Model.PipingItem.pPipeClassId != null)
-                {
-                    dataResponse.PipeDiameters = await GetPipeDiameterByPipeClass(Model.PipingItem.pPipeClassId.Value);
-                }
-
-
-
+                dataResponse.PipeDiameters = await GetPipeDiameterByPipeClass(Model.PipeClassId.Value);
             }
+
 
 
             return dataResponse;
@@ -429,27 +437,27 @@ namespace CPTool.UIApp.Services
             }
 
 
-            if (Model.PipingItem.StartMWOItem != null && Model.PipingItem.StartMWOItem.Id != 0)
+            if (Model.StartMWOItem != null && Model.StartMWOItem.Id != 0)
             {
-                Model.PipingItem.StartMWOItem = dataResponse.MWOItemsStarts.FirstOrDefault(x => x.Id == Model.PipingItem.StartMWOItem.Id);
+                Model.StartMWOItem = dataResponse.MWOItemsStarts.FirstOrDefault(x => x.Id == Model.StartMWOItem.Id);
 
-                dataResponse.NozzlesByMWOItemsStarts = Model.PipingItem.StartMWOItem.Nozzles.Where(x => x.StreamType == StreamType.Outlet).ToList();
-                if (Model.PipingItem.NozzleStart != null)
+                dataResponse.NozzlesByMWOItemsStarts = Model.StartMWOItem.Nozzles.Where(x => x.StreamType == StreamType.Outlet).ToList();
+                if (Model.NozzleStart != null)
                 {
-                    Model.PipingItem.NozzleStart = dataResponse.NozzlesByMWOItemsStarts.FirstOrDefault(x => x.Id == Model.PipingItem.NozzleStart.Id);
-                    dataResponse.OriginalNozzlePipeStart = Model.PipingItem.NozzleStart;
+                    Model.NozzleStart = dataResponse.NozzlesByMWOItemsStarts.FirstOrDefault(x => x.Id == Model.NozzleStart.Id);
+                    dataResponse.OriginalNozzlePipeStart = Model.NozzleStart;
                 }
 
             }
-            if (Model.PipingItem.FinishMWOItem != null && Model.PipingItem.FinishMWOItem.Id != 0)
+            if (Model.FinishMWOItem != null && Model.FinishMWOItem.Id != 0)
             {
-                Model.PipingItem.FinishMWOItem = dataResponse.MWOItemsFinish.FirstOrDefault(x => x.Id == Model.PipingItem.FinishMWOItem.Id);
-                dataResponse.NozzlesByMWOItemsFinish = Model.PipingItem.FinishMWOItem.Nozzles.Where(x => x.StreamType == StreamType.Inlet).ToList();
+                Model.FinishMWOItem = dataResponse.MWOItemsFinish.FirstOrDefault(x => x.Id == Model.FinishMWOItem.Id);
+                dataResponse.NozzlesByMWOItemsFinish = Model.FinishMWOItem.Nozzles.Where(x => x.StreamType == StreamType.Inlet).ToList();
 
-                if (Model.PipingItem.NozzleFinish != null)
+                if (Model.NozzleFinish != null)
                 {
-                    Model.PipingItem.NozzleFinish = dataResponse.NozzlesByMWOItemsFinish.FirstOrDefault(x => x.Id == Model.PipingItem.NozzleFinish.Id);
-                    dataResponse.OriginalNozzlePipeFinish = Model.PipingItem.NozzleFinish;
+                    Model.NozzleFinish = dataResponse.NozzlesByMWOItemsFinish.FirstOrDefault(x => x.Id == Model.NozzleFinish.Id);
+                    dataResponse.OriginalNozzlePipeFinish = Model.NozzleFinish;
                 }
 
 
@@ -481,70 +489,16 @@ namespace CPTool.UIApp.Services
             return response;
         }
 
-        public async Task<bool> VerifyProcessCondition(CommandMWOItem command)
-        {
-            switch (command.ChapterId)
-            {
-                case 4:
-                    if (command.EquipmentItem.eProcessCondition == null)
-                    {
-                        command.EquipmentItem.eProcessCondition = new();
 
-                        await AddUpdate(command);
-                        return true;
-                    }
-                    else if (command.EquipmentItem.eProcessCondition.Density == null)
-                    {
-                        command.EquipmentItem.eProcessCondition = new();
-
-                        await AddUpdate(command);
-                        return true;
-                    }
-                    break;
-                case 6:
-                    if (command.PipingItem.pProcessCondition == null)
-                    {
-                        command.PipingItem.pProcessCondition = new();
-
-                        await AddUpdate(command);
-                        return true;
-                    }
-                    else if (command.PipingItem.pProcessCondition.Density == null)
-                    {
-                        command.PipingItem.pProcessCondition = new();
-
-                        await AddUpdate(command);
-                        return true;
-                    }
-                    break;
-                case 7:
-                    if (command.InstrumentItem.iProcessCondition == null)
-                    {
-                        command.InstrumentItem.iProcessCondition = new();
-
-                        await AddUpdate(command);
-                        return true;
-                    }
-                    else if (command.InstrumentItem.iProcessCondition.Density == null)
-                    {
-                        command.InstrumentItem.iProcessCondition = new();
-
-                        await AddUpdate(command);
-                        return true;
-                    }
-                    break;
-            }
-            return false;
-        }
 
         public async Task VerifyNozzlesClosing(MWOItemDialogData dataResponse, CommandMWOItem Model)
         {
 
             if (Model.Id != 0)
             {
-                await UpdateNozzleConnected(dataResponse.OriginalNozzlePipeStart, Model.PipingItem.NozzleStart, Model);
+                await UpdateNozzleConnected(dataResponse.OriginalNozzlePipeStart, Model.NozzleStart, Model);
 
-                await UpdateNozzleConnected(dataResponse.OriginalNozzlePipeFinish, Model.PipingItem.NozzleFinish, Model);
+                await UpdateNozzleConnected(dataResponse.OriginalNozzlePipeFinish, Model.NozzleFinish, Model);
 
 
 
@@ -562,7 +516,7 @@ namespace CPTool.UIApp.Services
                         Original.ConnectedTo = null;
                         await mediator.Send(Original);
                     }
-                    else if(NozzlePiping.Id!= Original.Id)
+                    else if (NozzlePiping.Id != Original.Id)
                     {
                         Original.ConnectedTo = null;
                         await mediator.Send(Original);
@@ -578,12 +532,12 @@ namespace CPTool.UIApp.Services
                     NozzlePiping.ConnectedTo = Model;
                     await mediator.Send(NozzlePiping);
                 }
-                
+
 
             }
 
         }
-       public MWOItemDialogData OnChangeEquipmentStart(MWOItemDialogData dataResponse, CommandPipingItem Model)
+        public MWOItemDialogData OnChangeEquipmentStart(MWOItemDialogData dataResponse, CommandMWOItem Model)
         {
 
             if (Model.NozzleStart != null && Model.NozzleStart.Id != 0)
@@ -611,7 +565,7 @@ namespace CPTool.UIApp.Services
 
             return dataResponse;
         }
-        public MWOItemDialogData OnChangeEquipmentFinish(MWOItemDialogData dataResponse, CommandPipingItem Model)
+        public MWOItemDialogData OnChangeEquipmentFinish(MWOItemDialogData dataResponse, CommandMWOItem Model)
         {
             if (Model.NozzleFinish != null && Model.NozzleFinish.Id != 0)
             {
@@ -633,5 +587,45 @@ namespace CPTool.UIApp.Services
             return dataResponse;
 
         }
+
+
+        List<CommandMWOItem> SearchList(List<CommandMWOItem> items, string searched)
+        {
+            List<CommandMWOItem> result = new();
+            if (searched.IsNullOrEmpty()) return items;
+            if (items.Any(x => x.BrandName.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(items.Where(x => x.BrandName.ToLower().Contains(searched.ToLower())));
+
+            }
+            if (items.Any(x => x.ChapterName.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(items.Where(x => x.ChapterName.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+            if (items.Any(x => x.SupplierName.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(items.Where(x => x.SupplierName.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+            if (items.Any(x => x.TagId.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(items.Where(x => x.TagId.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+
+            if (items.Any(x => x.Name.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(items.Where(x => x.Name.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+            if (items.Any(x => x.Nomenclatore.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(items.Where(x => x.Nomenclatore.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+            return result;
+        }
     }
+
 }

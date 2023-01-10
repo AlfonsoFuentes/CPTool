@@ -3,13 +3,11 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdate
 {
-    public class UnitaryBasePrizeCommandResponse : BaseResponse
+    public class UnitaryBasePrizeCommandResponse : BaseResponse<CommandUnitaryBasePrize>
     {
         public UnitaryBasePrizeCommandResponse() : base()
         {
 
         }
-
-        public CommandUnitaryBasePrize? UnitaryBasePrizeObject { get; set; }
     }
 }

@@ -2,8 +2,10 @@
 {
     public class PipeAccesory  : AuditableEntity
     {
-        public int? pPipingItemId { get; set; }
-        public PipingItem? pPipingItem { get; set; }
+        public int? MWOItemId { get; set; }
+        public MWOItem? MWOItem { get; set; }
+        //public int? pPipingItemId { get; set; }
+        //public PipingItem? pPipingItem { get; set; }
         public int? pProcessConditionId { get; set; }
         public ProcessCondition? pProcessCondition { get; set; }
 

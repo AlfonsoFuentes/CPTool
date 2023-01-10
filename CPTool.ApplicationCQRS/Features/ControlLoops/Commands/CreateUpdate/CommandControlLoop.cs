@@ -94,9 +94,9 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
 
         void CreateAmount()
         {
-            if (ProcessVariable?.MWOItem?.ChapterId == 7 && ProcessVariable?.MWOItem?.InstrumentItem != null)
+            if (ProcessVariable?.MWOItem?.ChapterId == 7 && ProcessVariable?.MWOItem != null)
             {
-                var instrument = ProcessVariable?.MWOItem.InstrumentItem;
+                var instrument = ProcessVariable?.MWOItem;
 
                 switch (instrument?.MeasuredVariable?.TagLetter)
                 {

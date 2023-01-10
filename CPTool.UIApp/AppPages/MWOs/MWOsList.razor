@@ -21,19 +21,19 @@
                         ToolTip="Items for MWO">
 
         </ButtonTemplate>
-        <ButtonTemplate Icon="currency_exchange"
+        @*<ButtonTemplate Icon="currency_exchange"
                         Disabled=@DisableEdit
                         Click=GoToPurchaseOrderList
                         ToolTip="Purchase Orders">
 
-        </ButtonTemplate>
+        </ButtonTemplate>*@
         <ButtonTemplate Icon="add_task"
                         Disabled=@DisableEdit
                         Click=CreateTaskMWO
                         ToolTip="Create Task">
 
         </ButtonTemplate>
-        <ButtonTemplate Icon="follow_the_signs"
+       @* <ButtonTemplate Icon="follow_the_signs"
                         Disabled=@DisableEdit
                         Click=GoToUserRequirmentPage
                         ToolTip="User Requirements">
@@ -50,7 +50,7 @@
                         Click=GoToControlLoopList
                         ToolTip="Control Loops">
 
-        </ButtonTemplate>
+        </ButtonTemplate>*@
 
     </ToolBarButtons>
     <Columns>
@@ -58,36 +58,25 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.CECName)" Title="CEC Name" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Budget)" Title="Budget, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Budget)
-            </Template>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.ProjectLeaderName)" Title="Project Leader" TextAlign="TextAlign.Left">
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Expenses)" Title="Expenses, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Expenses)
-            </Template>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.BudgetValue)" Title="Budget, USD" Filterable=false Sortable=false>
+           
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Assigned)" Title="Assigned, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Assigned)
-            </Template>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.ExpensesValue)" Title="Expenses, USD" Filterable=false Sortable=false>
+           
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Actual)" Title="Actual, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Actual)
-            </Template>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.AssignedValue)" Title="Assigned, USD" Filterable=false Sortable=false>
+           
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Commitment)" Title="Commitment, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Commitment)
-            </Template>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.ActualValue)" Title="Actual, USD" Filterable=false Sortable=false>
+          
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.Pending)" Title="Pending, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", detail.Pending)
-            </Template>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.CommitmentValue)" Title="Commitment, USD" Filterable=false Sortable=false>
+          
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWO" Property="@nameof(CommandMWO.PendingValue)" Title="Pending, USD" Filterable=false Sortable=false>
+          
         </RadzenDataGridColumn>
     </Columns>
 </TableTemplate>

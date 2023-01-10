@@ -1,5 +1,6 @@
 ﻿
-using CPTool.ApplicationCQRS.Features.InstrumentItems.Commands.CreateUpdate;
+
+using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.UIApp.AppPages.MWOItems;
 using CPTool.UIApp.Services;
 using Microsoft.AspNetCore.Components;
@@ -11,13 +12,70 @@ namespace CPTool.UIApp.AppPages.MWOItems
     {
         [CascadingParameter]
         protected MWOItemDialog DialogParent { get; set; }
-        protected CommandInstrumentItem Model => DialogParent.Model.InstrumentItem;
+        protected CommandMWOItem Model => DialogParent.Model;
         protected MWOItemDialogData DialogData => DialogParent.DialogData;
         async Task ChangeBrand(int brandid)
         {
-            Model.iSupplier = new();
+            Model.Supplier = new();
+            DialogParent.PreviousValues.BrandId = brandid;
+            await DialogParent.VerifiyePrevious();
             DialogData.Suppliers=await DialogParent.Service.GetSupliersByBrand(brandid);
         }
-       
+        async Task ChangeSupplier(int supplierid)
+        {
+
+            DialogParent.PreviousValues.SupplierId = supplierid;
+            await DialogParent.VerifiyePrevious();
+
+        }
+        async Task ChangeOuterMaterial(int outermaterial)
+        {
+
+            DialogParent.PreviousValues.OuterMaterialId = outermaterial;
+            await DialogParent.VerifiyePrevious();
+
+        }
+        async Task ChangeOuterInnerMaterial(int innermaterialid)
+        {
+
+            DialogParent.PreviousValues.InnerMaterialId = innermaterialid;
+            await DialogParent.VerifiyePrevious();
+
+        }
+        async Task ChangeMeasuredVariable(int MeasuredVariable)
+        {
+
+            DialogParent.PreviousValues.MeasuredVariableId = MeasuredVariable;
+            await DialogParent.VerifiyePrevious();
+
+        }
+        async Task ChangeMeasuredVariableModifier(int MeasuredVariableModifier)
+        {
+
+            DialogParent.PreviousValues.MeasuredVariableModifierId = MeasuredVariableModifier;
+            await DialogParent.VerifiyePrevious();
+
+        }
+        async Task ChangeReadout(int Readout)
+        {
+
+            DialogParent.PreviousValues.ReadoutId = Readout;
+            await DialogParent.VerifiyePrevious();
+
+        }
+        async Task ChangeDeviceFunction(int DeviceFunction)
+        {
+
+            DialogParent.PreviousValues.DeviceFunctionId = DeviceFunction;
+            await DialogParent.VerifiyePrevious();
+
+        }
+        async Task ChangeDeviceFunctionModifier(int DeviceFunctionModifier)
+        {
+
+            DialogParent.PreviousValues.DeviceFunctionModifierId = DeviceFunctionModifier;
+            await DialogParent.VerifiyePrevious();
+
+        }
     }
 }

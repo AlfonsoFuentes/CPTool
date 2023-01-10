@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.MeasuredVariables.Commands.CreateUpdat
                         table.AddDomainEvent(new CreatedEvent<MeasuredVariable>(table));
                         table = await _unitofwork.RepositoryMeasuredVariable.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.MeasuredVariableObject = _mapper.Map<CommandMeasuredVariable>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.MeasuredVariables.Commands.CreateUpdat
                             table.AddDomainEvent(new UpdatedEvent<MeasuredVariable>(table));
                             await _unitofwork.RepositoryMeasuredVariable.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.MeasuredVariableObject = _mapper.Map<CommandMeasuredVariable>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

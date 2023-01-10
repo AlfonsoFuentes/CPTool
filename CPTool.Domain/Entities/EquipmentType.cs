@@ -6,9 +6,11 @@
         [ForeignKey("EquipmentTypeId")]
         public ICollection<EquipmentTypeSub>? EquipmentTypeSubs { get; set; }
 
-        [ForeignKey("eEquipmentTypeId")]
-        public ICollection<EquipmentItem> EquipmentItems { get; set; } = null!;
+        [ForeignKey("EquipmentTypeId")]
+        public ICollection<Specification>? Specifications { get; set; }
 
+        [ForeignKey("EquipmentTypeId")]
+        public ICollection<MWOItem> MWOItems { get; set; } = null!;
     }
 
 }

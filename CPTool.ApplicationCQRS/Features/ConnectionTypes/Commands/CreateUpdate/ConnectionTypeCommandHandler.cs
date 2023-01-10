@@ -54,8 +54,10 @@ namespace CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate
                         table.AddDomainEvent(new CreatedEvent<ConnectionType>(table));
                         table = await _unitofwork.RepositoryConnectionType.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.ConnectionTypeObject = _mapper.Map<CommandConnectionType>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
+
+
                     }
                     else
                     {
@@ -67,8 +69,8 @@ namespace CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate
                             table.AddDomainEvent(new UpdatedEvent<ConnectionType>(table));
                             await _unitofwork.RepositoryConnectionType.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.ConnectionTypeObject = _mapper.Map<CommandConnectionType>(table);
-                     
+                            Response.ResponseObject = request;
+
                         }
 
 

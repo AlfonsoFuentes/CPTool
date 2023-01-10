@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Units.Commands.CreateUpdate
 {
     public class UnitValidator : AbstractValidator<CommandUnit>
     {
-        private readonly IRepositoryEntityUnit _UnitRepository;
-        public UnitValidator(IRepositoryEntityUnit UnitRepository)
+        private readonly IRepositoryEntityUnit _Repository;
+        public UnitValidator(IRepositoryEntityUnit Repository)
         {
-            _UnitRepository = UnitRepository;
+            _Repository = Repository;
 
             //RuleFor(p => p.Name)
             //    .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.Units.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandUnit e, CancellationToken token)
         {
-            return !await _UnitRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CPTool.Application.Features.MMOTypeFeatures.CreateEdit;
-using CPTool.Application.Features.MOTypeFeatures.CreateEdit;
+﻿
 using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOTypes.Queries.Export;
 using CPTool.ApplicationCQRS.Responses;

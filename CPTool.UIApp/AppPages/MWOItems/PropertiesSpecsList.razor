@@ -1,0 +1,32 @@
+﻿@using CPTool.ApplicationCQRS.Features.PropertySpecifications.Commands.CreateUpdate;
+
+@if (debug)
+{
+
+}
+
+<TableTemplate T="CommandPropertySpecification"
+               @ref=table
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+               OnDelete="@Delete"
+               Elements="@Elements" Export="@Export">
+
+    <Columns>
+
+        <RadzenDataGridColumn TItem="CommandPropertySpecification" Property="@nameof(CommandPropertySpecification.Name)" Title="Name" TextAlign="TextAlign.Left">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandPropertySpecification" Property="@nameof(CommandPropertySpecification.Value)" Title="Type" TextAlign="TextAlign.Left" Filterable=true Sortable=true Groupable=true>
+
+        </RadzenDataGridColumn>
+       
+
+
+
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+    TableTemplate<CommandPropertySpecification> table;
+}

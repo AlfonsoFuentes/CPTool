@@ -14,13 +14,7 @@
     </NotFound>
 </Router>
 @code{
-    [Inject]
-    public IMWOService MWOService{ get; set; }
-    [Inject]
-    public IMWOItemService MWOItemService { get; set; }
-    protected override async Task OnInitializedAsync()
-    {
-       
-    }
-   
+
+    public static  CommandMWOItem MWOItemSelected{ get; set; }
+
 }

@@ -6,8 +6,7 @@ namespace CPTool.ApplicationCQRSFeatures.Nozzles.Queries.GetList
     public class GetNozzlesListQuery : IRequest<List<CommandNozzle>>
     {
        
-        public int EquipmentId { get; set; }    
-        public int InstrumentId { get; set; }
-        public int PipingId { get; set; }
+        public int MWOItemId { get; set; }    
+      
     }
 }

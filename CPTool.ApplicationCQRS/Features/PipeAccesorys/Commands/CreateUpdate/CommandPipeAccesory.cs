@@ -1,9 +1,10 @@
 ﻿using CPtool.ExtensionMethods;
 using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
-using CPTool.ApplicationCQRS.Features.PipingItems.Commands.CreateUpdate;
+
 using CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Units.Commands.CreateUpdate;
@@ -18,8 +19,8 @@ namespace CPTool.ApplicationCQRS.Features.PipeAccesorys.Commands.CreateUpdate
     {
 
 
-        public int? pPipingItemId => pPipingItem?.Id == 0 ? null : pPipingItem?.Id;
-        public CommandPipingItem? pPipingItem { get; set; } = new();
+        public int? MWOItemId => MWOItem?.Id == 0 ? null : MWOItem?.Id;
+        public CommandMWOItem? MWOItem { get; set; } = new();
         public int? pProcessConditionId => pProcessCondition?.Id == 0 ? null : pProcessCondition?.Id;
         public CommandProcessCondition? pProcessCondition { get; set; } = new();
 

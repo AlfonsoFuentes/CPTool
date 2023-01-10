@@ -3,8 +3,10 @@
     public class Readout  : AuditableEntity
     {
         [ForeignKey("ReadoutId")]
-        public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
+        public ICollection<Specification>? Specifications { get; set; }
         public string? TagLetter { get; set; }
+        [ForeignKey("ReadoutId")]
+        public ICollection<MWOItem>? MWOItems { get; set; } = null!;
     }
 
 

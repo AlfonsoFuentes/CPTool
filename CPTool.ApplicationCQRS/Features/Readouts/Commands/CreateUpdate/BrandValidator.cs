@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Readouts.Commands.CreateUpdate
 {
     public class ReadoutValidator : AbstractValidator<CommandReadout>
     {
-        private readonly IRepositoryReadout _ReadoutRepository;
-        public ReadoutValidator(IRepositoryReadout ReadoutRepository)
+        private readonly IRepositoryReadout _Repository;
+        public ReadoutValidator(IRepositoryReadout Repository)
         {
-            _ReadoutRepository = ReadoutRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.Readouts.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandReadout e, CancellationToken token)
         {
-            return !await _ReadoutRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

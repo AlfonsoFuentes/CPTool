@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate
 {
     public class ElectricalBoxValidator : AbstractValidator<CommandElectricalBox>
     {
-        private readonly IRepositoryElectricalBox _ElectricalBoxRepository;
-        public ElectricalBoxValidator(IRepositoryElectricalBox ElectricalBoxRepository)
+        private readonly IRepositoryElectricalBox _Repository;
+        public ElectricalBoxValidator(IRepositoryElectricalBox Repository)
         {
-            _ElectricalBoxRepository = ElectricalBoxRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,9 @@ namespace CPTool.ApplicationCQRS.Features.ElectricalBoxs.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandElectricalBox e, CancellationToken token)
         {
-            return !await _ElectricalBoxRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
+        
         }
     }
 }

@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdat
 {
     public class UnitaryBasePrizeValidator : AbstractValidator<CommandUnitaryBasePrize>
     {
-        private readonly IRepositoryUnitaryBasePrize _UnitaryBasePrizeRepository;
-        public UnitaryBasePrizeValidator(IRepositoryUnitaryBasePrize UnitaryBasePrizeRepository)
+        private readonly IRepositoryUnitaryBasePrize _Repository;
+        public UnitaryBasePrizeValidator(IRepositoryUnitaryBasePrize Repository)
         {
-            _UnitaryBasePrizeRepository = UnitaryBasePrizeRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,9 @@ namespace CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdat
 
         private async Task<bool> NameUnique(CommandUnitaryBasePrize e, CancellationToken token)
         {
-            return !await _UnitaryBasePrizeRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
+           
         }
     }
 }

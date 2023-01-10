@@ -13,7 +13,9 @@ namespace CPTool.UIApp.AppPages.ConnectionTypes
         public CommandConnectionType Model { get; set; } = new();
         async Task<BaseResponse> Save()
         {
-            return await Service.AddUpdate(Model);
+            var result= await Service.AddUpdate(Model);
+            
+            return result;
         }
     }
 }

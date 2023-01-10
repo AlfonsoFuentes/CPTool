@@ -1,4 +1,4 @@
-﻿@page "/mwo-items/{MWOId:int}"
+﻿
 @using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 
 <PageTitle>@($"Items in {Parent.Name}")</PageTitle>
@@ -9,69 +9,36 @@
 }
 
 <TableTemplate T="CommandMWOItem"
-              
+               @ref=table
                @bind-SelectedItem=@SelectedItem
                ShowDialog="ShowTableDialog"
               
                OnDelete="@Delete"
-             
+               ShowSearch=true
+               SearchChanged="@SearchChanged"
                Elements="@Elements" 
                Export="@Export">
 
     <Columns>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.ChapterName)" Title="Chapter" TextAlign="TextAlign.Left" Width="10%" Sortable=false Filterable=false>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.TagId)" Title="Tag Id" TextAlign="TextAlign.Left" Width="20%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Name)" Title="Name" TextAlign="TextAlign.Left" Width="30%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.BrandName)" Title="Brand" TextAlign="TextAlign.Left" Width="20%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.SupplierName)" Title="Supplier" TextAlign="TextAlign.Left" Width="20%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.BudgetPrizeString)" Title="Budget, USD" Filterable=false Sortable=false Width="20%">
+           
+        </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.TagId)" Title="Tag Id" TextAlign="TextAlign.Left" Width="10%">
-        </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Name)" Title="Name" TextAlign="TextAlign.Left" Width="40%">
-        </RadzenDataGridColumn>
-
-        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.BudgetPrize)" Title="Budget, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @detail.BudgetPrize.ToString("C0")
-            </Template>
-            <FooterTemplate>
-                <b>@DialogData.SumBudget.ToString("C0")</b>
-            </FooterTemplate>
-        </RadzenDataGridColumn>
-
-        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Assigned)" Title="Assigned, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @detail.Assigned.ToString("C0")
-            </Template>
-            <FooterTemplate>
-                <b>@DialogData.SumAssigned.ToString("C0")</b>
-            </FooterTemplate>
-        </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Actual)" Title="Actual, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @detail.Actual.ToString("C0")
-            </Template>
-            <FooterTemplate>
-                <b>@DialogData.SumActual.ToString("C0")</b>
-            </FooterTemplate>
-
-        </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Commitment)" Title="Commitment, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @detail.Commitment.ToString("C0")
-            </Template>
-            <FooterTemplate>
-                <b>@DialogData.SumCommitment.ToString("C0")</b>
-            </FooterTemplate>
-
-        </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Pending)" Title="Pending, USD" Filterable=false Sortable=false>
-            <Template Context="detail">
-                @detail.Pending.ToString("C0")
-            </Template>
-            <FooterTemplate>
-                <b>@DialogData.SumPending.ToString("C0")</b>
-            </FooterTemplate>
-
-        </RadzenDataGridColumn>
+       
     </Columns>
 </TableTemplate>
 
 @code {
     bool debug = true;
+    TableTemplate<CommandMWOItem> table;
 }

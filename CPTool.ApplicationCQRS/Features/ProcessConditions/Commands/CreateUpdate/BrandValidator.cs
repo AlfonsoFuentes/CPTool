@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdat
 {
     public class ProcessConditionValidator : AbstractValidator<CommandProcessCondition>
     {
-        private readonly IRepositoryProcessCondition _ProcessConditionRepository;
-        public ProcessConditionValidator(IRepositoryProcessCondition ProcessConditionRepository)
+        private readonly IRepositoryProcessCondition _Repository;
+        public ProcessConditionValidator(IRepositoryProcessCondition Repository)
         {
-            _ProcessConditionRepository = ProcessConditionRepository;
+            _Repository = Repository;
 
             //RuleFor(p => p.Name)
             //    .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdat
 
         private async Task<bool> NameUnique(CommandProcessCondition e, CancellationToken token)
         {
-            return !await _ProcessConditionRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

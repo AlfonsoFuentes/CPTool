@@ -19,23 +19,26 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
         public IPurchaseOrderService Service { get; set; }
         [Parameter]
         public CommandPurchaseOrder Model { get; set; } = new();
-        
+
 
         public PurchaseOrderDialogData DialogData = new();
+        string ButtonSaveName => Service.GetButtonName(Model);
         bool DisableButtonSave => Service.DisableButtonSave(Model);
         protected override async Task OnInitializedAsync()
         {
-            if(Model.Id!=0)
-            Model = await Service.GetById(Model.Id);
+
+            if (Model.Id != 0)
+                Model = await Service.GetById(Model.Id);
+        
             DialogData = await Service.GetPurchaseOrderDataDialog(Model);
 
 
         }
         async Task<BaseResponse> Save()
         {
-            var result= await Service.AddUpdate(Model);
-           
-           
+            var result = await Service.AddUpdate(Model);
+
+
             return result;
         }
         async Task GetSuppliersByBrands(int brandid)
@@ -46,7 +49,7 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
 
 
 
-        public bool DisableAddRemoveMWOItem =>!( Model.pSupplier.Id != 0 && SelectedItemToAdd.Id != 0
+        public bool DisableAddRemoveMWOItem => !(Model.pSupplier.Id != 0 && SelectedItemToAdd.Id != 0
                                                     && Model.Currency != Currency.None);
 
         protected async Task SavePurchaseOrder()

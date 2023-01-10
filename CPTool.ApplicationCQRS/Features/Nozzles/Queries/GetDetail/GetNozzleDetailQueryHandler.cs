@@ -23,10 +23,10 @@ namespace CPTool.ApplicationCQRSFeatures.Nozzles.Queries.GetDetail
         {
             var table = await _UnitOfWork.RepositoryNozzle.GetByIdAsync(request.Id);
 
-            if(table!.ConnectedToId!=null)
-            {
-                table!.ConnectedTo = await _UnitOfWork.RepositoryMWOItem.GetByIdAsync(table!.ConnectedToId.Value);
-            }
+            //if(table!.ConnectedToId!=null)
+            //{
+            //    table!.ConnectedTo = await _UnitOfWork.RepositoryMWOItem.GetByIdAsync(table!.ConnectedToId.Value);
+            //}
             var dto = _mapper.Map<CommandNozzle>(table);
             return dto;
         }

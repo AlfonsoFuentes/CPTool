@@ -20,6 +20,7 @@ namespace CPTool.UIApp.AppPages.MWOs
         }
         async Task<BaseResponse> Save()
         {
+            Model.Approved = Model.ToApproved;
             return await Service.AddUpdate(Model);
         }
     }

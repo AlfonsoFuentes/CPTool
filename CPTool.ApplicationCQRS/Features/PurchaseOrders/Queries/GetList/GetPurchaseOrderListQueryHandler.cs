@@ -7,6 +7,8 @@ using CPTool.ApplicationCQRS.Contracts.Persistence;
 using MediatR;
 using CPTool.ApplicationCQRSFeatures.PurchaseOrders.Queries.GetList;
 using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Collections.Generic;
 
 namespace CPTool.ApplicationCQRSFeatures.PurchaseOrders.Queries.GetList
 {
@@ -33,8 +35,11 @@ namespace CPTool.ApplicationCQRSFeatures.PurchaseOrders.Queries.GetList
             {
                 allPurchaseOrder = (await _UnitOfWork.RepositoryPurchaseOrder.GetAllAsync(s => s.MWOId == request.MWOId, orderBy));
             }
-
-            return _mapper.Map<List<CommandPurchaseOrder>>(allPurchaseOrder);
+            var result = _mapper.Map<List<CommandPurchaseOrder>>(allPurchaseOrder);
+            
+            return result;
         }
+      
+
     }
 }

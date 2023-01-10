@@ -20,9 +20,6 @@ namespace CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate
 
 
 
-        private async Task<bool> NameUnique(CommandBrandSupplier e, CancellationToken token)
-        {
-            return !await _BrandSupplierRepository.IsPropertyUnique(e.Id,"Name",e.Name);
-        }
+       
     }
 }

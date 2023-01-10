@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
 {
     public class ControlLoopValidator : AbstractValidator<CommandControlLoop>
     {
-        private readonly IRepositoryControlLoop _ControlLoopRepository;
-        public ControlLoopValidator(IRepositoryControlLoop ControlLoopRepository)
+        private readonly IRepositoryControlLoop _Repository;
+        public ControlLoopValidator(IRepositoryControlLoop Repository)
         {
-            _ControlLoopRepository = ControlLoopRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.ProcessVariable!.Id)
                .NotEqual(0).WithMessage("Process Variable is required.")
@@ -38,7 +38,9 @@ namespace CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandControlLoop e, CancellationToken token)
         {
-            return !await _ControlLoopRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id  && x.Name == e.Name);
+            return !result;
+           
         }
     }
 }

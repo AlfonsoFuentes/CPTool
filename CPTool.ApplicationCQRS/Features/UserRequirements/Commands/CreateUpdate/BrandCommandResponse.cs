@@ -3,13 +3,11 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.UserRequirements.Commands.CreateUpdate
 {
-    public class UserRequirementCommandResponse : BaseResponse
+    public class UserRequirementCommandResponse : BaseResponse<CommandUserRequirement>
     {
         public UserRequirementCommandResponse() : base()
         {
 
         }
-
-        public CommandUserRequirement? UserRequirementObject { get; set; }
     }
 }

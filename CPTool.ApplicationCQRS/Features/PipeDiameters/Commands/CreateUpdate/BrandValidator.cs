@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate
 {
     public class PipeDiameterValidator : AbstractValidator<CommandPipeDiameter>
     {
-        private readonly IRepositoryPipeDiameter _PipeDiameterRepository;
-        public PipeDiameterValidator(IRepositoryPipeDiameter PipeDiameterRepository)
+        private readonly IRepositoryPipeDiameter _Repository;
+        public PipeDiameterValidator(IRepositoryPipeDiameter Repository)
         {
-            _PipeDiameterRepository = PipeDiameterRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -32,7 +32,8 @@ namespace CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandPipeDiameter e, CancellationToken token)
         {
-            return !await _PipeDiameterRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

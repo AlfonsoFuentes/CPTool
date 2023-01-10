@@ -1,7 +1,8 @@
-﻿using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
+﻿using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeAccesorys.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
-using CPTool.ApplicationCQRS.Features.PipingItems.Commands.CreateUpdate;
+
 using CPTool.ApplicationCQRS.Features.Units.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.UnitsSystem;
@@ -23,7 +24,7 @@ namespace CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate
 
         }
       
-        public List<CommandPipingItem>? PipingItems { get; set; } = null!;
+        public List<CommandMWOItem>? MWOItems { get; set; } = null!;
         public List<CommandNozzle>? Nozzles { get; set; } = null!;
         public int? OuterDiameterId => OuterDiameter == null ? null : OuterDiameter.Id;
         public CommandUnit OuterDiameter { get; set; } = new(LengthUnits.Inch);

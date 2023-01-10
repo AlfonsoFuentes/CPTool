@@ -1,10 +1,10 @@
 ﻿namespace CPTool.Persistence.Persistence
 {
-    public interface IRepositoryEquipmentItem : ICommandRepository<EquipmentItem>
-    {
+    //public interface IRepositoryEquipmentItem : ICommandRepository<EquipmentItem>
+    //{
 
 
 
-    }
+    //}
     
 }

@@ -1,5 +1,4 @@
-﻿using CPTool.Application.Generic;
-using CPTool.Persistence.BaseClass;
+﻿
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components;
 using CPTool.ApplicationCQRSResponses;
@@ -16,11 +15,11 @@ namespace CPTool.UIApp.AppPages.Templates
 
 
         [Parameter]
-        public T Model { get; set; } = new();
+        public T Model { get; set; } 
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
-
+        string classname=>typeof(T).Name;
         protected bool errorVisible;
 
         [Parameter]

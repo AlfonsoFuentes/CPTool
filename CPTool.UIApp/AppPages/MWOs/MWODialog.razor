@@ -1,5 +1,6 @@
 ﻿@using CPTool.ApplicationCQRS.Features.MWOTypes.Commands.CreateUpdate;
-<DialogTemplate Model="@Model" Save="@Save">
+@using CPTool.ApplicationCQRS.Features.Users.Commands.CreateUpdate;
+<DialogTemplate Model="@Model" Save="@Save" DisableButtonSave=@(Model.Approved)>
     <ChildContent>
         <SelectTemplate T="CommandMWOType" Elements=@DialogData.MWOTypes
                         Label="MWO Type"
@@ -13,7 +14,9 @@
         <TextBoxTemplate Label="Name" @bind-Value=@Model.Name >
 
         </TextBoxTemplate>
+        <SelectTemplate T="CommandUser" Elements="DialogData.ProjectLeaders" Label="Project Leader" PropertyName="Name" @bind-Model=@Model.ProjectLeader>
 
+        </SelectTemplate>
         <NumericTemplate Label="MWO number"
                           Regex="\d{5}"
                           RegexError="Must supply 5 digits number"
@@ -26,7 +29,15 @@
         <FieldTemplate Label="CEB Name" Value="@Model.CEBName">
 
         </FieldTemplate>
-
+        @if (Model.Approved)
+        {
+            <FieldTemplate Label="Approval Date" Value="@Model.ApprovalDate.ToShortDateString()"></FieldTemplate>
+        }
+        else
+        {
+            <SwitchTemplate @bind-Value=@Model.ToApproved Label="Approve MWO?" OnChange="@StateHasChanged"></SwitchTemplate>
+        }
+       
     </ChildContent>
 
 </DialogTemplate>

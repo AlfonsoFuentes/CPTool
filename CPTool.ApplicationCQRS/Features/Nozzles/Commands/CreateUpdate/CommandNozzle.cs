@@ -1,14 +1,14 @@
 ﻿using CPtool.ExtensionMethods;
 using CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate;
-using CPTool.ApplicationCQRS.Features.EquipmentItems.Commands.CreateUpdate;
+
 using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
-using CPTool.ApplicationCQRS.Features.InstrumentItems.Commands.CreateUpdate;
+
 using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeAccesorys.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
-using CPTool.ApplicationCQRS.Features.PipingItems.Commands.CreateUpdate;
+
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.Domain.Enums;
 using MediatR;
@@ -27,13 +27,13 @@ namespace CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate
        
         public string ConnectedToName => ConnectedTo == null ? "" : ConnectedTo!.TagId;
 
-        public int? EquipmentItemId => EquipmentItem == null || EquipmentItem?.Id == 0 ? null : EquipmentItem?.Id;
-        public CommandEquipmentItem? EquipmentItem { get; set; } = new();
-        public int? InstrumentItemId => InstrumentItem == null || InstrumentItem?.Id == 0 ? null : InstrumentItem?.Id;
-        public CommandInstrumentItem? InstrumentItem { get; set; } = new();
+        //public int? EquipmentItemId => EquipmentItem == null || EquipmentItem?.Id == 0 ? null : EquipmentItem?.Id;
+        //public CommandEquipmentItem? EquipmentItem { get; set; } = new();
+        //public int? InstrumentItemId => InstrumentItem == null || InstrumentItem?.Id == 0 ? null : InstrumentItem?.Id;
+        //public CommandInstrumentItem? InstrumentItem { get; set; } = new();
 
-        public int? PipingItemId => PipingItem == null || PipingItem?.Id == 0 ? null : PipingItem?.Id;
-        public CommandPipingItem? PipingItem { get; set; } = new();
+        public int? MWOItemId => MWOItem == null || MWOItem?.Id == 0 ? null : MWOItem?.Id;
+        public CommandMWOItem? MWOItem { get; set; } = new();
 
         public int? PipeDiameterId => PipeDiameter?.Id == 0 ? null : PipeDiameter?.Id;
         public CommandPipeDiameter? PipeDiameter { get; set; } = new();

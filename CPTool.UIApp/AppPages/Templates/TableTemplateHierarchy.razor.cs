@@ -1,6 +1,5 @@
 ﻿using BlazorDownloadFile;
-using CPTool.Application.Generic;
-using CPTool.Persistence.BaseClass;
+
 using Microsoft.AspNetCore.Components;
 using Radzen.Blazor;
 using Radzen;

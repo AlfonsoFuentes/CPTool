@@ -5,8 +5,8 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
 {
     public class AddPurchaseOrder
     {
-
-       public int Id { get; set; }
+        public string QuoteNo { get; set; } = "";
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int? pBrandId { get; set; }
         public int? pSupplierId { get; set; }
@@ -33,7 +33,7 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
     }
     public class UpdatePurchaseOrder
     {
-
+        public string QuoteNo { get; set; } = "";
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int? pBrandId { get; set; }

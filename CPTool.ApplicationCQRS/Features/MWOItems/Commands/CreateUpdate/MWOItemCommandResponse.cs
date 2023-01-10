@@ -3,13 +3,13 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 {
-    public class MWOItemCommandResponse : BaseResponse
+    public class MWOItemCommandResponse : BaseResponse<CommandMWOItem>
     {
         public MWOItemCommandResponse() : base()
         {
 
         }
 
-        public CommandMWOItem? MWOItemObject { get; set; }
+      
     }
 }

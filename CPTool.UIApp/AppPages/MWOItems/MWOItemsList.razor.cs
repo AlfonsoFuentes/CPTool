@@ -10,6 +10,8 @@ namespace CPTool.UIApp.AppPages.MWOItems
 {
     public partial class MWOItemsList
     {
+        [CascadingParameter]
+        public TabsMWOItems DialogParent { get; set; }
         [Inject]
         public IMWOItemService Service { get; set; }
         [Inject]
@@ -21,20 +23,23 @@ namespace CPTool.UIApp.AppPages.MWOItems
         public int MWOId { get; set; }
         MWOItemDialogData DialogData = new();
         CommandMWO Parent = new();
-        protected override async Task OnInitializedAsync()
+        
+        public async Task UpdateTable()
         {
             Parent = await MWOService.GetById(MWOId);
             Elements = await Service.GetAll(MWOId);
             DialogData.GetSummary(Elements);
+            StateHasChanged();
 
         }
-
         async Task<bool> ShowTableDialog(CommandMWOItem model)
         {
+            App.MWOItemSelected = model;
             if (model.Id == 0)
             {
 
                 model.MWO = Parent;
+                model.BudgetItem = false;
             }
 
             var result = await DialogService.OpenAsync<MWOItemDialog>(model.Id == 0 ? $"Add new Item" : $"Edit {model.Name}",
@@ -48,7 +53,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
             {
                 Elements = await Service.GetAll(MWOId);
                 DialogData.GetSummary(Elements);
-                StateHasChanged();
+                await DialogParent.UpdateTables();
             }
             return (bool)result;
 
@@ -61,7 +66,8 @@ namespace CPTool.UIApp.AppPages.MWOItems
             {
                 Elements = await Service.GetAll(MWOId);
                 DialogData.GetSummary(Elements);
-                StateHasChanged();
+
+                await DialogParent.UpdateTables();
             }
             return result.Success;
         }
@@ -69,6 +75,10 @@ namespace CPTool.UIApp.AppPages.MWOItems
         {
             return await Service.GetFiletoExport(type, Elements);
         }
+        async Task SearchChanged(string searched)
+        {
+            Elements = await Service.GetAllWithSearch(MWOId, searched);
 
+        }
     }
 }

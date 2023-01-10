@@ -2,15 +2,19 @@
 {
     public class ProcessCondition  : AuditableEntity
     {
-        [ForeignKey("pProcessConditionId")]
-        public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
-        [ForeignKey("eProcessConditionId")]
-        public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
-        [ForeignKey("iProcessConditionId")]
-        public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
+        [ForeignKey("ProcessConditionId")]
+        public ICollection<MWOItem>? MWOItems { get; set; } = null!;
+
 
         [ForeignKey("pProcessConditionId")]
-        public ICollection<PipingItem>? PipingItems { get; set; } = null!;
+        public ICollection<PipeAccesory>? PipeAccesorys { get; set; } = null!;
+        //[ForeignKey("eProcessConditionId")]
+        //public ICollection<EquipmentItem>? EquipmentItems { get; set; } = null!;
+        //[ForeignKey("iProcessConditionId")]
+        //public ICollection<InstrumentItem>? InstrumentItems { get; set; } = null!;
+
+        //[ForeignKey("pProcessConditionId")]
+        //public ICollection<PipingItem>? PipingItems { get; set; } = null!;
         public int? PressureId { get; set; }
         public EntityUnit? Pressure { get; set; }
         public int? TemperatureId { get; set; }

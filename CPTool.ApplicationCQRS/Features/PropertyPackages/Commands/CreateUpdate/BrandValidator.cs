@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.PropertyPackages.Commands.CreateUpdate
 {
     public class PropertyPackageValidator : AbstractValidator<CommandPropertyPackage>
     {
-        private readonly IRepositoryPropertyPackage _PropertyPackageRepository;
-        public PropertyPackageValidator(IRepositoryPropertyPackage PropertyPackageRepository)
+        private readonly IRepositoryPropertyPackage _Repository;
+        public PropertyPackageValidator(IRepositoryPropertyPackage Repository)
         {
-            _PropertyPackageRepository = PropertyPackageRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.PropertyPackages.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandPropertyPackage e, CancellationToken token)
         {
-            return !await _PropertyPackageRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

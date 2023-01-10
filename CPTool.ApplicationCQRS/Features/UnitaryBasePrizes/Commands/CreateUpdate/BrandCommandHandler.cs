@@ -54,8 +54,8 @@ namespace CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdat
                         table.AddDomainEvent(new CreatedEvent<UnitaryBasePrize>(table));
                         table = await _unitofwork.RepositoryUnitaryBasePrize.AddAsync(table);
                         await _unitofwork.Complete();
-                        Response.UnitaryBasePrizeObject = _mapper.Map<CommandUnitaryBasePrize>(table);
-                        
+                        request.Id = table.Id;
+                        Response.ResponseObject = request;
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdat
                             table.AddDomainEvent(new UpdatedEvent<UnitaryBasePrize>(table));
                             await _unitofwork.RepositoryUnitaryBasePrize.UpdateAsync(table);
                             await _unitofwork.Complete();
-                            Response.UnitaryBasePrizeObject = _mapper.Map<CommandUnitaryBasePrize>(table);
-                     
+                            request.Id = table.Id;
+                            Response.ResponseObject = request;
                         }
 
 

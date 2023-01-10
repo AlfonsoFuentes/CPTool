@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.FieldLocations.Commands.CreateUpdate
 {
     public class FieldLocationValidator : AbstractValidator<CommandFieldLocation>
     {
-        private readonly IRepositoryFieldLocation _FieldLocationRepository;
-        public FieldLocationValidator(IRepositoryFieldLocation FieldLocationRepository)
+        private readonly IRepositoryFieldLocation _Repository;
+        public FieldLocationValidator(IRepositoryFieldLocation Repository)
         {
-            _FieldLocationRepository = FieldLocationRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.FieldLocations.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandFieldLocation e, CancellationToken token)
         {
-            return !await _FieldLocationRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

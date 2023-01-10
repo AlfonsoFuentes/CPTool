@@ -3,13 +3,13 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate
 {
-    public class TaxCodeLPCommandResponse : BaseResponse
+    public class TaxCodeLPCommandResponse : BaseResponse<CommandTaxCodeLP>
     {
         public TaxCodeLPCommandResponse() : base()
         {
 
         }
 
-        public CommandTaxCodeLP? TaxCodeLPObject { get; set; }
+       
     }
 }

@@ -9,64 +9,66 @@
 {
 
 }
-<Panel>
-    <Left>
-        <RadzenCard>
+@if(Model.ChapterId==6)
+{
+    <Panel>
+        <Left>
+            <RadzenCard>
 
 
-            <SelectTemplate T="CommandPipeClass"
+                <SelectTemplate T="CommandPipeClass"
                             Clearable=true
                             Elements=@DialogData.PipeClasses
-                            Change="@(()=>OnChangePipeClass(Model.pPipeClass.Id))"
+                            Change="@(()=>OnChangePipeClass(Model.PipeClass.Id))"
                             PropertyName="Name"
                             Label="Pipe Class"
-                            @bind-Model="@Model.pPipeClass">
+                            @bind-Model="@Model.PipeClass">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandPipeDiameter"
+                </SelectTemplate>
+                <SelectTemplate T="CommandPipeDiameter"
                             Clearable=true
                             PropertyName="Name"
-                            Disabled=@(Model.pPipeClass==null?true:false)
+                            Disabled=@(Model.PipeClass==null?true:false)
                             Elements=@DialogData.PipeDiameters
                             Label="Diameter"
-                            @bind-Model="@Model.pDiameter">
+                            @bind-Model="@Model.Diameter">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandMaterial"
+                </SelectTemplate>
+                <SelectTemplate T="CommandMaterial"
                             Clearable=true
                             PropertyName="Name"
                             Elements=@DialogData.Materials
                             Label="Pipe Material"
-                            @bind-Model="@Model.pMaterial">
+                            @bind-Model="@Model.MaterialPiping">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandProcessFluid"
+                </SelectTemplate>
+                <SelectTemplate T="CommandProcessFluid"
                             Clearable=true
                             PropertyName="Name"
                             Elements=@DialogData.ProcessFluids
                             Label="Process Fluid"
-                            @bind-Model="@Model.pProcessFluid">
+                            @bind-Model="@Model.ProcessFluid">
 
 
-            </SelectTemplate>
+                </SelectTemplate>
 
-            <SwitchTemplate Label="Insulation" @bind-Value="@Model.Insulation">
+                <SwitchTemplate Label="Insulation" @bind-Value="@Model.Insulation">
 
-            </SwitchTemplate>
+                </SwitchTemplate>
 
-            <TextBoxTemplate @bind-Value="@Model.TagNumber" Label="Tag Number"></TextBoxTemplate>
+                <TextBoxTemplate @bind-Value="@Model.TagNumber" Label="Tag Number"></TextBoxTemplate>
 
-            <FieldTemplate Label="Tag" Value="@DialogParent.Model.PipingItem.TagId"></FieldTemplate>
+                <FieldTemplate Label="Tag" Value="@DialogParent.Model.TagId"></FieldTemplate>
 
 
-        </RadzenCard>
-    </Left>
-    <Rigth>
-        <RadzenCard>
-           <SelectTemplate T="CommandMWOItem"
+            </RadzenCard>
+        </Left>
+        <Rigth>
+            <RadzenCard>
+                <SelectTemplate T="CommandMWOItem"
                             Elements=@DialogData.MWOItemsStarts
                             Clearable=true
                             PropertyName="@nameof(CommandMWOItem.TagId)"
@@ -75,19 +77,18 @@
                             @bind-Model="@Model.StartMWOItem">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandNozzle"
+                </SelectTemplate>
+                <SelectTemplate T="CommandNozzle"
                             @ref=selectnozzlestart
                             Elements=@DialogData.NozzlesByMWOItemsStarts
                             Clearable=true
                             PropertyName="@nameof(CommandNozzle.NameDescription)"
                             Label="Nozzle Start"
-                          
                             @bind-Model="@Model.NozzleStart">
 
 
-            </SelectTemplate>
-             <SelectTemplate T="CommandMWOItem"
+                </SelectTemplate>
+                <SelectTemplate T="CommandMWOItem"
                             Clearable=true
                             Elements=@DialogData.MWOItemsFinish
                             PropertyName="@nameof(CommandMWOItem.TagId)"
@@ -96,22 +97,23 @@
                             @bind-Model="@Model.FinishMWOItem">
 
 
-            </SelectTemplate>
-            <SelectTemplate T="CommandNozzle"
+                </SelectTemplate>
+                <SelectTemplate T="CommandNozzle"
                             @ref=selectnozzlefinish
                             Clearable=true
                             Elements=@DialogData.NozzlesByMWOItemsFinish
                             PropertyName="@nameof(CommandNozzle.NameDescription)"
-                           
                             Label="Nozzle Finish"
                             @bind-Model="@Model.NozzleFinish">
 
 
-            </SelectTemplate>@**@
+                </SelectTemplate>@**@
 
-        </RadzenCard>
-    </Rigth>
-</Panel>
+            </RadzenCard>
+        </Rigth>
+    </Panel>
+}
+
 
 @code {
     bool debug = true;

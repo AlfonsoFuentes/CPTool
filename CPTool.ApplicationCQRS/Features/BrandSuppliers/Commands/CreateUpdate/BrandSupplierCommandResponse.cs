@@ -3,13 +3,13 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate
 {
-    public class BrandSupplierCommandResponse : BaseResponse
+    public class BrandSupplierCommandResponse : BaseResponse<CommandBrandSupplier>
     {
         public BrandSupplierCommandResponse() : base()
         {
 
         }
 
-        public CommandBrandSupplier? BrandSupplierObject { get; set; }
+        
     }
 }

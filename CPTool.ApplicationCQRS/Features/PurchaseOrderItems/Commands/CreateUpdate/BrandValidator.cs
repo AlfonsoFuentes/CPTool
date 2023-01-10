@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpda
 {
     public class PurchaseOrderItemValidator : AbstractValidator<CommandPurchaseOrderItem>
     {
-        private readonly IRepositoryPurchaseOrderItem _PurchaseOrderItemRepository;
-        public PurchaseOrderItemValidator(IRepositoryPurchaseOrderItem PurchaseOrderItemRepository)
+        private readonly IRepositoryPurchaseOrderItem _Repository;
+        public PurchaseOrderItemValidator(IRepositoryPurchaseOrderItem Repository)
         {
-            _PurchaseOrderItemRepository = PurchaseOrderItemRepository;
+            _Repository = Repository;
 
             //RuleFor(p => p.Name)
             //    .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -35,7 +35,8 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpda
 
         private async Task<bool> NameUnique(CommandPurchaseOrderItem e, CancellationToken token)
         {
-            return !await _PurchaseOrderItemRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

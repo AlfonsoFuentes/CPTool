@@ -38,9 +38,7 @@ namespace CPTool.PersistenceCQRS.Repositories
         IRepositoryMWO _RepositoryMWO = null!;
         IRepositoryMWOType _RepositoryMWOType = null!;
         IRepositoryMWOItem _RepositoryMWOItem = null!;
-        IRepositoryMWOItemWithEquipment _RepositoryMWOItemWithEquipment = null!;
-        IRepositoryMWOItemWithInstrument _RepositoryMWOItemWithInstrument = null!;
-        IRepositoryMWOItemWithPiping _RepositoryMWOItemWithPiping = null!;
+
         IRepositoryMWOItemWithNozzles _RepositoryMWOItemWithNozzles = null!;
         IRepositoryNozzle _RepositoryNozzle = null!;
         IRepositoryPipeAccesory _RepositoryPipeAccesory = null!;
@@ -65,26 +63,11 @@ namespace CPTool.PersistenceCQRS.Repositories
         IRepositoryUserRequirement _RepositoryUserRequirement = null!;
         IRepositoryUserRequirementType _RepositoryUserRequirementType = null!;
         IRepositoryWire _RepositoryWire = null!;
-        IRepositoryAlterationItem _RepositoryAlterationItem = null!;
-        IRepositoryFoundationItem _RepositoryFoundationItem = null!;
-        IRepositoryStructuralItem _RepositoryStructuralItem = null!;
-        IRepositoryEquipmentItem _RepositoryEquipmentItem = null!;
-  
-        IRepositoryElectricalItem _RepositoryElectricalItem = null!;
-        IRepositoryInstrumentItem _RepositoryInstrumentItem = null!;
-      
-        IRepositoryInsulationItem _RepositoryInsulationItem = null!;
-        IRepositoryPipingItem _RepositoryPipingItem = null!;
-    
-        IRepositoryPaintingItem _RepositoryPaintingItem = null!;
-        IRepositoryEHSItem _RepositoryEHSItem = null!;
-        IRepositoryTaxesItem _RepositoryTaxesItem = null!;
-        IRepositoryTestingItem _RepositoryTestingItem = null!;
-        IRepositoryEngineeringCostItem _RepositoryEngineeringCostItem = null!;
-        IRepositoryContingencyItem _RepositoryContingencyItem = null!;
+
+        IRepositorySpecification _RepositorySpecification = null!;
+        IRepositoryPropertySpecification _RepositoryPropertySpecification = null!;
 
 
-   
         private readonly TableContext _context;
 
 
@@ -121,10 +104,11 @@ namespace CPTool.PersistenceCQRS.Repositories
         public IRepositoryMWO RepositoryMWO => _RepositoryMWO ??= new RepositoryMWO(_context);
         public IRepositoryMWOType RepositoryMWOType => _RepositoryMWOType ??= new RepositoryMWOType(_context);
         public IRepositoryMWOItem RepositoryMWOItem => _RepositoryMWOItem ??= new RepositoryMWOItem(_context);
-        public IRepositoryMWOItemWithEquipment RepositoryMWOItemWithEquipment => _RepositoryMWOItemWithEquipment ??= new RepositoryMWOItemWithEquipment(_context);
-        public IRepositoryMWOItemWithInstrument RepositoryMWOItemWithInstrument => _RepositoryMWOItemWithInstrument ??= new RepositoryMWOItemWithInstrument(_context);
-        public IRepositoryMWOItemWithPiping RepositoryMWOItemWithPiping => _RepositoryMWOItemWithPiping ??= new RepositoryMWOItemWithPiping(_context);
+   
         public IRepositoryMWOItemWithNozzles RepositoryMWOItemWithNozzles => _RepositoryMWOItemWithNozzles ??= new RepositoryMWOItemWithNozzles(_context);
+        public IRepositorySpecification RepositorySpecification => _RepositorySpecification ??= new RepositorySpecification(_context);
+
+        public IRepositoryPropertySpecification RepositoryPropertySpecification => _RepositoryPropertySpecification ??= new RepositoryPropertySpecification(_context);
 
         public IRepositoryBrand RepositoryBrand => _RepositoryBrand ??= new RepositoryBrand(_context);
         public IRepositoryBrandSupplier RepositoryBrandSupplier => _RepositoryBrandSupplier ??= new RepositoryBrandSupplier(_context);
@@ -190,21 +174,7 @@ namespace CPTool.PersistenceCQRS.Repositories
         public IRepositoryUserRequirementType RepositoryUserRequirementType => _RepositoryUserRequirementType ??= new RepositoryUserRequirementType(_context);
 
         public IRepositoryWire RepositoryWire => _RepositoryWire ??= new RepositoryWire(_context);
-        public IRepositoryAlterationItem RepositoryAlterationItem => _RepositoryAlterationItem ??= new RepositoryAlterationItem(_context);
-        public IRepositoryFoundationItem RepositoryFoundationItem => _RepositoryFoundationItem ??= new RepositoryFoundationItem(_context);
-        public IRepositoryStructuralItem RepositoryStructuralItem => _RepositoryStructuralItem ??= new RepositoryStructuralItem(_context);
-        public IRepositoryEquipmentItem RepositoryEquipmentItem => _RepositoryEquipmentItem ??= new RepositoryEquipmentItem(_context);
-        public IRepositoryElectricalItem RepositoryElectricalItem => _RepositoryElectricalItem ??= new RepositoryElectricalItem(_context);
-        public IRepositoryPipingItem RepositoryPipingItem => _RepositoryPipingItem ??= new RepositoryPipingItem(_context);
-        public IRepositoryInstrumentItem RepositoryInstrumentItem => _RepositoryInstrumentItem ??= new RepositoryInstrumentItem(_context);
-       public IRepositoryInsulationItem RepositoryInsulationItem => _RepositoryInsulationItem ??= new RepositoryInsulationItem(_context);
-        public IRepositoryPaintingItem RepositoryPaintingItem => _RepositoryPaintingItem ??= new RepositoryPaintingItem(_context);
-        public IRepositoryEHSItem RepositoryEHSItem => _RepositoryEHSItem ??= new RepositoryEHSItem(_context);
-        public IRepositoryTaxesItem RepositoryTaxesItem => _RepositoryTaxesItem ??= new RepositoryTaxesItem(_context);
-        public IRepositoryTestingItem RepositoryTestingItem => _RepositoryTestingItem ??= new RepositoryTestingItem(_context);
-        public IRepositoryEngineeringCostItem RepositoryEngineeringCostItem => _RepositoryEngineeringCostItem ??= new RepositoryEngineeringCostItem(_context);
-        public IRepositoryContingencyItem RepositoryContingencyItem => _RepositoryContingencyItem ??= new RepositoryContingencyItem(_context);
-
+      
         public async Task<int> Complete()
         {
             return await SaveChangesAsync();

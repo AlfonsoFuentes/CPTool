@@ -3,13 +3,11 @@ using FluentValidation.Results;
 
 namespace CPTool.ApplicationCQRS.Features.Readouts.Commands.CreateUpdate
 {
-    public class ReadoutCommandResponse : BaseResponse
+    public class ReadoutCommandResponse : BaseResponse<CommandReadout>
     {
         public ReadoutCommandResponse() : base()
         {
 
         }
-
-        public CommandReadout? ReadoutObject { get; set; }
     }
 }

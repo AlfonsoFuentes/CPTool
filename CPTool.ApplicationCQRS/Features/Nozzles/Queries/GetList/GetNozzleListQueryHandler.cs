@@ -26,25 +26,18 @@ namespace CPTool.ApplicationCQRSFeatures.Nozzles.Queries.GetList
         {
             IReadOnlyList<Nozzle> allNozzle = null!;
 
-            if (request.EquipmentId != 0)
+            if (request.MWOItemId != 0)
             {
-                allNozzle = await _UnitOfWork.RepositoryNozzle.GetAllAsync(x => x.EquipmentItemId == request.EquipmentId);
+                allNozzle = await _UnitOfWork.RepositoryNozzle.GetAllAsync(x => x.MWOItemId == request.MWOItemId);
             }
-            else if (request.InstrumentId != 0)
-            {
-                allNozzle = await _UnitOfWork.RepositoryNozzle.GetAllAsync(x => x.InstrumentItemId == request.InstrumentId);
-            }
-            else if (request.PipingId != 0)
-            {
-                allNozzle = await _UnitOfWork.RepositoryNozzle.GetAllAsync(x => x.PipingItemId == request.PipingId);
-            }
-            foreach (var row in allNozzle)
-            {
-                if (row!.ConnectedToId != null)
-                {
-                    row!.ConnectedTo = await _UnitOfWork.RepositoryMWOItem.GetByIdAsync(row!.ConnectedToId.Value);
-                }
-            }
+           
+            //foreach (var row in allNozzle)
+            //{
+            //    if (row!.ConnectedToId != null)
+            //    {
+            //        row!.ConnectedTo = await _UnitOfWork.RepositoryMWOItem.GetByIdAsync(row!.ConnectedToId.Value);
+            //    }
+            //}
             return _mapper.Map<List<CommandNozzle>>(allNozzle);
         }
     }

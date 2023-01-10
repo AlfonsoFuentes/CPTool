@@ -4,5 +4,6 @@
     {
         [ForeignKey("TaxCodeLDId")]
         public ICollection<Supplier> Suppliers { get; set; } = null!;
+        public bool IsTwoWayMatch { get; set; }
     }
 }

@@ -3,6 +3,7 @@
 
 global using CPTool.PersistenceCQRS.Repositories;
 global using CPToolCQRS.Infrastructure.Persistence;
+global using CPTool.Domain.Entities;
 
 namespace CPToolCQRS.Infrastructure.Repositories
 {

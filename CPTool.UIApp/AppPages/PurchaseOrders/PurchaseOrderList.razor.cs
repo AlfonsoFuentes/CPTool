@@ -1,4 +1,4 @@
-﻿using CPTool.Application.Features.DownPaymentFeatures.CreateEdit;
+﻿
 using CPTool.ApplicationCQRS.Features.DownPayments.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
@@ -24,16 +24,21 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
         CommandPurchaseOrder SelectedItem = new();
         [Parameter]
         public int MWOId { get; set; }
-        PurchaseOrderDialogData DialogData = new();
+
         CommandMWO Parent;
 
         bool DisableDownpayment => SelectedItem.Id == 0 || (int)SelectedItem.PurchaseOrderStatus > (int)PurchaseOrderApprovalStatus.Created;
         protected override async Task OnInitializedAsync()
         {
+            if (MWOId == 0)
+                await UpdateTable();
+
+        }
+        public async Task UpdateTable()
+        {
             Parent = await MWOService.GetById(MWOId);
             Elements = await Service.GetAll(MWOId);
-          
-
+            StateHasChanged();
         }
         async Task<bool> ShowTableDialog(CommandPurchaseOrder model)
         {
@@ -53,7 +58,7 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
             if ((bool)result)
             {
                 Elements = await Service.GetAll(MWOId);
-               
+
                 StateHasChanged();
             }
             return (bool)result;
@@ -66,7 +71,7 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
             if (result.Success)
             {
                 Elements = await Service.GetAll(MWOId);
-              
+
                 StateHasChanged();
             }
             return result.Success;
@@ -77,7 +82,7 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
         }
         public async Task<bool> ShowDownPaymentDialog(CommandDownPayment model)
         {
-            if(model.Id==0)
+            if (model.Id == 0)
             {
                 model.PurchaseOrder = SelectedItem;
             }
@@ -91,10 +96,15 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
         async Task AddDownPayment()
         {
             CommandDownPayment model = new();
-           
-            var result = await ShowDownPaymentDialog(model);
-           
 
+            var result = await ShowDownPaymentDialog(model);
+
+
+
+        }
+        async Task SearchChanged(string searched)
+        {
+            Elements = await Service.GetAllWithSearch(MWOId, searched);
 
         }
     }

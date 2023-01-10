@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate
 {
     public class ProcessFluidValidator : AbstractValidator<CommandProcessFluid>
     {
-        private readonly IRepositoryProcessFluid _ProcessFluidRepository;
-        public ProcessFluidValidator(IRepositoryProcessFluid ProcessFluidRepository)
+        private readonly IRepositoryProcessFluid _Repository;
+        public ProcessFluidValidator(IRepositoryProcessFluid Repository)
         {
-            _ProcessFluidRepository = ProcessFluidRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -37,11 +37,14 @@ namespace CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandProcessFluid e, CancellationToken token)
         {
-            return !await _ProcessFluidRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
         private async Task<bool>AbbreviationUnique(CommandProcessFluid e, CancellationToken token)
         {
-            return !await _ProcessFluidRepository.IsPropertyUnique(e.Id,"TagLetter" ,e.TagLetter);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.TagLetter == e.TagLetter);
+            return !result;
+          
         }
     }
 }

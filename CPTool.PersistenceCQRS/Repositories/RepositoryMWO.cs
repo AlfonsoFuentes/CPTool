@@ -1,4 +1,5 @@
 ﻿
+using CPTool.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,17 @@ namespace CPToolCQRS.Infrastructure.Repositories
         {
 
             QueryList = QueryList
-                 .Include(x => x.MWOType)
-           .Include(x => x.MWOItems)
-              .Include(x => x.PurchaseOrders).ThenInclude(y => y.pBrand)
-              .Include(x => x!.PurchaseOrders!).ThenInclude(y => y!.PurchaseOrderItems!).ThenInclude(z => z!.MWOItem!);
-            QueryDialog = QueryDialog
+                 .Include(x => x.ProjectLeader)
                  .Include(x => x.MWOType)
                  .Include(x => x.MWOItems)
-              .Include(x => x.PurchaseOrders).ThenInclude(y => y.pBrand)
-              .Include(x => x!.PurchaseOrders!).ThenInclude(y => y!.PurchaseOrderItems!).ThenInclude(z => z!.MWOItem!);
+                
+              .Include(x => x.PurchaseOrders)
+              .Include(x => x!.PurchaseOrders!).ThenInclude(y => y!.PurchaseOrderItems!).ThenInclude(z => z!.MWOItem!)
+              ;
+            QueryDialog = QueryDialog
+                 .Include(x => x.ProjectLeader)
+                 .Include(x => x.MWOType)
+                 ;
         }
 
 

@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate
 {
     public class ConnectionTypeValidator : AbstractValidator<CommandConnectionType>
     {
-        private readonly IRepositoryConnectionType _ConnectionTypeRepository;
-        public ConnectionTypeValidator(IRepositoryConnectionType ConnectionTypeRepository)
+        private readonly IRepositoryConnectionType _Repository;
+        public ConnectionTypeValidator(IRepositoryConnectionType Repository)
         {
-            _ConnectionTypeRepository = ConnectionTypeRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,9 @@ namespace CPTool.ApplicationCQRS.Features.ConnectionTypes.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandConnectionType e, CancellationToken token)
         {
-            return !await _ConnectionTypeRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
+
         }
     }
 }

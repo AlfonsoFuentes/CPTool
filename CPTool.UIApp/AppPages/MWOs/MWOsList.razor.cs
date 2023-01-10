@@ -1,5 +1,4 @@
-﻿using CPTool.Application.Features.MWOFeatures.CreateEdit;
-using CPTool.Application.Features.TaksFeatures.CreateEdit;
+﻿
 using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
@@ -52,26 +51,26 @@ namespace CPTool.UIApp.AppPages.MWOs
         {
             return await Service.GetFiletoExport(type, Elements);
         }
-        void GoToUserRequirmentPage()
-        {
-            NavigationManager.NavigateTo($"user-requirement/{SelectedItem.Id}");
-        }
-        void GoToPurchaseOrderList()
-        {
-            NavigationManager.NavigateTo($"purchase-orders/{SelectedItem.Id}");
-        }
-        void GoToUserSignalList()
-        {
-            NavigationManager.NavigateTo($"signals/{SelectedItem.Id}");
-        }
+        //void GoToUserRequirmentPage()
+        //{
+        //    NavigationManager.NavigateTo($"user-requirement/{SelectedItem.Id}");
+        //}
+        //void GoToPurchaseOrderList()
+        //{
+        //    NavigationManager.NavigateTo($"purchase-orders/{SelectedItem.Id}");
+        //}
+        //void GoToUserSignalList()
+        //{
+        //    NavigationManager.NavigateTo($"signals/{SelectedItem.Id}");
+        //}
         void GoToMWOItemList()
         {
             NavigationManager.NavigateTo($"mwo-items/{SelectedItem.Id}");
         }
-        void GoToControlLoopList()
-        {
-            NavigationManager.NavigateTo($"control-loops/{SelectedItem.Id}");
-        }
+        //void GoToControlLoopList()
+        //{
+        //    NavigationManager.NavigateTo($"control-loops/{SelectedItem.Id}");
+        //}
         async Task CreateTaskMWO()
         {
             CommandTaks editTaks = new CommandTaks();

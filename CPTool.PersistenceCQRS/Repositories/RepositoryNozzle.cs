@@ -16,10 +16,10 @@ namespace CPToolCQRS.Infrastructure.Repositories
                 .Include(x => x.ConnectionType!)
                 .Include(x => x.nGasket!)
                 .Include(x => x.nMaterial!)
-                .Include(x => x.EquipmentItem!)
-                .Include(x => x.InstrumentItem!)
-                .Include(x => x.PipingItem!)
-                .Include(x => x.ConnectedTo!);
+                .Include(x => x.MWOItem!)
+                //.Include(x => x.InstrumentItem!)
+                //.Include(x => x.PipingItem!)
+                /*.Include(x => x.ConnectedTo!)*/;
 
             QueryDialog = QueryDialog
                   .Include(x => x.nPipeClass!)
@@ -27,10 +27,10 @@ namespace CPToolCQRS.Infrastructure.Repositories
                 .Include(x => x.ConnectionType!)
                 .Include(x => x.nGasket!)
                 .Include(x => x.nMaterial!)
-                 .Include(x => x.EquipmentItem!)
-                .Include(x => x.InstrumentItem!)
-                .Include(x => x.PipingItem!)
-                .Include(x => x.ConnectedTo!);
+                 .Include(x => x.MWOItem!)
+                //.Include(x => x.InstrumentItem!)
+                //.Include(x => x.PipingItem!)
+                /*.Include(x => x.ConnectedTo!)*/;
         }
         
     }

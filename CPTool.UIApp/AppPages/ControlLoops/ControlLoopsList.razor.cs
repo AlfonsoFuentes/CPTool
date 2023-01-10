@@ -20,10 +20,12 @@ namespace CPTool.UIApp.AppPages.ControlLoops
         CommandMWO MWO = new();
         [Parameter]
         public int MWOId { get; set; }
-        protected override async Task OnInitializedAsync()
+        
+        public async Task UpdateTable()
         {
-            MWO=await MWOService.GetById(MWOId);
+            MWO = await MWOService.GetById(MWOId);
             Elements = await Service.GetAll(MWOId);
+            StateHasChanged();
         }
         async Task<bool> ShowTableDialog(CommandControlLoop model)
         {

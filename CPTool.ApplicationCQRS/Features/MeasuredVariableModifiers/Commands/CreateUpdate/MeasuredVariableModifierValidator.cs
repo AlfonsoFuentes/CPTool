@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.MeasuredVariableModifiers.Commands.Cre
 {
     public class MeasuredVariableModifierValidator : AbstractValidator<CommandMeasuredVariableModifier>
     {
-        private readonly IRepositoryMeasuredVariableModifier _MeasuredVariableModifierRepository;
-        public MeasuredVariableModifierValidator(IRepositoryMeasuredVariableModifier MeasuredVariableModifierRepository)
+        private readonly IRepositoryMeasuredVariableModifier _Repository;
+        public MeasuredVariableModifierValidator(IRepositoryMeasuredVariableModifier Repository)
         {
-            _MeasuredVariableModifierRepository = MeasuredVariableModifierRepository;
+            _Repository = Repository;
 
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -31,7 +31,8 @@ namespace CPTool.ApplicationCQRS.Features.MeasuredVariableModifiers.Commands.Cre
 
         private async Task<bool> NameUnique(CommandMeasuredVariableModifier e, CancellationToken token)
         {
-            return !await _MeasuredVariableModifierRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }

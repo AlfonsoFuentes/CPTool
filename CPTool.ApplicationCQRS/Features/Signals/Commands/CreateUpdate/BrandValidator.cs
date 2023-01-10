@@ -9,10 +9,10 @@ namespace CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate
 {
     public class SignalValidator : AbstractValidator<CommandSignal>
     {
-        private readonly IRepositorySignal _SignalRepository;
-        public SignalValidator(IRepositorySignal SignalRepository)
+        private readonly IRepositorySignal _Repository;
+        public SignalValidator(IRepositorySignal Repository)
         {
-            _SignalRepository = SignalRepository;
+            _Repository = Repository;
 
             //RuleFor(p => p.Name)
             //    .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -42,7 +42,8 @@ namespace CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate
 
         private async Task<bool> NameUnique(CommandSignal e, CancellationToken token)
         {
-            return !await _SignalRepository.IsPropertyUnique(e.Id,"Name",e.Name);
+            var result = await _Repository.Any(x => x.Id != e.Id && x.Name == e.Name);
+            return !result;
         }
     }
 }
