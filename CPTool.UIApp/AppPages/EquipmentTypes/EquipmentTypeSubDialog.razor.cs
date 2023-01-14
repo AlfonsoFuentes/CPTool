@@ -1,7 +1,7 @@
 ﻿using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRSResponses;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.EquipmentTypes

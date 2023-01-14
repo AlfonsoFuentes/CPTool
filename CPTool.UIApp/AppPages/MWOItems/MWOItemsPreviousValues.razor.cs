@@ -1,6 +1,6 @@
 ﻿using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRSResponses;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Radzen;

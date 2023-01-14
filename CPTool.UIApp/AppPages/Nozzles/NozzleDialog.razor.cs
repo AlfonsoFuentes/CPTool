@@ -1,7 +1,7 @@
 ﻿using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRSResponses;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 

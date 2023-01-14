@@ -3,7 +3,7 @@
 
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using CPTool.Domain.Entities;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 

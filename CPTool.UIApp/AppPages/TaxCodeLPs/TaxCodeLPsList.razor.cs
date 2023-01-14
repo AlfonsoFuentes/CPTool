@@ -1,7 +1,7 @@
 ﻿using CPTool.ApplicationCQRS.Features.TaxCodeLPs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.TaxCodeLPs

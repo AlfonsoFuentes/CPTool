@@ -4,11 +4,12 @@
 <RadzenNotification />
 <RadzenContextMenu />
 <RadzenTooltip />
-<RadzenLayout class="rz-shadow-3" Style="height: 800px; grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body'">
+<RadzenLayout class="rz-shadow-3" Style=@style>
     <RadzenHeader>
         <div class="d-flex align-items-center">
             <RadzenSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
             <RadzenLabel Text="Header" />
+           
         </div>
     </RadzenHeader>
     <RadzenSidebar @bind-Expanded="@sidebar1Expanded">
@@ -48,7 +49,7 @@
                 </RadzenPanelMenuItem>
             </RadzenPanelMenuItem>
         </RadzenPanelMenu>
-       
+
     </RadzenSidebar>
     <RadzenBody>
         <div class="p-2">
@@ -60,5 +61,24 @@
 
 @code {
     bool sidebar1Expanded = false;
+    public int Height { get; set; }
+    public int Width { get; set; }
+    string style => $"height: {Height}px; grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body'";
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var dimension = await JSRuntime.InvokeAsync<WindowDimension>("getDimensions");
+            Height = dimension.Height;
+            Width = dimension.Width;
+        }
+
+    }
+    public class WindowDimension
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+    }
+   
 }

@@ -2,7 +2,7 @@
 using CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRSResponses;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.BrandSupplier

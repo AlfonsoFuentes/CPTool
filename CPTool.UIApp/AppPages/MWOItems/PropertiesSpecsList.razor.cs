@@ -3,7 +3,7 @@ using CPTool.ApplicationCQRS.Features.PropertySpecifications.Commands.CreateUpda
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.UIApp.AppPages.PropertySpecifications;
 
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 

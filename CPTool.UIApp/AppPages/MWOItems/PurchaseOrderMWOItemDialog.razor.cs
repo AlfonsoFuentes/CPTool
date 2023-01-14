@@ -4,7 +4,7 @@ using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
 using CPTool.UIApp.AppPages.MWOs;
 using CPTool.UIApp.AppPages.PurchaseOrders;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 

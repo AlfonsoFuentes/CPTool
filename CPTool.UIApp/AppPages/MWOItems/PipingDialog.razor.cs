@@ -5,7 +5,7 @@ using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 
 using CPTool.Domain.Enums;
 using CPTool.UIApp.AppPages.MWOItems;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

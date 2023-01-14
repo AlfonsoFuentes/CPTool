@@ -1,6 +1,6 @@
 ﻿using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
 using CPTool.ApplicationCQRSResponses;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.Gaskets

@@ -3,7 +3,7 @@ using CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.UIApp.AppPages.UserRequirments;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 using CPTool.UIApp.AppPages.MWOItems;

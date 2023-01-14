@@ -3,7 +3,7 @@ using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Nozzles.Commands.CreateUpdate;
 using CPTool.ApplicationCQRSResponses;
 using CPTool.UIApp.AppPages.Nozzles;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 using System.Xml.Linq;
@@ -89,7 +89,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
             {
               
                 Model = await Service.GetById(Model.Id);
-                App.MWOItemSelected = Model;
+              
                 DialogData = await Service.GetMWOItemDataDialogByModel(DialogData, Model);
                
             }

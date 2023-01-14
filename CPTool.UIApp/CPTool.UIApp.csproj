@@ -10,17 +10,17 @@
 		<PackageReference Include="BlazorDownloadFile" Version="2.4.0.2" />
 		<PackageReference Include="Custom.Radzen.Blazor" Version="4.3.6" />
 		<PackageReference Include="DocumentFormat.OpenXml" Version="2.19.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.1">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-		<PackageReference Include="Radzen.Blazor" Version="4.4.6" />
+		<PackageReference Include="Radzen.Blazor" Version="4.5.0" />
 		<PackageReference Include="RestSharp" Version="108.0.3" />
 	</ItemGroup>
   <ItemGroup>
@@ -29,6 +29,9 @@
     <ProjectReference Include="..\CPTool.PersistenceCQRS\CPTool.PersistenceCQRS.csproj" />
     <ProjectReference Include="..\CPTool.Services\CPTool.Services.csproj" />
     <ProjectReference Include="..\CPTool.UnitsSystem\CPTool.UnitsSystem.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

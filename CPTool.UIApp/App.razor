@@ -1,6 +1,6 @@
 ﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 @using CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdate;
-@using CPTool.UIApp.Services;
+@using CPTool.InfrastructureCQRS.Services;
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(LayoutRadzen)" />
@@ -15,6 +15,9 @@
 </Router>
 @code{
 
-    public static  CommandMWOItem MWOItemSelected{ get; set; }
+    public static RenderFragment RenderWelcomeInfo = __builder =>
+    {
+       
+    };
 
 }

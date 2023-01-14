@@ -2,7 +2,7 @@
 using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.UIApp.AppPages.MWOItems;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 
@@ -34,7 +34,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
         }
         async Task<bool> ShowTableDialog(CommandMWOItem model)
         {
-            App.MWOItemSelected = model;
+           
             if (model.Id == 0)
             {
 

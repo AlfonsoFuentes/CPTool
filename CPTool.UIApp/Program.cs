@@ -1,7 +1,7 @@
 using BlazorDownloadFile;
 using CPTool.Services;
 using CPTool.UIApp;
-
+using CPTool.InfrastructureCQRS;
 using CPTool.UnitsSystem;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -26,7 +26,7 @@ UnitManager.RegisterByAssembly(typeof(SIUnitTypes).Assembly);
 
 var app = builder.Build();
 
-//await app.ResetDatabaseAsync();
+await app.ResetDatabaseAsync();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

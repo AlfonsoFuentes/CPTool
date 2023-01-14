@@ -4,7 +4,7 @@ using CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.Domain.Enums;
 using CPTool.UIApp.AppPages.Taks;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -51,18 +51,7 @@ namespace CPTool.UIApp.AppPages.MWOs
         {
             return await Service.GetFiletoExport(type, Elements);
         }
-        //void GoToUserRequirmentPage()
-        //{
-        //    NavigationManager.NavigateTo($"user-requirement/{SelectedItem.Id}");
-        //}
-        //void GoToPurchaseOrderList()
-        //{
-        //    NavigationManager.NavigateTo($"purchase-orders/{SelectedItem.Id}");
-        //}
-        //void GoToUserSignalList()
-        //{
-        //    NavigationManager.NavigateTo($"signals/{SelectedItem.Id}");
-        //}
+       
         void GoToMWOItemList()
         {
             NavigationManager.NavigateTo($"mwo-items/{SelectedItem.Id}");

@@ -1,4 +1,4 @@
-﻿using CPTool.UIApp.Services;
+﻿using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.PurchaseOrders

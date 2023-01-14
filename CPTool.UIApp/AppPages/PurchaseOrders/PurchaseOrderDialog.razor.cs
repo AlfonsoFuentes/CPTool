@@ -5,7 +5,7 @@ using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
 using CPTool.ApplicationCQRSResponses;
 using CPTool.Domain.Enums;
 using CPTool.Services;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.PurchaseOrders

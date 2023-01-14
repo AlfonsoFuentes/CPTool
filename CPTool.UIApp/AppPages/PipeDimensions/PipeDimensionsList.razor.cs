@@ -1,7 +1,7 @@
 ﻿using CPTool.ApplicationCQRS.Features.PipeClasss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PipeDiameters.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
-using CPTool.UIApp.Services;
+using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CPTool.UIApp.AppPages.PipeDimensions
