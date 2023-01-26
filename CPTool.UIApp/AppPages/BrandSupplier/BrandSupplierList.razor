@@ -9,6 +9,8 @@
                        @bind-SelectedItem=@SelectedItemBrand
                        ShowDialog="ShowBrandDialog"
                        OnDelete="@DeleteBrand"
+                       SearchChanged="OnSearchBrand"
+                       ShowSearch=true
                        Elements="@ElementsBrand" Export="@ExportBrand">
             <ToolBarButtons>
                 <ButtonTemplate Icon="restore"
@@ -33,6 +35,8 @@
                        ShowDialog="ShowSupplier"
                        OnDelete="@DeleteSupplier"
                        Elements="@ElementsSupplier"
+                       ShowSearch=true
+                       SearchChanged="OnSearchSupplier"
                        Export="@ExportSupplier">
             <ToolBarButtons>
                 <ButtonTemplate Icon="restore"

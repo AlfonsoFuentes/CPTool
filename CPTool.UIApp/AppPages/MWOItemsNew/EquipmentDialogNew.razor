@@ -1,0 +1,96 @@
+﻿@using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.EquipmentTypeSubs.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Gaskets.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Materials.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
+
+
+@if (debug)
+{
+
+}
+@if (Model.ChapterId == 4)
+{
+    <Panel>
+        <Left>
+            <RadzenCard>
+                <SelectTemplate T="CommandEquipmentType" Elements="@DialogData.EquipmentTypes"
+                            Label="Type" Change=@(()=>ChangeEquipmentType(Model.EquipmentType.Id))
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.EquipmentType>
+
+                </SelectTemplate>
+                <SelectTemplate T="CommandEquipmentTypeSub"
+                            Clearable=true
+                            Label="Sub Type"
+                            Elements="@DialogData.EquipmentTypeSubs"
+                            Change=@(()=>ChangeEquipmentTypeSub(Model.EquipmentType.Id))
+                            PropertyName="Name"
+                            Disabled=@((Model.EquipmentType==null||Model.EquipmentType.Id==0))
+                            @bind-Model=@Model.EquipmentTypeSub>
+
+                </SelectTemplate>
+                @if (!Model.BudgetItem)
+                {
+                    <TextBoxTemplate @bind-Value=@Model.TagNumber Label="Tag Number">
+
+                    </TextBoxTemplate>
+
+
+                    <FieldTemplate Label="Tag Id" Value=@Model.TagId></FieldTemplate>
+                }
+
+
+            </RadzenCard>
+        </Left>
+        <Rigth>
+            <RadzenCard>
+                <SelectTemplate T="CommandBrand" Elements="@DialogData.Brands" Label="Brand or Service" Change=@(()=>ChangeBrand(Model.Brand.Id))
+                            Clearable=true
+                            PropertyName="Name" @bind-Model=@Model.Brand>
+
+                </SelectTemplate>
+                <SelectTemplate T="CommandSupplier"
+                            Clearable=true
+                            Change=@(()=>ChangeSupplier(Model.Supplier.Id))
+                            Elements="@DialogData.Suppliers" Label="Supplier"
+                            Disabled=@(Model.Brand==null||Model.Brand.Id==0)
+                            PropertyName="Name" @bind-Model=@Model.Supplier>
+
+                </SelectTemplate>
+
+                <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Outer Material"
+                            Clearable=true
+                            Change=@(()=>ChangeOuterMaterial(Model.MaterialOuter.Id))
+                            PropertyName="Name" @bind-Model=@Model.MaterialOuter>
+
+                </SelectTemplate>
+                <SelectTemplate T="CommandMaterial" Elements="@DialogData.Materials" Label="Inner Material"
+                            Clearable=true
+                            Change=@(()=>ChangeOuterInnerMaterial(Model.InnerMaterial.Id))
+                            PropertyName="Name" @bind-Model=@Model.InnerMaterial>
+
+                </SelectTemplate>
+
+                <TextBoxTemplate @bind-Value="@Model.Model"
+                             Label="Equipment Model"
+                             Rows="3"></TextBoxTemplate>
+                <TextBoxTemplate @bind-Value="@Model.Reference"
+                             Label="Reference"
+                             Rows="3"></TextBoxTemplate>
+                @if (!Model.BudgetItem)
+                {
+                    <TextBoxTemplate @bind-Value="@Model.SerialNumber"
+                             Label="Serial Number"></TextBoxTemplate>
+                }
+
+            </RadzenCard>
+        </Rigth>
+    </Panel>
+}
+
+@code {
+    bool debug = true;
+
+}

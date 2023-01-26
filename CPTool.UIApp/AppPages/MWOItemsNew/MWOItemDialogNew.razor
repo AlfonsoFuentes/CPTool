@@ -1,0 +1,112 @@
+﻿@page "/MWOItemDialog/{MWOId:int}/{Budget:bool}"
+@page "/MWOItemDialog/{MWOId:int}/{MWOItemId:int}/{Budget:bool}"
+<div class="row" style="margin-bottom: 1rem">
+
+
+    <div class="row">
+        <ToolBarDialogTemplate OnGoBack="GoBack" OnSave="Save" OnExportClick="ReportDialog"></ToolBarDialogTemplate>
+    </div>
+    @if (errorVisible)
+    {
+        <div class="row">
+            @foreach (var row in errors)
+            {
+                <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
+                    @row
+                </RadzenAlert>
+            }
+        </div>
+    }
+    <div class="row">
+        <CascadingValue Value="this">
+            @if (loaded)
+            {
+                <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Style="width:100%" RenderMode="TabRenderMode.Client">
+                    <Tabs>
+                        <RadzenTabsItem Text="Name">
+                            <ChapterDialogNew ></ChapterDialogNew>
+                        </RadzenTabsItem>
+
+                        <RadzenTabsItem Text="Specs">
+                            <SpecsDialogNew ></SpecsDialogNew>
+                        </RadzenTabsItem>
+                        @*<RadzenTabsItem Text="Accesories" Visible=@VisibleAccesories>
+                    @*<AccesoriesDialog></AccesoriesDialog>
+                    </RadzenTabsItem>*@
+                        <RadzenTabsItem Text="Nozzles" Visible=@VisibleNozzle>
+                            <MWOItemNozzlesDialogNew></MWOItemNozzlesDialogNew>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Signals" Visible=@VisibleSignals>
+                            <SignalListDialogNew></SignalListDialogNew>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Process Conditions" Visible=@VisibleNozzle>
+                            <ProcessConditionsDialogNew></ProcessConditionsDialogNew>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="PurchaseOrder" Visible=@VisiblePurchaseOrder>
+                            <PurchaseOrderDialogBudgetList></PurchaseOrderDialogBudgetList>
+                        </RadzenTabsItem>
+
+
+                    </Tabs>
+                </RadzenTabs>
+            }
+
+            @if (CoincidenceEquipments > 0)
+            {
+                
+                <RadzenButton ButtonStyle="ButtonStyle.Success" Click="@ShowDialogCoincidences" @onclick:preventDefault>
+                    Equipments as Required
+                    <RadzenBadge Variant="Variant.Outlined" BadgeStyle="BadgeStyle.Light" Text="@CoincidenceEquipments.ToString()" Class="ml-2" />
+                </RadzenButton>
+            }
+        </CascadingValue>
+    </div>
+</div>
+
+@if (debug)
+{
+
+}
+@code {
+    bool debug = true;
+   
+    
+    int CoincidenceEquipments = 0;
+    TabPosition tabPosition = TabPosition.Top;
+    void OnChange(int index)
+    {
+        StateHasChanged();
+    }
+
+    bool VisibleNozzle => OnVisibleNozzle();
+    bool VisibleAccesories => OnVisibleAccesories();
+    bool VisibleSignals => OnVisibleVisibleSignals();
+    bool VisiblePurchaseOrder => OnVisiblePurchaseOrders();
+    bool OnVisibleNozzle()
+    {
+        if (Budget||Model.BudgetItem) return false;
+        if (Model.Chapter.Id == 6 || Model.Chapter.Id == 4 || Model.Chapter.Id == 7) return true;
+
+        return false;
+    }
+    bool OnVisibleAccesories()
+    {
+       if (Budget||Model.BudgetItem) return false;
+        if (Model.Chapter.Id == 7) return true;
+
+        return false;
+    }
+    bool OnVisibleVisibleSignals()
+    {
+       if (Budget||Model.BudgetItem) return false;
+        if (Model.Chapter.Id == 4 || Model.Chapter.Id == 7) return true;
+
+        return false;
+    }
+    bool OnVisiblePurchaseOrders()
+    {
+        if (Model.Id == 0) return false;
+
+        return true;
+    }
+}

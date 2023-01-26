@@ -26,6 +26,7 @@ namespace CPToolCQRS.Infrastructure.Repositories
                .Include(x => x.ProcessFluid)
                .Include(x => x.Diameter)
                .Include(x => x.InnerMaterial)
+               .Include(x => x.MaterialOuter)
                .Include(x => x.PurchaseOrderItems!).ThenInclude(x=>x.PurchaseOrder);
             ;
 

@@ -14,10 +14,9 @@ namespace CPTool.UIApp
                 var context = scope.ServiceProvider.GetService<TableContext>();
                 if (context != null)
                 {
-                    //await UpdateEquipmentItem(context);
-                    //await UpdatePiping(context);
-                    //await UpdateInstrument(context);
-                    //context.SaveChanges();
+                    await UpdateNomenclador(context);
+
+                    context.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -33,12 +32,23 @@ namespace CPTool.UIApp
             int nomeclador = 1;
             foreach (var mwo in mwolist)
             {
-                nomeclador = 1;
-                foreach (var item in mwo.MWOItems.Where(x => x.BudgetItem == true).OrderBy(x=>x.ChapterId).ThenBy(x => x.Id))
+
+                var chapters = mwo.MWOItems.Select(x => x.Chapter).GroupBy(x=>x).Select(x=>x.Key).ToList();
+                foreach (var row in chapters)
                 {
-                    item.Nomenclatore = $"{item.TagLetter}{nomeclador}";
-                    nomeclador++;
+
+                    nomeclador = 1;
+                    var items = mwo.MWOItems.Where(x => x.BudgetItem == true && x.ChapterId == row.Id).OrderBy(x => x.Id).ToList();
+                    foreach (var item in items)
+                    {
+                    
+                        item.Order = nomeclador;
+                        nomeclador++;
+                        db.MWOItems.Update(item);
+                    }
                 }
+
+
             }
         }
     }

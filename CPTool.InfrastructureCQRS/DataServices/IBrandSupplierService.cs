@@ -4,6 +4,7 @@ using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Brands.Queries.Export;
 using CPTool.ApplicationCQRS.Features.BrandSuppliers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ConnectionTypes.Queries.Export;
+using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Suppliers.Queries.Export;
 using CPTool.ApplicationCQRS.Features.TaxCodeLDs.Commands.CreateUpdate;
@@ -21,6 +22,7 @@ using CPTool.ApplicationCQRSFeatures.TaxCodeLDs.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.TaxCodeLPs.Queries.GetList;
 using CPTool.Domain.Entities;
 using MediatR;
+using Microsoft.IdentityModel.Tokens;
 using System.Runtime.InteropServices;
 
 
@@ -43,10 +45,12 @@ namespace CPTool.InfrastructureCQRS.Services
         Task<List<CommandBrand>> GetAllBrand();
         Task<List<CommandSupplier>> GetAllSupplier();
         Task<List<CommandBrandSupplier>> GetAllBrandSupplier();
-        
+
         Task<ExportBaseResponse> GetFiletoExportBrand(string type, List<CommandBrand> toExport);
         Task<ExportBaseResponse> GetFiletoExportSupplier(string type, List<CommandSupplier> toExport);
         Task<SupplierDialogData> GetSupplierDataDialog();
+        List<CommandBrand> SearchListBrand(List<CommandBrand> brands, string searched);
+        List<CommandSupplier> SearchListSupplier(List<CommandSupplier> suppliers, string searched);
     }
     public class BrandSupplierService : IBrandSupplierService
     {
@@ -71,7 +75,7 @@ namespace CPTool.InfrastructureCQRS.Services
 
         public async Task<BrandCommandResponse> AddUpdateBrand(CommandBrandSupplier command)
         {
-            var result = await mediator.Send(command.Brand);
+            var result = await mediator.Send(command.Brand!);
             command.Brand = result.ResponseObject;
             await mediator.Send(command);
             return result;
@@ -92,20 +96,20 @@ namespace CPTool.InfrastructureCQRS.Services
             GetBrandDetailQuery command = new() { Id = id };
 
             return await mediator.Send(command);
-     
+
         }
 
         public async Task<CommandSupplier> GetByIdSupplier(int id)
         {
-            GetSupplierDetailQuery command = new() { Id=id };
+            GetSupplierDetailQuery command = new() { Id = id };
             return await mediator.Send(command);
         }
 
-        public async  Task<List<CommandBrand>> GetAllBrand()
+        public async Task<List<CommandBrand>> GetAllBrand()
         {
             GetBrandsListQuery command = new();
-        return await mediator.Send(command);
-            
+            return await mediator.Send(command);
+
 
         }
 
@@ -113,7 +117,7 @@ namespace CPTool.InfrastructureCQRS.Services
         {
             GetSuppliersListQuery command = new();
             return await mediator.Send(command);
-          
+
         }
 
         public async Task<ExportBaseResponse> GetFiletoExportBrand(string type, List<CommandBrand> toExport)
@@ -127,7 +131,7 @@ namespace CPTool.InfrastructureCQRS.Services
         public async Task<ExportBaseResponse> GetFiletoExportSupplier(string type, List<CommandSupplier> toExport)
         {
             ExportSuppliersQuery export = new();
-            export.List=toExport;
+            export.List = toExport;
             export.Type = type;
             return await mediator.Send(export);
         }
@@ -145,12 +149,54 @@ namespace CPTool.InfrastructureCQRS.Services
             return result;
         }
 
-       
+
 
         public async Task<List<CommandBrandSupplier>> GetAllBrandSupplier()
         {
             GetBrandSuppliersListQuery command = new();
             return await mediator.Send(command);
+        }
+        public List<CommandBrand> SearchListBrand(List<CommandBrand> brands, string searched)
+        {
+            List<CommandBrand> result = new();
+            if (searched.IsNullOrEmpty()) return brands;
+            if (brands.Any(x => x.Name.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(brands.Where(x => x.Name.ToLower().Contains(searched.ToLower())));
+
+            }
+            if (brands.Any(x => x.BrandTypeName.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(brands.Where(x => x.BrandTypeName.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+            return result;
+        }
+        public List<CommandSupplier> SearchListSupplier(List<CommandSupplier> suppliers, string searched)
+        {
+            List<CommandSupplier> result = new();
+            if (searched.IsNullOrEmpty()) return suppliers;
+            if (suppliers.Any(x => x.Name.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(suppliers.Where(x => x.Name.ToLower().Contains(searched.ToLower())));
+
+            }
+            if (suppliers.Any(x => x.VendorCode!.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(suppliers.Where(x => x.VendorCode!.ToLower().Contains(searched.ToLower() )&& !result.Any(y => y.Id == x.Id)));
+
+            }
+            if (suppliers.Any(x => x.TaxCodeLDName.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)))
+            {
+                result.AddRange(suppliers.Where(x => x.TaxCodeLDName.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+            if (suppliers.Any(x => x.TaxCodeLPName.ToLower().Contains(searched.ToLower())))
+            {
+                result.AddRange(suppliers.Where(x => x.TaxCodeLPName.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+
+            }
+            return result;
         }
     }
 }

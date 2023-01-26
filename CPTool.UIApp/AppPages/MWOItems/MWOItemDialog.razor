@@ -1,49 +1,17 @@
 ﻿@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRSResponses;
 @using CPTool.UIApp.AppPages.Signals
 @if (debug)
 {
 
 }
 
-<DialogTemplate Model="@Model" Save="@Save">
+<DialogTemplate Model="@Model" SaveButtonName="Close" VisibleCancelButton=false >
     <ChildContent>
         <CascadingValue Value="this">
-
-            <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Style="width:100%" RenderMode="TabRenderMode.Client">
-                <Tabs>
-                    <RadzenTabsItem Text="Name">
-                        <ChapterDialog></ChapterDialog>
-                    </RadzenTabsItem>
-
-                    <RadzenTabsItem Text="Specs">
-                        <SpecsDialog></SpecsDialog>
-                    </RadzenTabsItem>
-                    @*<RadzenTabsItem Text="Accesories" Visible=@VisibleAccesories>
-                        @*<AccesoriesDialog></AccesoriesDialog>
-                    </RadzenTabsItem>*@
-                    <RadzenTabsItem Text="Nozzles" Visible=@VisibleNozzle>
-                        <MWOItemNozzlesDialog></MWOItemNozzlesDialog>
-                    </RadzenTabsItem>
-                    <RadzenTabsItem Text="Signals" Visible=@VisibleSignals>
-                        <SignalListDialog></SignalListDialog>
-                    </RadzenTabsItem>
-                    <RadzenTabsItem Text="Process Conditions" Visible=@VisibleNozzle>
-                        <ProcessConditionsDialog></ProcessConditionsDialog>
-                    </RadzenTabsItem>
-                    <RadzenTabsItem Text="PurchaseOrder" Visible=@(!Budget)>
-                        <PurchaseOrderMWOItemDialog></PurchaseOrderMWOItemDialog>
-                    </RadzenTabsItem>
-
-
-                </Tabs>
-            </RadzenTabs>
-            @if (CoincidenceEquipments > 0)
-            {
-                <RadzenButton ButtonStyle="ButtonStyle.Success" Click="@ShowDialogCoincidences">
-                    Equipments as Required
-                    <RadzenBadge Variant="Variant.Outlined" BadgeStyle="BadgeStyle.Light" Text="@CoincidenceEquipments.ToString()" Class="ml-2" />
-                </RadzenButton>
-            }
+            <SpecsDialog></SpecsDialog>
+            
+           
         </CascadingValue>
 
     </ChildContent>
@@ -62,29 +30,7 @@
         //StateHasChanged();
     }
 
-    bool VisibleNozzle => OnVisibleNozzle();
-    bool VisibleAccesories => OnVisibleAccesories();
-    bool VisibleSignals => OnVisibleVisibleSignals();
+   
 
-    bool OnVisibleNozzle()
-    {
-        if (Budget) return false;
-        if (Model.Chapter.Id == 6 || Model.Chapter.Id == 4 || Model.Chapter.Id == 7) return true;
-
-        return false;
-    }
-    bool OnVisibleAccesories()
-    {
-        if (Budget) return false;
-        if (Model.Chapter.Id == 7) return true;
-
-        return false;
-    }
-    bool OnVisibleVisibleSignals()
-    {
-        if (Budget) return false;
-        if (Model.Chapter.Id == 4 || Model.Chapter.Id == 7) return true;
-
-        return false;
-    }
+   
 }

@@ -3,6 +3,7 @@ using CPTool.ApplicationCQRS.Features.MWOs.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.Domain.Entities;
 using CPTool.InfrastructureCQRS.Services;
+using CPTool.UIApp.AppPages.MWOItemsNew.List;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 
@@ -10,28 +11,24 @@ namespace CPTool.UIApp.AppPages.ControlLoops
 {
     public partial  class ControlLoopsList
     {
+        [CascadingParameter]
+        public TabsMWOItems DialogParent { get; set; }
         [Inject]
         public IControlLoopService Service { get; set; }
         [Inject]
         public IMWOService MWOService { get; set; }
 
-        List<CommandControlLoop> Elements = new();
+        List<CommandControlLoop> Elements => DialogParent.MWOItemListData.ControlLoops;
         CommandControlLoop SelectedItem = new();
-        CommandMWO MWO = new();
-        [Parameter]
-        public int MWOId { get; set; }
+        CommandMWO Parent => DialogParent.MWOItemListData.MWO;
+       
         
-        public async Task UpdateTable()
-        {
-            MWO = await MWOService.GetById(MWOId);
-            Elements = await Service.GetAll(MWOId);
-            StateHasChanged();
-        }
+        
         async Task<bool> ShowTableDialog(CommandControlLoop model)
         {
             if(model.Id== 0) {
 
-                model.MWO = MWO;
+                model.MWO = Parent;
             }
             var result = await DialogService.OpenAsync<ControlLoopsDialog>(model.Id == 0 ? $"Add new Control Loop" : $"Edit {model.Name}",
                   new Dictionary<string, object> { { "Model", model } },  
@@ -40,7 +37,7 @@ namespace CPTool.UIApp.AppPages.ControlLoops
 
             if ((bool)result)
             {
-                Elements = await Service.GetAll(MWOId);
+                DialogParent.MWOItemListData.ControlLoops = await Service.GetAll(Parent.Id);
                 StateHasChanged();
             }
             return (bool)result;
@@ -53,7 +50,7 @@ namespace CPTool.UIApp.AppPages.ControlLoops
             if (result.Success)
             {
                 SelectedItem = new();
-                Elements = await Service.GetAll(MWOId);
+                DialogParent.MWOItemListData.ControlLoops = await Service.GetAll(Parent.Id);
                 StateHasChanged();
             }
             return result.Success;

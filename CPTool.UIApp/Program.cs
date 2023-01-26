@@ -26,7 +26,7 @@ UnitManager.RegisterByAssembly(typeof(SIUnitTypes).Assembly);
 
 var app = builder.Build();
 
-await app.ResetDatabaseAsync();
+//await app.ResetDatabaseAsync();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

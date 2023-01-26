@@ -1,6 +1,12 @@
 ﻿<div style="margin-bottom: 1rem" class="row container-fluid">
-    <div class=@classleft>@Left</div>
-    <div class=@classrigth>@Rigth</div>
+    @if (VisibleLeft)
+    {
+        <div class=@classleft>@Left</div>
+    }
+    @if (VisibleRigth)
+    {
+        <div class=@classrigth>@Rigth</div>
+    }
 </div>
 
 @code {
@@ -10,8 +16,11 @@
     public RenderFragment Rigth { get; set; }
     [Parameter]
     public int ColLeft { get; set; } = 6;
-
-    int ColRigth => 12 - ColLeft;
+    [Parameter]
+    public bool VisibleLeft { get; set; } = true;
+    [Parameter]
+    public bool VisibleRigth { get; set; } = true;
+    int ColRigth => VisibleLeft==true? 12 - ColLeft:12;
 
     string classleft => $"col-md-{ColLeft}";
     string classrigth => $"col-md-{ColRigth}";

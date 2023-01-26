@@ -1,0 +1,26 @@
+﻿@using CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
+<CascadingValue Value="Dialog">
+    <Panel VisibleLeft=@visibleleft>
+        <Left>
+            <DesignItems></DesignItems>
+        </Left>
+        <Rigth>
+            <DesignItemSelected @ref=DesignItemSelected></DesignItemSelected>
+        </Rigth>
+    </Panel>
+</CascadingValue>
+
+
+@code {
+    bool visibleleft => Model.Id == 0;
+    [CascadingParameter]
+    public PurchaseOrderDialog Dialog { get; set; }
+    public CommandPurchaseOrder Model => Dialog.Model;
+    DesignItemSelected DesignItemSelected;
+    public async Task SaveRow(CommandPurchaseOrderItem order)
+    {
+        await DesignItemSelected.SaveRow(order);
+    }
+
+}

@@ -25,10 +25,7 @@ namespace CPTool.ApplicationCQRSFeatures.PurchaseOrders.Queries.GetDetail
             if(request.Id!=0)
             {
                 var table = await _UnitOfWork.RepositoryPurchaseOrder.GetByIdAsync(request.Id);
-                //foreach (var row in table!.PurchaseOrderItems!)
-                //{
-                //    await AsignInternalItem(row.MWOItem!);
-                //}
+               
                 dto = _mapper.Map<CommandPurchaseOrder>(table);
             }
             

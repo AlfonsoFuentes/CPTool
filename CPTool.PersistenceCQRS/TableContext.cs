@@ -73,8 +73,8 @@ namespace CPToolCQRS.Infrastructure.Persistence
             modelBuilder.Entity<MWOItem>().HasOne(c => c.Diameter).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MWOItem>().HasOne(c => c.PipeClass).WithMany(t => t.MWOItems).OnDelete(DeleteBehavior.NoAction);
 
-           
-
+            modelBuilder.Entity<MWOItem>().Navigation(e => e.MaterialOuter).AutoInclude();
+            modelBuilder.Entity<MWOItem>().Navigation(e => e.InnerMaterial).AutoInclude();
             modelBuilder.Entity<PipeClass>().HasMany(c => c.PipeDiameters).WithOne(t => t.dPipeClass).OnDelete(DeleteBehavior.Cascade);
             
 

@@ -10,67 +10,73 @@ using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Radzen;
+using CPTool.UIApp.AppPages.MWOItems;
+using CPTool.UIApp.AppPages.PurchaseOrders.Dialog;
 
 namespace CPTool.UIApp.AppPages.PurchaseOrders
 {
     public partial class PurchaseOrderList
     {
+       
         [Inject]
         public IPurchaseOrderService Service { get; set; }
         [Inject]
         public IMWOService MWOService { get; set; }
 
-        List<CommandPurchaseOrder> Elements = new();
+        List<CommandPurchaseOrder> Elements { get; set; } = new();
         CommandPurchaseOrder SelectedItem = new();
-        [Parameter]
-        public int MWOId { get; set; }
 
-        CommandMWO Parent;
-
-        bool DisableDownpayment => SelectedItem.Id == 0 || (int)SelectedItem.PurchaseOrderStatus > (int)PurchaseOrderApprovalStatus.Created;
         protected override async Task OnInitializedAsync()
         {
-            if (MWOId == 0)
-                await UpdateTable();
-
+            Elements = await Service.GetAll(0);
+           
         }
-        public async Task UpdateTable()
+      
+
+        bool DisableDownpayment => SelectedItem.Id == 0 || (int)SelectedItem.PurchaseOrderStatus > (int)PurchaseOrderApprovalStatus.Created;
+        Task<bool> ShowTableDialog(CommandPurchaseOrder model)
         {
-            Parent = await MWOService.GetById(MWOId);
-            Elements = await Service.GetAll(MWOId);
-            StateHasChanged();
-        }
-        async Task<bool> ShowTableDialog(CommandPurchaseOrder model)
-        {
-            if (model.Id == 0)
-            {
-
-                model.MWO = Parent;
-            }
-
-            var result = await DialogService.OpenAsync<PurchaseOrderDialog>(model.Id == 0 ? $"Add new Purchaser to {Parent.Name}" : $"Edit {model.PONumber}",
-                  new Dictionary<string, object> { { "Model", model } },
-               new DialogOptions() { Width = "1200px", Height = "700px", Resizable = true, Draggable = true });
+            //if (model.Id == 0)
+            //{
+            //    NavigationManager.NavigateTo($"/PurchaseOrderDialog/{DialogParent.Model.Id}");
+            //}
+            //else
+            //{
+            //    NavigationManager.NavigateTo($"/PurchaseOrderDialog/{model..Model.Id}/{model.Id}");
+            //}
 
 
-            if (result == null) return false;
-
-            if ((bool)result)
-            {
-                Elements = await Service.GetAll(MWOId);
-
-                StateHasChanged();
-            }
-            return (bool)result;
+            return Task.FromResult(true);
 
         }
+
+        //async Task<bool> ShowTableDialog(CommandPurchaseOrder model)
+        //{
+
+
+        //    var result = await DialogService.OpenAsync<PurchaseOrderDialog>( $"Edit {model.PONumber}",
+        //          new Dictionary<string, object> { { "Model", model } },
+        //       new DialogOptions() { Width = "1200px", Height = "700px", Resizable = true, Draggable = true });
+
+
+        //    if (result == null) return false;
+
+        //    if ((bool)result)
+        //    {
+        //        Elements = await Service.GetAll(0);
+
+        //        StateHasChanged();
+        //    }
+        //    return (bool)result;
+
+        //}
         async Task<bool> Delete(CommandPurchaseOrder toDelete)
         {
 
             var result = await Service.Delete(toDelete.Id);
             if (result.Success)
             {
-                Elements = await Service.GetAll(MWOId);
+                Elements = await Service.GetAll(0);
 
                 StateHasChanged();
             }
@@ -104,7 +110,7 @@ namespace CPTool.UIApp.AppPages.PurchaseOrders
         }
         async Task SearchChanged(string searched)
         {
-            Elements = await Service.GetAllWithSearch(MWOId, searched);
+            Elements = await Service.GetAllWithSearch( searched);
 
         }
     }

@@ -37,6 +37,7 @@ using CPTool.ApplicationCQRS.Responses;
 using CPTool.Domain.Entities;
 using MediatR;
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
@@ -59,7 +60,7 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 
         public List<CommandPropertySpecification> PropertySpecifications { get; set; } = new();
         public List<CommandPurchaseOrderItem> PurchaseOrderItems { get; set; } = new();
-        public List<CommandPurchaseOrder> PurchaseOrders => PurchaseOrderItems.Select(x=>x.PurchaseOrder!).ToList();
+        public List<CommandPurchaseOrder> PurchaseOrders => PurchaseOrderItems.Select(x => x.PurchaseOrder!).ToList();
 
 
         public int? ChapterId => Chapter?.Id == 0 ? null : Chapter?.Id;
@@ -91,7 +92,7 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
 
         string GetTagId()
         {
-           
+
             switch (Chapter?.Id)
             {
                 case 4:
@@ -130,10 +131,10 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
         public void AssignInternalItem()
         {
 
-            var chapterlist = MWO!.MWOItems!.Where(x => x.ChapterId != 0).ToList();
+            var list = MWO!.MWOItems!.Where(x => x.ChapterId == ChapterId && x.BudgetItem == true).OrderBy(x=>x.Order).ToList();
 
-            var list = chapterlist.Where(x => x.ChapterId == ChapterId).ToList();
-            Order = list.Count == 0 ? 1 : list.OrderBy(x => x.Order).Last().Order + 1;
+           
+            Order = list.Count == 0 ? 1 : list.Last().Order + 1;
 
 
 
@@ -305,7 +306,7 @@ namespace CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate
             {
                 _Readout = value;
 
-               
+
 
 
             }

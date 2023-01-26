@@ -1,0 +1,28 @@
+﻿@using CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
+@using CPTool.UIApp.AppPages.PurchaseOrders.Dialog.DesignItems
+
+<CascadingValue Value="Dialog">
+    <Panel VisibleLeft=@visibleleft>
+        <Left>
+            <BudgetItems></BudgetItems>
+        </Left>
+        <Rigth>
+            <BudgetItemSelected @ref=BudgetItemSelected></BudgetItemSelected>
+        </Rigth>
+    </Panel>
+</CascadingValue>
+
+
+@code {
+    bool visibleleft => Model.Id == 0;
+    [CascadingParameter]
+    public PurchaseOrderDialog Dialog { get; set; }
+    public CommandPurchaseOrder Model => Dialog.Model;
+    BudgetItemSelected BudgetItemSelected;
+    public async Task SaveRow(CommandPurchaseOrderItem order)
+    {
+        await BudgetItemSelected.SaveRow(order);
+    }
+
+}

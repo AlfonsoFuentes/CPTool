@@ -17,48 +17,7 @@ namespace CPTool.UIApp.AppPages.MWOItems
         protected MWOItemDialogData DialogData => DialogParent.DialogData;
 
 
-        async Task ChangeBrand( int brandid)
-        {
-            Model.Supplier = new();
-            DialogParent.PreviousValues.BrandId = brandid;
-            await DialogParent.VerifiyePrevious();
-            DialogData.Suppliers=await DialogParent.Service.GetSupliersByBrand(brandid);    
-        }
-        async Task ChangeEquipmentType(int equipmenttypeid)
-        {
-            Model.EquipmentTypeSub = new();
-            DialogParent.PreviousValues.EquipmentTypeId= equipmenttypeid;
-            await DialogParent.VerifiyePrevious();
-            DialogData.EquipmentTypeSubs=await DialogParent.Service.GetEquipmentTypeSubByEquipmentType(equipmenttypeid);
-        }
-        async Task ChangeEquipmentTypeSub(int equipmenttypeSubid)
-        {
-          
-            DialogParent.PreviousValues.EquipmentTypeSubId = equipmenttypeSubid;
-            await DialogParent.VerifiyePrevious();
-           
-        }
-        async Task ChangeSupplier(int supplierid)
-        {
-
-            DialogParent.PreviousValues.SupplierId = supplierid;
-            await DialogParent.VerifiyePrevious();
-
-        }
-        async Task ChangeOuterMaterial(int outermaterial)
-        {
-
-            DialogParent.PreviousValues.OuterMaterialId = outermaterial;
-            await DialogParent.VerifiyePrevious();
-
-        }
-        async Task ChangeOuterInnerMaterial(int innermaterialid)
-        {
-
-            DialogParent.PreviousValues.InnerMaterialId = innermaterialid;
-            await DialogParent.VerifiyePrevious();
-
-        }
+       
        
     }
 }

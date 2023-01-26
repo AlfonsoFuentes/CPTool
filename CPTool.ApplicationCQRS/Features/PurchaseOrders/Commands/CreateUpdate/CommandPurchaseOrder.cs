@@ -7,6 +7,7 @@ using CPTool.ApplicationCQRS.Features.Takss.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.Domain.Enums;
 using MediatR;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
 {
@@ -37,12 +38,12 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
         public PurchaseOrderApprovalStatus PurchaseOrderStatus { get; set; } = PurchaseOrderApprovalStatus.Draft;
 
         public string PrizeUSDValue => String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", PrizeUSD);
-        public double PrizeUSD => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(x => x.PrizeUSD);
+        public double PrizeUSD => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true).Sum(x => x.PrizeUSD);
         public string PrizeCurrencyValue => String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", PrizeCurrency);
-        public double PrizeCurrency => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(x => x.PrizeCurrency);
-        public double PrizeCurrencyTax => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(x => x.PrizeCurrencyTax);
+        public double PrizeCurrency => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Where(x=>x.MWOItem!.BudgetItem==true).Sum(x => x.PrizeCurrency);
+        public double PrizeCurrencyTax => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true).Sum(x => x.PrizeCurrencyTax);
 
-        public double TotalPrizeCurrency => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Sum(x => x.TotalPrizeCurrency);
+        public double TotalPrizeCurrency => PurchaseOrderItems.Count == 0 ? 0 : PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true).Sum(x => x.TotalPrizeCurrency);
 
         public string CurrencyName => Currency.ToString();
         public Currency Currency { get; set; } = Currency.COP;
@@ -62,20 +63,22 @@ namespace CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate
         public string SupplierName => pSupplier!.Name;
 
         public List<CommandPurchaseOrderItem> PurchaseOrderItems { get; set; } = new();
+        public List<CommandPurchaseOrderItem> PurchaseOrderItemsBudget => PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true).OrderBy(x => x.MWOItem!.Nomenclatore).ToList();
+        public List<CommandPurchaseOrderItem> PurchaseOrderItemsDesign => PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == false).OrderBy(x => x.MWOItem!.Chapter!.LetterName).ThenBy(x => x.MWOItem.TagNumber).ToList();
         public List<CommandDownPayment>? DownPayments { get; set; }
         public List<CommandTaks>? Taks { get; set; }
 
         public CommandTaks? CommandTaks => Taks!.Count == 0 ? null : Taks.FirstOrDefault();
 
         public double ActualValue => (PurchaseOrderItems.Count == 0) ? 0 : 
-            StatusPurchaseOrder == StatusPurchaseOrder.Actual ? PurchaseOrderItems.Where(x=>x!.MWOItem!.ChapterId!=1).Sum(x => x.PrizeUSD) : 0;
+            StatusPurchaseOrder == StatusPurchaseOrder.Actual ? PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true&&x!.MWOItem!.ChapterId!=1).Sum(x => x.PrizeUSD) : 0;
         public double CommitmentValue => (PurchaseOrderItems.Count == 0) ? 0 : 
-            StatusPurchaseOrder == StatusPurchaseOrder.Commitment ? PurchaseOrderItems.Where(x => x!.MWOItem!.ChapterId != 1).Sum(x => x.PrizeUSD) : 0;
+            StatusPurchaseOrder == StatusPurchaseOrder.Commitment ? PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true && x!.MWOItem!.ChapterId != 1).Sum(x => x.PrizeUSD) : 0;
 
         public double ActualValueExpenses => (PurchaseOrderItems.Count == 0) ? 0 :
-           StatusPurchaseOrder == StatusPurchaseOrder.Actual ? PurchaseOrderItems.Where(x => x!.MWOItem!.ChapterId == 1).Sum(x => x.PrizeUSD) : 0;
+           StatusPurchaseOrder == StatusPurchaseOrder.Actual ? PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true && x!.MWOItem!.ChapterId == 1).Sum(x => x.PrizeUSD) : 0;
         public double CommitmentValueExpenses => (PurchaseOrderItems.Count == 0) ? 0 :
-            StatusPurchaseOrder == StatusPurchaseOrder.Commitment ? PurchaseOrderItems.Where(x => x!.MWOItem!.ChapterId == 1).Sum(x => x.PrizeUSD) : 0;
+            StatusPurchaseOrder == StatusPurchaseOrder.Commitment ? PurchaseOrderItems.Where(x => x.MWOItem!.BudgetItem == true && x!.MWOItem!.ChapterId == 1).Sum(x => x.PrizeUSD) : 0;
         public StatusPurchaseOrder StatusPurchaseOrder => GetStatusPurchaseOrder();
         public string PurchaseOrderStatusName => StatusPurchaseOrder.ToString();
         StatusPurchaseOrder GetStatusPurchaseOrder()

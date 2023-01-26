@@ -6,7 +6,7 @@ using CPTool.UIApp.AppPages.UserRequirments;
 using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
-using CPTool.UIApp.AppPages.MWOItems;
+using CPTool.UIApp.AppPages.MWOItemsNew.List;
 using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
 using Autofac.Core;
 
@@ -14,29 +14,26 @@ namespace CPTool.UIApp.AppPages.Signals
 {
     public partial class SignalsList
     {
+        [CascadingParameter]
+        public TabsMWOItems DialogParent { get; set; }
 
         [Inject]
         public ISignalService Service { get; set; }
         [Inject]
         public IMWOService MWOService { get; set; }
 
-        List<CommandSignal> Elements = new();
+        List<CommandSignal> Elements => DialogParent.MWOItemListData.Signals;
         CommandSignal SelectedItem = new();
 
-        CommandMWO MWO = new();
+        CommandMWO Parent => DialogParent.MWOItemListData.MWO;
 
-        [Parameter]
-        public int MWOId { get; set; }
-
-        public async Task UpdateTable()
-        {
-            MWO = await MWOService.GetById(MWOId);
-            Elements = await Service.GetAll(MWOId);
-            StateHasChanged();
-        }
+       
         async Task<bool> ShowTableDialog(CommandSignal model)
         {
-
+            if(model.Id==0)
+            {
+                model.MWO = Parent;
+            }
 
             var result = await DialogService.OpenAsync<SignalsDialog>(model.Id == 0 ? $"Add new Signal to {model.MWOName}" : $"Edit {model.Name}",
                   new Dictionary<string, object> { { "Model", model } },
@@ -47,7 +44,7 @@ namespace CPTool.UIApp.AppPages.Signals
 
             if ((bool)result)
             {
-                Elements = await Service.GetAll(MWOId);
+                DialogParent.MWOItemListData.Signals = await Service.GetAll(Parent.Id);
 
                 StateHasChanged();
             }
@@ -60,7 +57,7 @@ namespace CPTool.UIApp.AppPages.Signals
             var result = await Service.Delete(toDelete.Id);
             if (result.Success)
             {
-                Elements = await Service.GetAll(MWOId);
+                DialogParent.MWOItemListData.Signals = await Service.GetAll(Parent.Id);
 
                 StateHasChanged();
             }

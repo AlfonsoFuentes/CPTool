@@ -5,29 +5,26 @@ using CPTool.ApplicationCQRS.Responses;
 using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
+using CPTool.UIApp.AppPages.MWOItemsNew.List;
 
 namespace CPTool.UIApp.AppPages.UserRequirments
 {
     public partial class UserRequirmentsList
     {
+        [CascadingParameter]
+        public TabsMWOItems DialogParent { get; set; }
         [Inject]
         public IUserRequirementService Service { get; set; }
         [Inject]
         public IMWOService MWOService { get; set; }
 
-        List<CommandUserRequirement> Elements = new();
+        List<CommandUserRequirement> Elements => DialogParent.MWOItemListData.UserRequirements;
         CommandUserRequirement SelectedItem = new();
-        [Parameter]
-        public int MWOId { get; set; }
-      
-        CommandMWO Parent = new();
         
-        public async Task UpdateTable()
-        {
-            Parent = await MWOService.GetById(MWOId);
-            Elements = await Service.GetAll(MWOId);
-            StateHasChanged();
-        }
+      
+        CommandMWO Parent => DialogParent.MWOItemListData.MWO;
+
+       
         async Task<bool> ShowTableDialog(CommandUserRequirement model)
         {
             if (model.Id == 0)
@@ -45,7 +42,7 @@ namespace CPTool.UIApp.AppPages.UserRequirments
 
             if ((bool)result)
             {
-                Elements = await Service.GetAll(MWOId);
+                DialogParent.MWOItemListData.UserRequirements = await Service.GetAll(Parent.Id);
                
                 StateHasChanged();
             }
@@ -58,7 +55,7 @@ namespace CPTool.UIApp.AppPages.UserRequirments
             var result = await Service.Delete(toDelete.Id);
             if (result.Success)
             {
-                Elements = await Service.GetAll(MWOId);
+                DialogParent.MWOItemListData.UserRequirements = await Service.GetAll(Parent.Id);
                
                 StateHasChanged();
             }

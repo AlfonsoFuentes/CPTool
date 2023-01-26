@@ -1,6 +1,7 @@
 ﻿
 using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Chapters.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.ControlLoops.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.DeviceFunctionModifiers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.DeviceFunctions.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.EquipmentTypes.Commands.CreateUpdate;
@@ -21,11 +22,14 @@ using CPTool.ApplicationCQRS.Features.ProcessConditions.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.ProcessFluids.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.PurchaseOrders.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Readouts.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.Signals.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Features.UnitaryBasePrizes.Commands.CreateUpdate;
+using CPTool.ApplicationCQRS.Features.UserRequirements.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.ApplicationCQRSFeatures.Brands.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.Chapters.Queries.GetList;
+using CPTool.ApplicationCQRSFeatures.ControlLoops.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.DeviceFunctionModifiers.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.DeviceFunctions.Queries.GetList;
 
@@ -38,6 +42,7 @@ using CPTool.ApplicationCQRSFeatures.MeasuredVariables.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.MWOItems.Commands.Delete;
 using CPTool.ApplicationCQRSFeatures.MWOItems.Queries.GetDetail;
 using CPTool.ApplicationCQRSFeatures.MWOItems.Queries.GetList;
+using CPTool.ApplicationCQRSFeatures.MWOs.Queries.GetDetail;
 using CPTool.ApplicationCQRSFeatures.Nozzles.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.PipeClasss.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.PipeDiameters.Queries.GetList;
@@ -49,14 +54,39 @@ using CPTool.ApplicationCQRSFeatures.Readouts.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.Signals.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.Suppliers.Queries.GetList;
 using CPTool.ApplicationCQRSFeatures.UnitaryBasePrizes.Queries.GetList;
+using CPTool.ApplicationCQRSFeatures.UserRequirements.Queries.GetList;
 using CPTool.Domain.Entities;
 using CPTool.Domain.Enums;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 
 namespace CPTool.InfrastructureCQRS.Services
 {
+    public class MWOItemListData
+    {
+        public CommandMWO MWO { get; set; } = new();
+        public List<CommandMWOItem> BudgetItems { get; set; } = new();
+        public List<CommandMWOItem> MWOItems { get; set; } = new();
+        public List<CommandPurchaseOrder> PurchaseOrder { get; set; } = new();
+        public List<CommandSignal> Signals { get; set; } = new();
+        public List<CommandControlLoop> ControlLoops { get; set; } = new();
+        public List<CommandUserRequirement> UserRequirements { get; set; } = new();
+        public double SumBudget { get; set; } = 0;
+        public double SumAssigned { get; set; } = 0;
+        public double SumActual { get; set; } = 0;
+        public double SumCommitment { get; set; } = 0;
+        public double SumPending { get; set; } = 0;
+        public void GetSummaryBudgetItem()
+        {
+            SumBudget = BudgetItems.Count == 0 ? 0 : BudgetItems.Sum(y => y.BudgetPrize);
+            SumAssigned = BudgetItems.Count == 0 ? 0 : BudgetItems.Sum(y => y.Assigned);
+            SumActual = BudgetItems.Count == 0 ? 0 : BudgetItems.Sum(y => y.Actual);
+            SumCommitment = BudgetItems.Count == 0 ? 0 : BudgetItems.Sum(y => y.Commitment);
+            SumPending = BudgetItems.Count == 0 ? 0 : BudgetItems.Sum(y => y.Pending);
+        }
+    }
     public class MWOItemDialogData
     {
         public List<CommandChapter> Chapters { get; set; } = new();
@@ -86,19 +116,7 @@ namespace CPTool.InfrastructureCQRS.Services
 
         public CommandNozzle OriginalNozzlePipeStart { get; set; } = new();
         public CommandNozzle OriginalNozzlePipeFinish { get; set; } = new();
-        public double SumBudget { get; set; } = 0;
-        public double SumAssigned { get; set; } = 0;
-        public double SumActual { get; set; } = 0;
-        public double SumCommitment { get; set; } = 0;
-        public double SumPending { get; set; } = 0;
-        public void GetSummary(List<CommandMWOItem> Elements)
-        {
-            SumBudget = Elements.Count == 0 ? 0 : Elements.Sum(y => y.BudgetPrize);
-            SumAssigned = Elements.Count == 0 ? 0 : Elements.Sum(y => y.Assigned);
-            SumActual = Elements.Count == 0 ? 0 : Elements.Sum(y => y.Actual);
-            SumCommitment = Elements.Count == 0 ? 0 : Elements.Sum(y => y.Commitment);
-            SumPending = Elements.Count == 0 ? 0 : Elements.Sum(y => y.Pending);
-        }
+       
 
     }
     public interface IMWOItemService
@@ -131,6 +149,10 @@ namespace CPTool.InfrastructureCQRS.Services
         Func<CommandNozzle, Task<bool>> ShowDialog { get; set; }
         Task<bool> OnShowDialog(CommandNozzle nozzle);
         Task<List<CommandMWOItem>> GetAllWithSearch(int MWOId, string search);
+        Task AssingNomenclatore(CommandMWOItem model);
+        Task<MWOItemListData> GetMWOList(int MWOId);
+        Task PassDataFoundToModel(CommandMWOItem commandMWOItem, CommandMWOItem founded);
+
     }
     public class MWOItemService : IMWOItemService
     {
@@ -174,7 +196,7 @@ namespace CPTool.InfrastructureCQRS.Services
             GetMWOItemsListQuery command = new()
             {
                 MWOId = MWOId,
-
+                Budget=false,
             };
             MWOItemOriginal = await mediator.Send(command);
             return MWOItemOriginal;
@@ -223,7 +245,7 @@ namespace CPTool.InfrastructureCQRS.Services
             switch (Model.ChapterId)
             {
                 case 4: return await GetDataByEquipment(dataResponse);
-                case 6: return await GetDataByPiping(dataResponse, Model.MWO);
+                case 6: return await GetDataByPiping(dataResponse, Model.MWO!);
                 case 7: return await GetDataByInstrument(dataResponse);
 
             }
@@ -313,7 +335,7 @@ namespace CPTool.InfrastructureCQRS.Services
         {
             GetMWOItemWithNozzlesListItemQuery getitemstart = new()
             {
-                MWOId = Model.MWO.Id,
+                MWOId = Model.MWO!.Id,
                 type = Domain.Enums.StreamType.Outlet,
                 ModelId = Model.Id
 
@@ -326,7 +348,7 @@ namespace CPTool.InfrastructureCQRS.Services
         {
             GetMWOItemWithNozzlesListItemQuery getitemstart = new()
             {
-                MWOId = Model.MWO.Id,
+                MWOId = Model.MWO!.Id,
                 type = Domain.Enums.StreamType.Inlet,
                 ModelId = Model.Id
 
@@ -337,7 +359,8 @@ namespace CPTool.InfrastructureCQRS.Services
         }
         public async Task<MWOItemDialogData> GetMWOItemDataDialogByModel(MWOItemDialogData dataResponse, CommandMWOItem Model)
         {
-
+           
+         
             if (Model.Chapter != null)
             {
                 await GetMWOItemDataDialogByChapter(dataResponse, Model);
@@ -573,10 +596,10 @@ namespace CPTool.InfrastructureCQRS.Services
 
 
             }
-            if (Model.FinishMWOItem.Id != 0)
+            if (Model.FinishMWOItem!.Id != 0)
             {
                 Model.FinishMWOItem = dataResponse.MWOItemsFinish.FirstOrDefault(x => x.Id == Model.FinishMWOItem.Id);
-                dataResponse.NozzlesByMWOItemsFinish = Model.FinishMWOItem.Nozzles.Where(x => x.StreamType == StreamType.Inlet).ToList();
+                dataResponse.NozzlesByMWOItemsFinish = Model.FinishMWOItem!.Nozzles.Where(x => x.StreamType == StreamType.Inlet).ToList();
             }
             else
             {
@@ -619,12 +642,64 @@ namespace CPTool.InfrastructureCQRS.Services
                 result.AddRange(items.Where(x => x.Name.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
 
             }
-            if (items.Any(x => x.Nomenclatore.ToLower().Contains(searched.ToLower())))
+            if (items.Any(x => x.Nomenclatore!.ToLower().Contains(searched.ToLower())))
             {
-                result.AddRange(items.Where(x => x.Nomenclatore.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
+                result.AddRange(items.Where(x => x.Nomenclatore!.ToLower().Contains(searched.ToLower()) && !result.Any(y => y.Id == x.Id)));
 
             }
             return result;
+        }
+
+        public async Task AssingNomenclatore(CommandMWOItem model)
+        {
+            var list = await GetAllBudget(model.MWO!.Id);
+            list = list.Where(x => x.ChapterId == model.ChapterId).OrderBy(x => x.Order).ToList();
+
+
+            model.Order = list.Count == 0 ? 1 : list.Last().Order + 1;
+        }
+
+        public async Task<MWOItemListData> GetMWOList(int MWOId)
+        {
+            MWOItemListData response = new();
+            GetMWODetailQuery mw = new() { Id= MWOId };
+            response.MWO =await mediator.Send(mw);
+
+            response.BudgetItems = await GetAllBudget(MWOId);
+            response.MWOItems = await GetAll(MWOId);
+
+            GetPurchaseOrdersListQuery po = new() { MWOId = MWOId };
+            response.PurchaseOrder = await mediator.Send(po);
+
+            GetSignalsListQuery si = new() { MWOId = MWOId };
+            response.Signals = await mediator.Send(si);
+
+            GetControlLoopsListQuery cl = new() { MWOId = MWOId };
+            response.ControlLoops = await mediator.Send(cl);
+
+            GetUserRequirementsListQuery ur = new() { MWOId = MWOId };
+            response.UserRequirements= await mediator.Send(ur);
+            return response;
+        }
+       public async Task PassDataFoundToModel(CommandMWOItem Model, CommandMWOItem founded)
+        {
+            Model.BudgetPrize = founded.Assigned;
+            Model.Model = founded.Model;
+            Model.Reference = founded.Reference;
+            Model.EquipmentType = founded.EquipmentType;
+            Model.EquipmentTypeSub = founded.EquipmentTypeSub;
+            Model.MeasuredVariable = founded.MeasuredVariable;
+            Model.MeasuredVariableModifier = founded.MeasuredVariableModifier;
+            Model.DeviceFunction = founded.DeviceFunction;
+            Model.DeviceFunctionModifier = founded.DeviceFunctionModifier;
+            Model.Readout = founded.Readout;
+            Model.InnerMaterial = founded.InnerMaterial;
+            Model.MaterialOuter = founded.MaterialOuter;
+            Model.Brand = founded.Brand;
+            Model.Supplier = founded.Supplier;
+            Model.UnitaryBasePrize = founded.UnitaryBasePrize;
+            await Task.Delay(1);
+            
         }
     }
 

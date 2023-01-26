@@ -11,10 +11,13 @@ namespace CPTool.UIApp.AppPages.Templates
         string classname => typeof(T).Name;
         [Parameter]
         public List<T> Elements { get; set; }
-        [Parameter]
-        public T Model { get; set; }
 
-        public T LocalModel { get; set; }
+        T _Model;
+        [Parameter]
+        public T Model { get { return _Model; } set{ _Model = value; } }
+
+      
+       
         [Parameter]
         public EventCallback<T> ModelChanged { get; set; }
 
@@ -28,14 +31,10 @@ namespace CPTool.UIApp.AppPages.Templates
         [Parameter]
         [EditorRequired]
         public string Label { get; set; }
-        protected override void OnInitialized()
-        {
-            LocalModel = Model == null ? new() : Model;
-            base.OnInitialized();
-        }
+       
         async Task OnChange()
         {
-            Model = LocalModel == null ? new() : LocalModel;
+            Model = _Model == null ? new() : _Model;
             await ModelChanged.InvokeAsync(Model);
             if (Change.HasDelegate) await Change.InvokeAsync();
 

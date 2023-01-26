@@ -135,7 +135,7 @@ namespace CPTool.UIApp.AppPages.Templates
         /// </summary>
         /// <value>The format.</value>
         [Parameter]
-        public string Format { get; set; } = "G6";
+        public string Format { get; set; } = "G10";
         [Parameter]
         public string Label { get; set; }
         /// <summary>

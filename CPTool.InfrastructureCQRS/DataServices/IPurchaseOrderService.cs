@@ -29,8 +29,8 @@ namespace CPTool.InfrastructureCQRS.Services
     {
         public List<CommandBrand> Brands { get; set; } = new();
         public List<CommandSupplier> Suppliers { get; set; } = new();
-        public List<CommandMWOItem> MWOItemsOriginal { get; set; } = new();
-
+        public List<CommandMWOItem> MWOItemsBudget { get; set; } = new();
+        public List<CommandMWOItem> MWOItemsDesign { get; set; } = new();
 
 
 
@@ -39,26 +39,29 @@ namespace CPTool.InfrastructureCQRS.Services
     }
     public interface IPurchaseOrderService
     {
-       
+
         Task<DeletePurchaseOrderCommandResponse> Delete(int id);
         Task<PurchaseOrderCommandResponse> AddUpdate(CommandPurchaseOrder command);
 
         Task<CommandPurchaseOrder> GetById(int id);
 
         Task<List<CommandPurchaseOrder>> GetAll(int MWOId);
-        Task<List<CommandPurchaseOrder>> GetAllWithSearch(int MWOId, string search);
+        Task<List<CommandPurchaseOrder>> GetAllWithSearch( string search);
 
         Task<ExportBaseResponse> GetFiletoExport(string type, List<CommandPurchaseOrder> List);
         Task<PurchaseOrderDialogData> GetPurchaseOrderDataDialog(CommandPurchaseOrder Model);
+
         Task<List<CommandSupplier>> GetSupplierByBrand(int brandId);
         CommandPurchaseOrderItem GetDataForAddItem(CommandMWOItem MWOItem, CommandPurchaseOrder Model);
-        void AddPurchaseOrderItemToMWOItem(CommandPurchaseOrder Model, CommandPurchaseOrderItem purchaseOrderItem, PurchaseOrderDialogData data);
-        void RemovePurchaseOrderItemFromMWOItem(CommandPurchaseOrder Model, PurchaseOrderDialogData data, int mwoitemid);
+        void AddMWOItemBudgetToPurchaseOrder(CommandPurchaseOrder Model, CommandPurchaseOrderItem purchaseOrderItem, PurchaseOrderDialogData data);
+        void AddMWOItemDesignToPurchaseOrder(CommandPurchaseOrder Model, CommandPurchaseOrderItem purchaseOrderItem, PurchaseOrderDialogData data);
+        void RemoveMWOItemBudgetFromPurchaseOrder(CommandPurchaseOrder Model, PurchaseOrderDialogData data, int mwoitemid);
+        void RemoveMWOItemDesignFromPurchaseOrder(CommandPurchaseOrder Model, PurchaseOrderDialogData data, int mwoitemid);
         bool DisableButtonSave(CommandPurchaseOrder Model);
         string GetButtonName(CommandPurchaseOrder Model);
-
-       
-
+        Task<PurchaseOrderDialogData> GetPurchaseOrderDataNewDialog(CommandPurchaseOrder Model);
+        Task AddMWOItemBudget(CommandMWOItem MWOItem, CommandPurchaseOrder Purchaseorder, PurchaseOrderDialogData DialogData);
+        Task AddMWOItemDesign(CommandMWOItem MWOItem, CommandPurchaseOrder Purchaseorder, PurchaseOrderDialogData DialogData);
     }
     public class PurchaseOrderService : IPurchaseOrderService
     {
@@ -99,11 +102,11 @@ namespace CPTool.InfrastructureCQRS.Services
         public async Task<List<CommandPurchaseOrder>> GetAll(int MWOId)
         {
             GetPurchaseOrdersListQuery command = new() { MWOId = MWOId };
-            PurchaseOrdersOriginal= await mediator.Send(command);
+            PurchaseOrdersOriginal = await mediator.Send(command);
             return PurchaseOrdersOriginal;
         }
-        
-        public Task<List<CommandPurchaseOrder>> GetAllWithSearch(int MWOId, string search)
+
+        public Task<List<CommandPurchaseOrder>> GetAllWithSearch( string search)
         {
             return Task.FromResult(SearchList(PurchaseOrdersOriginal, search));
         }
@@ -132,19 +135,47 @@ namespace CPTool.InfrastructureCQRS.Services
 
 
             data.InlineEdit = Model.Id == 0;
-            GetMWOItemsListQuery mwoitems = new() { MWOId = Model.MWO.Id, Budget = true };
-            data.MWOItemsOriginal = await mediator.Send(mwoitems);
 
+
+            GetMWOItemsListQuery mwoitems = new() { MWOId = Model.MWO.Id, Budget = true };
+            data.MWOItemsBudget = await mediator.Send(mwoitems);
+            mwoitems = new() { MWOId = Model.MWO.Id, Budget = false };
+            data.MWOItemsDesign = await mediator.Send(mwoitems);
             GetBrandsListQuery brands = new();
             data.Brands = await mediator.Send(brands);
-            if (Model.pBrand.Id != 0)
+            if (Model.pBrand!.Id != 0)
             {
                 data.Suppliers = await GetSupplierByBrand(Model.pBrand.Id);
             }
-          
+
             return data;
         }
+        public async Task<PurchaseOrderDialogData> GetPurchaseOrderDataNewDialog(CommandPurchaseOrder Model)
+        {
+            PurchaseOrderDialogData data = new();
 
+            Model.USDCOP = Model.Id == 0 ? _CurrencyService.RateList == null ? 4900 : Math.Round(_CurrencyService.RateList["COP"], 2) : Model.USDCOP;
+            Model.USDEUR = Model.Id == 0 ? _CurrencyService.RateList == null ? 1 : Math.Round(_CurrencyService.RateList["EUR"], 2) : Model.USDEUR;
+
+
+            if (Model.PurchaseOrderStatus == PurchaseOrderApprovalStatus.Ordering)
+            {
+                Model.POEstimatedDate = DateTime.UtcNow;
+            }
+
+
+            data.InlineEdit = Model.Id == 0;
+
+
+            GetBrandsListQuery brands = new();
+            data.Brands = await mediator.Send(brands);
+            if (Model.pBrand!.Id != 0)
+            {
+                data.Suppliers = await GetSupplierByBrand(Model.pBrand.Id);
+            }
+
+            return data;
+        }
         public async Task<List<CommandSupplier>> GetSupplierByBrand(int brandId)
         {
             GetSuppliersListQuery supplieres = new() { BrandId = brandId };
@@ -154,7 +185,7 @@ namespace CPTool.InfrastructureCQRS.Services
         {
             return Model.Id == 0 ? "Create PR" : Model.PurchaseOrderStatus == PurchaseOrderApprovalStatus.Ordering ? "Create PO" :
             Model.PurchaseOrderStatus == PurchaseOrderApprovalStatus.Created ?
-            Model.pBrand.BrandType == BrandType.Brand ? "Receive PO" : "Install PO" :
+            Model.pBrand!.BrandType == BrandType.Brand ? "Receive PO" : "Install PO" :
             Model.PurchaseOrderStatus == PurchaseOrderApprovalStatus.Received ? "Install PO" : "Close";
         }
         public bool DisableButtonSave(CommandPurchaseOrder Model)
@@ -179,22 +210,38 @@ namespace CPTool.InfrastructureCQRS.Services
             purchaseOrderItem.PurchaseOrder = Model;
             return purchaseOrderItem;
         }
-        public void AddPurchaseOrderItemToMWOItem(CommandPurchaseOrder Model, CommandPurchaseOrderItem purchaseOrderItem, PurchaseOrderDialogData data)
+        public void AddMWOItemBudgetToPurchaseOrder(CommandPurchaseOrder Model, CommandPurchaseOrderItem purchaseOrderItem, PurchaseOrderDialogData data)
         {
             Model.PurchaseOrderItems.Add(purchaseOrderItem);
-            data.MWOItemsOriginal.Remove(purchaseOrderItem.MWOItem);
-            Model.PurchaseOrderItems = Model.PurchaseOrderItems.OrderBy(x => x.MWOItem!.Nomenclatore).ToList();
+
+            data.MWOItemsBudget.Remove(purchaseOrderItem!.MWOItem!);
+
         }
-        public void RemovePurchaseOrderItemFromMWOItem(CommandPurchaseOrder Model, PurchaseOrderDialogData data, int mwoitemid)
+        public void RemoveMWOItemBudgetFromPurchaseOrder(CommandPurchaseOrder Model, PurchaseOrderDialogData data, int mwoitemid)
         {
 
             var selected = Model.PurchaseOrderItems.FirstOrDefault(x => x.MWOItemId == mwoitemid);
-            Model.PurchaseOrderItems.Remove(selected);
-            data.MWOItemsOriginal.Add(selected.MWOItem);
-            Model.PurchaseOrderItems = Model.PurchaseOrderItems.OrderBy(x => x.MWOItem!.Nomenclatore).ToList();
+            Model.PurchaseOrderItems.Remove(selected!);
+
+            data.MWOItemsBudget.Add(selected!.MWOItem!);
+
 
         }
+        public void AddMWOItemDesignToPurchaseOrder(CommandPurchaseOrder Model, CommandPurchaseOrderItem purchaseOrderItem, PurchaseOrderDialogData data)
+        {
+            Model.PurchaseOrderItems.Add(purchaseOrderItem);
 
+            data.MWOItemsDesign.Remove(purchaseOrderItem!.MWOItem!);
+        }
+        public void RemoveMWOItemDesignFromPurchaseOrder(CommandPurchaseOrder Model, PurchaseOrderDialogData data, int mwoitemid)
+        {
+
+            var selected = Model.PurchaseOrderItems.FirstOrDefault(x => x.MWOItemId == mwoitemid);
+            Model.PurchaseOrderItems.Remove(selected!);
+
+            data.MWOItemsDesign.Add(selected!.MWOItem!);
+
+        }
         List<CommandPurchaseOrder> SearchList(List<CommandPurchaseOrder> purchaseOrders, string searched)
         {
             List<CommandPurchaseOrder> result = new();
@@ -245,6 +292,18 @@ namespace CPTool.InfrastructureCQRS.Services
 
             }
             return result;
+        }
+        public Task AddMWOItemBudget(CommandMWOItem MWOItem, CommandPurchaseOrder Purchaseorder, PurchaseOrderDialogData DialogData)
+        {
+            CommandPurchaseOrderItem purchaseOrderItem = GetDataForAddItem(MWOItem, Purchaseorder);
+            AddMWOItemBudgetToPurchaseOrder(Purchaseorder, purchaseOrderItem, DialogData);
+            return Task.CompletedTask;
+        }
+        public Task AddMWOItemDesign(CommandMWOItem MWOItem, CommandPurchaseOrder Purchaseorder, PurchaseOrderDialogData DialogData)
+        {
+            CommandPurchaseOrderItem purchaseOrderItem = GetDataForAddItem(MWOItem, Purchaseorder);
+            AddMWOItemDesignToPurchaseOrder(Purchaseorder, purchaseOrderItem, DialogData);
+            return Task.CompletedTask;
         }
     }
 }

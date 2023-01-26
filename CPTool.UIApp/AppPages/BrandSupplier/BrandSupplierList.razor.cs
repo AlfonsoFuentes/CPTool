@@ -5,6 +5,7 @@ using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
 using CPTool.ApplicationCQRS.Responses;
 using CPTool.InfrastructureCQRS.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CPTool.UIApp.AppPages.BrandSupplier
 {
@@ -21,24 +22,30 @@ namespace CPTool.UIApp.AppPages.BrandSupplier
         {
             get
             {
+                if (!SearchBrand.IsNullOrEmpty())
+                    return Service.SearchListBrand(_ElementsBrand, SearchBrand);
                 if (SelectedItemSupplier.Id == 0)
                     return _ElementsBrand;
+               
 
                 return ElementsBrandSupplier.Where(x => x.SupplierId == SelectedItemSupplier.Id).Select(x => x.Brand).ToList();
             }
-           
+
         }
 
         List<CommandSupplier> ElementsSupplier
         {
             get
             {
+                if (!SearchSupplier.IsNullOrEmpty())
+                    return Service.SearchListSupplier(_ElementsSupplier, SearchSupplier);
                 if (SelectedItemBrand.Id == 0)
                     return _ElementsSupplier;
+               
 
                 return ElementsBrandSupplier.Where(x => x.BrandId == SelectedItemBrand.Id).Select(x => x.Supplier).ToList();
             }
-           
+
         }
         protected override async Task OnInitializedAsync()
         {
@@ -81,7 +88,7 @@ namespace CPTool.UIApp.AppPages.BrandSupplier
         }
         async Task<bool> DeleteBrand(CommandBrand toDelete)
         {
-     
+
             var result = await Service.DeleteBrand(toDelete.Id);
             if (result.Success)
             {
@@ -111,6 +118,16 @@ namespace CPTool.UIApp.AppPages.BrandSupplier
         async Task<ExportBaseResponse> ExportSupplier(string type)
         {
             return await Service.GetFiletoExportSupplier(type, ElementsSupplier);
+        }
+        void OnSearchSupplier(string search)
+        {
+            SearchSupplier = search;
+        }
+        string SearchBrand = "";
+        string SearchSupplier = "";
+        void OnSearchBrand(string search)
+        {
+            SearchBrand = search;
         }
     }
 }

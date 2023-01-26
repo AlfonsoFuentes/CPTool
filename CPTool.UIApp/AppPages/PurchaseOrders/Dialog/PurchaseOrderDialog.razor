@@ -1,0 +1,170 @@
+﻿
+@page "/PurchaseOrderDialog/{MWOId:int}"
+@page "/PurchaseOrderDialog/{MWOId:int}/{PurchaseOrderId:int}"
+@using CPTool.ApplicationCQRS.Features.Brands.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.PurchaseOrderItems.Commands.CreateUpdate;
+@using CPTool.ApplicationCQRS.Features.Suppliers.Commands.CreateUpdate;
+@using CPTool.Domain.Enums;
+@using CPTool.UIApp.AppPages.PurchaseOrders.Dialog.BudgetItems
+@using CPTool.UIApp.AppPages.PurchaseOrders.Dialog.DesignItems
+<div class="row" style="margin-bottom: 1rem">
+
+
+    <div class="row">
+        <ToolBarDialogTemplate OnGoBack="GoBack" OnSave="Save" OnExportClick="ReportDialog"></ToolBarDialogTemplate>
+    </div>
+    @if (errorVisible)
+    {
+        <div class="row">
+            @foreach (var row in errors)
+            {
+                <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
+                    @row
+                </RadzenAlert>
+            }
+        </div>
+    }
+    <div class="row">
+        @if (loaded)
+        {
+            <RadzenTabs Change=@OnChange TabPosition="@tabPosition" Class="width:100%" RenderMode="TabRenderMode.Client">
+
+                <Tabs>
+                    <RadzenTabsItem Text="Purchase Order Name">
+                        <div style="margin-bottom: 1rem" class="row">
+                            <div class="col-md-6">
+                                <RadzenCard Class="m-3">
+                                    @if (Model.Id != 0)
+                                    {
+                                        <TextBoxTemplate Label="PO#" Disabled=@(Model.PurchaseOrderStatus==PurchaseOrderApprovalStatus.Ordering?false:true)
+                                                 @bind-Value=@Model.PONumber>
+
+                                        </TextBoxTemplate>
+                                        <DatePickerTamplate Label="Receive date" @bind-Value=@Model.POEstimatedDate Disabled=@(Model.PurchaseOrderStatus==PurchaseOrderApprovalStatus.Ordering?false:true)>
+
+                                        </DatePickerTamplate>
+                                    }
+                                    <TextBoxTemplate Label="Name" Rows=3 Disabled=@(Model.Id!=0)
+                                                 @bind-Value=@Model.Name>
+
+                                    </TextBoxTemplate>
+                                    <TextBoxTemplate Label="Quote No." Disabled=@(Model.Id!=0)
+                                                 @bind-Value=@Model.QuoteNo>
+
+                                    </TextBoxTemplate>
+                                    <TextBoxTemplate Label="PR Code" Disabled=@(Model.Id!=0)
+                                                 @bind-Value=@Model.PurchaseRequisition>
+
+                                    </TextBoxTemplate>
+                                    <SelectTemplate T="CommandBrand" Elements=@DialogData.Brands Disabled=@(Model.Id!=0)
+                                                Label="Brand"
+                                                @bind-Model=@Model.pBrand
+                                                Change="@(()=>GetSuppliersByBrands(Model.pBrand.Id))"
+                                                PropertyName="Name">
+
+                                    </SelectTemplate>
+                                    <SelectTemplate T="CommandSupplier"
+                                                Elements=@DialogData.Suppliers
+                                                Label="Supplier"
+                                                @bind-Model=@Model.pSupplier
+                                                Disabled=@(Model.pBrand.Id==0||Model.Id!=0)
+                                                PropertyName="Name">
+
+                                    </SelectTemplate>
+
+                                </RadzenCard>
+
+                            </div>
+                            <div class="col-md-6">
+                                <RadzenCard Class="m-3">
+
+                                    <FieldTemplate Label="Vendor Code" Value="@Model.VendorCode"></FieldTemplate>
+                                    <FieldTemplate Label="Tax Code" Value="@Model.TaxCode"></FieldTemplate>
+                                    <FieldTemplate Label="SPL" Value="@Model.SPL"></FieldTemplate>
+                                    @if (Model.CostCenter != "")
+                                    {
+                                        <FieldTemplate Label="Cost Center" Value="@Model.CostCenter"></FieldTemplate>
+
+                                    }
+
+                                    <SelectEnumTemplate T="Currency" Elements=@(Enum.GetValues<Currency>()) Disabled=@(Model.Id!=0) Label="Currency" @bind-Value=@Model.Currency>
+
+                                    </SelectEnumTemplate>
+                                    @if (Model.Currency == Currency.EUR)
+                                    {
+                                        <NumericTemplate TValue="double" @bind-Value="@Model.USDEUR" Disabled=@DisableButtonSave
+                                                 Label="$EUR to USD"></NumericTemplate>
+
+                                        <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=@DisableButtonSave>
+
+                                        </DatePickerTamplate>
+                                        <FieldTemplate Label="Total PO, $EUR" Value="@Model.PrizeCurrencyValue"></FieldTemplate>
+                                    }
+                                    else if (Model.Currency == Currency.COP)
+                                    {
+                                        <NumericTemplate TValue="double" @bind-Value="@Model.USDCOP" Disabled=@DisableButtonSave
+                                                 Label="$COP to USD"></NumericTemplate>
+
+                                        <DatePickerTamplate Label="Currency date" @bind-Value=@Model.CurrencyDate Disabled=@DisableButtonSave>
+
+                                        </DatePickerTamplate>
+                                        <FieldTemplate Label="Total PO, $COP" Value="@Model.PrizeCurrencyValue"></FieldTemplate>
+                                    }
+
+                                    <FieldTemplate Label="Total PO, $USD" Value="@Model.PrizeUSDValue"></FieldTemplate>
+                                </RadzenCard>
+
+                            </div>
+                        </div>
+                    </RadzenTabsItem>
+                    <RadzenTabsItem Text="Budget Items">
+                        <div style="margin-bottom: 1rem" class="row">
+                            <CascadingValue Value="this">
+                                <PurchaseOrderItemsBudget @ref=PurchaseOrderItemsBudget></PurchaseOrderItemsBudget>
+
+
+                            </CascadingValue>
+                        </div>
+                    </RadzenTabsItem>
+                     <RadzenTabsItem Text="Design Items">
+                        <div style="margin-bottom: 1rem" class="row">
+                            <CascadingValue Value="this">
+                                <PurchaseOrderItemsDesign @ref=PurchaseOrderItemsDesign></PurchaseOrderItemsDesign>
+
+
+                            </CascadingValue>
+                        </div>
+                    </RadzenTabsItem>
+                </Tabs>
+            </RadzenTabs>
+
+        }
+    </div>
+</div>
+
+@if (debug)
+{
+
+}
+
+@code {
+    bool debug = true;
+    bool loaded = true;
+    bool visibleleft => Model.Id == 0;
+    void OnChange(int index)
+    {
+
+    }
+    TabPosition tabPosition = TabPosition.Top;
+
+    PurchaseOrderItemsBudget PurchaseOrderItemsBudget;
+    PurchaseOrderItemsDesign PurchaseOrderItemsDesign;
+    public async Task ChangeCurrency(CommandPurchaseOrderItem order, double d)
+    {
+        order.PrizeCurrency = d;
+        await PurchaseOrderItemsBudget.SaveRow(order);
+        await PurchaseOrderItemsDesign.SaveRow(order);
+        StateHasChanged();
+
+    }
+}

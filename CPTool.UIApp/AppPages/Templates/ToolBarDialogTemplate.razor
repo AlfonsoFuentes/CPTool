@@ -1,0 +1,62 @@
+﻿<div class="row" style="margin-bottom: 1rem">
+
+    <div class="row">
+        <div class="col-12  col-md-6 justify-content-start justify-content-md-start" style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem">
+
+            <ButtonTemplate Icon="arrow_back" Click=OnGoBack ToolTip="Go Back"></ButtonTemplate>
+            <ButtonTemplate Icon="save" Click=OnSave ToolTip="Save"></ButtonTemplate>
+
+
+            @if (OtherButtons != null)
+                @OtherButtons
+
+
+
+
+
+                @if (ShowReport)
+            {
+                <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Click="@OnExportClick" Size=ButtonSize.Medium
+                               Variant="Variant.Flat" Shade="Shade.Lighter">
+                    <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
+                    <RadzenSplitButtonItem Text="CSV" Value="csv" />
+                    <RadzenSplitButtonItem Text="pdf" Value="pdf" />
+                </RadzenSplitButton>
+
+
+            }
+        </div>
+
+
+    </div>
+
+</div>
+
+@code {
+    void ShowTooltip(ElementReference elementReference, string tooltip, TooltipOptions options = null!) => TooltipService.Open(elementReference, tooltip, options);
+
+    [Parameter]
+    public EventCallback OnGoBack { get; set; }
+    [Parameter]
+    public EventCallback OnSave { get; set; }
+
+
+    [Parameter]
+    public EventCallback<RadzenSplitButtonItem> OnExportClick { get; set; }
+
+
+    [Parameter]
+    public RenderFragment OtherButtons { get; set; } = null!;
+
+
+
+    [Parameter]
+
+    public bool ShowReport { get; set; } = true;
+    [Parameter]
+
+    public bool DisableReport { get; set; } = false;
+
+
+
+}

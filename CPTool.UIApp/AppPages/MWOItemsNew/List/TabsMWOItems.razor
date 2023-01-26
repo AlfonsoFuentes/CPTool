@@ -1,0 +1,56 @@
+﻿@page "/mwo-items/{MWOId:int}"
+@using CPTool.InfrastructureCQRS.Services;
+@using CPTool.UIApp.AppPages.ControlLoops;
+@using CPTool.UIApp.AppPages.PurchaseOrders;
+@using CPTool.UIApp.AppPages.Signals;
+@using CPTool.UIApp.AppPages.UserRequirments;
+
+<CascadingValue Value="this">
+    <RadzenTabs Change=@OnChange TabPosition="@tabPosition" RenderMode="TabRenderMode.Client">
+
+        <Tabs>
+            <RadzenTabsItem Text="Budget">
+                <MWOItemsListBudget  ></MWOItemsListBudget>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="List">
+                <MWOItemsList  ></MWOItemsList>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="Purchase Orders">
+                <PurchaseOrderListMWOItem></PurchaseOrderListMWOItem>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="Signals">
+                <SignalsList  ></SignalsList>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="Control Loops">
+                <ControlLoopsList  ></ControlLoopsList>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="User Requirements">
+                <UserRequirmentsList ></UserRequirmentsList>
+            </RadzenTabsItem>
+
+        </Tabs>
+    </RadzenTabs>
+</CascadingValue>
+@code {
+    TabPosition tabPosition = TabPosition.Top;
+   
+    [Inject]
+    public IMWOItemService Service { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        MWOItemListData = await Service.GetMWOList(MWOId);
+    }
+    public MWOItemListData MWOItemListData = new();
+    
+    
+    void OnChange(int index)
+    {
+        
+    }
+    [Parameter]
+    public int MWOId { get; set; }
+    public int CurrentTab = 0;
+
+   
+}

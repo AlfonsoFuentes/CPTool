@@ -1,0 +1,44 @@
+﻿
+@using CPTool.ApplicationCQRS.Features.MWOItems.Commands.CreateUpdate;
+
+
+
+@if (debug)
+{
+
+}
+
+<TableTemplate T="CommandMWOItem"
+               @ref=table
+               @bind-SelectedItem=@SelectedItem
+               ShowDialog="ShowTableDialog"
+              
+               OnDelete="@Delete"
+               ShowSearch=true
+               SearchChanged="@SearchChanged"
+               Elements="@Elements" 
+               Export="@Export">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.ChapterName)" Title="Chapter" TextAlign="TextAlign.Left" Width="10%" Sortable=false Filterable=false>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.TagId)" Title="Tag Id" TextAlign="TextAlign.Left" Width="20%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.Name)" Title="Name" TextAlign="TextAlign.Left" Width="30%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.BrandName)" Title="Brand" TextAlign="TextAlign.Left" Width="20%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.SupplierName)" Title="Supplier" TextAlign="TextAlign.Left" Width="20%">
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CommandMWOItem" Property="@nameof(CommandMWOItem.BudgetPrizeString)" Title="Budget, USD" Filterable=false Sortable=false Width="20%">
+           
+        </RadzenDataGridColumn>
+
+       
+    </Columns>
+</TableTemplate>
+
+@code {
+    bool debug = true;
+    TableTemplate<CommandMWOItem> table;
+}

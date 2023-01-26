@@ -1,0 +1,47 @@
+﻿@if (DialogParent.Model.Chapter != null)
+{
+    @switch (DialogParent.Model.Chapter.Id)
+    {
+        case 4:
+            <EquipmentDialogNew @ref=EquipmentDialogNew></EquipmentDialogNew>
+            break;
+        case 6:
+            <PipingDialogNew @ref=PipingDialogNew></PipingDialogNew>
+            break;
+        case 7:
+            <InstrumentDialogNew @ref=InstrumentDialogNew></InstrumentDialogNew>
+            break;
+    }
+}
+
+@if (debug)
+{
+
+}
+
+@code {
+    bool debug = true;
+    [CascadingParameter]
+    protected MWOItemDialogNew DialogParent { get; set; }
+    EquipmentDialogNew EquipmentDialogNew;
+    PipingDialogNew PipingDialogNew;
+    InstrumentDialogNew InstrumentDialogNew;
+    public async Task UpdateDialog()
+    {
+        switch (DialogParent.Model.Chapter.Id)
+        {
+            case 4:
+                await EquipmentDialogNew.UpdateDialog();
+                break;
+            case 6:
+                await PipingDialogNew.UpdateDialog();
+                break;
+            case 7:
+                await InstrumentDialogNew.UpdateDialog();
+                break;
+        }
+
+    }
+
+
+}
